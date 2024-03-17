@@ -1,0 +1,16 @@
+.c-title {
+    font-size: $font-size_xl;
+    color: $font-color_default;
+    text-align: center;
+    margin: $space_xxl 0;
+    padding: 0; 
+
+    &__section{
+        font-weight: 900;
+        font-size: $font-size_xxl;
+    }
+    &__number{
+        font-size: $font-size_l;
+        margin-top: $space_xxl;
+    }
+}

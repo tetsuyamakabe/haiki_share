@@ -1,0 +1,20 @@
+.c-header {
+    margin-left: $space_xl;
+
+    @include mq(md){
+        height: 90px;
+    }
+    @include mq(sm){
+        margin-left: 0;
+        height: 50px;
+    }
+    &__title {
+        font-family: Arial;
+        font-style: italic;
+        font-weight: bold;
+        font-size: 50px;
+        text-decoration: none;
+        color: #000;
+        line-height: 60px;
+    }
+}

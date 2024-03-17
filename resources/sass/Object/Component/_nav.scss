@@ -1,0 +1,175 @@
+.c-nav {
+    &__menu{
+        display: flex;
+        align-items: center;
+        font-family: $font-family_corp;
+
+        @include mq(md){
+            display: block;
+            position: fixed;
+            top: 0;
+            right: -100%;
+            background: rgba(0, 0, 0, .7);
+            width: 100%;
+            height: 100vh;
+            padding-top: $space_3l;
+            transition: .5s;
+            z-index: 2;
+
+            &.active{
+                transition: .5s;
+                transform: translateX(-100%);
+                z-index: 2;
+            }
+        }
+
+        @include mq(sm){
+            display: block;
+            position: fixed;
+            top: 0;
+            right: -100%;
+            background: rgba(0, 0, 0, .7);
+            width: 100%;
+            height: 100vh;
+            padding-top: $space_3l;
+            transition: .5s;
+
+            &.active{
+                transition: .5s;
+                transform: translateX(-100%);
+            }    
+        }
+    
+        &--trigger{
+            display: none;
+            @include mq(md){
+                display: inline-block;
+                margin-top: $space_xxl;
+                margin-right: $space_xxl;
+            }
+            @include mq(sm){
+                display: inline-block;
+                margin-top: $space_m;
+            }
+            transition: all .4s;
+            box-sizing: border-box;
+            position: relative;
+            width: 40px;
+            height: 32px;
+            z-index: 3;
+            span{
+                display: inline-block;
+                transition: all .4s;
+                box-sizing: border-box;
+                position: absolute;
+                left: 0;
+                width: 100%;
+                height: 4px;
+                background-color: $font-color_default;
+                border-radius: 4px;
+                &:nth-of-type(1){
+                    top: 0;
+                }
+                &:nth-of-type(2){
+                    top: 14px;
+                }
+                &:nth-of-type(3){
+                    bottom: 0;
+                }
+            }
+            &.active span{
+                &:nth-of-type(1){
+                    transform: translateY(12px) rotate(-45deg);
+                }
+                &:nth-of-type(2){
+                    opacity: 0;
+                }
+                &:nth-of-type(3){
+                    transform: translateY(-15px) rotate(45deg);
+                }
+            }
+        }
+        
+        &--list {
+            display: flex;
+            align-items: center;
+            @include mq(md){
+                display: inline-block;
+            }
+            @include mq(sm){
+                text-align: center;
+                display: flex;
+                flex-direction: column;
+                padding: $space_xxl;
+            }
+        }
+
+        &--link {
+            font-size: $font-size_m;
+            margin: 0 $space_xl;
+            color: $font-color-sub2;
+            text-decoration: none;
+            position: relative;
+            &::after {
+                content: '';
+                position: absolute;
+                left: 0;
+                width: 100%;
+                height: 1px;
+                background: $font-color-sub2;
+                bottom: -1px;
+                transform: scale(0, 1);
+                transform-origin: left top;
+                transition: transform 0.3s;
+            }
+
+            &:hover::after {
+                transform: scale(1, 1);
+            }
+        }
+
+        &--item {
+            list-style: none;
+        }
+
+        &--user {
+            display: flex;
+            align-items: center;
+        }
+
+        &--username {
+            margin-right: $space_m;
+        }
+
+        @include mq(sm){
+            display: block;
+            font-size: $font-size_xxl;
+            &--item{
+                margin-right: initial;
+            }
+            &--link{
+                -webkit-font-smoothing: initial;
+                display: block;
+                padding: $space_3l;
+                text-align: center;
+                color: $font-color-sub3;
+            }
+        }
+
+        @include mq(md){
+            display: flex;
+            flex-direction: column;
+            font-size: $font-size_xxl;
+            &--item{
+                margin-right: initial;
+            }
+            &--link{
+                -webkit-font-smoothing: initial;
+                display: block;
+                padding: $space_3l;
+                text-align: center;
+                color: $font-color-sub3;
+            }
+        }
+    }
+}
