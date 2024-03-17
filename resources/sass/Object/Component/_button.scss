@@ -1,0 +1,16 @@
+.c-button {
+    background: #fff;
+    margin: 15px 0;
+    padding: 8px 32px;
+    font-size: 16px;
+    transition: 0.5s;
+    border: 2px solid #f66d9b;
+    border-radius: 3px;
+    text-decoration: none;
+
+    &:hover {
+        background: $font-color_main; /* ホバー時の背景色 */
+        cursor: pointer;
+
+    }
+}
