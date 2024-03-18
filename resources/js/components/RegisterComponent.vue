@@ -6,7 +6,7 @@
                     <th><label for="name" class="c-label">お名前</label></th>
                     <td>
                         <input v-model="formData.name" id="name" type="name" class="c-input" :class="{ 'is-invalid': errors && errors.name }" autocomplete="name">
-                        <span v-if="errors && errors.name" class="invalid-feedback">{{ errors.name[0] }}</span>
+                        <span v-if="errors && errors.name" class="c-error">{{ errors.name[0] }}</span>
                     </td>
                 </tr>
 
@@ -14,21 +14,21 @@
                     <th><label for="email" class="c-label">メールアドレス</label></th>
                     <td>
                         <input v-model="formData.email" id="email" type="email" class="c-input" :class="{ 'is-invalid': errors && errors.email }" autocomplete="email">
-                        <span v-if="errors && errors.email" class="invalid-feedback">{{ errors.email[0] }}</span>
+                        <span v-if="errors && errors.email" class="c-error">{{ errors.email[0] }}</span>
                     </td>
                 </tr>
                 <tr>
                     <th><label for="password" class="c-label">パスワード</label></th>
                     <td>
-                        <input v-model="formData.password" id="password" type="password" class="c-input" :class="{ 'is-invalid': errors && errors.password }" autocomplete="new-password">
-                        <span v-if="errors && errors.password" class="invalid-feedback">{{ errors.password[0] }}</span>
+                        <input v-model="formData.password" id="password" type="password" class="c-input" :class="{ 'is-invalid': errors && errors.password }" autocomplete="new-password" placeholder="英数字8文字以上で入力してください">
+                        <span v-if="errors && errors.password" class="c-error">{{ errors.password[0] }}</span>
                     </td>
                 </tr>
                 <tr>
                     <th><label for="password-confirm" class="c-label">パスワード（再入力）</label></th>
                     <td>
-                        <input v-model="formData.password_confirmation" id="password-confirm" type="password" class="c-input" autocomplete="new-password">
-                        <span v-if="errors && errors.password_confirmation" class="invalid-feedback">{{ errors.password_confirmation[0] }}</span>
+                        <input v-model="formData.password_confirmation" id="password-confirm" type="password" class="c-input" :class="{ 'is-invalid': errors && errors.password_confirmation }" autocomplete="new-password" placeholder="英数字8文字以上で入力してください">
+                        <span v-if="errors && errors.password_confirmation" class="c-error">{{ errors.password_confirmation[0] }}</span>
                     </td>
                 </tr>
             </table>
@@ -65,9 +65,8 @@ export default {
                     window.location.href = '/home'; // ホーム画面にリダイレクトする例
                 })
                 .catch(error => {
-                    if (error.response.status === 422) {
-                        this.errors = error.response.data.errors;
-                    }
+                    // console.error('ログイン失敗:', error.response.data);
+                    this.errors = error.response.data.errors;
                 });
         }
     }
