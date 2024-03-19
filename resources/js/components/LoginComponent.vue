@@ -17,11 +17,6 @@
                     </td>
                 </tr>
             </table>
-            <div class="c-checkbox">
-                <input v-model="formData.remember" class="form-check-input" type="checkbox" id="remember">
-                <label class="form-check-label" for="remember">パスワードお忘れの方はこちら</label>
-            </div>
-
             <div class="p-login__button">
                 <button type="submit" class="c-button">ログイン</button>
             </div>
