@@ -1,4 +1,8 @@
 {
+    "REGISTER": "ユーザー登録",
+    "LOGIN": "ログイン",
     "User Registration": "利用者側ユーザー登録",
-    "User Login": "利用者側ログイン"
+    "User Login": "利用者側ログイン",
+    "User ForgotPassword": "利用者側パスワード変更メール送信",
+    "User Reset Password": "利用者側パスワード変更"
 }
