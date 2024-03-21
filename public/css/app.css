@@ -136,6 +136,22 @@ table {
   border-spacing: 0;
 }
 
+html,
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  width: 100%;
+  color: #333;
+  font-size: 16px;
+  font-family: Quicksand, 游ゴシック体, "Yu Gothic", YuGothic, "\30D2\30E9\30AE\30CE\89D2\30B4\30B7\30C3\30AF   Pro", "Hiragino Kaku Gothic Pro", メイリオ, Meiryo, Osaka, "\FF2D\FF33   \FF30\30B4\30B7\30C3\30AF", "MS PGothic", sans-serif;
+  -webkit-text-size-adjust: 100%;
+     -moz-text-size-adjust: 100%;
+          text-size-adjust: 100%;
+  letter-spacing: 0.1em;
+  scroll-behavior: smooth;
+}
+
 #l-footer {
   width: 100%;
   height: 30px;
@@ -296,6 +312,7 @@ table {
 .c-error {
   display: block;
   color: red;
+  font-size: 16px;
 }
 
 .c-header {
@@ -327,10 +344,10 @@ table {
 
 .c-input {
   background: #f6f5f4;
-  width: 460px;
+  width: 300px;
   border: 1px solid #000;
-  margin: 15px 12px;
-  padding: 15px;
+  margin: 8px 0;
+  padding: 8px;
   box-sizing: border-box;
   font-size: 16px;
 }
@@ -617,17 +634,14 @@ table {
 
 .p-register {
   display: flex;
-  align-items: center;
   background-color: #fafafa;
-  height: 700px;
 }
 
 .p-register__form {
   background: #fff;
-  width: 650px;
-  margin: 15px auto;
+  margin: 120px auto;
   padding: 40px;
-  text-align: center;
+  text-align: left;
   border: 1px solid #000;
 }
 

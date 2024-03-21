@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Models\User;
+use App\Models\Address;
+use App\Models\Convenience;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -48,11 +51,26 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
-        return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
-        ]);
+        if ($data['role'] === 'user') {
+            return Validator::make($data, [
+                'name' => ['required', 'string', 'max:255'],
+                'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+                'password' => ['required', 'string', 'min:8', 'confirmed'],
+                'role' => ['required', 'string'],
+            ]);
+        } elseif ($data['role'] === 'convenience') {
+            return Validator::make($data, [
+                'name' => ['required', 'string', 'max:255'],
+                'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+                'password' => ['required', 'string', 'min:8', 'confirmed'],
+                'branch_name' => ['required', 'string', 'max:255'],
+                'prefecture' => ['required', 'string', 'max:255'],
+                'city' => ['required', 'string', 'max:255'],
+                'town' => ['required', 'string', 'max:255'],
+                'building' => ['string', 'max:255'],
+                'role' => ['required', 'string'],
+            ]);
+        }
     }
     /**
      * Create a new user instance after a valid registration.
@@ -62,10 +80,43 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        // 共通のユーザー情報を「users」テーブルに保存
+        $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+            'role' => $data['role'],
         ]);
+
+        // コンビニの場合は追加情報を「convenience_stores」テーブルに保存
+        if ($data['role'] === 'convenience') {
+            // 住所情報を保存し、そのIDを取得
+            $address = Address::create([
+                'prefecture' => $data['prefecture'],
+                'city' => $data['city'],
+                'town' => $data['town'],
+                'building' => $data['building'],
+            ]);
+            $addressId = $address->id;
+
+            // コンビニ情報を保存
+            $convenience = Convenience::create([
+                'user_id' => $user->id,
+                'branch_name' => $data['branch_name'],
+                'address_id' => $addressId,
+            ]);
+
+            // ConvenienceとAddressの関連付け
+            $convenience->address()->associate($address);
+            $convenience->save();
+
+            return $user;
+        }
+    }
+
+    // ユーザー登録画面の表示
+    public function show(Request $request)
+    {
+        return view('auth.register');
     }
 }
