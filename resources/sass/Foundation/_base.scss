@@ -1,0 +1,17 @@
+@import './variables.scss';
+
+//===========================
+//base
+//===========================
+html, body{
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    width: 100%;
+    color: $font-color_default;
+    font-size: $font-size_default;
+    font-family: $font-family_default;
+    text-size-adjust: 100%;
+    letter-spacing: 0.1em;
+    scroll-behavior: smooth;
+}
