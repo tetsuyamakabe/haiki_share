@@ -70,11 +70,16 @@
                     @auth
                         <a href="{{ url('/home') }}">Home</a>
                     @else
-                        <a href="{{ route('login') }}">Login</a>
-
-                        @if (Route::has('register'))
-                            <a href="{{ route('register') }}">Register</a>
+                        @if(request()->query('type') === 'user')
+                            <a href="{{ route('login', ['type' => 'user']) }}">Login</a>
+                        @else
+                            <a href="{{ route('login', ['type' => 'convenience']) }}">Login</a>
                         @endif
+                        @if (Route::has('register'))
+                            <a href="{{ route('register', ['type' => 'user']) }}">Register</a>
+                        @else
+                            <a href="{{ route('register', ['type' => 'convenience']) }}">Login</a>
+                    @endif
                     @endauth
                 </div>
             @endif

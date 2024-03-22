@@ -1,11 +1,15 @@
-@extends('layouts.app')
+@extends('layouts.common')
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">Dashboard</div>
+<div id="app">
+    <main class="l-main">
+        <div class="p-login">
+            <div class="p-login__form">
+                @if(request()->query('type') === 'user')
+                    <h1 class="c-title">{{ __('User Dashboard') }}</h1>
+                @else
+                    <h1 class="c-title">{{ __('Convenience Store Dashboard') }}</h1>
+                @endif
 
                 <div class="card-body">
                     @if (session('status'))
@@ -14,7 +18,19 @@
                         </div>
                     @endif
 
-                    You are logged in!
+                    {{ __('You are logged in!') }}
+                </div>
+
+                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                    {{ Auth::user()->name }} <span class="caret"></span>
+                </a>
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                        {{ __('Logout') }}
+                    </a>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                        @csrf
+                    </form>
                 </div>
             </div>
         </div>

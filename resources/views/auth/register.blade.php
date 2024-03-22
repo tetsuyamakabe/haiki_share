@@ -10,8 +10,7 @@
                 @else
                     <h1 class="c-title">{{ __('Convenience Store Registration') }}</h1>
                 @endif
-
-                <form method="POST" action="{{ route('register') }}">
+                <form method="POST" action="{{ route('register', ['type' => request()->query('type')]) }}">
                     @csrf
                     @if(request()->query('type') === 'user')
                         <user-registration-component></user-registration-component>
