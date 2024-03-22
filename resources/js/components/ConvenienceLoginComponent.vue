@@ -44,7 +44,7 @@ export default {
                 .then(response => {
                     // 登録成功時の処理
                     // 例えば、リダイレクトなど
-                    window.location.href = '/home'; // ホーム画面にリダイレクトする例
+                    window.location.href = '/home?type=convenience'; // ホーム画面にリダイレクトする例
                 })
                 .catch(error => {
                     console.error('ログイン失敗:', error.response.data);

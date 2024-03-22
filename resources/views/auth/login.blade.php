@@ -5,10 +5,18 @@
     <main class="l-main">
         <div class="p-login">
             <div class="p-login__form">
-                <h1 class="c-title">{{ __('User Login') }}</h1>
-                <form method="POST" action="{{ route('login') }}">
+                @if(request()->query('type') === 'user')
+                    <h1 class="c-title">{{ __('User Login') }}</h1>
+                @else
+                    <h1 class="c-title">{{ __('Convenience Store Login') }}</h1>
+                @endif
+                <form method="POST" action="{{ route('login', ['type' => request()->query('type')]) }}">
                     @csrf
-                    <login-component></login-component>
+                    @if(request()->query('type') === 'user')
+                        <user-login-component></user-login-component>
+                    @else
+                        <convenience-login-component></convenience-login-component>
+                    @endif
                     <div class="form-group row">
                         <div class="col-md-6 offset-md-4">
                             <div class="form-check">

@@ -4,6 +4,10 @@
     "User Registration": "利用者側ユーザー登録",
     "Convenience Store Registration": "コンビニ側ユーザー登録",
     "User Login": "利用者側ログイン",
+    "Convenience Store Login": "コンビニ側ログイン",
+    "User Dashboard": "利用者側ダッシュボード",
+    "Convenience Store Dashboard": "コンビニ側ダッシュボード",
+    "You are logged in!": "ログインしました。",
     "User ForgotPassword": "利用者側パスワード変更メール送信",
     "User Reset Password": "利用者側パスワード変更"
 }
