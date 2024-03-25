@@ -581,17 +581,14 @@ body {
 
 .p-forgotpassword {
   display: flex;
-  align-items: center;
   background-color: #fafafa;
-  height: 700px;
 }
 
 .p-forgotpassword__form {
   background: #fff;
-  width: 650px;
-  margin: 15px auto;
+  margin: 120px auto;
   padding: 40px;
-  text-align: center;
+  text-align: left;
   border: 1px solid #000;
 }
 
@@ -603,7 +600,7 @@ body {
 .p-login {
   width: 100%;
   display: flex;
-  background-color: #f6f5f4;
+  background-color: #fafafa;
 }
 
 @media screen and (max-width: 768px) {
@@ -620,10 +617,9 @@ body {
 
 .p-login__form {
   background: #fff;
-  width: 650px;
-  margin: 135px auto;
+  margin: 120px auto;
   padding: 40px;
-  text-align: center;
+  text-align: left;
   border: 1px solid #000;
 }
 

@@ -1,19 +1,22 @@
 <template>
     <div class="c-container">
         <form @submit.prevent="submitForm">
-            <table class="c-table__form">
+
+            <!-- バリデーションエラーメッセージ -->
+            <span v-if="errors && errors.email" class="c-error">{{ errors.email[0] }}</span>
+            <span v-if="errors && errors.password" class="c-error">{{ errors.password[0] }}</span>
+
+            <table>
                 <tr>
                     <th><label for="email" class="c-label">メールアドレス</label></th>
                     <td>
                         <input v-model="formData.email" id="email" type="email" class="c-input" :class="{ 'is-invalid': errors && errors.email }" autocomplete="email">
-                        <span v-if="errors && errors.email" class="c-error">{{ errors.email[0] }}</span>
                     </td>
                 </tr>
                 <tr>
                     <th><label for="password" class="c-label">パスワード</label></th>
                     <td>
-                        <input v-model="formData.password" id="password" type="password" class="c-input" :class="{ 'is-invalid': errors && errors.password }" autocomplete="new-password">
-                        <span v-if="errors && errors.password" class="c-error">{{ errors.password[0] }}</span>
+                        <input v-model="formData.password" id="password" type="password" class="c-input" :class="{ 'is-invalid': errors && errors.password }" autocomplete="new-password" placeholder="英数字8文字以上で入力してください">
                     </td>
                 </tr>
             </table>
@@ -40,16 +43,14 @@ export default {
     },
     methods: {
         submitForm() {
-            axios.post('/login', this.formData)
-                .then(response => {
-                    // 登録成功時の処理
-                    // 例えば、リダイレクトなど
-                    window.location.href = '/home?type=convenience'; // ホーム画面にリダイレクトする例
-                })
-                .catch(error => {
-                    console.error('ログイン失敗:', error.response.data);
-                    this.errors = error.response.data.errors;
-                });
+            axios.post('/login?type=convenience', this.formData).then(response => {
+                // 登録成功時の処理
+                // 例えば、リダイレクトなど
+                window.location.href = '/home'; // ホーム画面にリダイレクトする例
+            }).catch(error => {
+                console.error('ログイン失敗:', error.response.data);
+                this.errors = error.response.data.errors;
+            });
         }
     }
 };
