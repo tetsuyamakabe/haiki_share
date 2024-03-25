@@ -5034,10 +5034,10 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     submitForm: function submitForm() {
       var _this = this;
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/login', this.formData).then(function (response) {
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/login?type=convenience', this.formData).then(function (response) {
         // 登録成功時の処理
         // 例えば、リダイレクトなど
-        window.location.href = '/home?type=convenience'; // ホーム画面にリダイレクトする例
+        window.location.href = '/home'; // ホーム画面にリダイレクトする例
       })["catch"](function (error) {
         console.error('ログイン失敗:', error.response.data);
         _this.errors = error.response.data.errors;
@@ -5250,10 +5250,10 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     submitForm: function submitForm() {
       var _this = this;
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/login', this.formData).then(function (response) {
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/login?type=user', this.formData).then(function (response) {
         // 登録成功時の処理
         // 例えば、リダイレクトなど
-        window.location.href = '/home?type=user'; // ホーム画面にリダイレクトする例
+        window.location.href = '/home'; // ホーム画面にリダイレクトする例
       })["catch"](function (error) {
         console.error('ログイン失敗:', error.response.data);
         _this.errors = error.response.data.errors;
@@ -5328,9 +5328,11 @@ var render = function render() {
         return _vm.submitForm.apply(null, arguments);
       }
     }
-  }, [_c("table", {
-    staticClass: "c-table__form"
-  }, [_c("tr", [_vm._m(0), _vm._v(" "), _c("td", [_c("input", {
+  }, [_vm.errors && _vm.errors.email ? _c("span", {
+    staticClass: "c-error"
+  }, [_vm._v(_vm._s(_vm.errors.email[0]))]) : _vm._e(), _vm._v(" "), _vm.errors && _vm.errors.password ? _c("span", {
+    staticClass: "c-error"
+  }, [_vm._v(_vm._s(_vm.errors.password[0]))]) : _vm._e(), _vm._v(" "), _c("table", [_c("tr", [_vm._m(0), _vm._v(" "), _c("td", [_c("input", {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -5355,9 +5357,7 @@ var render = function render() {
         _vm.$set(_vm.formData, "email", $event.target.value);
       }
     }
-  }), _vm._v(" "), _vm.errors && _vm.errors.email ? _c("span", {
-    staticClass: "c-error"
-  }, [_vm._v(_vm._s(_vm.errors.email[0]))]) : _vm._e()])]), _vm._v(" "), _c("tr", [_vm._m(1), _vm._v(" "), _c("td", [_c("input", {
+  })])]), _vm._v(" "), _c("tr", [_vm._m(1), _vm._v(" "), _c("td", [_c("input", {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -5371,7 +5371,8 @@ var render = function render() {
     attrs: {
       id: "password",
       type: "password",
-      autocomplete: "new-password"
+      autocomplete: "new-password",
+      placeholder: "英数字8文字以上で入力してください"
     },
     domProps: {
       value: _vm.formData.password
@@ -5382,9 +5383,7 @@ var render = function render() {
         _vm.$set(_vm.formData, "password", $event.target.value);
       }
     }
-  }), _vm._v(" "), _vm.errors && _vm.errors.password ? _c("span", {
-    staticClass: "c-error"
-  }, [_vm._v(_vm._s(_vm.errors.password[0]))]) : _vm._e()])])]), _vm._v(" "), _vm._m(2)])]);
+  })])])]), _vm._v(" "), _vm._m(2)])]);
 };
 var staticRenderFns = [function () {
   var _vm = this,
@@ -6132,9 +6131,11 @@ var render = function render() {
         return _vm.submitForm.apply(null, arguments);
       }
     }
-  }, [_c("table", {
-    staticClass: "c-table__form"
-  }, [_c("tr", [_vm._m(0), _vm._v(" "), _c("td", [_c("input", {
+  }, [_vm.errors && _vm.errors.email ? _c("span", {
+    staticClass: "c-error"
+  }, [_vm._v(_vm._s(_vm.errors.email[0]))]) : _vm._e(), _vm._v(" "), _vm.errors && _vm.errors.password ? _c("span", {
+    staticClass: "c-error"
+  }, [_vm._v(_vm._s(_vm.errors.password[0]))]) : _vm._e(), _vm._v(" "), _c("table", [_c("tr", [_vm._m(0), _vm._v(" "), _c("td", [_c("input", {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -6159,9 +6160,7 @@ var render = function render() {
         _vm.$set(_vm.formData, "email", $event.target.value);
       }
     }
-  }), _vm._v(" "), _vm.errors && _vm.errors.email ? _c("span", {
-    staticClass: "c-error"
-  }, [_vm._v(_vm._s(_vm.errors.email[0]))]) : _vm._e()])]), _vm._v(" "), _c("tr", [_vm._m(1), _vm._v(" "), _c("td", [_c("input", {
+  })])]), _vm._v(" "), _c("tr", [_vm._m(1), _vm._v(" "), _c("td", [_c("input", {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -6175,7 +6174,8 @@ var render = function render() {
     attrs: {
       id: "password",
       type: "password",
-      autocomplete: "new-password"
+      autocomplete: "new-password",
+      placeholder: "英数字8文字以上で入力してください"
     },
     domProps: {
       value: _vm.formData.password
@@ -6186,9 +6186,7 @@ var render = function render() {
         _vm.$set(_vm.formData, "password", $event.target.value);
       }
     }
-  }), _vm._v(" "), _vm.errors && _vm.errors.password ? _c("span", {
-    staticClass: "c-error"
-  }, [_vm._v(_vm._s(_vm.errors.password[0]))]) : _vm._e()])])]), _vm._v(" "), _vm._m(2)])]);
+  })])])]), _vm._v(" "), _vm._m(2)])]);
 };
 var staticRenderFns = [function () {
   var _vm = this,

@@ -71,15 +71,12 @@
                         <a href="{{ url('/home') }}">Home</a>
                     @else
                         @if(request()->query('type') === 'user')
-                            <a href="{{ route('login', ['type' => 'user']) }}">Login</a>
+                            <a href="{{ route('login', ['type' => 'user']) }}">{{ __('User Login') }}</a>
+                            <a href="{{ route('register', ['type' => 'user']) }}">{{ __('User Registration') }}</a>
                         @else
-                            <a href="{{ route('login', ['type' => 'convenience']) }}">Login</a>
+                            <a href="{{ route('login', ['type' => 'convenience']) }}">{{ __('Convenience Store Login') }}</a>
+                            <a href="{{ route('register', ['type' => 'convenience']) }}">{{ __('Convenience Store Registration') }}</a>
                         @endif
-                        @if (Route::has('register'))
-                            <a href="{{ route('register', ['type' => 'user']) }}">Register</a>
-                        @else
-                            <a href="{{ route('register', ['type' => 'convenience']) }}">Login</a>
-                    @endif
                     @endauth
                 </div>
             @endif
