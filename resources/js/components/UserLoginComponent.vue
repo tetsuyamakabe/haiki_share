@@ -43,7 +43,7 @@ export default {
     },
     methods: {
         submitForm() {
-            axios.post('/login?type=user', this.formData).then(response => {
+            axios.post('/login', this.formData).then(response => {
                 // 登録成功時の処理
                 // 例えば、リダイレクトなど
                 window.location.href = '/home'; // ホーム画面にリダイレクトする例
