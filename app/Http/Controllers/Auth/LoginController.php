@@ -45,37 +45,37 @@ class LoginController extends Controller
     }
 
     public function login(Request $request)
-{
-    if ($this->attemptLogin($request)) {
-        // ログインが成功した場合は、ユーザー情報を取得する
-        $user = $this->guard()->user();
+    {
+        if ($this->attemptLogin($request)) {
+            // ログインが成功した場合は、ユーザー情報を取得する
+            $user = $this->guard()->user();
 
-        // ユーザーがログインしているかどうかを確認
-        if ($user) {
-            $userId = $user->id;
-            \Log::debug('ユーザーIDは、' . $userId);
-            // ユーザーのroleを取得
-            $role = $user->role;
-            \Log::debug('ユーザーのroleは、' . $role);
+            // ユーザーがログインしているかどうかを確認
+            if ($user) {
+                $userId = $user->id;
+                \Log::debug('ユーザーIDは、' . $userId);
+                // ユーザーのroleを取得
+                $role = $user->role;
+                \Log::debug('ユーザーのroleは、' . $role);
 
-            // クエリパラメータからtypeを取得
-            $type = $request->query('type');
-            \Log::debug('クエリパラメータは、' . $type);
+                // クエリパラメータからtypeを取得
+                $type = $request->query('type');
+                \Log::debug('クエリパラメータは、' . $type);
 
-            if (($role === 'user' && $type === 'user') || ($role === 'convenience' && $type === 'convenience')) {
-                // roleとクエリパラメータが整合する場合はログインを許可する
-                \Log::debug('ログインします');
-                return $this->sendLoginResponse($request);
+                if (($role === 'user' && $type === 'user') || ($role === 'convenience' && $type === 'convenience')) {
+                    // roleとクエリパラメータが整合する場合はログインを許可する
+                    \Log::debug('ログインします');
+                    return $this->sendLoginResponse($request);
+                } else {
+                    // roleとクエリパラメータが整合しない場合はログインを許可しない
+                    \Log::debug('ログインできません');
+                    return redirect('login');
+                }
             } else {
-                // roleとクエリパラメータが整合しない場合はログインを許可しない
-                \Log::debug('ログインできません');
+                // ユーザーがログインしていない場合はログインできません
                 return redirect('login');
             }
-        } else {
-            // ユーザーがログインしていない場合はログインできません
-            return redirect('login');
         }
     }
-}
 
 }
