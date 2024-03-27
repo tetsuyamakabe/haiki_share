@@ -45,10 +45,13 @@ class LoginController extends Controller
     }
 
     public function login(Request $request)
-    {
-        if ($this->attemptLogin($request)) {
-            // ログインが成功した場合は、ユーザー情報を取得する
-            $user = $this->guard()->user();
+{
+    if ($this->attemptLogin($request)) {
+        // ログインが成功した場合は、ユーザー情報を取得する
+        $user = $this->guard()->user();
+
+        // ユーザーがログインしているかどうかを確認
+        if ($user) {
             $userId = $user->id;
             \Log::debug('ユーザーIDは、' . $userId);
             // ユーザーのroleを取得
@@ -68,6 +71,11 @@ class LoginController extends Controller
                 \Log::debug('ログインできません');
                 return redirect('login');
             }
+        } else {
+            // ユーザーがログインしていない場合はログインできません
+            return redirect('login');
         }
     }
+}
+
 }

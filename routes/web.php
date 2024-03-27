@@ -17,7 +17,7 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home', 'HomeController@index')->name('home')->middleware('authcheckrole');
 Route::get('/register?type={$type}', 'RegisterController@show')->name('register');
 Route::get('/login', 'Auth\LoginController@show')->name('login.show');
-Route::post('/login?type={$type}', 'Auth\LoginController@login')->name('login')->middleware('authcheckrole');
+Route::post('/login', 'Auth\LoginController@login')->name('login')->middleware('authcheckrole');
