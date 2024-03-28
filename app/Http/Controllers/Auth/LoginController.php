@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -47,35 +48,34 @@ class LoginController extends Controller
 
     public function login(Request $request)
     {
-        if ($this->attemptLogin($request)) {
-            // ログインが成功した場合は、ユーザー情報を取得する
-            $user = $this->guard()->user();
-            // $user = Auth::user()->id;
-            // ユーザーがログインしているかどうかを確認
-            if ($user) {
-                $userId = $user->id;
-                \Log::debug('ユーザーIDは、' . $userId);
-                // ユーザーのroleを取得
-                $role = $user->role;
-                \Log::debug('ユーザーのroleは、' . $role);
+        // DBからemailをキーにして取得
+        $email = $request->input('email');
+        $user = User::where('email', $email)->first();
 
-                // クエリパラメータからtypeを取得
-                $type = $request->query('type');
-                \Log::debug('クエリパラメータは、' . $type);
+        $userId = $user->id;
+        \Log::debug('ユーザーIDは、' . $userId);
 
-                if (($role === 'user' && $type === 'user') || ($role === 'convenience' && $type === 'convenience')) {
-                    // roleとクエリパラメータが整合する場合はログインを許可する
-                    \Log::debug('ログインします');
-                    return $this->sendLoginResponse($request);
-                } else {
-                    // roleとクエリパラメータが整合しない場合はログインを許可しない
-                    \Log::debug('ログインできません');
-                    return redirect('login');
-                }
-            } else {
-                // ユーザーがログインしていない場合はログインできません
-                return redirect('login');
+        // ユーザーのroleを取得
+        $role = $user->role;
+        \Log::debug('ユーザーのroleは、' . $role);
+
+        // クエリパラメータからtypeを取得
+        $type = $request->query('type');
+        \Log::debug('クエリパラメータは、' . $type);
+    
+        if (($role === 'user' && $type === 'user') || ($role === 'convenience' && $type === 'convenience')) {
+            \Log::debug('ログインします');
+            if ($this->attemptLogin($request)) {
+                return route('home');
+                // return $this->sendLoginResponse($request);
             }
+        } else {
+            \Log::debug('ログインできません');
+            // Missing required parameters for [Route: login] [URI: login?type={$type}].エラー
+            return redirect('login')->with('type', $type);
+            // return redirect('login?type=' . $type);
+            // return redirect()->route('login.show', ['type' => $type]);
         }
     }
+    
 }
