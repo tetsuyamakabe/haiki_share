@@ -19,7 +19,6 @@ class AuthCheckRole
     public function handle(Request $request, Closure $next)
     {
         Log::debug('ミドルウェア');
-        Log::debug('クエリパラメータは、', [$request->query('type')]);
 
         // ログインしているかどうかを確認
         if(!auth()->check()) {
