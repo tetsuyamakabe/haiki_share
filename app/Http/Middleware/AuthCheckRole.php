@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 
 class AuthCheckRole
@@ -17,14 +18,22 @@ class AuthCheckRole
      */
     public function handle(Request $request, Closure $next)
     {
-        // ログインしているかどうかを確認
-        if(auth()->check()) {
-            // ログインユーザーのroleが'user'であるかどうかを確認
-            if(auth()->user()->role === 'user') {
-                return $next($request);
-            }
-        }
+        Log::debug('ミドルウェア');
+        Log::debug('クエリパラメータは、', [$request->query('type')]);
 
-        return redirect()->route('home');
+        // ログインしているかどうかを確認
+        if(!auth()->check()) {
+            return redirect()->route('home')->withErrors('Unauthorized');
+        }
+        Log::debug('ログイン');
+        // ログインユーザーのroleが'user'であるかどうかを確認
+        $user = auth()->user();
+        if($user->role === 'user' && $request->query('type') === 'user') {
+            return $next($request);
+        } elseif ($user->role === 'convenience' && $request->query('type') === 'convenience') {
+            return $next($request);
+        }
+        return $next($request);
     }
 }
+

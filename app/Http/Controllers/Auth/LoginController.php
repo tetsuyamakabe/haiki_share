@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 class LoginController extends Controller
@@ -49,7 +50,7 @@ class LoginController extends Controller
         if ($this->attemptLogin($request)) {
             // ログインが成功した場合は、ユーザー情報を取得する
             $user = $this->guard()->user();
-
+            // $user = Auth::user()->id;
             // ユーザーがログインしているかどうかを確認
             if ($user) {
                 $userId = $user->id;
