@@ -46,37 +46,35 @@ class LoginController extends Controller
     }
 
     public function login(Request $request)
-{
-    // DBからemailをキーにして取得
-    $email = $request->input('email');
-    $user = User::where('email', $email)->first();
+    {
+        // DBからemailをキーにして取得
+        $email = $request->input('email');
+        $user = User::where('email', $email)->first();
 
-    if(!$user) {
-        \Log::debug('ユーザーが見つかりませんでした。');
-        return redirect()->route('user.login.show')->with('error', 'ユーザーが見つかりませんでした。');
-    }
-
-    $userId = $user->id;
-    \Log::debug('ユーザーIDは、' . $userId);
-
-    // ユーザーのroleを取得
-    $role = $user->role;
-    \Log::debug('ユーザーのroleは、' . $role);
-
-    // クエリパラメータからtypeを取得
-    $type = $request->input('type');
-    \Log::debug('クエリパラメータは、' . $type);
-
-    if (($role === 'user' && $type === 'user')) {
-        \Log::debug('ログインします');
-        if ($this->attemptLogin($request)) {
-            return redirect()->route('home');
+        if(!$user) {
+            \Log::debug('ユーザーが見つかりませんでした。');
+            return redirect()->route('user.login.show')->with('error', 'ユーザーが見つかりませんでした。');
         }
-    } else {
-        \Log::debug('ログインできません');
-        return redirect()->route('user.login.show');
-    }
-}
 
-    
+        $userId = $user->id;
+        \Log::debug('ユーザーIDは、' . $userId);
+
+        // ユーザーのroleを取得
+        $role = $user->role;
+        \Log::debug('ユーザーのroleは、' . $role);
+
+        // クエリパラメータからtypeを取得
+        $type = $request->input('type');
+        \Log::debug('クエリパラメータは、' . $type);
+
+        if (($role === 'user' && $type === 'user')) {
+            \Log::debug('ログインします');
+            if ($this->attemptLogin($request)) {
+                return redirect()->route('home');
+            }
+        } else {
+            \Log::debug('ログインできません');
+            return redirect()->route('user.login.show');
+        }
+    }
 }
