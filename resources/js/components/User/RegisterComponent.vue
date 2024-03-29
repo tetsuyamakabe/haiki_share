@@ -64,8 +64,8 @@ export default {
     methods: {
         // 入力された値をサーバー側に送信するメソッド
         submitForm() {
-            axios.post('/register', this.formData).then(response => {
-                window.location.href = '/home';
+            axios.post('register', this.formData).then(response => {
+                window.location.href = '/home'; // 【TODO】 /homeに画面遷移しているので修正
             }).catch(error => {
                 console.error('ユーザー登録失敗:', error.response.data);
                 this.errors = error.response.data.errors;

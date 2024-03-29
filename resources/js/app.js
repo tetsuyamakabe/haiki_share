@@ -20,8 +20,8 @@ window.Vue = require('vue');
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
-Vue.component('user-registration-component', require('./components/UserRegistrationComponent.vue').default);
-Vue.component('convenience-registration-component', require('./components/ConvenienceRegistrationComponent.vue').default);
+Vue.component('user-register-component', require('./components/User/RegisterComponent.vue').default);
+Vue.component('convenience-register-component', require('./components/Convenience/RegisterComponent.vue').default);
 Vue.component('user-login-component', require('./components/UserLoginComponent.vue').default);
 Vue.component('convenience-login-component', require('./components/ConvenienceLoginComponent.vue').default);
 Vue.component('forgotpassword-component', require('./components/ForgotPasswordComponent.vue').default);

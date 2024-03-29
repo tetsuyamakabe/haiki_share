@@ -1,8 +1,8 @@
 {
     "REGISTER": "ユーザー登録",
     "LOGIN": "ログイン",
-    "User Registration": "利用者側ユーザー登録",
-    "Convenience Store Registration": "コンビニ側ユーザー登録",
+    "User Register": "利用者側ユーザー登録",
+    "Convenience Store Register": "コンビニ側ユーザー登録",
     "User Login": "利用者側ログイン",
     "Convenience Store Login": "コンビニ側ログイン",
     "User Dashboard": "利用者側ダッシュボード",
