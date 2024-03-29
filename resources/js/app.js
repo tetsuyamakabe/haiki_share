@@ -22,8 +22,8 @@ window.Vue = require('vue');
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('user-register-component', require('./components/User/RegisterComponent.vue').default);
 Vue.component('convenience-register-component', require('./components/Convenience/RegisterComponent.vue').default);
-Vue.component('user-login-component', require('./components/UserLoginComponent.vue').default);
-Vue.component('convenience-login-component', require('./components/ConvenienceLoginComponent.vue').default);
+Vue.component('user-login-component', require('./components/User/LoginComponent.vue').default);
+Vue.component('convenience-login-component', require('./components/Convenience/LoginComponent.vue').default);
 Vue.component('forgotpassword-component', require('./components/ForgotPasswordComponent.vue').default);
 Vue.component('resetpassword-component', require('./components/ResetPasswordComponent.vue').default);
 
