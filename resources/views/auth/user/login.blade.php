@@ -5,23 +5,15 @@
     <main class="l-main">
         <div class="p-login">
             <div class="p-login__form">
-                @if(request()->query('type') === 'user')
-                    <h1 class="c-title">{{ __('User Login') }}</h1>
-                @else
-                    <h1 class="c-title">{{ __('Convenience Store Login') }}</h1>
-                @endif
-                <form method="POST" action="{{ route('login', ['type' => request()->query('type')]) }}">
+                <h1 class="c-title">{{ __('User Login') }}</h1>
+                <form method="POST" action="{{ route('user.login') }}">
                     @csrf
-                    @if(request()->query('type') === 'user')
-                        <user-login-component></user-login-component>
-                    @else
-                        <convenience-login-component></convenience-login-component>
-                    @endif
+                    <input type="hidden" name="type" value="user">
+                    <user-login-component></user-login-component>
                     <div class="form-group row">
                         <div class="col-md-6 offset-md-4">
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-
                                 <label class="form-check-label" for="remember">
                                     {{ __('Remember Me') }}
                                 </label>

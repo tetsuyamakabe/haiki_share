@@ -70,12 +70,12 @@
                     @auth
                         <a href="{{ url('/home') }}">Home</a>
                     @else
-                        @if(request()->query('type') === 'user')
-                            <a href="{{ route('login', ['type' => 'user']) }}">{{ __('User Login') }}</a>
-                            <a href="{{ route('register', ['type' => 'user']) }}">{{ __('User Registration') }}</a>
+                        @if(request()->route()->getName() === 'user.register.show')
+                            <a href="{{ route('user.login.show') }}">{{ __('User Login') }}</a>
+                            <a href="{{ route('user.register.show') }}">{{ __('User Register') }}</a>
                         @else
-                            <a href="{{ route('login', ['type' => 'convenience']) }}">{{ __('Convenience Store Login') }}</a>
-                            <a href="{{ route('register', ['type' => 'convenience']) }}">{{ __('Convenience Store Registration') }}</a>
+                            <a href="{{ route('convenience.login.show') }}">{{ __('Convenience Store Login') }}</a>
+                            <a href="{{ route('convenience.register.show') }}">{{ __('Convenience Store Register') }}</a>
                         @endif
                     @endauth
                 </div>

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace App\Http\Controllers\Auth\Convenience;
 
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -43,7 +43,7 @@ class LoginController extends Controller
     // ログイン画面の表示
     public function show(Request $request)
     {
-        return view('auth.login');
+        return view('auth.convenience.login');
     }
 
     public function login(Request $request)
@@ -63,7 +63,7 @@ class LoginController extends Controller
         $type = $request->query('type');
         \Log::debug('クエリパラメータは、' . $type);
     
-        if (($role === 'user' && $type === 'user') || ($role === 'convenience' && $type === 'convenience')) {
+        if (($role === 'convenience' && $type === 'convenience')) {
             \Log::debug('ログインします');
             if ($this->attemptLogin($request)) {
                 return route('home');
