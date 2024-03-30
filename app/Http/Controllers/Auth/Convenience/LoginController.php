@@ -46,6 +46,7 @@ class LoginController extends Controller
         return view('auth.convenience.login');
     }
 
+    // ログイン処理
     public function login(Request $request)
     {
         // DBからemailをキーにして取得
@@ -59,23 +60,14 @@ class LoginController extends Controller
         $role = $user->role;
         \Log::debug('ユーザーのroleは、' . $role);
 
-        // クエリパラメータからtypeを取得
-        $type = $request->query('type');
-        \Log::debug('クエリパラメータは、' . $type);
-    
-        if (($role === 'convenience' && $type === 'convenience')) {
+        if (($role === 'convenience')) {
             \Log::debug('ログインします');
             if ($this->attemptLogin($request)) {
-                return route('home');
-                // return $this->sendLoginResponse($request);
+                return redirect()->route('home'); // 【TODO】 /homeになっているので修正（Authミドルウェアのことを忘れない）
             }
         } else {
             \Log::debug('ログインできません');
-            // Missing required parameters for [Route: login] [URI: login?type={$type}].エラー
-            return redirect('login')->with('type', $type);
-            // return redirect('login?type=' . $type);
-            // return redirect()->route('login.show', ['type' => $type]);
+            return redirect()->route('convenience.login.show');
         }
     }
-    
 }

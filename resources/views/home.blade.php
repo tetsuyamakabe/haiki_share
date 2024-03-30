@@ -5,12 +5,7 @@
     <main class="l-main">
         <div class="p-login">
             <div class="p-login__form">
-                @if(request()->query('type') === 'user')
-                    <h1 class="c-title">{{ __('User Dashboard') }}</h1>
-                @else
-                    <h1 class="c-title">{{ __('Convenience Store Dashboard') }}</h1>
-                @endif
-
+                <h1 class="c-title">{{ __('User Dashboard') }}</h1>
                 <div class="card-body">
                     @if (session('status'))
                         <div class="alert alert-success" role="alert">

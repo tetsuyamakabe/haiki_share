@@ -5034,7 +5034,7 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     submitForm: function submitForm() {
       var _this = this;
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/login', this.formData).then(function (response) {
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/convenience/login', this.formData).then(function (response) {
         // 登録成功時の処理
         // 例えば、リダイレクトなど
         window.location.href = '/home'; // ホーム画面にリダイレクトする例

@@ -70,13 +70,10 @@
                     @auth
                         <a href="{{ url('/home') }}">Home</a>
                     @else
-                        @if(request()->route()->getName() === 'user.register.show')
                             <a href="{{ route('user.login.show') }}">{{ __('User Login') }}</a>
                             <a href="{{ route('user.register.show') }}">{{ __('User Register') }}</a>
-                        @else
                             <a href="{{ route('convenience.login.show') }}">{{ __('Convenience Store Login') }}</a>
                             <a href="{{ route('convenience.register.show') }}">{{ __('Convenience Store Register') }}</a>
-                        @endif
                     @endauth
                 </div>
             @endif
