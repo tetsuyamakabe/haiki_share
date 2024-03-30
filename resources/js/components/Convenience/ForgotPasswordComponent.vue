@@ -22,24 +22,22 @@ export default {
     data() {
         return {
             formData: {
-            email: '',
+                email: '',
             },
-            validationErrors: {},
-            message: '',
-            errors: {}
+            errors: null
         };
     },
 
     methods: {
         sendResetLink() {
             // パスワードリセットリンク送信処理を実装する
-            axios.post('/password/email', { email: this.formData.email })
+            axios.post('/convenience/password/email', { email: this.formData.email })
             .then(response => {
                 this.message = response.data.message;
                 this.error = '';
             })
             .catch(error => {
-                this.validationErrors = error.response.data.errors;
+                this.errors = error.response.data.errors;
             });
         }
     }
