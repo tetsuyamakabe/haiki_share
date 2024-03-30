@@ -40,15 +40,22 @@ class PasswordResetNotification extends Notification
      * @param  mixed  $notifiable
      * @return \Illuminate\Notifications\Messages\MailMessage
      */
-    public function toMail($notifiable)
+    // public function toMail($notifiable)
+    // {
+    //     return (new MailMessage)
+    //         ->subject($this->title)
+    //         ->view('mail.passwordreset', [
+    //             'reset_url' => url('user/password/reset', $this->token),
+    //             'email' => $notifiable->getEmailForPasswordReset(),
+    //             'token' => $this->token,
+    //         ]);
+    // }
+    public function toMail($notifiable): MailMessage
     {
-        return (new MailMessage)
-            ->subject($this->title)
-            ->view('mail.passwordreset', [
-                'reset_url' => url('password/reset', $this->token),
-                'email' => $notifiable->getEmailForPasswordReset(),
-                'token' => $this->token,
-            ]);
+        $url = urldecode(route('user.password.reset', ['token' => $this->token]));
+        return (new MailMessage())
+            ->subject('【' . config('app.name') . '】パスワード再設定')
+            ->markdown('mail.passwordreset', ['reset_url' => $url, 'email' => $notifiable->getEmailForPasswordReset(), 'token' => $this->token,]);
     }
 
     /**

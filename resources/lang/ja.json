@@ -9,5 +9,7 @@
     "Convenience Store Dashboard": "コンビニ側ダッシュボード",
     "You are logged in!": "ログインしました。",
     "User ForgotPassword": "利用者側パスワード変更メール送信",
-    "User Reset Password": "利用者側パスワード変更"
+    "User Reset Password": "利用者側パスワード変更",
+    "Convenience Store ForgotPassword": "コンビニ側パスワード変更メール送信",
+    "Convenience Store Reset Password": "コンビニ側パスワード変更"
 }

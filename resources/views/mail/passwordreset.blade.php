@@ -1,10 +1,11 @@
-<!DOCTYPE html>
-<html lang="ja">
-    <body>
-        <h1>パスワード変更</h1>
-        <p>以下のリンクからパスワード変更の手続きを行ってください。</p>
-        <a href="{{$reset_url}}?email={{$email}}&token={{$token}}">パスワード変更</a>
-        <p>このパスワード変更用のリンクは、60分後に有効期限切れになります。</p>
-        <p>パスワードの変更をリクエストしていない場合、追加のアクションは必要ありません。</p>
-    </body>
-</html>
+@component('mail::message')
+ボタンを押して、パスワードリセットの手続きを行ってください。
+
+@component('mail::button', ['url' => $reset_url ])
+パスワードリセット
+@endcomponent
+
+----
+もしこのメールに心当たりがない場合は破棄してください。
+
+@endcomponent

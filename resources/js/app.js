@@ -19,13 +19,19 @@ window.Vue = require('vue');
 // const files = require.context('./', true, /\.vue$/i);
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
 
-Vue.component('example-component', require('./components/ExampleComponent.vue').default);
-Vue.component('user-register-component', require('./components/User/RegisterComponent.vue').default);
-Vue.component('convenience-register-component', require('./components/Convenience/RegisterComponent.vue').default);
-Vue.component('user-login-component', require('./components/User/LoginComponent.vue').default);
-Vue.component('convenience-login-component', require('./components/Convenience/LoginComponent.vue').default);
-Vue.component('forgotpassword-component', require('./components/ForgotPasswordComponent.vue').default);
-Vue.component('resetpassword-component', require('./components/ResetPasswordComponent.vue').default);
+// Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+
+// 利用者側
+Vue.component('user-register-component', require('./components/User/RegisterComponent.vue').default); // ユーザー登録画面
+Vue.component('user-login-component', require('./components/User/LoginComponent.vue').default); // ログイン画面
+Vue.component('user-forgotpassword-component', require('./components/User/ForgotPasswordComponent.vue').default); // パスワード変更（メールアドレス入力）画面
+Vue.component('user-resetpassword-component', require('./components/User/ResetPasswordComponent.vue').default); // // パスワード変更（古いパスワード・新しいパスワード入力）画面
+
+// コンビニ側
+Vue.component('convenience-register-component', require('./components/Convenience/RegisterComponent.vue').default); // ユーザー登録画面
+Vue.component('convenience-login-component', require('./components/Convenience/LoginComponent.vue').default); // ログイン画面
+Vue.component('convenience-forgotpassword-component', require('./components/Convenience/ForgotPasswordComponent.vue').default); // パスワード変更（メールアドレス入力）画面
+Vue.component('convenience-resetpassword-component', require('./components/Convenience/ResetPasswordComponent.vue').default); // // パスワード変更（古いパスワード・新しいパスワード入力）画面
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
