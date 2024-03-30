@@ -16,8 +16,16 @@ class Authenticate extends Middleware
     protected function redirectTo($request)
     {
         Log::debug('Authミドルウェア');
-        if (! $request->expectsJson()) {
-            return route('login');
+
+        // リクエストからパスを取得してログに記録
+        $path = $request->path();
+        Log::debug('リクエストのパスは、: ' . $path);
+
+        // リクエストされたパスによって適切なリダイレクト先を設定
+        if ($path === 'user/login') {
+            return route('user.login'); // 利用者ログイン画面にリダイレクト
+        } elseif ($path === 'convenience/login') {
+            return route('convenience.login'); // コンビニログイン画面にリダイレクト
         }
     }
 }

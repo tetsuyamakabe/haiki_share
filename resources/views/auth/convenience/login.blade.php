@@ -5,10 +5,10 @@
     <main class="l-main">
         <div class="p-login">
             <div class="p-login__form">
-                <h1 class="c-title">{{ __('User Login') }}</h1>
-                <form method="POST" action="{{ route('user.login') }}">
+                <h1 class="c-title">{{ __('Convenience Store Login') }}</h1>
+                <form method="POST" action="{{ route('convenience.login') }}">
                     @csrf
-                    <user-login-component></user-login-component>
+                    <convenience-login-component></convenience-login-component>
                     <div class="form-group row">
                         <div class="col-md-6 offset-md-4">
                             <div class="form-check">
