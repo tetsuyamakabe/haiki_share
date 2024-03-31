@@ -344,7 +344,7 @@ body {
 
 .c-input {
   background: #f6f5f4;
-  width: 300px;
+  width: 320px;
   border: 1px solid #000;
   margin: 8px 0;
   padding: 8px;
@@ -569,14 +569,24 @@ body {
   padding: 0;
 }
 
-.c-title__section {
-  font-weight: 900;
-  font-size: 30px;
+.c-title__terms {
+  font-weight: bold;
 }
 
-.c-title__number {
-  font-size: 18px;
-  margin-top: 30px;
+.p-container__terms {
+  height: 200px;
+  border: solid;
+  margin: 8px 0;
+  padding: 8px;
+  width: 480px;
+  overflow-y: auto;
+  font-size: 12px;
+  line-height: 1.2;
+}
+
+.p-container__checkbox {
+  display: flex;
+  justify-content: center;
 }
 
 .p-forgotpassword {
@@ -595,6 +605,22 @@ body {
 .p-forgotpassword__button {
   display: flex;
   justify-content: center;
+}
+
+.p-input__password {
+  position: relative;
+}
+
+.p-input__password input {
+  padding-right: 30px;
+}
+
+.p-input__password span {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 8px;
+  cursor: pointer;
 }
 
 .p-login {

@@ -1,5 +1,5 @@
 <template>
-    <div class="c-container">
+    <div class="p-container">
         <form @submit.prevent="resetPassword">
 
             <!-- バリデーションエラーメッセージ -->
@@ -7,23 +7,24 @@
             <span v-if="errors && errors.newPassword" class="c-error">{{ errors.newPassword[0] }}</span>
             <span v-if="errors && errors.password_confirmation" class="c-error">{{ errors.password_confirmation[0] }}</span>
 
+            <!-- 【TODO】 type="pasword"を検証のため削除しているので追加 -->
             <table>
                 <tr>
                     <th><label for="old_password" class="c-label">古いパスワード</label></th>
                     <td>
-                        <input v-model="formData.oldPassword" id="old_password" type="password" class="c-input" :class="{ 'is-invalid': errors && errors.oldPassword }" autocomplete="password" placeholder="英数字8文字以上で入力してください">
+                        <input v-model="formData.oldPassword" id="old_password" class="c-input" :class="{ 'is-invalid': errors && errors.oldPassword }" autocomplete="password" placeholder="英数字8文字以上で入力してください">
                     </td>
                 </tr>
                 <tr>
                     <th><label for="new_password" class="c-label">新しいパスワード</label></th>
                     <td>
-                        <input v-model="formData.newPassword" id="new_password" type="password" class="c-input" :class="{ 'is-invalid': errors && errors.newPassword }" autocomplete="password" placeholder="英数字8文字以上で入力してください">
+                        <input v-model="formData.newPassword" id="new_password" class="c-input" :class="{ 'is-invalid': errors && errors.newPassword }" autocomplete="password" placeholder="英数字8文字以上で入力してください">
                     </td>
                 </tr>
                 <tr>
                     <th><label for="password-confirm" class="c-label">新しいパスワード（再入力）</label></th>
                     <td>
-                        <input v-model="formData.password_confirmation" id="password_confirm" type="password" class="c-input" :class="{ 'is-invalid': errors && errors.password_confirmation }" autocomplete="password" placeholder="英数字8文字以上で入力してください">
+                        <input v-model="formData.password_confirmation" id="password_confirm" class="c-input" :class="{ 'is-invalid': errors && errors.password_confirmation }" autocomplete="password" placeholder="英数字8文字以上で入力してください">
                     </td>
                 </tr>
             </table>
@@ -68,24 +69,16 @@ export default {
     methods: {
         // パスワードリセット処理
         resetPassword() {
-            // 新しいパスワードと新しいパスワード（再入力）のバリデーション
-            if (this.formData.newPassword !== this.formData.password_confirmation) {
-                this.error = "新しいパスワードと新しいパスワード（再入力）が合っていません。";
-                return;
-            }
-
             // トークンを含めたデータを作成
             const data = {
                 email: this.email,
                 token: this.token,
-                old_password: this.formData.oldPassword,
-                new_password: this.formData.newPassword,
+                oldPassword: this.formData.oldPassword,
+                newPassword: this.formData.newPassword,
                 password_confirmation: this.formData.password_confirmation,
             };
 
             axios.post('/convenience/password/reset', data).then(response => {
-                this.message = response.data.message;
-                this.error = '';
                 // パスワードがリセットされた後にログイン画面に遷移する
                 window.location.href = '/convenience/login';
             }).catch(error => {

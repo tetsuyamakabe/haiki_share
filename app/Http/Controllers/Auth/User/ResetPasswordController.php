@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Auth\User;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Foundation\Auth\ResetsPasswords;
 use App\Http\Requests\User\ResetPasswordRequest;
 
@@ -48,7 +50,16 @@ class ResetPasswordController extends Controller
     // パスワード変更処理
     public function reset(ResetPasswordRequest $request)
     {
-        // 引数にResetPasswordRequestを渡してバリデーションメッセージを表示する
-        // 変更処理はResetsPasswordsトレイトで実行
+        \Log::debug('resetメソッドです。');
+        // ユーザーを特定するための情報を取得
+        $email = $request->email; // ユーザーのメールアドレス
+        $password = $request->newPassword; // 新しいパスワード
+
+        // ユーザーモデルを取得
+        $user = User::where('email', $email)->first();
+
+        // パスワードを更新
+        $user->password = Hash::make($password);
+        $user->save();
     }
 }
