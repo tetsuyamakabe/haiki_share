@@ -5162,42 +5162,53 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      oldPassword: '',
-      newPassword: '',
-      password_confirmation: '',
+      formData: {
+        oldPassword: '',
+        newPassword: '',
+        password_confirmation: ''
+      },
       token: '',
       email: '',
       errors: null
     };
   },
   mounted: function mounted() {
+    //  【TODO】 Vue Routerの $route オブジェクトを使ってパラメータを取得を検討
+    // URLからトークンを取得
+    var path = window.location.pathname;
+    var parts = path.split('/');
+    this.token = parts[parts.length - 1];
     var params = new URLSearchParams(window.location.search);
     this.email = params.get('email');
-    this.token = params.get('token');
-    console.log('Email:', this.email);
-    console.log('Token:', this.token);
+    console.log('email:', this.email);
+    console.log('token:', this.token);
   },
   methods: {
+    // パスワードリセット処理
     resetPassword: function resetPassword() {
       var _this = this;
-      if (this.newPassword !== this.password_confirmation) {
-        this.error = "Passwords do not match";
+      // 新しいパスワードと新しいパスワード（再入力）のバリデーション
+      if (this.formData.newPassword !== this.formData.password_confirmation) {
+        this.error = "新しいパスワードと新しいパスワード（再入力）が合っていません。";
         return;
       }
-      axios.post('/convenience/password/reset', {
+
+      // トークンを含めたデータを作成
+      var data = {
         email: this.email,
-        password: this.newPassword,
-        password_confirmation: this.password_confirmation,
-        token: this.token
-      }).then(function (response) {
+        token: this.token,
+        old_password: this.formData.oldPassword,
+        new_password: this.formData.newPassword,
+        password_confirmation: this.formData.password_confirmation
+      };
+      axios.post('/convenience/password/reset', data).then(function (response) {
         _this.message = response.data.message;
         _this.error = '';
         // パスワードがリセットされた後にログイン画面に遷移する
-        window.location.href = '/login';
+        window.location.href = '/convenience/login';
       })["catch"](function (error) {
-        console.log(error.response.data);
+        console.error('パスワード変更失敗:', error.response.data);
         _this.errors = error.response.data.errors;
-        _this.message = '';
       });
     }
   }
@@ -5224,15 +5235,16 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
+    // パスワードリセットリンク送信処理を実装する
     sendResetLink: function sendResetLink() {
       var _this = this;
-      // パスワードリセットリンク送信処理を実装する
       axios.post('/user/password/email', {
         email: this.formData.email
       }).then(function (response) {
         _this.message = response.data.message;
         _this.error = '';
       })["catch"](function (error) {
+        console.log('メール送信失敗：', error.response.data);
         _this.errors = error.response.data.errors;
       });
     }
@@ -5265,12 +5277,11 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
+    // 入力された値をサーバー側に送信するメソッド
     submitForm: function submitForm() {
       var _this = this;
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/user/login', this.formData).then(function (response) {
-        // 登録成功時の処理
-        // 例えば、リダイレクトなど
-        window.location.href = '/home'; // ホーム画面にリダイレクトする例
+        window.location.href = '/home'; // 【TODO】 /homeに画面遷移しているので修正
       })["catch"](function (error) {
         console.error('ログイン失敗:', error.response.data);
         _this.errors = error.response.data.errors;
@@ -5345,30 +5356,40 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   mounted: function mounted() {
+    //  【TODO】 Vue Routerの $route オブジェクトを使ってパラメータを取得を検討
+    // URLからトークンを取得
+    var path = window.location.pathname;
+    var parts = path.split('/');
+    this.token = parts[parts.length - 1];
     var params = new URLSearchParams(window.location.search);
     this.email = params.get('email');
-    this.token = params.get('token');
-    console.log('Email:', this.email);
-    console.log('Token:', this.token);
+    console.log('email:', this.email);
+    console.log('token:', this.token);
   },
   methods: {
+    // パスワードリセット処理
     resetPassword: function resetPassword() {
       var _this = this;
-      if (this.newPassword !== this.password_confirmation) {
-        this.error = "Passwords do not match";
+      // 新しいパスワードと新しいパスワード（再入力）のバリデーション
+      if (this.formData.newPassword !== this.formData.password_confirmation) {
+        this.error = "新しいパスワードと新しいパスワード（再入力）が合っていません。";
         return;
       }
-      axios.post('/user/password/reset', {
+
+      // トークンを含めたデータを作成
+      var data = {
         email: this.email,
-        password: this.newPassword,
-        password_confirmation: this.password_confirmation,
-        token: this.token
-      }).then(function (response) {
+        token: this.token,
+        old_password: this.formData.oldPassword,
+        new_password: this.formData.newPassword,
+        password_confirmation: this.formData.password_confirmation
+      };
+      axios.post('/user/password/reset', data).then(function (response) {
         // パスワードがリセットされた後にログイン画面に遷移する
         window.location.href = '/user/login';
       })["catch"](function (error) {
+        console.log('フロントエンドのデータは、', data);
         console.error('パスワード変更失敗:', error.response.data);
-        // エラーメッセージを取得してerrorsにセット
         _this.errors = error.response.data.errors;
       });
     }
@@ -5995,12 +6016,18 @@ var render = function render() {
         return _vm.resetPassword.apply(null, arguments);
       }
     }
-  }, [_c("table", [_c("tr", [_vm._m(0), _vm._v(" "), _c("td", [_c("input", {
+  }, [_vm.errors && _vm.errors.oldPassword ? _c("span", {
+    staticClass: "c-error"
+  }, [_vm._v(_vm._s(_vm.errors.oldPassword[0]))]) : _vm._e(), _vm._v(" "), _vm.errors && _vm.errors.newPassword ? _c("span", {
+    staticClass: "c-error"
+  }, [_vm._v(_vm._s(_vm.errors.newPassword[0]))]) : _vm._e(), _vm._v(" "), _vm.errors && _vm.errors.password_confirmation ? _c("span", {
+    staticClass: "c-error"
+  }, [_vm._v(_vm._s(_vm.errors.password_confirmation[0]))]) : _vm._e(), _vm._v(" "), _c("table", [_c("tr", [_vm._m(0), _vm._v(" "), _c("td", [_c("input", {
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: _vm.oldPassword,
-      expression: "oldPassword"
+      value: _vm.formData.oldPassword,
+      expression: "formData.oldPassword"
     }],
     staticClass: "c-input",
     "class": {
@@ -6009,25 +6036,24 @@ var render = function render() {
     attrs: {
       id: "old_password",
       type: "password",
-      autocomplete: "password"
+      autocomplete: "password",
+      placeholder: "英数字8文字以上で入力してください"
     },
     domProps: {
-      value: _vm.oldPassword
+      value: _vm.formData.oldPassword
     },
     on: {
       input: function input($event) {
         if ($event.target.composing) return;
-        _vm.oldPassword = $event.target.value;
+        _vm.$set(_vm.formData, "oldPassword", $event.target.value);
       }
     }
-  }), _vm._v(" "), _vm.errors && _vm.errors.oldPassword ? _c("span", {
-    staticClass: "c-error"
-  }, [_vm._v(_vm._s(_vm.errors.oldPassword[0]))]) : _vm._e()])]), _vm._v(" "), _c("tr", [_vm._m(1), _vm._v(" "), _c("td", [_c("input", {
+  })])]), _vm._v(" "), _c("tr", [_vm._m(1), _vm._v(" "), _c("td", [_c("input", {
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: _vm.newPassword,
-      expression: "newPassword"
+      value: _vm.formData.newPassword,
+      expression: "formData.newPassword"
     }],
     staticClass: "c-input",
     "class": {
@@ -6036,25 +6062,24 @@ var render = function render() {
     attrs: {
       id: "new_password",
       type: "password",
-      autocomplete: "password"
+      autocomplete: "password",
+      placeholder: "英数字8文字以上で入力してください"
     },
     domProps: {
-      value: _vm.newPassword
+      value: _vm.formData.newPassword
     },
     on: {
       input: function input($event) {
         if ($event.target.composing) return;
-        _vm.newPassword = $event.target.value;
+        _vm.$set(_vm.formData, "newPassword", $event.target.value);
       }
     }
-  }), _vm._v(" "), _vm.errors && _vm.errors.newPassword ? _c("span", {
-    staticClass: "c-error"
-  }, [_vm._v(_vm._s(_vm.errors.newPassword[0]))]) : _vm._e()])]), _vm._v(" "), _c("tr", [_vm._m(2), _vm._v(" "), _c("td", [_c("input", {
+  })])]), _vm._v(" "), _c("tr", [_vm._m(2), _vm._v(" "), _c("td", [_c("input", {
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: _vm.password_confirmation,
-      expression: "password_confirmation"
+      value: _vm.formData.password_confirmation,
+      expression: "formData.password_confirmation"
     }],
     staticClass: "c-input",
     "class": {
@@ -6063,20 +6088,19 @@ var render = function render() {
     attrs: {
       id: "password_confirm",
       type: "password",
-      autocomplete: "password"
+      autocomplete: "password",
+      placeholder: "英数字8文字以上で入力してください"
     },
     domProps: {
-      value: _vm.password_confirmation
+      value: _vm.formData.password_confirmation
     },
     on: {
       input: function input($event) {
         if ($event.target.composing) return;
-        _vm.password_confirmation = $event.target.value;
+        _vm.$set(_vm.formData, "password_confirmation", $event.target.value);
       }
     }
-  }), _vm._v(" "), _vm.errors && _vm.errors.password_confirmation ? _c("span", {
-    staticClass: "c-error"
-  }, [_vm._v(_vm._s(_vm.errors.password_confirmation[0]))]) : _vm._e()])])]), _vm._v(" "), _c("input", {
+  })])])]), _vm._v(" "), _c("input", {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -6094,6 +6118,26 @@ var render = function render() {
       input: function input($event) {
         if ($event.target.composing) return;
         _vm.token = $event.target.value;
+      }
+    }
+  }), _vm._v(" "), _c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.email,
+      expression: "email"
+    }],
+    attrs: {
+      type: "hidden",
+      name: "email"
+    },
+    domProps: {
+      value: _vm.email
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.email = $event.target.value;
       }
     }
   }), _vm._v(" "), _vm._m(3)])]);
@@ -6165,7 +6209,9 @@ var render = function render() {
         return _vm.sendResetLink.apply(null, arguments);
       }
     }
-  }, [_c("table", [_c("tr", [_vm._m(0), _vm._v(" "), _c("td", [_c("input", {
+  }, [_vm.errors && _vm.errors.email ? _c("span", {
+    staticClass: "c-error"
+  }, [_vm._v(_vm._s(_vm.errors.email[0]))]) : _vm._e(), _vm._v(" "), _c("table", [_c("tr", [_vm._m(0), _vm._v(" "), _c("td", [_c("input", {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -6190,9 +6236,7 @@ var render = function render() {
         _vm.$set(_vm.formData, "email", $event.target.value);
       }
     }
-  }), _vm._v(" "), _vm.errors && _vm.errors.email ? _c("span", {
-    staticClass: "c-error"
-  }, [_vm._v(_vm._s(_vm.errors.email[0]))]) : _vm._e()])])]), _vm._v(" "), _vm._m(1)])]);
+  })])])]), _vm._v(" "), _vm._m(1)])]);
 };
 var staticRenderFns = [function () {
   var _vm = this,
@@ -6546,7 +6590,13 @@ var render = function render() {
         return _vm.resetPassword.apply(null, arguments);
       }
     }
-  }, [_c("table", [_c("tr", [_vm._m(0), _vm._v(" "), _c("td", [_c("input", {
+  }, [_vm.errors && _vm.errors.oldPassword ? _c("span", {
+    staticClass: "c-error"
+  }, [_vm._v(_vm._s(_vm.errors.oldPassword[0]))]) : _vm._e(), _vm._v(" "), _vm.errors && _vm.errors.newPassword ? _c("span", {
+    staticClass: "c-error"
+  }, [_vm._v(_vm._s(_vm.errors.newPassword[0]))]) : _vm._e(), _vm._v(" "), _vm.errors && _vm.errors.password_confirmation ? _c("span", {
+    staticClass: "c-error"
+  }, [_vm._v(_vm._s(_vm.errors.password_confirmation[0]))]) : _vm._e(), _vm._v(" "), _c("table", [_c("tr", [_vm._m(0), _vm._v(" "), _c("td", [_c("input", {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -6559,8 +6609,8 @@ var render = function render() {
     },
     attrs: {
       id: "old_password",
-      type: "password",
-      autocomplete: "password"
+      autocomplete: "password",
+      placeholder: "英数字8文字以上で入力してください"
     },
     domProps: {
       value: _vm.formData.oldPassword
@@ -6571,9 +6621,7 @@ var render = function render() {
         _vm.$set(_vm.formData, "oldPassword", $event.target.value);
       }
     }
-  }), _vm._v(" "), _vm.errors && _vm.errors.oldPassword ? _c("span", {
-    staticClass: "c-error"
-  }, [_vm._v(_vm._s(_vm.errors.oldPassword[0]))]) : _vm._e()])]), _vm._v(" "), _c("tr", [_vm._m(1), _vm._v(" "), _c("td", [_c("input", {
+  })])]), _vm._v(" "), _c("tr", [_vm._m(1), _vm._v(" "), _c("td", [_c("input", {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -6586,8 +6634,8 @@ var render = function render() {
     },
     attrs: {
       id: "new_password",
-      type: "password",
-      autocomplete: "password"
+      autocomplete: "password",
+      placeholder: "英数字8文字以上で入力してください"
     },
     domProps: {
       value: _vm.formData.newPassword
@@ -6598,9 +6646,7 @@ var render = function render() {
         _vm.$set(_vm.formData, "newPassword", $event.target.value);
       }
     }
-  }), _vm._v(" "), _vm.errors && _vm.errors.newPassword ? _c("span", {
-    staticClass: "c-error"
-  }, [_vm._v(_vm._s(_vm.errors.newPassword[0]))]) : _vm._e()])]), _vm._v(" "), _c("tr", [_vm._m(2), _vm._v(" "), _c("td", [_c("input", {
+  })])]), _vm._v(" "), _c("tr", [_vm._m(2), _vm._v(" "), _c("td", [_c("input", {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -6613,8 +6659,8 @@ var render = function render() {
     },
     attrs: {
       id: "password_confirm",
-      type: "password",
-      autocomplete: "password"
+      autocomplete: "password",
+      placeholder: "英数字8文字以上で入力してください"
     },
     domProps: {
       value: _vm.formData.password_confirmation
@@ -6625,9 +6671,7 @@ var render = function render() {
         _vm.$set(_vm.formData, "password_confirmation", $event.target.value);
       }
     }
-  }), _vm._v(" "), _vm.errors && _vm.errors.password_confirmation ? _c("span", {
-    staticClass: "c-error"
-  }, [_vm._v(_vm._s(_vm.errors.password_confirmation[0]))]) : _vm._e()])])]), _vm._v(" "), _c("input", {
+  })])])]), _vm._v(" "), _c("input", {
     directives: [{
       name: "model",
       rawName: "v-model",
