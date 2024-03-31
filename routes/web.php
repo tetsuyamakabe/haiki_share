@@ -43,5 +43,5 @@ Route::post('/convenience/login', 'Auth\Convenience\LoginController@login')->nam
 Route::post('logout', 'Auth\Convenience\LoginController@logout')->name('logout'); // ログアウト処理（仮）
 Route::get('/convenience/password/reset', 'Auth\Convenience\ForgotPasswordController@show')->name('convenience.password.request'); // パスワード変更画面（メールアドレス入力画面）
 Route::post('/convenience/password/email', 'Auth\Convenience\ForgotPasswordController@sendResetLinkEmail')->name('convenience.password.email'); // パスワード変更メール送信処理
-Route::get('/convenience/password/reset/{token}', 'Auth\Convenience\ResetPasswordController@showResetForm')->name('convenience.password.reset'); // パスワード変更（古いパスワード・新しいパスワード入力）画面
+Route::get('/convenience/password/reset/{token}', 'Auth\Convenience\ResetPasswordController@show')->name('convenience.password.reset'); // パスワード変更（古いパスワード・新しいパスワード入力）画面
 Route::post('/convenience/password/reset', 'Auth\Convenience\ResetPasswordController@reset')->name('convenience.password.update'); // パスワード変更処理

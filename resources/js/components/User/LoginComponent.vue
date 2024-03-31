@@ -41,12 +41,12 @@ export default {
             errors: null
         };
     },
+
     methods: {
+        // 入力された値をサーバー側に送信するメソッド
         submitForm() {
             axios.post('/user/login', this.formData).then(response => {
-                // 登録成功時の処理
-                // 例えば、リダイレクトなど
-                window.location.href = '/home'; // ホーム画面にリダイレクトする例
+                window.location.href = '/home'; // 【TODO】 /homeに画面遷移しているので修正
             }).catch(error => {
                 console.error('ログイン失敗:', error.response.data);
                 this.errors = error.response.data.errors;

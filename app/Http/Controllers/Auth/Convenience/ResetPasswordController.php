@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Auth\User;
+namespace App\Http\Controllers\Auth\Convenience;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ResetsPasswords;
-use App\Http\Requests\User\ResetPasswordRequest;
+use App\Http\Requests\Convenience\ResetPasswordRequest;
 
 class ResetPasswordController extends Controller
 {
@@ -42,7 +42,7 @@ class ResetPasswordController extends Controller
     // パスワード変更画面（古いパスワード・新しいパスワード入力画面）の表示
     public function show(Request $request)
     {
-        return view('auth.user.passwords.reset');
+        return view('auth.convenience.passwords.reset');
     }
 
     // パスワード変更処理

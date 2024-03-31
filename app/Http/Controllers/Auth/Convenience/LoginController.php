@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\Convenience\LoginRequest;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 class LoginController extends Controller
@@ -47,7 +48,7 @@ class LoginController extends Controller
     }
 
     // ログイン処理
-    public function login(Request $request)
+    public function login(LoginRequest $request)
     {
         // DBからemailをキーにして取得
         $email = $request->input('email');

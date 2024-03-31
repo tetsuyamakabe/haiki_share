@@ -4,8 +4,8 @@ namespace App\Models;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Notifications\User\PasswordResetNotification;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use App\Notifications\PasswordResetNotification;
 
 class User extends Authenticatable
 {
@@ -41,7 +41,11 @@ class User extends Authenticatable
     // PasswordResetNotificationクラスを利用するためにオーバーライド
     public function sendPasswordResetNotification($token)
     {
-        $this->notify(new PasswordResetNotification($token));
+        if ($this->role === 'user') {
+            $this->notify(new \App\Notifications\User\PasswordResetNotification($token));
+        } elseif ($this->role === 'convenience') {
+            $this->notify(new \App\Notifications\Convenience\PasswordResetNotification($token));
+        }
     }
 }
 
