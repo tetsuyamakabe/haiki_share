@@ -35,14 +35,16 @@
 @import 'Object/component/input';
 @import 'Object/component/label';
 @import 'Object/component/nav';
-@import 'Object/component/table';
+@import 'Object/component/text';
 @import 'Object/component/title';
 
 
 // -----------------------------------------------------------------
 // Project
 // -----------------------------------------------------------------
+@import 'Object/project/container';
 @import 'Object/project/forgotpassword';
+@import 'Object/project/input';
 @import 'Object/project/login';
 @import 'Object/project/register';
 @import 'Object/project/resetpassword';

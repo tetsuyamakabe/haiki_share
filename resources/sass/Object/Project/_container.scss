@@ -1,0 +1,17 @@
+.p-container {
+    &__terms {
+        height: 200px;
+        border: solid;
+        margin: 8px 0;
+        padding: 8px;
+        width: 480px;
+        overflow-y: auto;
+        font-size: 12px;
+        line-height: 1.2;
+    }
+
+    &__checkbox {
+        display: flex;
+        justify-content: center;
+    }
+}

@@ -24,9 +24,9 @@ class ResetPasswordRequest extends FormRequest
     public function rules()
     {
         return [
-            'oldPassword' => 'required|min:8',
-            'newPassword' => 'required|min:8',
-            'password_confirmation' => 'required|min:8',
+            'oldPassword' => ['required', 'string', 'min:8'],
+            'newPassword' => ['required', 'string', 'min:8'],
+            'password_confirmation' => ['required', 'string', 'min:8', 'same:newPassword'],
         ];
     }
 }

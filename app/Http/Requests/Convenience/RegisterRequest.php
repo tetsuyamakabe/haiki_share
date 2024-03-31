@@ -33,6 +33,7 @@ class RegisterRequest extends FormRequest
             'town' => ['required', 'string', 'max:255'],
             'building' => ['nullable', 'string', 'max:255'],
             'role' => ['required', 'string'],
+            'agreement' => ['required', 'accepted'],
         ];
     }
 }

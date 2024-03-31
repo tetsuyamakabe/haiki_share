@@ -1,5 +1,5 @@
 <template>
-    <div class="c-container">
+    <div class="p-container">
         <form @submit.prevent="resetPassword">
 
             <!-- バリデーションエラーメッセージ -->
@@ -69,18 +69,12 @@ export default {
     methods: {
         // パスワードリセット処理
         resetPassword() {
-            // 新しいパスワードと新しいパスワード（再入力）のバリデーション
-            if (this.formData.newPassword !== this.formData.password_confirmation) {
-                this.error = "新しいパスワードと新しいパスワード（再入力）が合っていません。";
-                return;
-            }
-
             // トークンを含めたデータを作成
             const data = {
                 email: this.email,
                 token: this.token,
-                old_password: this.formData.oldPassword,
-                new_password: this.formData.newPassword,
+                oldPassword: this.formData.oldPassword,
+                newPassword: this.formData.newPassword,
                 password_confirmation: this.formData.password_confirmation,
             };
 
@@ -88,7 +82,6 @@ export default {
                 // パスワードがリセットされた後にログイン画面に遷移する
                 window.location.href = '/user/login';
             }).catch(error => {
-                console.log('フロントエンドのデータは、', data);
                 console.error('パスワード変更失敗:', error.response.data);
                 this.errors = error.response.data.errors;
             });

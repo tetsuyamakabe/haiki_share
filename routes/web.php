@@ -19,6 +19,11 @@ Auth::routes(['reset' => false]); // デフォルトのパスワードリマイ�
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+// 利用規約
+Route::get('/terms', function () {
+    return view('auth.terms');
+});
+
 // 未認証ユーザーはwelcome画面に遷移（仮）
 Route::get('/', function () {
     return view('welcome');

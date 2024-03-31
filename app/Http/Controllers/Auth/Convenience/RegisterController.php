@@ -94,7 +94,7 @@ class RegisterController extends Controller
             // コンビニ情報を保存
             $convenience = Convenience::create([
                 'user_id' => $user->id,
-                'branch_name' => $data['branch_name'],
+                'branch_name' => $validated['branch_name'],
                 'address_id' => $addressId,
             ]);
 
