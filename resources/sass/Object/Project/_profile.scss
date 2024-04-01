@@ -1,8 +1,8 @@
-.p-register {
+.p-profile {
     display: flex;
     background-color: #fafafa;
 
-    &__form {
+    &__form{
         background: #fff;
         margin: 120px auto;
         padding: 40px;
@@ -10,7 +10,7 @@
         border: 1px solid #000;
     }
 
-    &__button {
+    &__button{
         display: flex;
         justify-content: center;
     }

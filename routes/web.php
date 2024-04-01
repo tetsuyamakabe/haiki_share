@@ -39,6 +39,11 @@ Route::get('/user/password/reset', 'Auth\User\ForgotPasswordController@show')->n
 Route::post('/user/password/email', 'Auth\User\ForgotPasswordController@sendResetLinkEmail')->name('user.password.email'); // パスワード変更メール送信処理
 Route::get('/user/password/reset/{token}', 'Auth\User\ResetPasswordController@show')->name('user.password.reset'); // パスワード変更（古いパスワード・新しいパスワード入力）画面
 Route::post('/user/password/reset', 'Auth\User\ResetPasswordController@reset')->name('user.password.update'); // パスワード変更処理
+Route::get('/user/mypage/{userId}', 'Accounts\User\MyProfileController@showMyPage')->name('user.mypage.show'); // マイページ画面
+Route::get('/user/mypage/profile/{userId}', 'Accounts\User\MyProfileController@showProfile')->name('user.profile.show'); // プロフィール編集画面
+Route::post('/user/mypage/profile/{userId}', 'Accounts\User\MyProfileController@editProfile')->name('user.profile.edit'); // プロフィール編集・更新処理
+Route::put('/user/mypage/profile/{userId}', 'Accounts\User\MyProfileController@editProfile')->name('user.profile.edit'); // プロフィール編集・更新処理
+Route::get('/user/mypage/withdraw', 'Accounts\User\MyProfileController@showWithdraw')->name('user.withdraw.show'); // 退会画面
 
 // コンビニ側
 Route::get('/convenience/register', 'Auth\Convenience\RegisterController@show')->name('convenience.register.show'); // ユーザー登録画面
@@ -50,3 +55,6 @@ Route::get('/convenience/password/reset', 'Auth\Convenience\ForgotPasswordContro
 Route::post('/convenience/password/email', 'Auth\Convenience\ForgotPasswordController@sendResetLinkEmail')->name('convenience.password.email'); // パスワード変更メール送信処理
 Route::get('/convenience/password/reset/{token}', 'Auth\Convenience\ResetPasswordController@show')->name('convenience.password.reset'); // パスワード変更（古いパスワード・新しいパスワード入力）画面
 Route::post('/convenience/password/reset', 'Auth\Convenience\ResetPasswordController@reset')->name('convenience.password.update'); // パスワード変更処理
+Route::get('/convenience/mypage', 'Accounts\Convenience\MyProfileController@showMyPage')->name('convenience.mypage.show'); // マイページ画面
+Route::get('/convenience/mypage/profile', 'Accounts\Convenience\MyProfileController@showProfile')->name('convenience.profile.show'); // プロフィール編集画面
+Route::get('/convenience/mypage/withdraw', 'Accounts\Convenience\MyProfileController@showWithdraw')->name('convenience.withdraw.show'); // 退会画面

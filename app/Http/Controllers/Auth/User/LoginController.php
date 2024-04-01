@@ -28,7 +28,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/user/mypage/{$userId}'; // ログイン後、マイページに遷移
 
     /**
      * Create a new controller instance.
@@ -63,7 +63,8 @@ class LoginController extends Controller
         if (($role === 'user')) {
             \Log::debug('ログインします');
             if ($this->attemptLogin($request)) {
-                return redirect()->route('home'); // 【TODO】 /homeになっているので修正（Authミドルウェアのことを忘れない）
+                // ログイン成功時にユーザーIDを含んだURLにリダイレクト
+                return response()->json(['user_id' => $userId]);
             }
         } else {
             \Log::debug('ログインできません');
