@@ -16,10 +16,26 @@
                 <tr>
                     <th><label for="password" class="c-label">パスワード</label></th>
                     <td>
-                        <input v-model="formData.password" id="password" type="password" class="c-input" :class="{ 'is-invalid': errors && errors.password }" autocomplete="new-password" placeholder="英数字8文字以上で入力してください">
+                        <div class="p-input__password">
+                            <input v-model="formData.password" id="password" :type="PasswordType" class="c-input" :class="{ 'is-invalid': errors && errors.password }" autocomplete="new-password" placeholder="英数字8文字以上で入力してください">
+                            <span @click="togglePasswordVisibility('password')"><i :class="PasswordIconClass"></i></span>
+                        </div>
                     </td>
                 </tr>
             </table>
+
+            <!-- パスワード保持 -->
+            <div class="p-container__checkbox">
+                <input type="checkbox" v-model="remember" id="remember">
+                <span class="c-text__center" for="remember">パスワードを保持する</span>
+            </div>
+
+            <!-- パスワードリマインダー -->
+            <div class="p-container__link">
+                <a class="btn btn-link" :href="passwordResetRoute">パスワードをお忘れの場合はこちら</a>
+            </div>
+
+            <!-- ログインボタン -->
             <div class="p-login__button">
                 <button type="submit" class="c-button">ログイン</button>
             </div>
@@ -36,21 +52,43 @@ export default {
             formData: {
                 email: '',
                 password: '',
-                remember: false
             },
-            errors: null
+            remember: false, // パスワード保持にチェックしたか
+            errors: null,
+            PasswordType: 'password', // パスワードの初期設定
+            PasswordConfirmType: 'password', // パスワード（再入力）の初期設定
+            PasswordIconClass: 'far fa-eye-slash', // 初期アイコン
+            PasswordConfirmIconClass: 'far fa-eye-slash', // 初期アイコン
         };
     },
+
+    computed: {
+        // パスワード変更メール送信画面のリンク
+        passwordResetRoute() {
+            return '/convenience/password/reset';
+        }
+    },
+
     methods: {
+        // 入力された値をサーバー側に送信するメソッド
         submitForm() {
             axios.post('/convenience/login', this.formData).then(response => {
-                // 登録成功時の処理
-                // 例えば、リダイレクトなど
-                window.location.href = '/home'; // ホーム画面にリダイレクトする例
+                window.location.href = '/home'; // 【TODO】 /homeに画面遷移しているので修正
             }).catch(error => {
                 console.error('ログイン失敗:', error.response.data);
                 this.errors = error.response.data.errors;
             });
+        },
+
+        // パスワードの表示・非表示を切り替えるメソッド
+        togglePasswordVisibility(type) {
+            if (type === 'password') {
+                this.PasswordType = this.PasswordType === 'password' ? 'text' : 'password';
+                this.PasswordIconClass = this.PasswordIconClass === 'far fa-eye-slash' ? 'far fa-eye' : 'far fa-eye-slash';
+            } else if (type === 'password_confirm') {
+                this.PasswordConfirmType = this.PasswordConfirmType === 'password' ? 'text' : 'password';
+                this.PasswordConfirmIconClass = this.PasswordConfirmIconClass === 'far fa-eye-slash' ? 'far fa-eye' : 'far fa-eye-slash';
+            }
         }
     }
 };

@@ -5061,23 +5061,46 @@ __webpack_require__.r(__webpack_exports__);
     return {
       formData: {
         email: '',
-        password: '',
-        remember: false
+        password: ''
       },
-      errors: null
+      remember: false,
+      // パスワード保持にチェックしたか
+      errors: null,
+      PasswordType: 'password',
+      // パスワードの初期設定
+      PasswordConfirmType: 'password',
+      // パスワード（再入力）の初期設定
+      PasswordIconClass: 'far fa-eye-slash',
+      // 初期アイコン
+      PasswordConfirmIconClass: 'far fa-eye-slash' // 初期アイコン
     };
   },
+  computed: {
+    // パスワード変更メール送信画面のリンク
+    passwordResetRoute: function passwordResetRoute() {
+      return '/convenience/password/reset';
+    }
+  },
   methods: {
+    // 入力された値をサーバー側に送信するメソッド
     submitForm: function submitForm() {
       var _this = this;
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/convenience/login', this.formData).then(function (response) {
-        // 登録成功時の処理
-        // 例えば、リダイレクトなど
-        window.location.href = '/home'; // ホーム画面にリダイレクトする例
+        window.location.href = '/home'; // 【TODO】 /homeに画面遷移しているので修正
       })["catch"](function (error) {
         console.error('ログイン失敗:', error.response.data);
         _this.errors = error.response.data.errors;
       });
+    },
+    // パスワードの表示・非表示を切り替えるメソッド
+    togglePasswordVisibility: function togglePasswordVisibility(type) {
+      if (type === 'password') {
+        this.PasswordType = this.PasswordType === 'password' ? 'text' : 'password';
+        this.PasswordIconClass = this.PasswordIconClass === 'far fa-eye-slash' ? 'far fa-eye' : 'far fa-eye-slash';
+      } else if (type === 'password_confirm') {
+        this.PasswordConfirmType = this.PasswordConfirmType === 'password' ? 'text' : 'password';
+        this.PasswordConfirmIconClass = this.PasswordConfirmIconClass === 'far fa-eye-slash' ? 'far fa-eye' : 'far fa-eye-slash';
+      }
     }
   }
 });
@@ -5297,22 +5320,114 @@ __webpack_require__.r(__webpack_exports__);
     return {
       formData: {
         email: '',
-        password: '',
-        remember: false
+        password: ''
       },
-      errors: null
+      remember: false,
+      // パスワード保持にチェックしたか
+      errors: null,
+      PasswordType: 'password',
+      // パスワードの初期設定
+      PasswordConfirmType: 'password',
+      // パスワード（再入力）の初期設定
+      PasswordIconClass: 'far fa-eye-slash',
+      // 初期アイコン
+      PasswordConfirmIconClass: 'far fa-eye-slash' // 初期アイコン
     };
+  },
+  computed: {
+    // パスワード変更メール送信画面のリンク
+    passwordResetRoute: function passwordResetRoute() {
+      return '/user/password/reset';
+    }
   },
   methods: {
     // 入力された値をサーバー側に送信するメソッド
     submitForm: function submitForm() {
       var _this = this;
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/user/login', this.formData).then(function (response) {
-        window.location.href = '/home'; // 【TODO】 /homeに画面遷移しているので修正
+        var userId = response.data.user_id; // レスポンスからユーザーIDを取得
+        console.log('userIdは、', userId);
+        window.location.href = '/user/mypage/' + userId; // ユーザーIDを含んだリダイレクト先のURLに遷移
       })["catch"](function (error) {
         console.error('ログイン失敗:', error.response.data);
         _this.errors = error.response.data.errors;
       });
+    },
+    // パスワードの表示・非表示を切り替えるメソッド
+    togglePasswordVisibility: function togglePasswordVisibility(type) {
+      if (type === 'password') {
+        this.PasswordType = this.PasswordType === 'password' ? 'text' : 'password';
+        this.PasswordIconClass = this.PasswordIconClass === 'far fa-eye-slash' ? 'far fa-eye' : 'far fa-eye-slash';
+      } else if (type === 'password_confirm') {
+        this.PasswordConfirmType = this.PasswordConfirmType === 'password' ? 'text' : 'password';
+        this.PasswordConfirmIconClass = this.PasswordConfirmIconClass === 'far fa-eye-slash' ? 'far fa-eye' : 'far fa-eye-slash';
+      }
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/User/ProfileComponent.vue?vue&type=script&lang=js":
+/*!*******************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/User/ProfileComponent.vue?vue&type=script&lang=js ***!
+  \*******************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['user'],
+  data: function data() {
+    return {
+      formData: {
+        name: this.user.name || '',
+        email: this.user.email || '',
+        password: '',
+        password_confirmation: '',
+        introduction: this.user.introduction || '',
+        profile_image: null
+      },
+      errors: null,
+      PasswordType: 'password',
+      // パスワードの初期設定
+      PasswordConfirmType: 'password',
+      // パスワード（再入力）の初期設定
+      PasswordIconClass: 'far fa-eye-slash',
+      // 初期アイコン
+      PasswordConfirmIconClass: 'far fa-eye-slash' // 初期アイコン
+    };
+  },
+  methods: {
+    // 入力された値をサーバー側に送信するメソッド
+    submitForm: function submitForm() {
+      var _this = this;
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/user/mypage/profile', this.formData).then(function (response) {
+        var userId = response.data.user_id; // レスポンスからユーザーIDを取得
+        console.log('userIdは、', userId);
+        window.location.href = '/user/mypage/' + userId; // ユーザーIDを含んだリダイレクト先のURLに遷移
+      })["catch"](function (error) {
+        console.error('プロフィール編集失敗:', error.response.data);
+        _this.errors = error.response.data.errors;
+      });
+    },
+    // パスワードの表示・非表示を切り替えるメソッド
+    togglePasswordVisibility: function togglePasswordVisibility(type) {
+      if (type === 'password') {
+        this.PasswordType = this.PasswordType === 'password' ? 'text' : 'password';
+        this.PasswordIconClass = this.PasswordIconClass === 'far fa-eye-slash' ? 'far fa-eye' : 'far fa-eye-slash';
+      } else if (type === 'password_confirm') {
+        this.PasswordConfirmType = this.PasswordConfirmType === 'password' ? 'text' : 'password';
+        this.PasswordConfirmIconClass = this.PasswordConfirmIconClass === 'far fa-eye-slash' ? 'far fa-eye' : 'far fa-eye-slash';
+      }
+    },
+    // ファイルが選択されたときの処理
+    handleFileChange: function handleFileChange(event) {
+      this.formData.profile_image = event.target.files[0];
     }
   }
 });
@@ -5584,7 +5699,9 @@ var render = function render() {
         _vm.$set(_vm.formData, "email", $event.target.value);
       }
     }
-  })])]), _vm._v(" "), _c("tr", [_vm._m(1), _vm._v(" "), _c("td", [_c("input", {
+  })])]), _vm._v(" "), _c("tr", [_vm._m(1), _vm._v(" "), _c("td", [_c("div", {
+    staticClass: "p-input__password"
+  }, [_vm.PasswordType === "checkbox" ? _c("input", {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -5597,9 +5714,72 @@ var render = function render() {
     },
     attrs: {
       id: "password",
-      type: "password",
       autocomplete: "new-password",
-      placeholder: "英数字8文字以上で入力してください"
+      placeholder: "英数字8文字以上で入力してください",
+      type: "checkbox"
+    },
+    domProps: {
+      checked: Array.isArray(_vm.formData.password) ? _vm._i(_vm.formData.password, null) > -1 : _vm.formData.password
+    },
+    on: {
+      change: function change($event) {
+        var $$a = _vm.formData.password,
+          $$el = $event.target,
+          $$c = $$el.checked ? true : false;
+        if (Array.isArray($$a)) {
+          var $$v = null,
+            $$i = _vm._i($$a, $$v);
+          if ($$el.checked) {
+            $$i < 0 && _vm.$set(_vm.formData, "password", $$a.concat([$$v]));
+          } else {
+            $$i > -1 && _vm.$set(_vm.formData, "password", $$a.slice(0, $$i).concat($$a.slice($$i + 1)));
+          }
+        } else {
+          _vm.$set(_vm.formData, "password", $$c);
+        }
+      }
+    }
+  }) : _vm.PasswordType === "radio" ? _c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.formData.password,
+      expression: "formData.password"
+    }],
+    staticClass: "c-input",
+    "class": {
+      "is-invalid": _vm.errors && _vm.errors.password
+    },
+    attrs: {
+      id: "password",
+      autocomplete: "new-password",
+      placeholder: "英数字8文字以上で入力してください",
+      type: "radio"
+    },
+    domProps: {
+      checked: _vm._q(_vm.formData.password, null)
+    },
+    on: {
+      change: function change($event) {
+        return _vm.$set(_vm.formData, "password", null);
+      }
+    }
+  }) : _c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.formData.password,
+      expression: "formData.password"
+    }],
+    staticClass: "c-input",
+    "class": {
+      "is-invalid": _vm.errors && _vm.errors.password
+    },
+    attrs: {
+      id: "password",
+      autocomplete: "new-password",
+      placeholder: "英数字8文字以上で入力してください",
+      type: _vm.PasswordType
     },
     domProps: {
       value: _vm.formData.password
@@ -5610,7 +5790,61 @@ var render = function render() {
         _vm.$set(_vm.formData, "password", $event.target.value);
       }
     }
-  })])])]), _vm._v(" "), _vm._m(2)])]);
+  }), _vm._v(" "), _c("span", {
+    on: {
+      click: function click($event) {
+        return _vm.togglePasswordVisibility("password");
+      }
+    }
+  }, [_c("i", {
+    "class": _vm.PasswordIconClass
+  })])])])])]), _vm._v(" "), _c("div", {
+    staticClass: "p-container__checkbox"
+  }, [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.remember,
+      expression: "remember"
+    }],
+    attrs: {
+      type: "checkbox",
+      id: "remember"
+    },
+    domProps: {
+      checked: Array.isArray(_vm.remember) ? _vm._i(_vm.remember, null) > -1 : _vm.remember
+    },
+    on: {
+      change: function change($event) {
+        var $$a = _vm.remember,
+          $$el = $event.target,
+          $$c = $$el.checked ? true : false;
+        if (Array.isArray($$a)) {
+          var $$v = null,
+            $$i = _vm._i($$a, $$v);
+          if ($$el.checked) {
+            $$i < 0 && (_vm.remember = $$a.concat([$$v]));
+          } else {
+            $$i > -1 && (_vm.remember = $$a.slice(0, $$i).concat($$a.slice($$i + 1)));
+          }
+        } else {
+          _vm.remember = $$c;
+        }
+      }
+    }
+  }), _vm._v(" "), _c("span", {
+    staticClass: "c-text__center",
+    attrs: {
+      "for": "remember"
+    }
+  }, [_vm._v("パスワードを保持する")])]), _vm._v(" "), _c("div", {
+    staticClass: "p-container__link"
+  }, [_c("a", {
+    staticClass: "btn btn-link",
+    attrs: {
+      href: _vm.passwordResetRoute
+    }
+  }, [_vm._v("パスワードをお忘れの場合はこちら")])]), _vm._v(" "), _vm._m(2)])]);
 };
 var staticRenderFns = [function () {
   var _vm = this,
@@ -6532,7 +6766,7 @@ var render = function render() {
   var _vm = this,
     _c = _vm._self._c;
   return _c("div", {
-    staticClass: "c-container"
+    staticClass: "p-container"
   }, [_c("form", {
     on: {
       submit: function submit($event) {
@@ -6569,7 +6803,9 @@ var render = function render() {
         _vm.$set(_vm.formData, "email", $event.target.value);
       }
     }
-  })])]), _vm._v(" "), _c("tr", [_vm._m(1), _vm._v(" "), _c("td", [_c("input", {
+  })])]), _vm._v(" "), _c("tr", [_vm._m(1), _vm._v(" "), _c("td", [_c("div", {
+    staticClass: "p-input__password"
+  }, [_vm.PasswordType === "checkbox" ? _c("input", {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -6582,9 +6818,72 @@ var render = function render() {
     },
     attrs: {
       id: "password",
-      type: "password",
       autocomplete: "new-password",
-      placeholder: "英数字8文字以上で入力してください"
+      placeholder: "英数字8文字以上で入力してください",
+      type: "checkbox"
+    },
+    domProps: {
+      checked: Array.isArray(_vm.formData.password) ? _vm._i(_vm.formData.password, null) > -1 : _vm.formData.password
+    },
+    on: {
+      change: function change($event) {
+        var $$a = _vm.formData.password,
+          $$el = $event.target,
+          $$c = $$el.checked ? true : false;
+        if (Array.isArray($$a)) {
+          var $$v = null,
+            $$i = _vm._i($$a, $$v);
+          if ($$el.checked) {
+            $$i < 0 && _vm.$set(_vm.formData, "password", $$a.concat([$$v]));
+          } else {
+            $$i > -1 && _vm.$set(_vm.formData, "password", $$a.slice(0, $$i).concat($$a.slice($$i + 1)));
+          }
+        } else {
+          _vm.$set(_vm.formData, "password", $$c);
+        }
+      }
+    }
+  }) : _vm.PasswordType === "radio" ? _c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.formData.password,
+      expression: "formData.password"
+    }],
+    staticClass: "c-input",
+    "class": {
+      "is-invalid": _vm.errors && _vm.errors.password
+    },
+    attrs: {
+      id: "password",
+      autocomplete: "new-password",
+      placeholder: "英数字8文字以上で入力してください",
+      type: "radio"
+    },
+    domProps: {
+      checked: _vm._q(_vm.formData.password, null)
+    },
+    on: {
+      change: function change($event) {
+        return _vm.$set(_vm.formData, "password", null);
+      }
+    }
+  }) : _c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.formData.password,
+      expression: "formData.password"
+    }],
+    staticClass: "c-input",
+    "class": {
+      "is-invalid": _vm.errors && _vm.errors.password
+    },
+    attrs: {
+      id: "password",
+      autocomplete: "new-password",
+      placeholder: "英数字8文字以上で入力してください",
+      type: _vm.PasswordType
     },
     domProps: {
       value: _vm.formData.password
@@ -6595,7 +6894,61 @@ var render = function render() {
         _vm.$set(_vm.formData, "password", $event.target.value);
       }
     }
-  })])])]), _vm._v(" "), _vm._m(2)])]);
+  }), _vm._v(" "), _c("span", {
+    on: {
+      click: function click($event) {
+        return _vm.togglePasswordVisibility("password");
+      }
+    }
+  }, [_c("i", {
+    "class": _vm.PasswordIconClass
+  })])])])])]), _vm._v(" "), _c("div", {
+    staticClass: "p-container__checkbox"
+  }, [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.remember,
+      expression: "remember"
+    }],
+    attrs: {
+      type: "checkbox",
+      id: "remember"
+    },
+    domProps: {
+      checked: Array.isArray(_vm.remember) ? _vm._i(_vm.remember, null) > -1 : _vm.remember
+    },
+    on: {
+      change: function change($event) {
+        var $$a = _vm.remember,
+          $$el = $event.target,
+          $$c = $$el.checked ? true : false;
+        if (Array.isArray($$a)) {
+          var $$v = null,
+            $$i = _vm._i($$a, $$v);
+          if ($$el.checked) {
+            $$i < 0 && (_vm.remember = $$a.concat([$$v]));
+          } else {
+            $$i > -1 && (_vm.remember = $$a.slice(0, $$i).concat($$a.slice($$i + 1)));
+          }
+        } else {
+          _vm.remember = $$c;
+        }
+      }
+    }
+  }), _vm._v(" "), _c("span", {
+    staticClass: "c-text__center",
+    attrs: {
+      "for": "remember"
+    }
+  }, [_vm._v("パスワードを保持する")])]), _vm._v(" "), _c("div", {
+    staticClass: "p-container__link"
+  }, [_c("a", {
+    staticClass: "btn btn-link",
+    attrs: {
+      href: _vm.passwordResetRoute
+    }
+  }, [_vm._v("パスワードをお忘れの場合はこちら")])]), _vm._v(" "), _vm._m(2)])]);
 };
 var staticRenderFns = [function () {
   var _vm = this,
@@ -6626,6 +6979,388 @@ var staticRenderFns = [function () {
       type: "submit"
     }
   }, [_vm._v("ログイン")])]);
+}];
+render._withStripped = true;
+
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/User/ProfileComponent.vue?vue&type=template&id=3141addd":
+/*!*****************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib/loaders/templateLoader.js??ref--6!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/User/ProfileComponent.vue?vue&type=template&id=3141addd ***!
+  \*****************************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function render() {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {
+    staticClass: "p-container"
+  }, [_c("form", {
+    on: {
+      submit: function submit($event) {
+        $event.preventDefault();
+        return _vm.submitForm.apply(null, arguments);
+      }
+    }
+  }, [_vm.errors && _vm.errors.name ? _c("span", {
+    staticClass: "c-error"
+  }, [_vm._v(_vm._s(_vm.errors.name[0]))]) : _vm._e(), _vm._v(" "), _vm.errors && _vm.errors.email ? _c("span", {
+    staticClass: "c-error"
+  }, [_vm._v(_vm._s(_vm.errors.email[0]))]) : _vm._e(), _vm._v(" "), _vm.errors && _vm.errors.password ? _c("span", {
+    staticClass: "c-error"
+  }, [_vm._v(_vm._s(_vm.errors.password[0]))]) : _vm._e(), _vm._v(" "), _vm.errors && _vm.errors.password_confirmation ? _c("span", {
+    staticClass: "c-error"
+  }, [_vm._v(_vm._s(_vm.errors.password_confirmation[0]))]) : _vm._e(), _vm._v(" "), _c("table", [_c("tr", [_vm._m(0), _vm._v(" "), _c("td", [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.formData.name,
+      expression: "formData.name"
+    }],
+    staticClass: "c-input",
+    "class": {
+      "is-invalid": _vm.errors && _vm.errors.name
+    },
+    attrs: {
+      id: "name",
+      type: "text",
+      autocomplete: "name"
+    },
+    domProps: {
+      value: _vm.formData.name
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_vm.formData, "name", $event.target.value);
+      }
+    }
+  })])]), _vm._v(" "), _c("tr", [_vm._m(1), _vm._v(" "), _c("td", [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.formData.email,
+      expression: "formData.email"
+    }],
+    staticClass: "c-input",
+    "class": {
+      "is-invalid": _vm.errors && _vm.errors.email
+    },
+    attrs: {
+      id: "email",
+      type: "email",
+      autocomplete: "email"
+    },
+    domProps: {
+      value: _vm.formData.email
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_vm.formData, "email", $event.target.value);
+      }
+    }
+  })])]), _vm._v(" "), _c("tr", [_vm._m(2), _vm._v(" "), _c("td", [_c("div", {
+    staticClass: "p-input__password"
+  }, [_vm.PasswordType === "checkbox" ? _c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.formData.password,
+      expression: "formData.password"
+    }],
+    staticClass: "c-input",
+    "class": {
+      "is-invalid": _vm.errors && _vm.errors.password
+    },
+    attrs: {
+      id: "password",
+      autocomplete: "new-password",
+      placeholder: "英数字8文字以上で入力してください",
+      type: "checkbox"
+    },
+    domProps: {
+      checked: Array.isArray(_vm.formData.password) ? _vm._i(_vm.formData.password, null) > -1 : _vm.formData.password
+    },
+    on: {
+      change: function change($event) {
+        var $$a = _vm.formData.password,
+          $$el = $event.target,
+          $$c = $$el.checked ? true : false;
+        if (Array.isArray($$a)) {
+          var $$v = null,
+            $$i = _vm._i($$a, $$v);
+          if ($$el.checked) {
+            $$i < 0 && _vm.$set(_vm.formData, "password", $$a.concat([$$v]));
+          } else {
+            $$i > -1 && _vm.$set(_vm.formData, "password", $$a.slice(0, $$i).concat($$a.slice($$i + 1)));
+          }
+        } else {
+          _vm.$set(_vm.formData, "password", $$c);
+        }
+      }
+    }
+  }) : _vm.PasswordType === "radio" ? _c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.formData.password,
+      expression: "formData.password"
+    }],
+    staticClass: "c-input",
+    "class": {
+      "is-invalid": _vm.errors && _vm.errors.password
+    },
+    attrs: {
+      id: "password",
+      autocomplete: "new-password",
+      placeholder: "英数字8文字以上で入力してください",
+      type: "radio"
+    },
+    domProps: {
+      checked: _vm._q(_vm.formData.password, null)
+    },
+    on: {
+      change: function change($event) {
+        return _vm.$set(_vm.formData, "password", null);
+      }
+    }
+  }) : _c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.formData.password,
+      expression: "formData.password"
+    }],
+    staticClass: "c-input",
+    "class": {
+      "is-invalid": _vm.errors && _vm.errors.password
+    },
+    attrs: {
+      id: "password",
+      autocomplete: "new-password",
+      placeholder: "英数字8文字以上で入力してください",
+      type: _vm.PasswordType
+    },
+    domProps: {
+      value: _vm.formData.password
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_vm.formData, "password", $event.target.value);
+      }
+    }
+  }), _vm._v(" "), _c("span", {
+    on: {
+      click: function click($event) {
+        return _vm.togglePasswordVisibility("password");
+      }
+    }
+  }, [_c("i", {
+    "class": _vm.PasswordIconClass
+  })])])])]), _vm._v(" "), _c("tr", [_vm._m(3), _vm._v(" "), _c("td", [_c("div", {
+    staticClass: "p-input__password"
+  }, [_vm.PasswordConfirmType === "checkbox" ? _c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.formData.password_confirmation,
+      expression: "formData.password_confirmation"
+    }],
+    staticClass: "c-input",
+    "class": {
+      "is-invalid": _vm.errors && _vm.errors.password_confirmation
+    },
+    attrs: {
+      id: "password-confirm",
+      autocomplete: "new-password",
+      placeholder: "英数字8文字以上で入力してください",
+      type: "checkbox"
+    },
+    domProps: {
+      checked: Array.isArray(_vm.formData.password_confirmation) ? _vm._i(_vm.formData.password_confirmation, null) > -1 : _vm.formData.password_confirmation
+    },
+    on: {
+      change: function change($event) {
+        var $$a = _vm.formData.password_confirmation,
+          $$el = $event.target,
+          $$c = $$el.checked ? true : false;
+        if (Array.isArray($$a)) {
+          var $$v = null,
+            $$i = _vm._i($$a, $$v);
+          if ($$el.checked) {
+            $$i < 0 && _vm.$set(_vm.formData, "password_confirmation", $$a.concat([$$v]));
+          } else {
+            $$i > -1 && _vm.$set(_vm.formData, "password_confirmation", $$a.slice(0, $$i).concat($$a.slice($$i + 1)));
+          }
+        } else {
+          _vm.$set(_vm.formData, "password_confirmation", $$c);
+        }
+      }
+    }
+  }) : _vm.PasswordConfirmType === "radio" ? _c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.formData.password_confirmation,
+      expression: "formData.password_confirmation"
+    }],
+    staticClass: "c-input",
+    "class": {
+      "is-invalid": _vm.errors && _vm.errors.password_confirmation
+    },
+    attrs: {
+      id: "password-confirm",
+      autocomplete: "new-password",
+      placeholder: "英数字8文字以上で入力してください",
+      type: "radio"
+    },
+    domProps: {
+      checked: _vm._q(_vm.formData.password_confirmation, null)
+    },
+    on: {
+      change: function change($event) {
+        return _vm.$set(_vm.formData, "password_confirmation", null);
+      }
+    }
+  }) : _c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.formData.password_confirmation,
+      expression: "formData.password_confirmation"
+    }],
+    staticClass: "c-input",
+    "class": {
+      "is-invalid": _vm.errors && _vm.errors.password_confirmation
+    },
+    attrs: {
+      id: "password-confirm",
+      autocomplete: "new-password",
+      placeholder: "英数字8文字以上で入力してください",
+      type: _vm.PasswordConfirmType
+    },
+    domProps: {
+      value: _vm.formData.password_confirmation
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_vm.formData, "password_confirmation", $event.target.value);
+      }
+    }
+  }), _vm._v(" "), _c("span", {
+    on: {
+      click: function click($event) {
+        return _vm.togglePasswordVisibility("password_confirm");
+      }
+    }
+  }, [_c("i", {
+    "class": _vm.PasswordConfirmIconClass
+  })])])])]), _vm._v(" "), _c("tr", [_vm._m(4), _vm._v(" "), _c("td", [_c("textarea", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.formData.introduction,
+      expression: "formData.introduction"
+    }],
+    staticClass: "c-input",
+    attrs: {
+      id: "introduction",
+      type: "text",
+      autocomplete: "introduction"
+    },
+    domProps: {
+      value: _vm.formData.introduction
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_vm.formData, "introduction", $event.target.value);
+      }
+    }
+  })])]), _vm._v(" "), _c("tr", [_vm._m(5), _vm._v(" "), _c("td", [_c("input", {
+    attrs: {
+      type: "file",
+      id: "profile_image"
+    },
+    on: {
+      change: _vm.handleFileChange
+    }
+  })])])]), _vm._v(" "), _vm._m(6)])]);
+};
+var staticRenderFns = [function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("th", [_c("label", {
+    staticClass: "c-label",
+    attrs: {
+      "for": "name"
+    }
+  }, [_vm._v("お名前")])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("th", [_c("label", {
+    staticClass: "c-label",
+    attrs: {
+      "for": "email"
+    }
+  }, [_vm._v("メールアドレス")])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("th", [_c("label", {
+    staticClass: "c-label",
+    attrs: {
+      "for": "password"
+    }
+  }, [_vm._v("パスワード")])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("th", [_c("label", {
+    staticClass: "c-label",
+    attrs: {
+      "for": "password-confirm"
+    }
+  }, [_vm._v("パスワード（再入力）")])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("th", [_c("label", {
+    staticClass: "c-label",
+    attrs: {
+      "for": "introduction"
+    }
+  }, [_vm._v("自己紹介")])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("th", [_c("label", {
+    staticClass: "c-label",
+    attrs: {
+      "for": "profile_image"
+    }
+  }, [_vm._v("顔写真")])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {
+    staticClass: "p-profile__button"
+  }, [_c("button", {
+    staticClass: "c-button",
+    attrs: {
+      type: "submit"
+    }
+  }, [_vm._v("更新する")])]);
 }];
 render._withStripped = true;
 
@@ -54768,6 +55503,7 @@ Vue.component('user-register-component', __webpack_require__(/*! ./components/Us
 Vue.component('user-login-component', __webpack_require__(/*! ./components/User/LoginComponent.vue */ "./resources/js/components/User/LoginComponent.vue")["default"]); // ログイン画面
 Vue.component('user-forgotpassword-component', __webpack_require__(/*! ./components/User/ForgotPasswordComponent.vue */ "./resources/js/components/User/ForgotPasswordComponent.vue")["default"]); // パスワード変更（メールアドレス入力）画面
 Vue.component('user-resetpassword-component', __webpack_require__(/*! ./components/User/ResetPasswordComponent.vue */ "./resources/js/components/User/ResetPasswordComponent.vue")["default"]); // // パスワード変更（古いパスワード・新しいパスワード入力）画面
+Vue.component('user-profile-component', __webpack_require__(/*! ./components/User/ProfileComponent.vue */ "./resources/js/components/User/ProfileComponent.vue")["default"]); // // プロフィール編集画面
 
 // コンビニ側
 Vue.component('convenience-register-component', __webpack_require__(/*! ./components/Convenience/RegisterComponent.vue */ "./resources/js/components/Convenience/RegisterComponent.vue")["default"]); // ユーザー登録画面
@@ -55245,6 +55981,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_LoginComponent_vue_vue_type_template_id_221fe85d__WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_LoginComponent_vue_vue_type_template_id_221fe85d__WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/User/ProfileComponent.vue":
+/*!***********************************************************!*\
+  !*** ./resources/js/components/User/ProfileComponent.vue ***!
+  \***********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _ProfileComponent_vue_vue_type_template_id_3141addd__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ProfileComponent.vue?vue&type=template&id=3141addd */ "./resources/js/components/User/ProfileComponent.vue?vue&type=template&id=3141addd");
+/* harmony import */ var _ProfileComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ProfileComponent.vue?vue&type=script&lang=js */ "./resources/js/components/User/ProfileComponent.vue?vue&type=script&lang=js");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _ProfileComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"],
+  _ProfileComponent_vue_vue_type_template_id_3141addd__WEBPACK_IMPORTED_MODULE_0__["render"],
+  _ProfileComponent_vue_vue_type_template_id_3141addd__WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/User/ProfileComponent.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/User/ProfileComponent.vue?vue&type=script&lang=js":
+/*!***********************************************************************************!*\
+  !*** ./resources/js/components/User/ProfileComponent.vue?vue&type=script&lang=js ***!
+  \***********************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ProfileComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./ProfileComponent.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/User/ProfileComponent.vue?vue&type=script&lang=js");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ProfileComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/User/ProfileComponent.vue?vue&type=template&id=3141addd":
+/*!*****************************************************************************************!*\
+  !*** ./resources/js/components/User/ProfileComponent.vue?vue&type=template&id=3141addd ***!
+  \*****************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_ProfileComponent_vue_vue_type_template_id_3141addd__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??ref--6!../../../../node_modules/vue-loader/lib??vue-loader-options!./ProfileComponent.vue?vue&type=template&id=3141addd */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/User/ProfileComponent.vue?vue&type=template&id=3141addd");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_ProfileComponent_vue_vue_type_template_id_3141addd__WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_ProfileComponent_vue_vue_type_template_id_3141addd__WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
