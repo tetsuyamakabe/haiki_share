@@ -343,6 +343,12 @@ body {
   line-height: 60px;
 }
 
+.c-icon {
+  width: 160px;
+  height: 160px;
+  margin: 16px 8px;
+}
+
 .c-input {
   background: #f6f5f4;
   width: 320px;

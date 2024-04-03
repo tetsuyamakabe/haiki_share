@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class MyProfileController extends Controller
 {
@@ -26,10 +27,12 @@ class MyProfileController extends Controller
     // プロフィール編集・更新処理
     public function editProfile(Request $request, $userId)
     {
-        // ユーザー情報を更新（パスワード、自己紹介、顔写真を追加する必要あり）
         $user = User::find($userId);
         $user->name = $request->input('name');
         $user->email = $request->input('email');
+        $user->password = Hash::make($request->input('password'));
+        $user->icon = $request->input('icon');
+        $user->introduction = $request->input('introduction');
         $user->save();
 
         return view('accounts.user.mypage', ['user' => $user]);

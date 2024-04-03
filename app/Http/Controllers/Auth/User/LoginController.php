@@ -63,6 +63,7 @@ class LoginController extends Controller
         if (($role === 'user')) {
             \Log::debug('ログインします');
             if ($this->attemptLogin($request)) {
+                \Log::debug('attemptLoginメソッド');
                 // ログイン成功時にユーザーIDを含んだURLにリダイレクト
                 return response()->json(['user_id' => $userId]);
             }
