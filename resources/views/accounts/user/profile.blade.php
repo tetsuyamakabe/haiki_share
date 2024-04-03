@@ -9,7 +9,7 @@
                 <form method="POST" action="{{ route('user.profile.edit', $user->id) }}">
                     @csrf
                     @method('PUT')
-                    <user-profile-component :user="{{ $user }}"></user-profile-component>
+                    <user-profile-component :user="{{ $user }}" :user-id="{{ $user->id }}"></user-profile-component>
                 </form>
             </div>
         </div>
