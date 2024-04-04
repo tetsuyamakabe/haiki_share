@@ -1,5 +1,5 @@
 <template>
-    <div class="c-container">
+    <div class="p-container">
         <form @submit.prevent="submitForm">
 
             <!-- バリデーションエラーメッセージ -->

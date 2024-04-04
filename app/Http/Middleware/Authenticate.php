@@ -17,14 +17,14 @@ class Authenticate extends Middleware
     {
         Log::debug('Authミドルウェア');
 
-        // リクエストからルート名を取得してログに記録
-        $routeName = $request->route()->getName();
-        Log::debug('リクエストのルート名は、: ' . $routeName);
+        // リクエストからパスを取得してログに記録
+        $path = $request->path();
+        Log::debug('リクエストのパスは、: ' . $path);
 
-        // リクエストされたルート名によって適切なリダイレクト先を設定
-        if ($routeName === 'user.login.show') {
+        // リクエストされたパスによって適切なリダイレクト先を設定
+        if ($path === 'user/login') {
             return route('user.login'); // 利用者ログイン画面にリダイレクト
-        } elseif ($routeName === 'convenience.login.show') {
+        } elseif ($path === 'convenience/login') {
             return route('convenience.login'); // コンビニログイン画面にリダイレクト
         }
     }

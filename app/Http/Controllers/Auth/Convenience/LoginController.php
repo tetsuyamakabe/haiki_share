@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Auth\Convenience;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\Convenience\LoginRequest;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
@@ -29,7 +28,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/convenience/mypage/{$userId}'; // ログイン後、マイページに遷移
 
     /**
      * Create a new controller instance.
@@ -53,7 +52,7 @@ class LoginController extends Controller
         // DBからemailをキーにして取得
         $email = $request->input('email');
         $user = User::where('email', $email)->first();
-
+        \Log::debug('$userは、', [$user]);
         $userId = $user->id;
         \Log::debug('ユーザーIDは、' . $userId);
 
@@ -64,7 +63,9 @@ class LoginController extends Controller
         if (($role === 'convenience')) {
             \Log::debug('ログインします');
             if ($this->attemptLogin($request)) {
-                return redirect()->route('home'); // 【TODO】 /homeになっているので修正（Authミドルウェアのことを忘れない）
+                \Log::debug('attemptLoginメソッド');
+                // ログイン成功時にユーザーIDを含んだURLにリダイレクト
+                return response()->json(['user_id' => $userId]);
             }
         } else {
             \Log::debug('ログインできません');

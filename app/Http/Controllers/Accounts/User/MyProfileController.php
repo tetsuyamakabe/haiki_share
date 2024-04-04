@@ -43,4 +43,16 @@ class MyProfileController extends Controller
     {
         return view('accounts.user.withdraw');
     }
+
+    // 退会処理の実行
+    public function withdraw()
+    {
+        $user = Auth::user();
+        $user->is_deleted = true; // 論理削除の実行
+        $user->save();
+
+        Auth::logout(); // 自動ログアウト
+
+        return redirect()->route('home')->with('success', '退会処理が完了しました。');
+    }
 }
