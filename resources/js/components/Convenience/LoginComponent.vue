@@ -73,7 +73,9 @@ export default {
         // 入力された値をサーバー側に送信するメソッド
         submitForm() {
             axios.post('/convenience/login', this.formData).then(response => {
-                window.location.href = '/home'; // 【TODO】 /homeに画面遷移しているので修正
+                const userId = response.data.user_id; // レスポンスからユーザーIDを取得
+                console.log('userIdは、', userId);
+                window.location.href = '/convenience/mypage/' + userId; // ユーザーIDを含んだリダイレクト先のURLに遷移
             }).catch(error => {
                 console.error('ログイン失敗:', error.response.data);
                 this.errors = error.response.data.errors;

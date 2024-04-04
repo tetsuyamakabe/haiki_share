@@ -52,7 +52,7 @@ class LoginController extends Controller
         // DBからemailをキーにして取得
         $email = $request->input('email');
         $user = User::where('email', $email)->first();
-
+        \Log::debug('$userは、', [$user]);
         $userId = $user->id;
         \Log::debug('ユーザーIDは、' . $userId);
 
