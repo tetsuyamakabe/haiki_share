@@ -5172,7 +5172,7 @@ var jsonpAdapter = __webpack_require__(/*! axios-jsonp */ "./node_modules/axios-
     // 入力された値をサーバー側に送信するメソッド
     submitForm: function submitForm() {
       var _this2 = this;
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.put('/convenience/mypage/profile', this.formData).then(function (response) {
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.put('/convenience/mypage/profile/{userId}', this.formData).then(function (response) {
         var userId = response.data.user_id; // レスポンスからユーザーIDを取得
         console.log('userIdは、', userId);
         window.location.href = '/convenience/mypage/' + userId; // ユーザーIDを含んだリダイレクト先のURLに遷移
@@ -5481,9 +5481,11 @@ __webpack_require__.r(__webpack_exports__);
         name: this.user.name || '',
         email: this.user.email || '',
         password: '',
+        // 編集前のパスワードは非表示（入力フォームを空）にする
         password_confirmation: '',
+        // 編集前のパスワード（再入力）は非表示（入力フォームを空）にする
         introduction: this.user.introduction || '',
-        profile_image: null
+        icon: this.user.icon || ''
       },
       errors: null,
       PasswordType: 'password',
@@ -5499,10 +5501,11 @@ __webpack_require__.r(__webpack_exports__);
     // 入力された値をサーバー側に送信するメソッド
     submitForm: function submitForm() {
       var _this = this;
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.put('/user/mypage/profile', this.formData).then(function (response) {
-        var userId = response.data.user_id; // レスポンスからユーザーIDを取得
-        console.log('userIdは、', userId);
-        window.location.href = '/user/mypage/' + userId; // ユーザーIDを含んだリダイレクト先のURLに遷移
+      var userId = this.user.id; // Vue.jsコンポーネントから渡されたユーザーIDを取得する
+
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.put('/user/mypage/profile/' + userId, this.formData).then(function (response) {
+        console.log('プロフィールが更新されました:', response.data);
+        window.location.href = '/user/mypage/' + userId;
       })["catch"](function (error) {
         console.error('プロフィール編集失敗:', error.response.data);
         _this.errors = error.response.data.errors;
@@ -5518,9 +5521,19 @@ __webpack_require__.r(__webpack_exports__);
         this.PasswordConfirmIconClass = this.PasswordConfirmIconClass === 'far fa-eye-slash' ? 'far fa-eye' : 'far fa-eye-slash';
       }
     },
+    // ドラッグ＆ドロップエリアに画像がドロップされたときの処理
+    handleDrop: function handleDrop(event) {
+      event.preventDefault();
+      var file = event.dataTransfer.files[0];
+      this.displayImage(file);
+    },
     // ファイルが選択されたときの処理
     handleFileChange: function handleFileChange(event) {
-      this.formData.profile_image = event.target.files[0];
+      console.log('handleFileChangeメソッドです');
+      var file = event.target.files[0];
+      if (file) {
+        this.formData.icon = file;
+      }
     }
   }
 });
@@ -7982,15 +7995,29 @@ var render = function render() {
         _vm.$set(_vm.formData, "introduction", $event.target.value);
       }
     }
-  })])]), _vm._v(" "), _c("tr", [_vm._m(5), _vm._v(" "), _c("td", [_c("input", {
+  })])]), _vm._v(" "), _c("tr", [_vm._m(5), _vm._v(" "), _c("td", [_c("div", {
+    staticClass: "drag-drop-area",
+    on: {
+      drop: _vm.handleDrop
+    }
+  }, [_c("input", {
+    staticClass: "hidden-input",
     attrs: {
       type: "file",
-      id: "profile_image"
+      id: "icon"
     },
     on: {
       change: _vm.handleFileChange
     }
-  })])])]), _vm._v(" "), _vm._m(6)])]);
+  }), _vm._v(" "), _c("div", {
+    staticClass: "drag-drop-content"
+  }, [_c("img", {
+    staticClass: "c-icon",
+    attrs: {
+      src: "/default.png",
+      alt: "デフォルト顔写真"
+    }
+  }), _vm._v(" "), !_vm.formData.icon ? _c("span", [_vm._v("ドラッグ＆ドロップ")]) : _vm._e()])])])])]), _vm._v(" "), _vm._m(6)])]);
 };
 var staticRenderFns = [function () {
   var _vm = this,
@@ -8043,7 +8070,7 @@ var staticRenderFns = [function () {
   return _c("th", [_c("label", {
     staticClass: "c-label",
     attrs: {
-      "for": "profile_image"
+      "for": "icon"
     }
   }, [_vm._v("顔写真")])]);
 }, function () {

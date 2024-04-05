@@ -6,7 +6,7 @@
         <div class="p-profile">
             <div class="p-profile__form">
                 <h1 class="c-title">{{ __('Convenience Store Profile') }}</h1>
-                <form method="POST" action="{{ route('convenience.profile.edit', $user->id) }}">
+                <form method="POST" action="{{ route('convenience.profile.edit', $user->id) }}" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
                     <convenience-profile-component :user="{{ $user }}" :convenience="{{ $convenience }}" :address="{{ $address }}" :user-id="{{ $user->id }}"></convenience-profile-component>

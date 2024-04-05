@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Convenience;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Notifications\User\PasswordResetNotification;
@@ -46,6 +47,12 @@ class User extends Authenticatable
         } elseif ($this->role === 'convenience') {
             $this->notify(new \App\Notifications\Convenience\PasswordResetNotification($token));
         }
+    }
+
+    // コンビニテーブルとの関連付け
+    public function convenience()
+    {
+        return $this->hasOne(Convenience::class);
     }
 }
 
