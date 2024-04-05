@@ -30,13 +30,16 @@ class MyProfileController extends Controller
     // プロフィール編集・更新処理
     public function editProfile(Request $request, $userId)
     {
+        \Log::info('Request data:', $request->all());
         // ユーザー情報を取得
         $user = User::find($userId);
         
         // ユーザー情報を更新
         $user->name = $request->input('name');
         $user->email = $request->input('email');
-        $user->password = Hash::make($request->input('password'));
+        if ($request->filled('password')) { // パスワードが提供されているか確認
+            $user->password = Hash::make($request->input('password'));
+        }
         $user->icon = $request->input('icon');
         $user->introduction = $request->input('introduction');
         $user->save();

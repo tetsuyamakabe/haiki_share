@@ -14,7 +14,7 @@
                 </form>
                 <div class="p-mypage__button" style="display:flex; justify-content:center;">
                     <!-- プロフィール編集ボタンを表示する（ボタンクリックで画面遷移する） -->
-                    <a href="{{ route('user.profile.show', ['user' => $user]) }}" class="c-button">{{ __('Edit Profile') }}</a>
+                    <a href="{{ route('user.profile.show', ['userId' => $user->id]) }}" class="c-button">{{ __('Edit Profile') }}</a>
                 </div>
         </div>
     </main>

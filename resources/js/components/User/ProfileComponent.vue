@@ -51,9 +51,15 @@
                 </tr>
 
                 <tr>
-                    <th><label for="profile_image" class="c-label">顔写真</label></th>
+                    <th><label for="icon" class="c-label">顔写真</label></th>
                     <td>
-                        <input type="file" id="profile_image" @change="handleFileChange">
+                        <div class="drag-drop-area" @drop="handleDrop">
+                            <input type="file" id="icon" @change="handleFileChange" class="hidden-input">
+                            <div class="drag-drop-content">
+                                <img src="/default.png" alt="デフォルト顔写真" class="c-icon">
+                                <span v-if="!formData.icon">ドラッグ＆ドロップ</span>
+                            </div>
+                        </div>
                     </td>
                 </tr>
             </table>
@@ -76,10 +82,10 @@ export default {
             formData: {
                 name: this.user.name || '',
                 email: this.user.email || '',
-                password: '',
-                password_confirmation: '',
+                password: '', // 編集前のパスワードは非表示（入力フォームを空）にする
+                password_confirmation: '', // 編集前のパスワード（再入力）は非表示（入力フォームを空）にする
                 introduction: this.user.introduction || '',
-                profile_image: null,
+                icon: this.user.icon || '',
             },
             errors: null,
             PasswordType: 'password', // パスワードの初期設定
@@ -92,10 +98,11 @@ export default {
     methods: {
         // 入力された値をサーバー側に送信するメソッド
         submitForm() {
-            axios.put('/user/mypage/profile', this.formData).then(response => {
-                const userId = response.data.user_id; // レスポンスからユーザーIDを取得
-                console.log('userIdは、', userId);
-                window.location.href = '/user/mypage/' + userId; // ユーザーIDを含んだリダイレクト先のURLに遷移
+            const userId = this.user.id; // Vue.jsコンポーネントから渡されたユーザーIDを取得する
+
+            axios.put('/user/mypage/profile/' + userId, this.formData).then(response => {
+                console.log('プロフィールが更新されました:', response.data);
+                window.location.href = '/user/mypage/' + userId;
             }).catch(error => {
                 console.error('プロフィール編集失敗:', error.response.data);
                 this.errors = error.response.data.errors;
@@ -113,9 +120,20 @@ export default {
             }
         },
 
+        // ドラッグ＆ドロップエリアに画像がドロップされたときの処理
+        handleDrop(event) {
+            event.preventDefault();
+            const file = event.dataTransfer.files[0];
+            this.displayImage(file);
+        },
+
         // ファイルが選択されたときの処理
         handleFileChange(event) {
-            this.formData.profile_image = event.target.files[0];
+            console.log('handleFileChangeメソッドです');
+            const file = event.target.files[0];
+            if (file) {
+                this.formData.icon = file;
+            }
         }
     }
 }

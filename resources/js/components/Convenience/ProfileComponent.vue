@@ -157,7 +157,7 @@ export default {
 
         // 入力された値をサーバー側に送信するメソッド
         submitForm() {
-            axios.put('/convenience/mypage/profile', this.formData).then(response => {
+            axios.put('/convenience/mypage/profile/{userId}', this.formData).then(response => {
                 const userId = response.data.user_id; // レスポンスからユーザーIDを取得
                 console.log('userIdは、', userId);
                 window.location.href = '/convenience/mypage/' + userId; // ユーザーIDを含んだリダイレクト先のURLに遷移

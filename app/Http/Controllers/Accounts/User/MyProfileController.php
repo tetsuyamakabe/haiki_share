@@ -20,18 +20,35 @@ class MyProfileController extends Controller
     // プロフィール編集画面の表示
     public function showProfile(Request $request, $userId)
     {
+        \Log::info('showProfileメソッドの$userIdは、', [$userId]);
         $user = User::find($userId);
+        \Log::info('showProfileメソッドの$userは、', [$user]);
         return view('accounts.user.profile', ['user' => $user]);
     }
 
     // プロフィール編集・更新処理
     public function editProfile(Request $request, $userId)
     {
+        \Log::info('$userIdは、', [$userId]);
+        \Log::info('リクエストは、:', $request->all());
         $user = User::find($userId);
+        \Log::info('$userは、', [$user]);
         $user->name = $request->input('name');
         $user->email = $request->input('email');
-        $user->password = Hash::make($request->input('password'));
-        $user->icon = $request->input('icon');
+
+        // パスワードの入力がある場合のみ更新する
+        $password = $request->input('password');
+        if (!empty($password)) {
+            $user->password = Hash::make($password);
+        }
+
+        // ファイルがアップロードされているか確認
+        if ($request->hasFile('icon')) {
+            $profileImage = $request->file('icon');
+            $profileImagePath = $profileImage->store('public/icons'); // 保存先をpublic/iconsに変更
+            $user->icon = $profileImagePath; // ファイルパスを保存
+        }
+
         $user->introduction = $request->input('introduction');
         $user->save();
 
