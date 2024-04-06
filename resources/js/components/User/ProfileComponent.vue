@@ -100,7 +100,23 @@ export default {
         submitForm() {
             const userId = this.user.id; // Vue.jsコンポーネントから渡されたユーザーIDを取得する
 
-            axios.put('/user/mypage/profile/' + userId, this.formData).then(response => {
+            // リクエストヘッダー定義
+            const config = {
+                headers: {
+                'content-type': 'multipart/form-data'
+                }
+            };
+            // FormDataオブジェクトを作成
+            const formData = new FormData();
+            formData.append('name', this.formData.name);
+            formData.append('email', this.formData.email);
+            formData.append('password', this.formData.password);
+            formData.append('password_confirmation', this.formData.password_confirmation);
+            formData.append('introduction', this.formData.introduction);
+            formData.append('icon', this.formData.icon);
+
+            console.log('formDataは、', formData);
+            axios.put('/user/mypage/profile/' + userId, formData, config).then(response => {
                 console.log('プロフィールが更新されました:', response.data);
                 window.location.href = '/user/mypage/' + userId;
             }).catch(error => {
