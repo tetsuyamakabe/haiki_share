@@ -5503,7 +5503,22 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
       var userId = this.user.id; // Vue.jsコンポーネントから渡されたユーザーIDを取得する
 
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.put('/user/mypage/profile/' + userId, this.formData).then(function (response) {
+      // リクエストヘッダー定義
+      var config = {
+        headers: {
+          'content-type': 'multipart/form-data'
+        }
+      };
+      // FormDataオブジェクトを作成
+      var formData = new FormData();
+      formData.append('name', this.formData.name);
+      formData.append('email', this.formData.email);
+      formData.append('password', this.formData.password);
+      formData.append('password_confirmation', this.formData.password_confirmation);
+      formData.append('introduction', this.formData.introduction);
+      formData.append('icon', this.formData.icon);
+      console.log('formDataは、', formData);
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.put('/user/mypage/profile/' + userId, formData, config).then(function (response) {
         console.log('プロフィールが更新されました:', response.data);
         window.location.href = '/user/mypage/' + userId;
       })["catch"](function (error) {
