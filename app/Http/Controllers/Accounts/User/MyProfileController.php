@@ -45,7 +45,9 @@ class MyProfileController extends Controller
         // ファイルがアップロードされているか確認
         if ($request->hasFile('icon')) {
             $profileImage = $request->file('icon');
-            $profileImagePath = $profileImage->store('public/icons'); // 保存先をpublic/iconsに変更
+            $extension = $profileImage->getClientOriginalExtension(); // ファイルの拡張子を取得
+            $fileName = sha1($profileImage->getClientOriginalName()) . '.' . $extension; // SHA-1ハッシュでファイル名を決定
+            $profileImagePath = $profileImage->storeAs('public/icons', $fileName); // ファイルを保存
             $user->icon = $profileImagePath; // ファイルパスを保存
         }
 
