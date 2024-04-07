@@ -56,7 +56,8 @@
                         <div class="drag-drop-area" @drop="handleDrop">
                             <input type="file" id="icon" @change="handleFileChange" class="hidden-input">
                             <div class="drag-drop-content">
-                                <img src="/default.png" alt="デフォルト顔写真" class="c-icon">
+                                <img v-if="formData.icon" :src="formData.icon" alt="アップロード顔写真" class="c-icon">
+                                <img v-else src="/default.png" alt="デフォルト顔写真" class="c-icon">
                                 <span v-if="!formData.icon">ドラッグ＆ドロップ</span>
                             </div>
                         </div>
@@ -108,6 +109,7 @@ export default {
             };
             // FormDataオブジェクトを作成
             const formData = new FormData();
+            formData.append('_method', 'PUT');
             formData.append('name', this.formData.name);
             formData.append('email', this.formData.email);
             formData.append('password', this.formData.password);
@@ -115,8 +117,7 @@ export default {
             formData.append('introduction', this.formData.introduction);
             formData.append('icon', this.formData.icon);
 
-            console.log('formDataは、', formData);
-            axios.put('/user/mypage/profile/' + userId, formData, config).then(response => {
+            axios.post('/user/mypage/profile/' + userId, formData, config).then(response => {
                 console.log('プロフィールが更新されました:', response.data);
                 window.location.href = '/user/mypage/' + userId;
             }).catch(error => {

@@ -5511,14 +5511,14 @@ __webpack_require__.r(__webpack_exports__);
       };
       // FormDataオブジェクトを作成
       var formData = new FormData();
+      formData.append('_method', 'PUT');
       formData.append('name', this.formData.name);
       formData.append('email', this.formData.email);
       formData.append('password', this.formData.password);
       formData.append('password_confirmation', this.formData.password_confirmation);
       formData.append('introduction', this.formData.introduction);
       formData.append('icon', this.formData.icon);
-      console.log('formDataは、', formData);
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.put('/user/mypage/profile/' + userId, formData, config).then(function (response) {
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/user/mypage/profile/' + userId, formData, config).then(function (response) {
         console.log('プロフィールが更新されました:', response.data);
         window.location.href = '/user/mypage/' + userId;
       })["catch"](function (error) {
@@ -8026,7 +8026,13 @@ var render = function render() {
     }
   }), _vm._v(" "), _c("div", {
     staticClass: "drag-drop-content"
-  }, [_c("img", {
+  }, [_vm.formData.icon ? _c("img", {
+    staticClass: "c-icon",
+    attrs: {
+      src: _vm.formData.icon,
+      alt: "アップロード顔写真"
+    }
+  }) : _c("img", {
     staticClass: "c-icon",
     attrs: {
       src: "/default.png",
