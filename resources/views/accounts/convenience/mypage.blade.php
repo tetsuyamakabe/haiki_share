@@ -14,7 +14,10 @@
                 </form>
                 <div class="p-mypage__button" style="display:flex; justify-content:center;">
                     <!-- プロフィール編集ボタンを表示する（ボタンクリックで画面遷移する） -->
-                    <a href="{{ route('convenience.profile.show', ['user' => $user]) }}" class="c-button">{{ __('Edit Profile') }}</a>
+                    <a href="{{ route('convenience.profile.show', ['userId' => $user->id]) }}" class="c-button">{{ __('Edit Profile') }}</a>
+
+                    <!-- 退会画面へのリンクを追加 -->
+                    <a href="{{ route('convenience.withdraw.show', ['userId' => $user->id]) }}" class="c-button" style="margin-left: 20px;">{{ __('Withdraw') }}</a>
                 </div>
         </div>
     </main>

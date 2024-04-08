@@ -77,7 +77,11 @@
                     @endauth
                 </div>
             @endif
-
+            @if (session('flash_message'))
+                <div class="flash_message">
+                    {{ session('flash_message') }}
+                </div>
+            @endif
             <div class="content">
                 <div class="title m-b-md">
                     Laravel

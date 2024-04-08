@@ -770,3 +770,21 @@ body {
   position: relative;
 }
 
+.p-withdraw {
+  display: flex;
+  background-color: #fafafa;
+}
+
+.p-withdraw__form {
+  background: #fff;
+  margin: 120px auto;
+  padding: 40px;
+  text-align: left;
+  border: 1px solid #000;
+}
+
+.p-withdraw__button {
+  display: flex;
+  justify-content: center;
+}
+

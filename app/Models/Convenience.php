@@ -5,9 +5,12 @@ namespace App\Models;
 use App\Models\User;
 use App\Models\Address;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Convenience extends Model
 {
+    use SoftDeletes;
+
     protected $table = 'convenience_stores';
 
     protected $fillable = [
@@ -27,7 +30,6 @@ class Convenience extends Model
     }
 }
 
-
 // mysql> desc convenience_stores;
 // +-------------+---------------------+------+-----+---------+----------------+
 // | Field       | Type                | Null | Key | Default | Extra          |
@@ -36,7 +38,7 @@ class Convenience extends Model
 // | user_id     | bigint(20) unsigned | NO   | MUL | NULL    |                |
 // | branch_name | varchar(255)        | NO   |     | NULL    |                |
 // | address_id  | bigint(20) unsigned | NO   | MUL | NULL    |                |
-// | is_deleted  | tinyint(1)          | NO   |     | 0       |                |
+// | deleted_at  | timestamp           | YES  |     | NULL    |                |
 // | created_at  | timestamp           | YES  |     | NULL    |                |
 // | updated_at  | timestamp           | YES  |     | NULL    |                |
 // +-------------+---------------------+------+-----+---------+----------------+

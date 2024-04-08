@@ -5421,6 +5421,35 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Convenience/WithdrawComponent.vue?vue&type=script&lang=js":
+/*!***************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Convenience/WithdrawComponent.vue?vue&type=script&lang=js ***!
+  \***************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['user'],
+  methods: {
+    // 退会処理をサーバー側に送信するメソッド
+    withdraw: function withdraw() {
+      var _this = this;
+      var userId = this.user.id;
+      axios.post('/convenience/mypage/withdraw/' + userId).then(function (response) {
+        console.log('退会が完了しました');
+        window.location.href = '/home';
+      })["catch"](function (error) {
+        console.error('退会処理失敗:', error.response.data);
+        _this.errors = error.response.data.errors;
+      });
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/User/ForgotPasswordComponent.vue?vue&type=script&lang=js":
 /*!**************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/User/ForgotPasswordComponent.vue?vue&type=script&lang=js ***!
@@ -5781,6 +5810,35 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/User/WithdrawComponent.vue?vue&type=script&lang=js":
+/*!********************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/User/WithdrawComponent.vue?vue&type=script&lang=js ***!
+  \********************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['user'],
+  methods: {
+    // 退会処理をサーバー側に送信するメソッド
+    withdraw: function withdraw() {
+      var _this = this;
+      var userId = this.user.id;
+      axios.post('/user/mypage/withdraw/' + userId).then(function (response) {
+        console.log('退会が完了しました');
+        window.location.href = '/home';
+      })["catch"](function (error) {
+        console.error('退会処理失敗:', error.response.data);
+        _this.errors = error.response.data.errors;
+      });
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Convenience/ForgotPasswordComponent.vue?vue&type=template&id=475487ec":
 /*!*******************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib/loaders/templateLoader.js??ref--6!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Convenience/ForgotPasswordComponent.vue?vue&type=template&id=475487ec ***!
@@ -6127,7 +6185,9 @@ var render = function render() {
     staticClass: "c-error"
   }, [_vm._v(_vm._s(_vm.errors.town[0]))]) : _vm._e(), _vm._v(" "), _vm.errors && _vm.errors.building ? _c("span", {
     staticClass: "c-error"
-  }, [_vm._v(_vm._s(_vm.errors.building[0]))]) : _vm._e(), _vm._v(" "), _vm.errors && _vm.errors.password ? _c("span", {
+  }, [_vm._v(_vm._s(_vm.errors.building[0]))]) : _vm._e(), _vm._v(" "), _vm.errors && _vm.errors.email ? _c("span", {
+    staticClass: "c-error"
+  }, [_vm._v(_vm._s(_vm.errors.email[0]))]) : _vm._e(), _vm._v(" "), _vm.errors && _vm.errors.password ? _c("span", {
     staticClass: "c-error"
   }, [_vm._v(_vm._s(_vm.errors.password[0]))]) : _vm._e(), _vm._v(" "), _vm.errors && _vm.errors.password_confirmation ? _c("span", {
     staticClass: "c-error"
@@ -7539,6 +7599,37 @@ render._withStripped = true;
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Convenience/WithdrawComponent.vue?vue&type=template&id=09d28700":
+/*!*************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib/loaders/templateLoader.js??ref--6!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Convenience/WithdrawComponent.vue?vue&type=template&id=09d28700 ***!
+  \*************************************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function render() {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {
+    staticClass: "p-container"
+  }, [_c("p", [_vm._v("退会手続きを行いますか？")]), _vm._v(" "), _c("div", {
+    staticClass: "p-withdraw__button"
+  }, [_c("button", {
+    staticClass: "c-button",
+    on: {
+      click: _vm.withdraw
+    }
+  }, [_vm._v("退会する")])])]);
+};
+var staticRenderFns = [];
+render._withStripped = true;
+
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/User/ForgotPasswordComponent.vue?vue&type=template&id=4ea63dc6":
 /*!************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib/loaders/templateLoader.js??ref--6!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/User/ForgotPasswordComponent.vue?vue&type=template&id=4ea63dc6 ***!
@@ -8828,6 +8919,37 @@ var staticRenderFns = [function () {
     }
   }, [_vm._v("変更する")])]);
 }];
+render._withStripped = true;
+
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/User/WithdrawComponent.vue?vue&type=template&id=f29faf4c":
+/*!******************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib/loaders/templateLoader.js??ref--6!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/User/WithdrawComponent.vue?vue&type=template&id=f29faf4c ***!
+  \******************************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function render() {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {
+    staticClass: "p-container"
+  }, [_c("p", [_vm._v("退会手続きを行いますか？")]), _vm._v(" "), _c("div", {
+    staticClass: "p-withdraw__button"
+  }, [_c("button", {
+    staticClass: "c-button",
+    on: {
+      click: _vm.withdraw
+    }
+  }, [_vm._v("退会する")])])]);
+};
+var staticRenderFns = [];
 render._withStripped = true;
 
 
@@ -56399,6 +56521,7 @@ Vue.component('user-login-component', __webpack_require__(/*! ./components/User/
 Vue.component('user-forgotpassword-component', __webpack_require__(/*! ./components/User/ForgotPasswordComponent.vue */ "./resources/js/components/User/ForgotPasswordComponent.vue")["default"]); // パスワード変更（メールアドレス入力）画面
 Vue.component('user-resetpassword-component', __webpack_require__(/*! ./components/User/ResetPasswordComponent.vue */ "./resources/js/components/User/ResetPasswordComponent.vue")["default"]); // パスワード変更（古いパスワード・新しいパスワード入力）画面
 Vue.component('user-profile-component', __webpack_require__(/*! ./components/User/ProfileComponent.vue */ "./resources/js/components/User/ProfileComponent.vue")["default"]); // プロフィール編集画面
+Vue.component('user-withdraw-component', __webpack_require__(/*! ./components/User/WithdrawComponent.vue */ "./resources/js/components/User/WithdrawComponent.vue")["default"]); // 退会画面
 
 // コンビニ側
 Vue.component('convenience-register-component', __webpack_require__(/*! ./components/Convenience/RegisterComponent.vue */ "./resources/js/components/Convenience/RegisterComponent.vue")["default"]); // ユーザー登録画面
@@ -56406,6 +56529,7 @@ Vue.component('convenience-login-component', __webpack_require__(/*! ./component
 Vue.component('convenience-forgotpassword-component', __webpack_require__(/*! ./components/Convenience/ForgotPasswordComponent.vue */ "./resources/js/components/Convenience/ForgotPasswordComponent.vue")["default"]); // パスワード変更（メールアドレス入力）画面
 Vue.component('convenience-resetpassword-component', __webpack_require__(/*! ./components/Convenience/ResetPasswordComponent.vue */ "./resources/js/components/Convenience/ResetPasswordComponent.vue")["default"]); // パスワード変更（古いパスワード・新しいパスワード入力）画面
 Vue.component('convenience-profile-component', __webpack_require__(/*! ./components/Convenience/ProfileComponent.vue */ "./resources/js/components/Convenience/ProfileComponent.vue")["default"]); // プロフィール編集画面
+Vue.component('convenience-withdraw-component', __webpack_require__(/*! ./components/Convenience/WithdrawComponent.vue */ "./resources/js/components/Convenience/WithdrawComponent.vue")["default"]); // 退会画面
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -56813,6 +56937,75 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/Convenience/WithdrawComponent.vue":
+/*!*******************************************************************!*\
+  !*** ./resources/js/components/Convenience/WithdrawComponent.vue ***!
+  \*******************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _WithdrawComponent_vue_vue_type_template_id_09d28700__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./WithdrawComponent.vue?vue&type=template&id=09d28700 */ "./resources/js/components/Convenience/WithdrawComponent.vue?vue&type=template&id=09d28700");
+/* harmony import */ var _WithdrawComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./WithdrawComponent.vue?vue&type=script&lang=js */ "./resources/js/components/Convenience/WithdrawComponent.vue?vue&type=script&lang=js");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _WithdrawComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"],
+  _WithdrawComponent_vue_vue_type_template_id_09d28700__WEBPACK_IMPORTED_MODULE_0__["render"],
+  _WithdrawComponent_vue_vue_type_template_id_09d28700__WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/Convenience/WithdrawComponent.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/Convenience/WithdrawComponent.vue?vue&type=script&lang=js":
+/*!*******************************************************************************************!*\
+  !*** ./resources/js/components/Convenience/WithdrawComponent.vue?vue&type=script&lang=js ***!
+  \*******************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_WithdrawComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./WithdrawComponent.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Convenience/WithdrawComponent.vue?vue&type=script&lang=js");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_WithdrawComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/Convenience/WithdrawComponent.vue?vue&type=template&id=09d28700":
+/*!*************************************************************************************************!*\
+  !*** ./resources/js/components/Convenience/WithdrawComponent.vue?vue&type=template&id=09d28700 ***!
+  \*************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_WithdrawComponent_vue_vue_type_template_id_09d28700__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??ref--6!../../../../node_modules/vue-loader/lib??vue-loader-options!./WithdrawComponent.vue?vue&type=template&id=09d28700 */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Convenience/WithdrawComponent.vue?vue&type=template&id=09d28700");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_WithdrawComponent_vue_vue_type_template_id_09d28700__WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_WithdrawComponent_vue_vue_type_template_id_09d28700__WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/components/User/ForgotPasswordComponent.vue":
 /*!******************************************************************!*\
   !*** ./resources/js/components/User/ForgotPasswordComponent.vue ***!
@@ -57153,6 +57346,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_ResetPasswordComponent_vue_vue_type_template_id_899ef148__WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_ResetPasswordComponent_vue_vue_type_template_id_899ef148__WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/User/WithdrawComponent.vue":
+/*!************************************************************!*\
+  !*** ./resources/js/components/User/WithdrawComponent.vue ***!
+  \************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _WithdrawComponent_vue_vue_type_template_id_f29faf4c__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./WithdrawComponent.vue?vue&type=template&id=f29faf4c */ "./resources/js/components/User/WithdrawComponent.vue?vue&type=template&id=f29faf4c");
+/* harmony import */ var _WithdrawComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./WithdrawComponent.vue?vue&type=script&lang=js */ "./resources/js/components/User/WithdrawComponent.vue?vue&type=script&lang=js");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _WithdrawComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"],
+  _WithdrawComponent_vue_vue_type_template_id_f29faf4c__WEBPACK_IMPORTED_MODULE_0__["render"],
+  _WithdrawComponent_vue_vue_type_template_id_f29faf4c__WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/User/WithdrawComponent.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/User/WithdrawComponent.vue?vue&type=script&lang=js":
+/*!************************************************************************************!*\
+  !*** ./resources/js/components/User/WithdrawComponent.vue?vue&type=script&lang=js ***!
+  \************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_WithdrawComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./WithdrawComponent.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/User/WithdrawComponent.vue?vue&type=script&lang=js");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_WithdrawComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/User/WithdrawComponent.vue?vue&type=template&id=f29faf4c":
+/*!******************************************************************************************!*\
+  !*** ./resources/js/components/User/WithdrawComponent.vue?vue&type=template&id=f29faf4c ***!
+  \******************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_WithdrawComponent_vue_vue_type_template_id_f29faf4c__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??ref--6!../../../../node_modules/vue-loader/lib??vue-loader-options!./WithdrawComponent.vue?vue&type=template&id=f29faf4c */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/User/WithdrawComponent.vue?vue&type=template&id=f29faf4c");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_WithdrawComponent_vue_vue_type_template_id_f29faf4c__WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_WithdrawComponent_vue_vue_type_template_id_f29faf4c__WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
