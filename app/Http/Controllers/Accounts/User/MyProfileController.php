@@ -14,7 +14,7 @@ class MyProfileController extends Controller
     // マイページ画面の表示
     public function showMyPage(Request $request, $userId)
     {
-        $user = User::find($userId);
+        $user = User::findOrFail($userId);
         return view('accounts.user.mypage', ['user' => $user]);
     }
 
@@ -22,7 +22,7 @@ class MyProfileController extends Controller
     public function showProfile(Request $request, $userId)
     {
         \Log::info('showProfileメソッドの$userIdは、', [$userId]);
-        $user = User::find($userId);
+        $user = User::findOrFail($userId);
         \Log::info('showProfileメソッドの$userは、', [$user]);
         return view('accounts.user.profile', ['user' => $user]);
     }
@@ -34,7 +34,7 @@ class MyProfileController extends Controller
         \Log::info('リクエストは、:', $request->all());
 
         // ユーザー情報を取得
-        $user = User::find($userId);
+        $user = User::findOrFail($userId);
         \Log::info('$userは、', [$user]);
 
         // ユーザー情報を更新
@@ -64,21 +64,18 @@ class MyProfileController extends Controller
     }
 
     // 退会画面の表示
-    public function showWithdraw(Request $request, $userId)
+    public function showWithdraw($userId)
     {
-        $user = User::find($userId);
-        return view('accounts.user.withdraw');
+        $user = User::findOrFail($userId);
+        return view('accounts.user.withdraw', ['user' => $user]);
     }
 
     // 退会処理の実行
     public function withdraw(Request $request, $userId)
     {
         $user = Auth::user();
-        $user->is_deleted = true; // 論理削除の実行
-        $user->save();
-
+        $user->delete(); // 論理削除を実行
         Auth::logout(); // 自動ログアウト
-
-        return redirect()->route('home')->with('success', '退会処理が完了しました。');
+        return redirect('/'); // home画面に遷移
     }
 }

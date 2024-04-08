@@ -24,15 +24,15 @@ class ProfileRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['required|string|max:255'],
-            'email' => ['required|string|email|max:255|unique:users,email,' . auth()->id()],
-            'password' => ['nullable|string|min:8|confirmed'],
-            'introduction' => ['nullable|string|max:50'],
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users,email,' . auth()->id(),
+            'password' => 'nullable|string|min:8|confirmed',
+            'introduction' => 'nullable|string|max:50',
         ];
 
         // アイコン画像がアップロードされた場合のみバリデーションルールを適用
         if ($this->hasFile('icon')) {
-            $rules['icon'] = ['nullable|image|mimes:jpeg,png,jpg,gif|max:2048'];
+            $rules['icon'] = 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048';
         }
         return $rules;
     }

@@ -15,7 +15,7 @@ class MyProfileController extends Controller
     // マイページ画面の表示
     public function showMyPage(Request $request, $userId)
     {
-        $user = User::find($userId);
+        $user = User::findOrFail($userId);
         return view('accounts.convenience.mypage', ['user' => $user]);
     }
 
@@ -23,7 +23,7 @@ class MyProfileController extends Controller
     public function showProfile(Request $request, $userId)
     {
         // dd($userId);
-        $user = User::find($userId);
+        $user = User::findOrFail($userId);
         // dd($user);
         $convenience = $user->convenience;
         // dd($convenience);
@@ -38,7 +38,7 @@ class MyProfileController extends Controller
         \Log::info('リクエストは、:', $request->all());
 
         // ユーザー情報を取得
-        $user = User::find($userId);
+        $user = User::findOrFail($userId);
         \Log::info('$userは、', [$user]);
         
         // ユーザー情報を更新
@@ -89,21 +89,27 @@ class MyProfileController extends Controller
     }
 
     // 退会画面の表示
-    public function showWithdraw(Request $request, $userId)
+    public function showWithdraw($userId)
     {
-        $user = User::find($userId);
-        return view('accounts.convenience.withdraw');
+        $user = User::findOrFail($userId);
+        return view('accounts.convenience.withdraw', ['user' => $user]);
     }
 
     // 退会処理の実行
     public function withdraw(Request $request, $userId)
     {
         $user = Auth::user();
-        $user->is_deleted = true; // 論理削除の実行
-        $user->save();
 
-        Auth::logout(); // 自動ログアウト
-
-        return redirect()->route('home')->with('success', '退会処理が完了しました。');
+        // コンビニ情報を取得
+        if ($user->role === 'convenience') {
+            $convenience = Convenience::where('user_id', $user->id)->first();
+            if ($convenience) {
+                $convenience->delete(); // 論理削除を実行
+                $convenience->address()->delete(); // 住所情報を取得して論理削除
+            }
+        }
+        $user->delete(); // ユーザー情報を論理削除
+        Auth::logout(); // ログアウト
+        return redirect('/'); // home画面に遷移
     }
 }

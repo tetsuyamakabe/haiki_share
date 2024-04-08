@@ -27,6 +27,7 @@ Vue.component('user-login-component', require('./components/User/LoginComponent.
 Vue.component('user-forgotpassword-component', require('./components/User/ForgotPasswordComponent.vue').default); // パスワード変更（メールアドレス入力）画面
 Vue.component('user-resetpassword-component', require('./components/User/ResetPasswordComponent.vue').default); // パスワード変更（古いパスワード・新しいパスワード入力）画面
 Vue.component('user-profile-component', require('./components/User/ProfileComponent.vue').default); // プロフィール編集画面
+Vue.component('user-withdraw-component', require('./components/User/WithdrawComponent.vue').default); // 退会画面
 
 // コンビニ側
 Vue.component('convenience-register-component', require('./components/Convenience/RegisterComponent.vue').default); // ユーザー登録画面
@@ -34,6 +35,7 @@ Vue.component('convenience-login-component', require('./components/Convenience/L
 Vue.component('convenience-forgotpassword-component', require('./components/Convenience/ForgotPasswordComponent.vue').default); // パスワード変更（メールアドレス入力）画面
 Vue.component('convenience-resetpassword-component', require('./components/Convenience/ResetPasswordComponent.vue').default); // パスワード変更（古いパスワード・新しいパスワード入力）画面
 Vue.component('convenience-profile-component', require('./components/Convenience/ProfileComponent.vue').default); // プロフィール編集画面
+Vue.component('convenience-withdraw-component', require('./components/Convenience/WithdrawComponent.vue').default); // 退会画面
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
