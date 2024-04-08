@@ -27,7 +27,7 @@
                     <th><label for="password" class="c-label">パスワード</label></th>
                     <td>
                         <div class="p-input__password">
-                            <input v-model="formData.password" id="password" :type="PasswordType" class="c-input" :class="{ 'is-invalid': errors && errors.password }" autocomplete="new-password" placeholder="英数字8文字以上で入力してください">
+                            <input v-model="formData.password" id="password" :type="PasswordType" class="c-input" :class="{ 'is-invalid': errors && errors.password }" placeholder="英数字8文字以上で入力してください">
                             <span @click="togglePasswordVisibility('password')"><i :class="PasswordIconClass"></i></span>
                         </div>
                     </td>
@@ -36,7 +36,7 @@
                     <th><label for="password-confirm" class="c-label">パスワード（再入力）</label></th>
                     <td>
                         <div class="p-input__password">
-                            <input v-model="formData.password_confirmation" id="password-confirm" :type="PasswordConfirmType" class="c-input" :class="{ 'is-invalid': errors && errors.password_confirmation }" autocomplete="new-password" placeholder="英数字8文字以上で入力してください">
+                            <input v-model="formData.password_confirmation" id="password-confirm" :type="PasswordConfirmType" class="c-input" :class="{ 'is-invalid': errors && errors.password_confirmation }" placeholder="英数字8文字以上で入力してください">
                             <span @click="togglePasswordVisibility('password_confirm')"><i :class="PasswordConfirmIconClass"></i></span>
                         </div>
                     </td>

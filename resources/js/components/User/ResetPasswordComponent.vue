@@ -12,19 +12,19 @@
                 <tr>
                     <th><label for="old_password" class="c-label">古いパスワード</label></th>
                     <td>
-                        <input v-model="formData.oldPassword" id="old_password" class="c-input" :class="{ 'is-invalid': errors && errors.oldPassword }" autocomplete="password" placeholder="英数字8文字以上で入力してください">
+                        <input v-model="formData.oldPassword" id="old_password" class="c-input" :class="{ 'is-invalid': errors && errors.oldPassword }" placeholder="英数字8文字以上で入力してください">
                     </td>
                 </tr>
                 <tr>
                     <th><label for="new_password" class="c-label">新しいパスワード</label></th>
                     <td>
-                        <input v-model="formData.newPassword" id="new_password" class="c-input" :class="{ 'is-invalid': errors && errors.newPassword }" autocomplete="password" placeholder="英数字8文字以上で入力してください">
+                        <input v-model="formData.newPassword" id="new_password" class="c-input" :class="{ 'is-invalid': errors && errors.newPassword }" placeholder="英数字8文字以上で入力してください">
                     </td>
                 </tr>
                 <tr>
                     <th><label for="password-confirm" class="c-label">新しいパスワード（再入力）</label></th>
                     <td>
-                        <input v-model="formData.password_confirmation" id="password_confirm" class="c-input" :class="{ 'is-invalid': errors && errors.password_confirmation }" autocomplete="password" placeholder="英数字8文字以上で入力してください">
+                        <input v-model="formData.password_confirmation" id="password_confirm" class="c-input" :class="{ 'is-invalid': errors && errors.password_confirmation }" placeholder="英数字8文字以上で入力してください">
                     </td>
                 </tr>
             </table>

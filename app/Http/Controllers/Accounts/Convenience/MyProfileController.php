@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use App\Http\Requests\Convenience\ProfileRequest;
 
 class MyProfileController extends Controller
 {
@@ -21,27 +22,46 @@ class MyProfileController extends Controller
     // プロフィール編集画面の表示
     public function showProfile(Request $request, $userId)
     {
+        // dd($userId);
         $user = User::find($userId);
+        // dd($user);
         $convenience = $user->convenience;
+        // dd($convenience);
         $address = $convenience->address;
         return view('accounts.convenience.profile', ['user' => $user, 'convenience' => $convenience, 'address' => $address]);
     }
 
     // プロフィール編集・更新処理
-    public function editProfile(Request $request, $userId)
+    public function editProfile(ProfileRequest $request, $userId)
     {
-        \Log::info('Request data:', $request->all());
+        \Log::info('$userIdは、', [$userId]);
+        \Log::info('リクエストは、:', $request->all());
+
         // ユーザー情報を取得
         $user = User::find($userId);
+        \Log::info('$userは、', [$user]);
         
         // ユーザー情報を更新
         $user->name = $request->input('name');
         $user->email = $request->input('email');
-        if ($request->filled('password')) { // パスワードが提供されているか確認
-            $user->password = Hash::make($request->input('password'));
+
+        // パスワードの入力がある場合のみ更新する
+        $password = $request->input('password');
+        if (!empty($password)) {
+            $user->password = Hash::make($password);
         }
-        $user->icon = $request->input('icon');
+
         $user->introduction = $request->input('introduction');
+
+        // ファイルがアップロードされているか確認
+        if ($request->hasFile('icon')) {
+            $iconImage = $request->file('icon');
+            $extension = $iconImage->getClientOriginalExtension(); // ファイルの拡張子を取得
+            $fileName = sha1($iconImage->getClientOriginalName()) . '.' . $extension; // SHA-1ハッシュでファイル名を決定
+            $iconImagePath = $iconImage->storeAs('public/icons', $fileName); // ファイルを保存
+            $user->icon = $fileName; // ファイルパスを保存
+        }
+
         $user->save();
 
         // コンビニ情報を取得
@@ -69,13 +89,14 @@ class MyProfileController extends Controller
     }
 
     // 退会画面の表示
-    public function showWithdraw(Request $request)
+    public function showWithdraw(Request $request, $userId)
     {
+        $user = User::find($userId);
         return view('accounts.convenience.withdraw');
     }
 
     // 退会処理の実行
-    public function withdraw()
+    public function withdraw(Request $request, $userId)
     {
         $user = Auth::user();
         $user->is_deleted = true; // 論理削除の実行

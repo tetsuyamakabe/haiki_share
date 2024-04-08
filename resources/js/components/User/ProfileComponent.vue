@@ -7,6 +7,8 @@
             <span v-if="errors && errors.email" class="c-error">{{ errors.email[0] }}</span>
             <span v-if="errors && errors.password" class="c-error">{{ errors.password[0] }}</span>
             <span v-if="errors && errors.password_confirmation" class="c-error">{{ errors.password_confirmation[0] }}</span>
+            <span v-if="errors && errors.introduction" class="c-error">{{ errors.introduction[0] }}</span>
+            <span v-if="errors && errors.icon" class="c-error">{{ errors.icon[0] }}</span>
 
             <table>
                 <tr>
@@ -27,7 +29,7 @@
                     <th><label for="password" class="c-label">パスワード</label></th>
                     <td>
                         <div class="p-input__password">
-                            <input v-model="formData.password" id="password" :type="PasswordType" class="c-input" :class="{ 'is-invalid': errors && errors.password }" autocomplete="new-password" placeholder="英数字8文字以上で入力してください">
+                            <input v-model="formData.password" id="password" :type="PasswordType" class="c-input" :class="{ 'is-invalid': errors && errors.password }" placeholder="英数字8文字以上で入力してください">
                             <span @click="togglePasswordVisibility('password')"><i :class="PasswordIconClass"></i></span>
                         </div>
                     </td>
@@ -37,7 +39,7 @@
                     <th><label for="password-confirm" class="c-label">パスワード（再入力）</label></th>
                     <td>
                         <div class="p-input__password">
-                            <input v-model="formData.password_confirmation" id="password-confirm" :type="PasswordConfirmType" class="c-input" :class="{ 'is-invalid': errors && errors.password_confirmation }" autocomplete="new-password" placeholder="英数字8文字以上で入力してください">
+                            <input v-model="formData.password_confirmation" id="password-confirm" :type="PasswordConfirmType" class="c-input" :class="{ 'is-invalid': errors && errors.password_confirmation }" placeholder="英数字8文字以上で入力してください">
                             <span @click="togglePasswordVisibility('password_confirm')"><i :class="PasswordConfirmIconClass"></i></span>
                         </div>
                     </td>
@@ -46,23 +48,26 @@
                 <tr>
                     <th><label for="introduction" class="c-label">自己紹介</label></th>
                     <td>
-                        <textarea v-model="formData.introduction" id="introduction" type="text" class="c-input" autocomplete="introduction"></textarea>
+                        <div class="p-textarea__form">
+                            <textarea v-model.trim="formData.introduction" maxlength="50" id="introduction" type="text" class="c-textarea" autocomplete="introduction" @keyup="countCharacters" :class="{ 'is-invalid': errors && errors.introduction }" placeholder="50文字以内で入力してください"></textarea>
+                            <span class="c-textarea__count">{{ formData.introduction.length }} / 50文字</span>
+                        </div>
                     </td>
                 </tr>
 
                 <tr>
                     <th><label for="icon" class="c-label">顔写真</label></th>
                     <td>
-                        <div class="drag-drop-area" @drop="handleDrop">
-                            <input type="file" id="icon" @change="handleFileChange" class="hidden-input">
-                            <div class="drag-drop-content">
-                                <img v-if="formData.icon" :src="formData.icon" alt="アップロード顔写真" class="c-icon">
-                                <img v-else src="/default.png" alt="デフォルト顔写真" class="c-icon">
-                                <span v-if="!formData.icon">ドラッグ＆ドロップ</span>
-                            </div>
+                        <div class="p-image" @drop="handleDrop" :class="{ 'is-invalid': errors && errors.icon }">
+                            <input type="file" id="icon" @change="handleFileChange" class="c-input__hidden">
+                            <img v-if="!iconPreview && formData.icon" :src="'/storage/icons/' + formData.icon" alt="アップロード顔写真" class="c-icon">
+                            <img v-else-if="iconPreview" :src="iconPreview" alt="アップロード顔写真" class="c-icon">
+                            <img v-else src="/default.png" alt="デフォルト顔写真" class="c-icon">
+                            <span v-if="!formData.icon">ドラッグ＆ドロップ</span>
                         </div>
                     </td>
                 </tr>
+
             </table>
 
             <!-- 更新ボタン -->
@@ -88,6 +93,8 @@ export default {
                 introduction: this.user.introduction || '',
                 icon: this.user.icon || '',
             },
+            textareaCount: 0, // 自己紹介文の文字数カウント初期値
+            iconPreview: '',
             errors: null,
             PasswordType: 'password', // パスワードの初期設定
             PasswordConfirmType: 'password', // パスワード（再入力）の初期設定
@@ -99,7 +106,7 @@ export default {
     methods: {
         // 入力された値をサーバー側に送信するメソッド
         submitForm() {
-            const userId = this.user.id; // Vue.jsコンポーネントから渡されたユーザーIDを取得する
+            const userId = this.user.id;
 
             // リクエストヘッダー定義
             const config = {
@@ -107,7 +114,8 @@ export default {
                 'content-type': 'multipart/form-data'
                 }
             };
-            // FormDataオブジェクトを作成
+
+            // フォームデータを作成
             const formData = new FormData();
             formData.append('_method', 'PUT');
             formData.append('name', this.formData.name);
@@ -115,7 +123,11 @@ export default {
             formData.append('password', this.formData.password);
             formData.append('password_confirmation', this.formData.password_confirmation);
             formData.append('introduction', this.formData.introduction);
-            formData.append('icon', this.formData.icon);
+            
+            // icon フィールドが空でない場合のみ、フォームデータに追加
+            if (this.formData.icon !== '') {
+                formData.append('icon', this.formData.icon);
+            }
 
             axios.post('/user/mypage/profile/' + userId, formData, config).then(response => {
                 console.log('プロフィールが更新されました:', response.data);
@@ -137,20 +149,42 @@ export default {
             }
         },
 
+        // 自己紹介文の文字数をカウントするメソッド
+        countCharacters() {
+            this.countCharactersLength = this.formData.introduction.length;
+            if (this.countCharactersLength > 50) {
+                this.formData.introduction = this.formData.introduction.slice(0, 50);
+                this.countCharactersLength = 50;
+            }
+        },
+
         // ドラッグ＆ドロップエリアに画像がドロップされたときの処理
         handleDrop(event) {
             event.preventDefault();
-            const file = event.dataTransfer.files[0];
-            this.displayImage(file);
+            event.dataTransfer.files[0];
         },
 
         // ファイルが選択されたときの処理
         handleFileChange(event) {
-            console.log('handleFileChangeメソッドです');
             const file = event.target.files[0];
             if (file) {
+                // プレビューを表示する
+                this.previewImage(file);
+                // formData.iconにファイルオブジェクトを設定
                 this.formData.icon = file;
+            } else {
+                this.formData.icon = null;
             }
+        },
+
+        // 画像のプレビューを表示するメソッド
+        previewImage(file) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                // プレビュー画像のURLを生成し、formDataに設定
+                this.iconPreview = e.target.result;
+            };
+            reader.readAsDataURL(file);
         }
     }
 }

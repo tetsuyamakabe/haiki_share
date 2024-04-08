@@ -344,9 +344,9 @@ body {
 }
 
 .c-icon {
-  width: 160px;
-  height: 160px;
-  margin: 16px 8px;
+  width: 200px;
+  height: 200px;
+  border-radius: 100%;
 }
 
 .c-input {
@@ -357,6 +357,17 @@ body {
   padding: 8px;
   box-sizing: border-box;
   font-size: 16px;
+}
+
+.c-input__hidden {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  z-index: 1;
+  cursor: pointer;
 }
 
 .c-label {
@@ -568,6 +579,23 @@ body {
   }
 }
 
+.c-textarea {
+  background: #f6f5f4;
+  width: 320px;
+  border: 1px solid #000;
+  margin: 16px 8px;
+  padding: 8px;
+  box-sizing: border-box;
+  font-size: 16px;
+}
+
+.c-textarea__count {
+  position: absolute;
+  font-size: 14px;
+  right: 6px;
+  bottom: -3px;
+}
+
 .c-title {
   font-size: 24px;
   color: #333;
@@ -619,6 +647,19 @@ body {
 .p-forgotpassword__button {
   display: flex;
   justify-content: center;
+}
+
+.p-image {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  border: 1px solid #000;
+  border-radius: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 16px 8px;
+  padding: 8px;
 }
 
 .p-input__password {
@@ -723,5 +764,9 @@ body {
 .p-resetpassword__button {
   display: flex;
   justify-content: center;
+}
+
+.p-textarea__form {
+  position: relative;
 }
 
