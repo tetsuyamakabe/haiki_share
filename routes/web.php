@@ -45,8 +45,8 @@ Route::middleware(['auth', 'authcheckrole'])->group(function () {
     Route::get('/user/mypage/profile/{userId}', 'Accounts\User\MyProfileController@showProfile')->name('user.profile.show'); // プロフィール編集画面
     Route::post('/user/mypage/profile/{userId}', 'Accounts\User\MyProfileController@editProfile')->name('user.profile.edit'); // プロフィール編集・更新処理
     Route::put('/user/mypage/profile/{userId}', 'Accounts\User\MyProfileController@editProfile')->name('user.profile.edit'); // プロフィール編集・更新処理
-    Route::get('/user/mypage/withdraw', 'Accounts\User\MyProfileController@showWithdraw')->name('user.withdraw.show'); // 退会画面
-    Route::delete('/user/mypage/withdraw', 'Accounts\User\MyProfileController@withdraw')->name('user.withdraw'); // 退会処理
+    Route::get('/user/mypage/withdraw/{userId}', 'Accounts\User\MyProfileController@showWithdraw')->name('user.withdraw.show'); // 退会画面
+    Route::delete('/user/mypage/withdraw/{userId}', 'Accounts\User\MyProfileController@withdraw')->name('user.withdraw'); // 退会処理
 });
 
 // コンビニ側
@@ -65,6 +65,6 @@ Route::middleware(['auth', 'authcheckrole'])->group(function () {
     Route::get('/convenience/mypage/profile/{userId}', 'Accounts\Convenience\MyProfileController@showProfile')->name('convenience.profile.show'); // プロフィール編集画面
     Route::post('/convenience/mypage/profile/{userId}', 'Accounts\Convenience\MyProfileController@editProfile')->name('convenience.profile.edit'); // プロフィール編集・更新処理
     Route::put('/convenience/mypage/profile/{userId}', 'Accounts\Convenience\MyProfileController@editProfile')->name('convenience.profile.edit'); // プロフィール編集・更新処理
-    Route::get('/convenience/mypage/withdraw', 'Accounts\Convenience\MyProfileController@showWithdraw')->name('convenience.withdraw.show'); // 退会画面
-    Route::delete('/convenience/mypage/withdraw', 'Accounts\Convenience\MyProfileController@withdraw')->name('convenience.withdraw'); // 退会処理
+    Route::get('/convenience/mypage/withdraw/{userId}', 'Accounts\Convenience\MyProfileController@showWithdraw')->name('convenience.withdraw.show'); // 退会画面
+    Route::delete('/convenience/mypage/withdraw/{userId}', 'Accounts\Convenience\MyProfileController@withdraw')->name('convenience.withdraw'); // 退会処理
 });

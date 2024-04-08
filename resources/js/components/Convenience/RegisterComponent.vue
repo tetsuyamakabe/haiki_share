@@ -18,19 +18,19 @@
                 <tr>
                     <th><label for="name" class="c-label">コンビニ名</label></th>
                     <td>
-                        <input v-model="formData.name" id="name" type="text" class="c-input" :class="{ 'is-invalid': errors && errors.name }">
+                        <input v-model="formData.name" id="name" type="text" class="c-input" :class="{ 'is-invalid': errors && errors.name }" autocomplete="name">
                     </td>
                 </tr>
                 <tr>
                     <th><label for="branch_name" class="c-label">支店名</label></th>
                     <td>
-                        <input v-model="formData.branch_name" id="branch_name" type="text" class="c-input" :class="{ 'is-invalid': errors && errors.branch_name }">
+                        <input v-model="formData.branch_name" id="branch_name" type="text" class="c-input" :class="{ 'is-invalid': errors && errors.branch_name }" autocomplete="branch_name">
                     </td>
                 </tr>
                 <tr>
                     <th><label for="address" class="c-label">住所</label></th>
                     <td>
-                        <input v-model="formData.postalcode" id="address" type="text" class="c-input" :class="{ 'is-invalid': errors && errors.address }">
+                        <input v-model="formData.postalcode" id="address" type="text" class="c-input" :class="{ 'is-invalid': errors && errors.address }" autocomplete="address">
                     </td>
                 </tr>
                 <tr>
@@ -41,38 +41,38 @@
                 <tr>
                     <th><label for="prefecture" class="c-label">都道府県</label></th>
                     <td>
-                        <input v-model="formData.prefecture" id="prefecture" type="text" class="c-input" :class="{ 'is-invalid': errors && errors.prefecture }">
+                        <input v-model="formData.prefecture" id="prefecture" type="text" class="c-input" :class="{ 'is-invalid': errors && errors.prefecture }" autocomplete="prefecture">
                     </td>
                 </tr>
                 <tr>
                     <th><label for="city" class="c-label">市区町村</label></th>
                     <td>
-                        <input v-model="formData.city" id="city" type="text" class="c-input" :class="{ 'is-invalid': errors && errors.city }">
+                        <input v-model="formData.city" id="city" type="text" class="c-input" :class="{ 'is-invalid': errors && errors.city }" autocomplete="city">
                     </td>
                 </tr>
                 <tr>
                     <th><label for="town" class="c-label">地名・番地</label></th>
                     <td>
-                        <input v-model="formData.town" id="town" type="text" class="c-input" :class="{ 'is-invalid': errors && errors.town }">
+                        <input v-model="formData.town" id="town" type="text" class="c-input" :class="{ 'is-invalid': errors && errors.town }" autocomplete="town">
                     </td>
                 </tr>
                 <tr>
                     <th><label for="building" class="c-label">建物名・部屋番号</label></th>
                     <td>
-                        <input v-model="formData.building" id="building" type="text" class="c-input" :class="{ 'is-invalid': errors && errors.building }">
+                        <input v-model="formData.building" id="building" type="text" class="c-input" :class="{ 'is-invalid': errors && errors.building }" autocomplete="building">
                     </td>
                 </tr>
                 <tr>
                     <th><label for="email" class="c-label">メールアドレス</label></th>
                     <td>
-                        <input v-model="formData.email" id="email" type="email" class="c-input" :class="{ 'is-invalid': errors && errors.email }">
+                        <input v-model="formData.email" id="email" type="email" class="c-input" :class="{ 'is-invalid': errors && errors.email }" autocomplete="email">
                     </td>
                 </tr>
                 <tr>
                     <th><label for="password" class="c-label">パスワード</label></th>
                     <td>
                         <div class="p-input__password">
-                            <input v-model="formData.password" id="password" :type="PasswordType" class="c-input" :class="{ 'is-invalid': errors && errors.password }" autocomplete="new-password" placeholder="英数字8文字以上で入力してください">
+                            <input v-model="formData.password" id="password" :type="PasswordType" class="c-input" :class="{ 'is-invalid': errors && errors.password }" placeholder="英数字8文字以上で入力してください">
                             <span @click="togglePasswordVisibility('password')"><i :class="PasswordIconClass"></i></span>
                         </div>
                     </td>
@@ -81,7 +81,7 @@
                     <th><label for="password-confirm" class="c-label">パスワード（再入力）</label></th>
                     <td>
                         <div class="p-input__password">
-                            <input v-model="formData.password_confirmation" id="password-confirm" :type="PasswordConfirmType" class="c-input" :class="{ 'is-invalid': errors && errors.password_confirmation }" autocomplete="new-password" placeholder="英数字8文字以上で入力してください">
+                            <input v-model="formData.password_confirmation" id="password-confirm" :type="PasswordConfirmType" class="c-input" :class="{ 'is-invalid': errors && errors.password_confirmation }" placeholder="英数字8文字以上で入力してください">
                             <span @click="togglePasswordVisibility('password_confirm')"><i :class="PasswordConfirmIconClass"></i></span>
                         </div>
                     </td>
