@@ -23,5 +23,6 @@
     "User Product Index": "利用者側商品一覧",
     "Convenience Store Product Index": "コンビニ側商品一覧",
     "ProductIndex": "商品一覧",
-    "ProductSale": "商品出品"
+    "ProductSale": "商品出品",
+    "ProductEdit": "商品編集"
 }
