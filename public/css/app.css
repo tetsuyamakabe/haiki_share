@@ -346,7 +346,7 @@ body {
 .c-icon {
   width: 200px;
   height: 200px;
-  border-radius: 100%;
+  border-radius: 50%;
 }
 
 .c-input {
@@ -579,6 +579,18 @@ body {
   }
 }
 
+.c-product__picture {
+  width: 200px;
+  height: 200px;
+}
+
+.c-text {
+  position: absolute;
+  font-size: 12px;
+  left: 8px;
+  bottom: 0px;
+}
+
 .c-textarea {
   background: #f6f5f4;
   width: 320px;
@@ -649,12 +661,12 @@ body {
   justify-content: center;
 }
 
-.p-image {
+.p-icon {
   position: relative;
   width: 200px;
   height: 200px;
   border: 1px solid #000;
-  border-radius: 100%;
+  border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -705,6 +717,24 @@ body {
 }
 
 .p-login__button {
+  display: flex;
+  justify-content: center;
+}
+
+.p-product__picture {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  border: 1px solid #000;
+  border-radius: 5%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 16px 8px;
+  padding: 8px;
+}
+
+.p-product__button {
   display: flex;
   justify-content: center;
 }
@@ -764,6 +794,10 @@ body {
 .p-resetpassword__button {
   display: flex;
   justify-content: center;
+}
+
+.p-text__form {
+  position: relative;
 }
 
 .p-textarea__form {

@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
+use App\Models\Product;
 use App\Models\Convenience;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Notifications\User\PasswordResetNotification;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class User extends Authenticatable
 {
@@ -19,7 +20,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'role',
+        'name', 'email', 'password', 'icon', 'introduction', 'role',
     ];
 
     /**
@@ -50,10 +51,16 @@ class User extends Authenticatable
         }
     }
 
-    // コンビニテーブルとの関連付け
+    // コンビニモデルとの関連付け（一対一の関係）
     public function convenience()
     {
         return $this->hasOne(Convenience::class);
+    }
+
+    // 商品モデルとの関連付け（一対多の関係）
+    public function products()
+    {
+        return $this->hasMany(Product::class);
     }
 }
 

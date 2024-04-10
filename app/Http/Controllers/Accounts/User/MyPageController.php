@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\User\ProfileRequest;
 
-class MyProfileController extends Controller
+class MyPageController extends Controller
 {
     // マイページ画面の表示
     public function showMyPage(Request $request, $userId)

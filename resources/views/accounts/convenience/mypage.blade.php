@@ -5,7 +5,7 @@
     <main class="l-main">
         <div class="p-mypage">
             <h1 class="c-title">{{ __('Convenience Store MyPage') }}</h1>
-            <p class="c-text" style="font-weight:bold; font-size: 24px;">ユーザー名は、{{ Auth::user()->name }}です。</p>
+            <p style="font-weight:bold; font-size: 24px;">ユーザー名は、{{ Auth::user()->name }}です。</p>
                 <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                     {{ __('Logout') }}
                 </a>
@@ -18,6 +18,12 @@
 
                     <!-- 退会画面へのリンクを追加 -->
                     <a href="{{ route('convenience.withdraw.show', ['userId' => $user->id]) }}" class="c-button" style="margin-left: 20px;">{{ __('Withdraw') }}</a>
+
+                    <!-- 商品一覧画面へのリンクを追加 -->
+                    <a href="{{ route('convenience.productIndex.show') }}" class="c-button" style="margin-left: 20px;">{{ __('ProductIndex') }}</a>
+
+                    <!-- 商品出品画面へのリンクを追加 -->
+                    <a href="{{ route('convenience.productSale.show', ['userId' => $user->id]) }}" class="c-button" style="margin-left: 20px;">{{ __('ProductSale') }}</a>
                 </div>
         </div>
     </main>

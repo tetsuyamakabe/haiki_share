@@ -19,5 +19,9 @@
     "Convenience Store Profile": "コンビニ側プロフィール編集",
     "Withdraw": "退会",
     "User Withdraw": "利用者側退会画面",
-    "Convenience Store Withdraw": "コンビニ側退会画面"
+    "Convenience Store Withdraw": "コンビニ側退会画面",
+    "User Product Index": "利用者側商品一覧",
+    "Convenience Store Product Index": "コンビニ側商品一覧",
+    "ProductIndex": "商品一覧",
+    "ProductSale": "商品出品"
 }

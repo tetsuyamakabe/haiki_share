@@ -16,11 +16,12 @@ class Address extends Model
         'prefecture', 'city', 'town', 'building'
     ];
 
-    // コンビニテーブルとの関連付け
-    public function convenienceStores()
+    // コンビニモデルとの関連付け（一対一の関係）
+    public function convenience()
     {
-        return $this->hasMany(Convenience::class);
+        return $this->hasOne(Convenience::class);
     }
+
 }
 // mysql> desc addresses;
 // +------------+---------------------+------+-----+---------+----------------+

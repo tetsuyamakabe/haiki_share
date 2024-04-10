@@ -37,7 +37,7 @@ class ProfileRequest extends FormRequest
     
         // アイコン画像がアップロードされた場合のみバリデーションルールを適用
         if ($this->hasFile('icon')) {
-            $rules['icon'] = 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048';
+            $rules['icon'] = 'nullable|file|mimes:jpeg,png,jpg,gif|max:2048';
         }
         return $rules;
     }
