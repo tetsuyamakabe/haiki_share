@@ -1,6 +1,23 @@
 .c-product {
     &__picture {
-        width: 200px;
+        min-width: 268px;
         height: 200px;
+    }
+
+    &__name {
+        font-size: 18px;
+        font-weight: bold;
+    }
+
+    &__price {
+        font-size: 14px;
+        display: flex;
+        justify-content: center;
+    }
+
+    &__date {
+        font-size: 14px;
+        display: flex;
+        justify-content: center;
     }
 }
