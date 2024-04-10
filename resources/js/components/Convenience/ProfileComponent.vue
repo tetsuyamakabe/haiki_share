@@ -112,7 +112,7 @@
                 <tr>
                     <th><label for="icon" class="c-label">顔写真</label></th>
                     <td>
-                        <div class="p-image" @drop="handleDrop" :class="{ 'is-invalid': errors && errors.icon }">
+                        <div class="p-icon" @drop="handleDrop" :class="{ 'is-invalid': errors && errors.icon }">
                             <input type="file" id="icon" @change="handleFileChange" class="c-input__hidden">
                             <img v-if="!iconPreview && formData.icon" :src="'/storage/icons/' + formData.icon" alt="アップロード顔写真" class="c-icon">
                             <img v-else-if="iconPreview" :src="iconPreview" alt="アップロード顔写真" class="c-icon">
@@ -188,7 +188,7 @@ export default {
             // リクエストヘッダー定義
             const config = {
                 headers: {
-                'content-type': 'multipart/form-data'
+                    'content-type': 'multipart/form-data'
                 }
             };
 

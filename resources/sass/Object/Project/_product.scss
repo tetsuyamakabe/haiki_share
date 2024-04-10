@@ -1,0 +1,19 @@
+.p-product {
+    &__picture {
+        position: relative;
+        width: 200px;
+        height: 200px;
+        border: 1px solid #000;
+        border-radius: 5%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 16px 8px;
+        padding: 8px;
+    }
+
+    &__button{
+        display: flex;
+        justify-content: center;
+    }
+}

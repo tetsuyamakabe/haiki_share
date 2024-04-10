@@ -5,7 +5,7 @@
     <main class="l-main">
         <div class="p-mypage">
             <h1 class="c-title">{{ __('User MyPage') }}</h1>
-            <p class="c-text" style="font-weight:bold; font-size: 24px;">ユーザー名は、{{ Auth::user()->name }}です。</p>
+            <p style="font-weight:bold; font-size: 24px;">ユーザー名は、{{ Auth::user()->name }}です。</p>
                 <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                     {{ __('Logout') }}
                 </a>
@@ -18,6 +18,9 @@
                     
                     <!-- 退会画面へのリンクを追加 -->
                     <a href="{{ route('user.withdraw.show', ['userId' => $user->id]) }}" class="c-button" style="margin-left: 20px;">{{ __('Withdraw') }}</a>
+
+                    <!-- 商品一覧画面へのリンクを追加 -->
+                    <a href="{{ route('user.productIndex.show') }}" class="c-button" style="margin-left: 20px;">{{ __('ProductIndex') }}</a>
                 </div>
         </div>
     </main>

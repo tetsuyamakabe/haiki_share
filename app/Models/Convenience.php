@@ -14,20 +14,27 @@ class Convenience extends Model
     protected $table = 'convenience_stores';
 
     protected $fillable = [
-        'user_id', 'branch_name', 'address_id', 'is_deleted'
+        'user_id', 'branch_name', 'address_id'
     ];
 
-    // ユーザーテーブルとの関連付け
+    // ユーザーモデルとの関連付け（一対一の関係）
     public function user()
     {
         return $this->belongsTo(User::class);
     }
 
-    // 住所テーブルとの関連付け
+    // 住所モデルとの関連付け（一対一の関係）
     public function address()
     {
         return $this->belongsTo(Address::class);
     }
+
+    // 商品モデルとの関連付け（一対多の関係）
+    public function products()
+    {
+        return $this->hasMany(Product::class);
+    }
+
 }
 
 // mysql> desc convenience_stores;
