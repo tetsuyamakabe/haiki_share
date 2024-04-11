@@ -28,7 +28,12 @@ class ProductEditRequest extends FormRequest
             'price' => 'required|numeric|min:0',
             'category' => 'required',
             'expiration_date' => 'required|date',
-            'product_picture' => 'required|file|mimes:jpeg,png,jpg,gif|max:2048',
         ];
+
+        // 商品画像がアップロードされた場合のみバリデーションルールを適用
+        if ($this->hasFile('product_picture')) {
+            $rules['product_picture'] = 'required|file|mimes:jpeg,png,jpg,gif|max:2048';
+        }
+        return $rules;
     }
 }

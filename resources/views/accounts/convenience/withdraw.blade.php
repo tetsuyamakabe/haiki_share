@@ -8,6 +8,7 @@
                 <h1 class="c-title">{{ __('Convenience Store Withdraw') }}</h1>
                 <form method="POST" action="{{ route('convenience.withdraw', ['userId' => $user->id]) }}">
                     @csrf
+                    @method('DELETE')
                     <convenience-withdraw-component  :user="{{ $user }}"></convenience-withdraw-component>
                 </form>
             </div>
