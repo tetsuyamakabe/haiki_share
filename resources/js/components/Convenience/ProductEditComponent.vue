@@ -50,7 +50,7 @@
                     <td>
                         <div class="p-product__picture" @drop="handleDrop" :class="{ 'is-invalid': errors && errors.product_picture }">
                             <input type="file" id="product_picture" @change="handleFileChange" class="c-input__hidden">
-                            <img v-if="!picturePreview && formData.product_picture" :src="'/storage/product_pictures/' + formData.product_picture" alt="アップロード商品画像" class="c-product__picture">
+                            <img v-if="!picturePreview && formData.product_picture !== ''" :src="'/storage/product_pictures/' + formData.product_picture" alt="アップロード商品画像" class="c-product__picture">
                             <img v-else-if="picturePreview" :src="picturePreview" alt="アップロード商品画像" class="c-product__picture">
                             <img v-else src="/storage/product_pictures/no_image.png" alt="NO_IMAGE" class="c-product__picture">
                         </div>
@@ -71,15 +71,15 @@
 import axios from 'axios';
 
 export default {
-    props: ['product', 'categories'],
+    props: ['product', 'categories', 'product_pictures'],
     data() {
         return {
             formData: {
                 name: this.product.name || '',
                 price: this.product.price || '',
-                category: this.product.category || '',
+                category: this.product.category_id || '',
                 expiration_date: this.product.expiration_date || '',
-                product_picture: this.product.product_picture || '',
+                product_picture: this.product_pictures.length > 0 ? this.product_pictures[0].file : '',
             },
             picturePreview: '',
             errors: null,
@@ -96,8 +96,8 @@ export default {
                 const year = inputDate.substring(0, 4); // YYYYの部分を取り出す
                 const month = inputDate.substring(4, 6); // MMの部分を取り出す
                 const day = inputDate.substring(6, 8); // DDの部分を取り出す
-                // YYYY-MM-DD形式に変換して返す
-                return `${year}-${month}-${day}`;
+                // YYYYMMDD形式に変換して返す
+                return `${year}${month}${day}`;
             } else {
                 // 入力が不正な場合は空文字を返す
                 return '';
@@ -108,6 +108,8 @@ export default {
     methods: {
         // 入力された値をサーバー側に送信するメソッド
         submitForm() {
+            const productId = this.product.id;
+            
             // リクエストヘッダー定義
             const config = {
                 headers: {
@@ -124,7 +126,7 @@ export default {
             formData.append('expiration_date', this.formattedExpirationDate);
             formData.append('product_picture', this.formData.product_picture);
 
-            axios.post('/convenience/products/' + this.product.id, formData, config).then(response => {
+            axios.post('/convenience/products/edit/' + productId, formData, config).then(response => {
                 console.log('商品が編集されました:', response.data);
                 // 商品一覧画面に遷移
                 window.location.href = '/convenience/products';

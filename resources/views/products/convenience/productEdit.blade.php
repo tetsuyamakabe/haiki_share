@@ -9,7 +9,7 @@
                 <form method="POST" action="{{ route('convenience.productEdit.edit', $product->id) }}" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
-                    <convenience-productedit-component :product="{{ $product }}" :categories="{{ $categories }}"></convenience-productedit-component>
+                    <convenience-productedit-component :product="{{ $product }}" :categories="{{ $categories }}" :product_pictures="{{ $productPictures }}"></convenience-productedit-component>
                 </form>
             </div>
         </div>
