@@ -16,8 +16,6 @@ class Product extends Model
         'name', 'price', 'expiration_date', 'category_id', 'convenience_store_id'
     ];
 
-    protected $dates = ['expiration_date'];
-
     // カテゴリーモデルとの関連付け（一対一の関係）
     public function category()
     {

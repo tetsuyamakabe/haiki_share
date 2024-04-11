@@ -40,6 +40,7 @@ Vue.component('convenience-withdraw-component', require('./components/Convenienc
 Vue.component('convenience-productindex-component', require('./components/Convenience/ProductIndexComponent.vue').default); //商品一覧画面
 Vue.component('convenience-productsale-component', require('./components/Convenience/ProductSaleComponent.vue').default); //商品出品画面
 Vue.component('convenience-productedit-component', require('./components/Convenience/ProductEditComponent.vue').default); //商品編集画面
+Vue.component('convenience-productdelete-component', require('./components/Convenience/ProductDeleteComponent.vue').default); //商品削除ボタン
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

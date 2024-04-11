@@ -47,6 +47,7 @@ Route::middleware(['auth', 'authcheckrole'])->group(function () {
     Route::put('/user/mypage/profile/{userId}', 'Accounts\User\MyPageController@editProfile')->name('user.profile.edit'); // プロフィール編集・更新処理
     Route::get('/user/mypage/withdraw/{userId}', 'Accounts\User\MyPageController@showWithdraw')->name('user.withdraw.show'); // 退会画面
     Route::post('/user/mypage/withdraw/{userId}', 'Accounts\User\MyPageController@withdraw')->name('user.withdraw'); // 退会処理
+    Route::delete('/user/mypage/withdraw/{userId}', 'Accounts\User\MyPageController@withdraw')->name('user.withdraw'); // 退会処理
 
     Route::get('/user/products', 'Products\User\ProductController@showProductIndex')->name('user.productIndex.show'); // 商品一覧画面
 });
@@ -69,6 +70,7 @@ Route::middleware(['auth', 'authcheckrole'])->group(function () {
     Route::put('/convenience/mypage/profile/{userId}', 'Accounts\Convenience\MyPageController@editProfile')->name('convenience.profile.edit'); // プロフィール編集・更新処理
     Route::get('/convenience/mypage/withdraw/{userId}', 'Accounts\Convenience\MyPageController@showWithdraw')->name('convenience.withdraw.show'); // 退会画面
     Route::post('/convenience/mypage/withdraw/{userId}', 'Accounts\Convenience\MyPageController@withdraw')->name('convenience.withdraw'); // 退会処理
+    Route::delete('/convenience/mypage/withdraw/{userId}', 'Accounts\Convenience\MyPageController@withdraw')->name('convenience.withdraw'); // 退会処理
 
     Route::get('/convenience/products', 'Products\Convenience\ProductController@showProductIndex')->name('convenience.productIndex.show'); // 商品一覧画面
     Route::get('/convenience/products/{userId}', 'Products\Convenience\ProductController@showProductSale')->name('convenience.productSale.show'); // 商品出品画面
@@ -78,5 +80,8 @@ Route::middleware(['auth', 'authcheckrole'])->group(function () {
     Route::get('/convenience/products/edit/{productId}', 'Products\Convenience\ProductController@showProductEdit')->name('convenience.productEdit.show'); // 商品編集画面
     Route::post('/convenience/products/edit/{productId}', 'Products\Convenience\ProductController@editProduct')->name('convenience.productEdit.edit'); // 商品編集・更新処理
     Route::put('/convenience/products/edit/{productId}', 'Products\Convenience\ProductController@editProduct')->name('convenience.productEdit.edit'); // 商品編集・更新処理
+
+    Route::post('/convenience/products/{productId}', 'Products\Convenience\ProductController@delete')->name('convenience.products.delete'); // 商品削除
+    Route::delete('/convenience/products/{productId}', 'Products\Convenience\ProductController@delete')->name('convenience.products.delete'); // 商品削除
 
 });

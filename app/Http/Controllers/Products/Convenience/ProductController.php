@@ -17,7 +17,6 @@ class ProductController extends Controller
     // 商品一覧画面の表示
     public function showProductIndex()
     {
-        // 商品一覧を取得し、関連付けられた画像もロードする
         $products = Product::with('pictures')->get();
         return view('products.convenience.productIndex', ['products' => $products]);
     }
@@ -73,13 +72,10 @@ class ProductController extends Controller
         // dd($productId);
         // 商品情報を取得
         $product = Product::findOrFail($productId);
-        // dd($product);
-        // 商品に紐づく商品画像を取得
+        $product->expiration_date = Carbon::parse($product->expiration_date)->format('Ymd'); // 賞味期限をフォーマット
         $productPictures = ProductPicture::where('product_id', $productId)->get();
-        // dd($productPictures);
-        // カテゴリー情報を取得
         $categories = Category::all();
-        
+
         return view('products.convenience.productEdit', ['product' => $product, 'productPictures' => $productPictures, 'categories' => $categories]);
     }
 
@@ -111,8 +107,15 @@ class ProductController extends Controller
             $ProductPicture->file = $fileName;
             $ProductPicture->save();
         }
-        \Log::info('更新されました。');
         return redirect()->route('convenience.productIndex.show')->with('flash_message', '商品の編集が完了しました');
     }
 
+    public function delete(Request $request, $productId)
+    {
+        \Log::info('deleteメソッドが実行されます。');
+        $product = Product::findOrFail($productId);
+        $product->delete();
+
+        return redirect()->route('convenience.productIndex.show')->with('flash_message', '商品削除が完了しました');
+    }
 }
