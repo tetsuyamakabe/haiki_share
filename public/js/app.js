@@ -5122,15 +5122,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['product', 'categories'],
+  props: ['product', 'categories', 'product_pictures'],
   data: function data() {
     return {
       formData: {
         name: this.product.name || '',
         price: this.product.price || '',
-        category: this.product.category || '',
+        category: this.product.category_id || '',
         expiration_date: this.product.expiration_date || '',
-        product_picture: this.product.product_picture || ''
+        product_picture: this.product_pictures.length > 0 ? this.product_pictures[0].file : ''
       },
       picturePreview: '',
       errors: null
@@ -5140,16 +5140,21 @@ __webpack_require__.r(__webpack_exports__);
     // 賞味期限日付の入力値をYYYY-MM-DD形式に直すメソッド
     formattedExpirationDate: function formattedExpirationDate() {
       var inputDate = this.formData.expiration_date;
+      console.log('inputDate:', inputDate); // inputDate の値を確認
 
-      // YYYYMMDD形式に直す
       if (inputDate && inputDate.length === 8) {
-        var year = inputDate.substring(0, 4); // YYYYの部分を取り出す
-        var month = inputDate.substring(4, 6); // MMの部分を取り出す
-        var day = inputDate.substring(6, 8); // DDの部分を取り出す
-        // YYYY-MM-DD形式に変換して返す
-        return "".concat(year, "-").concat(month, "-").concat(day);
+        var year = inputDate.substring(0, 4);
+        console.log('year:', year); // year の値を確認
+
+        var month = inputDate.substring(4, 6);
+        console.log('month:', month); // month の値を確認
+
+        var day = inputDate.substring(6, 8);
+        console.log('day:', day); // day の値を確認
+
+        return "".concat(year).concat(month).concat(day);
       } else {
-        // 入力が不正な場合は空文字を返す
+        console.log('Invalid inputDate:', inputDate); // 入力が不正な場合の値を確認
         return '';
       }
     }
@@ -5158,6 +5163,8 @@ __webpack_require__.r(__webpack_exports__);
     // 入力された値をサーバー側に送信するメソッド
     submitForm: function submitForm() {
       var _this = this;
+      var productId = this.product.id;
+
       // リクエストヘッダー定義
       var config = {
         headers: {
@@ -5173,7 +5180,7 @@ __webpack_require__.r(__webpack_exports__);
       formData.append('category', this.formData.category);
       formData.append('expiration_date', this.formattedExpirationDate);
       formData.append('product_picture', this.formData.product_picture);
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/convenience/products/' + this.product.id, formData, config).then(function (response) {
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/convenience/products/edit/' + productId, formData, config).then(function (response) {
         console.log('商品が編集されました:', response.data);
         // 商品一覧画面に遷移
         window.location.href = '/convenience/products';
@@ -6500,12 +6507,6 @@ var render = function render() {
   })], 2)])]), _vm._v(" "), _c("tr", [_vm._m(3), _vm._v(" "), _c("td", [_c("div", {
     staticClass: "p-text__form"
   }, [_c("input", {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: _vm.formData.expiration_date,
-      expression: "formData.expiration_date"
-    }],
     staticClass: "c-input",
     "class": {
       "is-invalid": _vm.errors && _vm.errors.expiration_date
@@ -6517,12 +6518,6 @@ var render = function render() {
     },
     domProps: {
       value: _vm.formData.expiration_date
-    },
-    on: {
-      input: function input($event) {
-        if ($event.target.composing) return;
-        _vm.$set(_vm.formData, "expiration_date", $event.target.value);
-      }
     }
   }), _vm._v(" "), _c("span", {
     staticClass: "c-text"
@@ -6543,7 +6538,7 @@ var render = function render() {
     on: {
       change: _vm.handleFileChange
     }
-  }), _vm._v(" "), !_vm.picturePreview && _vm.formData.product_picture ? _c("img", {
+  }), _vm._v(" "), !_vm.picturePreview && _vm.formData.product_picture !== "" ? _c("img", {
     staticClass: "c-product__picture",
     attrs: {
       src: "/storage/product_pictures/" + _vm.formData.product_picture,

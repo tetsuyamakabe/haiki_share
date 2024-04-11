@@ -25,7 +25,6 @@
                     <!-- 商品出品画面へのリンクを追加 -->
                     <a href="{{ route('convenience.productSale.show', ['userId' => $user->id]) }}" class="c-button" style="margin-left: 20px;">{{ __('ProductSale') }}</a>
 
-                    <a href="{{ route('convenience.productEdit.show', ['userId' => $user->id]) }}" class="c-button" style="margin-left: 20px;">{{ __('ProductEdit') }}</a>
                 </div>
         </div>
     </main>

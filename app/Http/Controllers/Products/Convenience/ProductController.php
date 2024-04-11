@@ -26,8 +26,9 @@ class ProductController extends Controller
     public function showProductSale(Request $request, $userId)
     {
         $user = User::findOrFail($userId);
+        // dd($user);
         $categories = Category::all();
-        return view('products.convenience.productSale', ['user' => $userId, 'categories' => $categories]);
+        return view('products.convenience.productSale', ['user' => $user, 'categories' => $categories]);
     }
 
     // 商品出品処理（商品の投稿）
@@ -70,10 +71,16 @@ class ProductController extends Controller
         \Log::info('showProductEditメソッドが実行されます。');
         \Log::info('$productIdは、', [$productId]);
         // dd($productId);
+        // 商品情報を取得
         $product = Product::findOrFail($productId);
         // dd($product);
+        // 商品に紐づく商品画像を取得
+        $productPictures = ProductPicture::where('product_id', $productId)->get();
+        // dd($productPictures);
+        // カテゴリー情報を取得
         $categories = Category::all();
-        return view('products.convenience.productEdit', ['product' => $product, 'categories' => $categories]);
+        
+        return view('products.convenience.productEdit', ['product' => $product, 'productPictures' => $productPictures, 'categories' => $categories]);
     }
 
     // 商品編集・更新処理
@@ -100,10 +107,12 @@ class ProductController extends Controller
             $fileName = sha1($picture->getClientOriginalName()) . '.' . $extension;
             $picturePath = $picture->storeAs('public/product_pictures', $fileName);
 
-            $productPicture->product_id = $product->id;
-            $productPicture->file = $fileName;
-            $productPicture->save();
+            $ProductPicture = ProductPicture::where('product_id', $product->id)->first();
+            $ProductPicture->file = $fileName;
+            $ProductPicture->save();
         }
+        \Log::info('更新されました。');
         return redirect()->route('convenience.productIndex.show')->with('flash_message', '商品の編集が完了しました');
     }
+
 }

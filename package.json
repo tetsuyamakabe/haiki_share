@@ -24,6 +24,7 @@
         "vue-template-compiler": "^2.7.16"
     },
     "dependencies": {
-        "axios-jsonp": "^1.0.4"
+        "axios-jsonp": "^1.0.4",
+        "moment": "^2.30.1"
     }
 }

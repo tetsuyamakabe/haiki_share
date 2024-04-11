@@ -75,8 +75,8 @@ Route::middleware(['auth', 'authcheckrole'])->group(function () {
     Route::post('/convenience/products/{userId}', 'Products\Convenience\ProductController@createProductSale')->name('convenience.productSale.create'); // 商品出品処理
     Route::put('/convenience/products/{userId}', 'Products\Convenience\ProductController@createProductSale')->name('convenience.productSale.create'); // 商品出品処理
 
-    Route::get('/convenience/products/edit/{userId}', 'Products\Convenience\ProductController@showProductEdit')->name('convenience.productEdit.show'); // 商品編集画面
-    Route::post('/convenience/products/edit/{userId}', 'Products\Convenience\ProductController@editProduct')->name('convenience.productEdit.edit'); // 商品編集・更新処理
-    Route::put('/convenience/products/edit/{userId}', 'Products\Convenience\ProductController@editProduct')->name('convenience.productEdit.edit'); // 商品編集・更新処理
+    Route::get('/convenience/products/edit/{productId}', 'Products\Convenience\ProductController@showProductEdit')->name('convenience.productEdit.show'); // 商品編集画面
+    Route::post('/convenience/products/edit/{productId}', 'Products\Convenience\ProductController@editProduct')->name('convenience.productEdit.edit'); // 商品編集・更新処理
+    Route::put('/convenience/products/edit/{productId}', 'Products\Convenience\ProductController@editProduct')->name('convenience.productEdit.edit'); // 商品編集・更新処理
 
 });
