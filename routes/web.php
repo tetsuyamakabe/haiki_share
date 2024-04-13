@@ -81,7 +81,6 @@ Route::middleware(['auth', 'authcheckrole'])->group(function () {
     Route::post('/convenience/products/edit/{productId}', 'Products\Convenience\ProductController@editProduct')->name('convenience.productEdit.edit'); // 商品編集・更新処理
     Route::put('/convenience/products/edit/{productId}', 'Products\Convenience\ProductController@editProduct')->name('convenience.productEdit.edit'); // 商品編集・更新処理
 
-    Route::post('/convenience/products/{productId}', 'Products\Convenience\ProductController@delete')->name('convenience.products.delete'); // 商品削除
     Route::delete('/convenience/products/{productId}', 'Products\Convenience\ProductController@delete')->name('convenience.products.delete'); // 商品削除
 
 });

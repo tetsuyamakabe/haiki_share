@@ -116,6 +116,7 @@ class ProductController extends Controller
         $product = Product::findOrFail($productId);
         $product->delete();
 
-        return redirect()->route('convenience.productIndex.show')->with('flash_message', '商品削除が完了しました');
+        // リダイレクトではなく、JSONレスポンスで返す
+        return response()->json(['message' => '商品削除が完了しました']);
     }
 }

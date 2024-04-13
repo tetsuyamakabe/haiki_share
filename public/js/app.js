@@ -5125,12 +5125,11 @@ __webpack_require__.r(__webpack_exports__);
     deleteProduct: function deleteProduct() {
       var _this = this;
       var productId = this.product.id;
-      axios.post('/convenience/products/' + productId).then(function (response) {
+      axios["delete"]('/convenience/products/' + productId).then(function (response) {
         console.log('商品が削除されました:', response.data);
         window.location.href = '/convenience/products';
       })["catch"](function (error) {
         console.error('商品削除失敗:', error.response.data);
-        // エラーメッセージを表示
         _this.errors = error.response.data.errors;
       });
     }
