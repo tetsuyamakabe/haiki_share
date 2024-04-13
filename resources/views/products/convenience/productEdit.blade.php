@@ -11,11 +11,7 @@
                     @method('PUT')
                     <convenience-productedit-component :product="{{ $product }}" :categories="{{ $categories }}" :product_pictures="{{ $productPictures }}"></convenience-productedit-component>
                 </form>
-                <form method="POST" action="{{ route('convenience.products.delete', $product->id) }}">
-                    @csrf
-                    @method('DELETE')
-                    <convenience-productdelete-component :product="{{ $product }}"></convenience-productdelete-component>
-                </form>
+                <convenience-productdelete-component :product="{{ $product }}"></convenience-productdelete-component>
             </div>
         </div>
     </main>

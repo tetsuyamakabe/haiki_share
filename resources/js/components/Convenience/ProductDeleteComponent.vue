@@ -12,7 +12,7 @@ export default {
         // 商品削除処理をサーバー側に送信するメソッド
         deleteProduct() {
             const productId = this.product.id;
-            axios.post('/convenience/products/' + productId).then(response => {
+            axios.delete('/convenience/products/' + productId).then(response => {
                 console.log('商品が削除されました:', response.data);
                 window.location.href = '/convenience/products';
             }).catch(error => {
