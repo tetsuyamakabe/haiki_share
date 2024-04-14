@@ -6,10 +6,7 @@
         <div class="p-login">
             <div class="p-login__form">
                 <h1 class="c-title">{{ __('Convenience Store Login') }}</h1>
-                <form method="POST" action="{{ route('convenience.login') }}">
-                    @csrf
-                    <convenience-login-component></convenience-login-component>
-                </form>
+                <convenience-login-component></convenience-login-component>
             </div>
         </div>
     </main>

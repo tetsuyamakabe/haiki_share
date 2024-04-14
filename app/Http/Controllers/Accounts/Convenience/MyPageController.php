@@ -26,6 +26,7 @@ class MyPageController extends Controller
         $user = User::findOrFail($userId);
         // dd($user);
         $convenience = $user->convenience;
+        // dd($user->convenience);
         // dd($convenience);
         $address = $convenience->address;
         return view('accounts.convenience.profile', ['user' => $user, 'convenience' => $convenience, 'address' => $address]);

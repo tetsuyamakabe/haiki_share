@@ -6,10 +6,7 @@
         <div class="p-product">
             <div class="p-product__index">
                 <h1 class="c-title">{{ __('User Product Index') }}</h1>
-                <form method="POST" action="{{ route('user.product.show') }}">
-                    @csrf
-                    <user-productindex-component></user-productindex-component>
-                </form>
+                <user-productindex-component></user-productindex-component>
             </div>
         </div>
     </main>

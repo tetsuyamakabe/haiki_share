@@ -9,6 +9,7 @@ use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Models\ProductPicture;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\Convenience\ProductEditRequest;
 use App\Http\Requests\Convenience\ProductSaleRequest;
 
@@ -110,7 +111,8 @@ class ProductController extends Controller
         return redirect()->route('convenience.productIndex.show')->with('flash_message', '商品の編集が完了しました');
     }
 
-    public function delete(Request $request, $productId)
+    // 商品削除処理
+    public function deleteProduct(Request $request, $productId)
     {
         \Log::info('deleteメソッドが実行されます。');
         $product = Product::findOrFail($productId);
@@ -118,5 +120,24 @@ class ProductController extends Controller
 
         // リダイレクトではなく、JSONレスポンスで返す
         return response()->json(['message' => '商品削除が完了しました']);
+    }
+
+    // 商品詳細画面の表示
+    public function showProductDetail($productId)
+    {
+        // 商品IDから商品情報を取得
+        $product = Product::findOrFail($productId);
+        $categories = Category::all();
+        $productPictures = ProductPicture::where('product_id', $productId)->get();
+        foreach ($productPictures as $picture) {
+            $picture->url = asset('storage/product_pictures/' . $picture->file);
+        }
+
+        // その商品が他店舗の商品の場合は、購入ボタンをクリックできないようにする
+        $user = Auth::user(); // ログインユーザーのユーザー情報を取得
+        $userConvenienceId = $user->convenience->user_id; // ユーザーと紐づくコンビニのuser_idを取得
+        $productConvenienceId = $product->convenience_store_id; // 商品のコンビニidを取得
+
+        return view('products.convenience.productDetail', ['product' => $product, 'productPictures' => $productPictures, 'categories' => $categories, 'userConvenienceId' => $userConvenienceId, 'productConvenienceId' => $productConvenienceId]);
     }
 }

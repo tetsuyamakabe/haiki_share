@@ -305,8 +305,12 @@ body {
 
 .c-button:hover {
   background: #f66d9b;
-  /* ホバー時の背景色 */
   cursor: pointer;
+}
+
+.c-button__purchase:disabled {
+  background: #ccc;
+  cursor: not-allowed;
 }
 
 .c-error {
@@ -762,6 +766,14 @@ body {
 }
 
 .p-product__index {
+  background: #fff;
+  margin: 120px;
+  padding: 40px;
+  text-align: left;
+  border: 1px solid #000;
+}
+
+.p-product__form {
   background: #fff;
   margin: 120px auto;
   padding: 40px;
