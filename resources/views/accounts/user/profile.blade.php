@@ -6,11 +6,7 @@
         <div class="p-profile">
             <div class="p-profile__form">
                 <h1 class="c-title">{{ __('User Profile') }}</h1>
-                <form method="POST" action="{{ route('user.profile.edit', ['userId' => $user->id]) }}" enctype="multipart/form-data">
-                    @csrf
-                    @method('PUT')
-                    <user-profile-component :user="{{ $user }}" :user-id="{{ $user->id }}"></user-profile-component>
-                </form>
+                <user-profile-component :user="{{ $user }}" :user-id="{{ $user->id }}"></user-profile-component>
             </div>
         </div>
     </main>

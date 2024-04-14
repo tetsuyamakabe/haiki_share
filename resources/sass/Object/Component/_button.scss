@@ -9,8 +9,14 @@
     text-decoration: none;
 
     &:hover {
-        background: $font-color_main; /* ホバー時の背景色 */
+        background: $font-color_main;
         cursor: pointer;
+    }
 
+    &__purchase {
+        &:disabled{
+            background: $background-color_sub3;
+            cursor: not-allowed;
+        }
     }
 }
