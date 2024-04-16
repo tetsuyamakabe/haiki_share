@@ -8,10 +8,7 @@
                 </div>
                 <p class="c-product__price">価格 {{ product.price }} 円</p>
                 <p class="c-product__date">賞味期限 {{ product.expiration_date }}</p>
-                <div class="p-product__button">
-                    <a :href="getProductDetailLink(product.id)" class="c-button">詳細を見る</a>
-                    <a :href="getProductEditLink(product.id)" class="c-button">編集する</a>
-                </div>
+                <!-- 【TODO】 詳細を見るボタンを表示 -->
             </li>
         </ul>
     </div>
@@ -29,16 +26,6 @@ export default {
                 return '/storage/product_pictures/no_image.png';
             }
         },
-
-        // 商品詳細画面のリンクを返すメソッド
-        getProductDetailLink(productId) {
-            return '/convenience/products/detail/' + productId; // 【TODO】 VueRouterを使う
-        },
-
-        // 商品編集画面のリンクを返すメソッド
-        getProductEditLink(productId) {
-            return '/convenience/products/edit/' + productId; // 【TODO】 VueRouterを使う
-        }
     }
 }
 </script>

@@ -6,7 +6,7 @@
         <div class="p-product">
             <div class="p-product__index">
                 <h1 class="c-title">{{ __('ProductDetail') }}</h1>
-                <convenience-productdetail-component :product="{{ $product }}" :categories="{{ $categories }}" :product_pictures="{{ $productPictures }}"></convenience-productdetail-component>
+                <user-productdetail-component :product="{{ $product }}" :categories="{{ $categories }}" :product_pictures="{{ $productPictures }}"></user-productdetail-component>
             </div>
         </div>
     </main>

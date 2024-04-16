@@ -22,7 +22,8 @@
     "Convenience Store Withdraw": "コンビニ側退会画面",
     "User Product Index": "利用者側商品一覧",
     "Convenience Store Product Index": "コンビニ側商品一覧",
-    "ProductIndex": "商品一覧",
+    "Product All Index": "商品一覧",
+    "ProductIndex": "商品出品一覧",
     "ProductSale": "商品出品",
     "ProductEdit": "商品編集",
     "ProductDetail": "商品詳細"

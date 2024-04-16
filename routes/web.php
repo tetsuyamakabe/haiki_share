@@ -29,6 +29,10 @@ Route::get('/', function () {
     return view('welcome');
 })->name('login');
 
+
+// 利用者側・コンビニ側共通
+Route::get('/products', 'Products\Common\ProductController@showAllProductIndex')->name('product.productAllIndex.show'); // 商品一覧画面
+
 // 利用者側
 Route::get('/user/register', 'Auth\User\RegisterController@show')->name('user.register.show'); // ユーザー登録画面
 Route::post('/user/register', 'Auth\User\RegisterController@create')->name('user.register'); // ユーザー登録処理
@@ -47,7 +51,7 @@ Route::middleware(['auth', 'authcheckrole'])->group(function () {
     Route::get('/user/mypage/withdraw/{userId}', 'Accounts\User\MyPageController@showWithdraw')->name('user.withdraw.show'); // 退会画面
     Route::delete('/user/mypage/withdraw/{userId}', 'Accounts\User\MyPageController@withdraw')->name('user.withdraw'); // 退会処理
 
-    Route::get('/user/products', 'Products\User\ProductController@showProductIndex')->name('user.productIndex.show'); // 商品一覧画面
+    Route::get('/user/products/detail/{productId}', 'Products\User\ProductController@showProductDetail')->name('user.products.detail'); // 商品詳細画面
 });
 
 // コンビニ側
@@ -68,7 +72,7 @@ Route::middleware(['auth', 'authcheckrole'])->group(function () {
     Route::get('/convenience/mypage/withdraw/{userId}', 'Accounts\Convenience\MyPageController@showWithdraw')->name('convenience.withdraw.show'); // 退会画面
     Route::delete('/convenience/mypage/withdraw/{userId}', 'Accounts\Convenience\MyPageController@withdraw')->name('convenience.withdraw'); // 退会処理
 
-    Route::get('/convenience/products', 'Products\Convenience\ProductController@showProductIndex')->name('convenience.productIndex.show'); // 商品一覧画面
+    Route::get('/convenience/{convenienceId}/products', 'Products\Convenience\ProductController@showProductIndex')->name('convenience.productIndex.show'); // 出品した商品一覧画面
     Route::get('/convenience/products/{userId}', 'Products\Convenience\ProductController@showProductSale')->name('convenience.productSale.show'); // 商品出品画面
     Route::put('/convenience/products/{userId}', 'Products\Convenience\ProductController@createProductSale')->name('convenience.productSale.create'); // 商品出品処理
 

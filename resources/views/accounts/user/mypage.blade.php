@@ -20,7 +20,7 @@
                     <a href="{{ route('user.withdraw.show', ['userId' => $user->id]) }}" class="c-button" style="margin-left: 20px;">{{ __('Withdraw') }}</a>
 
                     <!-- 商品一覧画面へのリンクを追加 -->
-                    <a href="{{ route('user.productIndex.show') }}" class="c-button" style="margin-left: 20px;">{{ __('ProductIndex') }}</a>
+                    <a href="{{ route('product.productAllIndex.show') }}" class="c-button" style="margin-left: 20px;">{{ __('Product All Index') }}</a>
                 </div>
         </div>
     </main>
