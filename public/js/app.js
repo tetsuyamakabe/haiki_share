@@ -5280,22 +5280,21 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['products'],
   methods: {
+    // 商品画像のパスを取得するメソッド
     getProductPicturePath: function getProductPicturePath(product) {
-      // 商品の画像パスを取得する
-      if (product.pictures && product.pictures.length > 0) {
+      if (product.pictures.length > 0) {
         return '/storage/product_pictures/' + product.pictures[0].file;
       } else {
-        // 画像がない場合はデフォルトの画像パスを返す
         return '/storage/product_pictures/no_image.png';
       }
     },
+    // 商品詳細画面のリンクを返すメソッド
     getProductDetailLink: function getProductDetailLink(productId) {
-      // 商品詳細画面へのリンクを返す
-      return '/convenience/products/detail/' + productId;
+      return '/convenience/products/detail/' + productId; // 【TODO】 VueRouterを使う
     },
+    // 商品編集画面のリンクを返すメソッド
     getProductEditLink: function getProductEditLink(productId) {
-      // 商品編集画面へのリンクを返す
-      return '/convenience/products/edit/' + productId;
+      return '/convenience/products/edit/' + productId; // 【TODO】 VueRouterを使う
     }
   }
 });
@@ -5756,31 +5755,21 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['products'],
+  props: ['products', 'productDetailLink'],
   methods: {
+    // 商品画像のパスを取得するメソッド
     getProductPicturePath: function getProductPicturePath(product) {
-      // 商品の画像パスを取得する
-      if (product.pictures && product.pictures.length > 0) {
+      if (product.pictures.length > 0) {
         return '/storage/product_pictures/' + product.pictures[0].file;
       } else {
-        // 画像がない場合はデフォルトの画像パスを返す
         return '/storage/product_pictures/no_image.png';
       }
     },
+    // 商品詳細ページへのリンクを取得するメソッド
     getProductDetailLink: function getProductDetailLink(productId) {
-      if (this.isAuthenticated) {
-        // ログイン済みの場合
-        if (this.userRole === 'user') {
-          // 利用者ユーザーの場合
-          return '/user/products/detail/' + productId;
-        } else if (this.userRole === 'convenience') {
-          // コンビニユーザーの場合
-          return '/convenience/products/detail/' + productId;
-        }
-      } else {
-        // 未ログインの場合
-        return '/'; // ログインページへのリンク
-      }
+      var detailLink = this.productDetailLink[productId];
+      console.log('detailLinkは、', detailLink);
+      return detailLink;
     }
   }
 });

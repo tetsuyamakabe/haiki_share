@@ -16,7 +16,8 @@ class MyPageController extends Controller
     public function showMyPage(Request $request, $userId)
     {
         $user = User::findOrFail($userId);
-        return view('accounts.convenience.mypage', ['user' => $user]);
+        $convenience = Convenience::findOrFail($userId);
+        return view('accounts.convenience.mypage', ['user' => $user, 'convenience' => $convenience]);
     }
 
     // プロフィール編集画面の表示

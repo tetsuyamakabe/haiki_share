@@ -126,14 +126,25 @@ class ProductController extends Controller
     // 商品詳細画面の表示
     public function showProductDetail($productId)
     {
-        // 商品IDから商品情報を取得
-        $product = Product::findOrFail($productId);
-        $categories = Category::all();
-        $productPictures = ProductPicture::where('product_id', $productId)->get();
-        foreach ($productPictures as $picture) {
-            $picture->url = asset('storage/product_pictures/' . $picture->file);
+        if (auth()->check()) { // ログインしているか？
+            $role = auth()->user()->role; // roleのチェック
+            if ($role === 'convenience') {
+                \Log::debug('コンビニユーザーの商品詳細画面に遷移します。');
+                // 商品IDから商品情報を取得
+                $product = Product::findOrFail($productId);
+                $categories = Category::all();
+                $productPictures = ProductPicture::where('product_id', $productId)->get();
+                foreach ($productPictures as $picture) {
+                    $picture->url = asset('storage/product_pictures/' . $picture->file);
+                }
+                return view('products.convenience.productDetail', ['product' => $product, 'productPictures' => $productPictures, 'categories' => $categories]);
+            } else {
+                \Log::debug('利用者ユーザーです。');
+                return redirect()->route('home'); // 利用者ユーザーはhome画面に遷移
+            }
+        } else {
+            \Log::debug('home画面に遷移します。');
+            return redirect()->route('home'); // ログインしていないユーザーはhome画面に遷移
         }
-
-        return view('products.convenience.productDetail', ['product' => $product, 'productPictures' => $productPictures, 'categories' => $categories]);
     }
 }

@@ -8,7 +8,10 @@
                 </div>
                 <p class="c-product__price">価格 {{ product.price }} 円</p>
                 <p class="c-product__date">賞味期限 {{ product.expiration_date }}</p>
-                <!-- 【TODO】 詳細を見るボタンを表示 -->
+                <div class="p-product__button">
+                    <!-- 商品詳細ページのリンク -->
+                    <a :href="getProductDetailLink(product.id)" class="c-button">詳細を見る</a>
+                </div>
             </li>
         </ul>
     </div>
@@ -16,7 +19,7 @@
 
 <script>
 export default {
-    props: ['products'],
+    props: ['products', 'productDetailLink'],
     methods: {
         // 商品画像のパスを取得するメソッド
         getProductPicturePath(product) {
@@ -26,6 +29,14 @@ export default {
                 return '/storage/product_pictures/no_image.png';
             }
         },
+
+        // 商品詳細ページへのリンクを取得するメソッド
+        getProductDetailLink(productId) {
+            // Laravelから受け取ったproductDetailLinkを使って各商品の詳細画面のリンクを取得する
+            let detailLink = this.productDetailLink[productId];
+            console.log('detailLinkは、', detailLink);
+            return detailLink;
+        }
     }
 }
 </script>
