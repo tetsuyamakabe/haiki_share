@@ -23,7 +23,7 @@
                     <a href="{{ route('product.productAllIndex.show') }}" class="c-button" style="margin-left: 20px;">{{ __('Product All Index') }}</a>
 
                     <!-- 商品出品一覧画面へのリンクを追加 -->
-                    <a href="{{ route('convenience.productIndex.show') }}" class="c-button" style="margin-left: 20px;">{{ __('ProductIndex') }}</a>
+                    <a href="{{ route('convenience.productIndex.show', ['convenienceId' => $convenience->id]) }}" class="c-button" style="margin-left: 20px;">{{ __('ProductIndex') }}</a>
 
                     <!-- 商品出品画面へのリンクを追加 -->
                     <a href="{{ route('convenience.productSale.show', ['userId' => $user->id]) }}" class="c-button" style="margin-left: 20px;">{{ __('ProductSale') }}</a>
