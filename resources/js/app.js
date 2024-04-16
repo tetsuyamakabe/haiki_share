@@ -21,6 +21,9 @@ window.Vue = require('vue');
 
 // Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 
+// 利用者側・コンビニ側共通
+Vue.component('product-allindex-component', require('./components/ProductAllIndexComponent.vue').default); //商品一覧画面
+
 // 利用者側
 Vue.component('user-register-component', require('./components/User/RegisterComponent.vue').default); // ユーザー登録画面
 Vue.component('user-login-component', require('./components/User/LoginComponent.vue').default); // ログイン画面
@@ -28,7 +31,7 @@ Vue.component('user-forgotpassword-component', require('./components/User/Forgot
 Vue.component('user-resetpassword-component', require('./components/User/ResetPasswordComponent.vue').default); // パスワード変更（古いパスワード・新しいパスワード入力）画面
 Vue.component('user-profile-component', require('./components/User/ProfileComponent.vue').default); // プロフィール編集画面
 Vue.component('user-withdraw-component', require('./components/User/WithdrawComponent.vue').default); // 退会画面
-Vue.component('user-productindex-component', require('./components/User/ProductIndexComponent.vue').default); //商品一覧画面
+Vue.component('user-productdetail-component', require('./components/User/ProductDetailComponent.vue').default); //商品詳細画面
 
 // コンビニ側
 Vue.component('convenience-register-component', require('./components/Convenience/RegisterComponent.vue').default); // ユーザー登録画面

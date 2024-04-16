@@ -15,10 +15,11 @@ use App\Http\Requests\Convenience\ProductSaleRequest;
 
 class ProductController extends Controller
 {
-    // 商品一覧画面の表示
-    public function showProductIndex()
+    // 商品一覧画面（特定のコンビニが出品した商品一覧を表示）
+    public function showProductIndex($convenienceId)
     {
-        $products = Product::with('pictures')->get();
+        $products = Product::with('pictures')->where('convenience_store_id', $convenienceId)->get();
+        // $products = Product::with('pictures')->where('convenience_store_id', $convenienceId)->paginate(10);
         return view('products.convenience.productIndex', ['products' => $products]);
     }
 
@@ -133,11 +134,6 @@ class ProductController extends Controller
             $picture->url = asset('storage/product_pictures/' . $picture->file);
         }
 
-        // その商品が他店舗の商品の場合は、購入ボタンをクリックできないようにする
-        $user = Auth::user(); // ログインユーザーのユーザー情報を取得
-        $userConvenienceId = $user->convenience->user_id; // ユーザーと紐づくコンビニのuser_idを取得
-        $productConvenienceId = $product->convenience_store_id; // 商品のコンビニidを取得
-
-        return view('products.convenience.productDetail', ['product' => $product, 'productPictures' => $productPictures, 'categories' => $categories, 'userConvenienceId' => $userConvenienceId, 'productConvenienceId' => $productConvenienceId]);
+        return view('products.convenience.productDetail', ['product' => $product, 'productPictures' => $productPictures, 'categories' => $categories]);
     }
 }
