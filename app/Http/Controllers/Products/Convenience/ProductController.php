@@ -23,7 +23,7 @@ class ProductController extends Controller
         return view('products.convenience.productIndex', ['products' => $products]);
     }
 
-    // 商品出品一覧画面の表示
+    // 商品出品（投稿）画面の表示
     public function showProductSale(Request $request, $userId)
     {
         $user = User::findOrFail($userId);

@@ -13,7 +13,10 @@ class ProductController extends Controller
     public function showAllProductIndex()
     {
         // 商品情報を取得
-        $products = Product::with('pictures')->get();
+        // $products = Product::with('pictures')->get(); // 単一のコレクションが取得
+        $products = Product::with('pictures')->paginate(15); // LengthAwarePaginatorオブジェクトを含むページネーション
+        // dd($products);
+        // $products = Product::paginate(10);
         // 商品詳細画面のリンクの配列
         $productDetailLinks = [];
 
