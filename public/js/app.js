@@ -5818,6 +5818,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   methods: {
     // 商品画像のパスを取得するメソッド
     getProductPicturePath: function getProductPicturePath(product) {
+      // [Vue warn]: Error in render: "TypeError: Cannot read properties of undefined (reading 'length')"
       if (product.pictures.length > 0) {
         return '/storage/product_pictures/' + product.pictures[0].file;
       } else {
@@ -5999,10 +6000,10 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['product', 'categories', 'product_pictures'],
+  props: ['product', 'categories', 'product_pictures', 'purchased'],
   data: function data() {
     return {
-      isDisabled: false
+      isPurchased: this.purchased || false // 購入済みの場合はthis.purchasedを、それ以外の場合はfalseを使用
     };
   },
   methods: {
@@ -6017,13 +6018,28 @@ __webpack_require__.r(__webpack_exports__);
     },
     // 購入するメソッド
     purchaseProduct: function purchaseProduct() {
-      console.log('商品を購入しました');
-      // 購入ボタンを押すと、購入者・コンビニに通知メールが届くようにすること
-      // 購入ボタンを押したら、商品一覧画面に該当商品に「購入済み」ラベルをつけること
-      // 「購入済」状態の商品の商品詳細画面では、購入ボタンが押せないこと
-      // 自分が購入した商品の商品詳細画面では、「購入をキャンセル」ボタンが表示されること
-      // 以下は購入処理が完了したと仮定
-      this.isDisabled = true; // ボタンを無効化
+      var _this = this;
+      axios.post('/user/products/purchase/' + this.product.id).then(function (response) {
+        console.log(response.data);
+        _this.isPurchased = true; // 「購入する」から「購入済み」に
+      })["catch"](function (error) {
+        console.error('購入処理失敗:', error.response.data);
+        _this.errors = error.response.data.errors;
+      });
+    },
+    // 購入キャンセルするメソッド
+    cancelPurchase: function cancelPurchase() {
+      var _this2 = this;
+      // 購入キャンセルを押した際にバックエンドに通知リクエストを送信する
+      axios.post('/user/products/purchase/cancel/' + this.product.id).then(function (response) {
+        // バックエンドからの応答をログに表示する
+        console.log(response.data);
+        // ボタンを有効化
+        _this2.isDisabled = false;
+      })["catch"](function (error) {
+        // エラーが発生した場合の処理
+        console.error('購入キャンセル処理中にエラーが発生しました:', error);
+      });
     }
   }
 });
@@ -9196,15 +9212,23 @@ var render = function render() {
     }
   })])])]), _vm._v(" "), _c("div", {
     staticClass: "p-product__button"
-  }, [_c("button", {
+  }, [!_vm.purchased ? _c("button", {
     staticClass: "c-button c-button__purchase",
     attrs: {
-      disabled: _vm.isDisabled
+      disabled: _vm.isPurchased
     },
     on: {
       click: _vm.purchaseProduct
     }
-  }, [_vm._v("購入する")])])]);
+  }, [_vm._v("購入する")]) : _c("button", {
+    staticClass: "c-button c-button__cancel",
+    domProps: {
+      textContent: _vm._s("購入済み")
+    },
+    on: {
+      click: _vm.cancelPurchase
+    }
+  })])]);
 };
 var staticRenderFns = [function () {
   var _vm = this,

@@ -52,6 +52,8 @@ Route::middleware(['auth', 'authcheckrole'])->group(function () {
     Route::delete('/user/mypage/withdraw/{userId}', 'Accounts\User\MyPageController@withdraw')->name('user.withdraw'); // 退会処理
 
     Route::get('/user/products/detail/{productId}', 'Products\User\ProductController@showProductDetail')->name('user.products.detail'); // 商品詳細画面
+    Route::post('/user/products/purchase/{productId}', 'Products\User\ProductController@purchase')->name('user.products.purchase'); // 購入処理
+    Route::post('/user/products/purchase/cancel/{productId}', 'Products\User\ProductController@purchaseCancel')->name('user.products.purchase.cancel'); // 購入キャンセル
 });
 
 // コンビニ側

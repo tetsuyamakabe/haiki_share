@@ -24,19 +24,20 @@
             </tr>
         </table>
 
-        <!-- コンビニ側の購入ボタンは自店舗・他店舗に限らず購入ボタンをクリックできないようにする -->
+        <!-- 利用者側の購入ボタンは購入済みの購入ボタンは購入できない・自分が購入した商品の場合は、「購入をキャンセルする」ボタンが表示される -->
         <div class="p-product__button">
-            <button class="c-button c-button__purchase" :disabled="isDisabled" @click="purchaseProduct">購入する</button>
+            <button v-if="!purchased" class="c-button c-button__purchase" :disabled="isPurchased" @click="purchaseProduct">購入する</button>
+            <button v-else class="c-button c-button__cancel" @click="cancelPurchase" v-text="'購入済み'"></button>
         </div>
     </div>
 </template>
 
 <script>
 export default {
-    props: ['product', 'categories', 'product_pictures'],
+    props: ['product', 'categories', 'product_pictures', 'purchased'],
     data() {
         return {
-            isDisabled: false
+            isPurchased: false // 購入ボタンの状態
         };
     },
     methods: {
@@ -52,13 +53,25 @@ export default {
 
         // 購入するメソッド
         purchaseProduct() {
-            console.log('商品を購入しました');
-            // 購入ボタンを押すと、購入者・コンビニに通知メールが届くようにすること
-            // 購入ボタンを押したら、商品一覧画面に該当商品に「購入済み」ラベルをつけること
-            // 「購入済」状態の商品の商品詳細画面では、購入ボタンが押せないこと
-            // 自分が購入した商品の商品詳細画面では、「購入をキャンセル」ボタンが表示されること
-            // 以下は購入処理が完了したと仮定
-            this.isDisabled = true; // ボタンを無効化
+            axios.post('/user/products/purchase/' + this.product.id).then(response => {
+                console.log(response.data);
+                this.isPurchased = true; // 「購入する」から「購入済み」に
+            }).catch(error => {
+                console.error('購入処理失敗:', error.response.data);
+                this.errors = error.response.data.errors;
+            });
+        },
+
+        // 購入キャンセルするメソッド
+        cancelPurchase() {
+            // 購入キャンセルを押した際にバックエンドに通知リクエストを送信する
+            axios.post('/user/products/purchase/cancel/' + this.product.id).then(response => {
+                console.log(response.data);
+                this.isPurchased = false; // 「キャンセル」から「購入する」に
+            }).catch(error => {
+                console.error('購入キャンセル処理失敗:', error.response.data);
+                this.errors = error.response.data.errors;
+            });
         }
     },
 }
