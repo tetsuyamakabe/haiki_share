@@ -33,7 +33,7 @@ class ProductController extends Controller
                 \Log::info('$productは、', [$product]);
                 // 購入状態ログインしているユーザーが商品を購入しているか？
                 $purchased = Purchase::where('product_id', $productId)
-                                ->where('purchased_id', auth()->id())
+                                // ->where('purchased_id', auth()->id())
                                 ->exists(); // クエリが空でない場合にtrueを返すメソッド
                 \Log::info('$purchasedは、', [$purchased]);
                 // dd($purchased);
