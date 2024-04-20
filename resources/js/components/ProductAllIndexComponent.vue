@@ -34,6 +34,8 @@
 
 
 <script>
+import axios from 'axios';
+
 export default {
     props: ['products', 'productDetailLink'],
 
@@ -43,7 +45,7 @@ export default {
             last_page: '', // 最後のページ番号
             range: 5, // 表示されるページの範囲
             front_dot: false, // 前のページにドットを表示させるか
-            end_dot: false, // 後ろのページにドットを表示させるか
+            end_dot: false // 後ろのページにドットを表示させるか
         };
     },
 
@@ -93,6 +95,7 @@ export default {
         // 商品画像のパスを取得するメソッド
         getProductPicturePath(product) {
             console.log('productは、', product);
+            // [Vue warn]: Error in render: "TypeError: Cannot read properties of undefined (reading 'length')"
             if (product.pictures.length > 0) {
                 return '/storage/product_pictures/' + product.pictures[0].file;
             } else {
@@ -105,6 +108,14 @@ export default {
             // Laravelから受け取ったproductDetailLinkを使って各商品の詳細画面のリンクを取得する
             let detailLink = this.productDetailLink[productId];
             return detailLink;
+        },
+
+        // ページが変更されたときに新しい商品データを取得するメソッド
+        async getProducts() {
+            const result = await axios.get(`/products?page=${this.current_page}`);
+            const products = result.data;
+            this.products = products.data;
+            this.last_page = products.last_page;
         },
 
         // 配列作成メソッド
@@ -120,6 +131,7 @@ export default {
         changePage(page) {
             if (page > 0 && page <= this.last_page) {
                 this.current_page = page;
+                this.getProducts();
             }
         },
 
@@ -135,6 +147,12 @@ export default {
             }
             return true;
         },
+    },
+
+    // ページが初期化されたときに商品データを取得する
+    created() {
+        console.log('画像ファイルは、', this.products.data[0].pictures[0].file);
+        this.getProducts();
     },
 }
 </script>
