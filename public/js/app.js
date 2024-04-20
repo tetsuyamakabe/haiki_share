@@ -5765,6 +5765,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   props: ['products', 'productDetailLink'],
   data: function data() {
     return {
+      localProduct: [],
       current_page: 1,
       // 現在のページ番号
       last_page: '',
@@ -5845,7 +5846,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             case 2:
               result = _context.sent;
               products = result.data;
-              _this.products = products.data;
+              _this.localProduct = products.data;
               _this.last_page = products.last_page;
             case 6:
             case "end":
@@ -5883,6 +5884,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   // ページが初期化されたときに商品データを取得する
   created: function created() {
+    console.log(this.products);
     console.log('画像ファイルは、', this.products.data[0].pictures[0].file);
     this.getProducts();
   }
@@ -8793,7 +8795,7 @@ var render = function render() {
     staticClass: "p-container"
   }, [_c("ul", {
     staticClass: "p-product__list"
-  }, _vm._l(_vm.products, function (product) {
+  }, _vm._l(_vm.products.data, function (product) {
     return _c("li", {
       key: product.id,
       staticClass: "p-product__item"
