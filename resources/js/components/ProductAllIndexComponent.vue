@@ -1,7 +1,7 @@
 <template>
     <div class="p-container">
         <ul class="p-product__list">
-            <li v-for="product in products" :key="product.id" class="p-product__item">
+            <li v-for="product in products.data" :key="product.id" class="p-product__item">
                 <h3 class="c-product__name">{{ product.name }}</h3>
                 <div class="p-product__picture--container">
                     <img class="c-product__picture" :src="getProductPicturePath(product)" alt="Product Image">
@@ -41,6 +41,7 @@ export default {
 
     data() {
         return {
+            localProduct: [],
             current_page: 1, // 現在のページ番号
             last_page: '', // 最後のページ番号
             range: 5, // 表示されるページの範囲
@@ -95,7 +96,6 @@ export default {
         // 商品画像のパスを取得するメソッド
         getProductPicturePath(product) {
             console.log('productは、', product);
-            // [Vue warn]: Error in render: "TypeError: Cannot read properties of undefined (reading 'length')"
             if (product.pictures.length > 0) {
                 return '/storage/product_pictures/' + product.pictures[0].file;
             } else {
@@ -114,7 +114,7 @@ export default {
         async getProducts() {
             const result = await axios.get(`/products?page=${this.current_page}`);
             const products = result.data;
-            this.products = products.data;
+            this.localProduct = products.data;
             this.last_page = products.last_page;
         },
 
@@ -151,6 +151,7 @@ export default {
 
     // ページが初期化されたときに商品データを取得する
     created() {
+        console.log(this.products);
         console.log('画像ファイルは、', this.products.data[0].pictures[0].file);
         this.getProducts();
     },
