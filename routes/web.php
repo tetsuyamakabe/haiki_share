@@ -32,6 +32,7 @@ Route::get('/', function () {
 
 // 利用者側・コンビニ側共通
 Route::get('/products', 'Products\Common\ProductController@showAllProductIndex')->name('product.productAllIndex.show'); // 商品一覧画面
+Route::get('/products?page={current_page}', 'Products\Common\ProductController@getProducts');
 
 // 利用者側
 Route::get('/user/register', 'Auth\User\RegisterController@show')->name('user.register.show'); // ユーザー登録画面

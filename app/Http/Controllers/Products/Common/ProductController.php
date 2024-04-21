@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Products\Common;
 
 use App\Models\Product;
 use App\Models\Category;
+use Illuminate\Http\Request;
 use App\Models\ProductPicture;
 use App\Http\Controllers\Controller;
 
@@ -42,4 +43,11 @@ class ProductController extends Controller
 
         return view('products.productAllIndex', ['products' => $products, 'productDetailLinks' => $productDetailLinks]);
     }
+
+    public function getProducts(Request $request)
+    {
+        $products = Product::with('pictures')->paginate(10);
+        return response()->json($products);
+    }
+
 }
