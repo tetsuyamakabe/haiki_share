@@ -95,7 +95,7 @@ export default {
     methods: {
         // 商品画像のパスを取得するメソッド
         getProductPicturePath(product) {
-            console.log('productは、', product);
+            // console.log('productは、', product);
             if (product.pictures.length > 0) {
                 return '/storage/product_pictures/' + product.pictures[0].file;
             } else {
@@ -113,9 +113,13 @@ export default {
         // ページが変更されたときに新しい商品データを取得するメソッド
         async getProducts() {
             const result = await axios.get(`/products?page=${this.current_page}`);
+            // console.log('resultは、', result);
             const products = result.data;
+            console.log('productsは、', products);
             this.localProduct = products.data;
+            // console.log('productsは、', this.localProduct);
             this.last_page = products.last_page;
+            // console.log('this.last_pageは、', products.last_page);
         },
 
         // 配列作成メソッド
@@ -151,8 +155,8 @@ export default {
 
     // ページが初期化されたときに商品データを取得する
     created() {
-        console.log(this.products);
-        console.log('画像ファイルは、', this.products.data[0].pictures[0].file);
+        // console.log(this.products);
+        // console.log('画像ファイルは、', this.products.data[0].pictures[0].file);
         this.getProducts();
     },
 }

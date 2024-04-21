@@ -5819,8 +5819,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   methods: {
     // 商品画像のパスを取得するメソッド
     getProductPicturePath: function getProductPicturePath(product) {
-      console.log('productは、', product);
-      // [Vue warn]: Error in render: "TypeError: Cannot read properties of undefined (reading 'length')"
+      // console.log('productは、', product);
       if (product.pictures.length > 0) {
         return '/storage/product_pictures/' + product.pictures[0].file;
       } else {
@@ -5845,10 +5844,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               return axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/products?page=".concat(_this.current_page));
             case 2:
               result = _context.sent;
+              // console.log('resultは、', result);
               products = result.data;
+              console.log('productsは、', products);
               _this.localProduct = products.data;
+              // console.log('productsは、', this.localProduct);
               _this.last_page = products.last_page;
-            case 6:
+              // console.log('this.last_pageは、', products.last_page);
+            case 7:
             case "end":
               return _context.stop();
           }
@@ -5884,8 +5887,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   // ページが初期化されたときに商品データを取得する
   created: function created() {
-    console.log(this.products);
-    console.log('画像ファイルは、', this.products.data[0].pictures[0].file);
+    // console.log(this.products);
+    // console.log('画像ファイルは、', this.products.data[0].pictures[0].file);
     this.getProducts();
   }
 });
