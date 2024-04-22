@@ -29,7 +29,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '';
 
     /**
      * Create a new controller instance.
@@ -58,19 +58,11 @@ class RegisterController extends Controller
      * @return \App\User
      */
 
-    // ユーザー登録画面の表示
-    public function show(Request $request)
+     // ユーザー登録処理
+    public function create(RegisterRequest $request)
     {
-        return view('auth.user.register');
-    }
-
-    // ユーザー登録処理
-    protected function create(RegisterRequest $request)
-    {
-        // バリデーション済みデータの取得
         $validated = $request->validated();
 
-        // ユーザー情報を「users」テーブルに保存
         $user = User::create([
             'name' => $validated['name'],
             'email' => $validated['email'],
@@ -78,6 +70,6 @@ class RegisterController extends Controller
             'role' => $validated['role'],
         ]);
 
-        return $user; // 【TODO】 RegistersUsersトレイトのデフォルトのままの戻り値で/homeになっているので修正
+        return response()->json($user, 201);
     }
 }

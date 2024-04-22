@@ -18,36 +18,26 @@ class ProductController extends Controller
         $products = Product::with('pictures')->paginate(10); // LengthAwarePaginatorオブジェクトを含むページネーション
         // dd($products);
         // $products = Product::paginate(10);
-        // 商品詳細画面のリンクの配列
-        $productDetailLinks = [];
 
         // ログインユーザーのroleから商品詳細画面のリンクを作る
         if (auth()->check()) { // ログインしているか？
             $role = auth()->user()->role; // roleのチェック
 
-            // 各商品の商品詳細画面のリンクを作る
+            // 各商品の商品詳細画面のリンクを作る（productのプロパティの一つにリンクを追加）
             foreach ($products as $product) {
                 if ($role === 'user') {
-                    $productDetailLinks[$product->id] = route('user.products.detail', ['productId' => $product->id]);
+                    $product->detail_link = route('user.products.detail', ['productId' => $product->id]);
                 } elseif ($role === 'convenience') {
-                    $productDetailLinks[$product->id] = route('convenience.products.detail', ['productId' => $product->id]);
+                    $product->detail_link = route('convenience.products.detail', ['productId' => $product->id]);
                 }
             }
-
         } else {
             // ログインしていない場合は、各商品の商品詳細画面のリンクからhome画面に遷移する
             foreach ($products as $product) {
-                $productDetailLinks[$product->id] = route('home');
+                $product->detail_link = route('home');
             }
         }
 
-        return view('products.productAllIndex', ['products' => $products, 'productDetailLinks' => $productDetailLinks]);
+        return view('products.productAllIndex', ['products' => $products]);
     }
-
-    public function getProducts(Request $request)
-    {
-        $products = Product::with('pictures')->paginate(10);
-        return response()->json($products);
-    }
-
 }

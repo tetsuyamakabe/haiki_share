@@ -1,3 +1,4 @@
+
 <template>
     <div class="p-container">
         <ul class="p-product__list">
@@ -9,7 +10,7 @@
                 <p class="c-product__price">価格 {{ product.price }} 円</p>
                 <p class="c-product__date">賞味期限 {{ product.expiration_date }}</p>
                 <div class="p-product__button">
-                    <a :href="getProductDetailLink(product.id)" class="c-button">詳細を見る</a>
+                    <a :href="product.detail_link" class="c-button">詳細を見る</a>
                 </div>
             </li>
         </ul>
@@ -37,7 +38,7 @@
 import axios from 'axios';
 
 export default {
-    props: ['products', 'productDetailLink'],
+    props: ['products'],
 
     data() {
         return {
@@ -101,13 +102,6 @@ export default {
             } else {
                 return '/storage/product_pictures/no_image.png';
             }
-        },
-
-        // 商品詳細ページへのリンクを取得するメソッド
-        getProductDetailLink(productId) {
-            // Laravelから受け取ったproductDetailLinkを使って各商品の詳細画面のリンクを取得する
-            let detailLink = this.productDetailLink[productId];
-            return detailLink;
         },
 
         // ページが変更されたときに新しい商品データを取得するメソッド

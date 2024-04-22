@@ -1,3 +1,7 @@
+import VueRouter from 'vue-router';
+import HomeComponent from "./components/HomeComponent";
+import RegisterComponent from './components/User/RegisterComponent.vue';
+
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -7,6 +11,25 @@
 require('./bootstrap');
 
 window.Vue = require('vue');
+
+Vue.use(VueRouter);
+
+const router = new VueRouter({
+    mode: 'history',
+    routes: [
+        {
+            path: 'home',
+            name: 'home',
+            component: HomeComponent
+        },
+        {
+            path: '/user/register',
+            name: 'user.register',
+            component: RegisterComponent
+        },
+    ]
+});
+
 
 /**
  * The following block of code may be used to automatically register your
@@ -21,8 +44,16 @@ window.Vue = require('vue');
 
 // Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 
+// 共通コンポーネント
+Vue.component('header-component', require('./components/HeaderComponent.vue').default); // ヘッダー
+Vue.component('terms-component', require('./components/TermsComponent.vue').default); // 利用規約
+
+
 // 利用者側・コンビニ側共通
+Vue.component('home-component', require('./components/HomeComponent.vue').default); //商品一覧画面
+
 Vue.component('product-allindex-component', require('./components/ProductAllIndexComponent.vue').default); //商品一覧画面
+
 
 // 利用者側
 Vue.component('user-register-component', require('./components/User/RegisterComponent.vue').default); // ユーザー登録画面
@@ -54,4 +85,5 @@ Vue.component('convenience-productdetail-component', require('./components/Conve
 
 const app = new Vue({
     el: '#app',
+    router
 });
