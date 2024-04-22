@@ -6,7 +6,7 @@
         <div class="p-product">
             <div class="p-product__index">
                 <h1 class="c-title">{{ __('Product All Index') }}</h1>
-                <product-allindex-component :products='@json($products)' :product-detail-link="{{ json_encode($productDetailLinks) }}"></product-allindex-component>
+                <product-allindex-component :products='@json($products)'></product-allindex-component>
             </div>
         </div>
     </main>

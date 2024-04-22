@@ -16,3 +16,7 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+// 利用者側
+Route::get('/user/register', 'Auth\User\RegisterController@create')->name('user.register'); // ユーザー登録処理
+Route::post('/user/register', 'Auth\User\RegisterController@create')->name('user.register'); // ユーザー登録処理
