@@ -5568,9 +5568,15 @@ var jsonpAdapter = __webpack_require__(/*! axios-jsonp */ "./node_modules/axios-
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _TermsComponent_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../TermsComponent.vue */ "./resources/js/components/TermsComponent.vue");
 
-var jsonpAdapter = __webpack_require__(/*! axios-jsonp */ "./node_modules/axios-jsonp/lib/index.js");
+ // 利用規約
+var jsonpAdapter = __webpack_require__(/*! axios-jsonp */ "./node_modules/axios-jsonp/lib/index.js"); // 郵便番号API
+
 /* harmony default export */ __webpack_exports__["default"] = ({
+  components: {
+    'terms-component': _TermsComponent_vue__WEBPACK_IMPORTED_MODULE_1__["default"] // 路用規約コンポーネントを読み込み
+  },
   data: function data() {
     return {
       formData: {
@@ -5585,8 +5591,6 @@ var jsonpAdapter = __webpack_require__(/*! axios-jsonp */ "./node_modules/axios-
         password_confirmation: '',
         role: 'convenience'
       },
-      terms: '',
-      // 利用規約
       agreement: false,
       // 利用規約に同意したかどうか
       errors: null,
@@ -5598,10 +5602,6 @@ var jsonpAdapter = __webpack_require__(/*! axios-jsonp */ "./node_modules/axios-
       // 初期アイコン
       PasswordConfirmIconClass: 'far fa-eye-slash' // 初期アイコン
     };
-  },
-  mounted: function mounted() {
-    // 外部ファイル「terms.blade.php」の内容を取得
-    this.getTerms();
   },
   methods: {
     // 郵便番号検索APIを使って、郵便番号から住所を自動入力するメソッド
@@ -5623,24 +5623,17 @@ var jsonpAdapter = __webpack_require__(/*! axios-jsonp */ "./node_modules/axios-
         console.error('住所検索エラー:', error);
       });
     },
-    // 利用規約の内容を取得するメソッド
-    getTerms: function getTerms() {
-      var _this2 = this;
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/terms').then(function (response) {
-        _this2.terms = response.data;
-      })["catch"](function (error) {
-        console.error('利用規約の取得に失敗しました:', error);
-      });
-    },
     // 入力された値をサーバー側に送信するメソッド
     submitForm: function submitForm() {
-      var _this3 = this;
+      var _this2 = this;
       this.formData.agreement = this.agreement;
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/convenience/register', this.formData).then(function (response) {
-        window.location.href = '/home'; // 【TODO】 /homeに画面遷移しているので修正
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/convenience/register', this.formData).then(function (response) {
+        router.push({
+          name: 'home'
+        }); // 【TODO】 ユーザー登録後、/homeに画面遷移しているので修正
       })["catch"](function (error) {
         console.error('ユーザー登録失敗:', error.response.data);
-        _this3.errors = error.response.data.errors;
+        _this2.errors = error.response.data.errors;
       });
     },
     // パスワードの表示・非表示を切り替えるメソッド
@@ -6251,8 +6244,8 @@ __webpack_require__.r(__webpack_exports__);
     // 入力された値をサーバー側に送信するメソッド
     submitForm: function submitForm() {
       var _this = this;
-      // 利用規約に同意している場合は、フォームを送信
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/user/register', this.formData).then(function (response) {
+      this.formData.agreement = this.agreement;
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/user/register', this.formData).then(function (response) {
         router.push({
           name: 'home'
         }); // 【TODO】 ユーザー登録後、/homeに画面遷移しているので修正
@@ -7997,7 +7990,15 @@ __webpack_require__.r(__webpack_exports__);
 var render = function render() {
   var _vm = this,
     _c = _vm._self._c;
-  return _c("div", {
+  return _c("main", {
+    staticClass: "l-main"
+  }, [_c("div", {
+    staticClass: "p-register"
+  }, [_c("div", {
+    staticClass: "p-register__form"
+  }, [_c("h1", {
+    staticClass: "c-title"
+  }, [_vm._v("ユーザー登録")]), _vm._v(" "), _c("div", {
     staticClass: "p-container"
   }, [_c("form", {
     on: {
@@ -8435,11 +8436,7 @@ var render = function render() {
     "class": _vm.PasswordConfirmIconClass
   })])])])])]), _vm._v(" "), _c("div", {
     staticClass: "p-container__terms"
-  }, [_c("div", {
-    domProps: {
-      innerHTML: _vm._s(_vm.terms)
-    }
-  })]), _vm._v(" "), _c("div", {
+  }, [_c("terms-component")], 1), _vm._v(" "), _c("div", {
     staticClass: "p-container__checkbox"
   }, [_c("input", {
     directives: [{
@@ -8478,7 +8475,7 @@ var render = function render() {
     attrs: {
       "for": "agreement"
     }
-  }, [_vm._v("利用規約に同意します")])]), _vm._v(" "), _vm._m(10)])]);
+  }, [_vm._v("利用規約に同意します")])]), _vm._v(" "), _vm._m(10)])])])])]);
 };
 var staticRenderFns = [function () {
   var _vm = this,
@@ -61846,6 +61843,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
 /* harmony import */ var _components_HomeComponent__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/HomeComponent */ "./resources/js/components/HomeComponent.vue");
 /* harmony import */ var _components_User_RegisterComponent_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/User/RegisterComponent.vue */ "./resources/js/components/User/RegisterComponent.vue");
+/* harmony import */ var _components_Convenience_RegisterComponent_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/Convenience/RegisterComponent.vue */ "./resources/js/components/Convenience/RegisterComponent.vue");
+
 
 
 
@@ -61862,13 +61861,17 @@ Vue.use(vue_router__WEBPACK_IMPORTED_MODULE_0__["default"]);
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_0__["default"]({
   mode: 'history',
   routes: [{
-    path: 'home',
+    path: '/home',
     name: 'home',
     component: _components_HomeComponent__WEBPACK_IMPORTED_MODULE_1__["default"]
   }, {
     path: '/user/register',
     name: 'user.register',
     component: _components_User_RegisterComponent_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
+  }, {
+    path: '/convenience/register',
+    name: 'convenience.register',
+    component: _components_Convenience_RegisterComponent_vue__WEBPACK_IMPORTED_MODULE_3__["default"]
   }]
 });
 

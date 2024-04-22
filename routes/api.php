@@ -18,5 +18,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 // 利用者側
-Route::get('/user/register', 'Auth\User\RegisterController@create')->name('user.register'); // ユーザー登録処理
 Route::post('/user/register', 'Auth\User\RegisterController@create')->name('user.register'); // ユーザー登録処理
+
+// コンビニ側
+Route::post('/convenience/register', 'Auth\User\RegisterController@create')->name('convenience.register'); // ユーザー登録処理
