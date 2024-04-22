@@ -74,8 +74,9 @@ import TermsComponent from '../TermsComponent.vue'; // 利用規約
 
 export default {
     components: {
-        'terms-component': TermsComponent // 路用規約コンポーネントを読み込み
+        'terms-component': TermsComponent // 利用規約コンポーネントを読み込み
     },
+
     data() {
         return {
             formData: {
@@ -97,8 +98,8 @@ export default {
     methods: {
         // 入力された値をサーバー側に送信するメソッド
         submitForm() {
-            // 利用規約に同意している場合は、フォームを送信
-            axios.post('/user/register', this.formData).then(response => {
+            this.formData.agreement = this.agreement;
+            axios.post('/api/user/register', this.formData).then(response => {
                 router.push({ name: 'home' }); // 【TODO】 ユーザー登録後、/homeに画面遷移しているので修正
             }).catch(error => {
                 console.error('ユーザー登録失敗:', error.response.data);

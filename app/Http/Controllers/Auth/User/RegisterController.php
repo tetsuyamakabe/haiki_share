@@ -61,8 +61,10 @@ class RegisterController extends Controller
      // ユーザー登録処理
     public function create(RegisterRequest $request)
     {
+        // バリデーション済みデータの取得
         $validated = $request->validated();
 
+        // ユーザー情報を「users」テーブルに保存
         $user = User::create([
             'name' => $validated['name'],
             'email' => $validated['email'],

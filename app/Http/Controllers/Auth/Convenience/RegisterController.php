@@ -31,7 +31,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '';
 
     /**
      * Create a new controller instance.
@@ -61,13 +61,8 @@ class RegisterController extends Controller
      * @return \App\User
      */
 
-    // ユーザー登録画面の表示
-    public function show(Request $request)
-    {
-        return view('auth.convenience.register');
-    }
-
-    protected function create(RegisterRequest $request)
+    // ユーザー登録
+    public function create(RegisterRequest $request)
     {
         // バリデーション済みデータの取得
         $validated = $request->validated();
@@ -102,7 +97,7 @@ class RegisterController extends Controller
             $convenience->address()->associate($address);
             $convenience->save();
 
-            return $user; // 【TODO】 RegistersUsersトレイトのデフォルトのままの戻り値で/homeになっているので修正
+            return response()->json(['user' => $user, 'convenience' => $convenience, 'address' => $address], 201);
         }
     }
 }

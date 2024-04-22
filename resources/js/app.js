@@ -1,6 +1,7 @@
 import VueRouter from 'vue-router';
 import HomeComponent from "./components/HomeComponent";
-import RegisterComponent from './components/User/RegisterComponent.vue';
+import UserRegisterComponent from './components/User/RegisterComponent.vue';
+import ConvenienceRegisterComponent from './components/Convenience/RegisterComponent.vue';
 
 /**
  * First we will load all of this project's JavaScript dependencies which
@@ -18,15 +19,20 @@ const router = new VueRouter({
     mode: 'history',
     routes: [
         {
-            path: 'home',
+            path: '/home',
             name: 'home',
             component: HomeComponent
         },
         {
             path: '/user/register',
             name: 'user.register',
-            component: RegisterComponent
+            component: UserRegisterComponent
         },
+        {
+            path: '/convenience/register',
+            name: 'convenience.register',
+            component: ConvenienceRegisterComponent
+        }
     ]
 });
 
