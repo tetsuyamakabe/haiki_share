@@ -41,16 +41,9 @@ class ResetPasswordController extends Controller
         $this->middleware('guest');
     }
 
-    // パスワード変更画面（古いパスワード・新しいパスワード入力画面）の表示
-    public function show(Request $request)
-    {
-        return view('auth.user.passwords.reset');
-    }
-
     // パスワード変更処理
     public function reset(ResetPasswordRequest $request)
     {
-        \Log::debug('resetメソッドです。');
         // ユーザーを特定するための情報を取得
         $email = $request->email; // ユーザーのメールアドレス
         $password = $request->newPassword; // 新しいパスワード
@@ -58,8 +51,14 @@ class ResetPasswordController extends Controller
         // ユーザーモデルを取得
         $user = User::where('email', $email)->first();
 
+        if (!$user) {
+            return response()->json(['message' => 'ユーザーが見つかりません'], 404);
+        }
+
         // パスワードを更新
         $user->password = Hash::make($password);
         $user->save();
+
+        return response()->json(['message' => 'パスワードが変更されました']);
     }
 }

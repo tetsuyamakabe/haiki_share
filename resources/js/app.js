@@ -7,13 +7,14 @@ import HomeComponent from "./components/HomeComponent"; // HOME画面
 import UserRegisterComponent from './components/User/RegisterComponent.vue'; // ユーザー登録画面
 import UserLoginComponent from './components/User/LoginComponent.vue'; // ログイン画面
 import UserMyPageComponent from './components/User/MyPageComponent.vue'; // マイページ画面
-import UserForgotPasswordComponent from './components/User/ForgotPasswordComponent.vue'; // パスワード変更画面
+import UserForgotPasswordComponent from './components/User/ForgotPasswordComponent.vue'; // パスワードメール送信画面
+import UserResetPasswordPasswordComponent from './components/User/ResetPasswordComponent.vue'; // パスワードリセット画面
 
 // コンビニ側
 import ConvenienceRegisterComponent from './components/Convenience/RegisterComponent.vue'; // ユーザー登録画面
 import ConvenienceLoginComponent from './components/Convenience/LoginComponent.vue' // ログイン画面
 import ConvenienceMyPageComponent from './components/Convenience/MyPageComponent.vue' // マイページ画面
-import ConvenienceForgotPasswordComponent from './components/Convenience/ForgotPasswordComponent.vue'; // パスワード変更画面
+import ConvenienceForgotPasswordComponent from './components/Convenience/ForgotPasswordComponent.vue'; // パスワードメール送信画面
 
 /**
  * First we will load all of this project's JavaScript dependencies which
@@ -72,17 +73,23 @@ const router = new VueRouter({
             name: 'convenience.mypage',
             component: ConvenienceMyPageComponent
         },
-        // 利用者側パスワード変更画面
+        // 利用者側パスワードメール送信画面
         {
             path: '/user/password/email',
             name: 'user.password.email',
             component: UserForgotPasswordComponent
         },
-        // コンビニ側パスワード変更画面
+        // コンビニ側パスワードメール送信画面
         {
             path: '/convenience/password/email',
             name: 'convenience.password.email',
             component: ConvenienceForgotPasswordComponent
+        },
+        // 利用者側パスワードリセット画面
+        {
+            path: '/user/password/reset/:token',
+            name: 'user.password.reset',
+            component: UserResetPasswordPasswordComponent
         }
     ]
 });
