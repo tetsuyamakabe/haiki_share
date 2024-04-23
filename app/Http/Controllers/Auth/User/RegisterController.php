@@ -58,7 +58,7 @@ class RegisterController extends Controller
      * @return \App\User
      */
 
-     // ユーザー登録処理
+    // ユーザー登録処理
     public function create(RegisterRequest $request)
     {
         // バリデーション済みデータの取得

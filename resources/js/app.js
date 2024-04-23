@@ -2,6 +2,9 @@ import VueRouter from 'vue-router';
 import HomeComponent from "./components/HomeComponent";
 import UserRegisterComponent from './components/User/RegisterComponent.vue';
 import ConvenienceRegisterComponent from './components/Convenience/RegisterComponent.vue';
+import UserLoginComponent from './components/User/LoginComponent.vue';
+import UserMyPageComponent from './components/User/MyPageComponent.vue';
+import UserForgotPasswordComponent from './components/User/ForgotPasswordComponent.vue';
 
 /**
  * First we will load all of this project's JavaScript dependencies which
@@ -32,10 +35,24 @@ const router = new VueRouter({
             path: '/convenience/register',
             name: 'convenience.register',
             component: ConvenienceRegisterComponent
+        },
+        {
+            path: '/user/login',
+            name: 'user.login',
+            component: UserLoginComponent
+        },
+        {
+            path: '/user/mypage/:userId',
+            name: 'user.mypage',
+            component: UserMyPageComponent
+        },
+        {
+            path: '/user/password/email',
+            name: 'user.password.email',
+            component: UserForgotPasswordComponent
         }
     ]
 });
-
 
 /**
  * The following block of code may be used to automatically register your
@@ -64,6 +81,7 @@ Vue.component('product-allindex-component', require('./components/ProductAllInde
 // 利用者側
 Vue.component('user-register-component', require('./components/User/RegisterComponent.vue').default); // ユーザー登録画面
 Vue.component('user-login-component', require('./components/User/LoginComponent.vue').default); // ログイン画面
+Vue.component('user-mypage-component', require('./components/User/MyPageComponent.vue').default); // マイページ画面
 Vue.component('user-forgotpassword-component', require('./components/User/ForgotPasswordComponent.vue').default); // パスワード変更（メールアドレス入力）画面
 Vue.component('user-resetpassword-component', require('./components/User/ResetPasswordComponent.vue').default); // パスワード変更（古いパスワード・新しいパスワード入力）画面
 Vue.component('user-profile-component', require('./components/User/ProfileComponent.vue').default); // プロフィール編集画面

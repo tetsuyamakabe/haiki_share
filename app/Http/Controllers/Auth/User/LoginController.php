@@ -28,7 +28,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/user/mypage/{$userId}'; // ログイン後、マイページに遷移
+    protected $redirectTo = '';
 
     /**
      * Create a new controller instance.
@@ -40,12 +40,6 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
-    // ログイン画面の表示
-    public function show(Request $request)
-    {
-        return view('auth.user.login');
-    }
-
     // ログイン処理
     public function login(LoginRequest $request)
     {
@@ -53,6 +47,12 @@ class LoginController extends Controller
         $email = $request->input('email');
         $user = User::where('email', $email)->first();
         \Log::debug('$userは、', [$user]);
+
+        // ユーザーが見つからない場合
+        if (!$user) {
+            return response()->json(['message' => 'ユーザーが見つかりません'], 404);
+        }
+
         $userId = $user->id;
         \Log::debug('ユーザーIDは、' . $userId);
 
@@ -69,7 +69,7 @@ class LoginController extends Controller
             }
         } else {
             \Log::debug('ログインできません');
-            return redirect()->route('user.login.show');
+            return response()->json(['message' => 'ログインできません'], 401);
         }
     }
 }
