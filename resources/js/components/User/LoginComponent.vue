@@ -74,17 +74,14 @@ export default {
         submitForm() {
             axios.post('/api/user/login', this.formData).then(response => {
                 const userId = response.data.user_id; // レスポンスからユーザーIDを取得
-                console.log('ログインします。');
-                console.log('responseは、', response);
-                console.log('response.dataは、', response.data);
                 console.log('userIdは、', userId);
+                console.log('ログインします。');
                 this.$router.push({ name: 'user.mypage', params: { userId: userId } }); // userIdを含むマイページに遷移
             }).catch(error => {
                 console.error('ログイン失敗:', error.response.data);
                 this.errors = error.response.data.errors;
             });
         },
-
 
         // パスワードの表示・非表示を切り替えるメソッド
         togglePasswordVisibility(type) {

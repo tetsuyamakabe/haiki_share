@@ -25,3 +25,6 @@ Route::post('/user/password/email', 'Auth\User\ForgotPasswordController@sendRese
 
 // コンビニ側
 Route::post('/convenience/register', 'Auth\Convenience\RegisterController@create')->name('convenience.register'); // ユーザー登録処理
+Route::post('/convenience/login', 'Auth\Convenience\LoginController@login')->name('convenience.login'); // ログイン
+Route::post('logout', 'Auth\Convenience\LoginController@logout')->name('logout'); // ログアウト処理（仮）【TODO】 Vue実装
+Route::post('/convenience/password/email', 'Auth\Convenience\ForgotPasswordController@sendResetLinkEmail')->name('convenience.password.email'); // パスワード変更メール送信処理

@@ -1,10 +1,19 @@
-import VueRouter from 'vue-router';
-import HomeComponent from "./components/HomeComponent";
-import UserRegisterComponent from './components/User/RegisterComponent.vue';
-import ConvenienceRegisterComponent from './components/Convenience/RegisterComponent.vue';
-import UserLoginComponent from './components/User/LoginComponent.vue';
-import UserMyPageComponent from './components/User/MyPageComponent.vue';
-import UserForgotPasswordComponent from './components/User/ForgotPasswordComponent.vue';
+import VueRouter from 'vue-router'; // VueRouterのimport
+
+// 共通コンポーネント
+import HomeComponent from "./components/HomeComponent"; // HOME画面
+
+// 利用者側
+import UserRegisterComponent from './components/User/RegisterComponent.vue'; // ユーザー登録画面
+import UserLoginComponent from './components/User/LoginComponent.vue'; // ログイン画面
+import UserMyPageComponent from './components/User/MyPageComponent.vue'; // マイページ画面
+import UserForgotPasswordComponent from './components/User/ForgotPasswordComponent.vue'; // パスワード変更画面
+
+// コンビニ側
+import ConvenienceRegisterComponent from './components/Convenience/RegisterComponent.vue'; // ユーザー登録画面
+import ConvenienceLoginComponent from './components/Convenience/LoginComponent.vue' // ログイン画面
+import ConvenienceMyPageComponent from './components/Convenience/MyPageComponent.vue' // マイページ画面
+import ConvenienceForgotPasswordComponent from './components/Convenience/ForgotPasswordComponent.vue'; // パスワード変更画面
 
 /**
  * First we will load all of this project's JavaScript dependencies which
@@ -21,35 +30,59 @@ Vue.use(VueRouter);
 const router = new VueRouter({
     mode: 'history',
     routes: [
+        // HOME画面
         {
             path: '/home',
             name: 'home',
             component: HomeComponent
         },
+        // 利用者側ユーザー登録画面
         {
             path: '/user/register',
             name: 'user.register',
             component: UserRegisterComponent
         },
+        // コンビニ側ユーザー登録画面
         {
             path: '/convenience/register',
             name: 'convenience.register',
             component: ConvenienceRegisterComponent
         },
+        // 利用者側ログイン画面
         {
             path: '/user/login',
             name: 'user.login',
             component: UserLoginComponent
         },
+        // コンビニ側ログイン画面
+        {
+            path: '/convenience/login',
+            name: 'convenience.login',
+            component: ConvenienceLoginComponent
+        },
+        // 利用者側マイページ画面
         {
             path: '/user/mypage/:userId',
             name: 'user.mypage',
             component: UserMyPageComponent
         },
+        // コンビニ側マイページ画面
+        {
+            path: '/convenience/mypage/:userId',
+            name: 'convenience.mypage',
+            component: ConvenienceMyPageComponent
+        },
+        // 利用者側パスワード変更画面
         {
             path: '/user/password/email',
             name: 'user.password.email',
             component: UserForgotPasswordComponent
+        },
+        // コンビニ側パスワード変更画面
+        {
+            path: '/convenience/password/email',
+            name: 'convenience.password.email',
+            component: ConvenienceForgotPasswordComponent
         }
     ]
 });
@@ -67,39 +100,40 @@ const router = new VueRouter({
 
 // Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 
-// 共通コンポーネント
+// UI部分コンポーネント
 Vue.component('header-component', require('./components/HeaderComponent.vue').default); // ヘッダー
-Vue.component('terms-component', require('./components/TermsComponent.vue').default); // 利用規約
+// Vue.component('terms-component', require('./components/TermsComponent.vue').default); // 利用規約
 
 
-// 利用者側・コンビニ側共通
-Vue.component('home-component', require('./components/HomeComponent.vue').default); //商品一覧画面
+// // 利用者側・コンビニ側共通
+// Vue.component('home-component', require('./components/HomeComponent.vue').default); //商品一覧画面
 
-Vue.component('product-allindex-component', require('./components/ProductAllIndexComponent.vue').default); //商品一覧画面
+// Vue.component('product-allindex-component', require('./components/ProductAllIndexComponent.vue').default); //商品一覧画面
 
 
-// 利用者側
-Vue.component('user-register-component', require('./components/User/RegisterComponent.vue').default); // ユーザー登録画面
-Vue.component('user-login-component', require('./components/User/LoginComponent.vue').default); // ログイン画面
-Vue.component('user-mypage-component', require('./components/User/MyPageComponent.vue').default); // マイページ画面
-Vue.component('user-forgotpassword-component', require('./components/User/ForgotPasswordComponent.vue').default); // パスワード変更（メールアドレス入力）画面
-Vue.component('user-resetpassword-component', require('./components/User/ResetPasswordComponent.vue').default); // パスワード変更（古いパスワード・新しいパスワード入力）画面
-Vue.component('user-profile-component', require('./components/User/ProfileComponent.vue').default); // プロフィール編集画面
-Vue.component('user-withdraw-component', require('./components/User/WithdrawComponent.vue').default); // 退会画面
-Vue.component('user-productdetail-component', require('./components/User/ProductDetailComponent.vue').default); //商品詳細画面
+// // 利用者側
+// // Vue.component('user-register-component', require('./components/User/RegisterComponent.vue').default); // ユーザー登録画面
+// // Vue.component('user-login-component', require('./components/User/LoginComponent.vue').default); // ログイン画面
+// // Vue.component('user-mypage-component', require('./components/User/MyPageComponent.vue').default); // マイページ画面
+// // Vue.component('user-forgotpassword-component', require('./components/User/ForgotPasswordComponent.vue').default); // パスワード変更（メールアドレス入力）画面
+// // Vue.component('user-resetpassword-component', require('./components/User/ResetPasswordComponent.vue').default); // パスワード変更（古いパスワード・新しいパスワード入力）画面
+// // Vue.component('user-profile-component', require('./components/User/ProfileComponent.vue').default); // プロフィール編集画面
+// // Vue.component('user-withdraw-component', require('./components/User/WithdrawComponent.vue').default); // 退会画面
+// // Vue.component('user-productdetail-component', require('./components/User/ProductDetailComponent.vue').default); //商品詳細画面
 
-// コンビニ側
-Vue.component('convenience-register-component', require('./components/Convenience/RegisterComponent.vue').default); // ユーザー登録画面
-Vue.component('convenience-login-component', require('./components/Convenience/LoginComponent.vue').default); // ログイン画面
-Vue.component('convenience-forgotpassword-component', require('./components/Convenience/ForgotPasswordComponent.vue').default); // パスワード変更（メールアドレス入力）画面
-Vue.component('convenience-resetpassword-component', require('./components/Convenience/ResetPasswordComponent.vue').default); // パスワード変更（古いパスワード・新しいパスワード入力）画面
-Vue.component('convenience-profile-component', require('./components/Convenience/ProfileComponent.vue').default); // プロフィール編集画面
-Vue.component('convenience-withdraw-component', require('./components/Convenience/WithdrawComponent.vue').default); // 退会画面
-Vue.component('convenience-productindex-component', require('./components/Convenience/ProductIndexComponent.vue').default); //商品一覧画面
-Vue.component('convenience-productsale-component', require('./components/Convenience/ProductSaleComponent.vue').default); //商品出品画面
-Vue.component('convenience-productedit-component', require('./components/Convenience/ProductEditComponent.vue').default); //商品編集画面
-Vue.component('convenience-productdelete-component', require('./components/Convenience/ProductDeleteComponent.vue').default); //商品削除ボタン
-Vue.component('convenience-productdetail-component', require('./components/Convenience/ProductDetailComponent.vue').default); //商品詳細画面
+// // // コンビニ側
+// // Vue.component('convenience-register-component', require('./components/Convenience/RegisterComponent.vue').default); // ユーザー登録画面
+// // Vue.component('convenience-login-component', require('./components/Convenience/LoginComponent.vue').default); // ログイン画面
+// // Vue.component('convenience-mypage-component', require('./components/Convenience/MyPageComponent.vue').default); // マイページ画面
+// // Vue.component('convenience-forgotpassword-component', require('./components/Convenience/ForgotPasswordComponent.vue').default); // パスワード変更（メールアドレス入力）画面
+// // Vue.component('convenience-resetpassword-component', require('./components/Convenience/ResetPasswordComponent.vue').default); // パスワード変更（古いパスワード・新しいパスワード入力）画面
+// // Vue.component('convenience-profile-component', require('./components/Convenience/ProfileComponent.vue').default); // プロフィール編集画面
+// // Vue.component('convenience-withdraw-component', require('./components/Convenience/WithdrawComponent.vue').default); // 退会画面
+// // Vue.component('convenience-productindex-component', require('./components/Convenience/ProductIndexComponent.vue').default); //商品一覧画面
+// // Vue.component('convenience-productsale-component', require('./components/Convenience/ProductSaleComponent.vue').default); //商品出品画面
+// // Vue.component('convenience-productedit-component', require('./components/Convenience/ProductEditComponent.vue').default); //商品編集画面
+// // Vue.component('convenience-productdelete-component', require('./components/Convenience/ProductDeleteComponent.vue').default); //商品削除ボタン
+// // Vue.component('convenience-productdetail-component', require('./components/Convenience/ProductDetailComponent.vue').default); //商品詳細画面
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

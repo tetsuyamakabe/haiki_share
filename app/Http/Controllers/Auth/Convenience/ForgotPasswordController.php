@@ -34,12 +34,6 @@ class ForgotPasswordController extends Controller
         $this->middleware('guest');
     }
 
-    // パスワード変更画面（メールアドレス入力画面）の表示
-    public function show(Request $request)
-    {
-        return view('auth.convenience.passwords.email');
-    }
-
     // パスワード変更メール送信処理
     public function sendResetLinkEmail(ForgotPasswordRequest $request)
     {
@@ -55,8 +49,12 @@ class ForgotPasswordController extends Controller
             $request->only('email')
         );
 
-        return $response == Password::RESET_LINK_SENT
-                    ? $this->sendResetLinkResponse($request, $response)
-                    : $this->sendResetLinkFailedResponse($request, $response);
+        if ($response == Password::RESET_LINK_SENT) {
+            // パスワードリセットリンクが送信された場合
+            return response()->json(['message' => 'パスワードリセットリンクを送信しました。'], 200);
+        } else {
+            // パスワードリセットリンクの送信に失敗した場合
+            return response()->json(['errors' => ['email' => ['パスワードリセットリンクの送信に失敗しました。']]], 422);
+        }
     }
 }

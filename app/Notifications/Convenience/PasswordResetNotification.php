@@ -43,11 +43,11 @@ class PasswordResetNotification extends Notification
     public function toMail($notifiable): MailMessage
     {
         $url = route('convenience.password.reset', ['token' => $this->token, 'email' => $notifiable->getEmailForPasswordReset()]);
+        $count = config('auth.passwords.users.expire');
         return (new MailMessage())
             ->subject('【' . config('app.name') . '】パスワード再設定')
-            ->markdown('auth.convenience.mail.passwordreset', ['reset_url' => $url]);
+            ->markdown('auth.convenience.mail.passwordreset', ['reset_url' => $url, 'count' => $count]);
     }
-
 
     /**
      * Get the array representation of the notification.
