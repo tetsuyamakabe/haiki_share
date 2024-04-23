@@ -34,12 +34,6 @@ class ForgotPasswordController extends Controller
         $this->middleware('guest');
     }
 
-    // パスワード変更画面（メールアドレス入力画面）の表示
-    public function show(Request $request)
-    {
-        return view('auth.user.passwords.email');
-    }
-
     // パスワード変更メール送信処理
     public function sendResetLinkEmail(ForgotPasswordRequest $request)
     {

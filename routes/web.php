@@ -15,3 +15,5 @@
 Route::get('/{any}', function() { 
     return view('app');
 })->where('any', '.*');
+
+Route::get('/user/password/reset/{token}', 'Auth\User\ResetPasswordController@show')->name('user.password.reset'); // パスワード変更（古いパスワード・新しいパスワード入力）画面

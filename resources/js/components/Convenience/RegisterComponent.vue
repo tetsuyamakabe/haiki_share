@@ -168,8 +168,10 @@ export default {
         submitForm() {
             this.formData.agreement = this.agreement;
             axios.post('/api/convenience/register', this.formData).then(response => {
-                router.push({ name: 'home' }); // 【TODO】 ユーザー登録後、/homeに画面遷移しているので修正
+                console.log('ユーザー登録します。');
+                this.$router.push({ name: 'home' }); // 【TODO】 ユーザー登録後、/homeに画面遷移しているので修正
             }).catch(error => {
+                console.log('errorは、', error);
                 console.error('ユーザー登録失敗:', error.response.data);
                 this.errors = error.response.data.errors;
             });
