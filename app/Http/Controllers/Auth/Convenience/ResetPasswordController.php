@@ -29,7 +29,7 @@ class ResetPasswordController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '';
 
     /**
      * Create a new controller instance.
@@ -41,16 +41,9 @@ class ResetPasswordController extends Controller
         $this->middleware('guest');
     }
 
-    // パスワード変更画面（古いパスワード・新しいパスワード入力画面）の表示
-    public function show(Request $request)
-    {
-        return view('auth.convenience.passwords.reset');
-    }
-
     // パスワード変更処理
     public function reset(ResetPasswordRequest $request)
     {
-        \Log::debug('resetメソッドです。');
         // ユーザーを特定するための情報を取得
         $email = $request->email; // ユーザーのメールアドレス
         $password = $request->newPassword; // 新しいパスワード
@@ -58,9 +51,14 @@ class ResetPasswordController extends Controller
         // ユーザーモデルを取得
         $user = User::where('email', $email)->first();
 
+        if (!$user) {
+            return response()->json(['message' => 'ユーザーが見つかりません'], 404);
+        }
+
         // パスワードを更新
         $user->password = Hash::make($password);
         $user->save();
-        \Log::debug('パスワードを変更しました。');
+
+        return response()->json(['message' => 'パスワードが変更されました']);
     }
 }

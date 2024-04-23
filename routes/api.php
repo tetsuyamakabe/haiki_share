@@ -29,3 +29,4 @@ Route::post('/convenience/register', 'Auth\Convenience\RegisterController@create
 Route::post('/convenience/login', 'Auth\Convenience\LoginController@login')->name('convenience.login'); // ログイン
 Route::post('logout', 'Auth\Convenience\LoginController@logout')->name('logout'); // ログアウト処理（仮）【TODO】 Vue実装
 Route::post('/convenience/password/email', 'Auth\Convenience\ForgotPasswordController@sendResetLinkEmail')->name('convenience.password.email'); // パスワード変更メール送信処理
+Route::post('/convenience/password/reset', 'Auth\Convenience\ResetPasswordController@reset')->name('convenience.password.update'); // パスワード変更処理
