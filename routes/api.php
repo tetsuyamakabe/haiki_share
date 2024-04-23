@@ -22,6 +22,7 @@ Route::post('/user/register', 'Auth\User\RegisterController@create')->name('user
 Route::post('/user/login', 'Auth\User\LoginController@login')->name('user.login'); // ログイン
 Route::post('logout', 'Auth\User\LoginController@logout')->name('logout'); // ログアウト処理（仮）【TODO】 Vue実装
 Route::post('/user/password/email', 'Auth\User\ForgotPasswordController@sendResetLinkEmail')->name('user.password.email'); // パスワード変更メール送信処理
+Route::post('/user/password/reset', 'Auth\User\ResetPasswordController@reset')->name('user.password.update'); // パスワード変更処理
 
 // コンビニ側
 Route::post('/convenience/register', 'Auth\Convenience\RegisterController@create')->name('convenience.register'); // ユーザー登録処理
