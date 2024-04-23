@@ -28,7 +28,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/convenience/mypage/{$userId}'; // ログイン後、マイページに遷移
+    protected $redirectTo = '';
 
     /**
      * Create a new controller instance.
@@ -69,7 +69,7 @@ class LoginController extends Controller
             }
         } else {
             \Log::debug('ログインできません');
-            return redirect()->route('convenience.login.show');
+            return response()->json(['message' => 'ログインできません'], 401);
         }
     }
 }

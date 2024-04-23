@@ -39,11 +39,12 @@ export default {
     },
 
     methods: {
-        // パスワードリセットリンク送信処理を実装する
+        // パスワードリセットメール送信処理
         sendResetLink() {
             axios.post('/api/user/password/email', { email: this.formData.email }).then(response => {
+                console.log('パスワード変更メールを送信します。');
                 this.message = response.data.message;
-                this.error = '';
+                console.log('this.messageは、', this.message);
             }).catch(error => {
                 console.log('メール送信失敗：', error.response.data);
                 this.errors = error.response.data.errors;

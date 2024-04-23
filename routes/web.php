@@ -17,3 +17,4 @@ Route::get('/{any}', function() {
 })->where('any', '.*');
 
 Route::get('/user/password/reset/{token}', 'Auth\User\ResetPasswordController@show')->name('user.password.reset'); // パスワード変更（古いパスワード・新しいパスワード入力）画面
+Route::get('/convenience/password/reset/{token}', 'Auth\Convenience\ResetPasswordController@show')->name('convenience.password.reset'); // パスワード変更（古いパスワード・新しいパスワード入力）画面
