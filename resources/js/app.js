@@ -15,6 +15,7 @@ import ConvenienceRegisterComponent from './components/Convenience/RegisterCompo
 import ConvenienceLoginComponent from './components/Convenience/LoginComponent.vue' // ログイン画面
 import ConvenienceMyPageComponent from './components/Convenience/MyPageComponent.vue' // マイページ画面
 import ConvenienceForgotPasswordComponent from './components/Convenience/ForgotPasswordComponent.vue'; // パスワードメール送信画面
+import ConvenienceResetPasswordPasswordComponent from './components/Convenience/ResetPasswordComponent.vue' // パスワードリセット画面
 
 /**
  * First we will load all of this project's JavaScript dependencies which
@@ -90,7 +91,14 @@ const router = new VueRouter({
             path: '/user/password/reset/:token',
             name: 'user.password.reset',
             component: UserResetPasswordPasswordComponent
+        },
+        // コンビニ側パスワードリセット画面
+        {
+            path: '/convenience/password/reset/:token',
+            name: 'convenience.password.reset',
+            component: ConvenienceResetPasswordPasswordComponent
         }
+
     ]
 });
 
