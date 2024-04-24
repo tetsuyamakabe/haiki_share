@@ -98,13 +98,13 @@ export default {
                 introduction: '',
                 icon: '',
             },
-            textareaCount: 0,
+            textareaCount: 0, // 自己紹介文の文字数カウント初期値
             iconPreview: '',
             errors: null,
-            PasswordType: 'password',
-            PasswordConfirmType: 'password',
-            PasswordIconClass: 'far fa-eye-slash',
-            PasswordConfirmIconClass: 'far fa-eye-slash',
+            PasswordType: 'password', // パスワードの初期設定
+            PasswordConfirmType: 'password', // パスワード（再入力）の初期設定
+            PasswordIconClass: 'far fa-eye-slash', // 初期アイコン
+            PasswordConfirmIconClass: 'far fa-eye-slash', // 初期アイコン
         };
     },
 
@@ -120,10 +120,11 @@ export default {
             axios.get('/api/user/mypage/profile/' + this.userId).then(response => {
                 this.user = response.data.user;
                 console.log('APIからのレスポンス:', response.data);
+                // 取得したプロフィール情報をformDataに入れる
                 this.formData.name = this.user.name || '';
                 this.formData.email = this.user.email || '';
-                this.formData.password = '';
-                this.formData.password_confirmation = '';
+                this.formData.password = ''; // 編集前のパスワードは非表示（入力フォームを空）にする
+                this.formData.password_confirmation = ''; // 編集前のパスワード（再入力）は非表示（入力フォームを空）にする
                 this.formData.introduction = this.user.introduction || '';
                 this.formData.icon = this.user.icon || '';
             }).catch(error => {

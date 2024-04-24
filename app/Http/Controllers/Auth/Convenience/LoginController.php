@@ -53,6 +53,12 @@ class LoginController extends Controller
         $email = $request->input('email');
         $user = User::where('email', $email)->first();
         \Log::debug('$userは、', [$user]);
+
+        // ユーザーが見つからない場合
+        if (!$user) {
+            return response()->json(['message' => 'ユーザーが見つかりません'], 404);
+        }
+
         $userId = $user->id;
         \Log::debug('ユーザーIDは、' . $userId);
 
@@ -65,7 +71,9 @@ class LoginController extends Controller
             if ($this->attemptLogin($request)) {
                 \Log::debug('attemptLoginメソッド');
                 // ログイン成功時にユーザーIDを含んだURLにリダイレクト
-                return response()->json(['user_id' => $userId]);
+                return response()->json(['message' => '認証に成功しました', 'user_id' => $userId]);
+            } else {
+                return response()->json(['message' => '認証に失敗しました'], 401);
             }
         } else {
             \Log::debug('ログインできません');
