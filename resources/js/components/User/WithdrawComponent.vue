@@ -18,8 +18,7 @@
 <script>
 export default {
     created() {
-        // ルートからuserIdを取得
-        this.userId = this.$route.params.userId;
+        this.userId = this.$route.params.userId; // ルートからuserIdを取得
     },
 
     methods: {

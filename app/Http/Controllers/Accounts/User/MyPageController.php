@@ -60,14 +60,12 @@ class MyPageController extends Controller
     // 退会処理の実行
     public function withdraw(Request $request, $userId)
     {
-        $user = User::findOrFail($userId);
-        \Log::info('$userは、', [$user]);
-        if ($user) {
-            $user->delete(); // 論理削除を実行
-            Auth::logout(); // 自動ログアウト
-            return response()->json(['message' => 'ユーザーが退会しました', 'user' => $user]);
-        } else {
+        $user = User::find($userId);
+        if (!$user) {
             return response()->json(['message' => 'ユーザーが見つかりません'], 404);
         }
+        $user->delete(); // 論理削除を実行
+        Auth::logout(); // 自動ログアウト
+        return response()->json(['message' => 'ユーザーが退会しました', 'user' => $user]);
     }
 }

@@ -33,3 +33,6 @@ Route::post('/convenience/login', 'Auth\Convenience\LoginController@login')->nam
 Route::post('logout', 'Auth\Convenience\LoginController@logout')->name('logout'); // ログアウト処理（仮）【TODO】 Vue実装
 Route::post('/convenience/password/email', 'Auth\Convenience\ForgotPasswordController@sendResetLinkEmail')->name('convenience.password.email'); // パスワード変更メール送信処理
 Route::post('/convenience/password/reset', 'Auth\Convenience\ResetPasswordController@reset')->name('convenience.password.update'); // パスワード変更処理
+Route::get('/convenience/mypage/profile/{userId}', 'Accounts\Convenience\MyPageController@getProfile')->name('convenience.profile.get'); // プロフィール情報の取得処理
+Route::put('/convenience/mypage/profile/{userId}', 'Accounts\Convenience\MyPageController@editProfile')->name('convenience.profile.edit'); // プロフィール編集・更新処理
+Route::delete('/convenience/mypage/withdraw/{userId}', 'Accounts\Convenience\MyPageController@withdraw')->name('convenience.withdraw'); // 退会処理

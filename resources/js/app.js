@@ -18,6 +18,8 @@ import ConvenienceLoginComponent from './components/Convenience/LoginComponent.v
 import ConvenienceMyPageComponent from './components/Convenience/MyPageComponent.vue' // マイページ画面
 import ConvenienceForgotPasswordComponent from './components/Convenience/ForgotPasswordComponent.vue'; // パスワードメール送信画面
 import ConvenienceResetPasswordPasswordComponent from './components/Convenience/ResetPasswordComponent.vue' // パスワードリセット画面
+import ConvenienceProfileComponent from './components/Convenience/ProfileComponent.vue'; // プロフィール編集画面
+import ConvenienceWithdrawComponent from './components/Convenience/WithdrawComponent.vue'; // 退会画面
 
 /**
  * First we will load all of this project's JavaScript dependencies which
@@ -107,6 +109,13 @@ const router = new VueRouter({
             component: UserProfileComponent,
             props: true,
         },
+        // コンビニ側プロフィール編集画面
+        {
+            path: '/convenience/mypage/profile/:userId',
+            name: 'convenience.profile',
+            component: ConvenienceProfileComponent,
+            props: true,
+        },
         // 利用者側退会画面
         {
             path: '/user/mypage/withdraw/:userId',
@@ -114,6 +123,14 @@ const router = new VueRouter({
             component: UserWithdrawComponent,
             props: true,
         },
+        // コンビニ側退会画面
+        {
+            path: '/convenience/mypage/withdraw/:userId',
+            name: 'convenience.withdraw',
+            component: ConvenienceWithdrawComponent,
+            props: true,
+        },
+
     ]
 });
 

@@ -12,25 +12,13 @@ use App\Http\Requests\Convenience\ProfileRequest;
 
 class MyPageController extends Controller
 {
-    // マイページ画面の表示
-    public function showMyPage(Request $request, $userId)
+    // プロフィール情報の取得処理
+    public function getProfile(Request $request, $userId)
     {
         $user = User::findOrFail($userId);
         $convenience = Convenience::findOrFail($userId);
-        return view('accounts.convenience.mypage', ['user' => $user, 'convenience' => $convenience]);
-    }
-
-    // プロフィール編集画面の表示
-    public function showProfile(Request $request, $userId)
-    {
-        // dd($userId);
-        $user = User::findOrFail($userId);
-        // dd($user);
-        $convenience = $user->convenience;
-        // dd($user->convenience);
-        // dd($convenience);
         $address = $convenience->address;
-        return view('accounts.convenience.profile', ['user' => $user, 'convenience' => $convenience, 'address' => $address]);
+        return response()->json(['user' => $user, 'convenience' => $convenience, 'address' => $address]);
     }
 
     // プロフィール編集・更新処理
@@ -39,70 +27,65 @@ class MyPageController extends Controller
         \Log::info('$userIdは、', [$userId]);
         \Log::info('リクエストは、:', $request->all());
 
-        // ユーザー情報を取得
-        $user = User::findOrFail($userId);
-        \Log::info('$userは、', [$user]);
-        
-        // ユーザー情報を更新
-        $user->name = $request->input('name');
-        $user->email = $request->input('email');
+        try {
+            // ユーザー情報を取得
+            $user = User::findOrFail($userId);
+            \Log::info('$userは、', [$user]);
 
-        // パスワードの入力がある場合のみ更新する
-        $password = $request->input('password');
-        if (!empty($password)) {
-            $user->password = Hash::make($password);
-        }
+            // ユーザー情報を更新
+            $user->name = $request->input('name');
+            $user->email = $request->input('email');
 
-        $user->introduction = $request->input('introduction');
-
-        // ファイルがアップロードされているか確認
-        if ($request->hasFile('icon')) {
-            $iconImage = $request->file('icon');
-            $extension = $iconImage->getClientOriginalExtension(); // ファイルの拡張子を取得
-            $fileName = sha1($iconImage->getClientOriginalName()) . '.' . $extension; // SHA-1ハッシュでファイル名を決定
-            $iconImagePath = $iconImage->storeAs('public/icons', $fileName); // ファイルを保存
-            $user->icon = $fileName; // ファイルパスを保存
-        }
-
-        $user->save();
-
-        // コンビニ情報を取得
-        $convenience = Convenience::where('user_id', $userId)->first();
-
-        // コンビニ情報を更新
-        if ($convenience) {
-            $convenience->branch_name = $request->input('branch_name');
-            
-            // 住所情報の更新
-            $address = $convenience->address;
-            if ($address) {
-                $address->prefecture = $request->input('prefecture');
-                $address->city = $request->input('city');
-                $address->town = $request->input('town');
-                $address->building = $request->input('building');
-                $address->save();
+            // パスワードの入力がある場合のみ更新する
+            $password = $request->input('password');
+            if (!empty($password)) {
+                $user->password = Hash::make($password);
             }
 
-            $convenience->save();
+            $user->introduction = $request->input('introduction');
+
+            // ファイルがアップロードされているか確認
+            if ($request->hasFile('icon')) {
+                $iconImage = $request->file('icon');
+                $extension = $iconImage->getClientOriginalExtension(); // ファイルの拡張子を取得
+                $fileName = sha1($iconImage->getClientOriginalName()) . '.' . $extension; // SHA-1ハッシュでファイル名を決定
+                $iconImagePath = $iconImage->storeAs('public/icons', $fileName); // ファイルを保存
+                $user->icon = $fileName; // ファイルパスを保存
+            }
+            $user->save();
+
+            // コンビニ情報を取得
+            $convenience = Convenience::where('user_id', $userId)->first();
+
+            // コンビニ情報を更新
+            if ($convenience) {
+                $convenience->branch_name = $request->input('branch_name');
+                
+                // 住所情報の更新
+                $address = $convenience->address;
+                if ($address) {
+                    $address->prefecture = $request->input('prefecture');
+                    $address->city = $request->input('city');
+                    $address->town = $request->input('town');
+                    $address->building = $request->input('building');
+                    $address->save();
+                }
+                $convenience->save();
+            }
+            return response()->json(['message' => 'プロフィール編集に成功しました', 'user' => $user]);
+
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'プロフィール編集に失敗しました'], 500);
         }
-
-        // マイページを表示
-        return view('accounts.convenience.mypage', ['user' => $user]);
-    }
-
-    // 退会画面の表示
-    public function showWithdraw($userId)
-    {
-        $user = User::findOrFail($userId);
-        return view('accounts.convenience.withdraw', ['user' => $user]);
     }
 
     // 退会処理の実行
     public function withdraw(Request $request, $userId)
     {
-        $user = Auth::user();
-
-        // コンビニ情報を取得
+        $user = User::findOrFail($userId);
+        if (!$user) {
+            return response()->json(['message' => 'ユーザーが見つかりません'], 404);
+        }
         if ($user->role === 'convenience') {
             $convenience = Convenience::where('user_id', $user->id)->first();
             if ($convenience) {
@@ -110,8 +93,8 @@ class MyPageController extends Controller
                 $convenience->address()->delete(); // 住所情報を取得して論理削除
             }
         }
-        $user->delete(); // ユーザー情報を論理削除
-        Auth::logout(); // ログアウト
-        return redirect('/'); // home画面に遷移
+        $user->delete(); // ユーザーを削除
+        Auth::logout(); // 自動ログアウト
+        return response()->json(['message' => 'ユーザーが退会しました', 'user' => $user]);
     }
 }
