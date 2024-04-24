@@ -75,6 +75,8 @@ export default {
             axios.post('/api/convenience/login', this.formData).then(response => {
                 const userId = response.data.user_id; // レスポンスからユーザーIDを取得
                 console.log('userIdは、', userId);
+                this.message = response.data.message;
+                console.log('this.messageは、', this.message);
                 console.log('ログインします。');
                 this.$router.push({ name: 'convenience.mypage', params: { userId: userId } }); // userIdを含むマイページに遷移
             }).catch(error => {

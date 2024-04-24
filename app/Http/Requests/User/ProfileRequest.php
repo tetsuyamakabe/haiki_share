@@ -25,10 +25,14 @@ class ProfileRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users,email,' . auth()->id(),
             'password' => 'nullable|string|min:8|confirmed',
             'introduction' => 'nullable|string|max:50',
         ];
+
+        // メールアドレスが更新された場合のみバリデーションルールを適用
+        if ($this->has('email')) {
+            $rules['email'] = 'nullable|string|email|max:255|unique:users,email,' . auth()->id();
+        }
 
         // アイコン画像がアップロードされた場合のみバリデーションルールを適用
         if ($this->hasFile('icon')) {

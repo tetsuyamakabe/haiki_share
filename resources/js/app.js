@@ -9,6 +9,8 @@ import UserLoginComponent from './components/User/LoginComponent.vue'; // ログ
 import UserMyPageComponent from './components/User/MyPageComponent.vue'; // マイページ画面
 import UserForgotPasswordComponent from './components/User/ForgotPasswordComponent.vue'; // パスワードメール送信画面
 import UserResetPasswordPasswordComponent from './components/User/ResetPasswordComponent.vue'; // パスワードリセット画面
+import UserProfileComponent from './components/User/ProfileComponent.vue'; // プロフィール編集画面
+import UserWithdrawComponent from './components/User/WithdrawComponent.vue'; // 退会画面
 
 // コンビニ側
 import ConvenienceRegisterComponent from './components/Convenience/RegisterComponent.vue'; // ユーザー登録画面
@@ -97,8 +99,21 @@ const router = new VueRouter({
             path: '/convenience/password/reset/:token',
             name: 'convenience.password.reset',
             component: ConvenienceResetPasswordPasswordComponent
-        }
-
+        },
+        // 利用者側プロフィール編集画面
+        {
+            path: '/user/mypage/profile/:userId',
+            name: 'user.profile',
+            component: UserProfileComponent,
+            props: true,
+        },
+        // 利用者側退会画面
+        {
+            path: '/user/mypage/withdraw/:userId',
+            name: 'user.withdraw',
+            component: UserWithdrawComponent,
+            props: true,
+        },
     ]
 });
 
