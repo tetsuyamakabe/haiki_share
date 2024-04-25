@@ -69,27 +69,12 @@ class CategoriesTableSeeder extends Seeder
             'updated_at' => Carbon::now(),
         ]);
         DB::table('categories')->insert([
-            'name' => 'スイーツ・デザート・アイス',
+            'name' => 'スイーツ・デザート',
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);
         DB::table('categories')->insert([
             'name' => '揚げ物・フランク・焼き鳥',
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now(),
-        ]);
-        DB::table('categories')->insert([
-            'name' => 'おでん',
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now(),
-        ]);
-        DB::table('categories')->insert([
-            'name' => '中華まん',
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now(),
-        ]);
-        DB::table('categories')->insert([
-            'name' => '冷凍食品',
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);
