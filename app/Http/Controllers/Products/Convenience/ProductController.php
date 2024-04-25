@@ -15,70 +15,66 @@ use App\Http\Requests\Convenience\ProductSaleRequest;
 
 class ProductController extends Controller
 {
-    // 商品一覧画面（特定のコンビニが出品した商品一覧を表示）
-    public function showProductIndex($convenienceId)
+    // 商品情報の取得処理
+    public function getProduct(Request $request, $productId)
     {
-        $products = Product::with('pictures')->where('convenience_store_id', $convenienceId)->get();
-        // $products = Product::with('pictures')->where('convenience_store_id', $convenienceId)->paginate(10);
-        return view('products.convenience.productIndex', ['products' => $products]);
+        $product = Product::with(['pictures', 'category'])->findOrFail($productId);
+        return response()->json(['product' => $product]);
     }
 
-    // 商品出品（投稿）画面の表示
-    public function showProductSale(Request $request, $userId)
+    // 商品カテゴリー情報の取得
+    public function getCategories()
     {
-        $user = User::findOrFail($userId);
-        // dd($user);
         $categories = Category::all();
-        return view('products.convenience.productSale', ['user' => $user, 'categories' => $categories]);
+        return response()->json(['categories' => $categories]);
+    }
+
+    // 出品した商品情報の取得
+    public function getConvenienceProduct(Request $request, $convenienceId)
+    {
+        \Log::info('$convenienceIdは、', [$convenienceId]);
+        try {
+            $product = Product::with('pictures')->where('convenience_store_id', $convenienceId)->paginate(10);
+            return response()->json(['product' => $product]);
+        } catch (\Exception $e) {
+            return response()->json(['error' => '商品が見つかりません'], 404);
+        }
     }
 
     // 商品出品処理（商品の投稿）
-    public function createProductSale(ProductSaleRequest $request, $userId)
+    public function createProduct(ProductSaleRequest $request, $userId)
     {
         \Log::info('createProductSaleメソッドが実行されます。');
         \Log::info('$userIdは、', [$userId]);
         \Log::info('リクエストは、:', $request->all());
 
-        // 出品する商品情報の登録
-        $product = new Product();
-        $product->name = $request->name;
-        $product->price = $request->price;
-        $product->category_id = $request->category;
-        $product->expiration_date = Carbon::parse($request->expiration_date);
-        $product->convenience_store_id = $userId;
+        try {
+            // 出品する商品情報の登録
+            $product = new Product();
+            $product->name = $request->name;
+            $product->price = $request->price;
+            $product->category_id = $request->category;
+            $product->expiration_date = Carbon::parse($request->expiration_date);
+            $product->convenience_store_id = $userId;
+            $product->save();
 
-        $product->save();
+            // 商品画像の処理
+            if ($request->hasFile('product_picture')) {
+                $picture = $request->file('product_picture');
+                $extension = $picture->getClientOriginalExtension();
+                $fileName = sha1($picture->getClientOriginalName()) . '.' . $extension;
+                $picturePath = $picture->storeAs('public/product_pictures', $fileName);
 
-        // 商品画像の処理
-        if ($request->hasFile('product_picture')) {
-            $picture = $request->file('product_picture');
-            $extension = $picture->getClientOriginalExtension();
-            $fileName = sha1($picture->getClientOriginalName()) . '.' . $extension;
-            $picturePath = $picture->storeAs('public/product_pictures', $fileName);
-
-            // 商品画像をproduct_picturesテーブルに保存
-            $productPicture = new ProductPicture();
-            $productPicture->product_id = $product->id;
-            $productPicture->file = $fileName;
-            $productPicture->save();
+                // 商品画像をproduct_picturesテーブルに保存
+                $productPicture = new ProductPicture();
+                $productPicture->product_id = $product->id;
+                $productPicture->file = $fileName;
+                $productPicture->save();
+            }
+            return response()->json(['message' => '商品の出品に成功しました', 'product' => $product]);
+        } catch (\Exception $e) {
+            return response()->json(['message' => '商品の出品に失敗しました'], 500);
         }
-
-        return redirect()->route('convenience.mypage.show', ['user' => $userId])->with('flash_message', '商品出品が完了しました');
-    }
-
-    // 商品編集画面の表示
-    public function showProductEdit(Request $request, $productId)
-    {
-        \Log::info('showProductEditメソッドが実行されます。');
-        \Log::info('$productIdは、', [$productId]);
-        // dd($productId);
-        // 商品情報を取得
-        $product = Product::findOrFail($productId);
-        $product->expiration_date = Carbon::parse($product->expiration_date)->format('Ymd'); // 賞味期限をフォーマット
-        $productPictures = ProductPicture::where('product_id', $productId)->get();
-        $categories = Category::all();
-
-        return view('products.convenience.productEdit', ['product' => $product, 'productPictures' => $productPictures, 'categories' => $categories]);
     }
 
     // 商品編集・更新処理
@@ -87,64 +83,52 @@ class ProductController extends Controller
         \Log::info('editProductメソッドが実行されます。');
         \Log::info('$productIdは、', [$productId]);
         \Log::info('リクエストは、:', $request->all());
+        try {
+            // 出品する商品の更新
+            $product = Product::findOrFail($productId);
+            $product->name = $request->input('name');
+            $product->price = $request->input('price');
+            $product->category_id = $request->input('category');
+            $product->expiration_date = Carbon::parse($request->input('expiration_date'));
+            $product->convenience_store_id = $product->convenience_store_id;
 
-        // 出品する商品の更新
-        $product = Product::findOrFail($productId);
-        $product->name = $request->input('name');
-        $product->price = $request->input('price');
-        $product->category_id = $request->input('category');
-        $product->expiration_date = Carbon::parse($request->input('expiration_date'));
-        $product->convenience_store_id = $product->convenience_store_id;
+            $product->save();
 
-        $product->save();
+            // 商品画像の処理
+            if ($request->hasFile('product_picture')) {
+                $picture = $request->file('product_picture');
+                $extension = $picture->getClientOriginalExtension();
+                $fileName = sha1($picture->getClientOriginalName()) . '.' . $extension;
+                $picturePath = $picture->storeAs('public/product_pictures', $fileName);
 
-        // 商品画像の処理
-        if ($request->hasFile('product_picture')) {
-            $picture = $request->file('product_picture');
-            $extension = $picture->getClientOriginalExtension();
-            $fileName = sha1($picture->getClientOriginalName()) . '.' . $extension;
-            $picturePath = $picture->storeAs('public/product_pictures', $fileName);
-
-            $ProductPicture = ProductPicture::where('product_id', $product->id)->first();
-            $ProductPicture->file = $fileName;
-            $ProductPicture->save();
+                $ProductPicture = ProductPicture::where('product_id', $product->id)->first();
+                $ProductPicture->file = $fileName;
+                $ProductPicture->save();
+            }
+            return response()->json(['message' => '商品の編集に成功しました', 'product' => $product]);
+        } catch (\Exception $e) {
+            return response()->json(['message' => '商品の編集に失敗しました'], 500);
         }
-        return redirect()->route('convenience.productIndex.show')->with('flash_message', '商品の編集が完了しました');
     }
 
     // 商品削除処理
     public function deleteProduct(Request $request, $productId)
     {
         \Log::info('deleteメソッドが実行されます。');
+        
+        // 商品を論理削除する
         $product = Product::findOrFail($productId);
+        if (!$product) {
+            return response()->json(['message' => '商品が見つかりません'], 404);
+        }
         $product->delete();
 
-        // リダイレクトではなく、JSONレスポンスで返す
-        return response()->json(['message' => '商品削除が完了しました']);
-    }
-
-    // 商品詳細画面の表示
-    public function showProductDetail($productId)
-    {
-        if (auth()->check()) { // ログインしているか？
-            $role = auth()->user()->role; // roleのチェック
-            if ($role === 'convenience') {
-                \Log::debug('コンビニユーザーの商品詳細画面に遷移します。');
-                // 商品IDから商品情報を取得
-                $product = Product::findOrFail($productId);
-                $categories = Category::all();
-                $productPictures = ProductPicture::where('product_id', $productId)->get();
-                foreach ($productPictures as $picture) {
-                    $picture->url = asset('storage/product_pictures/' . $picture->file);
-                }
-                return view('products.convenience.productDetail', ['product' => $product, 'productPictures' => $productPictures, 'categories' => $categories]);
-            } else {
-                \Log::debug('利用者ユーザーです。');
-                return redirect()->route('home'); // 利用者ユーザーはhome画面に遷移
-            }
-        } else {
-            \Log::debug('home画面に遷移します。');
-            return redirect()->route('home'); // ログインしていないユーザーはhome画面に遷移
+        // 商品画像も論理削除する
+        $productPictures = ProductPicture::where('product_id', $productId)->get();
+        foreach ($productPictures as $productPicture) {
+            $productPicture->delete();
         }
+
+        return response()->json(['message' => '商品削除が完了しました']);
     }
 }

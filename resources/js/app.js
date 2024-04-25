@@ -21,6 +21,11 @@ import ConvenienceResetPasswordPasswordComponent from './components/Convenience/
 import ConvenienceProfileComponent from './components/Convenience/ProfileComponent.vue'; // プロフィール編集画面
 import ConvenienceWithdrawComponent from './components/Convenience/WithdrawComponent.vue'; // 退会画面
 
+// 商品
+import ProductSaleComponent from './components/Convenience/ProductSaleComponent.vue'; // 商品出品画面
+import ProductEditComponent from './components/Convenience/ProductEditComponent.vue'; // 商品編集画面
+import ProductIndexComponent from './components/Convenience/ProductIndexComponent.vue'; // 出品した商品一覧画面
+import ProductDetailComponent from './components/Convenience/ProductDetailComponent.vue'; // 商品詳細画面
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -130,7 +135,30 @@ const router = new VueRouter({
             component: ConvenienceWithdrawComponent,
             props: true,
         },
-
+        // 商品出品画面
+        {
+            path: '/convenience/products/create/:userId',
+            name: 'convenience.products.create',
+            component: ProductSaleComponent,
+        },
+        // 商品編集画面
+        {
+            path: '/convenience/products/edit/:productId',
+            name: 'convenience.products.edit',
+            component: ProductEditComponent,
+        },
+        // 出品した商品一覧画面
+        {
+            path: '/convenience/products/:convenienceId',
+            name: 'convenience.products',
+            component: ProductIndexComponent,
+        },
+        // 商品詳細画面
+        {
+            path: '/convenience/products/detail/:productId',
+            name: 'convenience.products.detail',
+            component: ProductDetailComponent,
+        },
     ]
 });
 

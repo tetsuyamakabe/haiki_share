@@ -73,7 +73,6 @@ class MyPageController extends Controller
                 $convenience->save();
             }
             return response()->json(['message' => 'プロフィール編集に成功しました', 'user' => $user]);
-
         } catch (\Exception $e) {
             return response()->json(['message' => 'プロフィール編集に失敗しました'], 500);
         }
