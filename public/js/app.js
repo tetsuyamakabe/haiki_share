@@ -5173,9 +5173,33 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['product', 'categories', 'product_pictures'],
+  data: function data() {
+    return {
+      product: [],
+      categories: [],
+      errors: null
+    };
+  },
+  created: function created() {
+    this.productId = this.$route.params.productId; // ルートからproductIdを取得
+    this.getProduct(); // 商品情報を取得
+  },
   methods: {
+    // 商品情報をサーバーから取得
+    getProduct: function getProduct() {
+      var _this = this;
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/products/' + this.productId).then(function (response) {
+        _this.product = response.data.product;
+        console.log('APIからのレスポンス:', response.data);
+      })["catch"](function (error) {
+        console.error('商品情報取得失敗:', error.response.data);
+        _this.errors = error.response.data;
+      });
+    },
     // カテゴリIDからカテゴリ名を取得するメソッド
     getCategoryName: function getCategoryName(categoryId) {
       for (var i = 0; i < this.categories.length; i++) {
@@ -5265,7 +5289,7 @@ __webpack_require__.r(__webpack_exports__);
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/products/' + this.productId).then(function (response) {
         _this2.product = response.data.product;
         console.log('APIからのレスポンス:', response.data);
-        // 取得したプロフィール情報をformDataに入れる
+        // 取得した商品情報をformDataに入れる
         _this2.formData.name = _this2.product.name || '';
         _this2.formData.price = _this2.product.price || '';
         _this2.formData.category = _this2.product.category.id || '';
@@ -6142,6 +6166,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
     // 商品詳細画面のリンクを返すメソッド
     getProductDetailLink: function getProductDetailLink(productId) {
+      // 【TODO】 利用者ユーザーは利用者側の詳細画面、コンビニユーザーはコンビニ側の詳細画面、ログインしていないユーザーはログイン画面に遷移させる
       return {
         name: 'convenience.products.detail',
         params: {
@@ -6323,6 +6348,81 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/User/ProductDetailComponent.vue?vue&type=script&lang=js":
+/*!*************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/User/ProductDetailComponent.vue?vue&type=script&lang=js ***!
+  \*************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      product: [],
+      categories: [],
+      isPurchased: false,
+      // 購入ボタン
+      errors: null
+    };
+  },
+  created: function created() {
+    this.productId = this.$route.params.productId; // ルートからproductIdを取得
+    this.getProduct(); // 商品情報を取得
+  },
+  methods: {
+    // 商品情報をサーバーから取得
+    getProduct: function getProduct() {
+      var _this = this;
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/products/' + this.productId).then(function (response) {
+        _this.product = response.data.product;
+        console.log('APIからのレスポンス:', response.data);
+      })["catch"](function (error) {
+        console.error('商品情報取得失敗:', error.response.data);
+        _this.errors = error.response.data;
+      });
+    },
+    // カテゴリIDからカテゴリ名を取得するメソッド
+    getCategoryName: function getCategoryName(categoryId) {
+      for (var i = 0; i < this.categories.length; i++) {
+        if (this.categories[i].id === categoryId) {
+          return this.categories[i].name;
+        }
+      }
+      return '';
+    },
+    // 商品購入するメソッド
+    purchaseProduct: function purchaseProduct() {
+      var _this2 = this;
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/user/products/purchase/' + this.productId).then(function (response) {
+        console.log('APIからのレスポンス:', response.data);
+        _this2.isPurchased = true; // 「購入する」から「購入済み」に
+      })["catch"](function (error) {
+        console.error('商品購入処理失敗:', error.response.data);
+        _this2.errors = error.response.data.errors;
+      });
+    },
+    // 商品購入キャンセルするメソッド
+    cancelPurchase: function cancelPurchase() {
+      var _this3 = this;
+      // 購入キャンセルを押した際にバックエンドに通知リクエストを送信する
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/user/products/purchase/cancel/' + this.productId).then(function (response) {
+        console.log('APIからのレスポンス:', response.data);
+        _this3.isPurchased = false; // 「キャンセル」から「購入する」に
+      })["catch"](function (error) {
+        console.error('商品購入キャンセル処理失敗:', error.response.data);
+        _this3.errors = error.response.data.errors;
+      });
+    }
+  }
+});
 
 /***/ }),
 
@@ -7034,22 +7134,30 @@ __webpack_require__.r(__webpack_exports__);
 var render = function render() {
   var _vm = this,
     _c = _vm._self._c;
-  return _c("div", {
+  return _c("main", {
+    staticClass: "l-main"
+  }, [_c("div", {
+    staticClass: "p-profile"
+  }, [_c("div", {
+    staticClass: "p-product__form"
+  }, [_c("h1", {
+    staticClass: "c-title"
+  }, [_vm._v("商品詳細")]), _vm._v(" "), _c("div", {
     staticClass: "p-container"
-  }, [_c("table", [_c("h1", [_vm._v(_vm._s(_vm.product.name))]), _vm._v(" "), _c("tr", [_vm._m(0), _vm._v(" "), _c("td", [_vm._v(_vm._s(_vm.product.price))])]), _vm._v(" "), _c("tr", [_vm._m(1), _vm._v(" "), _c("td", [_vm._v(_vm._s(_vm.getCategoryName(_vm.product.category_id)))])]), _vm._v(" "), _c("tr", [_vm._m(2), _vm._v(" "), _c("td", [_vm._v(_vm._s(_vm.product.expiration_date))])]), _vm._v(" "), _c("tr", [_vm._m(3), _vm._v(" "), _c("td", [_c("img", {
+  }, [_c("table", [_c("h1", [_vm._v(_vm._s(_vm.product.name))]), _vm._v(" "), _c("tr", [_vm._m(0), _vm._v(" "), _c("td", [_vm._v(_vm._s(_vm.product.price))])]), _vm._v(" "), _c("tr", [_vm._m(1), _vm._v(" "), _c("td", [_vm._v(_vm._s(_vm.getCategoryName(_vm.product.category_id)))])]), _vm._v(" "), _c("tr", [_vm._m(2), _vm._v(" "), _c("td", [_vm._v(_vm._s(_vm.product.expiration_date))])]), _vm._v(" "), _c("tr", [_vm._m(3), _vm._v(" "), _c("td", [_vm.product.pictures && _vm.product.pictures.length > 0 ? _c("img", {
     staticClass: "c-product__picture",
     attrs: {
-      src: _vm.product_pictures[0].url,
+      src: "/storage/product_pictures/" + _vm.product.pictures[0].file,
       alt: "商品画像"
     }
-  })])])]), _vm._v(" "), _c("div", {
+  }) : _vm._e()])])]), _vm._v(" "), _c("div", {
     staticClass: "p-product__button"
   }, [_c("button", {
     staticClass: "c-button c-button__purchase",
     attrs: {
       disabled: true
     }
-  }, [_vm._v("購入する")])])]);
+  }, [_vm._v("購入する")])])])])])]);
 };
 var staticRenderFns = [function () {
   var _vm = this,
@@ -9831,6 +9939,98 @@ var render = function render() {
   return _c("p", [_vm._v("これはmypage画面です。")]);
 };
 var staticRenderFns = [];
+render._withStripped = true;
+
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/User/ProductDetailComponent.vue?vue&type=template&id=12cb53f4":
+/*!***********************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib/loaders/templateLoader.js??ref--6!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/User/ProductDetailComponent.vue?vue&type=template&id=12cb53f4 ***!
+  \***********************************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function render() {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("main", {
+    staticClass: "l-main"
+  }, [_c("div", {
+    staticClass: "p-profile"
+  }, [_c("div", {
+    staticClass: "p-product__form"
+  }, [_c("h1", {
+    staticClass: "c-title"
+  }, [_vm._v("商品詳細")]), _vm._v(" "), _c("div", {
+    staticClass: "p-container"
+  }, [_c("table", [_c("h1", [_vm._v(_vm._s(_vm.product.name))]), _vm._v(" "), _c("tr", [_vm._m(0), _vm._v(" "), _c("td", [_vm._v(_vm._s(_vm.product.price))])]), _vm._v(" "), _c("tr", [_vm._m(1), _vm._v(" "), _c("td", [_vm._v(_vm._s(_vm.getCategoryName(_vm.product.category_id)))])]), _vm._v(" "), _c("tr", [_vm._m(2), _vm._v(" "), _c("td", [_vm._v(_vm._s(_vm.product.expiration_date))])]), _vm._v(" "), _c("tr", [_vm._m(3), _vm._v(" "), _c("td", [_vm.product.pictures && _vm.product.pictures.length > 0 ? _c("img", {
+    staticClass: "c-product__picture",
+    attrs: {
+      src: "/storage/product_pictures/" + _vm.product.pictures[0].file,
+      alt: "商品画像"
+    }
+  }) : _vm._e()])])]), _vm._v(" "), _c("div", {
+    staticClass: "p-product__button"
+  }, [!_vm.isPurchased ? _c("button", {
+    staticClass: "c-button c-button__purchase",
+    attrs: {
+      disabled: _vm.isPurchased
+    },
+    on: {
+      click: _vm.purchaseProduct
+    }
+  }, [_vm._v("購入する")]) : _c("button", {
+    staticClass: "c-button c-button__cancel",
+    domProps: {
+      textContent: _vm._s("購入済み")
+    },
+    on: {
+      click: _vm.cancelPurchase
+    }
+  })])])])])]);
+};
+var staticRenderFns = [function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("th", [_c("label", {
+    staticClass: "c-label",
+    attrs: {
+      "for": "price"
+    }
+  }, [_vm._v("価格")])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("th", [_c("label", {
+    staticClass: "c-label",
+    attrs: {
+      "for": "category"
+    }
+  }, [_vm._v("カテゴリ名")])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("th", [_c("label", {
+    staticClass: "c-label",
+    attrs: {
+      "for": "expiration_date"
+    }
+  }, [_vm._v("賞味期限")])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("th", [_c("label", {
+    staticClass: "c-label",
+    attrs: {
+      "for": "product_picture"
+    }
+  }, [_vm._v("商品画像")])]);
+}];
 render._withStripped = true;
 
 
@@ -62251,19 +62451,20 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_User_ResetPasswordComponent_vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/User/ResetPasswordComponent.vue */ "./resources/js/components/User/ResetPasswordComponent.vue");
 /* harmony import */ var _components_User_ProfileComponent_vue__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/User/ProfileComponent.vue */ "./resources/js/components/User/ProfileComponent.vue");
 /* harmony import */ var _components_User_WithdrawComponent_vue__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/User/WithdrawComponent.vue */ "./resources/js/components/User/WithdrawComponent.vue");
-/* harmony import */ var _components_Convenience_RegisterComponent_vue__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/Convenience/RegisterComponent.vue */ "./resources/js/components/Convenience/RegisterComponent.vue");
-/* harmony import */ var _components_Convenience_LoginComponent_vue__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./components/Convenience/LoginComponent.vue */ "./resources/js/components/Convenience/LoginComponent.vue");
-/* harmony import */ var _components_Convenience_MyPageComponent_vue__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./components/Convenience/MyPageComponent.vue */ "./resources/js/components/Convenience/MyPageComponent.vue");
-/* harmony import */ var _components_Convenience_ForgotPasswordComponent_vue__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./components/Convenience/ForgotPasswordComponent.vue */ "./resources/js/components/Convenience/ForgotPasswordComponent.vue");
-/* harmony import */ var _components_Convenience_ResetPasswordComponent_vue__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./components/Convenience/ResetPasswordComponent.vue */ "./resources/js/components/Convenience/ResetPasswordComponent.vue");
-/* harmony import */ var _components_Convenience_ProfileComponent_vue__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./components/Convenience/ProfileComponent.vue */ "./resources/js/components/Convenience/ProfileComponent.vue");
-/* harmony import */ var _components_Convenience_WithdrawComponent_vue__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./components/Convenience/WithdrawComponent.vue */ "./resources/js/components/Convenience/WithdrawComponent.vue");
-/* harmony import */ var _components_Convenience_ProductSaleComponent_vue__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./components/Convenience/ProductSaleComponent.vue */ "./resources/js/components/Convenience/ProductSaleComponent.vue");
-/* harmony import */ var _components_Convenience_ProductEditComponent_vue__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./components/Convenience/ProductEditComponent.vue */ "./resources/js/components/Convenience/ProductEditComponent.vue");
-/* harmony import */ var _components_Convenience_ProductSaleIndexComponent_vue__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./components/Convenience/ProductSaleIndexComponent.vue */ "./resources/js/components/Convenience/ProductSaleIndexComponent.vue");
-/* harmony import */ var _components_Convenience_ProductPurchaseIndexComponent_vue__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./components/Convenience/ProductPurchaseIndexComponent.vue */ "./resources/js/components/Convenience/ProductPurchaseIndexComponent.vue");
-/* harmony import */ var _components_ProductAllIndexComponent_vue__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./components/ProductAllIndexComponent.vue */ "./resources/js/components/ProductAllIndexComponent.vue");
-/* harmony import */ var _components_Convenience_ProductDetailComponent_vue__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./components/Convenience/ProductDetailComponent.vue */ "./resources/js/components/Convenience/ProductDetailComponent.vue");
+/* harmony import */ var _components_User_ProductDetailComponent_vue__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/User/ProductDetailComponent.vue */ "./resources/js/components/User/ProductDetailComponent.vue");
+/* harmony import */ var _components_Convenience_RegisterComponent_vue__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./components/Convenience/RegisterComponent.vue */ "./resources/js/components/Convenience/RegisterComponent.vue");
+/* harmony import */ var _components_Convenience_LoginComponent_vue__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./components/Convenience/LoginComponent.vue */ "./resources/js/components/Convenience/LoginComponent.vue");
+/* harmony import */ var _components_Convenience_MyPageComponent_vue__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./components/Convenience/MyPageComponent.vue */ "./resources/js/components/Convenience/MyPageComponent.vue");
+/* harmony import */ var _components_Convenience_ForgotPasswordComponent_vue__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./components/Convenience/ForgotPasswordComponent.vue */ "./resources/js/components/Convenience/ForgotPasswordComponent.vue");
+/* harmony import */ var _components_Convenience_ResetPasswordComponent_vue__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./components/Convenience/ResetPasswordComponent.vue */ "./resources/js/components/Convenience/ResetPasswordComponent.vue");
+/* harmony import */ var _components_Convenience_ProfileComponent_vue__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./components/Convenience/ProfileComponent.vue */ "./resources/js/components/Convenience/ProfileComponent.vue");
+/* harmony import */ var _components_Convenience_WithdrawComponent_vue__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./components/Convenience/WithdrawComponent.vue */ "./resources/js/components/Convenience/WithdrawComponent.vue");
+/* harmony import */ var _components_Convenience_ProductDetailComponent_vue__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./components/Convenience/ProductDetailComponent.vue */ "./resources/js/components/Convenience/ProductDetailComponent.vue");
+/* harmony import */ var _components_Convenience_ProductSaleComponent_vue__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./components/Convenience/ProductSaleComponent.vue */ "./resources/js/components/Convenience/ProductSaleComponent.vue");
+/* harmony import */ var _components_Convenience_ProductEditComponent_vue__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./components/Convenience/ProductEditComponent.vue */ "./resources/js/components/Convenience/ProductEditComponent.vue");
+/* harmony import */ var _components_Convenience_ProductSaleIndexComponent_vue__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./components/Convenience/ProductSaleIndexComponent.vue */ "./resources/js/components/Convenience/ProductSaleIndexComponent.vue");
+/* harmony import */ var _components_Convenience_ProductPurchaseIndexComponent_vue__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./components/Convenience/ProductPurchaseIndexComponent.vue */ "./resources/js/components/Convenience/ProductPurchaseIndexComponent.vue");
+/* harmony import */ var _components_ProductAllIndexComponent_vue__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./components/ProductAllIndexComponent.vue */ "./resources/js/components/ProductAllIndexComponent.vue");
  // VueRouterのimport
 
 // 共通コンポーネント
@@ -62277,6 +62478,7 @@ __webpack_require__.r(__webpack_exports__);
  // パスワードリセット画面
  // プロフィール編集画面
  // 退会画面
+ // 商品詳細画面
 
 // コンビニ側
  // ユーザー登録画面
@@ -62286,6 +62488,7 @@ __webpack_require__.r(__webpack_exports__);
  // パスワードリセット画面
  // プロフィール編集画面
  // 退会画面
+ // 商品詳細画面
 
 // 商品
  // 商品出品画面
@@ -62293,7 +62496,6 @@ __webpack_require__.r(__webpack_exports__);
  // 出品した商品一覧画面
  // 購入された商品一覧画面
  // 商品一覧画面
- // 商品詳細画面
 
 /**
  * First we will load all of this project's JavaScript dependencies which
@@ -62323,7 +62525,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_0__["default"]({
   {
     path: '/convenience/register',
     name: 'convenience.register',
-    component: _components_Convenience_RegisterComponent_vue__WEBPACK_IMPORTED_MODULE_9__["default"]
+    component: _components_Convenience_RegisterComponent_vue__WEBPACK_IMPORTED_MODULE_10__["default"]
   },
   // 利用者側ログイン画面
   {
@@ -62335,7 +62537,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_0__["default"]({
   {
     path: '/convenience/login',
     name: 'convenience.login',
-    component: _components_Convenience_LoginComponent_vue__WEBPACK_IMPORTED_MODULE_10__["default"]
+    component: _components_Convenience_LoginComponent_vue__WEBPACK_IMPORTED_MODULE_11__["default"]
   },
   // 利用者側マイページ画面
   {
@@ -62347,7 +62549,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_0__["default"]({
   {
     path: '/convenience/mypage/:userId',
     name: 'convenience.mypage',
-    component: _components_Convenience_MyPageComponent_vue__WEBPACK_IMPORTED_MODULE_11__["default"]
+    component: _components_Convenience_MyPageComponent_vue__WEBPACK_IMPORTED_MODULE_12__["default"]
   },
   // 利用者側パスワードメール送信画面
   {
@@ -62359,7 +62561,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_0__["default"]({
   {
     path: '/convenience/password/email',
     name: 'convenience.password.email',
-    component: _components_Convenience_ForgotPasswordComponent_vue__WEBPACK_IMPORTED_MODULE_12__["default"]
+    component: _components_Convenience_ForgotPasswordComponent_vue__WEBPACK_IMPORTED_MODULE_13__["default"]
   },
   // 利用者側パスワードリセット画面
   {
@@ -62371,7 +62573,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_0__["default"]({
   {
     path: '/convenience/password/reset/:token',
     name: 'convenience.password.reset',
-    component: _components_Convenience_ResetPasswordComponent_vue__WEBPACK_IMPORTED_MODULE_13__["default"]
+    component: _components_Convenience_ResetPasswordComponent_vue__WEBPACK_IMPORTED_MODULE_14__["default"]
   },
   // 利用者側プロフィール編集画面
   {
@@ -62384,7 +62586,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_0__["default"]({
   {
     path: '/convenience/mypage/profile/:userId',
     name: 'convenience.profile',
-    component: _components_Convenience_ProfileComponent_vue__WEBPACK_IMPORTED_MODULE_14__["default"],
+    component: _components_Convenience_ProfileComponent_vue__WEBPACK_IMPORTED_MODULE_15__["default"],
     props: true
   },
   // 利用者側退会画面
@@ -62398,44 +62600,50 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_0__["default"]({
   {
     path: '/convenience/mypage/withdraw/:userId',
     name: 'convenience.withdraw',
-    component: _components_Convenience_WithdrawComponent_vue__WEBPACK_IMPORTED_MODULE_15__["default"],
+    component: _components_Convenience_WithdrawComponent_vue__WEBPACK_IMPORTED_MODULE_16__["default"],
     props: true
   },
   // 商品出品画面
   {
     path: '/convenience/products/create/:userId',
     name: 'convenience.products.create',
-    component: _components_Convenience_ProductSaleComponent_vue__WEBPACK_IMPORTED_MODULE_16__["default"]
+    component: _components_Convenience_ProductSaleComponent_vue__WEBPACK_IMPORTED_MODULE_18__["default"]
   },
   // 商品編集画面
   {
     path: '/convenience/products/edit/:productId',
     name: 'convenience.products.edit',
-    component: _components_Convenience_ProductEditComponent_vue__WEBPACK_IMPORTED_MODULE_17__["default"]
+    component: _components_Convenience_ProductEditComponent_vue__WEBPACK_IMPORTED_MODULE_19__["default"]
   },
   // 出品した商品一覧画面
   {
     path: '/convenience/products/sale/:convenienceId',
     name: 'convenience.products.sale',
-    component: _components_Convenience_ProductSaleIndexComponent_vue__WEBPACK_IMPORTED_MODULE_18__["default"]
+    component: _components_Convenience_ProductSaleIndexComponent_vue__WEBPACK_IMPORTED_MODULE_20__["default"]
   },
   // 購入された商品一覧画面
   {
     path: '/convenience/products/purchase/:convenienceId',
     name: 'convenience.products.purchase',
-    component: _components_Convenience_ProductPurchaseIndexComponent_vue__WEBPACK_IMPORTED_MODULE_19__["default"]
+    component: _components_Convenience_ProductPurchaseIndexComponent_vue__WEBPACK_IMPORTED_MODULE_21__["default"]
   },
   // 商品一覧画面
   {
     path: '/products',
     name: 'products',
-    component: _components_ProductAllIndexComponent_vue__WEBPACK_IMPORTED_MODULE_20__["default"]
+    component: _components_ProductAllIndexComponent_vue__WEBPACK_IMPORTED_MODULE_22__["default"]
   },
-  // 商品詳細画面
+  // 利用者側商品詳細画面
   {
-    path: '/products/detail/:productId',
+    path: '/user/products/detail/:productId',
+    name: 'user.products.detail',
+    component: _components_User_ProductDetailComponent_vue__WEBPACK_IMPORTED_MODULE_9__["default"]
+  },
+  // コンビニ側商品詳細画面
+  {
+    path: '/convenience/products/detail/:productId',
     name: 'convenience.products.detail',
-    component: _components_Convenience_ProductDetailComponent_vue__WEBPACK_IMPORTED_MODULE_21__["default"]
+    component: _components_Convenience_ProductDetailComponent_vue__WEBPACK_IMPORTED_MODULE_17__["default"]
   }]
 });
 
@@ -63972,6 +64180,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_MyPageComponent_vue_vue_type_template_id_7aea7069__WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_MyPageComponent_vue_vue_type_template_id_7aea7069__WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/User/ProductDetailComponent.vue":
+/*!*****************************************************************!*\
+  !*** ./resources/js/components/User/ProductDetailComponent.vue ***!
+  \*****************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _ProductDetailComponent_vue_vue_type_template_id_12cb53f4__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ProductDetailComponent.vue?vue&type=template&id=12cb53f4 */ "./resources/js/components/User/ProductDetailComponent.vue?vue&type=template&id=12cb53f4");
+/* harmony import */ var _ProductDetailComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ProductDetailComponent.vue?vue&type=script&lang=js */ "./resources/js/components/User/ProductDetailComponent.vue?vue&type=script&lang=js");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _ProductDetailComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"],
+  _ProductDetailComponent_vue_vue_type_template_id_12cb53f4__WEBPACK_IMPORTED_MODULE_0__["render"],
+  _ProductDetailComponent_vue_vue_type_template_id_12cb53f4__WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/User/ProductDetailComponent.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/User/ProductDetailComponent.vue?vue&type=script&lang=js":
+/*!*****************************************************************************************!*\
+  !*** ./resources/js/components/User/ProductDetailComponent.vue?vue&type=script&lang=js ***!
+  \*****************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ProductDetailComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./ProductDetailComponent.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/User/ProductDetailComponent.vue?vue&type=script&lang=js");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ProductDetailComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/User/ProductDetailComponent.vue?vue&type=template&id=12cb53f4":
+/*!***********************************************************************************************!*\
+  !*** ./resources/js/components/User/ProductDetailComponent.vue?vue&type=template&id=12cb53f4 ***!
+  \***********************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_ProductDetailComponent_vue_vue_type_template_id_12cb53f4__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??ref--6!../../../../node_modules/vue-loader/lib??vue-loader-options!./ProductDetailComponent.vue?vue&type=template&id=12cb53f4 */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/User/ProductDetailComponent.vue?vue&type=template&id=12cb53f4");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_ProductDetailComponent_vue_vue_type_template_id_12cb53f4__WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_ProductDetailComponent_vue_vue_type_template_id_12cb53f4__WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

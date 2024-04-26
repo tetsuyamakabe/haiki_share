@@ -73,6 +73,7 @@ export default {
 
         // 商品詳細画面のリンクを返すメソッド
         getProductDetailLink(productId) {
+            // 【TODO】 利用者ユーザーは利用者側の詳細画面、コンビニユーザーはコンビニ側の詳細画面、ログインしていないユーザーはログイン画面に遷移させる
             return { name: 'convenience.products.detail', params: { productId: productId } };
         },
 

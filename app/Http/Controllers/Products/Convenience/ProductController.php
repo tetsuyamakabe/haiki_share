@@ -44,7 +44,7 @@ class ProductController extends Controller
     // すべての商品情報の取得
     public function getAllProducts()
     {
-        $products = Product::with('pictures')->paginate(10);
+        $products = Product::with('pictures')->paginate(4);
         return response()->json(['products' => $products]);
     }
 

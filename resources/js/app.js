@@ -11,6 +11,7 @@ import UserForgotPasswordComponent from './components/User/ForgotPasswordCompone
 import UserResetPasswordPasswordComponent from './components/User/ResetPasswordComponent.vue'; // パスワードリセット画面
 import UserProfileComponent from './components/User/ProfileComponent.vue'; // プロフィール編集画面
 import UserWithdrawComponent from './components/User/WithdrawComponent.vue'; // 退会画面
+import UserProductDetailComponent from './components/User/ProductDetailComponent.vue'; // 商品詳細画面
 
 // コンビニ側
 import ConvenienceRegisterComponent from './components/Convenience/RegisterComponent.vue'; // ユーザー登録画面
@@ -20,6 +21,7 @@ import ConvenienceForgotPasswordComponent from './components/Convenience/ForgotP
 import ConvenienceResetPasswordPasswordComponent from './components/Convenience/ResetPasswordComponent.vue' // パスワードリセット画面
 import ConvenienceProfileComponent from './components/Convenience/ProfileComponent.vue'; // プロフィール編集画面
 import ConvenienceWithdrawComponent from './components/Convenience/WithdrawComponent.vue'; // 退会画面
+import ConvenienceProductDetailComponent from './components/Convenience/ProductDetailComponent.vue'; // 商品詳細画面
 
 // 商品
 import ProductSaleComponent from './components/Convenience/ProductSaleComponent.vue'; // 商品出品画面
@@ -27,7 +29,6 @@ import ProductEditComponent from './components/Convenience/ProductEditComponent.
 import ProductSaleIndexComponent from './components/Convenience/ProductSaleIndexComponent.vue'; // 出品した商品一覧画面
 import ProductPurchaseIndexComponent from './components/Convenience/ProductPurchaseIndexComponent.vue'; // 購入された商品一覧画面
 import ProductAllIndexComponent from './components/ProductAllIndexComponent.vue'; // 商品一覧画面
-import ProductDetailComponent from './components/Convenience/ProductDetailComponent.vue'; // 商品詳細画面
 
 /**
  * First we will load all of this project's JavaScript dependencies which
@@ -168,11 +169,17 @@ const router = new VueRouter({
             name: 'products',
             component: ProductAllIndexComponent,
         },
-        // 商品詳細画面
+        // 利用者側商品詳細画面
         {
-            path: '/products/detail/:productId',
+            path: '/user/products/detail/:productId',
+            name: 'user.products.detail',
+            component: UserProductDetailComponent,
+        },
+        // コンビニ側商品詳細画面
+        {
+            path: '/convenience/products/detail/:productId',
             name: 'convenience.products.detail',
-            component: ProductDetailComponent,
+            component: ConvenienceProductDetailComponent,
         },
     ]
 });
