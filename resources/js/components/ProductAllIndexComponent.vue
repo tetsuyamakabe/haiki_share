@@ -1,99 +1,66 @@
-
 <template>
-    <div class="p-container">
-        <ul class="p-product__list">
-            <li v-for="product in products.data" :key="product.id" class="p-product__item">
-                <h3 class="c-product__name">{{ product.name }}</h3>
-                <div class="p-product__picture--container">
-                    <img class="c-product__picture" :src="getProductPicturePath(product)" alt="Product Image">
+    <main class="l-main">
+        <div class="p-profile">
+            <div class="p-product__form">
+                <h1 class="c-title">商品一覧</h1>
+                <div class="p-container">
+                    <ul class="p-product__list">
+                        <li v-for="product in products.data" :key="product.id" class="p-product__item">
+                            <h3 class="c-product__name">{{ product.name }}</h3>
+                            <div class="p-product__picture--container">
+                                <img class="c-product__picture" :src="getProductPicturePath(product)" alt="Product Image">
+                            </div>
+                            <p class="c-product__price">価格 {{ product.price }} 円</p>
+                            <p class="c-product__date">賞味期限 {{ product.expiration_date }}</p>
+                            <div class="p-product__button">
+                                <router-link :to="getProductDetailLink(product.id)" class="c-button">詳細を見る</router-link>
+                            </div>
+                        </li>
+                    </ul>
                 </div>
-                <p class="c-product__price">価格 {{ product.price }} 円</p>
-                <p class="c-product__date">賞味期限 {{ product.expiration_date }}</p>
-                <div class="p-product__button">
-                    <a :href="product.detail_link" class="c-button">詳細を見る</a>
-                </div>
-            </li>
-        </ul>
-
-        <!-- ページネーション -->
-        <ul class="pagination">
-            <!-- 前に移動する<<ボタン -->
-            <li :class="{ 'inactive': current_page == 1, 'disabled': current_page == 1 }" @click="changePage(current_page - 1)">«</li>
-            <!-- ページ番号の範囲 -->
-            <li v-for="page in frontPageRange" :key="page" @click="changePage(page)" :class="{ 'active': isCurrent(page), 'inactive': !isCurrent(page) }">{{ page }}</li>
-            <!-- ドットの表示 -->
-            <li v-if="front_dot" class="inactive disabled">...</li>
-            <!-- ページ番号の範囲 -->
-            <li v-for="page in middlePageRange" :key="page" @click="changePage(page)" :class="{ 'active': isCurrent(page), 'inactive': !isCurrent(page) }">{{ page }}</li>
-            <!-- ドットの表示 -->
-            <li v-if="end_dot" class="inactive">...</li>
-            <!-- 次に移動する>>ボタン -->
-            <li :class="{ 'inactive': current_page >= last_page, 'disabled': current_page >= last_page }" @click="changePage(current_page + 1)">»</li>
-        </ul>
-    </div>
+                <!-- ページネーション -->
+                <pagination-component @onClick="onPageChange" :current_page="currentPage" :last_page="lastPage" />
+            </div>
+        </div>
+    </main>
 </template>
-
 
 <script>
 import axios from 'axios';
+import PaginationComponent from './PaginationComponent.vue'; // ページネーションコンポーネント
 
 export default {
-    props: ['products'],
+    components: {
+        PaginationComponent,
+    },
 
     data() {
         return {
-            localProduct: [],
-            current_page: 1, // 現在のページ番号
-            last_page: '', // 最後のページ番号
-            range: 5, // 表示されるページの範囲
-            front_dot: false, // 前のページにドットを表示させるか
-            end_dot: false // 後ろのページにドットを表示させるか
+            products: [],
+            currentPage: 1, // currentPageを定義
+            lastPage: 1, // lastPageを定義
         };
     },
 
-    computed: {
-        // 最初のページ番号の範囲
-        frontPageRange() {
-            if (!this.sizeCheck) {
-                this.front_dot = false;
-                this.end_dot = false;
-                return this.calRange(1, this.last_page);
-            }
-            return this.calRange(1, 2);
-        },
-
-        // 中間のページ番号の範囲
-        middlePageRange() {
-            if (!this.sizeCheck) return [];
-            let start = "";
-            let end = "";
-            if (this.current_page <= this.range) {
-                start = 3;
-                end = this.range + 2;
-                this.front_dot = false;
-                this.end_dot = true;
-            } else if (this.current_page > this.last_page - this.range) {
-                start = this.last_page - this.range - 1;
-                end = this.last_page - 2;
-                this.front_dot = true;
-                this.end_dot = false;
-            } else {
-                start = this.current_page - Math.floor(this.range / 2);
-                end = this.current_page + Math.floor(this.range / 2);
-                this.front_dot = true;
-                this.end_dot = true;
-            }
-            return this.calRange(start, end);
-        },
-
-        // 最後のページ番号の範囲
-        lastPageRange() {
-            if (!this.sizeCheck) return [];
-            return this.calRange(this.last_page - 1, this.last_page);
-        },
+    created() {
+        this.getProduct(); // サーバから商品情報を取得
+        this.getProducts(); // ページが変更された時の商品情報を取得
     },
 
     methods: {
+        // 商品情報をサーバーから取得
+        getProduct() {
+            console.log('すべての商品情報を取得します');
+            axios.get('/api/products').then(response => {
+                console.log('APIからのレスポンス:', response.data);
+                this.products = response.data.products; // プロパティ名を修正
+                this.lastPage = response.data.last_page; // プロパティ名を修正
+            }).catch(error => {
+                console.error('商品情報取得失敗:', error.response.data);
+                this.errors = error.response.data;
+            });
+        },
+
         // 商品画像のパスを取得するメソッド
         getProductPicturePath(product) {
             // console.log('productは、', product);
@@ -104,83 +71,35 @@ export default {
             }
         },
 
-        // ページが変更されたときに新しい商品データを取得するメソッド
-        async getProducts() {
-            const result = await axios.get(`/products?page=${this.current_page}`);
-            // console.log('resultは、', result);
-            const products = result.data;
-            console.log('productsは、', products);
-            this.localProduct = products.data;
-            // console.log('productsは、', this.localProduct);
-            this.last_page = products.last_page;
-            // console.log('this.last_pageは、', products.last_page);
-        },
-
-        // 配列作成メソッド
-        calRange(start, end) {
-            const range = [];
-            for (let i = start; i <= end; i++) {
-                range.push(i);
-            }
-            return range;
+        // 商品詳細画面のリンクを返すメソッド
+        getProductDetailLink(productId) {
+            return { name: 'convenience.products.detail', params: { productId: productId } };
         },
 
         // ページが変更されたときの処理
-        changePage(page) {
-            if (page > 0 && page <= this.last_page) {
-                this.current_page = page;
-                this.getProducts();
+        onPageChange(page) {
+            this.getProducts(page);
+        },
+
+        // ページが変更されたときに新しい商品データを取得するメソッド
+        async getProducts(page) {
+            try {
+                // APIリクエストの前にcurrentPageを更新する
+                this.currentPage = page;
+                console.log('pageは、', page);
+                console.log('this.currentPageは、', this.currentPage);
+                const result = await axios.get('/api/products/' + `?page=${this.currentPage}`);
+                const products = result.data;
+                console.log('productsは、', products);
+                this.products = products.products;
+                console.log('productsは、', this.products);
+                this.lastPage = products.products.last_page;
+                console.log('this.lastPageは、', this.lastPage);
+            } catch (error) {
+                console.error('ページを更新時に商品情報取得失敗:', error.response.data);
+                this.errors = error.response.data;
             }
         },
-
-        // ページが現在のページかどうかを確認するメソッド
-        isCurrent(page) {
-            return page === this.current_page;
-        },
-
-        // ページネーションの表示を制御するためのメソッド
-        sizeCheck() {
-            if (this.last_page <= this.range + 4) {
-                return false;
-            }
-            return true;
-        },
-    },
-
-    // ページが初期化されたときに商品データを取得する
-    created() {
-        // console.log(this.products);
-        // console.log('画像ファイルは、', this.products.data[0].pictures[0].file);
-        this.getProducts();
     },
 }
 </script>
-
-<style scoped>
-.pagination {
-    display: flex;
-    list-style-type: none;
-}
-
-.pagination li {
-    border: 1px solid #ddd;
-    padding: 6px 12px;
-    text-align: center;
-}
-
-.active {
-    background-color: #337;
-    color:white;
-}
-
-.inactive{
-    color: #337;
-}
-
-.pagination li + li {
-    border-left: none;
-}
-.disabled {
-    cursor: not-allowed;
-}
-</style>

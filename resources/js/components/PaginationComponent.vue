@@ -18,11 +18,10 @@
 
 <script>
 export default {
-    props: ['current_page', 'last_page', 'convenienceId'],
+    props: ['current_page', 'last_page'],
     data() {
         return {
-            products: [],
-            currentPage: 1,
+            currentPage: 1, // currentPageをpropsから受け取る
             range: 5, // 表示されるページの範囲
             front_dot: false, // 前のページにドットを表示させるか
             end_dot: false // 後ろのページにドットを表示させるか
@@ -81,10 +80,6 @@ export default {
         },
     },
 
-    created() {
-        this.convenienceId = this.$route.params.convenienceId; // ルートからconvenienceIdを取得
-    },
-
     methods: {
         // 配列作成メソッド
         calRange(start, end) {
@@ -102,9 +97,11 @@ export default {
 
         // ページが変更されたときの処理
         changePage(page) {
+            console.log('changePageメソッドです。');
             if (page > 0 && page <= this.last_page) {
                 this.currentPage = page;
-                this.$emit("getProducts", this.currentPage);
+                console.log('pageは、', page);
+                this.$emit("onClick", this.currentPage); // 親コンポーネントに正しいページ番号を伝達
             }
         },
     },

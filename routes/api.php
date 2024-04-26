@@ -42,3 +42,4 @@ Route::put('/convenience/products/{userId}', 'Products\Convenience\ProductContro
 Route::put('/convenience/products/edit/{productId}', 'Products\Convenience\ProductController@editProduct'); // 商品編集・更新処理
 Route::delete('/convenience/products/{productId}', 'Products\Convenience\ProductController@deleteProduct'); // 商品削除
 Route::get('/convenience/products/{convenienceId}', 'Products\Convenience\ProductController@getConvenienceProduct'); // 出品した商品情報の取得
+Route::get('/products', 'Products\Convenience\ProductController@getAllProducts'); // すべての商品情報の取得

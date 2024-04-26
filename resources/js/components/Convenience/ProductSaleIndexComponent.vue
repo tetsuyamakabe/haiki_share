@@ -20,14 +20,15 @@
                     </ul>
                 </div>
                 <!-- ページネーション -->
-                <pagination-component @onClick="getProducts" :current_page="currentPage" :last_page="lastPage" :convenienceId="convenienceId" />
+                <pagination-component @onClick="onPageChange" :current_page="currentPage" :last_page="lastPage" />
             </div>
         </div>
     </main>
 </template>
 
 <script>
-import PaginationComponent from '../PaginationComponent.vue'
+import axios from 'axios';
+import PaginationComponent from '../PaginationComponent.vue'; // ページネーションコンポーネント
 
 export default {
     components: {
@@ -44,11 +45,12 @@ export default {
 
     created() {
         this.convenienceId = this.$route.params.convenienceId; // ルートからconvenienceIdを取得
-        this.getProduct(); // 商品情報を取得
-        this.getProducts(); // 商品情報を取得
+        this.getProduct(); // サーバから商品情報を取得
+        this.getProducts(); // ページが変更された時の商品情報を取得
     },
 
     methods: {
+        // 商品情報をサーバーから取得
         getProduct() {
             console.log('商品情報を取得します');
             axios.get('/api/convenience/products/' + this.convenienceId).then(response => {
@@ -82,15 +84,29 @@ export default {
             return { name: 'convenience.products.edit', params: { productId: productId } };
         },
 
+        // ページが変更されたときの処理
+        onPageChange(page) {
+            this.getProducts(page);
+        },
+
         // ページが変更されたときに新しい商品データを取得するメソッド
-        async getProducts() {
-            const result = await axios.get('/api/convenience/products/' + this.convenienceId + `?page=${this.currentPage}`);
-            const products = result.data;
-            console.log('productsは、', products);
-            this.products = products.product;
-            console.log('productsは、', this.products);
-            this.last_page = products.product.last_page;
-            console.log('this.last_pageは、', this.last_page);
+        async getProducts(page) {
+            try {
+                // APIリクエストの前にcurrentPageを更新する
+                this.currentPage = page;
+                console.log('pageは、', page);
+                console.log('this.currentPageは、', this.currentPage);
+                const result = await axios.get('/api/convenience/products/' + this.convenienceId + `?page=${this.currentPage}`);
+                const products = result.data;
+                console.log('productsは、', products);
+                this.products = products.product;
+                console.log('productsは、', this.products);
+                this.lastPage = products.product.last_page;
+                console.log('this.lastPageは、', this.lastPage);
+            } catch (error) {
+                console.error('ページを更新時に商品情報取得失敗:', error.response.data);
+                this.errors = error.response.data;
+            }
         },
     },
 }

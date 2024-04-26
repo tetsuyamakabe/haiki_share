@@ -41,6 +41,13 @@ class ProductController extends Controller
         }
     }
 
+    // すべての商品情報の取得
+    public function getAllProducts()
+    {
+        $products = Product::with('pictures')->paginate(10);
+        return response()->json(['products' => $products]);
+    }
+
     // 商品出品処理（商品の投稿）
     public function createProduct(ProductSaleRequest $request, $userId)
     {
