@@ -20,19 +20,20 @@
                     </ul>
                 </div>
                 <!-- ページネーション -->
-                <pagination-component :current_page="currentPage" :last_page="lastPage" :convenienceId="convenienceId" />
+                <pagination-component @onClick="getProducts" :current_page="currentPage" :last_page="lastPage" :convenienceId="convenienceId" />
             </div>
         </div>
     </main>
 </template>
 
 <script>
-import PaginationComponent from '../PagenationComponent.vue'
+import PaginationComponent from '../PaginationComponent.vue'
 
 export default {
     components: {
         PaginationComponent,
     },
+
     data() {
         return {
             products: [],
@@ -44,6 +45,7 @@ export default {
     created() {
         this.convenienceId = this.$route.params.convenienceId; // ルートからconvenienceIdを取得
         this.getProduct(); // 商品情報を取得
+        this.getProducts(); // 商品情報を取得
     },
 
     methods: {
@@ -75,10 +77,21 @@ export default {
             return { name: 'convenience.products.detail', params: { productId: productId } };
         },
 
+        // 商品編集画面のリンクを返すメソッド
         getProductEditLink(productId) {
             return { name: 'convenience.products.edit', params: { productId: productId } };
         },
 
+        // ページが変更されたときに新しい商品データを取得するメソッド
+        async getProducts() {
+            const result = await axios.get('/api/convenience/products/' + this.convenienceId + `?page=${this.currentPage}`);
+            const products = result.data;
+            console.log('productsは、', products);
+            this.products = products.product;
+            console.log('productsは、', this.products);
+            this.last_page = products.product.last_page;
+            console.log('this.last_pageは、', this.last_page);
+        },
     },
 }
 </script>
