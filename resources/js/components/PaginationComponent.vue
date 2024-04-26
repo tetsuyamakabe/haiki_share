@@ -83,21 +83,9 @@ export default {
 
     created() {
         this.convenienceId = this.$route.params.convenienceId; // ルートからconvenienceIdを取得
-        this.getProducts(); // 商品情報を取得
     },
 
     methods: {
-        // ページが変更されたときに新しい商品データを取得するメソッド
-        async getProducts() {
-            const result = await axios.get('/api/convenience/products/' + this.convenienceId + `?page=${this.currentPage}`);
-            const products = result.data;
-            console.log('productsは、', products);
-            this.products = products.product;
-            console.log('productsは、', this.products);
-            this.last_page = products.product.last_page;
-            console.log('this.last_pageは、', this.last_page);
-        },
-
         // 配列作成メソッド
         calRange(start, end) {
             const range = [];
@@ -107,18 +95,17 @@ export default {
             return range;
         },
 
-        // ページが変更されたときの処理
-        changePage(page) {
-            console.log('changePage()メソッド')
-            if (page > 0 && page <= this.last_page) {
-                this.getProducts();
-                this.$emit('update:current_page', page);
-            }
-        },
-
         // ページが現在のページかどうかを確認するメソッド
         isCurrent(page) {
             return page === this.currentPage;
+        },
+
+        // ページが変更されたときの処理
+        changePage(page) {
+            if (page > 0 && page <= this.last_page) {
+                this.currentPage = page;
+                this.$emit("getProducts", this.currentPage);
+            }
         },
     },
 };
