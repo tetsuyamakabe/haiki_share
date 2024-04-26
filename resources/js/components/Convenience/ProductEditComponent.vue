@@ -38,7 +38,7 @@
                                 </td>
                             </tr>
 
-                        <tr>
+                            <tr>
                                 <th><label for="expiration_date" class="c-label">賞味期限</label></th>
                                 <td>
                                     <div class="p-text__form">
@@ -143,7 +143,7 @@ export default {
             axios.get('/api/products/'+ this.productId).then(response => {
                 this.product = response.data.product;
                 console.log('APIからのレスポンス:', response.data);
-                // 取得したプロフィール情報をformDataに入れる
+                // 取得した商品情報をformDataに入れる
                 this.formData.name = this.product.name || '';
                 this.formData.price = this.product.price || '';
                 this.formData.category = this.product.category.id || '';
