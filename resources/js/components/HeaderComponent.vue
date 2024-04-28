@@ -14,8 +14,10 @@
                 <ul class="c-nav__menu--list">
                     <li class="c-nav__menu--item"><router-link class="c-nav__menu--link" :to="{ name: 'user.register' }">利用者ユーザー登録</router-link></li>
                     <li class="c-nav__menu--item"><router-link class="c-nav__menu--link" :to="{ name: 'user.login' }">利用者ログイン</router-link></li>
+                    <li class="c-nav__menu--item"><router-link class="c-nav__menu--link" :to="{ name: 'user.logout' }">利用者ログアウト</router-link></li>
                     <li class="c-nav__menu--item"><router-link class="c-nav__menu--link" :to="{ name: 'convenience.register' }">コンビニユーザー登録</router-link></li>
                     <li class="c-nav__menu--item"><router-link class="c-nav__menu--link" :to="{ name: 'convenience.login' }">コンビニログイン</router-link></li>
+                    <li class="c-nav__menu--item"><router-link class="c-nav__menu--link" :to="{ name: 'convenience.logout' }">コンビニログアウト</router-link></li>
                 </ul>
             </nav>
         </div>

@@ -178,14 +178,22 @@ export default {
         // 編集前のプロフィール情報をサーバーから取得
         getProfile() {
             console.log('プロフィールを取得します');
-            axios.get('/api/convenience/mypage/profile/' + this.userId).then(response => {
+            const csrfToken = document.head.querySelector('meta[name="csrf-token"]').content;
+            // リクエストヘッダー定義
+            const config = {
+                headers: {
+                    'X-CSRF-TOKEN': csrfToken
+                }
+            };
+            console.log(config);
+            axios.get('/api/convenience/mypage/profile/' + this.userId, config).then(response => {
                 this.user = response.data.user;
                 this.convenience = response.data.convenience;
                 this.address = response.data.address;
                 console.log('APIからのレスポンス:', response.data);
                 // 取得したプロフィール情報をformDataに入れる
                 this.formData.name = this.user.name || '';
-                this.formData. branch_name = this.convenience.branch_name || '',
+                this.formData.branch_name = this.convenience.branch_name || '',
                 this.formData.prefecture = this.address.prefecture || '',
                 this.formData.city = this.address.city || '',
                 this.formData.town = this.address.town || '',
@@ -225,7 +233,7 @@ export default {
             // リクエストヘッダー定義
             const config = {
                 headers: {
-                    'content-type': 'multipart/form-data'
+                    'content-type': 'multipart/form-data',
                 }
             };
 

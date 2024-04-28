@@ -1,0 +1,26 @@
+<template>
+    <div class="p-login__button">
+        <button @click="logout" class="c-button">ログアウト</button>
+    </div>
+</template>
+
+<script>
+import axios from 'axios';
+
+export default {
+    methods: {
+        // ログアウト処理
+        logout() {
+            axios.post('/api/convenience/logout').then(response => {
+                this.message = response.data.message;
+                console.log('this.messageは、', this.message);
+                console.log('ログアウトします');
+                this.$router.push({ name: 'convenience.login' }); // ログアウト処理完了後、コンビニ側ログイン画面に遷移
+            }).catch(error => {
+                console.error('ログアウト処理失敗:', error.response.data);
+                this.errors = error.response.data.errors;
+            });
+        }
+    }
+}
+</script>

@@ -85,6 +85,7 @@ class MyPageController extends Controller
         if (!$user) {
             return response()->json(['message' => 'ユーザーが見つかりません'], 404);
         }
+        Auth::logout(); // 自動ログアウト
         if ($user->role === 'convenience') {
             $convenience = Convenience::where('user_id', $user->id)->first();
             if ($convenience) {
@@ -93,7 +94,6 @@ class MyPageController extends Controller
             }
         }
         $user->delete(); // ユーザーを削除
-        Auth::logout(); // 自動ログアウト
         return response()->json(['message' => 'ユーザーが退会しました', 'user' => $user]);
     }
 }

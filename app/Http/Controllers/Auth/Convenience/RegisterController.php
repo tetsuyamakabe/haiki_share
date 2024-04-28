@@ -100,4 +100,9 @@ class RegisterController extends Controller
             return response()->json(['user' => $user, 'convenience' => $convenience, 'address' => $address], 201);
         }
     }
+
+    protected function registered(Request $request, $user)
+    {
+        return $user;
+    }
 }

@@ -23,9 +23,12 @@ Route::get('/products/{productId}', 'Products\Convenience\ProductController@getP
 Route::get('categories', 'Products\Convenience\ProductController@getCategories'); // 商品カテゴリー情報の取得
 
 // 利用者側
-Route::post('/user/register', 'Auth\User\RegisterController@create'); // ユーザー登録処理
-Route::post('/user/login', 'Auth\User\LoginController@login'); // ログイン
-Route::post('logout', 'Auth\User\LoginController@logout'); // ログアウト処理（仮）【TODO】 Vue実装
+Route::post('/user/register', 'Auth\User\RegisterController@register');
+// Route::post('/user/register', 'Auth\User\RegisterController@create'); // ユーザー登録処理
+Route::post('/user/login', 'Auth\User\LoginController@login');
+// Route::post('/user/login', 'Auth\User\LoginController@login'); // ログイン
+Route::post('/user/logout', 'Auth\User\LoginController@logout');
+// Route::post('logout', 'Auth\User\LoginController@logout'); // ログアウト処理（仮）【TODO】 Vue実装
 Route::post('/user/password/email', 'Auth\User\ForgotPasswordController@sendResetLinkEmail'); // パスワード変更メール送信処理
 Route::post('/user/password/reset', 'Auth\User\ResetPasswordController@reset'); // パスワード変更処理
 
@@ -38,9 +41,12 @@ Route::middleware(['auth', 'authcheckrole'])->group(function () {
 });
 
 // コンビニ側
-Route::post('/convenience/register', 'Auth\Convenience\RegisterController@create'); // ユーザー登録処理
-Route::post('/convenience/login', 'Auth\Convenience\LoginController@login'); // ログイン
-Route::post('logout', 'Auth\Convenience\LoginController@logout'); // ログアウト処理（仮）【TODO】 Vue実装
+Route::post('/convenience/register', 'Auth\Convenience\RegisterController@register');
+// Route::post('/convenience/register', 'Auth\Convenience\RegisterController@create'); // ユーザー登録処理
+Route::post('/convenience/login', 'Auth\Convenience\LoginController@login');
+// Route::post('/convenience/login', 'Auth\Convenience\LoginController@login'); // ログイン
+Route::post('/convenience/logout', 'Auth\Convenience\LoginController@logout');
+// Route::post('logout', 'Auth\Convenience\LoginController@logout'); // ログアウト処理（仮）【TODO】 Vue実装
 Route::post('/convenience/password/email', 'Auth\Convenience\ForgotPasswordController@sendResetLinkEmail'); // パスワード変更メール送信処理
 Route::post('/convenience/password/reset', 'Auth\Convenience\ResetPasswordController@reset'); // パスワード変更処理
 

@@ -140,7 +140,7 @@ export default {
             // リクエストヘッダー定義
             const config = {
                 headers: {
-                'content-type': 'multipart/form-data'
+                    'content-type': 'multipart/form-data'
                 }
             };
 

@@ -80,4 +80,24 @@ class LoginController extends Controller
             return response()->json(['message' => 'ログインできません'], 401);
         }
     }
+
+    // ログアウト処理
+    public function logout(Request $request)
+    {
+        Auth::logout();
+        return response()->json(['message' => 'ログアウトしました']);
+    }
+
+    protected function authenticated(Request $request, $user)
+    {
+        return $user;
+    }
+
+    protected function loggedOut(Request $request)
+    {
+        // セッションを再生成する
+        $request->session()->regenerate();
+
+        return response()->json();
+    }
 }
