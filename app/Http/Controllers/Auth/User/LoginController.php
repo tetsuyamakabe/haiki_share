@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth\User;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\User\LoginRequest;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
@@ -73,5 +74,25 @@ class LoginController extends Controller
             \Log::debug('ログインできません');
             return response()->json(['message' => 'ログインできません'], 401);
         }
+    }
+
+    // ログアウト処理
+    public function logout(Request $request)
+    {
+        Auth::logout();
+        return response()->json(['message' => 'ログアウトしました']);
+    }
+
+    protected function authenticated(Request $request, $user)
+    {
+        return $user;
+    }
+
+    protected function loggedOut(Request $request)
+    {
+        // セッションを再生成する
+        $request->session()->regenerate();
+
+        return response()->json();
     }
 }

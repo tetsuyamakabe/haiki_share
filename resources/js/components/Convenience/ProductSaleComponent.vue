@@ -49,15 +49,15 @@
                             </tr>
 
                             <tr>
-                                <!-- 【TODO】 商品画像を最大3枚アップロードできるようにする -->
-                                <th><label for="product_picture" class="c-label">商品画像</label></th>
+                                <th><label class="c-label">商品画像</label></th>
                                 <td>
-                                    <div class="p-product__picture" @drop="handleDrop" :class="{ 'is-invalid': errors && errors.product_picture }">
-                                        <input type="file" id="product_picture" @change="handleFileChange" class="c-input__hidden">
-                                        <img v-if="!picturePreview && formData.product_picture" :src="'/storage/product_pictures/' + formData.product_picture" alt="アップロード商品画像" class="c-product__picture">
-                                        <img v-else-if="picturePreview" :src="picturePreview" alt="アップロード商品画像" class="c-product__picture">
+                                    <div v-for="(input, index) in imageInputs" :key="index" class="p-product__picture" :class="{ 'is-invalid': errors && errors.product_picture }">
+                                        <input type="file" :id="'product_picture_' + index" @change="handleFileChange(index)" class="c-input__hidden">
+                                        <img v-if="!picturePreview[index] && formData.product_pictures[index]" :src="'/storage/product_pictures/' + formData.product_pictures[index]" alt="アップロード商品画像" class="c-product__picture">
+                                        <img v-else-if="picturePreview[index]" :src="picturePreview[index]" alt="アップロード商品画像" class="c-product__picture">
                                         <img v-else src="/storage/product_pictures/no_image.png" alt="NO_IMAGE" class="c-product__picture">
                                     </div>
+                                    <button @click="addImageInput" class="c-button">画像追加</button>
                                 </td>
                             </tr>
 
@@ -85,11 +85,12 @@ export default {
                 price: '',
                 category: '',
                 expiration_date: '',
-                product_picture: '',
+                product_pictures: [], // ファイルの配列を追加
             },
             categories: [],
-            picturePreview: '',
+            picturePreview: [],
             errors: null,
+            imageInputs: [0], // 初期の画像入力フィールドの数
         };
     },
 
@@ -117,6 +118,11 @@ export default {
     },
 
     methods: {
+        // 画像入力フィールドを追加するメソッド
+        addImageInput() {
+            this.imageInputs.push(this.imageInputs.length);
+        },
+
         // 商品カテゴリー情報をサーバーから取得
         getCategories() {
             axios.get('/api/categories').then(response => {
@@ -145,7 +151,10 @@ export default {
             formData.append('price', this.formData.price);
             formData.append('category', this.formData.category);
             formData.append('expiration_date', this.formattedExpirationDate);
-            formData.append('product_picture', this.formData.product_picture);
+             // 画像ファイルを追加
+             this.formData.product_pictures.forEach((file, index) => {
+                formData.append(`product_picture_${index}`, file);
+            });
 
             axios.post('/api/convenience/products/' + userId, formData, config).then(response => {
                 console.log('userIdは、', userId);
@@ -166,24 +175,24 @@ export default {
         },
 
         // ファイルが選択されたときの処理
-        handleFileChange(event) {
+        handleFileChange(index) {
             const file = event.target.files[0];
             console.log('選択されたファイル:', file);
             // プレビューを表示する
-            this.previewImage(file);
-            // formData.product_pictureにファイルオブジェクトを設定
-            this.formData.product_picture = file;
+            this.previewImage(file, index);
+            // formData.product_picturesにファイルオブジェクトを設定
+            this.formData.product_pictures[index] = file;
         },
 
         // 画像のプレビューを表示するメソッド
-        previewImage(file) {
+        previewImage(file, index) {
             const reader = new FileReader();
             reader.onload = (e) => {
-                // プレビュー画像のURLを生成し、formDataに設定
-                this.picturePreview = e.target.result;
+                // プレビュー画像のURLを生成し、picturePreviewに設定
+                this.$set(this.picturePreview, index, e.target.result);
             };
             reader.readAsDataURL(file);
-        }
+        },
     }
 }
 </script>

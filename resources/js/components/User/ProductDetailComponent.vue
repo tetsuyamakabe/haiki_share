@@ -22,9 +22,12 @@
                         </tr>
 
                         <tr>
-                            <!-- 【TODO】 商品画像を複数枚あっても表示できるように画像スライダーを使う -->
                             <th><label for="product_picture" class="c-label">商品画像</label></th>
-                            <td><img v-if="product.pictures && product.pictures.length > 0" :src="'/storage/product_pictures/' + product.pictures[0].file" alt="商品画像" class="c-product__picture"></td>
+                            <td>
+                                <div class="p-product-slider">
+                                    <img v-for="(picture, index) in product.pictures" :key="index" :src="'/storage/product_pictures/' + picture.file" :alt="'商品画像' + (index + 1)" class="c-product__picture">
+                                </div>
+                            </td>
                         </tr>
                     </table>
 

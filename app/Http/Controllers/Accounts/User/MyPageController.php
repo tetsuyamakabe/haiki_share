@@ -64,8 +64,8 @@ class MyPageController extends Controller
         if (!$user) {
             return response()->json(['message' => 'ユーザーが見つかりません'], 404);
         }
-        $user->delete(); // 論理削除を実行
         Auth::logout(); // 自動ログアウト
+        $user->delete(); // 論理削除を実行
         return response()->json(['message' => 'ユーザーが退会しました', 'user' => $user]);
     }
 }
