@@ -179,7 +179,7 @@ export default {
                 this.message = response.data.message;
                 console.log('this.messageは、', this.message);
                 console.log('商品情報を更新します。');
-                this.$router.push({ name: 'convenience.products.detail', params: { productId: productId } });
+                this.$router.push({ name: 'convenience.products.sale' }); // 商品更新処理後、出品した商品一覧画面に遷移
             }).catch(error => {
                 console.error('商品編集失敗:', error.response.data);
                 this.errors = error.response.data.errors;

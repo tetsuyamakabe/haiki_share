@@ -44,7 +44,6 @@ export default {
     },
 
     created() {
-        this.convenienceId = this.$route.params.convenienceId; // ルートからconvenienceIdを取得
         this.getProduct(); // サーバから商品情報を取得
         this.getProducts(); // ページが変更された時の商品情報を取得
     },
@@ -53,11 +52,11 @@ export default {
         // 商品情報をサーバーから取得
         getProduct() {
             console.log('商品情報を取得します');
-            axios.get('/api/convenience/products/' + this.convenienceId).then(response => {
-                this.products = response.data.product;
+            axios.get('/api/convenience/products').then(response => {
+                this.products = response.data.products;
                 console.log('商品一覧:', this.products);
                 console.log('APIからのレスポンス:', response.data);
-                this.lastPage = response.data.product.last_page;
+                this.lastPage = response.data.products.last_page;
             }).catch(error => {
                 console.error('商品情報取得失敗:', error.response.data);
                 this.errors = error.response.data;
@@ -96,12 +95,12 @@ export default {
                 this.currentPage = page;
                 console.log('pageは、', page);
                 console.log('this.currentPageは、', this.currentPage);
-                const result = await axios.get('/api/convenience/products/' + this.convenienceId + `?page=${this.currentPage}`);
-                const products = result.data;
-                console.log('productsは、', products);
-                this.products = products.product;
-                console.log('productsは、', this.products);
-                this.lastPage = products.product.last_page;
+                const result = await axios.get('/api/convenience/products/' + `?page=${this.currentPage}`);
+                const responseData = result.data;
+                console.log('responseDataは、', responseData);
+                this.products = responseData.products;
+                console.log('this.productsは、', this.products);
+                this.lastPage = responseData.products.last_page;
                 console.log('this.lastPageは、', this.lastPage);
             } catch (error) {
                 console.error('ページを更新時に商品情報取得失敗:', error.response.data);

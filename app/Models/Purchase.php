@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Purchase extends Model
 {
-    protected $fillable = ['product_id', 'purchased_id'];
+    protected $fillable = ['product_id', 'purchased_id', 'is_purchased'];
 
     // 商品との関連付け（多対一の関係）
     public function product()
@@ -28,7 +28,8 @@ class Purchase extends Model
 // | id           | bigint(20) unsigned | NO   | PRI | NULL    | auto_increment |
 // | product_id   | bigint(20) unsigned | NO   | MUL | NULL    |                |
 // | purchased_id | bigint(20) unsigned | NO   | MUL | NULL    |                |
+// | is_purchased | tinyint(1)          | NO   |     | 0       |                |
 // | created_at   | timestamp           | YES  |     | NULL    |                |
 // | updated_at   | timestamp           | YES  |     | NULL    |                |
 // +--------------+---------------------+------+-----+---------+----------------+
-// 5 rows in set (0.01 sec)
+// 6 rows in set (0.00 sec)

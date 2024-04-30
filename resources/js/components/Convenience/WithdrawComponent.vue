@@ -17,15 +17,10 @@
 
 <script>
 export default {
-    created() {
-        this.userId = this.$route.params.userId; // ルートからuserIdを取得
-    },
-
     methods: {
         // 退会処理をサーバー側に送信するメソッド
         withdraw() {
-            const userId = this.userId;
-            axios.delete('/api/convenience/mypage/withdraw/' + userId).then(response => {
+            axios.delete('/api/convenience/mypage/withdraw').then(response => {
                 this.message = response.data.message;
                 console.log('this.messageは、', this.message);
                 console.log('退会します');

@@ -82,17 +82,4 @@ class LoginController extends Controller
         Auth::logout();
         return response()->json(['message' => 'ログアウトしました']);
     }
-
-    protected function authenticated(Request $request, $user)
-    {
-        return $user;
-    }
-
-    protected function loggedOut(Request $request)
-    {
-        // セッションを再生成する
-        $request->session()->regenerate();
-
-        return response()->json();
-    }
 }

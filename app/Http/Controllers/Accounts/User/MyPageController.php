@@ -12,21 +12,21 @@ use App\Http\Requests\User\ProfileRequest;
 class MyPageController extends Controller
 {
     // プロフィール情報の取得処理
-    public function getProfile(Request $request, $userId)
+   public function getProfile(Request $request)
     {
-        $user = User::findOrFail($userId);
+        $user = Auth::user();
+        \Log::info('$userは、', [$user]);
         return response()->json(['user' => $user]);
     }
 
     // プロフィール編集・更新処理
-    public function editProfile(ProfileRequest $request, $userId)
+    public function editProfile(ProfileRequest $request)
     {
-        \Log::info('$userIdは、', [$userId]);
         \Log::info('リクエストは、:', $request->all());
 
         try {
             // ユーザー情報を取得
-            $user = User::findOrFail($userId);
+            $user = Auth::user();
             \Log::info('$userは、', [$user]);
 
             // ユーザー情報を更新
@@ -58,9 +58,9 @@ class MyPageController extends Controller
     }
 
     // 退会処理の実行
-    public function withdraw(Request $request, $userId)
+    public function withdraw(Request $request)
     {
-        $user = User::find($userId);
+        $user = Auth::user();
         if (!$user) {
             return response()->json(['message' => 'ユーザーが見つかりません'], 404);
         }

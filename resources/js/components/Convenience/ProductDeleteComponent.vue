@@ -18,10 +18,8 @@ export default {
         deleteProduct() {
             const productId = this.productId;
             axios.delete('/api/convenience/products/' + productId).then(response => {
-                this.message = response.data.message;
-                console.log('this.messageは、', this.message);
                 console.log('商品情報を削除します。');
-                this.$router.push({ name: 'home' });
+                this.$router.push({ name: 'convenience.products.sale' }); // 商品削除処理後、出品した商品一覧画面に遷移
             }).catch(error => {
                 console.error('商品削除失敗:', error.response.data);
                 this.errors = error.response.data.errors;

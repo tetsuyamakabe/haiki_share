@@ -58,9 +58,21 @@ export default {
     created() {
         this.productId = this.$route.params.productId; // ルートからproductIdを取得
         this.getProduct(); // 商品情報を取得
+        this.getPurchase(); // 購入状態を取得
     },
 
     methods: {
+        // 商品の購入状態の取得
+        getPurchase() {
+            axios.get('/api/user/products/purchase/'+ this.productId).then(response => {
+                this.product = response.data.product;
+                console.log('APIからのレスポンス:', response.data);
+            }).catch(error => {
+                console.error('購入状態取得失敗:', error.response.data);
+                this.errors = error.response.data;
+            });
+        },
+
         // 商品情報をサーバーから取得
         getProduct() {
             axios.get('/api/products/'+ this.productId).then(response => {
