@@ -195,7 +195,7 @@ const router = new VueRouter({
 
 // セッションタイムアウトした場合のナビゲーションガード
 router.beforeEach((to, from, next) => {
-    const { role } = store.state; // 現在の役割を取得
+    const { role } = store.state; // 現在のroleを取得
     const loginPath = role === 'user' ? '/user/login' : '/convenience/login';
 
     if (to.matched.some(record => record.meta.requiresAuth) && !store.state.token) {
