@@ -2,6 +2,8 @@ import './bootstrap';
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import router from './router';
+import Vuex from 'vuex';
+import store from './store';
 
 /**
  * First we will load all of this project's JavaScript dependencies which
@@ -13,6 +15,8 @@ require('./bootstrap');
 
 window.Vue = require('vue');
 Vue.use(VueRouter);
+Vue.use(Vuex);
+
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -38,5 +42,6 @@ Vue.component('footer-component', require('./components/FooterComponent.vue').de
 
 const app = new Vue({
     el: '#app',
-    router
+    router,
+    store
 });
