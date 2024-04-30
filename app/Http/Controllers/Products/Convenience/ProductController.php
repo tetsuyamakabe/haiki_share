@@ -29,18 +29,6 @@ class ProductController extends Controller
         return response()->json(['categories' => $categories]);
     }
 
-    // 出品した商品情報の取得
-    public function getConvenienceProduct(Request $request, $convenienceId)
-    {
-        \Log::info('$convenienceIdは、', [$convenienceId]);
-        try {
-            $product = Product::with('pictures')->where('convenience_store_id', $convenienceId)->paginate(10);
-            return response()->json(['product' => $product]);
-        } catch (\Exception $e) {
-            return response()->json(['error' => '商品が見つかりません'], 404);
-        }
-    }
-
     // すべての商品情報の取得
     public function getAllProducts()
     {
@@ -48,11 +36,26 @@ class ProductController extends Controller
         return response()->json(['products' => $products]);
     }
 
+    // 出品した商品情報の取得
+    public function getConvenienceProduct(Request $request)
+    {
+        try {
+            $user = Auth::user();
+            $convenience = $user->convenience;
+            if (!$convenience) {
+                return response()->json(['error' => 'コンビニが見つかりません'], 404);
+            }
+            $product = Product::with('pictures')->where('convenience_store_id', $convenience->id)->paginate(10);
+            return response()->json(['products' => $product]);
+        } catch (\Exception $e) {
+            return response()->json(['error' => '商品が見つかりません'], 404);
+        }
+    }
+
     // 商品出品処理（商品の投稿）
-    public function createProduct(ProductSaleRequest $request, $userId)
+    public function createProduct(ProductSaleRequest $request)
     {
         \Log::info('createProductSaleメソッドが実行されます。');
-        \Log::info('$userIdは、', [$userId]);
         \Log::info('リクエストは、:', $request->all());
 
         try {
@@ -62,7 +65,9 @@ class ProductController extends Controller
             $product->price = $request->price;
             $product->category_id = $request->category;
             $product->expiration_date = Carbon::parse($request->expiration_date);
-            $product->convenience_store_id = $userId;
+            $user = Auth::user();
+            $convenienceId = $user->convenience->id;
+            $product->convenience_store_id = $convenienceId;
             $product->save();
 
             // 商品画像の処理
@@ -97,8 +102,9 @@ class ProductController extends Controller
             $product->price = $request->input('price');
             $product->category_id = $request->input('category');
             $product->expiration_date = Carbon::parse($request->input('expiration_date'));
-            $product->convenience_store_id = $product->convenience_store_id;
-
+            $user = Auth::user();
+            $convenienceId = $user->convenience->id;
+            $product->convenience_store_id = $convenienceId;
             $product->save();
 
             // 商品画像の処理

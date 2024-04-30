@@ -13,23 +13,22 @@ use App\Http\Requests\Convenience\ProfileRequest;
 class MyPageController extends Controller
 {
     // プロフィール情報の取得処理
-    public function getProfile(Request $request, $userId)
+    public function getProfile(Request $request)
     {
-        $user = User::findOrFail($userId);
-        $convenience = Convenience::findOrFail($userId);
+        $user = Auth::user();
+        $convenience = $user->convenience()->first();
         $address = $convenience->address;
         return response()->json(['user' => $user, 'convenience' => $convenience, 'address' => $address]);
     }
 
     // プロフィール編集・更新処理
-    public function editProfile(ProfileRequest $request, $userId)
+    public function editProfile(ProfileRequest $request)
     {
-        \Log::info('$userIdは、', [$userId]);
         \Log::info('リクエストは、:', $request->all());
 
         try {
             // ユーザー情報を取得
-            $user = User::findOrFail($userId);
+            $user = Auth::user();
             \Log::info('$userは、', [$user]);
 
             // ユーザー情報を更新
@@ -55,7 +54,7 @@ class MyPageController extends Controller
             $user->save();
 
             // コンビニ情報を取得
-            $convenience = Convenience::where('user_id', $userId)->first();
+            $convenience = $user->convenience()->first();
 
             // コンビニ情報を更新
             if ($convenience) {
@@ -79,15 +78,15 @@ class MyPageController extends Controller
     }
 
     // 退会処理の実行
-    public function withdraw(Request $request, $userId)
+    public function withdraw(Request $request)
     {
-        $user = User::findOrFail($userId);
+        $user = Auth::user();
         if (!$user) {
             return response()->json(['message' => 'ユーザーが見つかりません'], 404);
         }
         Auth::logout(); // 自動ログアウト
         if ($user->role === 'convenience') {
-            $convenience = Convenience::where('user_id', $user->id)->first();
+            $convenience = $user->convenience()->first();
             if ($convenience) {
                 $convenience->delete(); // 論理削除を実行
                 $convenience->address()->delete(); // 住所情報を取得して論理削除

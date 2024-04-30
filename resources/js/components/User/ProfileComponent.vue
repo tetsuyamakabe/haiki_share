@@ -109,7 +109,6 @@ export default {
     },
 
     created() {
-        this.userId = this.$route.params.userId; // ルートからuserIdを取得
         this.getProfile(); // プロフィール情報を取得
     },
 
@@ -117,7 +116,7 @@ export default {
         // 編集前のプロフィール情報をサーバーから取得
         getProfile() {
             console.log('プロフィールを取得します');
-            axios.get('/api/user/mypage/profile/' + this.userId).then(response => {
+            axios.get('/api/user/mypage/profile').then(response => {
                 this.user = response.data.user;
                 console.log('APIからのレスポンス:', response.data);
                 // 取得したプロフィール情報をformDataに入れる
@@ -135,8 +134,6 @@ export default {
 
         // 入力された値をサーバー側に送信するメソッド
         submitForm() {
-            const userId = this.user.id;
-
             // リクエストヘッダー定義
             const config = {
                 headers: {
@@ -158,11 +155,11 @@ export default {
                 formData.append('icon', this.formData.icon);
             }
 
-            axios.post('/api/user/mypage/profile/' + userId, formData, config).then(response => {
+            axios.post('/api/user/mypage/profile', formData, config).then(response => {
                 this.message = response.data.message;
                 console.log('this.messageは、', this.message);
                 console.log('プロフィールを更新します。');
-                this.$router.push({ name: 'user.mypage', params: { userId: userId } }); // userIdを含むマイページに遷移
+                this.$router.push({ name: 'user.mypage' });
             }).catch(error => {
                 console.error('プロフィール編集失敗:', error.response.data);
                 this.errors = error.response.data.errors;

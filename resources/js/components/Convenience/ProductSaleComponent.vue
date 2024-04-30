@@ -113,7 +113,6 @@ export default {
     },
 
     created() {
-        this.userId = this.$route.params.userId; // ルートからuserIdを取得
         this.getCategories(); // 商品カテゴリー情報を取得
     },
 
@@ -135,15 +134,12 @@ export default {
 
         // 入力された値をサーバー側に送信するメソッド
         submitForm() {
-            const userId = this.userId;
-
             // リクエストヘッダー定義
             const config = {
                 headers: {
                     'content-type': 'multipart/form-data'
                 }
             };
-
             // フォームデータを作成
             const formData = new FormData();
             formData.append('_method', 'PUT');
@@ -153,15 +149,13 @@ export default {
             formData.append('expiration_date', this.formattedExpirationDate);
              // 画像ファイルを追加
              this.formData.product_pictures.forEach((file, index) => {
-                formData.append(`product_picture_${index}`, file);
+                formData.append('product_picture', this.formData.product_pictures[index], file);
+
             });
 
-            axios.post('/api/convenience/products/' + userId, formData, config).then(response => {
-                console.log('userIdは、', userId);
-                this.message = response.data.message;
-                console.log('this.messageは、', this.message);
+            axios.post('/api/convenience/products/sale', formData, config).then(response => {
                 console.log('商品を投稿します。');
-                this.$router.push({ name: 'convenience.mypage', params: { userId: userId } }); // userIdを含むマイページに遷移
+                this.$router.push({ name: 'convenience.mypage' });
             }).catch(error => {
                 console.error('商品出品失敗:', error.response.data);
                 this.errors = error.response.data.errors;

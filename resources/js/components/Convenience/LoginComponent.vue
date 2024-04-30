@@ -73,12 +73,8 @@ export default {
         // 入力された値をサーバー側に送信するメソッド
         submitForm() {
             axios.post('/api/convenience/login', this.formData).then(response => {
-                const userId = response.data.user_id; // レスポンスからユーザーIDを取得
-                console.log('userIdは、', userId);
-                this.message = response.data.message;
-                console.log('this.messageは、', this.message);
                 console.log('ログインします。');
-                this.$router.push({ name: 'convenience.mypage', params: { userId: userId } }); // userIdを含むマイページに遷移
+                this.$router.push({ name: 'convenience.mypage' }); // ログイン後、マイページに遷移
             }).catch(error => {
                 console.error('ログイン失敗:', error.response.data);
                 this.errors = error.response.data.errors;

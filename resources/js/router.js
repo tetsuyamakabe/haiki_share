@@ -89,13 +89,13 @@ const router = new VueRouter({
         },
         // 利用者側マイページ画面
         {
-            path: '/user/mypage/:userId',
+            path: '/user/mypage',
             name: 'user.mypage',
             component: UserMyPageComponent
         },
         // コンビニ側マイページ画面
         {
-            path: '/convenience/mypage/:userId',
+            path: '/convenience/mypage',
             name: 'convenience.mypage',
             component: ConvenienceMyPageComponent
         },
@@ -125,35 +125,35 @@ const router = new VueRouter({
         },
         // 利用者側プロフィール編集画面
         {
-            path: '/user/mypage/profile/:userId',
+            path: '/user/mypage/profile',
             name: 'user.profile',
             component: UserProfileComponent,
             props: true,
         },
         // コンビニ側プロフィール編集画面
         {
-            path: '/convenience/mypage/profile/:userId',
+            path: '/convenience/mypage/profile',
             name: 'convenience.profile',
             component: ConvenienceProfileComponent,
             props: true,
         },
         // 利用者側退会画面
         {
-            path: '/user/mypage/withdraw/:userId',
+            path: '/user/mypage/withdraw',
             name: 'user.withdraw',
             component: UserWithdrawComponent,
             props: true,
         },
         // コンビニ側退会画面
         {
-            path: '/convenience/mypage/withdraw/:userId',
+            path: '/convenience/mypage/withdraw',
             name: 'convenience.withdraw',
             component: ConvenienceWithdrawComponent,
             props: true,
         },
         // 商品出品画面
         {
-            path: '/convenience/products/create/:userId',
+            path: '/convenience/products/create',
             name: 'convenience.products.create',
             component: ProductSaleComponent,
         },
@@ -165,13 +165,13 @@ const router = new VueRouter({
         },
         // 出品した商品一覧画面
         {
-            path: '/convenience/products/sale/:convenienceId',
+            path: '/convenience/products/sale',
             name: 'convenience.products.sale',
             component: ProductSaleIndexComponent,
         },
         // 購入された商品一覧画面
         {
-            path: '/convenience/products/purchase/:convenienceId',
+            path: '/convenience/products/purchase',
             name: 'convenience.products.purchase',
             component: ProductPurchaseIndexComponent,
         },

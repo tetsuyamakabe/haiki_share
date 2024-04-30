@@ -51,6 +51,7 @@ class RegisterController extends Controller
     {
         //
     }
+
     /**
      * Create a new user instance after a valid registration.
      *
@@ -73,10 +74,5 @@ class RegisterController extends Controller
         ]);
 
         return response()->json($user, 201);
-    }
-
-    protected function registered(Request $request, $user)
-    {
-        return $user;
     }
 }
