@@ -1,5 +1,6 @@
 import Vue from 'vue';
-import VueRouter from 'vue-router'; // VueRouterのimport
+import VueRouter from 'vue-router';
+import store from './store';
 
 // 共通コンポーネント
 import HomeComponent from "./components/HomeComponent"; // HOME画面
@@ -128,28 +129,24 @@ const router = new VueRouter({
             path: '/user/mypage/profile',
             name: 'user.profile',
             component: UserProfileComponent,
-            props: true,
         },
         // コンビニ側プロフィール編集画面
         {
             path: '/convenience/mypage/profile',
             name: 'convenience.profile',
             component: ConvenienceProfileComponent,
-            props: true,
         },
         // 利用者側退会画面
         {
             path: '/user/mypage/withdraw',
             name: 'user.withdraw',
             component: UserWithdrawComponent,
-            props: true,
         },
         // コンビニ側退会画面
         {
             path: '/convenience/mypage/withdraw',
             name: 'convenience.withdraw',
             component: ConvenienceWithdrawComponent,
-            props: true,
         },
         // 商品出品画面
         {
@@ -196,4 +193,15 @@ const router = new VueRouter({
     ]
 });
 
+// セッションタイムアウトした場合のナビゲーションガード
+router.beforeEach((to, from, next) => {
+    const { role } = store.state; // 現在の役割を取得
+    const loginPath = role === 'user' ? '/user/login' : '/convenience/login';
+
+    if (to.matched.some(record => record.meta.requiresAuth) && !store.state.token) {
+        next({ path: loginPath, query: { redirect: to.fullPath } });
+    } else {
+        next();
+    }
+});
 export default router;
