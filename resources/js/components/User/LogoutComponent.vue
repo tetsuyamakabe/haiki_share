@@ -15,7 +15,6 @@ export default {
                 this.message = response.data.message;
                 console.log('this.messageは、', this.message);
                 console.log('ログアウトします');
-                this.$store.commit('auth/clearUser');
                 this.$router.push({ name: 'user.login' }); // ログアウト処理完了後、利用者側ログイン画面に遷移
             }).catch(error => {
                 console.error('ログアウト処理失敗:', error.response.data);

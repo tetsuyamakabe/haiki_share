@@ -68,27 +68,13 @@ const router = new VueRouter({
         {
             path: '/user/login',
             name: 'user.login',
-            component: UserLoginComponent,
-            beforeEnter (to, from, next) {
-                if (store.getters['auth/check']) {
-                    next('/home')
-                } else {
-                    next()
-                }
-            }
+            component: UserLoginComponent
         },
         // コンビニ側ログイン画面
         {
             path: '/convenience/login',
             name: 'convenience.login',
-            component: ConvenienceLoginComponent,
-            beforeEnter (to, from, next) {
-                if (store.getters['auth/check']) {
-                    next('/home')
-                } else {
-                    next()
-                }
-            }
+            component: ConvenienceLoginComponent
         },
         // 利用者側ログアウト画面
         {
