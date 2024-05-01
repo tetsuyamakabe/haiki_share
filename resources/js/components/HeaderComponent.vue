@@ -12,17 +12,12 @@
 
             <nav class="c-nav__menu js-toggle-sp-menu-target">
                 <ul class="c-nav__menu--list">
-                    <div v-if="isLogin" class="navbar__item">
-                        {{ username }}
-                        <RouterLink :to="userLink">マイページ</RouterLink>
-                        <RouterLink :to="logoutLink">ログアウト</RouterLink>
-                    </div>
-                    <div v-else class="navbar__item">
-                        <RouterLink class="button button--link" to="/user/register">利用者ユーザー登録</RouterLink>
-                        <RouterLink class="button button--link" to="/user/login">利用者ログイン</RouterLink>
-                        <RouterLink class="button button--link" to="/convenience/register">コンビニユーザー登録</RouterLink>
-                        <RouterLink class="button button--link" to="/convenience/login">コンビニログイン</RouterLink>
-                    </div>
+                    <li class="c-nav__menu--item"><router-link class="c-nav__menu--link" :to="{ name: 'user.register' }">利用者ユーザー登録</router-link></li>
+                    <li class="c-nav__menu--item"><router-link class="c-nav__menu--link" :to="{ name: 'user.login' }">利用者ログイン</router-link></li>
+                    <li class="c-nav__menu--item"><button @click="userLogout" class="c-nav__menu--link">利用者ログアウト</button></li>
+                    <li class="c-nav__menu--item"><router-link class="c-nav__menu--link" :to="{ name: 'convenience.register' }">コンビニユーザー登録</router-link></li>
+                    <li class="c-nav__menu--item"><router-link class="c-nav__menu--link" :to="{ name: 'convenience.login' }">コンビニログイン</router-link></li>
+                    <li class="c-nav__menu--item"><button @click="convenienceLogout" class="c-nav__menu--link">コンビニログアウト</button></li>
                 </ul>
             </nav>
         </div>
@@ -30,37 +25,36 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
-    computed: {
-        // ログインユーザーかどうか
-        isLogin() {
-            return this.$store.getters['auth/check'];
+    methods: {
+        // 利用者ログアウト処理
+        userLogout() {
+            axios.post('/api/user/logout').then(response => {
+                this.message = response.data.message;
+                console.log('this.messageは、', this.message);
+                console.log('ログアウトします');
+                this.$router.push({ name: 'user.login' }); // ログアウト処理完了後、利用者側ログイン画面に遷移
+            }).catch(error => {
+                console.error('ログアウト処理失敗:', error.response.data);
+                this.errors = error.response.data.errors;
+            });
         },
 
-        // ユーザーの名前を表示する
-        username() {
-            return this.$store.getters['auth/username'];
-        },
+        // コンビニログアウト処理
+        convenienceLogout() {
+            axios.post('/api/convenience/logout').then(response => {
+                this.message = response.data.message;
+                console.log('this.messageは、', this.message);
+                console.log('ログアウトします');
+                this.$router.push({ name: 'convenience.login' }); // ログアウト処理完了後、コンビニ側ログイン画面に遷移
+            }).catch(error => {
+                console.error('ログアウト処理失敗:', error.response.data);
+                this.errors = error.response.data.errors;
+            });
+        }
 
-        // ログインユーザーのroleによって利用者・コンビニのマイページリンクを動的に変える
-        userLink() {
-            if (this.$store.getters['auth/role'] === 'user') {
-                return "/user/mypage";
-            } else if (this.$store.getters['auth/role'] === 'convenience') {
-                return "/convenience/mypage";
-            }
-            return "/home";
-        },
-
-        // ログインユーザーのroleによって利用者・コンビニのログアウトリンクを動的に変える
-        logoutLink() {
-            if (this.$store.getters['auth/role'] === 'user') {
-                return "/user/logout";
-            } else if (this.$store.getters['auth/role'] === 'convenience') {
-                return "/convenience/logout";
-            }
-            return "/home";
-        },
-    },
-};
+    }
+}
 </script>

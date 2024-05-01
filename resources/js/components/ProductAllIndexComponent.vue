@@ -42,13 +42,6 @@ export default {
         };
     },
 
-    computed: {
-        // ログインユーザーかどうか
-        isLogin() {
-            return this.$store.getters['auth/check'];
-        },
-    },
-
     created() {
         this.getProduct(); // サーバから商品情報を取得
         this.getProducts(); // ページが変更された時の商品情報を取得
@@ -60,8 +53,8 @@ export default {
             console.log('すべての商品情報を取得します');
             axios.get('/api/products').then(response => {
                 console.log('APIからのレスポンス:', response.data);
-                this.products = response.data.products;
-                this.lastPage = response.data.last_page;
+                this.products = response.data.products; // プロパティ名を修正
+                this.lastPage = response.data.last_page; // プロパティ名を修正
             }).catch(error => {
                 console.error('商品情報取得失敗:', error.response.data);
                 this.errors = error.response.data;
@@ -80,13 +73,8 @@ export default {
 
         // 商品詳細画面のリンクを返すメソッド
         getProductDetailLink(productId) {
-            // ログインユーザーのroleによって利用者・コンビニのマイページリンクを動的に変える
-            if (this.$store.getters['auth/role'] === 'user') {
-                    return { name: 'user.products.detail', params: { productId: productId } };
-                } else if (this.$store.getters['auth/role'] === 'convenience') {
-                    return { name: 'convenience.products.detail', params: { productId: productId } };
-                }
-            return "/home";
+            // 【TODO】 利用者ユーザーは利用者側の詳細画面、コンビニユーザーはコンビニ側の詳細画面、ログインしていないユーザーはログイン画面に遷移させる
+            return { name: 'convenience.products.detail', params: { productId: productId } };
         },
 
         // ページが変更されたときの処理
