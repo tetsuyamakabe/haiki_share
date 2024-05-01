@@ -52,6 +52,21 @@ class ProductController extends Controller
         }
     }
 
+    // 購入された商品情報の取得
+    public function getPurchaseProduct(Request $request)
+    {
+        // ログインユーザーのIDを取得
+        $userId = auth()->id();
+
+        // 購入された商品情報を取得
+        $products = Product::whereHas('purchases', function ($query) use ($userId) {
+            // 購入者IDがログインユーザーのIDで、購入フラグがtrueのクエリ
+            $query->where('purchased_id', $userId)->where('is_purchased', true);
+        })->paginate(4);
+
+        return response()->json(['products' => $products]);
+    }
+
     // 商品出品処理（商品の投稿）
     public function createProduct(ProductSaleRequest $request)
     {

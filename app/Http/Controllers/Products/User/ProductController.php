@@ -11,6 +11,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Notification;
+use App\Notifications\User\CancelNotification;
 use App\Notifications\User\PurchaseNotification;
 
 class ProductController extends Controller
@@ -46,14 +47,15 @@ class ProductController extends Controller
         // 購入情報を保存
         $purchase = new Purchase();
         $purchase->product_id = $product->id;
-        $purchase->purchased_id = $purchaserId; // 購入者の ID を設定する
+        $purchase->purchased_id = $purchaserId;
+        $purchase->is_purchased = true;
         $purchase->save();
 
-        // 利用者ユーザーに通知通知メールを送信
+        // 利用者（ログイン）ユーザーに商品購入完了通知メールを送信
         $user = Auth::user();
         Notification::send($user, new PurchaseNotification($product));
 
-        // コンビニユーザーに通知メールを送信
+        // コンビニユーザーに商品購入完了通知メールを送信
         $convenience = Convenience::findOrFail($product->convenience_store_id);
         Notification::send($convenience->user, new PurchaseNotification($product));
 
@@ -63,6 +65,28 @@ class ProductController extends Controller
     // 商品購入キャンセル処理
     public function cancelProduct($productId)
     {
-        // 購入キャンセル処理後、通知メールが届くようにする。
+        // 購入者と購入商品情報を取得
+        $purchaserId = Auth::id();
+        \Log::info('$purchaserIdは、', [$purchaserId]);
+        $product = Product::findOrFail($productId);
+    
+        // 購入情報を取得
+        $purchase = Purchase::where('product_id', $product->id)->where('purchased_id', $purchaserId)->first();
+    
+        if ($purchase) {
+            $purchase->delete();
+
+            // 利用者（ログイン）ユーザーに商品キャンセル完了通知メールを送信
+            $user = Auth::user();
+            Notification::send($user, new CancelNotification($product));
+
+            // コンビニユーザーに商品キャンセル完了通知メールを送信
+            $convenience = Convenience::findOrFail($product->convenience_store_id);
+            Notification::send($convenience->user, new CancelNotification($product));
+
+            return response()->json(['message' => '商品の購入をキャンセルしました。']);
+        } else {
+            return response()->json(['error' => '商品が見つかりません。'], 404);
+        }
     }
 }

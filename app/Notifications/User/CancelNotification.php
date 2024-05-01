@@ -1,24 +1,25 @@
 <?php
 
-namespace App\Notifications\Convenience;
+namespace App\Notifications\User;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class PurchaseNotification extends Notification
+class CancelNotification extends Notification
 {
     use Queueable;
+    protected $product;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($product)
     {
-        //
+        $this->product = $product;
     }
 
     /**
@@ -41,9 +42,10 @@ class PurchaseNotification extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->subject('【' . config('app.name') . '】商品購入完了メール。')
-                    ->view('products.convenience.mail.purchase');
+                    ->subject('【' . config('app.name') . '】商品キャンセル完了メール')
+                    ->view('products.cancel', ['product' => $this->product]);
     }
+
     /**
      * Get the array representation of the notification.
      *
