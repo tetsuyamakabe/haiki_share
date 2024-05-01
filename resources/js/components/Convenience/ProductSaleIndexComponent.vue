@@ -51,7 +51,7 @@ export default {
     methods: {
         // 商品情報をサーバーから取得
         getProduct() {
-            console.log('商品情報を取得します');
+            console.log('出品した商品情報を取得します');
             axios.get('/api/convenience/products').then(response => {
                 this.products = response.data.products;
                 console.log('商品一覧:', this.products);

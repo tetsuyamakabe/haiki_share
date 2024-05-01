@@ -99,7 +99,7 @@ export default {
         purchaseProduct() {
             axios.post('/api/user/products/purchase/' + this.productId).then(response => {
                 console.log('APIからのレスポンス:', response.data);
-                this.isPurchased = true; // 「購入する」から「購入済み」に
+                this.getPurchase(); // 購入状態を更新（「購入する」から「購入をキャンセル」へ変更）
             }).catch(error => {
                 console.error('商品購入処理失敗:', error.response.data);
                 this.errors = error.response.data.errors;
@@ -109,9 +109,9 @@ export default {
         // 商品購入キャンセルするメソッド
         cancelPurchase() {
             // 購入キャンセルを押した際にバックエンドに通知リクエストを送信する
-            axios.post('/api/user/products/purchase/cancel/' + this.productId).then(response => {
+            axios.delete('/api/user/products/purchase/cancel/' + this.productId).then(response => {
                 console.log('APIからのレスポンス:', response.data);
-                this.isPurchased = false; // 「キャンセル」から「購入する」に
+                this.getPurchase();　// 購入状態を更新（「購入キャンセル」から「購入する」へ変更）
             }).catch(error => {
                 console.error('商品購入キャンセル処理失敗:', error.response.data);
                 this.errors = error.response.data.errors;

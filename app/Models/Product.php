@@ -33,6 +33,13 @@ class Product extends Model
     {
         return $this->hasMany(ProductPicture::class);
     }
+
+    // 購入履歴との関連付け（一対多の関係）
+    public function purchases()
+    {
+        return $this->hasMany(Purchase::class);
+    }
+
 }
 
 // mysql> desc products;

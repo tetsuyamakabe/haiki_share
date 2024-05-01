@@ -5720,20 +5720,19 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     };
   },
   created: function created() {
-    this.convenienceId = this.$route.params.convenienceId; // ルートからconvenienceIdを取得
-    this.getProduct(); // サーバから商品情報を取得
+    this.getPurchasedProduct(); // サーバから商品情報を取得
     this.getProducts(); // ページが変更された時の商品情報を取得
   },
   methods: {
     // 商品情報をサーバーから取得
-    getProduct: function getProduct() {
+    getPurchasedProduct: function getPurchasedProduct() {
       var _this = this;
-      console.log('商品情報を取得します');
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/convenience/products/' + this.convenienceId).then(function (response) {
-        _this.products = response.data.product;
+      console.log('購入された商品情報を取得します');
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/convenience/products/purchased').then(function (response) {
+        _this.products = response.data.products;
         console.log('商品一覧:', _this.products);
         console.log('APIからのレスポンス:', response.data);
-        _this.lastPage = response.data.product.last_page;
+        _this.lastPage = response.data.products.last_page;
       })["catch"](function (error) {
         console.error('商品情報取得失敗:', error.response.data);
         _this.errors = error.response.data;
@@ -5765,7 +5764,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     getProducts: function getProducts(page) {
       var _this2 = this;
       return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
-        var result, products;
+        var result, responseData;
         return _regeneratorRuntime().wrap(function _callee$(_context) {
           while (1) switch (_context.prev = _context.next) {
             case 0:
@@ -5775,14 +5774,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               console.log('pageは、', page);
               console.log('this.currentPageは、', _this2.currentPage);
               _context.next = 6;
-              return axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/convenience/products/' + _this2.convenienceId + "?page=".concat(_this2.currentPage));
+              return axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/convenience/products/' + "?page=".concat(_this2.currentPage));
             case 6:
               result = _context.sent;
-              products = result.data;
-              console.log('productsは、', products);
-              _this2.products = products.product;
-              console.log('productsは、', _this2.products);
-              _this2.lastPage = products.product.last_page;
+              responseData = result.data;
+              console.log('responseDataは、', responseData);
+              _this2.products = responseData.products;
+              console.log('this.productsは、', _this2.products);
+              _this2.lastPage = responseData.products.last_page;
               console.log('this.lastPageは、', _this2.lastPage);
               _context.next = 19;
               break;
@@ -6070,7 +6069,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     // 商品情報をサーバーから取得
     getProduct: function getProduct() {
       var _this = this;
-      console.log('商品情報を取得します');
+      console.log('出品した商品情報を取得します');
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/convenience/products').then(function (response) {
         _this.products = response.data.products;
         console.log('商品一覧:', _this.products);
@@ -7688,7 +7687,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this3 = this;
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/user/products/purchase/' + this.productId).then(function (response) {
         console.log('APIからのレスポンス:', response.data);
-        _this3.isPurchased = true; // 「購入する」から「購入済み」に
+        _this3.getPurchase(); // 購入状態を更新（「購入する」から「購入をキャンセル」へ変更）
       })["catch"](function (error) {
         console.error('商品購入処理失敗:', error.response.data);
         _this3.errors = error.response.data.errors;
@@ -7698,9 +7697,9 @@ __webpack_require__.r(__webpack_exports__);
     cancelPurchase: function cancelPurchase() {
       var _this4 = this;
       // 購入キャンセルを押した際にバックエンドに通知リクエストを送信する
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/user/products/purchase/cancel/' + this.productId).then(function (response) {
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a["delete"]('/api/user/products/purchase/cancel/' + this.productId).then(function (response) {
         console.log('APIからのレスポンス:', response.data);
-        _this4.isPurchased = false; // 「キャンセル」から「購入する」に
+        _this4.getPurchase(); // 購入状態を更新（「購入キャンセル」から「購入する」へ変更）
       })["catch"](function (error) {
         console.error('商品購入キャンセル処理失敗:', error.response.data);
         _this4.errors = error.response.data.errors;

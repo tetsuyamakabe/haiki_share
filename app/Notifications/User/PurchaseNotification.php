@@ -43,7 +43,7 @@ class PurchaseNotification extends Notification
     {
         return (new MailMessage)
                     ->subject('【' . config('app.name') . '】商品購入完了メール')
-                    ->view('products.user.mail.purchase', ['product' => $this->product]);
+                    ->view('products.purchase', ['product' => $this->product]);
     }
 
     /**
