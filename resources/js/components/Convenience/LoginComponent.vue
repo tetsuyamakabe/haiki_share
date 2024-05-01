@@ -74,6 +74,7 @@ export default {
         submitForm() {
             axios.post('/api/convenience/login', this.formData).then(response => {
                 console.log('ログインします。');
+                this.$store.dispatch('auth/currentUser');
                 this.$router.push({ name: 'convenience.mypage' }); // ログイン後、マイページに遷移
             }).catch(error => {
                 console.error('ログイン失敗:', error.response.data);

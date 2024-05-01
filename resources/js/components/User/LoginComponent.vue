@@ -75,11 +75,7 @@ export default {
             axios.post('/api/user/login', this.formData).then(response => {
                 console.log('ログインします。');
                 console.log('APIからのレスポンス:', response.data);
-                this.$store.dispatch('auth', {
-                    userId: response.data.user_id,
-                    token: response.data.token,
-                    role: response.data.role
-                });
+                this.$store.dispatch('auth/currentUser');
                 this.$router.push({ name: 'user.mypage' }); // ログイン後、マイページに遷移
             }).catch(error => {
                 console.error('ログイン失敗:', error.response.data);

@@ -33,8 +33,9 @@
 
                     <!-- 利用者側の購入ボタンは購入済みの購入ボタンは購入できない・自分が購入した商品の場合は、「購入をキャンセルする」ボタンが表示される -->
                     <div class="p-product__button">
-                        <button v-if="!isPurchased" class="c-button c-button__purchase" :disabled="isPurchased" @click="purchaseProduct">購入する</button>
-                        <button v-else class="c-button c-button__cancel" @click="cancelPurchase" v-text="'購入済み'"></button>
+                        <button v-if="isPurchased === '購入する'" class="c-button c-button__purchase" @click="purchaseProduct">購入する</button>
+                        <button v-else-if="isPurchased === 'キャンセルする'" class="c-button c-button__cancel" @click="cancelPurchase">購入をキャンセルする</button>
+                        <button v-else="isPurchased === '購入済み'" class="c-button c-button__purchased">購入済み</button>
                     </div>
                 </div>
             </div>
@@ -48,7 +49,7 @@ import axios from 'axios';
 export default {
     data() {
         return {
-            product: [],
+            product: {},
             categories: [],
             isPurchased: false, // 購入ボタン
             errors: null
@@ -65,7 +66,7 @@ export default {
         // 商品の購入状態の取得
         getPurchase() {
             axios.get('/api/user/products/purchase/'+ this.productId).then(response => {
-                this.product = response.data.product;
+                this.isPurchased = response.data.status;
                 console.log('APIからのレスポンス:', response.data);
             }).catch(error => {
                 console.error('購入状態取得失敗:', error.response.data);
