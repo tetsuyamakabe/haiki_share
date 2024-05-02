@@ -62,6 +62,12 @@ class User extends Authenticatable
     {
         return $this->hasMany(Product::class);
     }
+
+    // お気に入りモデルとの関連付け（一対多の関係）
+    public function likes()
+    {
+        return $this->hasMany(Like::class);
+    }
 }
 
 // mysql> desc users;
