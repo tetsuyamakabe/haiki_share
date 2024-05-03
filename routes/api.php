@@ -24,6 +24,7 @@ Route::get('/user', fn() => Auth::user())->name('user');
 Route::get('/products', 'Products\Convenience\ProductController@getAllProducts'); // すべての商品情報の取得
 Route::get('/products/{productId}', 'Products\Convenience\ProductController@getProduct'); // 商品情報の取得
 Route::get('categories', 'Products\Convenience\ProductController@getCategories'); // 商品カテゴリー情報の取得
+Route::get('like', 'Products\Convenience\ProductController@getLike'); // 商品のお気に入り情報の取得
 
 // 利用者側
 Route::post('/user/register', 'Auth\User\RegisterController@create'); // ユーザー登録処理
