@@ -31,6 +31,11 @@
                         </tr>
                     </table>
 
+                    <!-- Twitterのシェアボタン -->
+                    <div class="twitter_share">
+                        <button @click="twitterShare">ツイッターでシェアする</button>
+                    </div>
+
                     <!-- 利用者側の購入ボタンは購入済みの購入ボタンは購入できない・自分が購入した商品の場合は、「購入をキャンセルする」ボタンが表示される -->
                     <div class="p-product__button">
                         <button v-if="!isPurchased" class="c-button c-button__purchase" :disabled="isPurchased" @click="purchaseProduct">購入する</button>
@@ -115,7 +120,21 @@ export default {
                 console.error('商品購入キャンセル処理失敗:', error.response.data);
                 this.errors = error.response.data.errors;
             });
+        },
+
+        // Twitterのシェアボタン
+        twitterShare(){
+            const shareURL = 'https://twitter.com/intent/tweet?text=' + "haiki share 商品をシェアする" + "%20%23haikishare" + '&url=' + "https://haikishare.com/user/products/detail/" + this.productId;  
+            location.href = shareURL
         }
-    },
+    }
 }
 </script>
+
+<style scoped>
+.twitter_share{
+    max-width: 1000px;
+    margin: auto;
+}
+</style>
+

@@ -21,6 +21,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::get('/products', 'Products\Convenience\ProductController@getAllProducts'); // すべての商品情報の取得
 Route::get('/products/{productId}', 'Products\Convenience\ProductController@getProduct'); // 商品情報の取得
 Route::get('categories', 'Products\Convenience\ProductController@getCategories'); // 商品カテゴリー情報の取得
+Route::get('like', 'Products\Convenience\ProductController@getLike'); // 商品のお気に入り情報の取得
 
 // 利用者側
 Route::post('/user/register', 'Auth\User\RegisterController@create'); // ユーザー登録処理
@@ -36,6 +37,8 @@ Route::middleware(['auth', 'authcheckrole'])->group(function () {
     Route::get('/user/products/purchase/{productId}', 'Products\User\ProductController@getPurchase'); // 商品の購入状態の取得
     Route::post('/user/products/purchase/{productId}', 'Products\User\ProductController@purchaseProduct'); // 商品購入処理
     Route::delete('/user/products/purchase/cancel/{productId}', 'Products\User\ProductController@cancelProduct'); // 商品購入キャンセル処理
+    Route::post('/user/like/{productId}', 'Products\User\ProductController@likeProduct'); // 商品お気に入り登録処理
+    Route::post('/user/unlike/{productid}', 'Products\User\ProductController@unlikeProduct'); // 商品お気に入り解除処理
 });
 
 // コンビニ側

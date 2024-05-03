@@ -10,8 +10,6 @@ class Address extends Model
 {
     use SoftDeletes;
 
-    protected $table = 'addresses';
-
     protected $fillable = [
         'prefecture', 'city', 'town', 'building'
     ];

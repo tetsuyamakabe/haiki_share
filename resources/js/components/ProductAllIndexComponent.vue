@@ -10,6 +10,10 @@
                             <div class="p-product__picture--container">
                                 <img class="c-product__picture" :src="getProductPicturePath(product)" alt="Product Image">
                             </div>
+                            <div>
+                                <button v-if="!product.liked" type="button" class="btn btn-primary" @click="productLike(product)">いいね{{ likeCount }}</button>
+                                <button v-else type="button" class="btn btn-primary" @click="productUnlike(product)">いいね{{ likeCount }}</button>
+                            </div>
                             <p class="c-product__price">価格 {{ product.price }} 円</p>
                             <p class="c-product__date">賞味期限 {{ product.expiration_date }}</p>
                             <div class="p-product__button">
@@ -37,8 +41,9 @@ export default {
     data() {
         return {
             products: [],
-            currentPage: 1, // currentPageを定義
-            lastPage: 1, // lastPageを定義
+            currentPage: 1,
+            lastPage: 1,
+            likeCount: 0,
         };
     },
 
@@ -100,6 +105,54 @@ export default {
                 console.error('ページを更新時に商品情報取得失敗:', error.response.data);
                 this.errors = error.response.data;
             }
+        },
+
+        // 商品お気に入り登録
+        productLike(product) {
+            axios.post('/api/user/like/' + product.id).then(response => {
+                console.log('お気に入り登録しました。');
+                product.liked = true;
+                console.log('product.likedは、', product.liked);
+                this.likeCount = response.data.likeCount;
+                console.log('product.likeCountは、', this.likeCount);
+            }).catch(error => {
+                console.error('商品のお気に入り登録失敗:', error);
+            });
+        },
+
+        // 商品お気に入り解除
+        productUnlike(product) {
+            axios.post('/api/user/unlike/' + product.id).then(response => {
+                console.log('お気に入り解除しました。');
+                product.liked = false;
+                console.log('product.likedは、', product.liked);
+                this.likeCount = response.data.likeCount;
+                console.log('product.likeCountは、', this.likeCount);
+            }).catch(error => {
+                console.error('商品のお気に入り解除失敗:', error);
+            });
+        },
+
+        // 購入状態を更新するメソッド
+        updatePurchaseStatus() {
+            this.products.forEach(product => {
+                this.getPurchase(product.id).then(response => {
+                    product.purchaseStatus = response.data.status;
+                }).catch(error => {
+                    console.error('購入状態取得失敗:', error.response.data);
+                });
+            });
+        },
+
+        // 商品の購入状態を取得するメソッド
+        getPurchase() {
+            axios.get('/api/user/products/purchase/'+ this.productId).then(response => {
+                this.isPurchased = response.data.status;
+                console.log('APIからのレスポンス:', response.data);
+            }).catch(error => {
+                console.error('購入状態取得失敗:', error.response.data);
+                this.errors = error.response.data;
+            });
         },
     },
 }

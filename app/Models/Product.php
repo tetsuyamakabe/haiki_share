@@ -28,18 +28,23 @@ class Product extends Model
         return $this->belongsTo(Convenience::class);
     }
 
-    // 商品画像との関連付け（一対多の関係）
+    // 商品画像モデルとの関連付け（一対多の関係）
     public function pictures()
     {
         return $this->hasMany(ProductPicture::class);
     }
 
-    // 購入履歴との関連付け（一対多の関係）
+    // 購入状態モデルとの関連付け（一対多の関係）
     public function purchases()
     {
         return $this->hasMany(Purchase::class);
     }
 
+    // お気に入りモデルとの関連付け（一対多の関係）
+    public function likes()
+    {
+        return $this->hasMany(Like::class);
+    }
 }
 
 // mysql> desc products;
