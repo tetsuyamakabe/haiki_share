@@ -17,9 +17,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-// ログインユーザー
-Route::get('/user', fn() => Auth::user())->name('user');
-
 // 商品
 Route::get('/products', 'Products\Convenience\ProductController@getAllProducts'); // すべての商品情報の取得
 Route::get('/products/{productId}', 'Products\Convenience\ProductController@getProduct'); // 商品情報の取得

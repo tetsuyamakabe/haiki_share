@@ -21,16 +21,22 @@ class ProductController extends Controller
     // 商品の購入状態の取得
     public function getPurchase($productId)
     {
+        // 利用者と商品情報を取得
         $userId = Auth::id();
         $product = Product::findOrFail($productId);
+
+        // 購入情報を取得
         $purchase = Purchase::where('product_id', $productId)->first();
 
-        if (!$purchase) { // 購入情報が存在しない場合、商品はまだ誰も購入していない
+        if (!$purchase) {
+            // 購入情報が存在しない場合、商品はまだ誰も購入していない
             $purchaseStatus = '購入する';
         } else {
-            if ($purchase->is_purchased == true && $purchase->purchased_id == $userId) { // ログインユーザーが購入した商品の場合
+            if ($purchase->is_purchased == true && $purchase->purchased_id == $userId) {
+                // ログインユーザーが購入した商品の場合
                 $purchaseStatus = 'キャンセルする';
-            } else { // 他ユーザーが購入した商品の場合
+            } else {
+                // 他ユーザーが購入した商品の場合
                 $purchaseStatus = '購入済み';
             }
         }

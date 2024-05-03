@@ -24,6 +24,10 @@
 
     </head>
     <body>
-        <div id="app"></div>
+        <div id="app">
+            <header-component></header-component>
+            <router-view></router-view>
+            <footer-component></footer-component>
+        </div>
     </body>
 </html>
