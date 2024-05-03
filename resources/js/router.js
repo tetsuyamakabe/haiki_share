@@ -69,26 +69,12 @@ const router = new VueRouter({
             path: '/user/login',
             name: 'user.login',
             component: UserLoginComponent,
-            beforeEnter (to, from, next) {
-                if (store.getters['auth/check']) {
-                    next('/home')
-                } else {
-                    next()
-                }
-            }
         },
         // コンビニ側ログイン画面
         {
             path: '/convenience/login',
             name: 'convenience.login',
             component: ConvenienceLoginComponent,
-            beforeEnter (to, from, next) {
-                if (store.getters['auth/check']) {
-                    next('/home')
-                } else {
-                    next()
-                }
-            }
         },
         // 利用者側ログアウト画面
         {
@@ -207,15 +193,4 @@ const router = new VueRouter({
     ]
 });
 
-// セッションタイムアウトした場合のナビゲーションガード
-router.beforeEach((to, from, next) => {
-    const { role } = store.state; // 現在のroleを取得
-    const loginPath = role === 'user' ? '/user/login' : '/convenience/login';
-
-    if (to.matched.some(record => record.meta.requiresAuth) && !store.state.token) {
-        next({ path: loginPath, query: { redirect: to.fullPath } });
-    } else {
-        next();
-    }
-});
 export default router;

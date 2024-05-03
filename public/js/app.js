@@ -7088,11 +7088,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _PaginationComponent_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./PaginationComponent.vue */ "./resources/js/components/PaginationComponent.vue");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : String(i); }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == _typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw new Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(_typeof(e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw new Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, "catch": function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw new Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-//
-//
 //
 //
 //
@@ -7139,28 +7140,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     return {
       products: [],
       currentPage: 1,
-      // currentPageを定義
-      lastPage: 1 // lastPageを定義
+      lastPage: 1,
+      likeCount: 0
     };
   },
   computed: {
     // ログインユーザーかどうか
     isLogin: function isLogin() {
       return this.$store.getters['auth/check'];
-    },
-    //     isLike() {
-    //     return productId => {
-    //         return this.$store.getters['like/isLike'](productId);
-    //     };
-    // }
-    isPurchased: function isPurchased() {
-      var _this = this;
-      return function (productId) {
-        var product = _this.products.find(function (p) {
-          return p.id === productId;
-        });
-        return product && product.isPurchased; // 商品が存在し、購入済みであれば true を返す
-      };
     }
   },
   created: function created() {
@@ -7168,31 +7155,30 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     this.getProducts(); // ページが変更された時の商品情報を取得
     this.getPurchase();
   },
-  methods: {
+  methods: _defineProperty({
     // 商品の購入状態の取得
     getPurchase: function getPurchase() {
-      var _this2 = this;
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/user/products/purchase/' + this.productId).then(function (response) {
-        _this2.isPurchased = response.data.status;
+      var _this = this;
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/user/products/purchase/' + product.id).then(function (response) {
+        _this.isPurchased = response.data.status;
         console.log('APIからのレスポンス:', response.data);
       })["catch"](function (error) {
         console.error('購入状態取得失敗:', error.response.data);
-        _this2.errors = error.response.data;
+        _this.errors = error.response.data;
       });
     },
     // 商品情報をサーバーから取得
     getProduct: function getProduct() {
-      var _this3 = this;
+      var _this2 = this;
       console.log('すべての商品情報を取得します');
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/products').then(function (response) {
         console.log('APIからのレスポンス:', response.data);
-        _this3.products = response.data.products;
-        _this3.lastPage = response.data.last_page;
-        // 商品情報を取得した後に購入状態を取得する
-        _this3.getPurchase();
+        _this2.products = response.data.products;
+        _this2.lastPage = response.data.last_page;
+        _this2.getPurchase();
       })["catch"](function (error) {
         console.error('商品情報取得失敗:', error.response.data);
-        _this3.errors = error.response.data;
+        _this2.errors = error.response.data;
       });
     },
     // 商品画像のパスを取得するメソッド
@@ -7230,7 +7216,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
     // ページが変更されたときに新しい商品データを取得するメソッド
     getProducts: function getProducts(page) {
-      var _this4 = this;
+      var _this3 = this;
       return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
         var result, products;
         return _regeneratorRuntime().wrap(function _callee$(_context) {
@@ -7238,26 +7224,26 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             case 0:
               _context.prev = 0;
               // APIリクエストの前にcurrentPageを更新する
-              _this4.currentPage = page;
+              _this3.currentPage = page;
               console.log('pageは、', page);
-              console.log('this.currentPageは、', _this4.currentPage);
+              console.log('this.currentPageは、', _this3.currentPage);
               _context.next = 6;
-              return axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/products/' + "?page=".concat(_this4.currentPage));
+              return axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/products/' + "?page=".concat(_this3.currentPage));
             case 6:
               result = _context.sent;
               products = result.data;
               console.log('productsは、', products);
-              _this4.products = products.products;
-              console.log('productsは、', _this4.products);
-              _this4.lastPage = products.products.last_page;
-              console.log('this.lastPageは、', _this4.lastPage);
+              _this3.products = products.products;
+              console.log('productsは、', _this3.products);
+              _this3.lastPage = products.products.last_page;
+              console.log('this.lastPageは、', _this3.lastPage);
               _context.next = 19;
               break;
             case 15:
               _context.prev = 15;
               _context.t0 = _context["catch"](0);
               console.error('ページを更新時に商品情報取得失敗:', _context.t0.response.data);
-              _this4.errors = _context.t0.response.data;
+              _this3.errors = _context.t0.response.data;
             case 19:
             case "end":
               return _context.stop();
@@ -7265,63 +7251,53 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee, null, [[0, 15]]);
       }))();
     },
-    getLike: function getLike() {
-      var _this5 = this;
-      console.log('商品のお気に入り情報を取得します');
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/like').then(function (response) {
-        console.log('APIからのレスポンス:', response.data);
-        _this5.like = response.data.like;
+    // 商品お気に入り登録
+    productLike: function productLike(product) {
+      var _this4 = this;
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/user/like/' + product.id).then(function (response) {
+        console.log('お気に入り登録しました。');
+        product.liked = true;
+        console.log('product.likedは、', product.liked);
+        _this4.likeCount = response.data.likeCount;
+        console.log('product.likeCountは、', _this4.likeCount);
       })["catch"](function (error) {
-        console.error('商品情報取得失敗:', error.response.data);
-        _this5.errors = error.response.data;
+        console.error('商品のお気に入り登録失敗:', error);
       });
     },
-    // お気に入り登録されているかどうかを判定するメソッド
-    isLike: function isLike() {
-      var _this6 = this;
-      return function (productId) {
-        return _this6.$store.getters['like/isLike'](productId);
-      };
+    // 商品お気に入り解除
+    productUnlike: function productUnlike(product) {
+      var _this5 = this;
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/user/unlike/' + product.id).then(function (response) {
+        console.log('お気に入り解除しました。');
+        product.liked = false;
+        console.log('product.likedは、', product.liked);
+        _this5.likeCount = response.data.likeCount;
+        console.log('product.likeCountは、', _this5.likeCount);
+      })["catch"](function (error) {
+        console.error('商品のお気に入り解除失敗:', error);
+      });
     },
-    // 商品をお気に入り登録または解除するメソッド
-    toggleLike: function toggleLike(productId) {
-      var _this7 = this;
-      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
-        var isLiked;
-        return _regeneratorRuntime().wrap(function _callee2$(_context2) {
-          while (1) switch (_context2.prev = _context2.next) {
-            case 0:
-              _context2.prev = 0;
-              isLiked = _this7.$store.getters['like/isLike'](productId); // お気に入り情報を取得
-              if (!isLiked) {
-                _context2.next = 7;
-                break;
-              }
-              _context2.next = 5;
-              return _this7.removeLike(productId);
-            case 5:
-              _context2.next = 9;
-              break;
-            case 7:
-              _context2.next = 9;
-              return _this7.addLike(productId);
-            case 9:
-              // 商品情報を再取得して画面を更新
-              _this7.getProduct();
-              _context2.next = 15;
-              break;
-            case 12:
-              _context2.prev = 12;
-              _context2.t0 = _context2["catch"](0);
-              console.error('Failed to like/unlike the product:', _context2.t0.response);
-            case 15:
-            case "end":
-              return _context2.stop();
-          }
-        }, _callee2, null, [[0, 12]]);
-      }))();
+    // 購入状態を更新するメソッド
+    updatePurchaseStatus: function updatePurchaseStatus() {
+      var _this6 = this;
+      this.products.forEach(function (product) {
+        _this6.getPurchase(product.id).then(function (response) {
+          product.purchaseStatus = response.data.status;
+        })["catch"](function (error) {
+          console.error('購入状態取得失敗:', error.response.data);
+        });
+      });
     }
-  }
+  }, "getPurchase", function getPurchase() {
+    var _this7 = this;
+    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/user/products/purchase/' + this.productId).then(function (response) {
+      _this7.isPurchased = response.data.status;
+      console.log('APIからのレスポンス:', response.data);
+    })["catch"](function (error) {
+      console.error('購入状態取得失敗:', error.response.data);
+      _this7.errors = error.response.data;
+    });
+  })
 });
 
 /***/ }),
@@ -7730,6 +7706,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -7802,10 +7779,9 @@ __webpack_require__.r(__webpack_exports__);
         _this4.errors = error.response.data.errors;
       });
     },
+    // Twitterのシェアボタン
     twitterShare: function twitterShare() {
-      //シェアする画面を設定
       var shareURL = 'https://twitter.com/intent/tweet?text=' + "haiki share 商品をシェアする" + "%20%23haikishare" + '&url=' + "https://haikishare.com/user/products/detail/" + this.productId;
-      //シェア用の画面へ移行
       location.href = shareURL;
     }
   }
@@ -48711,47 +48687,35 @@ var render = function () {
                       ]
                     ),
                     _vm._v(" "),
-                    _vm.isLogin
-                      ? _c(
-                          "div",
-                          { staticClass: "p-product__button" },
-                          [
-                            _c(
-                              "button",
-                              {
-                                on: {
-                                  click: function ($event) {
-                                    _vm.toggleLike(product.id)
-                                  },
+                    _c("div", [
+                      !product.liked
+                        ? _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-primary",
+                              attrs: { type: "button" },
+                              on: {
+                                click: function ($event) {
+                                  _vm.productLike(product)
                                 },
                               },
-                              [
-                                _vm.isLike(product.id)
-                                  ? _c("i", { staticClass: "fas fa-heart" })
-                                  : _c("i", { staticClass: "far fa-heart" }),
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _vm.isPurchased(product.id)
-                              ? _c("span", { staticClass: "c-label" }, [
-                                  _vm._v("購入済み"),
-                                ])
-                              : _vm._e(),
-                            _vm._v(" "),
-                            _c(
-                              "router-link",
-                              {
-                                staticClass: "c-button",
-                                attrs: {
-                                  to: _vm.getProductDetailLink(product.id),
+                            },
+                            [_vm._v("いいね" + _vm._s(_vm.likeCount))]
+                          )
+                        : _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-primary",
+                              attrs: { type: "button" },
+                              on: {
+                                click: function ($event) {
+                                  _vm.productUnlike(product)
                                 },
                               },
-                              [_vm._v("詳細を見る")]
-                            ),
-                          ],
-                          1
-                        )
-                      : _vm._e(),
+                            },
+                            [_vm._v("いいね" + _vm._s(_vm.likeCount))]
+                          ),
+                    ]),
                     _vm._v(" "),
                     _c("p", { staticClass: "c-product__price" }, [
                       _vm._v("価格 " + _vm._s(product.price) + " 円"),
@@ -48776,6 +48740,10 @@ var render = function () {
                       ],
                       1
                     ),
+                    _vm._v(" "),
+                    product.purchaseStatus === "購入済み"
+                      ? _c("div", [_c("span", [_vm._v("購入済み")])])
+                      : _vm._e(),
                   ]
                 )
               })
@@ -69109,27 +69077,13 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
   {
     path: '/user/login',
     name: 'user.login',
-    component: _components_User_LoginComponent_vue__WEBPACK_IMPORTED_MODULE_6__["default"],
-    beforeEnter: function beforeEnter(to, from, next) {
-      if (_store__WEBPACK_IMPORTED_MODULE_2__["default"].getters['auth/check']) {
-        next('/home');
-      } else {
-        next();
-      }
-    }
+    component: _components_User_LoginComponent_vue__WEBPACK_IMPORTED_MODULE_6__["default"]
   },
   // コンビニ側ログイン画面
   {
     path: '/convenience/login',
     name: 'convenience.login',
-    component: _components_Convenience_LoginComponent_vue__WEBPACK_IMPORTED_MODULE_15__["default"],
-    beforeEnter: function beforeEnter(to, from, next) {
-      if (_store__WEBPACK_IMPORTED_MODULE_2__["default"].getters['auth/check']) {
-        next('/home');
-      } else {
-        next();
-      }
-    }
+    component: _components_Convenience_LoginComponent_vue__WEBPACK_IMPORTED_MODULE_15__["default"]
   },
   // 利用者側ログアウト画面
   {
@@ -69246,24 +69200,6 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
     component: _components_Convenience_ProductDetailComponent_vue__WEBPACK_IMPORTED_MODULE_22__["default"]
   }]
 });
-
-// セッションタイムアウトした場合のナビゲーションガード
-router.beforeEach(function (to, from, next) {
-  var role = _store__WEBPACK_IMPORTED_MODULE_2__["default"].state.role; // 現在のroleを取得
-  var loginPath = role === 'user' ? '/user/login' : '/convenience/login';
-  if (to.matched.some(function (record) {
-    return record.meta.requiresAuth;
-  }) && !_store__WEBPACK_IMPORTED_MODULE_2__["default"].state.token) {
-    next({
-      path: loginPath,
-      query: {
-        redirect: to.fullPath
-      }
-    });
-  } else {
-    next();
-  }
-});
 /* harmony default export */ __webpack_exports__["default"] = (router);
 
 /***/ }),
@@ -69310,17 +69246,26 @@ var actions = {
       return _regeneratorRuntime().wrap(function _callee$(_context) {
         while (1) switch (_context.prev = _context.next) {
           case 0:
-            _context.next = 2;
+            _context.prev = 0;
+            _context.next = 3;
             return axios.get('/api/user');
-          case 2:
+          case 3:
             response = _context.sent;
             user = response.data || null;
             context.commit('setUser', user);
-          case 5:
+            _context.next = 13;
+            break;
+          case 8:
+            _context.prev = 8;
+            _context.t0 = _context["catch"](0);
+            console.error("Authentication error:", _context.t0);
+            context.commit('clearUser');
+            router.push('/home');
+          case 13:
           case "end":
             return _context.stop();
         }
-      }, _callee);
+      }, _callee, null, [[0, 8]]);
     }))();
   }
 };
@@ -69347,65 +69292,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 /* harmony import */ var _auth__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./auth */ "./resources/js/store/auth.js");
-/* harmony import */ var _like__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./like */ "./resources/js/store/like.js");
-
 
 
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__["default"]);
 var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
   modules: {
-    auth: _auth__WEBPACK_IMPORTED_MODULE_2__["default"],
-    like: _like__WEBPACK_IMPORTED_MODULE_3__["default"]
+    auth: _auth__WEBPACK_IMPORTED_MODULE_2__["default"]
   }
 });
 /* harmony default export */ __webpack_exports__["default"] = (store);
-
-/***/ }),
-
-/***/ "./resources/js/store/like.js":
-/*!************************************!*\
-  !*** ./resources/js/store/like.js ***!
-  \************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-var state = {
-  likedProducts: []
-};
-var getters = {
-  likedProducts: function likedProducts(state) {
-    return state.likedProducts;
-  }
-};
-var mutations = {
-  addLike: function addLike(state, productId) {
-    state.likedProducts.push(productId);
-  },
-  removeLike: function removeLike(state, productId) {
-    state.likedProducts = state.likedProducts.filter(function (id) {
-      return id !== productId;
-    });
-  }
-};
-var actions = {
-  addLike: function addLike(_ref, productId) {
-    var commit = _ref.commit;
-    commit('addLike', productId);
-  },
-  removeLike: function removeLike(_ref2, productId) {
-    var commit = _ref2.commit;
-    commit('removeLike', productId);
-  }
-};
-/* harmony default export */ __webpack_exports__["default"] = ({
-  state: state,
-  getters: getters,
-  mutations: mutations,
-  actions: actions
-});
 
 /***/ }),
 

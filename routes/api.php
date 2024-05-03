@@ -39,6 +39,8 @@ Route::middleware(['auth', 'authcheckrole'])->group(function () {
     Route::get('/user/products/purchase/{productId}', 'Products\User\ProductController@getPurchase'); // 商品の購入状態の取得
     Route::post('/user/products/purchase/{productId}', 'Products\User\ProductController@purchaseProduct'); // 商品購入処理
     Route::delete('/user/products/purchase/cancel/{productId}', 'Products\User\ProductController@cancelProduct'); // 商品購入キャンセル処理
+    Route::post('/user/like/{productId}', 'Products\User\ProductController@likeProduct'); // 商品お気に入り登録処理
+    Route::post('/user/unlike/{productid}', 'Products\User\ProductController@unlikeProduct'); // 商品お気に入り解除処理
 });
 
 // コンビニ側

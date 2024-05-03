@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Products\User;
 
+use App\Models\Like;
 use App\Models\Product;
 use App\Models\Category;
 use App\Models\Purchase;
 use App\Models\Convenience;
+use Illuminate\Http\Request;
 use App\Models\ProductPicture;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -88,5 +90,46 @@ class ProductController extends Controller
         } else {
             return response()->json(['error' => '商品が見つかりません。'], 404);
         }
+    }
+
+    // 商品のお気に入り情報の取得（お気に入り数の取得）
+    public function getLike(Request $request, $productId)
+    {
+        $userId = auth()->id();
+        $like = Like::where('user_id', $userId)->where('product_id', $productId)->first();
+
+        if ($like) {
+            return response()->json(['like' => true]);
+        } else {
+            return response()->json(['like' => false]);
+        }
+    }
+
+    // 商品お気に入り登録処理
+    public function likeProduct(Request $request, $productId)
+    {
+        $userId = auth()->id();
+        $likedProduct = Like::where('product_id', $productId)->where('user_id', $userId)->first();
+        if ($likedProduct) {
+            return response()->json(['message' => 'すでにお気に入り登録されています。'], 400);
+        }
+        $like = Like::create(['product_id' => $productId, 'user_id' => $userId]);
+        $likeCount = Like::where('product_id', $productId)->count();
+
+        return response()->json(['likeCount' => $likeCount, 'message' => '商品をお気に入り登録しました。']);
+    }
+
+    // 商品お気に入り解除処理
+    public function unlikeProduct(Request $request, $productId)
+    {
+        $userId = auth()->id();
+        $likedProduct = Like::where('product_id', $productId)->where('user_id', $userId)->first();
+        if (!$likedProduct) {
+            return response()->json(['message' => 'お気に入り登録が見つかりません。'], 400);
+        }
+        $likedProduct->delete();
+        $likeCount = Like::where('product_id', $productId)->count();
+
+        return response()->json(['likeCount' => $likeCount, 'message' => '商品のお気に入り登録を解除しました。']);
     }
 }
