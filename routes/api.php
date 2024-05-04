@@ -23,6 +23,8 @@ Route::get('/products/{productId}', 'Products\Convenience\ProductController@getP
 Route::get('categories', 'Products\Convenience\ProductController@getCategories'); // 商品カテゴリー情報の取得
 Route::get('like', 'Products\Convenience\ProductController@getLike'); // 商品のお気に入り情報の取得
 
+Route::get('/user', fn() => Auth::user())->name('user');
+
 // 利用者側
 Route::post('/user/register', 'Auth\User\RegisterController@create'); // ユーザー登録処理
 Route::post('/user/login', 'Auth\User\LoginController@login'); // ログイン処理

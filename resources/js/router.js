@@ -1,6 +1,5 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import store from './store';
 
 // 共通コンポーネント
 import HomeComponent from "./components/HomeComponent"; // HOME画面

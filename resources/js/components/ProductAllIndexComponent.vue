@@ -11,8 +11,8 @@
                                 <img class="c-product__picture" :src="getProductPicturePath(product)" alt="Product Image">
                             </div>
                             <div>
-                                <button v-if="!product.liked" type="button" class="btn btn-primary" @click="productLike(product)">いいね{{ likeCount }}</button>
-                                <button v-else type="button" class="btn btn-primary" @click="productUnlike(product)">いいね{{ likeCount }}</button>
+                                <button v-if="!product.liked" type="button" class="btn btn-primary" @click="productLike(product)">いいね{{ product.likeCount }}</button>
+                                <button v-else type="button" class="btn btn-primary" @click="productUnlike(product)">いいね{{ product.likeCount }}</button>
                             </div>
                             <p class="c-product__price">価格 {{ product.price }} 円</p>
                             <p class="c-product__date">賞味期限 {{ product.expiration_date }}</p>
@@ -47,6 +47,13 @@ export default {
         };
     },
 
+    computed: {
+        // ログインユーザーかどうか
+        isLogin() {
+            return this.$store.getters['auth/check'];
+        },
+    },
+
     created() {
         this.getProduct(); // サーバから商品情報を取得
         this.getProducts(); // ページが変更された時の商品情報を取得
@@ -58,8 +65,8 @@ export default {
             console.log('すべての商品情報を取得します');
             axios.get('/api/products').then(response => {
                 console.log('APIからのレスポンス:', response.data);
-                this.products = response.data.products; // プロパティ名を修正
-                this.lastPage = response.data.last_page; // プロパティ名を修正
+                this.products = response.data.products;
+                this.lastPage = response.data.last_page;
             }).catch(error => {
                 console.error('商品情報取得失敗:', error.response.data);
                 this.errors = error.response.data;
@@ -78,8 +85,13 @@ export default {
 
         // 商品詳細画面のリンクを返すメソッド
         getProductDetailLink(productId) {
-            // 【TODO】 利用者ユーザーは利用者側の詳細画面、コンビニユーザーはコンビニ側の詳細画面、ログインしていないユーザーはログイン画面に遷移させる
-            return { name: 'convenience.products.detail', params: { productId: productId } };
+            // ログインユーザーのroleによって利用者・コンビニのマイページリンクを動的に変える
+            if (this.$store.getters['auth/role'] === 'user') {
+                    return { name: 'user.products.detail', params: { productId: productId } };
+                } else if (this.$store.getters['auth/role'] === 'convenience') {
+                    return { name: 'convenience.products.detail', params: { productId: productId } };
+                }
+            return "/home";
         },
 
         // ページが変更されたときの処理
@@ -111,10 +123,10 @@ export default {
         productLike(product) {
             axios.post('/api/user/like/' + product.id).then(response => {
                 console.log('お気に入り登録しました。');
-                product.liked = true;
-                console.log('product.likedは、', product.liked);
-                this.likeCount = response.data.likeCount;
-                console.log('product.likeCountは、', this.likeCount);
+                this.liked = true;
+                console.log('this.likedは、', this.liked);
+                product.likeCount = response.data.likeCount;
+                console.log('product.likeCountは、', product.likeCount);
             }).catch(error => {
                 console.error('商品のお気に入り登録失敗:', error);
             });
@@ -124,34 +136,12 @@ export default {
         productUnlike(product) {
             axios.post('/api/user/unlike/' + product.id).then(response => {
                 console.log('お気に入り解除しました。');
-                product.liked = false;
-                console.log('product.likedは、', product.liked);
-                this.likeCount = response.data.likeCount;
-                console.log('product.likeCountは、', this.likeCount);
+                this.liked = false;
+                console.log('this.likedは、', this.liked);
+                product.likeCount = response.data.likeCount;
+                console.log('product.likeCountは、', product.likeCount);
             }).catch(error => {
                 console.error('商品のお気に入り解除失敗:', error);
-            });
-        },
-
-        // 購入状態を更新するメソッド
-        updatePurchaseStatus() {
-            this.products.forEach(product => {
-                this.getPurchase(product.id).then(response => {
-                    product.purchaseStatus = response.data.status;
-                }).catch(error => {
-                    console.error('購入状態取得失敗:', error.response.data);
-                });
-            });
-        },
-
-        // 商品の購入状態を取得するメソッド
-        getPurchase() {
-            axios.get('/api/user/products/purchase/'+ this.productId).then(response => {
-                this.isPurchased = response.data.status;
-                console.log('APIからのレスポンス:', response.data);
-            }).catch(error => {
-                console.error('購入状態取得失敗:', error.response.data);
-                this.errors = error.response.data;
             });
         },
     },
