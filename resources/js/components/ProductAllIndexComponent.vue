@@ -11,8 +11,9 @@
                                 <img class="c-product__picture" :src="getProductPicturePath(product)" alt="Product Image">
                             </div>
                             <div>
-                                <button v-if="!product.liked" type="button" class="btn btn-primary" @click="productLike(product)">いいね{{ product.likeCount }}</button>
-                                <button v-else type="button" class="btn btn-primary" @click="productUnlike(product)">いいね{{ product.likeCount }}</button>
+                                <i v-if="!liked" class="far fa-heart" @click="productLike(product)"></i>
+                                <i v-else class="fas fa-heart" @click="productUnlike(product)"></i>
+                                <span>いいね{{ product.likeCount }}</span>
                             </div>
                             <p class="c-product__price">価格 {{ product.price }} 円</p>
                             <p class="c-product__date">賞味期限 {{ product.expiration_date }}</p>
@@ -43,6 +44,7 @@ export default {
             products: [],
             currentPage: 1,
             lastPage: 1,
+            liked: false,
             likeCount: 0,
         };
     },
@@ -122,9 +124,9 @@ export default {
         // 商品お気に入り登録
         productLike(product) {
             axios.post('/api/user/like/' + product.id).then(response => {
-                console.log('お気に入り登録しました。');
+                console.log(product.id, 'の商品をお気に入り登録しました。');
                 this.liked = true;
-                console.log('this.likedは、', this.liked);
+                console.log('product.likedは、', product.liked);
                 product.likeCount = response.data.likeCount;
                 console.log('product.likeCountは、', product.likeCount);
             }).catch(error => {
@@ -135,9 +137,9 @@ export default {
         // 商品お気に入り解除
         productUnlike(product) {
             axios.post('/api/user/unlike/' + product.id).then(response => {
-                console.log('お気に入り解除しました。');
+                console.log(product.id, 'の商品をお気に入り解除しました。');
                 this.liked = false;
-                console.log('this.likedは、', this.liked);
+                console.log('product.likedは、', product.liked);
                 product.likeCount = response.data.likeCount;
                 console.log('product.likeCountは、', product.likeCount);
             }).catch(error => {

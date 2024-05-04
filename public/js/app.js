@@ -5201,6 +5201,8 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/convenience/login', this.formData).then(function (response) {
         console.log('ログインします。');
+        console.log('APIからのレスポンス:', response.data);
+        _this.$store.dispatch('auth/currentUser');
         _this.$router.push({
           name: 'convenience.mypage'
         }); // ログイン後、マイページに遷移
@@ -7120,6 +7122,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
 
 
  // ページネーションコンポーネント
@@ -7133,6 +7136,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       products: [],
       currentPage: 1,
       lastPage: 1,
+      liked: false,
       likeCount: 0
     };
   },
@@ -7234,9 +7238,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     productLike: function productLike(product) {
       var _this3 = this;
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/user/like/' + product.id).then(function (response) {
-        console.log('お気に入り登録しました。');
+        console.log(product.id, 'の商品をお気に入り登録しました。');
         _this3.liked = true;
-        console.log('this.likedは、', _this3.liked);
+        console.log('product.likedは、', product.liked);
         product.likeCount = response.data.likeCount;
         console.log('product.likeCountは、', product.likeCount);
       })["catch"](function (error) {
@@ -7249,7 +7253,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/user/unlike/' + product.id).then(function (response) {
         console.log('お気に入り解除しました。');
         _this4.liked = false;
-        console.log('this.likedは、', _this4.liked);
+        console.log('product.likedは、', product.liked);
         product.likeCount = response.data.likeCount;
         console.log('product.likeCountは、', product.likeCount);
       })["catch"](function (error) {
@@ -7510,11 +7514,7 @@ __webpack_require__.r(__webpack_exports__);
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/user/login', this.formData).then(function (response) {
         console.log('ログインします。');
         console.log('APIからのレスポンス:', response.data);
-        _this.$store.dispatch('auth', {
-          userId: response.data.user_id,
-          token: response.data.token,
-          role: response.data.role
-        });
+        _this.$store.dispatch('auth/currentUser');
         _this.$router.push({
           name: 'user.mypage'
         }); // ログイン後、マイページに遷移
@@ -48650,33 +48650,27 @@ var render = function () {
                     ),
                     _vm._v(" "),
                     _c("div", [
-                      !product.liked
-                        ? _c(
-                            "button",
-                            {
-                              staticClass: "btn btn-primary",
-                              attrs: { type: "button" },
-                              on: {
-                                click: function ($event) {
-                                  _vm.productLike(product)
-                                },
+                      !_vm.liked
+                        ? _c("i", {
+                            staticClass: "far fa-heart",
+                            on: {
+                              click: function ($event) {
+                                _vm.productLike(product)
                               },
                             },
-                            [_vm._v("いいね" + _vm._s(product.likeCount))]
-                          )
-                        : _c(
-                            "button",
-                            {
-                              staticClass: "btn btn-primary",
-                              attrs: { type: "button" },
-                              on: {
-                                click: function ($event) {
-                                  _vm.productUnlike(product)
-                                },
+                          })
+                        : _c("i", {
+                            staticClass: "fas fa-heart",
+                            on: {
+                              click: function ($event) {
+                                _vm.productUnlike(product)
                               },
                             },
-                            [_vm._v("いいね" + _vm._s(product.likeCount))]
-                          ),
+                          }),
+                      _vm._v(" "),
+                      _c("span", [
+                        _vm._v("いいね" + _vm._s(product.likeCount)),
+                      ]),
                     ]),
                     _vm._v(" "),
                     _c("p", { staticClass: "c-product__price" }, [
