@@ -20,15 +20,9 @@ const mutations = {
 
 const actions = {
     async currentUser (context) {
-        try {
-            const response = await axios.get('/api/user');
-            const user = response.data || null;
-            context.commit('setUser', user);
-        } catch (error) {
-            console.error("Authentication error:", error);
-            context.commit('clearUser');
-            router.push('/home');
-        }
+        const response = await axios.get('/api/user');
+        const user = response.data || null;
+        context.commit('setUser', user);
     }
 }
 
