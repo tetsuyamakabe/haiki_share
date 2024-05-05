@@ -20,7 +20,23 @@ class ProductController extends Controller
     // 商品情報の取得処理
     public function getProduct(Request $request, $productId)
     {
-        $product = Product::with(['pictures', 'category'])->findOrFail($productId);
+        $userId = auth()->id();
+        // \Log::info('$userIdは、', [$userId]);
+        // 商品情報を取得
+        $product = Product::with(['pictures', 'category'])->withCount('likes')->findOrFail($productId);
+        // \Log::info('$productIdは、', [$productId]);
+        // 購入情報を取得
+        $purchase = Purchase::where('product_id', $productId)->first();
+        // \Log::info('$purchaseは、', [$purchase]);
+        // 購入者のIDを取得
+        $purchasedId = $purchase ? $purchase->purchaser->id : null;
+
+        // is_purchasedプロパティを設定
+        $product->is_purchased = $purchase ? true : false;
+        $product->purchased_id = $purchasedId;
+        $like = Like::where('user_id', $userId)->where('product_id', $product->id)->first();
+        $product->liked = $like ? true : false;
+        // \Log::info('$productは、', [$product]);
         return response()->json(['product' => $product]);
     }
 
@@ -46,9 +62,7 @@ class ProductController extends Controller
             $is_purchased = Purchase::where('product_id', $product->id)->first();
             $product->is_purchased = $is_purchased ? true : false;
         }
-
-        \Log::info('$productは、', [$products]);
-
+        // \Log::info('$productsは、', [$products]);
         return response()->json(['products' => $products]);
     }
 

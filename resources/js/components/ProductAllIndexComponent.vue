@@ -25,6 +25,7 @@
                             </div>
                         </li>
                     </ul>
+                    <search-component />
                 </div>
                 <!-- ページネーション -->
                 <pagination-component @onClick="onPageChange" :current_page="currentPage" :last_page="lastPage" />
@@ -35,10 +36,12 @@
 
 <script>
 import axios from 'axios';
+import SearchComponent from './SearchComponent.vue'; // 絞り込み検索コンポーネント
 import PaginationComponent from './PaginationComponent.vue'; // ページネーションコンポーネント
 
 export default {
     components: {
+        SearchComponent,
         PaginationComponent,
     },
 
