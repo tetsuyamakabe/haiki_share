@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Products\Convenience;
 
 use Carbon\Carbon;
+use App\Models\Like;
 use App\Models\User;
 use App\Models\Product;
 use App\Models\Category;
+use App\Models\Purchase;
 use Illuminate\Http\Request;
 use App\Models\ProductPicture;
 use App\Http\Controllers\Controller;
@@ -32,7 +34,21 @@ class ProductController extends Controller
     // すべての商品情報の取得
     public function getAllProducts()
     {
-        $products = Product::with('pictures')->paginate(4);
+        $userId = auth()->id();
+        $products = Product::with('pictures')->withCount('likes')->paginate(4); // withCountでいいね数の取得
+
+        foreach ($products as $product) {
+            // 商品情報にお気に入り情報を含める
+            $like = Like::where('user_id', $userId)->where('product_id', $product->id)->first();
+            $product->liked = $like ? true : false;
+
+            // 購入済み商品は「購入済み」ラベルをつける
+            $is_purchased = Purchase::where('product_id', $product->id)->first();
+            $product->is_purchased = $is_purchased ? true : false;
+        }
+
+        \Log::info('$productは、', [$products]);
+
         return response()->json(['products' => $products]);
     }
 

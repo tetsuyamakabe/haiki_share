@@ -11,9 +11,12 @@
                                 <img class="c-product__picture" :src="getProductPicturePath(product)" alt="Product Image">
                             </div>
                             <div>
-                                <i v-if="!liked" class="far fa-heart" @click="productLike(product)"></i>
+                                <label v-show="product.is_purchased" class="c-label__purchase">購入済み</label>
+                            </div>
+                            <div>
+                                <i v-if="!product.liked" class="far fa-heart" @click="productLike(product)"></i>
                                 <i v-else class="fas fa-heart" @click="productUnlike(product)"></i>
-                                <span>いいね{{ product.likeCount }}</span>
+                                <span>いいね{{ product.likes_count }}</span>
                             </div>
                             <p class="c-product__price">価格 {{ product.price }} 円</p>
                             <p class="c-product__date">賞味期限 {{ product.expiration_date }}</p>
@@ -44,8 +47,6 @@ export default {
             products: [],
             currentPage: 1,
             lastPage: 1,
-            liked: false,
-            likeCount: 0,
         };
     },
 
@@ -125,10 +126,10 @@ export default {
         productLike(product) {
             axios.post('/api/user/like/' + product.id).then(response => {
                 console.log(product.id, 'の商品をお気に入り登録しました。');
-                this.liked = true;
-                console.log('product.likedは、', product.liked);
-                product.likeCount = response.data.likeCount;
-                console.log('product.likeCountは、', product.likeCount);
+                product.liked = true;
+                console.log('this.likedは、', product.liked);
+                product.likes_count++;
+                console.log('product.likes_countは、', product.likes_count);
             }).catch(error => {
                 console.error('商品のお気に入り登録失敗:', error);
             });
@@ -138,10 +139,10 @@ export default {
         productUnlike(product) {
             axios.post('/api/user/unlike/' + product.id).then(response => {
                 console.log(product.id, 'の商品をお気に入り解除しました。');
-                this.liked = false;
+                product.liked = false;
                 console.log('product.likedは、', product.liked);
-                product.likeCount = response.data.likeCount;
-                console.log('product.likeCountは、', product.likeCount);
+                product.likes_count--;
+                console.log('product.likes_count', product.likes_count);
             }).catch(error => {
                 console.error('商品のお気に入り解除失敗:', error);
             });
