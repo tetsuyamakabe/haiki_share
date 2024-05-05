@@ -31,6 +31,11 @@
                         </tr>
                     </table>
 
+                    <div>
+                        <i v-if="!product.liked" class="far fa-heart" @click="productLike(product)"></i>
+                        <i v-else class="fas fa-heart" @click="productUnlike(product)"></i>
+                        <span>いいね{{ product.likes_count }}</span>
+                    </div>
                     <!-- Twitterのシェアボタン -->
                     <div class="twitter_share">
                         <button @click="twitterShare">ツイッターでシェアする</button>
@@ -38,9 +43,9 @@
 
                     <!-- 利用者側の購入ボタンは購入済みの購入ボタンは購入できない・自分が購入した商品の場合は、「購入をキャンセルする」ボタンが表示される -->
                     <div class="p-product__button">
-                        <button v-if="isPurchased === '購入する'" class="c-button c-button__purchase" @click="purchaseProduct">購入する</button>
-                        <button v-else-if="isPurchased === 'キャンセルする'" class="c-button c-button__cancel" @click="cancelPurchase">購入をキャンセルする</button>
-                        <button v-else="isPurchased === '購入済み'" class="c-button c-button__purchased">購入済み</button>
+                        <button v-if="product.is_purchased === false" class="c-button c-button__purchase" @click="purchaseProduct">購入する</button>
+                        <button v-else-if="product.is_purchased === true && product.purchased_id === loginId" class="c-button c-button__cancel" @click="cancelPurchase">購入をキャンセルする</button>
+                        <button v-else class="c-button c-button__purchased">購入済み</button>
                     </div>
                 </div>
             </div>
@@ -56,29 +61,31 @@ export default {
         return {
             product: {},
             categories: [],
-            isPurchased: false, // 購入ボタン
             errors: null
         };
+    },
+
+    computed: {
+        // ログインユーザーかどうか
+        isLogin() {
+            return this.$store.getters['auth/check'];
+        },
+        // ログインユーザーのIDを取得
+        loginId() {
+            if (this.isLogin) {
+                return this.$store.getters['auth/id'];
+            } else {
+                return null;
+            }
+        },
     },
 
     created() {
         this.productId = this.$route.params.productId; // ルートからproductIdを取得
         this.getProduct(); // 商品情報を取得
-        this.getPurchase(); // 購入状態を取得
     },
 
     methods: {
-        // 商品の購入状態の取得
-        getPurchase() {
-            axios.get('/api/user/products/purchase/'+ this.productId).then(response => {
-                this.isPurchased = response.data.status;
-                console.log('APIからのレスポンス:', response.data);
-            }).catch(error => {
-                console.error('購入状態取得失敗:', error.response.data);
-                this.errors = error.response.data;
-            });
-        },
-
         // 商品情報をサーバーから取得
         getProduct() {
             axios.get('/api/products/'+ this.productId).then(response => {
@@ -127,7 +134,34 @@ export default {
         twitterShare(){
             const shareURL = 'https://twitter.com/intent/tweet?text=' + "haiki share 商品をシェアする" + "%20%23haikishare" + '&url=' + "https://haikishare.com/user/products/detail/" + this.productId;  
             location.href = shareURL
-        }
+        },
+
+        // 商品お気に入り登録
+        productLike(product) {
+            axios.post('/api/user/like/' + product.id).then(response => {
+                console.log(product.id, 'の商品をお気に入り登録しました。');
+                product.liked = true;
+                console.log('this.likedは、', product.liked);
+                product.likes_count++;
+                console.log('product.likes_countは、', product.likes_count);
+            }).catch(error => {
+                console.error('商品のお気に入り登録失敗:', error);
+            });
+        },
+
+        // 商品お気に入り解除
+        productUnlike(product) {
+            axios.post('/api/user/unlike/' + product.id).then(response => {
+                console.log(product.id, 'の商品をお気に入り解除しました。');
+                product.liked = false;
+                console.log('product.likedは、', product.liked);
+                product.likes_count--;
+                console.log('product.likes_count', product.likes_count);
+            }).catch(error => {
+                console.error('商品のお気に入り解除失敗:', error);
+            });
+        },
+
     }
 }
 </script>

@@ -6,6 +6,7 @@ const getters = {
     check: state => !! state.user,
     username: state => state.user ? state.user.name : '',
     role: state => state.user ? state.user.role : '',
+    id: state => state.user ? state.user.id : '',
 }
 
 const mutations = {

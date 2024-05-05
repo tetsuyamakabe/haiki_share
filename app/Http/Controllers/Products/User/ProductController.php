@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Products\User;
 
 use App\Models\Like;
+use App\Models\Address;
 use App\Models\Product;
 use App\Models\Category;
 use App\Models\Purchase;
@@ -18,32 +19,6 @@ use App\Notifications\User\PurchaseNotification;
 
 class ProductController extends Controller
 {
-    // 商品の購入状態の取得
-    public function getPurchase($productId)
-    {
-        // 利用者と商品情報を取得
-        $userId = Auth::id();
-        $product = Product::findOrFail($productId);
-
-        // 購入情報を取得
-        $purchase = Purchase::where('product_id', $productId)->first();
-
-        if (!$purchase) {
-            // 購入情報が存在しない場合、商品はまだ誰も購入していない
-            $purchaseStatus = '購入する';
-        } else {
-            if ($purchase->is_purchased == true && $purchase->purchased_id == $userId) {
-                // ログインユーザーが購入した商品の場合
-                $purchaseStatus = 'キャンセルする';
-            } else {
-                // 他ユーザーが購入した商品の場合
-                $purchaseStatus = '購入済み';
-            }
-        }
-
-        return response()->json(['status' => $purchaseStatus]);
-    }
-
     // 商品購入処理
     public function purchaseProduct($productId)
     {
@@ -122,5 +97,13 @@ class ProductController extends Controller
         $likedProduct->delete();
 
         return response()->json(['message' => '商品のお気に入り登録を解除しました。']);
+    }
+
+    // 出品しているコンビニがある都道府県の取得
+    public function getPrefecture()
+    {
+        // 住所テーブルからprefectureカラムの重複していない値だけを取り出す
+        $prefectures = Address::pluck('prefecture')->unique()->values();
+        return response()->json(['prefectures' => $prefectures]);
     }
 }

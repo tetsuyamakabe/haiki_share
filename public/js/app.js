@@ -7086,7 +7086,8 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _PaginationComponent_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./PaginationComponent.vue */ "./resources/js/components/PaginationComponent.vue");
+/* harmony import */ var _SearchComponent_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./SearchComponent.vue */ "./resources/js/components/SearchComponent.vue");
+/* harmony import */ var _PaginationComponent_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./PaginationComponent.vue */ "./resources/js/components/PaginationComponent.vue");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == _typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw new Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(_typeof(e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw new Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, "catch": function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw new Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -7126,13 +7127,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
 
 
+ // 絞り込み検索コンポーネント
  // ページネーションコンポーネント
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
-    PaginationComponent: _PaginationComponent_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
+    SearchComponent: _SearchComponent_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
+    PaginationComponent: _PaginationComponent_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
   },
   data: function data() {
     return {
@@ -7257,6 +7261,106 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         console.log('product.likes_count', product.likes_count);
       })["catch"](function (error) {
         console.error('商品のお気に入り解除失敗:', error);
+      });
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/SearchComponent.vue?vue&type=script&lang=js":
+/*!*************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/SearchComponent.vue?vue&type=script&lang=js ***!
+  \*************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      products: [],
+      prefectures: []
+    };
+  },
+  created: function created() {
+    this.getPrefectures();
+  },
+  methods: {
+    // 出品しているコンビニがある都道府県の取得
+    getPrefectures: function getPrefectures() {
+      var _this = this;
+      console.log('都道府県情報を取得します');
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/prefecture').then(function (response) {
+        console.log('APIからのレスポンス:', response.data);
+        _this.prefectures = response.data.prefectures;
+      })["catch"](function (error) {
+        console.error('都道府県情報取得失敗:', error.response.data);
+        _this.errors = error.response.data;
+      });
+    },
+    // 
+    searchProducts: function searchProducts() {
+      var _this2 = this;
+      console.log('検索結果を表示します');
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/products/search').then(function (response) {
+        console.log('APIからのレスポンス:', response.data);
+      })["catch"](function (error) {
+        console.error('検索失敗:', error.response.data);
+        _this2.errors = error.response.data;
       });
     }
   }
@@ -7668,6 +7772,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -7675,37 +7784,37 @@ __webpack_require__.r(__webpack_exports__);
     return {
       product: {},
       categories: [],
-      isPurchased: false,
-      // 購入ボタン
       errors: null
     };
+  },
+  computed: {
+    // ログインユーザーかどうか
+    isLogin: function isLogin() {
+      return this.$store.getters['auth/check'];
+    },
+    // ログインユーザーのIDを取得
+    loginId: function loginId() {
+      if (this.isLogin) {
+        return this.$store.getters['auth/id'];
+      } else {
+        return null;
+      }
+    }
   },
   created: function created() {
     this.productId = this.$route.params.productId; // ルートからproductIdを取得
     this.getProduct(); // 商品情報を取得
-    this.getPurchase(); // 購入状態を取得
   },
   methods: {
-    // 商品の購入状態の取得
-    getPurchase: function getPurchase() {
-      var _this = this;
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/user/products/purchase/' + this.productId).then(function (response) {
-        _this.isPurchased = response.data.status;
-        console.log('APIからのレスポンス:', response.data);
-      })["catch"](function (error) {
-        console.error('購入状態取得失敗:', error.response.data);
-        _this.errors = error.response.data;
-      });
-    },
     // 商品情報をサーバーから取得
     getProduct: function getProduct() {
-      var _this2 = this;
+      var _this = this;
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/products/' + this.productId).then(function (response) {
-        _this2.product = response.data.product;
+        _this.product = response.data.product;
         console.log('APIからのレスポンス:', response.data);
       })["catch"](function (error) {
         console.error('商品情報取得失敗:', error.response.data);
-        _this2.errors = error.response.data;
+        _this.errors = error.response.data;
       });
     },
     // カテゴリIDからカテゴリ名を取得するメソッド
@@ -7719,31 +7828,55 @@ __webpack_require__.r(__webpack_exports__);
     },
     // 商品購入するメソッド
     purchaseProduct: function purchaseProduct() {
-      var _this3 = this;
+      var _this2 = this;
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/user/products/purchase/' + this.productId).then(function (response) {
         console.log('APIからのレスポンス:', response.data);
-        _this3.getPurchase(); // 購入状態を更新（「購入する」から「購入をキャンセル」へ変更）
+        _this2.getPurchase(); // 購入状態を更新（「購入する」から「購入をキャンセル」へ変更）
       })["catch"](function (error) {
         console.error('商品購入処理失敗:', error.response.data);
-        _this3.errors = error.response.data.errors;
+        _this2.errors = error.response.data.errors;
       });
     },
     // 商品購入キャンセルするメソッド
     cancelPurchase: function cancelPurchase() {
-      var _this4 = this;
+      var _this3 = this;
       // 購入キャンセルを押した際にバックエンドに通知リクエストを送信する
       axios__WEBPACK_IMPORTED_MODULE_0___default.a["delete"]('/api/user/products/purchase/cancel/' + this.productId).then(function (response) {
         console.log('APIからのレスポンス:', response.data);
-        _this4.getPurchase(); // 購入状態を更新（「購入キャンセル」から「購入する」へ変更）
+        _this3.getPurchase(); // 購入状態を更新（「購入キャンセル」から「購入する」へ変更）
       })["catch"](function (error) {
         console.error('商品購入キャンセル処理失敗:', error.response.data);
-        _this4.errors = error.response.data.errors;
+        _this3.errors = error.response.data.errors;
       });
     },
     // Twitterのシェアボタン
     twitterShare: function twitterShare() {
       var shareURL = 'https://twitter.com/intent/tweet?text=' + "haiki share 商品をシェアする" + "%20%23haikishare" + '&url=' + "https://haikishare.com/user/products/detail/" + this.productId;
       location.href = shareURL;
+    },
+    // 商品お気に入り登録
+    productLike: function productLike(product) {
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/user/like/' + product.id).then(function (response) {
+        console.log(product.id, 'の商品をお気に入り登録しました。');
+        product.liked = true;
+        console.log('this.likedは、', product.liked);
+        product.likes_count++;
+        console.log('product.likes_countは、', product.likes_count);
+      })["catch"](function (error) {
+        console.error('商品のお気に入り登録失敗:', error);
+      });
+    },
+    // 商品お気に入り解除
+    productUnlike: function productUnlike(product) {
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/user/unlike/' + product.id).then(function (response) {
+        console.log(product.id, 'の商品をお気に入り解除しました。');
+        product.liked = false;
+        console.log('product.likedは、', product.liked);
+        product.likes_count--;
+        console.log('product.likes_count', product.likes_count);
+      })["catch"](function (error) {
+        console.error('商品のお気に入り解除失敗:', error);
+      });
     }
   }
 });
@@ -48621,103 +48754,112 @@ var render = function () {
         [
           _c("h1", { staticClass: "c-title" }, [_vm._v("商品一覧")]),
           _vm._v(" "),
-          _c("div", { staticClass: "p-container" }, [
-            _c(
-              "ul",
-              { staticClass: "p-product__list" },
-              _vm._l(_vm.products.data, function (product) {
-                return _c(
-                  "li",
-                  { key: product.id, staticClass: "p-product__item" },
-                  [
-                    _c("h3", { staticClass: "c-product__name" }, [
-                      _vm._v(_vm._s(product.name)),
-                    ]),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      { staticClass: "p-product__picture--container" },
-                      [
-                        _c("img", {
-                          staticClass: "c-product__picture",
-                          attrs: {
-                            src: _vm.getProductPicturePath(product),
-                            alt: "Product Image",
-                          },
-                        }),
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c("div", [
+          _c(
+            "div",
+            { staticClass: "p-container" },
+            [
+              _c(
+                "ul",
+                { staticClass: "p-product__list" },
+                _vm._l(_vm.products.data, function (product) {
+                  return _c(
+                    "li",
+                    { key: product.id, staticClass: "p-product__item" },
+                    [
+                      _c("h3", { staticClass: "c-product__name" }, [
+                        _vm._v(_vm._s(product.name)),
+                      ]),
+                      _vm._v(" "),
                       _c(
-                        "label",
-                        {
-                          directives: [
-                            {
-                              name: "show",
-                              rawName: "v-show",
-                              value: product.is_purchased,
-                              expression: "product.is_purchased",
-                            },
-                          ],
-                          staticClass: "c-label__purchase",
-                        },
-                        [_vm._v("購入済み")]
-                      ),
-                    ]),
-                    _vm._v(" "),
-                    _c("div", [
-                      !product.liked
-                        ? _c("i", {
-                            staticClass: "far fa-heart",
-                            on: {
-                              click: function ($event) {
-                                _vm.productLike(product)
-                              },
-                            },
-                          })
-                        : _c("i", {
-                            staticClass: "fas fa-heart",
-                            on: {
-                              click: function ($event) {
-                                _vm.productUnlike(product)
-                              },
+                        "div",
+                        { staticClass: "p-product__picture--container" },
+                        [
+                          _c("img", {
+                            staticClass: "c-product__picture",
+                            attrs: {
+                              src: _vm.getProductPicturePath(product),
+                              alt: "Product Image",
                             },
                           }),
+                        ]
+                      ),
                       _vm._v(" "),
-                      _c("span", [
-                        _vm._v("いいね" + _vm._s(product.likes_count)),
-                      ]),
-                    ]),
-                    _vm._v(" "),
-                    _c("p", { staticClass: "c-product__price" }, [
-                      _vm._v("価格 " + _vm._s(product.price) + " 円"),
-                    ]),
-                    _vm._v(" "),
-                    _c("p", { staticClass: "c-product__date" }, [
-                      _vm._v("賞味期限 " + _vm._s(product.expiration_date)),
-                    ]),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      { staticClass: "p-product__button" },
-                      [
+                      _c("div", [
                         _c(
-                          "router-link",
+                          "label",
                           {
-                            staticClass: "c-button",
-                            attrs: { to: _vm.getProductDetailLink(product.id) },
+                            directives: [
+                              {
+                                name: "show",
+                                rawName: "v-show",
+                                value: product.is_purchased,
+                                expression: "product.is_purchased",
+                              },
+                            ],
+                            staticClass: "c-label__purchase",
                           },
-                          [_vm._v("詳細を見る")]
+                          [_vm._v("購入済み")]
                         ),
-                      ],
-                      1
-                    ),
-                  ]
-                )
-              })
-            ),
-          ]),
+                      ]),
+                      _vm._v(" "),
+                      _c("div", [
+                        !product.liked
+                          ? _c("i", {
+                              staticClass: "far fa-heart",
+                              on: {
+                                click: function ($event) {
+                                  _vm.productLike(product)
+                                },
+                              },
+                            })
+                          : _c("i", {
+                              staticClass: "fas fa-heart",
+                              on: {
+                                click: function ($event) {
+                                  _vm.productUnlike(product)
+                                },
+                              },
+                            }),
+                        _vm._v(" "),
+                        _c("span", [
+                          _vm._v("いいね" + _vm._s(product.likes_count)),
+                        ]),
+                      ]),
+                      _vm._v(" "),
+                      _c("p", { staticClass: "c-product__price" }, [
+                        _vm._v("価格 " + _vm._s(product.price) + " 円"),
+                      ]),
+                      _vm._v(" "),
+                      _c("p", { staticClass: "c-product__date" }, [
+                        _vm._v("賞味期限 " + _vm._s(product.expiration_date)),
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "p-product__button" },
+                        [
+                          _c(
+                            "router-link",
+                            {
+                              staticClass: "c-button",
+                              attrs: {
+                                to: _vm.getProductDetailLink(product.id),
+                              },
+                            },
+                            [_vm._v("詳細を見る")]
+                          ),
+                        ],
+                        1
+                      ),
+                    ]
+                  )
+                })
+              ),
+              _vm._v(" "),
+              _c("search-component"),
+            ],
+            1
+          ),
           _vm._v(" "),
           _c("pagination-component", {
             attrs: { current_page: _vm.currentPage, last_page: _vm.lastPage },
@@ -48730,6 +48872,135 @@ var render = function () {
   ])
 }
 var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/SearchComponent.vue?vue&type=template&id=89b0c3cc":
+/*!*****************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/SearchComponent.vue?vue&type=template&id=89b0c3cc ***!
+  \*****************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function () {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("section", { staticClass: "l-side" }, [
+    _c("div", { staticClass: "p-search" }, [
+      _c("div", { staticClass: "p-search__form" }, [
+        _c("h1", { staticClass: "c-title" }, [_vm._v("商品検索")]),
+        _vm._v(" "),
+        _c("div", { staticClass: "p-sub__container" }, [
+          _c(
+            "form",
+            {
+              on: {
+                submit: function ($event) {
+                  $event.preventDefault()
+                  return _vm.searchProducts($event)
+                },
+              },
+            },
+            [
+              _c("table", [
+                _c("tr", [
+                  _vm._m(0),
+                  _vm._v(" "),
+                  _c("td", [
+                    _c(
+                      "select",
+                      [
+                        _c("option", { attrs: { value: "" } }, [
+                          _vm._v("都道府県を選択してください"),
+                        ]),
+                        _vm._v(" "),
+                        _vm._l(_vm.prefectures, function (prefecture) {
+                          return _c("option", { key: prefecture }, [
+                            _vm._v(_vm._s(prefecture)),
+                          ])
+                        }),
+                      ],
+                      2
+                    ),
+                  ]),
+                ]),
+                _vm._v(" "),
+                _vm._m(1),
+                _vm._v(" "),
+                _vm._m(2),
+              ]),
+              _vm._v(" "),
+              _vm._m(3),
+            ]
+          ),
+        ]),
+      ]),
+    ]),
+  ])
+}
+var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("th", [_c("label", [_vm._v("都道府県")])])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("tr", [
+      _c("th", [_c("label", [_vm._v("価格")])]),
+      _vm._v(" "),
+      _c("td", [
+        _c("input", {
+          attrs: { type: "text", name: "minprice", maxlength: "9", value: "" },
+        }),
+        _vm._v("円〜\n                                "),
+        _c("input", {
+          attrs: { type: "text", name: "maxprice", maxlength: "9", value: "" },
+        }),
+        _vm._v("円\n                            "),
+      ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("tr", [
+      _c("th", [_c("label", [_vm._v("賞味期限切れかどうか")])]),
+      _vm._v(" "),
+      _c("td", [
+        _c("div", [
+          _c("input", { attrs: { type: "radio", value: "true" } }),
+          _c("label", [_vm._v("賞味期限切れ")]),
+          _vm._v(" "),
+          _c("input", { attrs: { type: "radio", value: "false" } }),
+          _c("label", [_vm._v("賞味期限内")]),
+        ]),
+      ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "p-search__button" }, [
+      _c("button", { staticClass: "c-button", attrs: { type: "submit" } }, [
+        _vm._v("検索"),
+      ]),
+    ])
+  },
+]
 render._withStripped = true
 
 
@@ -49587,6 +49858,28 @@ var render = function () {
             ]),
           ]),
           _vm._v(" "),
+          _c("div", [
+            !_vm.product.liked
+              ? _c("i", {
+                  staticClass: "far fa-heart",
+                  on: {
+                    click: function ($event) {
+                      _vm.productLike(_vm.product)
+                    },
+                  },
+                })
+              : _c("i", {
+                  staticClass: "fas fa-heart",
+                  on: {
+                    click: function ($event) {
+                      _vm.productUnlike(_vm.product)
+                    },
+                  },
+                }),
+            _vm._v(" "),
+            _c("span", [_vm._v("いいね" + _vm._s(_vm.product.likes_count))]),
+          ]),
+          _vm._v(" "),
           _c("div", { staticClass: "twitter_share" }, [
             _c("button", { on: { click: _vm.twitterShare } }, [
               _vm._v("ツイッターでシェアする"),
@@ -49594,7 +49887,7 @@ var render = function () {
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "p-product__button" }, [
-            _vm.isPurchased === "購入する"
+            _vm.product.is_purchased === false
               ? _c(
                   "button",
                   {
@@ -49603,7 +49896,8 @@ var render = function () {
                   },
                   [_vm._v("購入する")]
                 )
-              : _vm.isPurchased === "キャンセルする"
+              : _vm.product.is_purchased === true &&
+                _vm.product.purchased_id === _vm.loginId
               ? _c(
                   "button",
                   {
@@ -68231,6 +68525,75 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/SearchComponent.vue":
+/*!*****************************************************!*\
+  !*** ./resources/js/components/SearchComponent.vue ***!
+  \*****************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _SearchComponent_vue_vue_type_template_id_89b0c3cc__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./SearchComponent.vue?vue&type=template&id=89b0c3cc */ "./resources/js/components/SearchComponent.vue?vue&type=template&id=89b0c3cc");
+/* harmony import */ var _SearchComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./SearchComponent.vue?vue&type=script&lang=js */ "./resources/js/components/SearchComponent.vue?vue&type=script&lang=js");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _SearchComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"],
+  _SearchComponent_vue_vue_type_template_id_89b0c3cc__WEBPACK_IMPORTED_MODULE_0__["render"],
+  _SearchComponent_vue_vue_type_template_id_89b0c3cc__WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/SearchComponent.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/SearchComponent.vue?vue&type=script&lang=js":
+/*!*****************************************************************************!*\
+  !*** ./resources/js/components/SearchComponent.vue?vue&type=script&lang=js ***!
+  \*****************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_SearchComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./SearchComponent.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/SearchComponent.vue?vue&type=script&lang=js");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_SearchComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/SearchComponent.vue?vue&type=template&id=89b0c3cc":
+/*!***********************************************************************************!*\
+  !*** ./resources/js/components/SearchComponent.vue?vue&type=template&id=89b0c3cc ***!
+  \***********************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SearchComponent_vue_vue_type_template_id_89b0c3cc__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./SearchComponent.vue?vue&type=template&id=89b0c3cc */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/SearchComponent.vue?vue&type=template&id=89b0c3cc");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SearchComponent_vue_vue_type_template_id_89b0c3cc__WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SearchComponent_vue_vue_type_template_id_89b0c3cc__WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/components/TermsComponent.vue":
 /*!****************************************************!*\
   !*** ./resources/js/components/TermsComponent.vue ***!
@@ -69196,6 +69559,9 @@ var getters = {
   },
   role: function role(state) {
     return state.user ? state.user.role : '';
+  },
+  id: function id(state) {
+    return state.user ? state.user.id : '';
   }
 };
 var mutations = {
