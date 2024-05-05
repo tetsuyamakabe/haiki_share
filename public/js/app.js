@@ -7123,6 +7123,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
 
 
  // ページネーションコンポーネント
@@ -7135,9 +7138,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     return {
       products: [],
       currentPage: 1,
-      lastPage: 1,
-      liked: false,
-      likeCount: 0
+      lastPage: 1
     };
   },
   computed: {
@@ -7236,26 +7237,24 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
     // 商品お気に入り登録
     productLike: function productLike(product) {
-      var _this3 = this;
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/user/like/' + product.id).then(function (response) {
         console.log(product.id, 'の商品をお気に入り登録しました。');
-        _this3.liked = true;
-        console.log('product.likedは、', product.liked);
-        product.likeCount = response.data.likeCount;
-        console.log('product.likeCountは、', product.likeCount);
+        product.liked = true;
+        console.log('this.likedは、', product.liked);
+        product.likes_count++;
+        console.log('product.likes_countは、', product.likes_count);
       })["catch"](function (error) {
         console.error('商品のお気に入り登録失敗:', error);
       });
     },
     // 商品お気に入り解除
     productUnlike: function productUnlike(product) {
-      var _this4 = this;
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/user/unlike/' + product.id).then(function (response) {
-        console.log('お気に入り解除しました。');
-        _this4.liked = false;
+        console.log(product.id, 'の商品をお気に入り解除しました。');
+        product.liked = false;
         console.log('product.likedは、', product.liked);
-        product.likeCount = response.data.likeCount;
-        console.log('product.likeCountは、', product.likeCount);
+        product.likes_count--;
+        console.log('product.likes_count', product.likes_count);
       })["catch"](function (error) {
         console.error('商品のお気に入り解除失敗:', error);
       });
@@ -48650,7 +48649,25 @@ var render = function () {
                     ),
                     _vm._v(" "),
                     _c("div", [
-                      !_vm.liked
+                      _c(
+                        "label",
+                        {
+                          directives: [
+                            {
+                              name: "show",
+                              rawName: "v-show",
+                              value: product.is_purchased,
+                              expression: "product.is_purchased",
+                            },
+                          ],
+                          staticClass: "c-label__purchase",
+                        },
+                        [_vm._v("購入済み")]
+                      ),
+                    ]),
+                    _vm._v(" "),
+                    _c("div", [
+                      !product.liked
                         ? _c("i", {
                             staticClass: "far fa-heart",
                             on: {
@@ -48669,7 +48686,7 @@ var render = function () {
                           }),
                       _vm._v(" "),
                       _c("span", [
-                        _vm._v("いいね" + _vm._s(product.likeCount)),
+                        _vm._v("いいね" + _vm._s(product.likes_count)),
                       ]),
                     ]),
                     _vm._v(" "),

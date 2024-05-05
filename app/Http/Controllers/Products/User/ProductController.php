@@ -98,19 +98,6 @@ class ProductController extends Controller
         }
     }
 
-    // 商品のお気に入り情報の取得（お気に入り数の取得）
-    public function getLike(Request $request, $productId)
-    {
-        $userId = auth()->id();
-        $like = Like::where('user_id', $userId)->where('product_id', $productId)->first();
-
-        if ($like) {
-            return response()->json(['like' => true]);
-        } else {
-            return response()->json(['like' => false]);
-        }
-    }
-
     // 商品お気に入り登録処理
     public function likeProduct(Request $request, $productId)
     {
@@ -120,9 +107,8 @@ class ProductController extends Controller
             return response()->json(['message' => 'すでにお気に入り登録されています。'], 400);
         }
         $like = Like::create(['product_id' => $productId, 'user_id' => $userId]);
-        $likeCount = Like::where('product_id', $productId)->count();
 
-        return response()->json(['likeCount' => $likeCount, 'message' => '商品をお気に入り登録しました。']);
+        return response()->json(['message' => '商品をお気に入り登録しました。']);
     }
 
     // 商品お気に入り解除処理
@@ -134,8 +120,7 @@ class ProductController extends Controller
             return response()->json(['message' => 'お気に入り登録が見つかりません。'], 400);
         }
         $likedProduct->delete();
-        $likeCount = Like::where('product_id', $productId)->count();
 
-        return response()->json(['likeCount' => $likeCount, 'message' => '商品のお気に入り登録を解除しました。']);
+        return response()->json(['message' => '商品のお気に入り登録を解除しました。']);
     }
 }
