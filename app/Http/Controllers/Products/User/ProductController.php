@@ -145,7 +145,7 @@ class ProductController extends Controller
                 $query->where('expiration_date', '>=', $today); // 賞味期限内の商品を検索
             }
         }
-        $products = $query->get();
+        $products = $query->paginate(4);
 
         return response()->json(['message' => '検索結果を表示します。', 'products' => $products]);
     }

@@ -52,12 +52,11 @@ import axios from 'axios';
 export default {
     data() {
         return {
-            products: [],
             prefectures: [],
-            selectedPrefecture: '', // 選択された都道府県
+            selectedPrefecture: '', // 都道府県
             minPrice: '', // 最小価格
             maxPrice: '', // 最大価格
-            isExpired: '' // 賞味期限切れかどうか
+            isExpired: false // 賞味期限切れかどうか
         };
     },
 
@@ -82,20 +81,13 @@ export default {
         submitForm() {
             console.log('検索結果を表示します');
             const requestBody = {
-                prefecture: this.selectedPrefecture, // 選択された都道府県
-                minprice: this.minPrice, // 最小価格
-                maxprice: this.maxPrice, // 最大価格
-                expiration_date: this.isExpired === 'true' ? 'expired' : 'not_expired' // trueの場合はexpired、falseの場合はnot_expiredを送信
+                prefecture: this.selectedPrefecture,
+                minprice: this.minPrice,
+                maxprice: this.maxPrice,
+                expiration_date: this.isExpired ? 'expired' : 'not_expired'
             };
-            axios.post('/api/products/search', requestBody).then(response => {
-                console.log('APIからのレスポンス:', response.data);
-                this.products = response.data.products;
-                this.$emit("search", this.products); // 親コンポーネントに検索結果を伝達
-            }).catch(error => {
-                console.error('検索失敗:', error.response.data);
-                this.errors = error.response.data;
-            });
-        },
+            this.$emit('search', requestBody); // 親コンポーネントに検索イベントを発火
+        }
     }
 }
 </script>

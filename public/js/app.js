@@ -7206,7 +7206,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     getProducts: function getProducts(page) {
       var _this2 = this;
       return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
-        var result, _products;
+        var result, products;
         return _regeneratorRuntime().wrap(function _callee$(_context) {
           while (1) switch (_context.prev = _context.next) {
             case 0:
@@ -7219,11 +7219,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               return axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/products/' + "?page=".concat(_this2.currentPage));
             case 6:
               result = _context.sent;
-              _products = result.data;
-              console.log('APIの結果は、', _products);
-              _this2.products = _products.products;
+              products = result.data;
+              console.log('APIの結果は、', products);
+              _this2.products = products.products;
               console.log('ページネーションメソッドのproductsは、', _this2.products);
-              _this2.lastPage = _products.products.last_page;
+              _this2.lastPage = products.products.last_page;
               console.log('this.lastPageは、', _this2.lastPage);
               _context.next = 19;
               break;
@@ -7264,9 +7264,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       });
     },
     searchResult: function searchResult(search) {
+      var _this3 = this;
       console.log('searchResult()メソッドです');
-      this.products = products.search;
-      console.log('this.productsは、', this.products);
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/products/search', search).then(function (response) {
+        console.log('APIからのレスポンス:', response.data);
+        _this3.products = response.data;
+        console.log('this.productsは、', _this3.products);
+      })["catch"](function (error) {
+        console.error('検索失敗:', error.response.data);
+        _this3.errors = error.response.data;
+      });
     }
   }
 });
@@ -7337,7 +7344,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      products: [],
       prefectures: [],
       selectedPrefecture: '',
       // 選択された都道府県
@@ -7345,7 +7351,7 @@ __webpack_require__.r(__webpack_exports__);
       // 最小価格
       maxPrice: '',
       // 最大価格
-      isExpired: '' // 賞味期限切れかどうか
+      isExpired: false // 賞味期限切れかどうか
     };
   },
   created: function created() {
@@ -7366,25 +7372,15 @@ __webpack_require__.r(__webpack_exports__);
     },
     // 検索フォームの値をサーバー側に送信するメソッド
     submitForm: function submitForm() {
-      var _this2 = this;
       console.log('検索結果を表示します');
       var requestBody = {
         prefecture: this.selectedPrefecture,
-        // 選択された都道府県
         minprice: this.minPrice,
-        // 最小価格
         maxprice: this.maxPrice,
-        // 最大価格
-        expiration_date: this.isExpired === 'true' ? 'expired' : 'not_expired' // trueの場合はexpired、falseの場合はnot_expiredを送信
+        expiration_date: this.isExpired ? 'expired' : 'not_expired'
       };
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/products/search', requestBody).then(function (response) {
-        console.log('APIからのレスポンス:', response.data);
-        _this2.products = response.data.products;
-        _this2.$emit("search", _this2.products); // 親コンポーネントに検索結果を伝達
-      })["catch"](function (error) {
-        console.error('検索失敗:', error.response.data);
-        _this2.errors = error.response.data;
-      });
+      // 親コンポーネントに検索イベントを発火
+      this.$emit('search', requestBody);
     }
   }
 });
