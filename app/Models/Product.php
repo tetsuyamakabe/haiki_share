@@ -2,9 +2,11 @@
 
 namespace App\Models;
 
-use App\Models\User;
+use App\Models\Like;
 use App\Models\Category;
+use App\Models\Purchase;
 use App\Models\Convenience;
+use App\Models\ProductPicture;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -25,7 +27,7 @@ class Product extends Model
     // コンビニモデルとの関連付け（多対一の関係）
     public function convenience()
     {
-        return $this->belongsTo(Convenience::class);
+        return $this->belongsTo(Convenience::class, 'convenience_store_id');
     }
 
     // 商品画像モデルとの関連付け（一対多の関係）

@@ -7206,7 +7206,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     getProducts: function getProducts(page) {
       var _this2 = this;
       return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
-        var result, products;
+        var result, _products;
         return _regeneratorRuntime().wrap(function _callee$(_context) {
           while (1) switch (_context.prev = _context.next) {
             case 0:
@@ -7219,11 +7219,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               return axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/products/' + "?page=".concat(_this2.currentPage));
             case 6:
               result = _context.sent;
-              products = result.data;
-              console.log('productsは、', products);
-              _this2.products = products.products;
-              console.log('productsは、', _this2.products);
-              _this2.lastPage = products.products.last_page;
+              _products = result.data;
+              console.log('APIの結果は、', _products);
+              _this2.products = _products.products;
+              console.log('ページネーションメソッドのproductsは、', _this2.products);
+              _this2.lastPage = _products.products.last_page;
               console.log('this.lastPageは、', _this2.lastPage);
               _context.next = 19;
               break;
@@ -7262,6 +7262,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       })["catch"](function (error) {
         console.error('商品のお気に入り解除失敗:', error);
       });
+    },
+    searchResult: function searchResult(search) {
+      console.log('searchResult()メソッドです');
+      this.products = products.search;
+      console.log('this.productsは、', this.products);
     }
   }
 });
@@ -7333,7 +7338,14 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       products: [],
-      prefectures: []
+      prefectures: [],
+      selectedPrefecture: '',
+      // 選択された都道府県
+      minPrice: '',
+      // 最小価格
+      maxPrice: '',
+      // 最大価格
+      isExpired: '' // 賞味期限切れかどうか
     };
   },
   created: function created() {
@@ -7352,12 +7364,23 @@ __webpack_require__.r(__webpack_exports__);
         _this.errors = error.response.data;
       });
     },
-    // 
-    searchProducts: function searchProducts() {
+    // 検索フォームの値をサーバー側に送信するメソッド
+    submitForm: function submitForm() {
       var _this2 = this;
       console.log('検索結果を表示します');
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/products/search').then(function (response) {
+      var requestBody = {
+        prefecture: this.selectedPrefecture,
+        // 選択された都道府県
+        minprice: this.minPrice,
+        // 最小価格
+        maxprice: this.maxPrice,
+        // 最大価格
+        expiration_date: this.isExpired === 'true' ? 'expired' : 'not_expired' // trueの場合はexpired、falseの場合はnot_expiredを送信
+      };
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/products/search', requestBody).then(function (response) {
         console.log('APIからのレスポンス:', response.data);
+        _this2.products = response.data.products;
+        _this2.$emit("search", _this2.products); // 親コンポーネントに検索結果を伝達
       })["catch"](function (error) {
         console.error('検索失敗:', error.response.data);
         _this2.errors = error.response.data;
@@ -48856,7 +48879,7 @@ var render = function () {
                 })
               ),
               _vm._v(" "),
-              _c("search-component"),
+              _c("search-component", { on: { search: _vm.searchResult } }),
             ],
             1
           ),
@@ -48905,7 +48928,7 @@ var render = function () {
               on: {
                 submit: function ($event) {
                   $event.preventDefault()
-                  return _vm.searchProducts($event)
+                  return _vm.submitForm($event)
                 },
               },
             },
@@ -48917,6 +48940,31 @@ var render = function () {
                   _c("td", [
                     _c(
                       "select",
+                      {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.selectedPrefecture,
+                            expression: "selectedPrefecture",
+                          },
+                        ],
+                        on: {
+                          change: function ($event) {
+                            var $$selectedVal = Array.prototype.filter
+                              .call($event.target.options, function (o) {
+                                return o.selected
+                              })
+                              .map(function (o) {
+                                var val = "_value" in o ? o._value : o.value
+                                return val
+                              })
+                            _vm.selectedPrefecture = $event.target.multiple
+                              ? $$selectedVal
+                              : $$selectedVal[0]
+                          },
+                        },
+                      },
                       [
                         _c("option", { attrs: { value: "" } }, [
                           _vm._v("都道府県を選択してください"),
@@ -48933,9 +48981,100 @@ var render = function () {
                   ]),
                 ]),
                 _vm._v(" "),
-                _vm._m(1),
+                _c("tr", [
+                  _vm._m(1),
+                  _vm._v(" "),
+                  _c("td", [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.minPrice,
+                          expression: "minPrice",
+                        },
+                      ],
+                      attrs: { type: "text", name: "minprice", maxlength: "9" },
+                      domProps: { value: _vm.minPrice },
+                      on: {
+                        input: function ($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.minPrice = $event.target.value
+                        },
+                      },
+                    }),
+                    _vm._v("円〜\n                                "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.maxPrice,
+                          expression: "maxPrice",
+                        },
+                      ],
+                      attrs: { type: "text", name: "maxprice", maxlength: "9" },
+                      domProps: { value: _vm.maxPrice },
+                      on: {
+                        input: function ($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.maxPrice = $event.target.value
+                        },
+                      },
+                    }),
+                    _vm._v("円\n                            "),
+                  ]),
+                ]),
                 _vm._v(" "),
-                _vm._m(2),
+                _c("tr", [
+                  _vm._m(2),
+                  _vm._v(" "),
+                  _c("td", [
+                    _c("div", [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.isExpired,
+                            expression: "isExpired",
+                          },
+                        ],
+                        attrs: { type: "radio", value: "true" },
+                        domProps: { checked: _vm._q(_vm.isExpired, "true") },
+                        on: {
+                          change: function ($event) {
+                            _vm.isExpired = "true"
+                          },
+                        },
+                      }),
+                      _c("label", [_vm._v("賞味期限切れ")]),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.isExpired,
+                            expression: "isExpired",
+                          },
+                        ],
+                        attrs: { type: "radio", value: "false" },
+                        domProps: { checked: _vm._q(_vm.isExpired, "false") },
+                        on: {
+                          change: function ($event) {
+                            _vm.isExpired = "false"
+                          },
+                        },
+                      }),
+                      _c("label", [_vm._v("賞味期限内")]),
+                    ]),
+                  ]),
+                ]),
               ]),
               _vm._v(" "),
               _vm._m(3),
@@ -48957,38 +49096,13 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("tr", [
-      _c("th", [_c("label", [_vm._v("価格")])]),
-      _vm._v(" "),
-      _c("td", [
-        _c("input", {
-          attrs: { type: "text", name: "minprice", maxlength: "9", value: "" },
-        }),
-        _vm._v("円〜\n                                "),
-        _c("input", {
-          attrs: { type: "text", name: "maxprice", maxlength: "9", value: "" },
-        }),
-        _vm._v("円\n                            "),
-      ]),
-    ])
+    return _c("th", [_c("label", [_vm._v("価格")])])
   },
   function () {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("tr", [
-      _c("th", [_c("label", [_vm._v("賞味期限切れかどうか")])]),
-      _vm._v(" "),
-      _c("td", [
-        _c("div", [
-          _c("input", { attrs: { type: "radio", value: "true" } }),
-          _c("label", [_vm._v("賞味期限切れ")]),
-          _vm._v(" "),
-          _c("input", { attrs: { type: "radio", value: "false" } }),
-          _c("label", [_vm._v("賞味期限内")]),
-        ]),
-      ]),
-    ])
+    return _c("th", [_c("label", [_vm._v("賞味期限切れかどうか")])])
   },
   function () {
     var _vm = this
