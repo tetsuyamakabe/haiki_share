@@ -25,6 +25,7 @@
                             </div>
                         </li>
                     </ul>
+                    <!-- 絞り込み検索 -->
                     <search-component @search="searchResult" />
                 </div>
                 <!-- ページネーション -->
@@ -129,9 +130,12 @@ export default {
         searchResult(search) {
             console.log('searchResult()メソッドです');
             axios.post('/api/products/search', search).then(response => {
+                const result = response.data;
                 console.log('APIからのレスポンス:', response.data);
-                this.products = response.data;
-                console.log('this.productsは、', this.products);
+                this.products = result.products;
+                this.lastPage = result.products.last_page;
+                console.log('ページネーションメソッドのproductsは、', this.products);
+                console.log('this.lastPageは、', this.lastPage);
             }).catch(error => {
                 console.error('検索失敗:', error.response.data);
                 this.errors = error.response.data;

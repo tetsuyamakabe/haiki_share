@@ -84,7 +84,7 @@ export default {
                 prefecture: this.selectedPrefecture,
                 minprice: this.minPrice,
                 maxprice: this.maxPrice,
-                expiration_date: this.isExpired ? 'expired' : 'not_expired'
+                expiration_date: this.isExpired,
             };
             this.$emit('search', requestBody); // 親コンポーネントに検索イベントを発火
         }

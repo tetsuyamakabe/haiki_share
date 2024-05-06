@@ -7239,6 +7239,25 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee, null, [[0, 15]]);
       }))();
     },
+    // 商品絞り込み検索
+    searchResult: function searchResult(search, page) {
+      var _this3 = this;
+      this.currentPage = page;
+      console.log('pageは、', page);
+      console.log('this.currentPageは、', this.currentPage);
+      console.log('searchResult()メソッドです');
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/products/search/' + "?page=".concat(this.currentPage), search).then(function (response) {
+        var result = response.data;
+        console.log('APIからのレスポンス:', response.data);
+        _this3.products = result.products;
+        _this3.lastPage = result.products.last_page;
+        console.log('ページネーションメソッドのproductsは、', _this3.products);
+        console.log('this.lastPageは、', _this3.lastPage);
+      })["catch"](function (error) {
+        console.error('検索失敗:', error.response.data);
+        _this3.errors = error.response.data;
+      });
+    },
     // 商品お気に入り登録
     productLike: function productLike(product) {
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/user/like/' + product.id).then(function (response) {
@@ -7261,18 +7280,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         console.log('product.likes_count', product.likes_count);
       })["catch"](function (error) {
         console.error('商品のお気に入り解除失敗:', error);
-      });
-    },
-    searchResult: function searchResult(search) {
-      var _this3 = this;
-      console.log('searchResult()メソッドです');
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/products/search', search).then(function (response) {
-        console.log('APIからのレスポンス:', response.data);
-        _this3.products = response.data;
-        console.log('this.productsは、', _this3.products);
-      })["catch"](function (error) {
-        console.error('検索失敗:', error.response.data);
-        _this3.errors = error.response.data;
       });
     }
   }
@@ -7346,7 +7353,7 @@ __webpack_require__.r(__webpack_exports__);
     return {
       prefectures: [],
       selectedPrefecture: '',
-      // 選択された都道府県
+      // 都道府県
       minPrice: '',
       // 最小価格
       maxPrice: '',
@@ -7377,10 +7384,9 @@ __webpack_require__.r(__webpack_exports__);
         prefecture: this.selectedPrefecture,
         minprice: this.minPrice,
         maxprice: this.maxPrice,
-        expiration_date: this.isExpired ? 'expired' : 'not_expired'
+        expiration_date: this.isExpired
       };
-      // 親コンポーネントに検索イベントを発火
-      this.$emit('search', requestBody);
+      this.$emit('search', requestBody); // 親コンポーネントに検索イベントを発火
     }
   }
 });
