@@ -125,6 +125,19 @@ export default {
             }
         },
 
+        // 商品絞り込み検索
+        searchResult(search) {
+            console.log('searchResult()メソッドです');
+            axios.post('/api/products/search', search).then(response => {
+                console.log('APIからのレスポンス:', response.data);
+                this.products = response.data;
+                console.log('this.productsは、', this.products);
+            }).catch(error => {
+                console.error('検索失敗:', error.response.data);
+                this.errors = error.response.data;
+            });
+        },
+
         // 商品お気に入り登録
         productLike(product) {
             axios.post('/api/user/like/' + product.id).then(response => {
@@ -149,12 +162,6 @@ export default {
             }).catch(error => {
                 console.error('商品のお気に入り解除失敗:', error);
             });
-        },
-
-        searchResult(search) {
-            console.log('searchResult()メソッドです');
-            this.products = search;
-            console.log('this.productsは、', this.products);
         },
     },
 }
