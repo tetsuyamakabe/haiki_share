@@ -26,15 +26,14 @@ class Convenience extends Model
     // 住所モデルとの関連付け（一対一の関係）
     public function address()
     {
-        return $this->belongsTo(Address::class);
+        return $this->belongsTo(Address::class, 'address_id');
     }
 
     // 商品モデルとの関連付け（一対多の関係）
     public function products()
     {
-        return $this->hasMany(Product::class);
+        return $this->hasMany(Product::class, 'convenience_store_id');
     }
-
 }
 
 // mysql> desc convenience_stores;

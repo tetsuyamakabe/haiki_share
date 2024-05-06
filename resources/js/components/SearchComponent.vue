@@ -4,12 +4,12 @@
             <div class="p-search__form">
                 <h1 class="c-title">商品検索</h1>
                 <div class="p-sub__container">
-                    <form @submit.prevent="searchProducts">
+                    <form @submit.prevent="submitForm">
                         <table>
                             <tr>
                                 <th><label>都道府県</label></th>
                                 <td>
-                                    <select>
+                                    <select v-model="selectedPrefecture">
                                         <option value="">都道府県を選択してください</option>
                                         <option v-for="prefecture in prefectures" :key="prefecture">{{ prefecture }}</option>
                                     </select>
@@ -19,8 +19,8 @@
                             <tr>
                                 <th><label>価格</label></th>
                                 <td>
-                                    <input type="text" name="minprice" maxlength="9" value="">円〜
-                                    <input type="text" name="maxprice" maxlength="9" value="">円
+                                    <input type="text" name="minprice" maxlength="9" v-model="minPrice">円〜
+                                    <input type="text" name="maxprice" maxlength="9" v-model="maxPrice">円
                                 </td>
                             </tr>
                 
@@ -28,8 +28,8 @@
                                 <th><label>賞味期限切れかどうか</label></th>
                                 <td>
                                     <div>
-                                        <input type="radio" value="true"><label>賞味期限切れ</label>
-                                        <input type="radio" value="false"><label>賞味期限内</label>
+                                        <input type="radio" value="true" v-model="isExpired"><label>賞味期限切れ</label>
+                                        <input type="radio" value="false" v-model="isExpired"><label>賞味期限内</label>
                                     </div>
                                 </td>
                             </tr>
@@ -54,6 +54,10 @@ export default {
         return {
             products: [],
             prefectures: [],
+            selectedPrefecture: '', // 選択された都道府県
+            minPrice: '', // 最小価格
+            maxPrice: '', // 最大価格
+            isExpired: '' // 賞味期限切れかどうか
         };
     },
 
@@ -70,6 +74,25 @@ export default {
                 this.prefectures = response.data.prefectures;
             }).catch(error => {
                 console.error('都道府県情報取得失敗:', error.response.data);
+                this.errors = error.response.data;
+            });
+        },
+
+        // 検索フォームの値をサーバー側に送信するメソッド
+        submitForm() {
+            console.log('検索結果を表示します');
+            const requestBody = {
+                prefecture: this.selectedPrefecture, // 選択された都道府県
+                minprice: this.minPrice, // 最小価格
+                maxprice: this.maxPrice, // 最大価格
+                expiration_date: this.isExpired === 'true' ? 'expired' : 'not_expired' // trueの場合はexpired、falseの場合はnot_expiredを送信
+            };
+            axios.post('/api/products/search', requestBody).then(response => {
+                console.log('APIからのレスポンス:', response.data);
+                this.products = response.data.products;
+                this.$emit("search", this.products); // 親コンポーネントに検索結果を伝達
+            }).catch(error => {
+                console.error('検索失敗:', error.response.data);
                 this.errors = error.response.data;
             });
         },

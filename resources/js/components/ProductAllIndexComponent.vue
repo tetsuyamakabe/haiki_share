@@ -25,7 +25,7 @@
                             </div>
                         </li>
                     </ul>
-                    <search-component />
+                    <search-component @search="searchResult" />
                 </div>
                 <!-- ページネーション -->
                 <pagination-component @onClick="onPageChange" :current_page="currentPage" :last_page="lastPage" />
@@ -114,9 +114,9 @@ export default {
                 console.log('this.currentPageは、', this.currentPage);
                 const result = await axios.get('/api/products/' + `?page=${this.currentPage}`);
                 const products = result.data;
-                console.log('productsは、', products);
+                console.log('APIの結果は、', products);
                 this.products = products.products;
-                console.log('productsは、', this.products);
+                console.log('ページネーションメソッドのproductsは、', this.products);
                 this.lastPage = products.products.last_page;
                 console.log('this.lastPageは、', this.lastPage);
             } catch (error) {
@@ -149,6 +149,12 @@ export default {
             }).catch(error => {
                 console.error('商品のお気に入り解除失敗:', error);
             });
+        },
+
+        searchResult(search) {
+            console.log('searchResult()メソッドです');
+            this.products = search;
+            console.log('this.productsは、', this.products);
         },
     },
 }
