@@ -115,8 +115,8 @@ class ProductController extends Controller
         $minPrice = $request->input('minprice');
         $maxPrice = $request->input('maxprice');
         $expired = $request->input('expiration_date');
-
-        $query = Product::query();
+        \Log::info('$expiredは、', [$expired]);
+        $query = Product::query()->with('pictures');
 
         // 出品しているコンビニがある都道府県
         if ($prefecture) {
@@ -139,7 +139,7 @@ class ProductController extends Controller
         // 賞味期限日付
         if ($expired !== null) {
             $today = Carbon::today()->toDateString(); // 現在の日付を取得
-            if ($expired === 'expired') {
+            if ($expired === 'true') {
                 $query->where('expiration_date', '<', $today); // 賞味期限切れの商品を検索
             } else {
                 $query->where('expiration_date', '>=', $today); // 賞味期限内の商品を検索
