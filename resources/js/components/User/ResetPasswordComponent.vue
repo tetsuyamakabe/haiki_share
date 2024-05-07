@@ -41,6 +41,7 @@
                 </form>
             </div>
         </div>
+        <a @click="$router.back()">前のページに戻る</a>
     </main>
 </template>
 

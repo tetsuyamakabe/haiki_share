@@ -48,21 +48,47 @@ class ProductController extends Controller
     }
 
     // すべての商品情報の取得
-    public function getAllProducts()
+    public function getAllProducts(Request $request)
     {
         $userId = auth()->id();
-        $products = Product::with('pictures')->withCount('likes')->paginate(4); // withCountでいいね数の取得
+        $query = Product::with('pictures')->withCount('likes'); // withCountでいいね数の取得
 
-        foreach ($products as $product) {
-            // 商品情報にお気に入り情報を含める
-            $like = Like::where('user_id', $userId)->where('product_id', $product->id)->first();
-            $product->liked = $like ? true : false;
+        if ($request) {
+            $prefecture = $request->input('prefecture');
+            $minPrice = $request->input('minprice');
+            $maxPrice = $request->input('maxprice');
+            $expired = $request->input('expiration_date');
 
-            // 購入済み商品は「購入済み」ラベルをつける
-            $is_purchased = Purchase::where('product_id', $product->id)->first();
-            $product->is_purchased = $is_purchased ? true : false;
+            // 出品しているコンビニがある都道府県
+            if ($prefecture) {
+                // Convenienceモデル経由でAddressモデルのprefectureの値を取得
+                $query->whereHas('convenience.address', function ($addressQuery) use ($prefecture) {
+                    // Addressモデルに指定された値とリクエストの値を持つレコードの検索
+                    $addressQuery->where('prefecture', $prefecture);
+                });
+            }
+
+            // 最小価格
+            if ($minPrice) {
+                $query->where('price', '>=', $minPrice);
+            }
+            // 最大価格
+            if ($maxPrice) {
+                $query->where('price', '<=', $maxPrice);
+            }
+
+            // 賞味期限日付
+            if ($expired !== null) {
+                $today = Carbon::today()->toDateString(); // 現在の日付を取得
+                if ($expired === 'true') {
+                    $query->where('expiration_date', '<', $today); // 賞味期限切れの商品を検索
+                } else {
+                    $query->where('expiration_date', '>=', $today); // 賞味期限内の商品を検索
+                }
+            }
         }
-        // \Log::info('$productsは、', [$products]);
+
+        $products = $query->paginate(4);
         return response()->json(['products' => $products]);
     }
 

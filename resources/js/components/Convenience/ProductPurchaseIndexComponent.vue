@@ -22,6 +22,7 @@
                 <pagination-component @onClick="onPageChange" :current_page="currentPage" :last_page="lastPage" />
             </div>
         </div>
+        <a @click="$router.back()">前のページに戻る</a>
     </main>
 </template>
 

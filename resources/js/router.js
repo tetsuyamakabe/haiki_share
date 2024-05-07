@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
+import store from './store';
 
 // 共通コンポーネント
 import HomeComponent from "./components/HomeComponent"; // HOME画面
@@ -191,5 +192,34 @@ const router = new VueRouter({
         },
     ]
 });
+
+// セッションが必要ないパス（HOME画面、利用規約、ユーザー登録画面、ログイン画面、パスワードメール送信画面、パスワードリセット画面）
+const publicPaths = [
+    '/home',
+    '/terms',
+    '/user/register',
+    '/convenience/register',
+    '/user/login',
+    '/convenience/login',
+    '/user/password/email',
+    '/convenience/password/email',
+    '/user/password/reset/:token',
+    '/convenience/password/reset/:token',
+];
+
+// セッションタイムアウトした場合のナビゲーションガード
+router.beforeEach((to, from, next) => {
+    const isLogin = store.getters['auth/check'];
+    console.log('現在のパス:', to.path);
+
+    // セッションタイムアウトして、現在パスが公開パスではない場合はHOME画面にリダイレクト
+    if (!isLogin && !publicPaths.includes(to.path)) {
+        console.log('セッションタイムアウトのため、リダイレクトします');
+        next('/home');
+    } else {
+        next();
+    }
+});
+
 
 export default router;

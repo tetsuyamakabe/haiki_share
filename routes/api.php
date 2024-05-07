@@ -22,7 +22,6 @@ Route::get('products', 'Products\Convenience\ProductController@getAllProducts');
 Route::get('/products/{productId}', 'Products\Convenience\ProductController@getProduct'); // 商品情報の取得
 Route::get('categories', 'Products\Convenience\ProductController@getCategories'); // 商品カテゴリー情報の取得
 Route::get('prefecture', 'Products\User\ProductController@getPrefecture'); // 出品しているコンビニがある都道府県の取得
-Route::post('/products/search', 'Products\User\ProductController@search'); // 商品絞り込み検索結果の取得
 
 Route::get('/user', fn() => Auth::user())->name('user'); // ユーザー情報の取得
 

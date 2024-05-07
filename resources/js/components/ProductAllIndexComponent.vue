@@ -26,12 +26,13 @@
                         </li>
                     </ul>
                     <!-- 絞り込み検索 -->
-                    <search-component @search="searchResult" />
+                    <search-component @search="onPageChange" />
                 </div>
                 <!-- ページネーション -->
                 <pagination-component @onClick="onPageChange" :current_page="currentPage" :last_page="lastPage" />
             </div>
         </div>
+        <a @click="$router.back()">前のページに戻る</a>
     </main>
 </template>
 
@@ -102,18 +103,18 @@ export default {
         },
 
         // ページが変更されたときの処理
-        onPageChange(page) {
-            this.getProducts(page);
+        onPageChange(page, search) {
+            this.getProducts(page, search);
         },
 
         // ページが変更されたときに新しい商品データを取得するメソッド
-        async getProducts(page) {
+        async getProducts(page, search) {
             try {
                 // APIリクエストの前にcurrentPageを更新する
                 this.currentPage = page;
                 console.log('pageは、', page);
                 console.log('this.currentPageは、', this.currentPage);
-                const result = await axios.get('/api/products/' + `?page=${this.currentPage}`);
+                const result = await axios.get('/api/products/' + `?page=${this.currentPage}`, search);
                 const products = result.data;
                 console.log('APIの結果は、', products);
                 this.products = products.products;
@@ -126,21 +127,21 @@ export default {
             }
         },
 
-        // 商品絞り込み検索
-        searchResult(search) {
-            console.log('searchResult()メソッドです');
-            axios.post('/api/products/search', search).then(response => {
-                const result = response.data;
-                console.log('APIからのレスポンス:', response.data);
-                this.products = result.products;
-                this.lastPage = result.products.last_page;
-                console.log('ページネーションメソッドのproductsは、', this.products);
-                console.log('this.lastPageは、', this.lastPage);
-            }).catch(error => {
-                console.error('検索失敗:', error.response.data);
-                this.errors = error.response.data;
-            });
-        },
+        // // 商品絞り込み検索
+        // searchResult(search) {
+        //     console.log('searchResult()メソッドです');
+        //     axios.get('/api/products/', search).then(response => {
+        //         const result = response.data;
+        //         console.log('APIからのレスポンス:', response.data);
+        //         this.products = result.products;
+        //         this.lastPage = result.products.last_page;
+        //         console.log('ページネーションメソッドのproductsは、', this.products);
+        //         console.log('this.lastPageは、', this.lastPage);
+        //     }).catch(error => {
+        //         console.error('検索失敗:', error.response.data);
+        //         this.errors = error.response.data;
+        //     });
+        // },
 
         // 商品お気に入り登録
         productLike(product) {
