@@ -5081,6 +5081,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -5122,6 +5123,7 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+//
 //
 //
 //
@@ -5294,6 +5296,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({});
 
@@ -5394,6 +5397,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -5446,6 +5450,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _ProductDeleteComponent_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ProductDeleteComponent.vue */ "./resources/js/components/Convenience/ProductDeleteComponent.vue");
+//
 //
 //
 //
@@ -5703,6 +5708,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
 
 
  // ページネーションコンポーネント
@@ -5813,6 +5819,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+//
 //
 //
 //
@@ -6045,6 +6052,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
 
 
  // ページネーションコンポーネント
@@ -6164,6 +6172,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+//
 //
 //
 //
@@ -6598,6 +6607,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
  // 利用規約
@@ -6738,6 +6748,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -6797,6 +6808,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
 //
 //
 //
@@ -6935,6 +6947,24 @@ __webpack_require__.r(__webpack_exports__);
         return "/convenience/logout";
       }
       return "/home";
+    }
+  },
+  methods: {
+    // ログアウト処理
+    logout: function logout() {
+      var _this = this;
+      // roleによってログアウトのAPIのエンドポイントとログアウト後のログイン画面のルートを動的に変える
+      var logoutEndpoint = this.$store.getters['auth/role'] === 'user' ? '/api/user/logout' : '/api/convenience/logout';
+      var loginRoute = this.$store.getters['auth/role'] === 'user' ? 'user.login' : 'convenience.login';
+      axios.post(logoutEndpoint).then(function (response) {
+        console.log('ログアウト成功:', response.data.message);
+        _this.$store.commit('auth/clearUser');
+        _this.$router.push({
+          name: loginRoute
+        }); // ログアウト処理完了後、ログイン画面に遷移
+      })["catch"](function (error) {
+        console.error('ログアウト処理失敗:', error.response.data);
+      });
     }
   }
 });
@@ -7128,6 +7158,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
 
 
  // 絞り込み検索コンポーネント
@@ -7199,11 +7231,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       return "/home";
     },
     // ページが変更されたときの処理
-    onPageChange: function onPageChange(page) {
-      this.getProducts(page);
+    onPageChange: function onPageChange(page, search) {
+      this.getProducts(page, search);
     },
     // ページが変更されたときに新しい商品データを取得するメソッド
-    getProducts: function getProducts(page) {
+    getProducts: function getProducts(page, search) {
       var _this2 = this;
       return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
         var result, products;
@@ -7216,7 +7248,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               console.log('pageは、', page);
               console.log('this.currentPageは、', _this2.currentPage);
               _context.next = 6;
-              return axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/products/' + "?page=".concat(_this2.currentPage));
+              return axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/products/' + "?page=".concat(_this2.currentPage), search);
             case 6:
               result = _context.sent;
               products = result.data;
@@ -7239,25 +7271,21 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee, null, [[0, 15]]);
       }))();
     },
-    // 商品絞り込み検索
-    searchResult: function searchResult(search, page) {
-      var _this3 = this;
-      this.currentPage = page;
-      console.log('pageは、', page);
-      console.log('this.currentPageは、', this.currentPage);
-      console.log('searchResult()メソッドです');
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/products/search/' + "?page=".concat(this.currentPage), search).then(function (response) {
-        var result = response.data;
-        console.log('APIからのレスポンス:', response.data);
-        _this3.products = result.products;
-        _this3.lastPage = result.products.last_page;
-        console.log('ページネーションメソッドのproductsは、', _this3.products);
-        console.log('this.lastPageは、', _this3.lastPage);
-      })["catch"](function (error) {
-        console.error('検索失敗:', error.response.data);
-        _this3.errors = error.response.data;
-      });
-    },
+    // // 商品絞り込み検索
+    // searchResult(search) {
+    //     console.log('searchResult()メソッドです');
+    //     axios.get('/api/products/', search).then(response => {
+    //         const result = response.data;
+    //         console.log('APIからのレスポンス:', response.data);
+    //         this.products = result.products;
+    //         this.lastPage = result.products.last_page;
+    //         console.log('ページネーションメソッドのproductsは、', this.products);
+    //         console.log('this.lastPageは、', this.lastPage);
+    //     }).catch(error => {
+    //         console.error('検索失敗:', error.response.data);
+    //         this.errors = error.response.data;
+    //     });
+    // },
     // 商品お気に入り登録
     productLike: function productLike(product) {
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/user/like/' + product.id).then(function (response) {
@@ -7521,6 +7549,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -7562,6 +7591,7 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+//
 //
 //
 //
@@ -7731,6 +7761,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({});
 
@@ -7747,6 +7778,7 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+//
 //
 //
 //
@@ -7919,6 +7951,7 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+//
 //
 //
 //
@@ -8221,6 +8254,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
  // 利用規約
@@ -8336,6 +8370,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -8395,6 +8430,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
 //
 //
 //
@@ -44758,6 +44794,18 @@ var render = function () {
         ]),
       ]),
     ]),
+    _vm._v(" "),
+    _c(
+      "a",
+      {
+        on: {
+          click: function ($event) {
+            _vm.$router.back()
+          },
+        },
+      },
+      [_vm._v("前のページに戻る")]
+    ),
   ])
 }
 var staticRenderFns = [
@@ -45057,6 +45105,18 @@ var render = function () {
         ]),
       ]),
     ]),
+    _vm._v(" "),
+    _c(
+      "a",
+      {
+        on: {
+          click: function ($event) {
+            _vm.$router.back()
+          },
+        },
+      },
+      [_vm._v("前のページに戻る")]
+    ),
   ])
 }
 var staticRenderFns = [
@@ -45202,6 +45262,18 @@ var render = function () {
         ),
       ]),
     ]),
+    _vm._v(" "),
+    _c(
+      "a",
+      {
+        on: {
+          click: function ($event) {
+            _vm.$router.back()
+          },
+        },
+      },
+      [_vm._v("前のページに戻る")]
+    ),
   ])
 }
 var staticRenderFns = []
@@ -45317,6 +45389,18 @@ var render = function () {
         ]),
       ]),
     ]),
+    _vm._v(" "),
+    _c(
+      "a",
+      {
+        on: {
+          click: function ($event) {
+            _vm.$router.back()
+          },
+        },
+      },
+      [_vm._v("前のページに戻る")]
+    ),
   ])
 }
 var staticRenderFns = [
@@ -45665,6 +45749,18 @@ var render = function () {
         ]),
       ]),
     ]),
+    _vm._v(" "),
+    _c(
+      "a",
+      {
+        on: {
+          click: function ($event) {
+            _vm.$router.back()
+          },
+        },
+      },
+      [_vm._v("前のページに戻る")]
+    ),
   ])
 }
 var staticRenderFns = [
@@ -45826,6 +45922,18 @@ var render = function () {
         1
       ),
     ]),
+    _vm._v(" "),
+    _c(
+      "a",
+      {
+        on: {
+          click: function ($event) {
+            _vm.$router.back()
+          },
+        },
+      },
+      [_vm._v("前のページに戻る")]
+    ),
   ])
 }
 var staticRenderFns = []
@@ -46146,6 +46254,18 @@ var render = function () {
         ]),
       ]),
     ]),
+    _vm._v(" "),
+    _c(
+      "a",
+      {
+        on: {
+          click: function ($event) {
+            _vm.$router.back()
+          },
+        },
+      },
+      [_vm._v("前のページに戻る")]
+    ),
   ])
 }
 var staticRenderFns = [
@@ -46312,6 +46432,18 @@ var render = function () {
         1
       ),
     ]),
+    _vm._v(" "),
+    _c(
+      "a",
+      {
+        on: {
+          click: function ($event) {
+            _vm.$router.back()
+          },
+        },
+      },
+      [_vm._v("前のページに戻る")]
+    ),
   ])
 }
 var staticRenderFns = []
@@ -47131,6 +47263,18 @@ var render = function () {
         ]),
       ]),
     ]),
+    _vm._v(" "),
+    _c(
+      "a",
+      {
+        on: {
+          click: function ($event) {
+            _vm.$router.back()
+          },
+        },
+      },
+      [_vm._v("前のページに戻る")]
+    ),
   ])
 }
 var staticRenderFns = [
@@ -48017,6 +48161,18 @@ var render = function () {
         ]),
       ]),
     ]),
+    _vm._v(" "),
+    _c(
+      "a",
+      {
+        on: {
+          click: function ($event) {
+            _vm.$router.back()
+          },
+        },
+      },
+      [_vm._v("前のページに戻る")]
+    ),
   ])
 }
 var staticRenderFns = [
@@ -48354,6 +48510,18 @@ var render = function () {
         ),
       ]),
     ]),
+    _vm._v(" "),
+    _c(
+      "a",
+      {
+        on: {
+          click: function ($event) {
+            _vm.$router.back()
+          },
+        },
+      },
+      [_vm._v("前のページに戻る")]
+    ),
   ])
 }
 var staticRenderFns = [
@@ -48439,6 +48607,18 @@ var render = function () {
         ]),
       ]),
     ]),
+    _vm._v(" "),
+    _c(
+      "a",
+      {
+        on: {
+          click: function ($event) {
+            _vm.$router.back()
+          },
+        },
+      },
+      [_vm._v("前のページに戻る")]
+    ),
   ])
 }
 var staticRenderFns = []
@@ -48552,9 +48732,14 @@ var render = function () {
                       _vm._v("マイページ"),
                     ]),
                     _vm._v(" "),
-                    _c("RouterLink", { attrs: { to: _vm.logoutLink } }, [
-                      _vm._v("ログアウト"),
-                    ]),
+                    _c(
+                      "RouterLink",
+                      {
+                        attrs: { to: _vm.logoutLink },
+                        on: { click: _vm.logout },
+                      },
+                      [_vm._v("ログアウト")]
+                    ),
                   ],
                   1
                 )
@@ -48881,7 +49066,7 @@ var render = function () {
                 })
               ),
               _vm._v(" "),
-              _c("search-component", { on: { search: _vm.searchResult } }),
+              _c("search-component", { on: { search: _vm.onPageChange } }),
             ],
             1
           ),
@@ -48894,6 +49079,18 @@ var render = function () {
         1
       ),
     ]),
+    _vm._v(" "),
+    _c(
+      "a",
+      {
+        on: {
+          click: function ($event) {
+            _vm.$router.back()
+          },
+        },
+      },
+      [_vm._v("前のページに戻る")]
+    ),
   ])
 }
 var staticRenderFns = []
@@ -49477,6 +49674,18 @@ var render = function () {
         ]),
       ]),
     ]),
+    _vm._v(" "),
+    _c(
+      "a",
+      {
+        on: {
+          click: function ($event) {
+            _vm.$router.back()
+          },
+        },
+      },
+      [_vm._v("前のページに戻る")]
+    ),
   ])
 }
 var staticRenderFns = [
@@ -49776,6 +49985,18 @@ var render = function () {
         ]),
       ]),
     ]),
+    _vm._v(" "),
+    _c(
+      "a",
+      {
+        on: {
+          click: function ($event) {
+            _vm.$router.back()
+          },
+        },
+      },
+      [_vm._v("前のページに戻る")]
+    ),
   ])
 }
 var staticRenderFns = [
@@ -49899,6 +50120,18 @@ var render = function () {
         ),
       ]),
     ]),
+    _vm._v(" "),
+    _c(
+      "a",
+      {
+        on: {
+          click: function ($event) {
+            _vm.$router.back()
+          },
+        },
+      },
+      [_vm._v("前のページに戻る")]
+    ),
   ])
 }
 var staticRenderFns = []
@@ -50029,6 +50262,18 @@ var render = function () {
         ]),
       ]),
     ]),
+    _vm._v(" "),
+    _c(
+      "a",
+      {
+        on: {
+          click: function ($event) {
+            _vm.$router.back()
+          },
+        },
+      },
+      [_vm._v("前のページに戻る")]
+    ),
   ])
 }
 var staticRenderFns = [
@@ -50618,6 +50863,18 @@ var render = function () {
         ]),
       ]),
     ]),
+    _vm._v(" "),
+    _c(
+      "a",
+      {
+        on: {
+          click: function ($event) {
+            _vm.$router.back()
+          },
+        },
+      },
+      [_vm._v("前のページに戻る")]
+    ),
   ])
 }
 var staticRenderFns = [
@@ -51181,6 +51438,18 @@ var render = function () {
         ]),
       ]),
     ]),
+    _vm._v(" "),
+    _c(
+      "a",
+      {
+        on: {
+          click: function ($event) {
+            _vm.$router.back()
+          },
+        },
+      },
+      [_vm._v("前のページに戻る")]
+    ),
   ])
 }
 var staticRenderFns = [
@@ -51458,6 +51727,18 @@ var render = function () {
         ),
       ]),
     ]),
+    _vm._v(" "),
+    _c(
+      "a",
+      {
+        on: {
+          click: function ($event) {
+            _vm.$router.back()
+          },
+        },
+      },
+      [_vm._v("前のページに戻る")]
+    ),
   ])
 }
 var staticRenderFns = [
@@ -51543,6 +51824,18 @@ var render = function () {
         ]),
       ]),
     ]),
+    _vm._v(" "),
+    _c(
+      "a",
+      {
+        on: {
+          click: function ($event) {
+            _vm.$router.back()
+          },
+        },
+      },
+      [_vm._v("前のページに戻る")]
+    ),
   ])
 }
 var staticRenderFns = []
@@ -69430,31 +69723,33 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
-/* harmony import */ var _components_HomeComponent__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/HomeComponent */ "./resources/js/components/HomeComponent.vue");
-/* harmony import */ var _components_TermsComponent_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/TermsComponent.vue */ "./resources/js/components/TermsComponent.vue");
-/* harmony import */ var _components_User_RegisterComponent_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/User/RegisterComponent.vue */ "./resources/js/components/User/RegisterComponent.vue");
-/* harmony import */ var _components_User_LoginComponent_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/User/LoginComponent.vue */ "./resources/js/components/User/LoginComponent.vue");
-/* harmony import */ var _components_User_LogoutComponent_vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/User/LogoutComponent.vue */ "./resources/js/components/User/LogoutComponent.vue");
-/* harmony import */ var _components_User_MyPageComponent_vue__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/User/MyPageComponent.vue */ "./resources/js/components/User/MyPageComponent.vue");
-/* harmony import */ var _components_User_ForgotPasswordComponent_vue__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/User/ForgotPasswordComponent.vue */ "./resources/js/components/User/ForgotPasswordComponent.vue");
-/* harmony import */ var _components_User_ResetPasswordComponent_vue__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/User/ResetPasswordComponent.vue */ "./resources/js/components/User/ResetPasswordComponent.vue");
-/* harmony import */ var _components_User_ProfileComponent_vue__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./components/User/ProfileComponent.vue */ "./resources/js/components/User/ProfileComponent.vue");
-/* harmony import */ var _components_User_WithdrawComponent_vue__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./components/User/WithdrawComponent.vue */ "./resources/js/components/User/WithdrawComponent.vue");
-/* harmony import */ var _components_User_ProductDetailComponent_vue__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./components/User/ProductDetailComponent.vue */ "./resources/js/components/User/ProductDetailComponent.vue");
-/* harmony import */ var _components_Convenience_RegisterComponent_vue__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./components/Convenience/RegisterComponent.vue */ "./resources/js/components/Convenience/RegisterComponent.vue");
-/* harmony import */ var _components_Convenience_LoginComponent_vue__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./components/Convenience/LoginComponent.vue */ "./resources/js/components/Convenience/LoginComponent.vue");
-/* harmony import */ var _components_Convenience_LogoutComponent_vue__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./components/Convenience/LogoutComponent.vue */ "./resources/js/components/Convenience/LogoutComponent.vue");
-/* harmony import */ var _components_Convenience_MyPageComponent_vue__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./components/Convenience/MyPageComponent.vue */ "./resources/js/components/Convenience/MyPageComponent.vue");
-/* harmony import */ var _components_Convenience_ForgotPasswordComponent_vue__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./components/Convenience/ForgotPasswordComponent.vue */ "./resources/js/components/Convenience/ForgotPasswordComponent.vue");
-/* harmony import */ var _components_Convenience_ResetPasswordComponent_vue__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./components/Convenience/ResetPasswordComponent.vue */ "./resources/js/components/Convenience/ResetPasswordComponent.vue");
-/* harmony import */ var _components_Convenience_ProfileComponent_vue__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./components/Convenience/ProfileComponent.vue */ "./resources/js/components/Convenience/ProfileComponent.vue");
-/* harmony import */ var _components_Convenience_WithdrawComponent_vue__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./components/Convenience/WithdrawComponent.vue */ "./resources/js/components/Convenience/WithdrawComponent.vue");
-/* harmony import */ var _components_Convenience_ProductDetailComponent_vue__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./components/Convenience/ProductDetailComponent.vue */ "./resources/js/components/Convenience/ProductDetailComponent.vue");
-/* harmony import */ var _components_Convenience_ProductSaleComponent_vue__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./components/Convenience/ProductSaleComponent.vue */ "./resources/js/components/Convenience/ProductSaleComponent.vue");
-/* harmony import */ var _components_Convenience_ProductEditComponent_vue__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./components/Convenience/ProductEditComponent.vue */ "./resources/js/components/Convenience/ProductEditComponent.vue");
-/* harmony import */ var _components_Convenience_ProductSaleIndexComponent_vue__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./components/Convenience/ProductSaleIndexComponent.vue */ "./resources/js/components/Convenience/ProductSaleIndexComponent.vue");
-/* harmony import */ var _components_Convenience_ProductPurchaseIndexComponent_vue__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./components/Convenience/ProductPurchaseIndexComponent.vue */ "./resources/js/components/Convenience/ProductPurchaseIndexComponent.vue");
-/* harmony import */ var _components_ProductAllIndexComponent_vue__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ./components/ProductAllIndexComponent.vue */ "./resources/js/components/ProductAllIndexComponent.vue");
+/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./store */ "./resources/js/store/index.js");
+/* harmony import */ var _components_HomeComponent__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/HomeComponent */ "./resources/js/components/HomeComponent.vue");
+/* harmony import */ var _components_TermsComponent_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/TermsComponent.vue */ "./resources/js/components/TermsComponent.vue");
+/* harmony import */ var _components_User_RegisterComponent_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/User/RegisterComponent.vue */ "./resources/js/components/User/RegisterComponent.vue");
+/* harmony import */ var _components_User_LoginComponent_vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/User/LoginComponent.vue */ "./resources/js/components/User/LoginComponent.vue");
+/* harmony import */ var _components_User_LogoutComponent_vue__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/User/LogoutComponent.vue */ "./resources/js/components/User/LogoutComponent.vue");
+/* harmony import */ var _components_User_MyPageComponent_vue__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/User/MyPageComponent.vue */ "./resources/js/components/User/MyPageComponent.vue");
+/* harmony import */ var _components_User_ForgotPasswordComponent_vue__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/User/ForgotPasswordComponent.vue */ "./resources/js/components/User/ForgotPasswordComponent.vue");
+/* harmony import */ var _components_User_ResetPasswordComponent_vue__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./components/User/ResetPasswordComponent.vue */ "./resources/js/components/User/ResetPasswordComponent.vue");
+/* harmony import */ var _components_User_ProfileComponent_vue__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./components/User/ProfileComponent.vue */ "./resources/js/components/User/ProfileComponent.vue");
+/* harmony import */ var _components_User_WithdrawComponent_vue__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./components/User/WithdrawComponent.vue */ "./resources/js/components/User/WithdrawComponent.vue");
+/* harmony import */ var _components_User_ProductDetailComponent_vue__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./components/User/ProductDetailComponent.vue */ "./resources/js/components/User/ProductDetailComponent.vue");
+/* harmony import */ var _components_Convenience_RegisterComponent_vue__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./components/Convenience/RegisterComponent.vue */ "./resources/js/components/Convenience/RegisterComponent.vue");
+/* harmony import */ var _components_Convenience_LoginComponent_vue__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./components/Convenience/LoginComponent.vue */ "./resources/js/components/Convenience/LoginComponent.vue");
+/* harmony import */ var _components_Convenience_LogoutComponent_vue__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./components/Convenience/LogoutComponent.vue */ "./resources/js/components/Convenience/LogoutComponent.vue");
+/* harmony import */ var _components_Convenience_MyPageComponent_vue__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./components/Convenience/MyPageComponent.vue */ "./resources/js/components/Convenience/MyPageComponent.vue");
+/* harmony import */ var _components_Convenience_ForgotPasswordComponent_vue__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./components/Convenience/ForgotPasswordComponent.vue */ "./resources/js/components/Convenience/ForgotPasswordComponent.vue");
+/* harmony import */ var _components_Convenience_ResetPasswordComponent_vue__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./components/Convenience/ResetPasswordComponent.vue */ "./resources/js/components/Convenience/ResetPasswordComponent.vue");
+/* harmony import */ var _components_Convenience_ProfileComponent_vue__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./components/Convenience/ProfileComponent.vue */ "./resources/js/components/Convenience/ProfileComponent.vue");
+/* harmony import */ var _components_Convenience_WithdrawComponent_vue__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./components/Convenience/WithdrawComponent.vue */ "./resources/js/components/Convenience/WithdrawComponent.vue");
+/* harmony import */ var _components_Convenience_ProductDetailComponent_vue__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./components/Convenience/ProductDetailComponent.vue */ "./resources/js/components/Convenience/ProductDetailComponent.vue");
+/* harmony import */ var _components_Convenience_ProductSaleComponent_vue__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./components/Convenience/ProductSaleComponent.vue */ "./resources/js/components/Convenience/ProductSaleComponent.vue");
+/* harmony import */ var _components_Convenience_ProductEditComponent_vue__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./components/Convenience/ProductEditComponent.vue */ "./resources/js/components/Convenience/ProductEditComponent.vue");
+/* harmony import */ var _components_Convenience_ProductSaleIndexComponent_vue__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./components/Convenience/ProductSaleIndexComponent.vue */ "./resources/js/components/Convenience/ProductSaleIndexComponent.vue");
+/* harmony import */ var _components_Convenience_ProductPurchaseIndexComponent_vue__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ./components/Convenience/ProductPurchaseIndexComponent.vue */ "./resources/js/components/Convenience/ProductPurchaseIndexComponent.vue");
+/* harmony import */ var _components_ProductAllIndexComponent_vue__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ./components/ProductAllIndexComponent.vue */ "./resources/js/components/ProductAllIndexComponent.vue");
+
 
 
 
@@ -69499,152 +69794,169 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
   {
     path: '/home',
     name: 'home',
-    component: _components_HomeComponent__WEBPACK_IMPORTED_MODULE_2__["default"]
+    component: _components_HomeComponent__WEBPACK_IMPORTED_MODULE_3__["default"]
   },
   // 利用規約ページ
   {
     path: '/terms',
     name: 'terms',
-    component: _components_TermsComponent_vue__WEBPACK_IMPORTED_MODULE_3__["default"]
+    component: _components_TermsComponent_vue__WEBPACK_IMPORTED_MODULE_4__["default"]
   },
   // 利用者側ユーザー登録画面
   {
     path: '/user/register',
     name: 'user.register',
-    component: _components_User_RegisterComponent_vue__WEBPACK_IMPORTED_MODULE_4__["default"]
+    component: _components_User_RegisterComponent_vue__WEBPACK_IMPORTED_MODULE_5__["default"]
   },
   // コンビニ側ユーザー登録画面
   {
     path: '/convenience/register',
     name: 'convenience.register',
-    component: _components_Convenience_RegisterComponent_vue__WEBPACK_IMPORTED_MODULE_13__["default"]
+    component: _components_Convenience_RegisterComponent_vue__WEBPACK_IMPORTED_MODULE_14__["default"]
   },
   // 利用者側ログイン画面
   {
     path: '/user/login',
     name: 'user.login',
-    component: _components_User_LoginComponent_vue__WEBPACK_IMPORTED_MODULE_5__["default"]
+    component: _components_User_LoginComponent_vue__WEBPACK_IMPORTED_MODULE_6__["default"]
   },
   // コンビニ側ログイン画面
   {
     path: '/convenience/login',
     name: 'convenience.login',
-    component: _components_Convenience_LoginComponent_vue__WEBPACK_IMPORTED_MODULE_14__["default"]
+    component: _components_Convenience_LoginComponent_vue__WEBPACK_IMPORTED_MODULE_15__["default"]
   },
   // 利用者側ログアウト画面
   {
     path: '/user/logout',
     name: 'user.logout',
-    component: _components_User_LogoutComponent_vue__WEBPACK_IMPORTED_MODULE_6__["default"]
+    component: _components_User_LogoutComponent_vue__WEBPACK_IMPORTED_MODULE_7__["default"]
   },
   // コンビニ側ログアウト画面
   {
     path: '/convenience/logout',
     name: 'convenience.logout',
-    component: _components_Convenience_LogoutComponent_vue__WEBPACK_IMPORTED_MODULE_15__["default"]
+    component: _components_Convenience_LogoutComponent_vue__WEBPACK_IMPORTED_MODULE_16__["default"]
   },
   // 利用者側マイページ画面
   {
     path: '/user/mypage',
     name: 'user.mypage',
-    component: _components_User_MyPageComponent_vue__WEBPACK_IMPORTED_MODULE_7__["default"]
+    component: _components_User_MyPageComponent_vue__WEBPACK_IMPORTED_MODULE_8__["default"]
   },
   // コンビニ側マイページ画面
   {
     path: '/convenience/mypage',
     name: 'convenience.mypage',
-    component: _components_Convenience_MyPageComponent_vue__WEBPACK_IMPORTED_MODULE_16__["default"]
+    component: _components_Convenience_MyPageComponent_vue__WEBPACK_IMPORTED_MODULE_17__["default"]
   },
   // 利用者側パスワードメール送信画面
   {
     path: '/user/password/email',
     name: 'user.password.email',
-    component: _components_User_ForgotPasswordComponent_vue__WEBPACK_IMPORTED_MODULE_8__["default"]
+    component: _components_User_ForgotPasswordComponent_vue__WEBPACK_IMPORTED_MODULE_9__["default"]
   },
   // コンビニ側パスワードメール送信画面
   {
     path: '/convenience/password/email',
     name: 'convenience.password.email',
-    component: _components_Convenience_ForgotPasswordComponent_vue__WEBPACK_IMPORTED_MODULE_17__["default"]
+    component: _components_Convenience_ForgotPasswordComponent_vue__WEBPACK_IMPORTED_MODULE_18__["default"]
   },
   // 利用者側パスワードリセット画面
   {
     path: '/user/password/reset/:token',
     name: 'user.password.reset',
-    component: _components_User_ResetPasswordComponent_vue__WEBPACK_IMPORTED_MODULE_9__["default"]
+    component: _components_User_ResetPasswordComponent_vue__WEBPACK_IMPORTED_MODULE_10__["default"]
   },
   // コンビニ側パスワードリセット画面
   {
     path: '/convenience/password/reset/:token',
     name: 'convenience.password.reset',
-    component: _components_Convenience_ResetPasswordComponent_vue__WEBPACK_IMPORTED_MODULE_18__["default"]
+    component: _components_Convenience_ResetPasswordComponent_vue__WEBPACK_IMPORTED_MODULE_19__["default"]
   },
   // 利用者側プロフィール編集画面
   {
     path: '/user/mypage/profile',
     name: 'user.profile',
-    component: _components_User_ProfileComponent_vue__WEBPACK_IMPORTED_MODULE_10__["default"]
+    component: _components_User_ProfileComponent_vue__WEBPACK_IMPORTED_MODULE_11__["default"]
   },
   // コンビニ側プロフィール編集画面
   {
     path: '/convenience/mypage/profile',
     name: 'convenience.profile',
-    component: _components_Convenience_ProfileComponent_vue__WEBPACK_IMPORTED_MODULE_19__["default"]
+    component: _components_Convenience_ProfileComponent_vue__WEBPACK_IMPORTED_MODULE_20__["default"]
   },
   // 利用者側退会画面
   {
     path: '/user/mypage/withdraw',
     name: 'user.withdraw',
-    component: _components_User_WithdrawComponent_vue__WEBPACK_IMPORTED_MODULE_11__["default"]
+    component: _components_User_WithdrawComponent_vue__WEBPACK_IMPORTED_MODULE_12__["default"]
   },
   // コンビニ側退会画面
   {
     path: '/convenience/mypage/withdraw',
     name: 'convenience.withdraw',
-    component: _components_Convenience_WithdrawComponent_vue__WEBPACK_IMPORTED_MODULE_20__["default"]
+    component: _components_Convenience_WithdrawComponent_vue__WEBPACK_IMPORTED_MODULE_21__["default"]
   },
   // 商品出品画面
   {
     path: '/convenience/products/create',
     name: 'convenience.products.create',
-    component: _components_Convenience_ProductSaleComponent_vue__WEBPACK_IMPORTED_MODULE_22__["default"]
+    component: _components_Convenience_ProductSaleComponent_vue__WEBPACK_IMPORTED_MODULE_23__["default"]
   },
   // 商品編集画面
   {
     path: '/convenience/products/edit/:productId',
     name: 'convenience.products.edit',
-    component: _components_Convenience_ProductEditComponent_vue__WEBPACK_IMPORTED_MODULE_23__["default"]
+    component: _components_Convenience_ProductEditComponent_vue__WEBPACK_IMPORTED_MODULE_24__["default"]
   },
   // 出品した商品一覧画面
   {
     path: '/convenience/products/sale',
     name: 'convenience.products.sale',
-    component: _components_Convenience_ProductSaleIndexComponent_vue__WEBPACK_IMPORTED_MODULE_24__["default"]
+    component: _components_Convenience_ProductSaleIndexComponent_vue__WEBPACK_IMPORTED_MODULE_25__["default"]
   },
   // 購入された商品一覧画面
   {
     path: '/convenience/products/purchase',
     name: 'convenience.products.purchase',
-    component: _components_Convenience_ProductPurchaseIndexComponent_vue__WEBPACK_IMPORTED_MODULE_25__["default"]
+    component: _components_Convenience_ProductPurchaseIndexComponent_vue__WEBPACK_IMPORTED_MODULE_26__["default"]
   },
   // 商品一覧画面
   {
     path: '/products',
     name: 'products',
-    component: _components_ProductAllIndexComponent_vue__WEBPACK_IMPORTED_MODULE_26__["default"]
+    component: _components_ProductAllIndexComponent_vue__WEBPACK_IMPORTED_MODULE_27__["default"]
   },
   // 利用者側商品詳細画面
   {
     path: '/user/products/detail/:productId',
     name: 'user.products.detail',
-    component: _components_User_ProductDetailComponent_vue__WEBPACK_IMPORTED_MODULE_12__["default"]
+    component: _components_User_ProductDetailComponent_vue__WEBPACK_IMPORTED_MODULE_13__["default"]
   },
   // コンビニ側商品詳細画面
   {
     path: '/convenience/products/detail/:productId',
     name: 'convenience.products.detail',
-    component: _components_Convenience_ProductDetailComponent_vue__WEBPACK_IMPORTED_MODULE_21__["default"]
+    component: _components_Convenience_ProductDetailComponent_vue__WEBPACK_IMPORTED_MODULE_22__["default"]
   }]
+});
+
+// セッションが必要ないパス（HOME画面、利用規約、ユーザー登録画面、ログイン画面、パスワードメール送信画面、パスワードリセット画面）
+var publicPaths = ['/home', '/terms', '/user/register', '/convenience/register', '/user/login', '/convenience/login', '/user/password/email', '/convenience/password/email', '/user/password/reset/:token', '/convenience/password/reset/:token'];
+
+// セッションタイムアウトした場合のナビゲーションガード
+router.beforeEach(function (to, from, next) {
+  var isLogin = _store__WEBPACK_IMPORTED_MODULE_2__["default"].getters['auth/check'];
+  console.log('現在のパス:', to.path);
+
+  // セッションタイムアウトして、現在パスが公開パスではない場合はHOME画面にリダイレクト
+  if (!isLogin && !publicPaths.includes(to.path)) {
+    console.log('セッションタイムアウトのため、リダイレクトします');
+    next('/home');
+  } else {
+    next();
+  }
 });
 /* harmony default export */ __webpack_exports__["default"] = (router);
 
