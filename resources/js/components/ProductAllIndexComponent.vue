@@ -26,7 +26,7 @@
                         </li>
                     </ul>
                     <!-- 絞り込み検索 -->
-                    <search-component @search="onPageChange" />
+                    <search-component @search="onPageChange" :current_page="currentPage" :last_page="lastPage"/>
                 </div>
                 <!-- ページネーション -->
                 <pagination-component @onClick="onPageChange" :current_page="currentPage" :last_page="lastPage" />
