@@ -7238,7 +7238,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     getProducts: function getProducts(page, search) {
       var _this2 = this;
       return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
-        var result, products;
+        var params, result, products;
         return _regeneratorRuntime().wrap(function _callee$(_context) {
           while (1) switch (_context.prev = _context.next) {
             case 0:
@@ -7247,9 +7247,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               _this2.currentPage = page;
               console.log('pageは、', page);
               console.log('this.currentPageは、', _this2.currentPage);
-              _context.next = 6;
-              return axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/products/' + "?page=".concat(_this2.currentPage), search);
-            case 6:
+
+              // パラメータをクエリ文字列に変換
+              params = new URLSearchParams(search).toString();
+              _context.next = 7;
+              return axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/products/' + "?page=".concat(_this2.currentPage, "&").concat(params));
+            case 7:
               result = _context.sent;
               products = result.data;
               console.log('APIの結果は、', products);
@@ -7257,18 +7260,18 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               console.log('ページネーションメソッドのproductsは、', _this2.products);
               _this2.lastPage = products.products.last_page;
               console.log('this.lastPageは、', _this2.lastPage);
-              _context.next = 19;
+              _context.next = 20;
               break;
-            case 15:
-              _context.prev = 15;
+            case 16:
+              _context.prev = 16;
               _context.t0 = _context["catch"](0);
               console.error('ページを更新時に商品情報取得失敗:', _context.t0.response.data);
               _this2.errors = _context.t0.response.data;
-            case 19:
+            case 20:
             case "end":
               return _context.stop();
           }
-        }, _callee, null, [[0, 15]]);
+        }, _callee, null, [[0, 16]]);
       }))();
     },
     // // 商品絞り込み検索
@@ -7407,14 +7410,36 @@ __webpack_require__.r(__webpack_exports__);
     },
     // 検索フォームの値をサーバー側に送信するメソッド
     submitForm: function submitForm() {
+      var _this2 = this;
       console.log('検索結果を表示します');
-      var requestBody = {
-        prefecture: this.selectedPrefecture,
-        minprice: this.minPrice,
-        maxprice: this.maxPrice,
-        expiration_date: this.isExpired
-      };
-      this.$emit('search', requestBody); // 親コンポーネントに検索イベントを発火
+      var url = '/api/products?';
+      if (this.selectedPrefecture) {
+        url += "prefecture=".concat(this.selectedPrefecture, "&");
+      }
+      if (this.minPrice) {
+        url += "minprice=".concat(this.minPrice, "&");
+      }
+      if (this.maxPrice) {
+        url += "maxprice=".concat(this.maxPrice, "&");
+      }
+      if (this.isExpired !== null) {
+        url += "expiration_date=".concat(this.isExpired, "&");
+      }
+      // 最後の '&' を削除して、余分な '&' を避ける
+      url = url.slice(0, -1);
+
+      // URLをログ出力して確認
+      console.log('検索URL:', url);
+
+      // サーバーにリクエストを送信
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get(url).then(function (response) {
+        var result = response.data;
+        console.log('APIからのレスポンス:', result);
+        _this2.$emit('search', result); // 親コンポーネントに検索イベントを発火
+      })["catch"](function (error) {
+        console.error('検索失敗:', error.response.data);
+        _this2.errors = error.response.data;
+      });
     }
   }
 });
@@ -49066,7 +49091,13 @@ var render = function () {
                 })
               ),
               _vm._v(" "),
-              _c("search-component", { on: { search: _vm.onPageChange } }),
+              _c("search-component", {
+                attrs: {
+                  current_page: _vm.currentPage,
+                  last_page: _vm.lastPage,
+                },
+                on: { search: _vm.onPageChange },
+              }),
             ],
             1
           ),
