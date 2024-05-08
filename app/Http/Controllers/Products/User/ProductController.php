@@ -100,6 +100,22 @@ class ProductController extends Controller
         return response()->json(['message' => '商品のお気に入り登録を解除しました。']);
     }
 
+    // 購入した商品情報の取得
+    public function getPurchasedProducts()
+    {
+        $user = Auth::user();
+        $products = $user->purchases()->with('product.pictures')->get();
+        return response()->json(['products' => $products]);
+    }
+
+    // お気に入り登録した商品情報の取得
+    public function getLikedProducts()
+    {
+        $user = Auth::user();
+        $products = $user->likes()->with('product.pictures')->get();
+        return response()->json(['products' => $products]);
+    }
+
     // 出品しているコンビニがある都道府県の取得
     public function getPrefecture()
     {

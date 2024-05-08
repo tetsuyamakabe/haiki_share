@@ -16,6 +16,8 @@ import UserResetPasswordPasswordComponent from './components/User/ResetPasswordC
 import UserProfileComponent from './components/User/ProfileComponent.vue'; // プロフィール編集画面
 import UserWithdrawComponent from './components/User/WithdrawComponent.vue'; // 退会画面
 import UserProductDetailComponent from './components/User/ProductDetailComponent.vue'; // 商品詳細画面
+import UserLikeProductComponent from './components/User/ProductLikeComponent.vue'; // お気に入り登録商品一覧画面
+import UserPurchasedProductComponent from './components/User/ProductPurchasedComponent.vue'; // 購入した商品一覧画面
 
 // コンビニ側
 import ConvenienceRegisterComponent from './components/Convenience/RegisterComponent.vue'; // ユーザー登録画面
@@ -190,6 +192,18 @@ const router = new VueRouter({
             name: 'convenience.products.detail',
             component: ConvenienceProductDetailComponent,
         },
+        // 利用者側お気に入り登録した商品一覧画面
+        {
+            path: '/user/products/liked',
+            name: 'user.products.liked',
+            component: UserLikeProductComponent,
+        },
+        // 利用者側購入した商品一覧画面
+        {
+            path: '/user/products/purchased',
+            name: 'user.products.purchased',
+            component: UserPurchasedProductComponent,
+        }
     ]
 });
 

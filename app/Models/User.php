@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Product;
+use App\Models\Purchase;
 use App\Models\Convenience;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -67,6 +68,12 @@ class User extends Authenticatable
     public function likes()
     {
         return $this->hasMany(Like::class);
+    }
+
+    // 購入した商品との関連付け（一対多の関係）
+    public function purchases()
+    {
+        return $this->hasMany(Purchase::class, 'purchased_id');
     }
 }
 

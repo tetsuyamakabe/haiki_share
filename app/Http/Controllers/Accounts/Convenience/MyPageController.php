@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Accounts\Convenience;
 
 use App\Models\User;
+use App\Models\Product;
 use App\Models\Convenience;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -12,6 +13,26 @@ use App\Http\Requests\Convenience\ProfileRequest;
 
 class MyPageController extends Controller
 {
+    // マイページに表示する出品・購入商品情報の取得
+    public function getMyProducts(Request $request)
+    {
+        $user = Auth::user();
+        $userId = auth()->id();
+        $convenience = $user->convenience;
+        // マイページに出品した商品を最大5件表示
+        $saleProducts =  Product::with('pictures')->where('convenience_store_id', $convenience->id)->limit(5)->get();
+        // マイページに購入された商品を最大5件表示
+        $purchasedProducts = Product::with('pictures')
+            ->where('convenience_store_id', $convenience->id)
+            ->whereHas('purchases', function ($query) {
+                $query->where('is_purchased', true);
+            })->limit(5)->get();
+
+        // \Log::info('$saleProductsは、', [$saleProducts]);
+        // \Log::info('$purchasedProductsは、', [$purchasedProducts]);
+        return response()->json(['sale_products' => $saleProducts, 'purchased_products' => $purchasedProducts]);
+    }
+
     // プロフィール情報の取得処理
     public function getProfile(Request $request)
     {

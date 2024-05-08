@@ -40,6 +40,9 @@ Route::middleware(['auth', 'authcheckrole'])->group(function () {
     Route::delete('/user/products/purchase/cancel/{productId}', 'Products\User\ProductController@cancelProduct'); // 商品購入キャンセル処理
     Route::post('/user/like/{productId}', 'Products\User\ProductController@likeProduct'); // 商品お気に入り登録処理
     Route::post('/user/unlike/{productid}', 'Products\User\ProductController@unlikeProduct'); // 商品お気に入り解除処理
+    Route::get('/user/products/purchased', 'Products\User\ProductController@getPurchasedProducts'); // 購入した商品情報の取得
+    Route::get('/user/products/liked', 'Products\User\ProductController@getLikedProducts'); // お気に入り登録した商品情報の取得
+    Route::get('/user/mypage/products', 'Accounts\User\MyPageController@getMyProducts'); // マイページに表示する購入・お気に入り商品情報の取得
 });
 
 // コンビニ側
@@ -56,6 +59,7 @@ Route::middleware(['auth', 'authcheckrole'])->group(function () {
     Route::put('/convenience/products/sale', 'Products\Convenience\ProductController@createProduct'); // 商品出品処理（商品の投稿）
     Route::put('/convenience/products/edit/{productId}', 'Products\Convenience\ProductController@editProduct'); // 商品編集・更新処理
     Route::delete('/convenience/products/{productId}', 'Products\Convenience\ProductController@deleteProduct'); // 商品削除
-    Route::get('/convenience/products', 'Products\Convenience\ProductController@getConvenienceProduct'); // 出品した商品情報の取得
-    Route::get('/convenience/products/purchased', 'Products\Convenience\ProductController@getPurchaseProduct'); // 購入された商品情報の取得
+    Route::get('/convenience/products', 'Products\Convenience\ProductController@getConvenienceProducts'); // 出品した商品情報の取得
+    Route::get('/convenience/products/purchased', 'Products\Convenience\ProductController@getPurchasedProducts'); // 購入された商品情報の取得
+    Route::get('/convenience/mypage/products', 'Accounts\Convenience\MyPageController@getMyProducts'); // マイページに表示する出品・購入商品情報の取得
 });

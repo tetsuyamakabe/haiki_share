@@ -11,6 +11,24 @@ use App\Http\Requests\User\ProfileRequest;
 
 class MyPageController extends Controller
 {
+    // マイページに表示する購入・お気に入り商品情報の取得
+    public function getMyProducts(Request $request)
+    {
+        try {
+            $user = Auth::user();
+            // マイページに購入した商品を最大5件表示
+            $purchasedProducts = $user->purchases()->with('product.pictures')->limit(5)->get();
+            // \Log::info('$purchasedProducts', [$purchasedProducts]);
+            // マイページにお気に入り登録商品を最大5件表示
+            $likedProducts = $user->likes()->with('product.pictures')->limit(5)->get();
+            // \Log::info('$likedProducts', [$likedProducts]);
+
+            return response()->json(['purchased_products' => $purchasedProducts, 'liked_products' => $likedProducts]);
+        } catch (\Exception $e) {
+            return response()->json(['error' => '商品が見つかりません'], 404);
+        }
+    }
+
     // プロフィール情報の取得処理
    public function getProfile(Request $request)
     {
