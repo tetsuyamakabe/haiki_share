@@ -7340,9 +7340,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) switch (_context.prev = _context.next) {
             case 0:
               // try {
-              console.log('検索結果を表示します', params); // searchがundefined
+              _this2.currentPage = page;
+              console.log('pageは、', page);
+              console.log('this.currentPageは、', _this2.currentPage);
+              console.log('検索結果を表示します', params);
+
               // URLの組み立て
-              url = '/products?page=' + page;
+              url = '/products?page=' + _this2.currentPage;
               if (params && params.prefecture) {
                 url += "&prefecture=".concat(params.prefecture);
               }
@@ -7358,14 +7362,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               console.log('検索URL:', url);
 
               // ページ遷移
-              _context.next = 9;
+              _context.next = 12;
               return _this2.$router.push({
                 path: url
               });
-            case 9:
-              _context.next = 11;
+            case 12:
+              _context.next = 14;
               return axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api' + url);
-            case 11:
+            case 14:
               result = _context.sent;
               console.log(result);
               products = result.data;
@@ -7378,7 +7382,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               //     console.error('ページを更新時に商品情報取得失敗:', error.response.data);
               //     this.errors = error.response.data;
               // }
-            case 19:
+            case 22:
             case "end":
               return _context.stop();
           }

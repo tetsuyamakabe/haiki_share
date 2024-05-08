@@ -147,9 +147,13 @@ export default {
         // ページが変更されたときに新しい商品データを取得するメソッド
         async getProducts(page, params) {
             // try {
+                this.currentPage = page;
+                console.log('pageは、', page);
+                console.log('this.currentPageは、', this.currentPage);
                 console.log('検索結果を表示します', params);
+
                 // URLの組み立て
-                let url = '/products?page=' + page;
+                let url = '/products?page=' + this.currentPage;
                 if (params && params.prefecture) {
                     url += `&prefecture=${params.prefecture}`;
                 }
