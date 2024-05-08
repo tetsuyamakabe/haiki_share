@@ -2,10 +2,10 @@
     <main class="l-main">
         <div class="p-profile">
             <div class="p-product__form">
-                <h1 class="c-title">購入された商品一覧</h1>
+                <h1 class="c-title">購入した商品一覧</h1>
                 <div class="p-container">
                     <ul class="p-product__list">
-                        <li v-for="product in products.data" :key="product.id" class="p-product__item">
+                        <li v-for="product in products" :key="product.id" class="p-product__item">
                             <h3 class="c-product__name">{{ product.name }}</h3>
                             <div class="p-product__picture--container">
                                 <img class="c-product__picture" :src="getProductPicturePath(product)" alt="Product Image">
@@ -51,8 +51,8 @@ export default {
     methods: {
         // 商品情報をサーバーから取得
         getPurchasedProduct() {
-            console.log('購入された商品情報を取得します');
-            axios.get('/api/convenience/products/purchased').then(response => {
+            console.log('お気に入り登録商品情報を取得します');
+            axios.get('/api/user/products/purchased').then(response => {
                 this.products = response.data.products;
                 console.log('商品一覧:', this.products);
                 console.log('APIからのレスポンス:', response.data);
@@ -66,8 +66,8 @@ export default {
         // 商品画像のパスを取得するメソッド
         getProductPicturePath(product) {
             // console.log('productは、', product);
-            if (product.pictures.length > 0) {
-                return '/storage/product_pictures/' + product.pictures[0].file;
+            if (product.product.pictures.length > 0) {
+                return '/storage/product_pictures/' + product.product.pictures[0].file;
             } else {
                 return '/storage/product_pictures/no_image.png';
             }
@@ -90,7 +90,7 @@ export default {
                 this.currentPage = page;
                 console.log('pageは、', page);
                 console.log('this.currentPageは、', this.currentPage);
-                const result = await axios.get('/api/convenience/products/purchased' + `?page=${this.currentPage}`);
+                const result = await axios.get('/api/user/products/purchased' + `?page=${this.currentPage}`);
                 const responseData = result.data;
                 console.log('responseDataは、', responseData);
                 this.products = responseData.products;

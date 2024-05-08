@@ -53,12 +53,8 @@ class ProductController extends Controller
         $userId = auth()->id();
         $query = Product::with('pictures')->withCount('likes'); // withCountでいいね数の取得
 
-        $prefecture = $request->input('prefecture');
-        $minPrice = $request->input('minprice');
-        $maxPrice = $request->input('maxprice');
-        $expired = $request->input('expiration_date');
-
         // 出品しているコンビニがある都道府県
+        $prefecture = $request->input('prefecture');
         if ($prefecture !== null) {
             // Convenienceモデル経由でAddressモデルのprefectureの値を取得
             $query->whereHas('convenience.address', function ($addressQuery) use ($prefecture) {
@@ -68,15 +64,18 @@ class ProductController extends Controller
         }
 
         // 最小価格
+        $minPrice = $request->input('minprice');
         if ($minPrice !== null) {
             $query->where('price', '>=', $minPrice);
         }
         // 最大価格
+        $maxPrice = $request->input('maxprice');
         if ($maxPrice !== null) {
             $query->where('price', '<=', $maxPrice);
         }
 
         // 賞味期限切れかどうか
+        $expired = $request->input('expiration_date');
         if ($expired !== null) {
             $today = Carbon::today()->toDateString(); // 現在の日付を取得
             if ($expired === 'true') {
@@ -86,12 +85,27 @@ class ProductController extends Controller
             }
         }
 
+        // コレクションを取得
         $products = $query->paginate(4);
+
+        // 各商品に対して処理を行う
+        foreach ($products as $product) {
+            // 商品情報にお気に入り情報を含める
+            $like = Like::where('user_id', $userId)->where('product_id', $product->id)->first();
+            $product->liked = $like ? true : false;
+
+            // 購入済み商品は「購入済み」ラベルをつける
+            $is_purchased = Purchase::where('product_id', $product->id)->first();
+            $product->is_purchased = $is_purchased ? true : false;
+        }
+
+        // \Log::info('$productは、', [$products]);
+
         return response()->json(['products' => $products]);
     }
 
     // 出品した商品情報の取得
-    public function getConvenienceProduct(Request $request)
+    public function getConvenienceProducts(Request $request)
     {
         try {
             $user = Auth::user();
@@ -107,17 +121,19 @@ class ProductController extends Controller
     }
 
     // 購入された商品情報の取得
-    public function getPurchaseProduct(Request $request)
+    public function getPurchasedProducts(Request $request)
     {
-        // ログインユーザーのIDを取得
-        $userId = auth()->id();
-
-        // 購入された商品情報を取得
-        $products = Product::whereHas('purchases', function ($query) use ($userId) {
-            // 購入者IDがログインユーザーのIDで、購入フラグがtrueのクエリ
-            $query->where('purchased_id', $userId)->where('is_purchased', true);
-        })->paginate(4);
-
+        $user = Auth::user();
+        $convenience = $user->convenience;
+        if (!$convenience) {
+            return response()->json(['error' => 'コンビニが見つかりません'], 404);
+        }
+        $products = Product::with('pictures')
+            ->where('convenience_store_id', $convenience->id)
+            ->whereHas('purchases', function ($query) {
+                $query->where('is_purchased', true);
+            })->paginate(10);
+        // \Log::info('$productsは、', [$products]);
         return response()->json(['products' => $products]);
     }
 
@@ -143,7 +159,9 @@ class ProductController extends Controller
             if ($request->hasFile('product_picture')) {
                 $picture = $request->file('product_picture');
                 $extension = $picture->getClientOriginalExtension();
-                $fileName = sha1($picture->getClientOriginalName()) . '.' . $extension;
+                $fileContent = file_get_contents($picture->getRealPath());
+                $fileName = sha1($fileContent) . '.' . $extension;
+                // $fileName = sha1($picture->getClientOriginalName()) . '.' . $extension;
                 $picturePath = $picture->storeAs('public/product_pictures', $fileName);
 
                 // 商品画像をproduct_picturesテーブルに保存

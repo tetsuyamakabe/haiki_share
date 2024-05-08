@@ -80,32 +80,23 @@ export default {
         // 検索フォームの値をサーバー側に送信するメソッド
         submitForm() {
             console.log('検索結果を表示します');
-            let url = '/api/products?';
+            let params = {};
+
             if (this.selectedPrefecture) {
-                url += `prefecture=${this.selectedPrefecture}&`;
+                params.prefecture = this.selectedPrefecture;
             }
             if (this.minPrice) {
-                url += `minprice=${this.minPrice}&`;
+                params.minprice = this.minPrice;
             }
             if (this.maxPrice) {
-                url += `maxprice=${this.maxPrice}&`;
+                params.maxprice = this.maxPrice;
             }
             if (this.isExpired !== null) {
-                url += `expiration_date=${this.isExpired}&`;
+                params.expiration_date = this.isExpired;
             }
-            url = url.slice(0, -1); // 最後にくっついている余分な'&'を削除
-            console.log('検索URL:', url);
-            
-            // サーバーにリクエストを送信
-            axios.get(url).then(response => {
-                const result = response.data;
-                console.log('APIからのレスポンス:', result);
-                this.$emit('search', result); // 親コンポーネントに検索イベントを発火
-            }).catch(error => {
-                console.error('検索失敗:', error.response.data);
-                this.errors = error.response.data;
-            });
-        }
+            console.log('検索パラメータ:', params);
+            this.$emit('search', params); // パラメータをつけたオブジェクトをemitする
+        },
     }
 }
 </script>
