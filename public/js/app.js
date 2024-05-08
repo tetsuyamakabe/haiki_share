@@ -7293,8 +7293,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       return "/home";
     },
     // ページが変更されたときの処理
-    onPageChange: function onPageChange(page, search) {
-      this.getProducts(page, search);
+    onPageChange: function onPageChange(page, params) {
+      this.getProducts(page, params);
     },
     // ページが変更されたときに新しい商品データを取得するメソッド
     // async getProducts(page, search) {
@@ -7331,7 +7331,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     //         this.errors = error.response.data;
     //     }
     // },
-    getProducts: function getProducts(page, search) {
+    // ページが変更されたときに新しい商品データを取得するメソッド
+    getProducts: function getProducts(page, params) {
       var _this2 = this;
       return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
         var url, result, products;
@@ -7339,20 +7340,20 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) switch (_context.prev = _context.next) {
             case 0:
               // try {
-              console.log('検索結果を表示します', search);
+              console.log('検索結果を表示します', params); // searchがundefined
               // URLの組み立て
               url = '/products?page=' + page;
-              if (search && search.selectedPrefecture) {
-                url += "&prefecture=".concat(search.selectedPrefecture);
+              if (params && params.prefecture) {
+                url += "&prefecture=".concat(params.prefecture);
               }
-              if (search && search.minPrice) {
-                url += "&minprice=".concat(search.minPrice);
+              if (params && params.minprice) {
+                url += "&minprice=".concat(params.minprice);
               }
-              if (search && search.maxPrice) {
-                url += "&maxprice=".concat(search.maxPrice);
+              if (params && params.maxprice) {
+                url += "&maxprice=".concat(params.maxprice);
               }
-              if (search && search.isExpired !== null) {
-                url += "&expiration_date=".concat(search.isExpired);
+              if (params && params.expiration_date !== null) {
+                url += "&expiration_date=".concat(params.expiration_date);
               }
               console.log('検索URL:', url);
 
@@ -7520,7 +7521,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     // 検索フォームの値をサーバー側に送信するメソッド
     submitForm: function submitForm() {
-      console.log('検索結果を表示します');
+      console.log('検索条件を送信します');
       var params = {};
       if (this.selectedPrefecture) {
         params.prefecture = this.selectedPrefecture;
@@ -7535,8 +7536,7 @@ __webpack_require__.r(__webpack_exports__);
         params.expiration_date = this.isExpired;
       }
       console.log('検索パラメータ:', params);
-      // パラメーターが含まれたオブジェクトをemitする
-      this.$emit('search', params);
+      this.$emit('search', this.currentPage, params); // ページ番号とパラメータをつけたオブジェクトをemitする
     }
   }
 });

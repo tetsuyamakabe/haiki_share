@@ -79,7 +79,7 @@ export default {
 
         // 検索フォームの値をサーバー側に送信するメソッド
         submitForm() {
-            console.log('検索結果を表示します');
+            console.log('検索条件を送信します');
             let params = {};
 
             if (this.selectedPrefecture) {
@@ -95,7 +95,7 @@ export default {
                 params.expiration_date = this.isExpired;
             }
             console.log('検索パラメータ:', params);
-            this.$emit('search', params); // パラメータをつけたオブジェクトをemitする
+            this.$emit('search', this.currentPage, params); // ページ番号とパラメータをつけたオブジェクトをemitする
         },
     }
 }
