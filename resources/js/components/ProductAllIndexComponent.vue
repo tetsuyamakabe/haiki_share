@@ -103,8 +103,8 @@ export default {
         },
 
         // ページが変更されたときの処理
-        onPageChange(page, search) {
-            this.getProducts(page, search);
+        onPageChange(page, params) {
+            this.getProducts(page, params);
         },
 
         // ページが変更されたときに新しい商品データを取得するメソッド
@@ -145,22 +145,22 @@ export default {
         // },
 
         // ページが変更されたときに新しい商品データを取得するメソッド
-        async getProducts(page, search) {
+        async getProducts(page, params) {
             // try {
-                console.log('検索結果を表示します', search); // searchがundefined
+                console.log('検索結果を表示します', params);
                 // URLの組み立て
                 let url = '/products?page=' + page;
-                if (search && search.selectedPrefecture) {
-                    url += `&prefecture=${search.selectedPrefecture}`;
+                if (params && params.prefecture) {
+                    url += `&prefecture=${params.prefecture}`;
                 }
-                if (search && search.minPrice) {
-                    url += `&minprice=${search.minPrice}`;
+                if (params && params.minprice) {
+                    url += `&minprice=${params.minprice}`;
                 }
-                if (search && search.maxPrice) {
-                    url += `&maxprice=${search.maxPrice}`;
+                if (params && params.maxprice) {
+                    url += `&maxprice=${params.maxprice}`;
                 }
-                if (search && search.isExpired !== null) {
-                    url += `&expiration_date=${search.isExpired}`;
+                if (params && params.expiration_date !== null) {
+                    url += `&expiration_date=${params.expiration_date}`;
                 }
                 console.log('検索URL:', url);
 
