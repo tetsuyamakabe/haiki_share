@@ -7250,11 +7250,39 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     this.getProducts(); // ページが変更された時の商品情報を取得
   },
   methods: {
+    // 検索結果を表示する
+    searchResult: function searchResult(params) {
+      console.log('すべての商品情報を取得します');
+      // URLの組み立て
+      var url = "/products?page=".concat(this.currentPage);
+      if (params && params.prefecture) {
+        url += "&prefecture=".concat(params.prefecture);
+      }
+      if (params && params.minprice) {
+        url += "&minprice=".concat(params.minprice);
+      }
+      if (params && params.maxprice) {
+        url += "&maxprice=".concat(params.maxprice);
+      }
+      if (params && params.expiration_date !== null) {
+        url += "&expiration_date=".concat(params.expiration_date);
+      }
+      console.log('検索URL:', url);
+      // ページ遷移
+      this.$router.push({
+        path: url
+      });
+      this.getProduct(params);
+    },
     // 商品情報をサーバーから取得
     getProduct: function getProduct() {
       var _this = this;
       console.log('すべての商品情報を取得します');
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/products').then(function (response) {
+      // 現在のルートのクエリパラメータを取得
+      var params = this.$route.query;
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/products', {
+        params: params
+      }).then(function (response) {
         console.log('APIからのレスポンス:', response.data);
         _this.products = response.data.products;
         _this.lastPage = response.data.last_page;
@@ -7293,113 +7321,46 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       return "/home";
     },
     // ページが変更されたときの処理
-    onPageChange: function onPageChange(page, params) {
-      this.getProducts(page, params);
+    onPageChange: function onPageChange(page) {
+      this.getProducts(page);
     },
     // ページが変更されたときに新しい商品データを取得するメソッド
-    // async getProducts(page, search) {
-    //     try {
-    //         console.log('検索結果を表示します');
-    //         let url = '/api/products?';
-    //         if (search.selectedPrefecture) {
-    //             url += `prefecture=${this.selectedPrefecture}&`;
-    //         }
-    //         if (search.minPrice) {
-    //             url += `minprice=${this.minPrice}&`;
-    //         }
-    //         if (search.maxPrice) {
-    //             url += `maxprice=${this.maxPrice}&`;
-    //         }
-    //         if (search.isExpired !== null) {
-    //             url += `expiration_date=${this.isExpired}&`;
-    //         }
-    //         url = url.slice(0, -1); // 最後にくっついている余分な'&'を削除
-    //         console.log('検索URL:', url);
-    //         // APIリクエストの前にcurrentPageを更新する
-    //         this.currentPage = page;
-    //         console.log('pageは、', page);
-    //         console.log('this.currentPageは、', this.currentPage);
-    //         const result = await axios.get('/api/products/' + `?page=${this.currentPage}`, url);
-    //         const products = result.data;
-    //         console.log('APIの結果は、', products);
-    //         this.products = products.products;
-    //         console.log('ページネーションメソッドのproductsは、', this.products);
-    //         this.lastPage = products.products.last_page;
-    //         console.log('this.lastPageは、', this.lastPage);
-    //     } catch (error) {
-    //         console.error('ページを更新時に商品情報取得失敗:', error.response.data);
-    //         this.errors = error.response.data;
-    //     }
-    // },
-    // ページが変更されたときに新しい商品データを取得するメソッド
-    getProducts: function getProducts(page, params) {
+    getProducts: function getProducts(page) {
       var _this2 = this;
       return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
-        var url, result, products;
+        var result, products;
         return _regeneratorRuntime().wrap(function _callee$(_context) {
           while (1) switch (_context.prev = _context.next) {
             case 0:
-              // try {
-              console.log('検索結果を表示します', params); // searchがundefined
-              // URLの組み立て
-              url = '/products?page=' + page;
-              if (params && params.prefecture) {
-                url += "&prefecture=".concat(params.prefecture);
-              }
-              if (params && params.minprice) {
-                url += "&minprice=".concat(params.minprice);
-              }
-              if (params && params.maxprice) {
-                url += "&maxprice=".concat(params.maxprice);
-              }
-              if (params && params.expiration_date !== null) {
-                url += "&expiration_date=".concat(params.expiration_date);
-              }
-              console.log('検索URL:', url);
-
-              // ページ遷移
-              _context.next = 9;
-              return _this2.$router.push({
-                path: url
-              });
-            case 9:
-              _context.next = 11;
-              return axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api' + url);
-            case 11:
+              _context.prev = 0;
+              // APIリクエストの前にcurrentPageを更新する
+              _this2.currentPage = page;
+              console.log('pageは、', page);
+              console.log('this.currentPageは、', _this2.currentPage);
+              _context.next = 6;
+              return axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/products/' + "?page=".concat(_this2.currentPage));
+            case 6:
               result = _context.sent;
-              console.log(result);
               products = result.data;
-              console.log('APIの結果は、', products);
+              console.log('productsは、', products);
               _this2.products = products.products;
-              console.log('ページネーションメソッドのproductsは、', _this2.products);
+              console.log('productsは、', _this2.products);
               _this2.lastPage = products.products.last_page;
               console.log('this.lastPageは、', _this2.lastPage);
-              // } catch (error) {
-              //     console.error('ページを更新時に商品情報取得失敗:', error.response.data);
-              //     this.errors = error.response.data;
-              // }
+              _context.next = 19;
+              break;
+            case 15:
+              _context.prev = 15;
+              _context.t0 = _context["catch"](0);
+              console.error('ページを更新時に商品情報取得失敗:', _context.t0.response.data);
+              _this2.errors = _context.t0.response.data;
             case 19:
             case "end":
               return _context.stop();
           }
-        }, _callee);
+        }, _callee, null, [[0, 15]]);
       }))();
     },
-    // // 商品絞り込み検索
-    // searchResult(search) {
-    //     console.log('searchResult()メソッドです');
-    //     axios.get('/api/products/', search).then(response => {
-    //         const result = response.data;
-    //         console.log('APIからのレスポンス:', response.data);
-    //         this.products = result.products;
-    //         this.lastPage = result.products.last_page;
-    //         console.log('ページネーションメソッドのproductsは、', this.products);
-    //         console.log('this.lastPageは、', this.lastPage);
-    //     }).catch(error => {
-    //         console.error('検索失敗:', error.response.data);
-    //         this.errors = error.response.data;
-    //     });
-    // },
     // 商品お気に入り登録
     productLike: function productLike(product) {
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/user/like/' + product.id).then(function (response) {
@@ -7536,7 +7497,7 @@ __webpack_require__.r(__webpack_exports__);
         params.expiration_date = this.isExpired;
       }
       console.log('検索パラメータ:', params);
-      this.$emit('search', this.currentPage, params); // ページ番号とパラメータをつけたオブジェクトをemitする
+      this.$emit('search', params); // パラメータをつけたオブジェクトをemitする
     }
   }
 });
@@ -49667,7 +49628,7 @@ var render = function () {
                   current_page: _vm.currentPage,
                   last_page: _vm.lastPage,
                 },
-                on: { search: _vm.onPageChange },
+                on: { search: _vm.searchResult },
               }),
             ],
             1
