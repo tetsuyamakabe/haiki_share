@@ -26,7 +26,7 @@
                         </li>
                     </ul>
                     <!-- 絞り込み検索 -->
-                    <search-component @search="searchResult" :current_page="currentPage" :last_page="lastPage"/>
+                    <search-component @search="searchResult" />
                 </div>
                 <!-- ページネーション -->
                 <pagination-component @onClick="onPageChange" :current_page="currentPage" :last_page="lastPage" />
@@ -72,7 +72,14 @@ export default {
         createURL(params) {
             console.log('検索URLを作成します');
             // URLの組み立て
-            let url = `/products?page=${this.currentPage}`;
+            let url = `/products`;
+
+            if (params.page) {
+                url += `?page=${params.page}`;
+            } else {
+                url += `?page=${this.currentPage}`;
+            }
+
             if (params && params.prefecture) {
                 url += `&prefecture=${params.prefecture}`;
             }
@@ -91,14 +98,14 @@ export default {
             this.getProduct();
         },
 
+        // ページが変更されたときの処理
+        onPageChange(page) {
+            this.createURL({ page: this.currentPage + 1 }); // pageをオブジェクトとして渡す
+        },
+
         // 検索結果を表示する
         searchResult(params) {
             this.createURL(params);
-        },
-
-        // ページが変更されたときの処理
-        onPageChange() {
-            this.createURL();
         },
 
         // 商品情報をサーバーから取得
