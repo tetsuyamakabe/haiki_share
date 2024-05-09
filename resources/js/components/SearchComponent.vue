@@ -95,7 +95,7 @@ export default {
                 params.expiration_date = this.isExpired;
             }
             console.log('検索パラメータ:', params);
-            this.$emit('search', this.currentPage, params); // ページ番号とパラメータをつけたオブジェクトをemitする
+            this.$emit('search', params); // パラメータをつけたオブジェクトをemitする
         },
     }
 }

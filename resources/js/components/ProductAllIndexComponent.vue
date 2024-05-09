@@ -26,7 +26,7 @@
                         </li>
                     </ul>
                     <!-- 絞り込み検索 -->
-                    <search-component @search="onPageChange" :current_page="currentPage" :last_page="lastPage"/>
+                    <search-component @search="searchResult" :current_page="currentPage" :last_page="lastPage"/>
                 </div>
                 <!-- ページネーション -->
                 <pagination-component @onClick="onPageChange" :current_page="currentPage" :last_page="lastPage" />
@@ -68,10 +68,35 @@ export default {
     },
 
     methods: {
+        // 検索結果を表示する
+        searchResult(params) {
+            console.log('すべての商品情報を取得します');
+            // URLの組み立て
+            let url = `/products?page=${this.currentPage}`;
+            if (params && params.prefecture) {
+                url += `&prefecture=${params.prefecture}`;
+            }
+            if (params && params.minprice) {
+                url += `&minprice=${params.minprice}`;
+            }
+            if (params && params.maxprice) {
+                url += `&maxprice=${params.maxprice}`;
+            }
+            if (params && params.expiration_date !== null) {
+                url += `&expiration_date=${params.expiration_date}`;
+            }
+            console.log('検索URL:', url);
+            // ページ遷移
+            this.$router.push({ path: url });
+            this.getProduct(params);
+        },
+
         // 商品情報をサーバーから取得
         getProduct() {
             console.log('すべての商品情報を取得します');
-            axios.get('/api/products').then(response => {
+            // 現在のルートのクエリパラメータを取得
+            const params = this.$route.query;
+            axios.get('/api/products', { params: params }).then(response => {
                 console.log('APIからのレスポンス:', response.data);
                 this.products = response.data.products;
                 this.lastPage = response.data.last_page;
@@ -103,104 +128,29 @@ export default {
         },
 
         // ページが変更されたときの処理
-        onPageChange(page, params) {
-            this.getProducts(page, params);
+        onPageChange(page) {
+            this.getProducts(page);
         },
 
         // ページが変更されたときに新しい商品データを取得するメソッド
-        // async getProducts(page, search) {
-        //     try {
-        //         console.log('検索結果を表示します');
-        //         let url = '/api/products?';
-        //         if (search.selectedPrefecture) {
-        //             url += `prefecture=${this.selectedPrefecture}&`;
-        //         }
-        //         if (search.minPrice) {
-        //             url += `minprice=${this.minPrice}&`;
-        //         }
-        //         if (search.maxPrice) {
-        //             url += `maxprice=${this.maxPrice}&`;
-        //         }
-        //         if (search.isExpired !== null) {
-        //             url += `expiration_date=${this.isExpired}&`;
-        //         }
-        //         url = url.slice(0, -1); // 最後にくっついている余分な'&'を削除
-        //         console.log('検索URL:', url);
-
-        //         // APIリクエストの前にcurrentPageを更新する
-        //         this.currentPage = page;
-        //         console.log('pageは、', page);
-        //         console.log('this.currentPageは、', this.currentPage);
-        //         const result = await axios.get('/api/products/' + `?page=${this.currentPage}`, url);
-        //         const products = result.data;
-        //         console.log('APIの結果は、', products);
-        //         this.products = products.products;
-        //         console.log('ページネーションメソッドのproductsは、', this.products);
-        //         this.lastPage = products.products.last_page;
-        //         console.log('this.lastPageは、', this.lastPage);
-        //     } catch (error) {
-        //         console.error('ページを更新時に商品情報取得失敗:', error.response.data);
-        //         this.errors = error.response.data;
-        //     }
-        // },
-
-        // ページが変更されたときに新しい商品データを取得するメソッド
-        async getProducts(page, params) {
-            // try {
+        async getProducts(page) {
+            try {
+                // APIリクエストの前にcurrentPageを更新する
                 this.currentPage = page;
                 console.log('pageは、', page);
                 console.log('this.currentPageは、', this.currentPage);
-                console.log('検索結果を表示します', params);
-
-                // URLの組み立て
-                let url = '/products?page=' + this.currentPage;
-                if (params && params.prefecture) {
-                    url += `&prefecture=${params.prefecture}`;
-                }
-                if (params && params.minprice) {
-                    url += `&minprice=${params.minprice}`;
-                }
-                if (params && params.maxprice) {
-                    url += `&maxprice=${params.maxprice}`;
-                }
-                if (params && params.expiration_date !== null) {
-                    url += `&expiration_date=${params.expiration_date}`;
-                }
-                console.log('検索URL:', url);
-
-                // ページ遷移
-                await this.$router.push({ path: url });
-
-                // APIリクエスト
-                const result = await axios.get('/api' + url);
-                console.log(result);
+                const result = await axios.get('/api/products/' + `?page=${this.currentPage}`);
                 const products = result.data;
-                console.log('APIの結果は、', products);
+                console.log('productsは、', products);
                 this.products = products.products;
-                console.log('ページネーションメソッドのproductsは、', this.products);
+                console.log('productsは、', this.products);
                 this.lastPage = products.products.last_page;
                 console.log('this.lastPageは、', this.lastPage);
-            // } catch (error) {
-            //     console.error('ページを更新時に商品情報取得失敗:', error.response.data);
-            //     this.errors = error.response.data;
-            // }
+            } catch (error) {
+                console.error('ページを更新時に商品情報取得失敗:', error.response.data);
+                this.errors = error.response.data;
+            }
         },
-
-        // // 商品絞り込み検索
-        // searchResult(search) {
-        //     console.log('searchResult()メソッドです');
-        //     axios.get('/api/products/', search).then(response => {
-        //         const result = response.data;
-        //         console.log('APIからのレスポンス:', response.data);
-        //         this.products = result.products;
-        //         this.lastPage = result.products.last_page;
-        //         console.log('ページネーションメソッドのproductsは、', this.products);
-        //         console.log('this.lastPageは、', this.lastPage);
-        //     }).catch(error => {
-        //         console.error('検索失敗:', error.response.data);
-        //         this.errors = error.response.data;
-        //     });
-        // },
 
         // 商品お気に入り登録
         productLike(product) {
