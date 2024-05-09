@@ -7248,9 +7248,15 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     // URLを作成する
     createURL: function createURL(params) {
+      console.log('paramsは、', params);
       console.log('検索URLを作成します');
       // URLの組み立て
-      var url = "/products?page=".concat(this.currentPage);
+      var url = "/products";
+      if (page) {
+        url += "?page=".concat(params.page);
+      } else {
+        url += "?page=".concat(this.currentPage);
+      }
       if (params && params.prefecture) {
         url += "&prefecture=".concat(params.prefecture);
       }
@@ -7270,13 +7276,15 @@ __webpack_require__.r(__webpack_exports__);
       });
       this.getProduct();
     },
+    // ページが変更されたときの処理
+    onPageChange: function onPageChange(page) {
+      this.createURL({
+        page: this.currentPage + 1
+      }); // pageをオブジェクトとして渡す
+    },
     // 検索結果を表示する
     searchResult: function searchResult(params) {
       this.createURL(params);
-    },
-    // ページが変更されたときの処理
-    onPageChange: function onPageChange() {
-      this.createURL();
     },
     // 商品情報をサーバーから取得
     getProduct: function getProduct() {
@@ -49605,13 +49613,7 @@ var render = function () {
                 })
               ),
               _vm._v(" "),
-              _c("search-component", {
-                attrs: {
-                  current_page: _vm.currentPage,
-                  last_page: _vm.lastPage,
-                },
-                on: { search: _vm.searchResult },
-              }),
+              _c("search-component", { on: { search: _vm.searchResult } }),
             ],
             1
           ),
