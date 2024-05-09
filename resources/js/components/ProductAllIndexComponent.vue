@@ -74,7 +74,7 @@ export default {
             // URLの組み立て
             let url = `/products`;
 
-            if (params.page) {
+            if (params && params.page) {
                 url += `?page=${params.page}`;
             } else {
                 url += `?page=${this.currentPage}`;
@@ -89,7 +89,7 @@ export default {
             if (params && params.maxprice) {
                 url += `&maxprice=${params.maxprice}`;
             }
-            if (params && params.expiration_date !== null) {
+            if (params && params.expiration_date) {
                 url += `&expiration_date=${params.expiration_date}`;
             }
             console.log('検索URL:', url);
@@ -100,7 +100,10 @@ export default {
 
         // ページが変更されたときの処理
         onPageChange(page) {
-            this.createURL({ page: this.currentPage + 1 }); // pageをオブジェクトとして渡す
+            console.log('これはonPageChange()メソッドです。');
+            this.currentPage = page; // ページ番号を更新
+            this.createURL();
+            console.log('これはonPageChange()メソッドでした。');
         },
 
         // 検索結果を表示する
@@ -113,10 +116,14 @@ export default {
             console.log('すべての商品情報を取得します');
             // 現在のルートのクエリパラメータを取得
             const params = this.$route.query;
+            console.log('paramsは、', params);
             axios.get('/api/products', { params: params }).then(response => {
+                console.log('paramsは、', params);
                 console.log('getProductのAPIからのレスポンス:', response.data);
                 this.products = response.data.products;
-                this.lastPage = response.data.last_page;
+                console.log('productsは、', this.products);
+                this.lastPage = response.data.products.last_page;
+                console.log('this.lastPageは、', this.lastPage);
             }).catch(error => {
                 console.error('商品情報取得失敗:', error.response.data);
                 this.errors = error.response.data;

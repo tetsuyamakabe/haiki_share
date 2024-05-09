@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddDefaultIconToUsersTable extends Migration
+class AddDefaultIconUsersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -16,7 +16,7 @@ class AddDefaultIconToUsersTable extends Migration
         // ユーザーテーブルのマイグレーション
         Schema::table('users', function (Blueprint $table) {
             // アイコンカラムのデフォルト値にデフォルト画像のパスを指定
-            // $table->string('icon')->default('default.png')->after('password');
+            $table->string('icon')->default('default.png')->change();
         });
     }
 
@@ -30,7 +30,7 @@ class AddDefaultIconToUsersTable extends Migration
         // ユーザーテーブルのロールバック
         Schema::table('users', function (Blueprint $table) {
             // アイコンカラムをロールバック
-            // $table->string('icon')->nullable()->change();
+            $table->string('icon')->nullable()->change();
         });
     }
 }

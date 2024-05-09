@@ -7156,7 +7156,10 @@ __webpack_require__.r(__webpack_exports__);
     // ページが変更されたときの処理
     changePage: function changePage(page) {
       console.log('changePageメソッドです。');
+      console.log('pageは、', page);
+      console.log('this.currentPageは、', this.currentPage);
       if (page > 0 && page <= this.last_page) {
+        console.log('this.currentPageは、', this.currentPage);
         this.currentPage = page;
         console.log('pageは、', page);
         this.$emit("onClick", this.currentPage); // 親コンポーネントに正しいページ番号を伝達
@@ -7248,11 +7251,10 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     // URLを作成する
     createURL: function createURL(params) {
-      console.log('paramsは、', params);
       console.log('検索URLを作成します');
       // URLの組み立て
       var url = "/products";
-      if (page) {
+      if (params && params.page) {
         url += "?page=".concat(params.page);
       } else {
         url += "?page=".concat(this.currentPage);
@@ -7266,7 +7268,7 @@ __webpack_require__.r(__webpack_exports__);
       if (params && params.maxprice) {
         url += "&maxprice=".concat(params.maxprice);
       }
-      if (params && params.expiration_date !== null) {
+      if (params && params.expiration_date) {
         url += "&expiration_date=".concat(params.expiration_date);
       }
       console.log('検索URL:', url);
@@ -7278,9 +7280,10 @@ __webpack_require__.r(__webpack_exports__);
     },
     // ページが変更されたときの処理
     onPageChange: function onPageChange(page) {
-      this.createURL({
-        page: this.currentPage + 1
-      }); // pageをオブジェクトとして渡す
+      console.log('これはonPageChange()メソッドです。');
+      this.currentPage = page; // ページ番号を更新
+      this.createURL();
+      console.log('これはonPageChange()メソッドでした。');
     },
     // 検索結果を表示する
     searchResult: function searchResult(params) {
@@ -7292,12 +7295,16 @@ __webpack_require__.r(__webpack_exports__);
       console.log('すべての商品情報を取得します');
       // 現在のルートのクエリパラメータを取得
       var params = this.$route.query;
+      console.log('paramsは、', params);
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/products', {
         params: params
       }).then(function (response) {
+        console.log('paramsは、', params);
         console.log('getProductのAPIからのレスポンス:', response.data);
         _this.products = response.data.products;
-        _this.lastPage = response.data.last_page;
+        console.log('productsは、', _this.products);
+        _this.lastPage = response.data.products.last_page;
+        console.log('this.lastPageは、', _this.lastPage);
       })["catch"](function (error) {
         console.error('商品情報取得失敗:', error.response.data);
         _this.errors = error.response.data;
