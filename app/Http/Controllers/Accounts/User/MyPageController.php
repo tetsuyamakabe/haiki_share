@@ -17,10 +17,14 @@ class MyPageController extends Controller
         try {
             $user = Auth::user();
             // マイページに購入した商品を最大5件表示
-            $purchasedProducts = $user->purchases()->with('product.pictures')->limit(5)->get();
+            $purchasedProducts = $user->purchases()->with('product.pictures')
+                ->orderBy('created_at', 'desc') // 最新の購入履歴（降順）
+                ->limit(5)->get();
             // \Log::info('$purchasedProducts', [$purchasedProducts]);
             // マイページにお気に入り登録商品を最大5件表示
-            $likedProducts = $user->likes()->with('product.pictures')->limit(5)->get();
+            $likedProducts = $user->likes()->with('product.pictures')
+                ->orderBy('created_at', 'desc') // 最新の登録履歴（降順）
+                ->limit(5)->get();
             // \Log::info('$likedProducts', [$likedProducts]);
 
             return response()->json(['purchased_products' => $purchasedProducts, 'liked_products' => $likedProducts]);

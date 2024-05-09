@@ -98,7 +98,10 @@ export default {
         // ページが変更されたときの処理
         changePage(page) {
             console.log('changePageメソッドです。');
+            console.log('pageは、', page);
+            console.log('this.currentPageは、', this.currentPage);
             if (page > 0 && page <= this.last_page) {
+                console.log('this.currentPageは、', this.currentPage);
                 this.currentPage = page;
                 console.log('pageは、', page);
                 this.$emit("onClick", this.currentPage); // 親コンポーネントに正しいページ番号を伝達

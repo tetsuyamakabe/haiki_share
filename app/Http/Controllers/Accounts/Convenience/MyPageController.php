@@ -20,13 +20,16 @@ class MyPageController extends Controller
         $userId = auth()->id();
         $convenience = $user->convenience;
         // マイページに出品した商品を最大5件表示
-        $saleProducts =  Product::with('pictures')->where('convenience_store_id', $convenience->id)->limit(5)->get();
+        $saleProducts =  Product::with('pictures')->where('convenience_store_id', $convenience->id)
+            ->orderBy('created_at', 'desc') // 最新の投稿（降順）
+            ->limit(5)->get();
         // マイページに購入された商品を最大5件表示
         $purchasedProducts = Product::with('pictures')
             ->where('convenience_store_id', $convenience->id)
             ->whereHas('purchases', function ($query) {
                 $query->where('is_purchased', true);
-            })->limit(5)->get();
+            })->orderBy('created_at', 'desc') // 最新の購入履歴（降順）
+            ->limit(5)->get();
 
         // \Log::info('$saleProductsは、', [$saleProducts]);
         // \Log::info('$purchasedProductsは、', [$purchasedProducts]);
