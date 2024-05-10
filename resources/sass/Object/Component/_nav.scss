@@ -16,7 +16,7 @@
             transition: .5s;
             z-index: 2;
 
-            &.active{
+            &.is-active{
                 transition: .5s;
                 transform: translateX(-100%);
                 z-index: 2;
@@ -34,7 +34,7 @@
             padding-top: $space_3l;
             transition: .5s;
 
-            &.active{
+            &.is-active{
                 transition: .5s;
                 transform: translateX(-100%);
             }    

@@ -4,13 +4,13 @@
             <router-link class="c-header__title" :to="{ name: 'home' }">
                 haiki share
             </router-link>
-            <div class="c-nav__menu--trigger js-toggle-sp-menu">
+            <div class="c-nav__menu--trigger" @click="open = !open">
                 <span></span>
                 <span></span>
                 <span></span>
             </div>
 
-            <nav class="c-nav__menu js-toggle-sp-menu-target">
+            <nav class="c-nav__menu" v-bind:class="{'is-active' : open }">
                 <ul class="c-nav__menu--list">
                     <div v-if="isLogin" class="navbar__item">
                         {{ username }}
@@ -31,6 +31,12 @@
 
 <script>
 export default {
+    data() {
+        return {
+            open: false,
+        }
+    },
+
     computed: {
         // ログインユーザーかどうか
         isLogin() {

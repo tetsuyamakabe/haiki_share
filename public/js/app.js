@@ -6983,6 +6983,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      open: false
+    };
+  },
   computed: {
     // ログインユーザーかどうか
     isLogin: function isLogin() {
@@ -7183,6 +7188,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _SearchComponent_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./SearchComponent.vue */ "./resources/js/components/SearchComponent.vue");
 /* harmony import */ var _PaginationComponent_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./PaginationComponent.vue */ "./resources/js/components/PaginationComponent.vue");
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : String(i); }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 //
 //
 //
@@ -7280,14 +7291,15 @@ __webpack_require__.r(__webpack_exports__);
     },
     // ページが変更されたときの処理
     onPageChange: function onPageChange(page) {
-      console.log('これはonPageChange()メソッドです。');
       this.currentPage = page; // ページ番号を更新
-      this.createURL();
-      console.log('これはonPageChange()メソッドでした。');
+      var params = _objectSpread({}, this.$route.query);
+      params.page = page; // 新しいページ番号にする
+      this.createURL(params); // 新しいURLを生成して画面遷移
     },
     // 検索結果を表示する
     searchResult: function searchResult(params) {
-      this.createURL(params);
+      params.page = 1; // ページ番号を1に設定
+      this.createURL(params); // 新しいURLを生成して画面遷移
     },
     // 商品情報をサーバーから取得
     getProduct: function getProduct() {
@@ -49268,96 +49280,100 @@ var render = function () {
           [_vm._v("\n            haiki share\n        ")]
         ),
         _vm._v(" "),
-        _vm._m(0),
+        _c(
+          "div",
+          {
+            staticClass: "c-nav__menu--trigger",
+            on: {
+              click: function ($event) {
+                _vm.open = !_vm.open
+              },
+            },
+          },
+          [_c("span"), _vm._v(" "), _c("span"), _vm._v(" "), _c("span")]
+        ),
         _vm._v(" "),
-        _c("nav", { staticClass: "c-nav__menu js-toggle-sp-menu-target" }, [
-          _c("ul", { staticClass: "c-nav__menu--list" }, [
-            _vm.isLogin
-              ? _c(
-                  "div",
-                  { staticClass: "navbar__item" },
-                  [
-                    _vm._v(
-                      "\n                    " +
-                        _vm._s(_vm.username) +
-                        "\n                    "
-                    ),
-                    _c("RouterLink", { attrs: { to: _vm.userLink } }, [
-                      _vm._v("マイページ"),
-                    ]),
-                    _vm._v(" "),
-                    _c(
-                      "RouterLink",
-                      {
-                        attrs: { to: _vm.logoutLink },
-                        on: { click: _vm.logout },
-                      },
-                      [_vm._v("ログアウト")]
-                    ),
-                  ],
-                  1
-                )
-              : _c(
-                  "div",
-                  { staticClass: "navbar__item" },
-                  [
-                    _c(
-                      "RouterLink",
-                      {
-                        staticClass: "button button--link",
-                        attrs: { to: "/user/register" },
-                      },
-                      [_vm._v("利用者ユーザー登録")]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "RouterLink",
-                      {
-                        staticClass: "button button--link",
-                        attrs: { to: "/user/login" },
-                      },
-                      [_vm._v("利用者ログイン")]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "RouterLink",
-                      {
-                        staticClass: "button button--link",
-                        attrs: { to: "/convenience/register" },
-                      },
-                      [_vm._v("コンビニユーザー登録")]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "RouterLink",
-                      {
-                        staticClass: "button button--link",
-                        attrs: { to: "/convenience/login" },
-                      },
-                      [_vm._v("コンビニログイン")]
-                    ),
-                  ],
-                  1
-                ),
-          ]),
-        ]),
+        _c(
+          "nav",
+          { staticClass: "c-nav__menu", class: { "is-active": _vm.open } },
+          [
+            _c("ul", { staticClass: "c-nav__menu--list" }, [
+              _vm.isLogin
+                ? _c(
+                    "div",
+                    { staticClass: "navbar__item" },
+                    [
+                      _vm._v(
+                        "\n                    " +
+                          _vm._s(_vm.username) +
+                          "\n                    "
+                      ),
+                      _c("RouterLink", { attrs: { to: _vm.userLink } }, [
+                        _vm._v("マイページ"),
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "RouterLink",
+                        {
+                          attrs: { to: _vm.logoutLink },
+                          on: { click: _vm.logout },
+                        },
+                        [_vm._v("ログアウト")]
+                      ),
+                    ],
+                    1
+                  )
+                : _c(
+                    "div",
+                    { staticClass: "navbar__item" },
+                    [
+                      _c(
+                        "RouterLink",
+                        {
+                          staticClass: "button button--link",
+                          attrs: { to: "/user/register" },
+                        },
+                        [_vm._v("利用者ユーザー登録")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "RouterLink",
+                        {
+                          staticClass: "button button--link",
+                          attrs: { to: "/user/login" },
+                        },
+                        [_vm._v("利用者ログイン")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "RouterLink",
+                        {
+                          staticClass: "button button--link",
+                          attrs: { to: "/convenience/register" },
+                        },
+                        [_vm._v("コンビニユーザー登録")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "RouterLink",
+                        {
+                          staticClass: "button button--link",
+                          attrs: { to: "/convenience/login" },
+                        },
+                        [_vm._v("コンビニログイン")]
+                      ),
+                    ],
+                    1
+                  ),
+            ]),
+          ]
+        ),
       ],
       1
     ),
   ])
 }
-var staticRenderFns = [
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      { staticClass: "c-nav__menu--trigger js-toggle-sp-menu" },
-      [_c("span"), _vm._v(" "), _c("span"), _vm._v(" "), _c("span")]
-    )
-  },
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
