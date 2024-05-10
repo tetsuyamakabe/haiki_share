@@ -94,21 +94,27 @@ export default {
             }
             console.log('検索URL:', url);
             // ページ遷移
-            this.$router.push({ path: url });
-            this.getProduct();
+            if (this.$route.fullPath !== url) { // 現在のURLと新しいURLが異なるか
+                this.$router.push(url);
+                this.getProduct();
+            }
         },
 
         // ページが変更されたときの処理
         onPageChange(page) {
             this.currentPage = page; // ページ番号を更新
-            const params = { ...this.$route.query };
+            const params = Object.assign({}, this.$route.query);
+            console.log('paramsは、', params);
             params.page = page; // 新しいページ番号にする
+            console.log('params.pageは、', params.page);
             this.createURL(params); // 新しいURLを生成して画面遷移
         },
 
         // 検索結果を表示する
         searchResult(params) {
             params.page = 1; // ページ番号を1に設定
+            console.log('params.pageは、', params.page);
+            this.onPageChange(params.page); // ページ番号を変更してページネーションに通知
             this.createURL(params); // 新しいURLを生成して画面遷移
         },
 
@@ -116,7 +122,7 @@ export default {
         getProduct() {
             console.log('すべての商品情報を取得します');
             // 現在のルートのクエリパラメータを取得
-            const params = this.$route.query;
+            const params = Object.assign({}, this.$route.query); // クエリパラメータのコピーを作成
             console.log('paramsは、', params);
             axios.get('/api/products', { params: params }).then(response => {
                 console.log('paramsは、', params);
@@ -151,26 +157,6 @@ export default {
                 }
             return "/home";
         },
-
-        // // ページが変更されたときに新しい商品データを取得するメソッド
-        // async getProducts(page) {
-        //     try {
-        //         // APIリクエストの前にcurrentPageを更新する
-        //         this.currentPage = page;
-        //         console.log('pageは、', page);
-        //         console.log('this.currentPageは、', this.currentPage);
-        //         const result = await axios.get(`/api/products?page=${page}`);
-        //         const products = result.data;
-        //         console.log('productsは、', products);
-        //         this.products = products.products;
-        //         console.log('productsは、', this.products);
-        //         this.lastPage = products.products.last_page;
-        //         console.log('this.lastPageは、', this.lastPage);
-        //     } catch (error) {
-        //         console.error('ページを更新時に商品情報取得失敗:', error.response.data);
-        //         this.errors = error.response.data;
-        //     }
-        // },
 
         // 商品お気に入り登録
         productLike(product) {

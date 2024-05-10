@@ -7188,12 +7188,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _SearchComponent_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./SearchComponent.vue */ "./resources/js/components/SearchComponent.vue");
 /* harmony import */ var _PaginationComponent_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./PaginationComponent.vue */ "./resources/js/components/PaginationComponent.vue");
-function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
-function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
-function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : String(i); }
-function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 //
 //
 //
@@ -7284,21 +7278,26 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
       }
       console.log('検索URL:', url);
       // ページ遷移
-      this.$router.push({
-        path: url
-      });
-      this.getProduct();
+      if (this.$route.fullPath !== url) {
+        // 現在のURLと新しいURLが異なるか
+        this.$router.push(url);
+        this.getProduct();
+      }
     },
     // ページが変更されたときの処理
     onPageChange: function onPageChange(page) {
       this.currentPage = page; // ページ番号を更新
-      var params = _objectSpread({}, this.$route.query);
+      var params = Object.assign({}, this.$route.query);
+      console.log('paramsは、', params);
       params.page = page; // 新しいページ番号にする
+      console.log('params.pageは、', params.page);
       this.createURL(params); // 新しいURLを生成して画面遷移
     },
     // 検索結果を表示する
     searchResult: function searchResult(params) {
       params.page = 1; // ページ番号を1に設定
+      console.log('params.pageは、', params.page);
+      this.onPageChange(params.page); // ページ番号を変更してページネーションに通知
       this.createURL(params); // 新しいURLを生成して画面遷移
     },
     // 商品情報をサーバーから取得
@@ -7306,7 +7305,7 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
       var _this = this;
       console.log('すべての商品情報を取得します');
       // 現在のルートのクエリパラメータを取得
-      var params = this.$route.query;
+      var params = Object.assign({}, this.$route.query); // クエリパラメータのコピーを作成
       console.log('paramsは、', params);
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/products', {
         params: params
@@ -7351,25 +7350,6 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
       }
       return "/home";
     },
-    // // ページが変更されたときに新しい商品データを取得するメソッド
-    // async getProducts(page) {
-    //     try {
-    //         // APIリクエストの前にcurrentPageを更新する
-    //         this.currentPage = page;
-    //         console.log('pageは、', page);
-    //         console.log('this.currentPageは、', this.currentPage);
-    //         const result = await axios.get(`/api/products?page=${page}`);
-    //         const products = result.data;
-    //         console.log('productsは、', products);
-    //         this.products = products.products;
-    //         console.log('productsは、', this.products);
-    //         this.lastPage = products.products.last_page;
-    //         console.log('this.lastPageは、', this.lastPage);
-    //     } catch (error) {
-    //         console.error('ページを更新時に商品情報取得失敗:', error.response.data);
-    //         this.errors = error.response.data;
-    //     }
-    // },
     // 商品お気に入り登録
     productLike: function productLike(product) {
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/user/like/' + product.id).then(function (response) {
