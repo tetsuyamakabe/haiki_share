@@ -100,15 +100,16 @@ export default {
 
         // ページが変更されたときの処理
         onPageChange(page) {
-            console.log('これはonPageChange()メソッドです。');
             this.currentPage = page; // ページ番号を更新
-            this.createURL();
-            console.log('これはonPageChange()メソッドでした。');
+            const params = { ...this.$route.query };
+            params.page = page; // 新しいページ番号にする
+            this.createURL(params); // 新しいURLを生成して画面遷移
         },
 
         // 検索結果を表示する
         searchResult(params) {
-            this.createURL(params);
+            params.page = 1; // ページ番号を1に設定
+            this.createURL(params); // 新しいURLを生成して画面遷移
         },
 
         // 商品情報をサーバーから取得

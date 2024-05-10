@@ -399,7 +399,7 @@ body {
     z-index: 2;
   }
 
-  .c-nav__menu.active {
+  .c-nav__menu.is-active {
     transition: 0.5s;
     transform: translateX(-100%);
     z-index: 2;
@@ -419,7 +419,7 @@ body {
     transition: 0.5s;
   }
 
-  .c-nav__menu.active {
+  .c-nav__menu.is-active {
     transition: 0.5s;
     transform: translateX(-100%);
   }
