@@ -1,0 +1,19 @@
+.c-link {
+    display: inline;
+    text-align: center;
+    text-decoration: none;
+    color: #434343;
+
+    &:hover {
+        text-decoration: underline;
+    }
+
+    &__products {
+        text-align: right;
+    }
+
+    &__back {
+        display: inline-block;
+    }
+
+}

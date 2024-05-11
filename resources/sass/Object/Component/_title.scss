@@ -1,9 +1,17 @@
 .c-title {
-    font-size: $font-size_xl;
-    color: $font-color_default;
+    color: #434343;
+    font-size: 32px;
+    font-weight: bold;
     text-align: center;
-    margin: $space_xxl 0;
-    padding: 0; 
+
+    @include mq(sm){
+        font-size: 16px;
+    }
+
+    &__sub {
+        font-size: 24px;
+        text-align: left;
+    }
 
     &__terms {
         font-weight: bold;

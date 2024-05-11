@@ -5,6 +5,7 @@ const state = {
 const getters = {
     check: state => !! state.user,
     username: state => state.user ? state.user.name : '',
+    icon: state => state.user ? `/storage/icons/${state.user.icon}` : '',
     role: state => state.user ? state.user.role : '',
     id: state => state.user ? state.user.id : '',
 }

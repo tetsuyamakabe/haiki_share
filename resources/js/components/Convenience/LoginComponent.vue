@@ -1,53 +1,47 @@
 <template>
     <main class="l-main">
-        <div class="p-login">
-            <div class="p-login__form">
-                <h1 class="c-title">ログイン</h1>
-                <div class="p-container">
-                    <form @submit.prevent="submitForm">
+        <div class="l-main__convenience">
+            <section class="p-register">
+                <h1 class="c-title u-mb__xl"><span>コンビニログイン</span></h1>
+                <form @submit.prevent="submitForm" class="c-form">
 
-                        <!-- バリデーションエラーメッセージ -->
-                        <span v-if="errors && errors.email" class="c-error">{{ errors.email[0] }}</span>
-                        <span v-if="errors && errors.password" class="c-error">{{ errors.password[0] }}</span>
+                    <!-- バリデーションエラーメッセージ -->
+                    <span v-if="errors && errors.email" class="c-error">{{ errors.email[0] }}</span>
+                    <span v-if="errors && errors.password" class="c-error">{{ errors.password[0] }}</span>
 
-                        <table>
-                            <tr>
-                                <th><label for="email" class="c-label">メールアドレス</label></th>
-                                <td>
-                                    <input v-model="formData.email" id="email" type="email" class="c-input" :class="{ 'is-invalid': errors && errors.email }" autocomplete="email">
-                                </td>
-                            </tr>
-                            <tr>
-                                <th><label for="password" class="c-label">パスワード</label></th>
-                                <td>
-                                    <div class="p-input__password">
-                                        <input v-model="formData.password" id="password" :type="PasswordType" class="c-input" :class="{ 'is-invalid': errors && errors.password }" placeholder="英数字8文字以上で入力してください">
-                                        <span @click="togglePasswordVisibility('password')"><i :class="PasswordIconClass"></i></span>
-                                    </div>
-                                </td>
-                            </tr>
-                        </table>
+                    <table>
+                        <tr>
+                            <th><label for="email" class="c-label">メールアドレス</label></th>
+                            <td>
+                                <input v-model="formData.email" id="email" type="email" class="c-input" :class="{ 'is-invalid': errors && errors.email }" autocomplete="email">
+                            </td>
+                        </tr>
+                        <tr>
+                            <th><label for="password" class="c-label">パスワード</label></th>
+                            <td>
+                                <div class="p-input__password">
+                                    <input v-model="formData.password" id="password" :type="PasswordType" class="c-input" :class="{ 'is-invalid': errors && errors.password }" placeholder="英数字8文字以上で入力してください">
+                                    <span @click="togglePasswordVisibility('password')"><i :class="PasswordIconClass"></i></span>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
 
-                        <!-- パスワード保持 -->
-                        <div class="p-container__checkbox">
-                            <input type="checkbox" v-model="remember" id="remember">
-                            <span class="c-text__center" for="remember">パスワードを保持する</span>
-                        </div>
+                    <!-- パスワード保持 -->
+                    <div class="c-checkbox c-checkbox__container">
+                        <input type="checkbox" v-model="remember" id="remember">
+                        <span class="c-text__center" for="remember">パスワードを保持する</span>
+                    </div>
 
-                        <!-- パスワードリマインダー -->
-                        <div class="p-container__link">
-                            <a class="btn btn-link" href="/convenience/password/email">パスワードをお忘れの場合はこちら</a>
-                        </div>
+                    <!-- パスワードリマインダー -->
+                    <a class="c-link" href="/convenience/password/email">パスワードをお忘れの場合はこちら</a>
 
-                        <!-- ログインボタン -->
-                        <div class="p-login__button">
-                            <button type="submit" class="c-button">ログイン</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
+                    <!-- ログインボタン -->
+                    <button type="submit" class="c-button c-button__submit c-button__convenience u-mt__m">ログインする</button>
+                </form>
+            </section>
         </div>
-        <a @click="$router.back()">前のページに戻る</a>
+        <a @click="$router.back()" class="c-link c-link__back u-mt__s u-mb__s">前のページに戻る</a>
     </main>
 </template>
   

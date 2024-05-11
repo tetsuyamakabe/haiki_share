@@ -67,6 +67,13 @@ export default {
         // this.getProducts(); // ページが変更された時の商品情報を取得
     },
 
+    watch: {
+        current_page(newValue) {
+            this.currentPage = newValue;
+            console.log('watchのthis.currentPageは、', this.currentPage);
+        },
+    },
+
     methods: {
         // URLを作成する
         createURL(params) {
@@ -106,15 +113,14 @@ export default {
             const params = Object.assign({}, this.$route.query);
             console.log('paramsは、', params);
             params.page = page; // 新しいページ番号にする
-            console.log('params.pageは、', params.page);
+            console.log('onPageChangeのparams.pageは、', params.page);
             this.createURL(params); // 新しいURLを生成して画面遷移
         },
 
         // 検索結果を表示する
         searchResult(params) {
             params.page = 1; // ページ番号を1に設定
-            console.log('params.pageは、', params.page);
-            this.onPageChange(params.page); // ページ番号を変更してページネーションに通知
+            console.log('searchResultのparams.pageは、', params.page);
             this.createURL(params); // 新しいURLを生成して画面遷移
         },
 

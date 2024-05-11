@@ -21,7 +21,7 @@ export default {
     props: ['current_page', 'last_page'],
     data() {
         return {
-            currentPage: 1, // currentPageをpropsから受け取る
+            currentPage: this.current_page, // currentPageをpropsから受け取る
             range: 5, // 表示されるページの範囲
             front_dot: false, // 前のページにドットを表示させるか
             end_dot: false // 後ろのページにドットを表示させるか
@@ -77,6 +77,13 @@ export default {
         lastPageRange() {
             if (!this.sizeCheck) return [];
             return this.calRange(this.last_page - 1, this.last_page);
+        },
+    },
+
+    watch: {
+        current_page(newValue) {
+            this.currentPage = newValue;
+            console.log('watchのthis.currentPageは、', this.currentPage);
         },
     },
 

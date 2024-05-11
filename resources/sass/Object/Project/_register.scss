@@ -1,17 +1,30 @@
 .p-register {
-    display: flex;
-    background-color: #fafafa;
+    padding: 40px;
+    border: 0.5px solid #434343;
 
-    &__form {
-        background: #fff;
-        margin: 120px auto;
-        padding: 40px;
-        text-align: left;
-        border: 1px solid #000;
+    @include mq(sm){
+        padding: 24px;
     }
 
-    &__button {
-        display: flex;
-        justify-content: center;
+    &__terms {
+        height: 200px;
+        border: 0.5px solid #434343;
+        margin: 8px;
+        padding: 8px;
+        width: 466px;
+        overflow-y: auto;
+        font-size: 12px;
+        line-height: 1.2;
+
+        @include mq(sm){
+            height: 200px;
+            border: 0.5px solid #434343;
+            margin: 8px;
+            padding: 8px;
+            overflow-y: auto;
+            font-size: 12px;
+            line-height: 1.2;
+            width: 250px;
+        }
     }
 }
