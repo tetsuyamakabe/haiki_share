@@ -1,0 +1,8 @@
+.c-form {
+    padding: 40px 248px;
+    background: #fefefe;
+
+    @include mq(sm){
+        padding: 16px;
+    }
+}

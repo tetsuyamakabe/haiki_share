@@ -153,6 +153,14 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        'name' => '名前',
+        'branch_name' => '支店名',
+        'prefecture' => '都道府県',
+        'city' => '市区町村',
+        'town' => '地名・番地',
+        'password' => 'パスワード',
+        'email' => 'メールアドレス'
+    ],
 
 ];

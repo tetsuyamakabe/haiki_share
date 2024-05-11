@@ -1,16 +1,46 @@
 .c-button {
-    background: #fff;
-    margin: 15px 0;
-    padding: 8px 32px;
-    font-size: 16px;
-    transition: 0.5s;
-    border: 2px solid #f66d9b;
-    border-radius: 3px;
     text-decoration: none;
+    border-radius: 3px;
+    background: #fefefe;
+
+    &__submit {
+        padding: 8px;
+        font-size: 16px;
+        transition: 0.3s;
+        width: 504px;
+        font-weight: bold;
+    
+        @include mq(sm){
+            width: 286px;
+        }
+    }
+
+    &__user {
+        border: 2px solid #00bfff;
+        &:hover {
+            background: #00bfff;
+        }
+    }
+
+    &__convenience {
+        border: 2px solid #ff1493;
+        &:hover {
+            background: #ff1493;
+        }
+    }
 
     &:hover {
-        background: $font-color_main;
+        color: #fefefe;
+        font-weight: bold;
         cursor: pointer;
+    }
+
+    &__detail {
+        display: block;
+        color: #434343;
+        font-size: 12px;
+        padding: 8px;
+        margin: 8px;
     }
 
     &__purchase {

@@ -1,0 +1,13 @@
+.p-mypage {
+    &__sidebar {
+        display: flex;
+        flex-direction: column;
+        width: 180px;
+    }
+
+    &__purchased,
+    &__liked,
+    &__sale {
+        background: #fefefe;
+    }
+}

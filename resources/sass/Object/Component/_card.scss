@@ -1,9 +1,14 @@
-.c-product {
+.c-card {
+    max-width: 200px;
+    height: 100%;
+    border: 1px solid #434343;
+
     &__picture {
-        width: 50%;
+        width: 85%;
     }
 
     &__name {
+        text-align: center;
         font-size: 12px;
         font-weight: bold;
     }

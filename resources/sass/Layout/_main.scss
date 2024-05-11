@@ -1,4 +1,21 @@
-.l-main{
+.l-main {
     width: 100%;
-    background-color: $background-color_main;
+
+    &__user {
+        background-color: #efffff;
+        padding: 120px 180px;
+
+        @include mq(sm){
+            padding: 24px;
+        }
+    }
+
+    &__convenience {
+        background-color: #ffefff;
+        padding: 120px 180px;
+
+        @include mq(sm){
+            padding: 24px;
+        }
+    }
 }

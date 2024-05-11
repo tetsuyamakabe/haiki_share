@@ -1,4 +1,7 @@
 .c-label{
-    font-size: $font-size_default;
-    color: $font-color_default;
+    font-size: 16px;
+    color: #434343;
+    @include mq(sm){
+        font-size: 8px;
+    }
 }
