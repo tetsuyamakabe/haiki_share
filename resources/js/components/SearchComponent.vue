@@ -1,6 +1,6 @@
 <template>
-    <section class="l-side">
-        <div class="p-search">
+    <section class="l-sidebar">
+        <div class="p-mypage__sidebar">
             <div class="p-search__form">
                 <h1 class="c-title">商品検索</h1>
                 <div class="p-sub__container">

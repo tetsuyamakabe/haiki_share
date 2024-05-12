@@ -1,38 +1,44 @@
 <template>
     <main class="l-main">
-        <div class="p-profile">
-            <div class="p-product__form">
-                <h1 class="c-title">商品一覧</h1>
-                <div class="p-container">
+        <div class="l-main__common">
+            <h1 class="c-title u-mb__xl">商品一覧</h1>
+            <div class="p-article__mypage">
+                <section class="p-register u-mr__s">
+
                     <ul class="p-product__list">
-                        <li v-for="product in products.data" :key="product.id" class="p-product__item">
-                            <h3 class="c-product__name">{{ product.name }}</h3>
-                            <div class="p-product__picture--container">
-                                <img class="c-product__picture" :src="getProductPicturePath(product)" alt="Product Image">
-                            </div>
-                            <div>
+                        <!-- 検索結果がない場合 -->
+                        <li v-if="!products.data || products.data.length === 0" class="p-product__item u-pd__l">
+                            <p>検索結果はありません。</p>
+                        </li>
+                        <!-- 商品一覧・検索結果を表示 -->
+                        <li v-else v-for="product in products.data" :key="product.id" class="p-product__item u-pd__l">
+                            <!-- 商品情報の表示 -->
+                            <div class="c-card u-pdb__s">
+                                <h3 class="c-card__name u-pdt__s">{{ product.name }}</h3>
+                                <img class="c-card__picture u-m__s" :src="getProductPicturePath(product)" alt="商品画像">
                                 <label v-show="product.is_purchased" class="c-label__purchase">購入済み</label>
-                            </div>
-                            <div>
                                 <i v-if="!product.liked" class="far fa-heart" @click="productLike(product)"></i>
                                 <i v-else class="fas fa-heart" @click="productUnlike(product)"></i>
                                 <span>いいね{{ product.likes_count }}</span>
-                            </div>
-                            <p class="c-product__price">価格 {{ product.price }} 円</p>
-                            <p class="c-product__date">賞味期限 {{ product.expiration_date }}</p>
-                            <div class="p-product__button">
-                                <router-link :to="getProductDetailLink(product.id)" class="c-button">詳細を見る</router-link>
+                                <p class="c-card__price">価格 {{ product.price }} 円</p>
+                                <p class="c-card__date">賞味期限 {{ product.expiration_date }}</p>
+                                <div class="p-product__button">
+                                    <router-link :to="getProductDetailLink(product.id)" class="c-button">詳細を見る</router-link>
+                                </div>
                             </div>
                         </li>
                     </ul>
-                    <!-- 絞り込み検索 -->
-                    <search-component @search="searchResult" />
-                </div>
-                <!-- ページネーション -->
-                <pagination-component @onClick="onPageChange" :current_page="currentPage" :last_page="lastPage" />
+                </section>
+
+                <!-- 絞り込み検索フォーム -->
+                <search-component @search="searchResult" />
+
             </div>
+            <!-- ページネーション -->
+            <pagination-component @onClick="onPageChange" :current_page="currentPage" :last_page="lastPage" />
+
         </div>
-        <a @click="$router.back()">前のページに戻る</a>
+        <a @click="$router.back()" class="c-link c-link__back u-mt__s u-mb__s">前のページに戻る</a>
     </main>
 </template>
 
@@ -52,6 +58,7 @@ export default {
             products: [],
             currentPage: 1,
             lastPage: 1,
+            lastParams: [],
         };
     },
 
@@ -64,14 +71,6 @@ export default {
 
     created() {
         this.getProduct(); // サーバから商品情報を取得
-        // this.getProducts(); // ページが変更された時の商品情報を取得
-    },
-
-    watch: {
-        current_page(newValue) {
-            this.currentPage = newValue;
-            console.log('watchのthis.currentPageは、', this.currentPage);
-        },
     },
 
     methods: {
@@ -109,19 +108,24 @@ export default {
 
         // ページが変更されたときの処理
         onPageChange(page) {
-            this.currentPage = page; // ページ番号を更新
-            const params = Object.assign({}, this.$route.query);
-            console.log('paramsは、', params);
-            params.page = page; // 新しいページ番号にする
-            console.log('onPageChangeのparams.pageは、', params.page);
-            this.createURL(params); // 新しいURLを生成して画面遷移
+            if (this.currentPage !== page) { // 現在のページ番号と新しいページ番号が異なるか
+                this.currentPage = page; // ページ番号を更新
+                const params = Object.assign({}, this.$route.query);
+                params.page = page; // 新しいページ番号にする
+                this.createURL(params); // 新しいURLを生成して画面遷移
+            }
         },
 
         // 検索結果を表示する
         searchResult(params) {
-            params.page = 1; // ページ番号を1に設定
-            console.log('searchResultのparams.pageは、', params.page);
-            this.createURL(params); // 新しいURLを生成して画面遷移
+            // 前回の検索条件が同じであればページ遷移を行わずに検索結果を再取得する
+            if (JSON.stringify(params) === JSON.stringify(this.lastParams)) {
+                this.getProduct(params); // 前回と同じ検索条件での再取得
+            } else {
+                this.currentPage = 1; // ページ番号をリセット
+                this.createURL(params); // 新しいURLを生成して画面遷移
+            }
+            this.lastParams = params; // 最後の検索条件を更新
         },
 
         // 商品情報をサーバーから取得

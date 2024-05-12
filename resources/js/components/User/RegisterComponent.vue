@@ -2,7 +2,7 @@
     <main class="l-main">
         <div class="l-main__user">
             <section class="p-register">
-                <h1 class="c-title u-mb__xl"><span>利用者ユーザー登録</span></h1>
+                <h1 class="c-title u-mb__xl">利用者ユーザー登録</h1>
                 <form @submit.prevent="submitForm" class="c-form">
 
                     <!-- バリデーションエラーメッセージ -->

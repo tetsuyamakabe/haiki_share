@@ -2,7 +2,7 @@
     <main class="l-main">
         <div class="l-main__convenience">
             <section class="p-register">
-                <h1 class="c-title u-mb__xl"><span>コンビニログイン</span></h1>
+                <h1 class="c-title u-mb__xl">コンビニログイン</h1>
                 <form @submit.prevent="submitForm" class="c-form">
 
                     <!-- バリデーションエラーメッセージ -->
