@@ -1,7 +1,8 @@
 .p-product {
     &__list {
-        width: 746px;
+        width: 750px;
         display: flex;
+        flex-wrap: wrap;
         text-align: center;
 
         @include mq(sm){

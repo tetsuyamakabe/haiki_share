@@ -1,142 +1,126 @@
 <template>
     <main class="l-main">
-        <div class="p-profile">
-            <div class="p-profile__form">
-                <h1 class="c-title">プロフィール編集</h1>
-                <div class="p-container">
-                    <form @submit.prevent="submitForm">
+        <div class="l-main__convenience">
+            <section class="p-register">
+                <h1 class="c-title u-mb__xl">コンビニプロフィール編集</h1>
+                <form @submit.prevent="submitForm" class="c-form">
 
-                        <!-- バリデーションエラーメッセージ -->
-                        <span v-if="errors && errors.name" class="c-error">{{ errors.name[0] }}</span>
-                        <span v-if="errors && errors.branch_name" class="c-error">{{ errors.branch_name[0] }}</span>
-                        <span v-if="errors && errors.address" class="c-error">{{ errors.address[0] }}</span>
-                        <span v-if="errors && errors.prefecture" class="c-error">{{ errors.prefecture[0] }}</span>
-                        <span v-if="errors && errors.city" class="c-error">{{ errors.city[0] }}</span>
-                        <span v-if="errors && errors.town" class="c-error">{{ errors.town[0] }}</span>
-                        <span v-if="errors && errors.building" class="c-error">{{ errors.building[0] }}</span>
-                        <span v-if="errors && errors.email" class="c-error">{{ errors.email[0] }}</span>
-                        <span v-if="errors && errors.password" class="c-error">{{ errors.password[0] }}</span>
-                        <span v-if="errors && errors.password_confirmation" class="c-error">{{ errors.password_confirmation[0] }}</span>
-                        <span v-if="errors && errors.introduction" class="c-error">{{ errors.introduction[0] }}</span>
-                        <span v-if="errors && errors.icon" class="c-error">{{ errors.icon[0] }}</span>
+                    <!-- バリデーションエラーメッセージ -->
+                    <span v-if="errors && errors.name" class="c-error">{{ errors.name[0] }}</span>
+                    <span v-if="errors && errors.branch_name" class="c-error">{{ errors.branch_name[0] }}</span>
+                    <span v-if="errors && errors.address" class="c-error">{{ errors.address[0] }}</span>
+                    <span v-if="errors && errors.prefecture" class="c-error">{{ errors.prefecture[0] }}</span>
+                    <span v-if="errors && errors.city" class="c-error">{{ errors.city[0] }}</span>
+                    <span v-if="errors && errors.town" class="c-error">{{ errors.town[0] }}</span>
+                    <span v-if="errors && errors.building" class="c-error">{{ errors.building[0] }}</span>
+                    <span v-if="errors && errors.email" class="c-error">{{ errors.email[0] }}</span>
+                    <span v-if="errors && errors.password" class="c-error">{{ errors.password[0] }}</span>
+                    <span v-if="errors && errors.password_confirmation" class="c-error">{{ errors.password_confirmation[0] }}</span>
+                    <span v-if="errors && errors.introduction" class="c-error">{{ errors.introduction[0] }}</span>
+                    <span v-if="errors && errors.icon" class="c-error">{{ errors.icon[0] }}</span>
 
-                        <table>
-                            <tr>
-                                <th><label for="name" class="c-label">コンビニ名</label></th>
-                                <td>
-                                    <input v-model="formData.name" id="name" type="text" class="c-input" :class="{ 'is-invalid': errors && errors.name }" autocomplete="name">
+                    <table>
+                        <tr>
+                            <th><label for="name" class="c-label">コンビニ名</label></th>
+                            <td>
+                                <input v-model="formData.name" id="name" type="text" class="c-input" :class="{ 'is-invalid': errors && errors.name }" autocomplete="name">
                                 </td>
-                            </tr>
+                        </tr>
 
-                            <tr>
-                                <th><label for="branch_name" class="c-label">支店名</label></th>
-                                <td>
-                                    <input v-model="formData.branch_name" id="branch_name" type="text" class="c-input" :class="{ 'is-invalid': errors && errors.branch_name }" autocomplete="branch_name">
-                                </td>
-                            </tr>
+                        <tr>
+                            <th><label for="branch_name" class="c-label">支店名</label></th>
+                            <td>
+                                <input v-model="formData.branch_name" id="branch_name" type="text" class="c-input" :class="{ 'is-invalid': errors && errors.branch_name }" autocomplete="branch_name">
+                            </td>
+                        </tr>
+                        <tr>
+                            <th><label for="address" class="c-label">郵便番号</label></th>
+                            <td>
+                                <input v-model="formData.postalcode" id="address" type="text" class="c-input" :class="{ 'is-invalid': errors && errors.address }" autocomplete="address" placeholder="郵便番号で住所を簡単入力できます">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" style="text-align: right;">
+                                <button type="button" class="c-button c-button__convenience u-mr__s" @click="searchAddress">郵便番号検索</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th><label for="prefecture" class="c-label">都道府県</label></th>
+                            <td>
+                                <input v-model="formData.prefecture" id="prefecture" type="text" class="c-input" :class="{ 'is-invalid': errors && errors.prefecture }" autocomplete="prefecture">
+                            </td>
+                        </tr>
+                        <tr>
+                            <th><label for="city" class="c-label">市区町村</label></th>
+                            <td>
+                                <input v-model="formData.city" id="city" type="text" class="c-input" :class="{ 'is-invalid': errors && errors.city }" autocomplete="city">
+                            </td>
+                        </tr>
+                        <tr>
+                            <th><label for="town" class="c-label">地名・番地</label></th>
+                            <td>
+                                <input v-model="formData.town" id="town" type="text" class="c-input" :class="{ 'is-invalid': errors && errors.town }" autocomplete="town">
+                            </td>
+                        </tr>
+                        <tr>
+                            <th><label for="building" class="c-label">建物名・部屋番号</label></th>
+                            <td>
+                                <input v-model="formData.building" id="building" type="text" class="c-input" :class="{ 'is-invalid': errors && errors.building }" autocomplete="building">
+                            </td>
+                        </tr>
+                        <tr>
+                            <th><label for="email" class="c-label">メールアドレス</label></th>
+                            <td>
+                                <input v-model="formData.email" id="email" type="email" class="c-input" :class="{ 'is-invalid': errors && errors.email }" autocomplete="email">
+                            </td>
+                        </tr>
+                        <tr>
+                            <th><label for="password" class="c-label">パスワード</label></th>
+                            <td>
+                                <div class="p-input__password">
+                                    <input v-model="formData.password" id="password" :type="PasswordType" class="c-input" :class="{ 'is-invalid': errors && errors.password }" autocomplete="new-password" placeholder="英数字8文字以上で入力してください">
+                                    <span @click="togglePasswordVisibility('password')"><i :class="PasswordIconClass"></i></span>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th><label for="password-confirm" class="c-label">パスワード（再入力）</label></th>
+                            <td>
+                                <div class="p-input__password">
+                                    <input v-model="formData.password_confirmation" id="password-confirm" :type="PasswordConfirmType" class="c-input" :class="{ 'is-invalid': errors && errors.password_confirmation }" autocomplete="new-password" placeholder="英数字8文字以上で入力してください">
+                                    <span @click="togglePasswordVisibility('password_confirm')"><i :class="PasswordConfirmIconClass"></i></span>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th><label for="introduction" class="c-label">自己紹介</label></th>
+                            <td>
+                                <div class="p-textarea__form">
+                                    <textarea v-model.trim="formData.introduction" maxlength="50" id="introduction" type="text" class="c-textarea" autocomplete="introduction" @keyup="countCharacters" :class="{ 'is-invalid': errors && errors.introduction }" placeholder="50文字以内で入力してください"></textarea>
+                                    <span class="c-textarea__count">{{ formData.introduction.length }} / 50文字</span>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th><label for="icon" class="c-label">顔写真</label></th>
+                            <td>
+                                <div class="p-icon" @drop="handleDrop" :class="{ 'is-invalid': errors && errors.icon }">
+                                    <input type="file" id="icon" @change="handleFileChange" class="c-input__hidden">
+                                    <img v-if="!iconPreview && formData.icon" :src="'/storage/icons/' + formData.icon" alt="アップロード顔写真" class="c-icon">
+                                    <img v-else-if="iconPreview" :src="iconPreview" alt="アップロード顔写真" class="c-icon">
+                                    <img v-else src="/default.png" alt="デフォルト顔写真" class="c-icon">
+                                    <span v-if="!formData.icon">ドラッグ＆ドロップ</span>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
 
-                            <tr>
-                                <th><label for="address" class="c-label">住所</label></th>
-                                <td>
-                                    <input v-model="formData.postalcode" id="address" type="text" class="c-input" :class="{ 'is-invalid': errors && errors.address }" autocomplete="address">
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td colspan="2" style="text-align: right;">
-                                    <button type="button" class="c-button" @click="searchAddress">郵便番号検索</button>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <th><label for="prefecture" class="c-label">都道府県</label></th>
-                                <td>
-                                    <input v-model="formData.prefecture" id="prefecture" type="text" class="c-input" :class="{ 'is-invalid': errors && errors.prefecture }" autocomplete="prefecture">
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <th><label for="city" class="c-label">市区町村</label></th>
-                                <td>
-                                    <input v-model="formData.city" id="city" type="text" class="c-input" :class="{ 'is-invalid': errors && errors.city }" autocomplete="city">
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <th><label for="town" class="c-label">地名・番地</label></th>
-                                <td>
-                                    <input v-model="formData.town" id="town" type="text" class="c-input" :class="{ 'is-invalid': errors && errors.town }" autocomplete="town">
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <th><label for="building" class="c-label">建物名・部屋番号</label></th>
-                                <td>
-                                    <input v-model="formData.building" id="building" type="text" class="c-input" :class="{ 'is-invalid': errors && errors.building }" autocomplete="building">
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <th><label for="email" class="c-label">メールアドレス</label></th>
-                                <td>
-                                    <input v-model="formData.email" id="email" type="email" class="c-input" :class="{ 'is-invalid': errors && errors.email }" autocomplete="email">
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <th><label for="password" class="c-label">パスワード</label></th>
-                                <td>
-                                    <div class="p-input__password">
-                                        <input v-model="formData.password" id="password" :type="PasswordType" class="c-input" :class="{ 'is-invalid': errors && errors.password }" autocomplete="new-password" placeholder="英数字8文字以上で入力してください">
-                                        <span @click="togglePasswordVisibility('password')"><i :class="PasswordIconClass"></i></span>
-                                    </div>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <th><label for="password-confirm" class="c-label">パスワード（再入力）</label></th>
-                                <td>
-                                    <div class="p-input__password">
-                                        <input v-model="formData.password_confirmation" id="password-confirm" :type="PasswordConfirmType" class="c-input" :class="{ 'is-invalid': errors && errors.password_confirmation }" autocomplete="new-password" placeholder="英数字8文字以上で入力してください">
-                                        <span @click="togglePasswordVisibility('password_confirm')"><i :class="PasswordConfirmIconClass"></i></span>
-                                    </div>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <th><label for="introduction" class="c-label">自己紹介</label></th>
-                                <td>
-                                    <div class="p-textarea__form">
-                                        <textarea v-model.trim="formData.introduction" maxlength="50" id="introduction" type="text" class="c-textarea" autocomplete="introduction" @keyup="countCharacters" :class="{ 'is-invalid': errors && errors.introduction }" placeholder="50文字以内で入力してください"></textarea>
-                                        <span class="c-textarea__count">{{ formData.introduction.length }} / 50文字</span>
-                                    </div>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <th><label for="icon" class="c-label">顔写真</label></th>
-                                <td>
-                                    <div class="p-icon" @drop="handleDrop" :class="{ 'is-invalid': errors && errors.icon }">
-                                        <input type="file" id="icon" @change="handleFileChange" class="c-input__hidden">
-                                        <img v-if="!iconPreview && formData.icon" :src="'/storage/icons/' + formData.icon" alt="アップロード顔写真" class="c-icon">
-                                        <img v-else-if="iconPreview" :src="iconPreview" alt="アップロード顔写真" class="c-icon">
-                                        <img v-else src="/default.png" alt="デフォルト顔写真" class="c-icon">
-                                        <span v-if="!formData.icon">ドラッグ＆ドロップ</span>
-                                    </div>
-                                </td>
-                            </tr>
-
-                        </table>
-
-                        <!-- 更新ボタン -->
-                        <div class="p-profile__button">
-                            <button type="submit" class="c-button">更新する</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
+                    <!-- 更新ボタン -->
+                    <button type="submit" class="c-button c-button__submit c-button__convenience">プロフィール更新する</button>
+                </form>
+            </section>
         </div>
-        <a @click="$router.back()">前のページに戻る</a>
+        <a @click="$router.back()" class="c-link c-link__back u-mt__s u-mb__s">前のページに戻る</a>
     </main>
 </template>
 

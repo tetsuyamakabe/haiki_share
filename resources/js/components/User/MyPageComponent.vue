@@ -1,7 +1,7 @@
 <template>
     <main class="l-main">
         <div class="l-main__user">
-            <h1 class="c-title u-mb__xl"><span>利用者マイページ</span></h1>
+            <h1 class="c-title u-mb__xl">利用者マイページ</h1>
             <div class="p-article__mypage">
                 <section class="p-register u-mr__s">
 
@@ -15,7 +15,7 @@
                         </div>
                         <div v-else>
                             <ul class="p-product__list">
-                                <li v-for="product in purchasedProducts" :key="product.id" class="p-product__item">
+                                <li v-for="product in purchasedProducts" :key="product.id" class="p-product__item u-pd__l">
                                     <div class="c-card u-pdb__s">
                                         <h3 class="c-card__name u-pdt__s">{{ product.name }}</h3>
                                         <img class="c-card__picture u-m__s" :src="getProductPicturePath(product)" alt="商品画像">
@@ -46,7 +46,7 @@
                         </div>
                         <div v-else>
                             <ul class="p-product__list">
-                                <li v-for="product in likedProducts" :key="product.id" class="p-product__item">
+                                <li v-for="product in likedProducts" :key="product.id" class="p-product__item u-pd__l">
                                     <div class="c-card u-pdb__s">
                                         <h3 class="c-card__name u-pdt__s">{{ product.name }}</h3>
                                         <img class="c-card__picture u-m__s" :src="getProductPicturePath(product)" alt="商品画像">

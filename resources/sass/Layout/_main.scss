@@ -18,4 +18,14 @@
             padding: 24px;
         }
     }
+
+    &__common {
+        background-color: #efffef;
+        padding: 120px 180px;
+
+        @include mq(sm){
+            padding: 24px;
+        }
+    }
+
 }
