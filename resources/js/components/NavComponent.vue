@@ -12,7 +12,7 @@
                 <div v-if="isLogin" class="l-nav__menu--item">
                     <span class="l-nav__menu--name">{{ username }}</span>
                     <RouterLink class="l-nav__menu--link" :to="userLink">マイページ</RouterLink>
-                    <RouterLink class="l-nav__menu--link" :to="logoutLink" @click="logout">ログアウト</RouterLink>
+                    <a class="l-nav__menu--link" @click="logout">ログアウト</a>
                 </div>
                 <div v-else class="l-nav__menu--item">
                     <RouterLink class="l-nav__menu--link" to="/user/register">利用者ユーザー登録</RouterLink>
@@ -55,16 +55,6 @@ export default {
                 return "/user/mypage";
             } else if (this.$store.getters['auth/role'] === 'convenience') {
                 return "/convenience/mypage";
-            }
-            return "/home";
-        },
-
-        // ログインユーザーのroleによって利用者・コンビニのログアウトリンクを動的に変える
-        logoutLink() {
-            if (this.$store.getters['auth/role'] === 'user') {
-                return "/user/logout";
-            } else if (this.$store.getters['auth/role'] === 'convenience') {
-                return "/convenience/logout";
             }
             return "/home";
         },

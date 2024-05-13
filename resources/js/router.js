@@ -78,18 +78,6 @@ const router = new VueRouter({
             name: 'convenience.login',
             component: ConvenienceLoginComponent,
         },
-        // 利用者側ログアウト画面
-        {
-            path: '/user/logout',
-            name: 'user.logout',
-            component: UserLogoutComponent
-        },
-        // コンビニ側ログアウト画面
-        {
-            path: '/convenience/logout',
-            name: 'convenience.logout',
-            component: ConvenienceLogoutComponent
-        },
         // 利用者側マイページ画面
         {
             path: '/user/mypage',

@@ -58,16 +58,17 @@ export default {
 
     methods: {
         // 入力された値をサーバー側に送信するメソッド
-        submitForm() {
-            axios.post('/api/user/login', this.formData).then(response => {
+        async submitForm() {
+            try {
+                const response = await axios.post('/api/user/login', this.formData);
                 console.log('ログインします。');
                 console.log('APIからのレスポンス:', response.data);
-                this.$store.dispatch('auth/currentUser');
+                await this.$store.dispatch('auth/currentUser'); // ログイン状態を保持
                 this.$router.push({ name: 'user.mypage' }); // ログイン後、マイページに遷移
-            }).catch(error => {
+            } catch (error) {
                 console.error('ログイン失敗:', error.response.data);
                 this.errors = error.response.data.errors;
-            });
+            }
         },
 
         // パスワードの表示・非表示を切り替えるメソッド
