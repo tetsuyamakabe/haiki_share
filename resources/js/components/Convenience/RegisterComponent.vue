@@ -1,12 +1,12 @@
 <template>
     <main class="l-main">
         <div class="l-main__convenience">
-            <section class="p-register">
+            <section class="l-main__wrapper">
                 <h1 class="c-title u-mb__xl">コンビニユーザー登録</h1>
                 <form @submit.prevent="submitForm" class="c-form">
 
                     <!-- バリデーションエラーメッセージ -->
-                    <span v-if="errors && errors.name" class="c-error">{{ errors.name[0] }}</span>
+                    <span v-if="errors && errors.convenience_name" class="c-error">{{ errors.convenience_name[0] }}</span>
                     <span v-if="errors && errors.branch_name" class="c-error">{{ errors.branch_name[0] }}</span>
                     <span v-if="errors && errors.address" class="c-error">{{ errors.address[0] }}</span>
                     <span v-if="errors && errors.prefecture" class="c-error">{{ errors.prefecture[0] }}</span>
@@ -18,43 +18,44 @@
                     <span v-if="errors && errors.password_confirmation" class="c-error">{{ errors.password_confirmation[0] }}</span>
                     <span v-if="errors && !agreement" class="c-error">利用規約に同意する必要があります。</span>
 
-                    <div class="form-group">
-                        <label for="name" class="c-label">コンビニ名</label>
-                        <input v-model="formData.name" id="name" type="text" class="c-input" :class="{ 'is-invalid': errors && errors.name }" autocomplete="name">
- 
-                        <label for="branch_name" class="c-label">支店名</label>
-                        <input v-model="formData.branch_name" id="branch_name" type="text" class="c-input" :class="{ 'is-invalid': errors && errors.branch_name }" autocomplete="branch_name">
-
-                        <label for="address" class="c-label">郵便番号</label>
-                        <input v-model="formData.postalcode" id="address" type="text" class="c-input" :class="{ 'is-invalid': errors && errors.address }" autocomplete="address" placeholder="郵便番号で住所を簡単入力できます">
-                        <button type="button" class="c-button c-button__convenience u-mr__s" @click="searchAddress">郵便番号検索</button>
-
-                        <label for="prefecture" class="c-label">都道府県</label>
-                        <input v-model="formData.prefecture" id="prefecture" type="text" class="c-input" :class="{ 'is-invalid': errors && errors.prefecture }" autocomplete="prefecture">
-
-                        <label for="city" class="c-label">市区町村</label>
-                        <input v-model="formData.city" id="city" type="text" class="c-input" :class="{ 'is-invalid': errors && errors.city }" autocomplete="city">
-
-                        <label for="town" class="c-label">地名・番地</label>
-                        <input v-model="formData.town" id="town" type="text" class="c-input" :class="{ 'is-invalid': errors && errors.town }" autocomplete="town">
-
-                        <label for="building" class="c-label">建物名・</br>部屋番号</label>
-                        <input v-model="formData.building" id="building" type="text" class="c-input" :class="{ 'is-invalid': errors && errors.building }" autocomplete="building">
-
-                        <label for="email" class="c-label">メールアドレス</label>
-                        <input v-model="formData.email" id="email" type="email" class="c-input" :class="{ 'is-invalid': errors && errors.email }" autocomplete="email">
-
-                        <label for="password" class="c-label">パスワード</label>
-                        <div class="p-input__password">
-                            <input v-model="formData.password" id="password" :type="PasswordType" class="c-input" :class="{ 'is-invalid': errors && errors.password }" placeholder="英数字8文字以上で入力してください">
-                            <span @click="togglePasswordVisibility('password')"><i :class="PasswordIconClass"></i></span>
-                        </div>
-
-                        <label for="password-confirm" class="c-label">パスワード（再入力）</label>
-                        <div class="p-input__password">
-                            <input v-model="formData.password_confirmation" id="password-confirm" :type="PasswordConfirmType" class="c-input" :class="{ 'is-invalid': errors && errors.password_confirmation }" placeholder="英数字8文字以上で入力してください">
-                            <span @click="togglePasswordVisibility('password_confirm')"><i :class="PasswordConfirmIconClass"></i></span>
-                        </div>
+                    <!-- コンビニ名 -->
+                    <label for="convenience_name" class="c-label">コンビニ名</label>
+                    <input v-model="formData.convenience_name" id="convenience_name" type="text" class="c-input" :class="{ 'is-invalid': errors && errors.convenience_name }" autocomplete="name">
+                    <!-- 支店名 -->
+                    <label for="branch_name" class="c-label">支店名</label>
+                    <input v-model="formData.branch_name" id="branch_name" type="text" class="c-input" :class="{ 'is-invalid': errors && errors.branch_name }" autocomplete="branch_name">
+                    <!-- 郵便番号 -->
+                    <label for="address" class="c-label">郵便番号</label>
+                    <input v-model="formData.postalcode" id="address" type="text" class="c-input" :class="{ 'is-invalid': errors && errors.address }" autocomplete="address" placeholder="郵便番号で住所を簡単入力できます">
+                    <div class="p-register__zip">
+                        <button type="button" class="c-button c-button__convenience" @click="searchAddress">郵便番号検索</button>
+                    </div>
+                    <!-- 都道府県 -->
+                    <label for="prefecture" class="c-label">都道府県</label>
+                    <input v-model="formData.prefecture" id="prefecture" type="text" class="c-input" :class="{ 'is-invalid': errors && errors.prefecture }" autocomplete="prefecture">
+                    <!-- 市区町村 -->
+                    <label for="city" class="c-label">市区町村</label>
+                    <input v-model="formData.city" id="city" type="text" class="c-input" :class="{ 'is-invalid': errors && errors.city }" autocomplete="city">
+                    <!-- 地名・番地 -->
+                    <label for="town" class="c-label">地名・番地</label>
+                    <input v-model="formData.town" id="town" type="text" class="c-input" :class="{ 'is-invalid': errors && errors.town }" autocomplete="town">
+                    <!-- 建物名・部屋番号 -->
+                    <label for="building" class="c-label">建物名・部屋番号</label>
+                    <input v-model="formData.building" id="building" type="text" class="c-input" :class="{ 'is-invalid': errors && errors.building }" autocomplete="building">
+                    <!-- メールアドレス -->
+                    <label for="email" class="c-label">メールアドレス</label>
+                    <input v-model="formData.email" id="email" type="email" class="c-input" :class="{ 'is-invalid': errors && errors.email }" autocomplete="email">
+                    <!-- パスワード -->
+                    <label for="password" class="c-label">パスワード</label>
+                    <div class="c-input__password">
+                        <input v-model="formData.password" id="password" :type="PasswordType" class="c-input" :class="{ 'is-invalid': errors && errors.password }" placeholder="英数字8文字以上で入力してください">
+                        <span @click="togglePasswordVisibility('password')"><i :class="PasswordIconClass"></i></span>
+                    </div>
+                    <!-- パスワード（再入力） -->
+                    <label for="password-confirm" class="c-label">パスワード（再入力）</label>
+                    <div class="c-input__password">
+                        <input v-model="formData.password_confirmation" id="password-confirm" :type="PasswordConfirmType" class="c-input" :class="{ 'is-invalid': errors && errors.password_confirmation }" placeholder="英数字8文字以上で入力してください">
+                        <span @click="togglePasswordVisibility('password_confirm')"><i :class="PasswordConfirmIconClass"></i></span>
                     </div>
 
                     <!-- 利用規約 -->
@@ -63,9 +64,9 @@
                     </div>
 
                     <!-- 利用規約チェックボックス -->
-                    <div class="c-checkbox c-checkbox__container">
-                        <input type="checkbox" v-model="agreement" id="agreement">
-                        <span class="c-text__agreement" for="agreement">利用規約に同意します</span>
+                    <div class="c-checkbox c-checkbox__container u-mt__m u-mb__m">
+                        <input class="c-checkbox u-mr__s" type="checkbox" v-model="agreement" id="agreement">
+                        <span class="c-text" for="agreement">利用規約に同意します</span>
                     </div>
 
                     <!-- 登録ボタン -->
@@ -90,7 +91,7 @@ export default {
     data() {
         return {
             formData: {
-                name: '',
+                convenience_name: '',
                 branch_name: '',
                 prefecture: '',
                 city: '',

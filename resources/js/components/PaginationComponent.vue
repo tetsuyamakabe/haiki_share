@@ -1,19 +1,21 @@
 <template>
-    <!-- ページネーション -->
-    <ul class="pagination">
-        <!-- 前に移動する<<ボタン -->
-        <li :class="{ 'inactive': currentPage == 1, 'disabled': currentPage == 1 }" @click="changePage(currentPage - 1)">«</li>
-        <!-- ページ番号の範囲 -->
-        <li v-for="page in frontPageRange" :key="page" @click="changePage(page)" :class="{ 'active': isCurrent(page), 'inactive': !isCurrent(page) }">{{ page }}</li>
-        <!-- ドットの表示 -->
-        <li v-if="front_dot" class="inactive disabled">...</li>
-        <!-- ページ番号の範囲 -->
-        <li v-for="page in middlePageRange" :key="page" @click="changePage(page)" :class="{ 'active': isCurrent(page), 'inactive': !isCurrent(page) }">{{ page }}</li>
-        <!-- ドットの表示 -->
-        <li v-if="end_dot" class="inactive">...</li>
-        <!-- 次に移動する>>ボタン -->
-        <li :class="{ 'inactive': currentPage >= last_page, 'disabled': currentPage >= last_page }" @click="changePage(currentPage + 1)">»</li>
-    </ul>
+    <div class="p-pagination u-mt__m">
+        <!-- ページネーション -->
+        <ul class="c-pagination">
+            <!-- 前に移動する<<ボタン -->
+            <li :class="{ 'inactive': currentPage == 1, 'disabled': currentPage == 1 }" @click="changePage(currentPage - 1)">«</li>
+            <!-- ページ番号の範囲 -->
+            <li v-for="page in frontPageRange" :key="page" @click="changePage(page)" :class="{ 'active': isCurrent(page), 'inactive': !isCurrent(page) }">{{ page }}</li>
+            <!-- ドットの表示 -->
+            <li v-if="front_dot" class="inactive disabled">...</li>
+            <!-- ページ番号の範囲 -->
+            <li v-for="page in middlePageRange" :key="page" @click="changePage(page)" :class="{ 'active': isCurrent(page), 'inactive': !isCurrent(page) }">{{ page }}</li>
+            <!-- ドットの表示 -->
+            <li v-if="end_dot" class="inactive">...</li>
+            <!-- 次に移動する>>ボタン -->
+            <li :class="{ 'inactive': currentPage >= last_page, 'disabled': currentPage >= last_page }" @click="changePage(currentPage + 1)">»</li>
+        </ul>
+    </div>
 </template>
 
 <script>
@@ -117,32 +119,3 @@ export default {
     },
 };
 </script>
-
-<style scoped>
-.pagination {
-    display: flex;
-    list-style-type: none;
-}
-
-.pagination li {
-    border: 1px solid #ddd;
-    padding: 6px 12px;
-    text-align: center;
-}
-
-.active {
-    background-color: #337;
-    color:white;
-}
-
-.inactive{
-    color: #337;
-}
-
-.pagination li + li {
-    border-left: none;
-}
-.disabled {
-    cursor: not-allowed;
-}
-</style>

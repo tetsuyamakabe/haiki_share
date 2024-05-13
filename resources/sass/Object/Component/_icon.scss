@@ -1,5 +1,17 @@
 .c-icon {
-    width: 200px;
-    height: 200px;
-    border-radius: 50%;
+    font-size: 24px;
+    @include mq(sm){
+        font-size: 12px;
+    }
+    &:hover {
+        cursor: pointer;
+    }
+
+    &__like {
+        color: #ff7fbf;
+    }
+
+    &__unlike {
+        color: #999;
+    }
 }

@@ -3,7 +3,8 @@
     font-weight: bold;
     font-size: 16px;
     color: #434343;
+
     @include mq(sm){
-        font-size: 8px;
+        font-size: 12px;
     }
 }

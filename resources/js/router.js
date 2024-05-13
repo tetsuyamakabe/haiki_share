@@ -222,7 +222,7 @@ const publicPaths = [
 ];
 
 // セッションタイムアウトした場合のナビゲーションガード
-router.beforeEach((to, from, next) => {
+router.beforeEach(async (to, from, next) => {
     const isLogin = store.getters['auth/check'];
     console.log('現在のパス:', to.path);
 
@@ -231,9 +231,9 @@ router.beforeEach((to, from, next) => {
         console.log('セッションタイムアウトのため、リダイレクトします');
         next('/home');
     } else {
+        await store.dispatch('auth/currentUser'); // ログイン状態を保持
         next();
     }
 });
-
 
 export default router;

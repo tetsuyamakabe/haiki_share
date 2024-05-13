@@ -56,7 +56,7 @@ class MyPageController extends Controller
             \Log::info('$userは、', [$user]);
 
             // ユーザー情報を更新
-            $user->name = $request->input('name');
+            $user->name = $request->input('convenience_name');
             $user->email = $request->input('email');
 
             // パスワードの入力がある場合のみ更新する

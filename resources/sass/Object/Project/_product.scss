@@ -1,9 +1,8 @@
 .p-product {
     &__list {
-        width: 750px;
+        width: 100%;
         display: flex;
         flex-wrap: wrap;
-        text-align: center;
 
         @include mq(sm){
             width: 100%;
@@ -14,7 +13,7 @@
     &__item {
         padding: 8px;
         @include mq(sm){
-            width: 50%;
+            width: calc(100% / 2);
             padding: 8px 0;
         }
     }
@@ -30,15 +29,15 @@
         align-items: center;
         margin: 16px 8px;
         padding: 8px;
-
     }
 
     &__index {
-        background: #fff;
-        margin: 120px;
-        padding: 40px;
-        text-align: left;
-        border: 1px solid #000;
+        background: #fefefe;
+        padding: 24px 58px;
+
+        @include mq(sm){
+            padding: 8px;
+        }
     }
 
     &__form{

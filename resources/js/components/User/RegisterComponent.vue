@@ -1,7 +1,7 @@
 <template>
     <main class="l-main">
         <div class="l-main__user">
-            <section class="p-register">
+            <section class="l-main__wrapper">
                 <h1 class="c-title u-mb__xl">利用者ユーザー登録</h1>
                 <form @submit.prevent="submitForm" class="c-form">
 
@@ -12,38 +12,24 @@
                     <span v-if="errors && errors.password_confirmation" class="c-error">{{ errors.password_confirmation[0] }}</span>
                     <span v-if="errors && !agreement" class="c-error">利用規約に同意する必要があります。</span>
 
-                    <table>
-                        <tr>
-                            <th><label for="name" class="c-label">お名前</label></th>
-                            <td>
-                                <input v-model="formData.name" id="name" type="name" class="c-input" :class="{ 'is-invalid': errors && errors.name }" autocomplete="name">
-                            </td>
-                        </tr>
-                        <tr>
-                            <th><label for="email" class="c-label">メールアドレス</label></th>
-                            <td>
-                                <input v-model="formData.email" id="email" type="email" class="c-input" :class="{ 'is-invalid': errors && errors.email }" autocomplete="email">
-                            </td>
-                        </tr>
-                        <tr>
-                            <th><label for="password" class="c-label">パスワード</label></th>
-                            <td>
-                                <div class="p-input__password">
-                                    <input v-model="formData.password" id="password" :type="PasswordType" class="c-input" :class="{ 'is-invalid': errors && errors.password }" placeholder="英数字8文字以上で入力してください">
-                                    <span @click="togglePasswordVisibility('password')"><i :class="PasswordIconClass"></i></span>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th><label for="password-confirm" class="c-label">パスワード</br>（再入力）</label></th>
-                            <td>
-                                <div class="p-input__password">
-                                    <input v-model="formData.password_confirmation" id="password-confirm" :type="PasswordConfirmType" class="c-input" :class="{ 'is-invalid': errors && errors.password_confirmation }" placeholder="英数字8文字以上で入力してください">
-                                    <span @click="togglePasswordVisibility('password_confirm')"><i :class="PasswordConfirmIconClass"></i></span>
-                                </div>
-                            </td>
-                        </tr>
-                    </table>
+                    <!-- お名前 -->
+                    <label for="name" class="c-label">お名前</label>
+                    <input v-model="formData.name" id="name" type="name" class="c-input" :class="{ 'is-invalid': errors && errors.name }" autocomplete="name">
+                    <!-- メールアドレス -->
+                    <label for="email" class="c-label">メールアドレス</label>
+                    <input v-model="formData.email" id="email" type="email" class="c-input" :class="{ 'is-invalid': errors && errors.email }" autocomplete="email">
+                    <!-- パスワード -->
+                    <label for="password" class="c-label">パスワード</label>
+                    <div class="c-input__password">
+                        <input v-model="formData.password" id="password" :type="PasswordType" class="c-input" :class="{ 'is-invalid': errors && errors.password }" placeholder="英数字8文字以上で入力してください">
+                        <span @click="togglePasswordVisibility('password')"><i :class="PasswordIconClass"></i></span>
+                    </div>
+                    <!-- パスワード（再入力） -->
+                    <label for="password-confirm" class="c-label">パスワード（再入力）</label>
+                    <div class="c-input__password">
+                        <input v-model="formData.password_confirmation" id="password-confirm" :type="PasswordConfirmType" class="c-input" :class="{ 'is-invalid': errors && errors.password_confirmation }" placeholder="英数字8文字以上で入力してください">
+                        <span @click="togglePasswordVisibility('password_confirm')"><i :class="PasswordConfirmIconClass"></i></span>
+                    </div>
 
                     <!-- 利用規約 -->
                     <div class="p-register__terms">
@@ -51,9 +37,9 @@
                     </div>
 
                     <!-- 利用規約チェックボックス -->
-                    <div class="c-checkbox c-checkbox__container">
-                        <input type="checkbox" v-model="agreement" id="agreement">
-                        <span class="c-text__agreement" for="agreement">利用規約に同意します</span>
+                    <div class="c-checkbox c-checkbox__container u-mt__m u-mb__m">
+                        <input class="c-checkbox u-mr__s" type="checkbox" v-model="agreement" id="agreement">
+                        <span class="c-text" for="agreement">利用規約に同意します</span>
                     </div>
 
                     <!-- 登録ボタン -->

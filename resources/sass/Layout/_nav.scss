@@ -99,6 +99,9 @@
                 transform: scale(0, 1);
                 transform-origin: left top;
                 transition: transform 0.3s;
+                @include mq(sm){
+                    display: none;
+                }
             }
 
             &:hover::after {
@@ -131,7 +134,7 @@
             &--link{
                 -webkit-font-smoothing: initial;
                 display: block;
-                padding: $space_3l;
+                padding: 16px 0;
                 text-align: center;
                 color: $font-color-sub3;
             }

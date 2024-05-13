@@ -1,6 +1,7 @@
 .p-article {
     &__mypage {
         display: flex;
+
         @include mq(sm){
             display: block;
         }

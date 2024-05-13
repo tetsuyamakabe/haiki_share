@@ -1,7 +1,7 @@
 <template>
     <main class="l-main">
         <div class="l-main__convenience">
-            <section class="p-register">
+            <section class="l-main__wrapper">
                 <h1 class="c-title u-mb__xl">コンビニログイン</h1>
                 <form @submit.prevent="submitForm" class="c-form">
 
@@ -9,28 +9,20 @@
                     <span v-if="errors && errors.email" class="c-error">{{ errors.email[0] }}</span>
                     <span v-if="errors && errors.password" class="c-error">{{ errors.password[0] }}</span>
 
-                    <table>
-                        <tr>
-                            <th><label for="email" class="c-label">メールアドレス</label></th>
-                            <td>
-                                <input v-model="formData.email" id="email" type="email" class="c-input" :class="{ 'is-invalid': errors && errors.email }" autocomplete="email">
-                            </td>
-                        </tr>
-                        <tr>
-                            <th><label for="password" class="c-label">パスワード</label></th>
-                            <td>
-                                <div class="p-input__password">
-                                    <input v-model="formData.password" id="password" :type="PasswordType" class="c-input" :class="{ 'is-invalid': errors && errors.password }" placeholder="英数字8文字以上で入力してください">
-                                    <span @click="togglePasswordVisibility('password')"><i :class="PasswordIconClass"></i></span>
-                                </div>
-                            </td>
-                        </tr>
-                    </table>
+                    <!-- メールアドレス -->
+                    <label for="email" class="c-label">メールアドレス</label>
+                    <input v-model="formData.email" id="email" type="email" class="c-input" :class="{ 'is-invalid': errors && errors.email }" autocomplete="email">
+                    <!-- パスワード -->
+                    <label for="password" class="c-label">パスワード</label>
+                    <div class="c-input__password">
+                        <input v-model="formData.password" id="password" :type="PasswordType" class="c-input" :class="{ 'is-invalid': errors && errors.password }" placeholder="英数字8文字以上で入力してください">
+                        <span @click="togglePasswordVisibility('password')"><i :class="PasswordIconClass"></i></span>
+                    </div>
 
                     <!-- パスワード保持 -->
-                    <div class="c-checkbox c-checkbox__container">
-                        <input type="checkbox" v-model="remember" id="remember">
-                        <span class="c-text__center" for="remember">パスワードを保持する</span>
+                    <div class="c-checkbox c-checkbox__container u-mt__m u-mb__m">
+                        <input class="c-checkbox u-mr__s" type="checkbox" v-model="remember" id="remember">
+                        <span class="c-text" for="remember">パスワードを保持する</span>
                     </div>
 
                     <!-- パスワードリマインダー -->
