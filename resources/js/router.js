@@ -226,12 +226,16 @@ router.beforeEach(async (to, from, next) => {
     const isLogin = store.getters['auth/check'];
     console.log('現在のパス:', to.path);
 
+    const user = store.state.auth.user;
+    if (!user) { // ユーザー情報がstoreにあるかどうかを確認
+        await store.dispatch('auth/currentUser'); // ログイン状態を保持
+    }
+
     // セッションタイムアウトして、現在パスが公開パスではない場合はHOME画面にリダイレクト
     if (!isLogin && !publicPaths.includes(to.path)) {
         console.log('セッションタイムアウトのため、リダイレクトします');
         next('/home');
     } else {
-        await store.dispatch('auth/currentUser'); // ログイン状態を保持
         next();
     }
 });

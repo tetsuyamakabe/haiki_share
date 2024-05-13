@@ -70533,29 +70533,28 @@ var publicPaths = ['/home', '/terms', '/user/register', '/convenience/register',
 // セッションタイムアウトした場合のナビゲーションガード
 router.beforeEach( /*#__PURE__*/function () {
   var _ref = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(to, from, next) {
-    var isLogin;
+    var isLogin, user;
     return _regeneratorRuntime().wrap(function _callee$(_context) {
       while (1) switch (_context.prev = _context.next) {
         case 0:
-          // セッションタイムアウトした場合の処理
           isLogin = _store__WEBPACK_IMPORTED_MODULE_2__["default"].getters['auth/check'];
           console.log('現在のパス:', to.path);
-
-          // セッションタイムアウトして、現在パスが公開パスではない場合はHOME画面にリダイレクト
-          if (!(!isLogin && !publicPaths.includes(to.path))) {
-            _context.next = 7;
+          user = _store__WEBPACK_IMPORTED_MODULE_2__["default"].state.auth.user;
+          if (user) {
+            _context.next = 6;
             break;
           }
-          console.log('セッションタイムアウトのため、リダイレクトします');
-          next('/home');
-          _context.next = 10;
-          break;
-        case 7:
-          _context.next = 9;
+          _context.next = 6;
           return _store__WEBPACK_IMPORTED_MODULE_2__["default"].dispatch('auth/currentUser');
-        case 9:
-          next();
-        case 10:
+        case 6:
+          // セッションタイムアウトして、現在パスが公開パスではない場合はHOME画面にリダイレクト
+          if (!isLogin && !publicPaths.includes(to.path)) {
+            console.log('セッションタイムアウトのため、リダイレクトします');
+            next('/home');
+          } else {
+            next();
+          }
+        case 7:
         case "end":
           return _context.stop();
       }
