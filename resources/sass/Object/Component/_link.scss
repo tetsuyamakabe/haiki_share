@@ -4,6 +4,10 @@
     text-decoration: none;
     color: #434343;
 
+    @include mq(sm){
+        font-size: 12px;
+    }
+
     &:hover {
         text-decoration: underline;
     }

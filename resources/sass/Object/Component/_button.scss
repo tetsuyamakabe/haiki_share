@@ -3,16 +3,16 @@
     border-radius: 3px;
     background: #fefefe;
 
+    @include mq(sm){
+        font-size: 8px;
+    }
+
     &__submit {
         padding: 8px;
         font-size: 16px;
         transition: 0.3s;
-        width: 504px;
+        width: 100%;
         font-weight: bold;
-    
-        @include mq(sm){
-            width: 286px;
-        }
     }
 
     &__user {
@@ -29,6 +29,13 @@
         }
     }
 
+    &__common {
+        border: 2px solid #32cd32;
+        &:hover {
+            background: #32cd32;
+        }
+    }
+
     &:hover {
         color: #fefefe;
         font-weight: bold;
@@ -38,7 +45,7 @@
     &__detail {
         display: block;
         color: #434343;
-        font-size: 12px;
+        font-size: 16px;
         padding: 8px;
         margin: 8px;
     }

@@ -69,7 +69,7 @@ class RegisterController extends Controller
 
         // ユーザー情報を「users」テーブルに保存
         $user = User::create([
-            'name' => $validated['name'],
+            'name' => $validated['convenience_name'],
             'email' => $validated['email'],
             'password' => Hash::make($validated['password']),
             'role' => $validated['role'],

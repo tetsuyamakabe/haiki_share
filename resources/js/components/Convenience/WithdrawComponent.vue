@@ -1,18 +1,16 @@
 <template>
     <main class="l-main">
-        <div class="p-profile">
-            <div class="p-profile__form">
-                <h1 class="c-title">退会</h1>
-                <div class="p-container">
-                    <p>退会手続きを行いますか？</p>
+        <div class="l-main__convenience">
+            <section class="l-main__wrapper">
+                <h1 class="c-title u-mb__xl">コンビニ退会</h1>
+                <form class="c-form">
+                    <h3 class="c-title c-title__sub">退会手続きを行いますか？</h3>
                     <!-- 退会ボタン -->
-                    <div class="p-withdraw__button">
-                        <button class="c-button" @click="withdraw">退会する</button>
-                    </div>
-                </div>
-            </div>
+                    <button @click="withdraw" class="c-button c-button__submit c-button__convenience u-mt__m">退会する</button>
+                </form>
+            </section>
         </div>
-        <a @click="$router.back()">前のページに戻る</a>
+        <a @click="$router.back()" class="c-link c-link__back u-mt__s u-mb__s">前のページに戻る</a>
     </main>
 </template>
 

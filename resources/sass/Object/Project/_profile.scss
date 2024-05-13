@@ -2,16 +2,19 @@
     display: flex;
     background-color: #fafafa;
 
-    &__form{
-        background: #fff;
-        margin: 120px auto;
-        padding: 40px;
-        text-align: left;
-        border: 1px solid #000;
-    }
+    &__icon {
+        width: 200px;
+        height: 200px;
+        border-radius: 50%;
 
-    &__button{
-        display: flex;
-        justify-content: center;
+        &--container {
+            position: relative;
+            width: 200px;
+            height: 200px;
+            border: 1px solid #000;
+            border-radius: 50%;
+            margin: auto;
+            padding: 8px;
+        }
     }
 }

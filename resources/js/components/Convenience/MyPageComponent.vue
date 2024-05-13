@@ -3,55 +3,57 @@
         <div class="l-main__convenience">
             <h1 class="c-title u-mb__xl">コンビニマイページ</h1>
             <div class="p-article__mypage">
-                <section class="p-register u-mr__s">
+                <section class="l-main__wrapper">
+                    <div class="l-container">
 
-                    <!-- 出品した商品を最大5件表示 -->
-                    <div class="p-mypage__sale u-pd__xl">
-                        <h2 class="c-title c-title__sub">出品した商品</h2><span class="c-text c-text__max">最大5件表示</span>
-                        <div v-if="saleProducts.length === 0">
-                            <ul class="p-product__list">
-                                <p class="u-pd__xl">出品した商品はありません。</p>
-                            </ul>
+                        <!-- 出品した商品を最大5件表示 -->
+                        <div class="p-mypage__sale">
+                            <h2 class="c-title c-title__sub">出品した商品</h2><span class="c-text c-text__max">最大5件表示</span>
+                            <div v-if="saleProducts.length === 0">
+                                <ul class="p-product__list">
+                                    <p class="c-text u-pd__xl">出品した商品はありません。</p>
+                                </ul>
+                            </div>
+                            <div v-else>
+                                <ul class="p-product__list">
+                                    <li v-for="product in saleProducts" :key="product.id" class="p-product__item">
+                                        <div class="c-card u-m__s">
+                                            <h3 class="c-card__name u-pd__s">{{ product.name }}</h3>
+                                            <img class="c-card__picture" :src="getProductPicturePath(product)" alt="商品画像">
+                                            <p class="c-card__price">{{ product.price }}円</p>
+                                            <p class="c-card__date">{{ product.expiration_date }}</p>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="c-link__products u-mt__s">
+                                <router-link class="c-link" :to="{ name: 'convenience.products.sale' }">全件表示</router-link>
+                            </div>
                         </div>
-                        <div v-else>
-                            <ul class="p-product__list">
-                                <li v-for="product in saleProducts" :key="product.id" class="p-product__item u-pd__l">
-                                    <div class="c-card">
-                                        <h3 class="c-card__name u-pdt__s">{{ product.name }}</h3>
-                                        <img class="c-card__picture u-m__s" :src="getProductPicturePath(product)" alt="商品画像">
-                                        <p class="c-card__price">価格 {{ product.price }} 円</p>
-                                        <p class="c-card__date">賞味期限 {{ product.expiration_date }}</p>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="c-link__products u-mt__s">
-                            <router-link class="c-link" :to="{ name: 'convenience.products.sale' }">全件表示</router-link>
-                        </div>
-                    </div>
 
-                    <!-- 購入された商品を最大5件表示 -->
-                    <div class="p-mypage__purchased u-mt__xl u-pd__xl">
-                        <h2 class="c-title c-title__sub">購入された商品</h2><span class="c-text c-text__max">最大5件表示</span>
-                        <div v-if="purchaseProducts.length === 0">
-                            <ul class="p-product__list">
-                                <p class="u-pd__xl">購入された商品はありません。</p>
-                            </ul>
-                        </div>
-                        <div v-else>
-                            <ul class="p-product__list">
-                                <li v-for="product in purchaseProducts" :key="product.id" class="p-product__item u-pd__l">
-                                    <div class="c-card">
-                                        <h3 class="c-card__name u-pdt__s">{{ product.name }}</h3>
-                                        <img class="c-card__picture u-m__s" :src="getProductPicturePath(product)" alt="商品画像">
-                                        <p class="c-card__price">価格 {{ product.price }} 円</p>
-                                        <p class="c-card__date">賞味期限 {{ product.expiration_date }}</p>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="c-link__products u-mt__s">
-                            <router-link class="c-link" :to="{ name: 'convenience.products.purchase' }">全件表示</router-link>
+                        <!-- 購入された商品を最大5件表示 -->
+                        <div class="p-mypage__purchased">
+                            <h2 class="c-title c-title__sub">購入された商品</h2><span class="c-text c-text__max">最大5件表示</span>
+                            <div v-if="purchaseProducts.length === 0">
+                                <ul class="p-product__list">
+                                    <p class="c-text u-pd__xl">購入された商品はありません。</p>
+                                </ul>
+                            </div>
+                            <div v-else>
+                                <ul class="p-product__list">
+                                    <li v-for="product in purchaseProducts" :key="product.id" class="p-product__item">
+                                        <div class="c-card u-m__s">
+                                            <h3 class="c-card__name u-pd__s">{{ product.name }}</h3>
+                                            <img class="c-card__picture" :src="getProductPicturePath(product)" alt="商品画像">
+                                            <p class="c-card__price">{{ product.price }}円</p>
+                                            <p class="c-card__date">{{ product.expiration_date }}</p>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="c-link__products u-mt__s">
+                                <router-link class="c-link" :to="{ name: 'convenience.products.purchase' }">全件表示</router-link>
+                            </div>
                         </div>
                     </div>
                 </section>

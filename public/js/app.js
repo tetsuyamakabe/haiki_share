@@ -5162,14 +5162,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -5272,6 +5264,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
 //
 //
 //
@@ -6337,47 +6331,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 var jsonpAdapter = __webpack_require__(/*! axios-jsonp */ "./node_modules/axios-jsonp/lib/index.js");
@@ -6385,7 +6338,7 @@ var jsonpAdapter = __webpack_require__(/*! axios-jsonp */ "./node_modules/axios-
   data: function data() {
     return {
       formData: {
-        name: '',
+        convenience_name: '',
         branch_name: '',
         prefecture: '',
         city: '',
@@ -6424,7 +6377,7 @@ var jsonpAdapter = __webpack_require__(/*! axios-jsonp */ "./node_modules/axios-
         _this.address = response.data.address;
         console.log('APIからのレスポンス:', response.data);
         // 取得したプロフィール情報をformDataに入れる
-        _this.formData.name = _this.user.name || '';
+        _this.formData.convenience_name = _this.user.name || '';
         _this.formData.branch_name = _this.convenience.branch_name || '', _this.formData.prefecture = _this.address.prefecture || '', _this.formData.city = _this.address.city || '', _this.formData.town = _this.address.town || '', _this.formData.building = _this.address.building || '', _this.formData.email = _this.user.email || '';
         _this.formData.password = ''; // 編集前のパスワードは非表示（入力フォームを空）にする
         _this.formData.password_confirmation = ''; // 編集前のパスワード（再入力）は非表示（入力フォームを空）にする
@@ -6467,7 +6420,7 @@ var jsonpAdapter = __webpack_require__(/*! axios-jsonp */ "./node_modules/axios-
       // フォームデータを作成
       var formData = new FormData();
       formData.append('_method', 'PUT');
-      formData.append('name', this.formData.name);
+      formData.append('convenience_name', this.formData.convenience_name);
       formData.append('branch_name', this.formData.branch_name);
       formData.append('prefecture', this.formData.prefecture);
       formData.append('city', this.formData.city);
@@ -6635,6 +6588,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
  // 利用規約
@@ -6647,7 +6601,7 @@ var jsonpAdapter = __webpack_require__(/*! axios-jsonp */ "./node_modules/axios-
   data: function data() {
     return {
       formData: {
-        name: '',
+        convenience_name: '',
         branch_name: '',
         prefecture: '',
         city: '',
@@ -6851,8 +6805,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   methods: {
@@ -6946,6 +6898,11 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
 //
 //
 //
@@ -7061,6 +7018,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
 //
 //
 //
@@ -7231,6 +7190,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 
  // 絞り込み検索コンポーネント
@@ -7283,11 +7250,10 @@ __webpack_require__.r(__webpack_exports__);
       }
       console.log('検索URL:', url);
       // ページ遷移
-      if (this.$route.fullPath !== url) {
-        // 現在のURLと新しいURLが異なるか
-        this.$router.push(url);
-        this.getProduct();
-      }
+      // if (this.$route.fullPath !== url) { // 現在のURLと新しいURLが異なるか
+      this.$router.push(url);
+      this.getProduct();
+      // }
     },
     // ページが変更されたときの処理
     onPageChange: function onPageChange(page) {
@@ -7301,7 +7267,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     // 検索結果を表示する
     searchResult: function searchResult(params) {
-      // 前回の検索条件と比較し、同じであればページ遷移を行わずに検索結果を再取得する
+      // 前回の検索条件が同じであればページ遷移を行わずに検索結果を再取得する
       if (JSON.stringify(params) === JSON.stringify(this.lastParams)) {
         this.getProduct(params); // 前回と同じ検索条件での再取得
       } else {
@@ -7437,17 +7403,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -7456,9 +7411,9 @@ __webpack_require__.r(__webpack_exports__);
       prefectures: [],
       selectedPrefecture: '',
       // 都道府県
-      minPrice: '',
+      minPrice: 0,
       // 最小価格
-      maxPrice: '',
+      maxPrice: 0,
       // 最大価格
       isExpired: false // 賞味期限切れかどうか
     };
@@ -7714,14 +7669,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -7824,6 +7771,9 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
 //
 //
 //
@@ -8479,35 +8429,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -8654,20 +8575,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _TermsComponent_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../TermsComponent.vue */ "./resources/js/components/TermsComponent.vue");
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -8896,8 +8803,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-//
-//
 //
 //
 //
@@ -13406,44 +13311,6 @@ defineJQueryPlugin(Toast);
 
 
 //# sourceMappingURL=bootstrap.esm.js.map
-
-
-/***/ }),
-
-/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Convenience/RegisterComponent.vue?vue&type=style&index=0&id=0b2c77f2&scoped=true&lang=css":
-/*!**********************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Convenience/RegisterComponent.vue?vue&type=style&index=0&id=0b2c77f2&scoped=true&lang=css ***!
-  \**********************************************************************************************************************************************************************************************************************************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
-// imports
-
-
-// module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/* 必要なスタイルを追加 */\n.form-group[data-v-0b2c77f2] {\n    margin-bottom: 15px;\n}\n.form-control[data-v-0b2c77f2] {\n    width: 100%;\n    padding: 10px;\n    border: 1px solid #ccc;\n    border-radius: 4px;\n    box-sizing: border-box;\n}\n.c-label[data-v-0b2c77f2] {\n    display: block;\n    margin-bottom: 5px;\n    font-weight: bold;\n}\n.c-error[data-v-0b2c77f2] {\n    color: red;\n    font-size: 12px;\n}\n.c-checkbox[data-v-0b2c77f2] {\n    margin-top: 15px;\n    display: flex;\n    align-items: center;\n}\n.c-checkbox input[type=\"checkbox\"][data-v-0b2c77f2] {\n    margin-right: 10px;\n}\n.c-button[data-v-0b2c77f2] {\n    padding: 10px 20px;\n    background-color: #337ab7;\n    color: white;\n    border: none;\n    border-radius: 4px;\n    cursor: pointer;\n    transition: background-color 0.3s;\n}\n.c-button[data-v-0b2c77f2]:hover {\n    background-color: #286090;\n}\n", ""]);
-
-// exports
-
-
-/***/ }),
-
-/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/PaginationComponent.vue?vue&type=style&index=0&id=5cc156e8&scoped=true&lang=css":
-/*!************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/PaginationComponent.vue?vue&type=style&index=0&id=5cc156e8&scoped=true&lang=css ***!
-  \************************************************************************************************************************************************************************************************************************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
-// imports
-
-
-// module
-exports.push([module.i, "\n.pagination[data-v-5cc156e8] {\n    display: flex;\n    list-style-type: none;\n}\n.pagination li[data-v-5cc156e8] {\n    border: 1px solid #ddd;\n    padding: 6px 12px;\n    text-align: center;\n}\n.active[data-v-5cc156e8] {\n    background-color: #337;\n    color:white;\n}\n.inactive[data-v-5cc156e8]{\n    color: #337;\n}\n.pagination li + li[data-v-5cc156e8] {\n    border-left: none;\n}\n.disabled[data-v-5cc156e8] {\n    cursor: not-allowed;\n}\n", ""]);
-
-// exports
 
 
 /***/ }),
@@ -44518,66 +44385,6 @@ process.umask = function() { return 0; };
 
 /***/ }),
 
-/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Convenience/RegisterComponent.vue?vue&type=style&index=0&id=0b2c77f2&scoped=true&lang=css":
-/*!**************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Convenience/RegisterComponent.vue?vue&type=style&index=0&id=0b2c77f2&scoped=true&lang=css ***!
-  \**************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-
-var content = __webpack_require__(/*! !../../../../node_modules/css-loader??ref--6-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--6-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./RegisterComponent.vue?vue&type=style&index=0&id=0b2c77f2&scoped=true&lang=css */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Convenience/RegisterComponent.vue?vue&type=style&index=0&id=0b2c77f2&scoped=true&lang=css");
-
-if(typeof content === 'string') content = [[module.i, content, '']];
-
-var transform;
-var insertInto;
-
-
-
-var options = {"hmr":true}
-
-options.transform = transform
-options.insertInto = undefined;
-
-var update = __webpack_require__(/*! ../../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
-
-if(content.locals) module.exports = content.locals;
-
-if(false) {}
-
-/***/ }),
-
-/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/PaginationComponent.vue?vue&type=style&index=0&id=5cc156e8&scoped=true&lang=css":
-/*!****************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/PaginationComponent.vue?vue&type=style&index=0&id=5cc156e8&scoped=true&lang=css ***!
-  \****************************************************************************************************************************************************************************************************************************************************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-
-var content = __webpack_require__(/*! !../../../node_modules/css-loader??ref--6-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/src??ref--6-2!../../../node_modules/vue-loader/lib??vue-loader-options!./PaginationComponent.vue?vue&type=style&index=0&id=5cc156e8&scoped=true&lang=css */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/PaginationComponent.vue?vue&type=style&index=0&id=5cc156e8&scoped=true&lang=css");
-
-if(typeof content === 'string') content = [[module.i, content, '']];
-
-var transform;
-var insertInto;
-
-
-
-var options = {"hmr":true}
-
-options.transform = transform
-options.insertInto = undefined;
-
-var update = __webpack_require__(/*! ../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
-
-if(content.locals) module.exports = content.locals;
-
-if(false) {}
-
-/***/ }),
-
 /***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/User/ProductDetailComponent.vue?vue&type=style&index=0&id=12cb53f4&scoped=true&lang=css":
 /*!************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/User/ProductDetailComponent.vue?vue&type=style&index=0&id=12cb53f4&scoped=true&lang=css ***!
@@ -45368,7 +45175,7 @@ var render = function () {
   var _c = _vm._self._c || _h
   return _c("main", { staticClass: "l-main" }, [
     _c("div", { staticClass: "l-main__convenience" }, [
-      _c("section", { staticClass: "p-register" }, [
+      _c("section", { staticClass: "l-main__wrapper" }, [
         _c("h1", { staticClass: "c-title u-mb__xl" }, [
           _vm._v("コンビニログイン"),
         ]),
@@ -45397,222 +45204,207 @@ var render = function () {
                 ])
               : _vm._e(),
             _vm._v(" "),
-            _c("table", [
-              _c("tr", [
-                _vm._m(0),
-                _vm._v(" "),
-                _c("td", [
-                  _c("input", {
+            _c("label", { staticClass: "c-label", attrs: { for: "email" } }, [
+              _vm._v("メールアドレス"),
+            ]),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.formData.email,
+                  expression: "formData.email",
+                },
+              ],
+              staticClass: "c-input",
+              class: { "is-invalid": _vm.errors && _vm.errors.email },
+              attrs: { id: "email", type: "email", autocomplete: "email" },
+              domProps: { value: _vm.formData.email },
+              on: {
+                input: function ($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.formData, "email", $event.target.value)
+                },
+              },
+            }),
+            _vm._v(" "),
+            _c(
+              "label",
+              { staticClass: "c-label", attrs: { for: "password" } },
+              [_vm._v("パスワード")]
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "c-input__password" }, [
+              _vm.PasswordType === "checkbox"
+                ? _c("input", {
                     directives: [
                       {
                         name: "model",
                         rawName: "v-model",
-                        value: _vm.formData.email,
-                        expression: "formData.email",
+                        value: _vm.formData.password,
+                        expression: "formData.password",
                       },
                     ],
                     staticClass: "c-input",
-                    class: { "is-invalid": _vm.errors && _vm.errors.email },
+                    class: { "is-invalid": _vm.errors && _vm.errors.password },
                     attrs: {
-                      id: "email",
-                      type: "email",
-                      autocomplete: "email",
+                      id: "password",
+                      placeholder: "英数字8文字以上で入力してください",
+                      type: "checkbox",
                     },
-                    domProps: { value: _vm.formData.email },
+                    domProps: {
+                      checked: Array.isArray(_vm.formData.password)
+                        ? _vm._i(_vm.formData.password, null) > -1
+                        : _vm.formData.password,
+                    },
+                    on: {
+                      change: function ($event) {
+                        var $$a = _vm.formData.password,
+                          $$el = $event.target,
+                          $$c = $$el.checked ? true : false
+                        if (Array.isArray($$a)) {
+                          var $$v = null,
+                            $$i = _vm._i($$a, $$v)
+                          if ($$el.checked) {
+                            $$i < 0 &&
+                              _vm.$set(
+                                _vm.formData,
+                                "password",
+                                $$a.concat([$$v])
+                              )
+                          } else {
+                            $$i > -1 &&
+                              _vm.$set(
+                                _vm.formData,
+                                "password",
+                                $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                              )
+                          }
+                        } else {
+                          _vm.$set(_vm.formData, "password", $$c)
+                        }
+                      },
+                    },
+                  })
+                : _vm.PasswordType === "radio"
+                ? _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.formData.password,
+                        expression: "formData.password",
+                      },
+                    ],
+                    staticClass: "c-input",
+                    class: { "is-invalid": _vm.errors && _vm.errors.password },
+                    attrs: {
+                      id: "password",
+                      placeholder: "英数字8文字以上で入力してください",
+                      type: "radio",
+                    },
+                    domProps: { checked: _vm._q(_vm.formData.password, null) },
+                    on: {
+                      change: function ($event) {
+                        _vm.$set(_vm.formData, "password", null)
+                      },
+                    },
+                  })
+                : _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.formData.password,
+                        expression: "formData.password",
+                      },
+                    ],
+                    staticClass: "c-input",
+                    class: { "is-invalid": _vm.errors && _vm.errors.password },
+                    attrs: {
+                      id: "password",
+                      placeholder: "英数字8文字以上で入力してください",
+                      type: _vm.PasswordType,
+                    },
+                    domProps: { value: _vm.formData.password },
                     on: {
                       input: function ($event) {
                         if ($event.target.composing) {
                           return
                         }
-                        _vm.$set(_vm.formData, "email", $event.target.value)
+                        _vm.$set(_vm.formData, "password", $event.target.value)
                       },
                     },
                   }),
-                ]),
-              ]),
-              _vm._v(" "),
-              _c("tr", [
-                _vm._m(1),
-                _vm._v(" "),
-                _c("td", [
-                  _c("div", { staticClass: "p-input__password" }, [
-                    _vm.PasswordType === "checkbox"
-                      ? _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.formData.password,
-                              expression: "formData.password",
-                            },
-                          ],
-                          staticClass: "c-input",
-                          class: {
-                            "is-invalid": _vm.errors && _vm.errors.password,
-                          },
-                          attrs: {
-                            id: "password",
-                            placeholder: "英数字8文字以上で入力してください",
-                            type: "checkbox",
-                          },
-                          domProps: {
-                            checked: Array.isArray(_vm.formData.password)
-                              ? _vm._i(_vm.formData.password, null) > -1
-                              : _vm.formData.password,
-                          },
-                          on: {
-                            change: function ($event) {
-                              var $$a = _vm.formData.password,
-                                $$el = $event.target,
-                                $$c = $$el.checked ? true : false
-                              if (Array.isArray($$a)) {
-                                var $$v = null,
-                                  $$i = _vm._i($$a, $$v)
-                                if ($$el.checked) {
-                                  $$i < 0 &&
-                                    _vm.$set(
-                                      _vm.formData,
-                                      "password",
-                                      $$a.concat([$$v])
-                                    )
-                                } else {
-                                  $$i > -1 &&
-                                    _vm.$set(
-                                      _vm.formData,
-                                      "password",
-                                      $$a
-                                        .slice(0, $$i)
-                                        .concat($$a.slice($$i + 1))
-                                    )
-                                }
-                              } else {
-                                _vm.$set(_vm.formData, "password", $$c)
-                              }
-                            },
-                          },
-                        })
-                      : _vm.PasswordType === "radio"
-                      ? _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.formData.password,
-                              expression: "formData.password",
-                            },
-                          ],
-                          staticClass: "c-input",
-                          class: {
-                            "is-invalid": _vm.errors && _vm.errors.password,
-                          },
-                          attrs: {
-                            id: "password",
-                            placeholder: "英数字8文字以上で入力してください",
-                            type: "radio",
-                          },
-                          domProps: {
-                            checked: _vm._q(_vm.formData.password, null),
-                          },
-                          on: {
-                            change: function ($event) {
-                              _vm.$set(_vm.formData, "password", null)
-                            },
-                          },
-                        })
-                      : _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.formData.password,
-                              expression: "formData.password",
-                            },
-                          ],
-                          staticClass: "c-input",
-                          class: {
-                            "is-invalid": _vm.errors && _vm.errors.password,
-                          },
-                          attrs: {
-                            id: "password",
-                            placeholder: "英数字8文字以上で入力してください",
-                            type: _vm.PasswordType,
-                          },
-                          domProps: { value: _vm.formData.password },
-                          on: {
-                            input: function ($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.$set(
-                                _vm.formData,
-                                "password",
-                                $event.target.value
-                              )
-                            },
-                          },
-                        }),
-                    _vm._v(" "),
-                    _c(
-                      "span",
-                      {
-                        on: {
-                          click: function ($event) {
-                            _vm.togglePasswordVisibility("password")
-                          },
-                        },
-                      },
-                      [_c("i", { class: _vm.PasswordIconClass })]
-                    ),
-                  ]),
-                ]),
-              ]),
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "c-checkbox c-checkbox__container" }, [
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.remember,
-                    expression: "remember",
-                  },
-                ],
-                attrs: { type: "checkbox", id: "remember" },
-                domProps: {
-                  checked: Array.isArray(_vm.remember)
-                    ? _vm._i(_vm.remember, null) > -1
-                    : _vm.remember,
-                },
-                on: {
-                  change: function ($event) {
-                    var $$a = _vm.remember,
-                      $$el = $event.target,
-                      $$c = $$el.checked ? true : false
-                    if (Array.isArray($$a)) {
-                      var $$v = null,
-                        $$i = _vm._i($$a, $$v)
-                      if ($$el.checked) {
-                        $$i < 0 && (_vm.remember = $$a.concat([$$v]))
-                      } else {
-                        $$i > -1 &&
-                          (_vm.remember = $$a
-                            .slice(0, $$i)
-                            .concat($$a.slice($$i + 1)))
-                      }
-                    } else {
-                      _vm.remember = $$c
-                    }
-                  },
-                },
-              }),
               _vm._v(" "),
               _c(
                 "span",
-                { staticClass: "c-text__center", attrs: { for: "remember" } },
-                [_vm._v("パスワードを保持する")]
+                {
+                  on: {
+                    click: function ($event) {
+                      _vm.togglePasswordVisibility("password")
+                    },
+                  },
+                },
+                [_c("i", { class: _vm.PasswordIconClass })]
               ),
             ]),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "c-checkbox c-checkbox__container u-mt__m u-mb__m",
+              },
+              [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.remember,
+                      expression: "remember",
+                    },
+                  ],
+                  staticClass: "c-checkbox u-mr__s",
+                  attrs: { type: "checkbox", id: "remember" },
+                  domProps: {
+                    checked: Array.isArray(_vm.remember)
+                      ? _vm._i(_vm.remember, null) > -1
+                      : _vm.remember,
+                  },
+                  on: {
+                    change: function ($event) {
+                      var $$a = _vm.remember,
+                        $$el = $event.target,
+                        $$c = $$el.checked ? true : false
+                      if (Array.isArray($$a)) {
+                        var $$v = null,
+                          $$i = _vm._i($$a, $$v)
+                        if ($$el.checked) {
+                          $$i < 0 && (_vm.remember = $$a.concat([$$v]))
+                        } else {
+                          $$i > -1 &&
+                            (_vm.remember = $$a
+                              .slice(0, $$i)
+                              .concat($$a.slice($$i + 1)))
+                        }
+                      } else {
+                        _vm.remember = $$c
+                      }
+                    },
+                  },
+                }),
+                _vm._v(" "),
+                _c(
+                  "span",
+                  { staticClass: "c-text", attrs: { for: "remember" } },
+                  [_vm._v("パスワードを保持する")]
+                ),
+              ]
+            ),
             _vm._v(" "),
             _c(
               "a",
@@ -45651,28 +45443,7 @@ var render = function () {
     ),
   ])
 }
-var staticRenderFns = [
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("th", [
-      _c("label", { staticClass: "c-label", attrs: { for: "email" } }, [
-        _vm._v("メールアドレス"),
-      ]),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("th", [
-      _c("label", { staticClass: "c-label", attrs: { for: "password" } }, [
-        _vm._v("パスワード"),
-      ]),
-    ])
-  },
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -45729,141 +45500,137 @@ var render = function () {
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "p-article__mypage" }, [
-        _c("section", { staticClass: "p-register u-mr__s" }, [
-          _c("div", { staticClass: "p-mypage__sale u-pd__xl" }, [
-            _c("h2", { staticClass: "c-title c-title__sub" }, [
-              _vm._v("出品した商品"),
-            ]),
-            _c("span", { staticClass: "c-text c-text__max" }, [
-              _vm._v("最大5件表示"),
-            ]),
-            _vm._v(" "),
-            _vm.saleProducts.length === 0
-              ? _c("div", [_vm._m(0)])
-              : _c("div", [
-                  _c(
-                    "ul",
-                    { staticClass: "p-product__list" },
-                    _vm._l(_vm.saleProducts, function (product) {
-                      return _c(
-                        "li",
-                        {
-                          key: product.id,
-                          staticClass: "p-product__item u-pd__l",
-                        },
-                        [
-                          _c("div", { staticClass: "c-card" }, [
-                            _c("h3", { staticClass: "c-card__name u-pdt__s" }, [
-                              _vm._v(_vm._s(product.name)),
-                            ]),
-                            _vm._v(" "),
-                            _c("img", {
-                              staticClass: "c-card__picture u-m__s",
-                              attrs: {
-                                src: _vm.getProductPicturePath(product),
-                                alt: "商品画像",
-                              },
-                            }),
-                            _vm._v(" "),
-                            _c("p", { staticClass: "c-card__price" }, [
-                              _vm._v("価格 " + _vm._s(product.price) + " 円"),
-                            ]),
-                            _vm._v(" "),
-                            _c("p", { staticClass: "c-card__date" }, [
-                              _vm._v(
-                                "賞味期限 " + _vm._s(product.expiration_date)
+        _c("section", { staticClass: "l-main__wrapper" }, [
+          _c("div", { staticClass: "l-container" }, [
+            _c("div", { staticClass: "p-mypage__sale" }, [
+              _c("h2", { staticClass: "c-title c-title__sub" }, [
+                _vm._v("出品した商品"),
+              ]),
+              _c("span", { staticClass: "c-text c-text__max" }, [
+                _vm._v("最大5件表示"),
+              ]),
+              _vm._v(" "),
+              _vm.saleProducts.length === 0
+                ? _c("div", [_vm._m(0)])
+                : _c("div", [
+                    _c(
+                      "ul",
+                      { staticClass: "p-product__list" },
+                      _vm._l(_vm.saleProducts, function (product) {
+                        return _c(
+                          "li",
+                          { key: product.id, staticClass: "p-product__item" },
+                          [
+                            _c("div", { staticClass: "c-card u-m__s" }, [
+                              _c(
+                                "h3",
+                                { staticClass: "c-card__name u-pd__s" },
+                                [_vm._v(_vm._s(product.name))]
                               ),
+                              _vm._v(" "),
+                              _c("img", {
+                                staticClass: "c-card__picture",
+                                attrs: {
+                                  src: _vm.getProductPicturePath(product),
+                                  alt: "商品画像",
+                                },
+                              }),
+                              _vm._v(" "),
+                              _c("p", { staticClass: "c-card__price" }, [
+                                _vm._v(_vm._s(product.price) + "円"),
+                              ]),
+                              _vm._v(" "),
+                              _c("p", { staticClass: "c-card__date" }, [
+                                _vm._v(_vm._s(product.expiration_date)),
+                              ]),
                             ]),
-                          ]),
-                        ]
-                      )
-                    })
-                  ),
-                ]),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "c-link__products u-mt__s" },
-              [
-                _c(
-                  "router-link",
-                  {
-                    staticClass: "c-link",
-                    attrs: { to: { name: "convenience.products.sale" } },
-                  },
-                  [_vm._v("全件表示")]
-                ),
-              ],
-              1
-            ),
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "p-mypage__purchased u-mt__xl u-pd__xl" }, [
-            _c("h2", { staticClass: "c-title c-title__sub" }, [
-              _vm._v("購入された商品"),
-            ]),
-            _c("span", { staticClass: "c-text c-text__max" }, [
-              _vm._v("最大5件表示"),
-            ]),
-            _vm._v(" "),
-            _vm.purchaseProducts.length === 0
-              ? _c("div", [_vm._m(1)])
-              : _c("div", [
+                          ]
+                        )
+                      })
+                    ),
+                  ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "c-link__products u-mt__s" },
+                [
                   _c(
-                    "ul",
-                    { staticClass: "p-product__list" },
-                    _vm._l(_vm.purchaseProducts, function (product) {
-                      return _c(
-                        "li",
-                        {
-                          key: product.id,
-                          staticClass: "p-product__item u-pd__l",
-                        },
-                        [
-                          _c("div", { staticClass: "c-card" }, [
-                            _c("h3", { staticClass: "c-card__name u-pdt__s" }, [
-                              _vm._v(_vm._s(product.name)),
-                            ]),
-                            _vm._v(" "),
-                            _c("img", {
-                              staticClass: "c-card__picture u-m__s",
-                              attrs: {
-                                src: _vm.getProductPicturePath(product),
-                                alt: "商品画像",
-                              },
-                            }),
-                            _vm._v(" "),
-                            _c("p", { staticClass: "c-card__price" }, [
-                              _vm._v("価格 " + _vm._s(product.price) + " 円"),
-                            ]),
-                            _vm._v(" "),
-                            _c("p", { staticClass: "c-card__date" }, [
-                              _vm._v(
-                                "賞味期限 " + _vm._s(product.expiration_date)
-                              ),
-                            ]),
-                          ]),
-                        ]
-                      )
-                    })
+                    "router-link",
+                    {
+                      staticClass: "c-link",
+                      attrs: { to: { name: "convenience.products.sale" } },
+                    },
+                    [_vm._v("全件表示")]
                   ),
-                ]),
+                ],
+                1
+              ),
+            ]),
             _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "c-link__products u-mt__s" },
-              [
-                _c(
-                  "router-link",
-                  {
-                    staticClass: "c-link",
-                    attrs: { to: { name: "convenience.products.purchase" } },
-                  },
-                  [_vm._v("全件表示")]
-                ),
-              ],
-              1
-            ),
+            _c("div", { staticClass: "p-mypage__purchased" }, [
+              _c("h2", { staticClass: "c-title c-title__sub" }, [
+                _vm._v("購入された商品"),
+              ]),
+              _c("span", { staticClass: "c-text c-text__max" }, [
+                _vm._v("最大5件表示"),
+              ]),
+              _vm._v(" "),
+              _vm.purchaseProducts.length === 0
+                ? _c("div", [_vm._m(1)])
+                : _c("div", [
+                    _c(
+                      "ul",
+                      { staticClass: "p-product__list" },
+                      _vm._l(_vm.purchaseProducts, function (product) {
+                        return _c(
+                          "li",
+                          { key: product.id, staticClass: "p-product__item" },
+                          [
+                            _c("div", { staticClass: "c-card u-m__s" }, [
+                              _c(
+                                "h3",
+                                { staticClass: "c-card__name u-pd__s" },
+                                [_vm._v(_vm._s(product.name))]
+                              ),
+                              _vm._v(" "),
+                              _c("img", {
+                                staticClass: "c-card__picture",
+                                attrs: {
+                                  src: _vm.getProductPicturePath(product),
+                                  alt: "商品画像",
+                                },
+                              }),
+                              _vm._v(" "),
+                              _c("p", { staticClass: "c-card__price" }, [
+                                _vm._v(_vm._s(product.price) + "円"),
+                              ]),
+                              _vm._v(" "),
+                              _c("p", { staticClass: "c-card__date" }, [
+                                _vm._v(_vm._s(product.expiration_date)),
+                              ]),
+                            ]),
+                          ]
+                        )
+                      })
+                    ),
+                  ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "c-link__products u-mt__s" },
+                [
+                  _c(
+                    "router-link",
+                    {
+                      staticClass: "c-link",
+                      attrs: { to: { name: "convenience.products.purchase" } },
+                    },
+                    [_vm._v("全件表示")]
+                  ),
+                ],
+                1
+              ),
+            ]),
           ]),
         ]),
         _vm._v(" "),
@@ -45952,7 +45719,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("ul", { staticClass: "p-product__list" }, [
-      _c("p", { staticClass: "u-pd__xl" }, [
+      _c("p", { staticClass: "c-text u-pd__xl" }, [
         _vm._v("出品した商品はありません。"),
       ]),
     ])
@@ -45962,7 +45729,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("ul", { staticClass: "p-product__list" }, [
-      _c("p", { staticClass: "u-pd__xl" }, [
+      _c("p", { staticClass: "c-text u-pd__xl" }, [
         _vm._v("購入された商品はありません。"),
       ]),
     ])
@@ -47161,7 +46928,7 @@ var render = function () {
   var _c = _vm._self._c || _h
   return _c("main", { staticClass: "l-main" }, [
     _c("div", { staticClass: "l-main__convenience" }, [
-      _c("section", { staticClass: "p-register" }, [
+      _c("section", { staticClass: "l-main__wrapper" }, [
         _c("h1", { staticClass: "c-title u-mb__xl" }, [
           _vm._v("コンビニプロフィール編集"),
         ]),
@@ -47178,9 +46945,9 @@ var render = function () {
             },
           },
           [
-            _vm.errors && _vm.errors.name
+            _vm.errors && _vm.errors.convenience_name
               ? _c("span", { staticClass: "c-error" }, [
-                  _vm._v(_vm._s(_vm.errors.name[0])),
+                  _vm._v(_vm._s(_vm.errors.convenience_name[0])),
                 ])
               : _vm._e(),
             _vm._v(" "),
@@ -47250,708 +47017,625 @@ var render = function () {
                 ])
               : _vm._e(),
             _vm._v(" "),
-            _c("table", [
-              _c("tr", [
-                _vm._m(0),
-                _vm._v(" "),
-                _c("td", [
-                  _c("input", {
+            _c(
+              "label",
+              { staticClass: "c-label", attrs: { for: "convenience_name" } },
+              [_vm._v("コンビニ名")]
+            ),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.formData.convenience_name,
+                  expression: "formData.convenience_name",
+                },
+              ],
+              staticClass: "c-input",
+              class: {
+                "is-invalid": _vm.errors && _vm.errors.convenience_name,
+              },
+              attrs: {
+                id: "convenience_name",
+                type: "text",
+                autocomplete: "name",
+              },
+              domProps: { value: _vm.formData.convenience_name },
+              on: {
+                input: function ($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(
+                    _vm.formData,
+                    "convenience_name",
+                    $event.target.value
+                  )
+                },
+              },
+            }),
+            _vm._v(" "),
+            _c(
+              "label",
+              { staticClass: "c-label", attrs: { for: "branch_name" } },
+              [_vm._v("支店名")]
+            ),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.formData.branch_name,
+                  expression: "formData.branch_name",
+                },
+              ],
+              staticClass: "c-input",
+              class: { "is-invalid": _vm.errors && _vm.errors.branch_name },
+              attrs: {
+                id: "branch_name",
+                type: "text",
+                autocomplete: "branch_name",
+              },
+              domProps: { value: _vm.formData.branch_name },
+              on: {
+                input: function ($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.formData, "branch_name", $event.target.value)
+                },
+              },
+            }),
+            _vm._v(" "),
+            _c("label", { staticClass: "c-label", attrs: { for: "address" } }, [
+              _vm._v("郵便番号"),
+            ]),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.formData.postalcode,
+                  expression: "formData.postalcode",
+                },
+              ],
+              staticClass: "c-input",
+              class: { "is-invalid": _vm.errors && _vm.errors.address },
+              attrs: {
+                id: "address",
+                type: "text",
+                autocomplete: "address",
+                placeholder: "郵便番号で住所を簡単入力できます",
+              },
+              domProps: { value: _vm.formData.postalcode },
+              on: {
+                input: function ($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.formData, "postalcode", $event.target.value)
+                },
+              },
+            }),
+            _vm._v(" "),
+            _c("div", { staticClass: "p-register__zip" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "c-button c-button__convenience",
+                  attrs: { type: "button" },
+                  on: { click: _vm.searchAddress },
+                },
+                [_vm._v("郵便番号検索")]
+              ),
+            ]),
+            _vm._v(" "),
+            _c(
+              "label",
+              { staticClass: "c-label", attrs: { for: "prefecture" } },
+              [_vm._v("都道府県")]
+            ),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.formData.prefecture,
+                  expression: "formData.prefecture",
+                },
+              ],
+              staticClass: "c-input",
+              class: { "is-invalid": _vm.errors && _vm.errors.prefecture },
+              attrs: {
+                id: "prefecture",
+                type: "text",
+                autocomplete: "prefecture",
+              },
+              domProps: { value: _vm.formData.prefecture },
+              on: {
+                input: function ($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.formData, "prefecture", $event.target.value)
+                },
+              },
+            }),
+            _vm._v(" "),
+            _c("label", { staticClass: "c-label", attrs: { for: "city" } }, [
+              _vm._v("市区町村"),
+            ]),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.formData.city,
+                  expression: "formData.city",
+                },
+              ],
+              staticClass: "c-input",
+              class: { "is-invalid": _vm.errors && _vm.errors.city },
+              attrs: { id: "city", type: "text", autocomplete: "city" },
+              domProps: { value: _vm.formData.city },
+              on: {
+                input: function ($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.formData, "city", $event.target.value)
+                },
+              },
+            }),
+            _vm._v(" "),
+            _c("label", { staticClass: "c-label", attrs: { for: "town" } }, [
+              _vm._v("地名・番地"),
+            ]),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.formData.town,
+                  expression: "formData.town",
+                },
+              ],
+              staticClass: "c-input",
+              class: { "is-invalid": _vm.errors && _vm.errors.town },
+              attrs: { id: "town", type: "text", autocomplete: "town" },
+              domProps: { value: _vm.formData.town },
+              on: {
+                input: function ($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.formData, "town", $event.target.value)
+                },
+              },
+            }),
+            _vm._v(" "),
+            _c(
+              "label",
+              { staticClass: "c-label", attrs: { for: "building" } },
+              [_vm._v("建物名・部屋番号")]
+            ),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.formData.building,
+                  expression: "formData.building",
+                },
+              ],
+              staticClass: "c-input",
+              class: { "is-invalid": _vm.errors && _vm.errors.building },
+              attrs: { id: "building", type: "text", autocomplete: "building" },
+              domProps: { value: _vm.formData.building },
+              on: {
+                input: function ($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.formData, "building", $event.target.value)
+                },
+              },
+            }),
+            _vm._v(" "),
+            _c("label", { staticClass: "c-label", attrs: { for: "email" } }, [
+              _vm._v("メールアドレス"),
+            ]),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.formData.email,
+                  expression: "formData.email",
+                },
+              ],
+              staticClass: "c-input",
+              class: { "is-invalid": _vm.errors && _vm.errors.email },
+              attrs: { id: "email", type: "email", autocomplete: "email" },
+              domProps: { value: _vm.formData.email },
+              on: {
+                input: function ($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.formData, "email", $event.target.value)
+                },
+              },
+            }),
+            _vm._v(" "),
+            _c(
+              "label",
+              { staticClass: "c-label", attrs: { for: "password" } },
+              [_vm._v("パスワード")]
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "c-input__password" }, [
+              _vm.PasswordType === "checkbox"
+                ? _c("input", {
                     directives: [
                       {
                         name: "model",
                         rawName: "v-model",
-                        value: _vm.formData.name,
-                        expression: "formData.name",
+                        value: _vm.formData.password,
+                        expression: "formData.password",
                       },
                     ],
                     staticClass: "c-input",
-                    class: { "is-invalid": _vm.errors && _vm.errors.name },
-                    attrs: { id: "name", type: "text", autocomplete: "name" },
-                    domProps: { value: _vm.formData.name },
-                    on: {
-                      input: function ($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(_vm.formData, "name", $event.target.value)
-                      },
-                    },
-                  }),
-                ]),
-              ]),
-              _vm._v(" "),
-              _c("tr", [
-                _vm._m(1),
-                _vm._v(" "),
-                _c("td", [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.formData.branch_name,
-                        expression: "formData.branch_name",
-                      },
-                    ],
-                    staticClass: "c-input",
-                    class: {
-                      "is-invalid": _vm.errors && _vm.errors.branch_name,
-                    },
+                    class: { "is-invalid": _vm.errors && _vm.errors.password },
                     attrs: {
-                      id: "branch_name",
-                      type: "text",
-                      autocomplete: "branch_name",
+                      id: "password",
+                      placeholder: "英数字8文字以上で入力してください",
+                      type: "checkbox",
                     },
-                    domProps: { value: _vm.formData.branch_name },
+                    domProps: {
+                      checked: Array.isArray(_vm.formData.password)
+                        ? _vm._i(_vm.formData.password, null) > -1
+                        : _vm.formData.password,
+                    },
                     on: {
-                      input: function ($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(
-                          _vm.formData,
-                          "branch_name",
-                          $event.target.value
-                        )
-                      },
-                    },
-                  }),
-                ]),
-              ]),
-              _vm._v(" "),
-              _c("tr", [
-                _vm._m(2),
-                _vm._v(" "),
-                _c("td", [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.formData.postalcode,
-                        expression: "formData.postalcode",
-                      },
-                    ],
-                    staticClass: "c-input",
-                    class: { "is-invalid": _vm.errors && _vm.errors.address },
-                    attrs: {
-                      id: "address",
-                      type: "text",
-                      autocomplete: "address",
-                      placeholder: "郵便番号で住所を簡単入力できます",
-                    },
-                    domProps: { value: _vm.formData.postalcode },
-                    on: {
-                      input: function ($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(
-                          _vm.formData,
-                          "postalcode",
-                          $event.target.value
-                        )
-                      },
-                    },
-                  }),
-                ]),
-              ]),
-              _vm._v(" "),
-              _c("tr", [
-                _c(
-                  "td",
-                  {
-                    staticStyle: { "text-align": "right" },
-                    attrs: { colspan: "2" },
-                  },
-                  [
-                    _c(
-                      "button",
-                      {
-                        staticClass: "c-button c-button__convenience u-mr__s",
-                        attrs: { type: "button" },
-                        on: { click: _vm.searchAddress },
-                      },
-                      [_vm._v("郵便番号検索")]
-                    ),
-                  ]
-                ),
-              ]),
-              _vm._v(" "),
-              _c("tr", [
-                _vm._m(3),
-                _vm._v(" "),
-                _c("td", [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.formData.prefecture,
-                        expression: "formData.prefecture",
-                      },
-                    ],
-                    staticClass: "c-input",
-                    class: {
-                      "is-invalid": _vm.errors && _vm.errors.prefecture,
-                    },
-                    attrs: {
-                      id: "prefecture",
-                      type: "text",
-                      autocomplete: "prefecture",
-                    },
-                    domProps: { value: _vm.formData.prefecture },
-                    on: {
-                      input: function ($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(
-                          _vm.formData,
-                          "prefecture",
-                          $event.target.value
-                        )
-                      },
-                    },
-                  }),
-                ]),
-              ]),
-              _vm._v(" "),
-              _c("tr", [
-                _vm._m(4),
-                _vm._v(" "),
-                _c("td", [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.formData.city,
-                        expression: "formData.city",
-                      },
-                    ],
-                    staticClass: "c-input",
-                    class: { "is-invalid": _vm.errors && _vm.errors.city },
-                    attrs: { id: "city", type: "text", autocomplete: "city" },
-                    domProps: { value: _vm.formData.city },
-                    on: {
-                      input: function ($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(_vm.formData, "city", $event.target.value)
-                      },
-                    },
-                  }),
-                ]),
-              ]),
-              _vm._v(" "),
-              _c("tr", [
-                _vm._m(5),
-                _vm._v(" "),
-                _c("td", [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.formData.town,
-                        expression: "formData.town",
-                      },
-                    ],
-                    staticClass: "c-input",
-                    class: { "is-invalid": _vm.errors && _vm.errors.town },
-                    attrs: { id: "town", type: "text", autocomplete: "town" },
-                    domProps: { value: _vm.formData.town },
-                    on: {
-                      input: function ($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(_vm.formData, "town", $event.target.value)
-                      },
-                    },
-                  }),
-                ]),
-              ]),
-              _vm._v(" "),
-              _c("tr", [
-                _vm._m(6),
-                _vm._v(" "),
-                _c("td", [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.formData.building,
-                        expression: "formData.building",
-                      },
-                    ],
-                    staticClass: "c-input",
-                    class: { "is-invalid": _vm.errors && _vm.errors.building },
-                    attrs: {
-                      id: "building",
-                      type: "text",
-                      autocomplete: "building",
-                    },
-                    domProps: { value: _vm.formData.building },
-                    on: {
-                      input: function ($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(_vm.formData, "building", $event.target.value)
-                      },
-                    },
-                  }),
-                ]),
-              ]),
-              _vm._v(" "),
-              _c("tr", [
-                _vm._m(7),
-                _vm._v(" "),
-                _c("td", [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.formData.email,
-                        expression: "formData.email",
-                      },
-                    ],
-                    staticClass: "c-input",
-                    class: { "is-invalid": _vm.errors && _vm.errors.email },
-                    attrs: {
-                      id: "email",
-                      type: "email",
-                      autocomplete: "email",
-                    },
-                    domProps: { value: _vm.formData.email },
-                    on: {
-                      input: function ($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(_vm.formData, "email", $event.target.value)
-                      },
-                    },
-                  }),
-                ]),
-              ]),
-              _vm._v(" "),
-              _c("tr", [
-                _vm._m(8),
-                _vm._v(" "),
-                _c("td", [
-                  _c("div", { staticClass: "p-input__password" }, [
-                    _vm.PasswordType === "checkbox"
-                      ? _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.formData.password,
-                              expression: "formData.password",
-                            },
-                          ],
-                          staticClass: "c-input",
-                          class: {
-                            "is-invalid": _vm.errors && _vm.errors.password,
-                          },
-                          attrs: {
-                            id: "password",
-                            autocomplete: "new-password",
-                            placeholder: "英数字8文字以上で入力してください",
-                            type: "checkbox",
-                          },
-                          domProps: {
-                            checked: Array.isArray(_vm.formData.password)
-                              ? _vm._i(_vm.formData.password, null) > -1
-                              : _vm.formData.password,
-                          },
-                          on: {
-                            change: function ($event) {
-                              var $$a = _vm.formData.password,
-                                $$el = $event.target,
-                                $$c = $$el.checked ? true : false
-                              if (Array.isArray($$a)) {
-                                var $$v = null,
-                                  $$i = _vm._i($$a, $$v)
-                                if ($$el.checked) {
-                                  $$i < 0 &&
-                                    _vm.$set(
-                                      _vm.formData,
-                                      "password",
-                                      $$a.concat([$$v])
-                                    )
-                                } else {
-                                  $$i > -1 &&
-                                    _vm.$set(
-                                      _vm.formData,
-                                      "password",
-                                      $$a
-                                        .slice(0, $$i)
-                                        .concat($$a.slice($$i + 1))
-                                    )
-                                }
-                              } else {
-                                _vm.$set(_vm.formData, "password", $$c)
-                              }
-                            },
-                          },
-                        })
-                      : _vm.PasswordType === "radio"
-                      ? _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.formData.password,
-                              expression: "formData.password",
-                            },
-                          ],
-                          staticClass: "c-input",
-                          class: {
-                            "is-invalid": _vm.errors && _vm.errors.password,
-                          },
-                          attrs: {
-                            id: "password",
-                            autocomplete: "new-password",
-                            placeholder: "英数字8文字以上で入力してください",
-                            type: "radio",
-                          },
-                          domProps: {
-                            checked: _vm._q(_vm.formData.password, null),
-                          },
-                          on: {
-                            change: function ($event) {
-                              _vm.$set(_vm.formData, "password", null)
-                            },
-                          },
-                        })
-                      : _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.formData.password,
-                              expression: "formData.password",
-                            },
-                          ],
-                          staticClass: "c-input",
-                          class: {
-                            "is-invalid": _vm.errors && _vm.errors.password,
-                          },
-                          attrs: {
-                            id: "password",
-                            autocomplete: "new-password",
-                            placeholder: "英数字8文字以上で入力してください",
-                            type: _vm.PasswordType,
-                          },
-                          domProps: { value: _vm.formData.password },
-                          on: {
-                            input: function ($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
+                      change: function ($event) {
+                        var $$a = _vm.formData.password,
+                          $$el = $event.target,
+                          $$c = $$el.checked ? true : false
+                        if (Array.isArray($$a)) {
+                          var $$v = null,
+                            $$i = _vm._i($$a, $$v)
+                          if ($$el.checked) {
+                            $$i < 0 &&
                               _vm.$set(
                                 _vm.formData,
                                 "password",
-                                $event.target.value
+                                $$a.concat([$$v])
                               )
-                            },
-                          },
-                        }),
-                    _vm._v(" "),
-                    _c(
-                      "span",
-                      {
-                        on: {
-                          click: function ($event) {
-                            _vm.togglePasswordVisibility("password")
-                          },
-                        },
-                      },
-                      [_c("i", { class: _vm.PasswordIconClass })]
-                    ),
-                  ]),
-                ]),
-              ]),
-              _vm._v(" "),
-              _c("tr", [
-                _vm._m(9),
-                _vm._v(" "),
-                _c("td", [
-                  _c("div", { staticClass: "p-input__password" }, [
-                    _vm.PasswordConfirmType === "checkbox"
-                      ? _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.formData.password_confirmation,
-                              expression: "formData.password_confirmation",
-                            },
-                          ],
-                          staticClass: "c-input",
-                          class: {
-                            "is-invalid":
-                              _vm.errors && _vm.errors.password_confirmation,
-                          },
-                          attrs: {
-                            id: "password-confirm",
-                            autocomplete: "new-password",
-                            placeholder: "英数字8文字以上で入力してください",
-                            type: "checkbox",
-                          },
-                          domProps: {
-                            checked: Array.isArray(
-                              _vm.formData.password_confirmation
-                            )
-                              ? _vm._i(
-                                  _vm.formData.password_confirmation,
-                                  null
-                                ) > -1
-                              : _vm.formData.password_confirmation,
-                          },
-                          on: {
-                            change: function ($event) {
-                              var $$a = _vm.formData.password_confirmation,
-                                $$el = $event.target,
-                                $$c = $$el.checked ? true : false
-                              if (Array.isArray($$a)) {
-                                var $$v = null,
-                                  $$i = _vm._i($$a, $$v)
-                                if ($$el.checked) {
-                                  $$i < 0 &&
-                                    _vm.$set(
-                                      _vm.formData,
-                                      "password_confirmation",
-                                      $$a.concat([$$v])
-                                    )
-                                } else {
-                                  $$i > -1 &&
-                                    _vm.$set(
-                                      _vm.formData,
-                                      "password_confirmation",
-                                      $$a
-                                        .slice(0, $$i)
-                                        .concat($$a.slice($$i + 1))
-                                    )
-                                }
-                              } else {
-                                _vm.$set(
-                                  _vm.formData,
-                                  "password_confirmation",
-                                  $$c
-                                )
-                              }
-                            },
-                          },
-                        })
-                      : _vm.PasswordConfirmType === "radio"
-                      ? _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.formData.password_confirmation,
-                              expression: "formData.password_confirmation",
-                            },
-                          ],
-                          staticClass: "c-input",
-                          class: {
-                            "is-invalid":
-                              _vm.errors && _vm.errors.password_confirmation,
-                          },
-                          attrs: {
-                            id: "password-confirm",
-                            autocomplete: "new-password",
-                            placeholder: "英数字8文字以上で入力してください",
-                            type: "radio",
-                          },
-                          domProps: {
-                            checked: _vm._q(
-                              _vm.formData.password_confirmation,
-                              null
-                            ),
-                          },
-                          on: {
-                            change: function ($event) {
+                          } else {
+                            $$i > -1 &&
                               _vm.$set(
                                 _vm.formData,
-                                "password_confirmation",
-                                null
+                                "password",
+                                $$a.slice(0, $$i).concat($$a.slice($$i + 1))
                               )
-                            },
-                          },
-                        })
-                      : _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.formData.password_confirmation,
-                              expression: "formData.password_confirmation",
-                            },
-                          ],
-                          staticClass: "c-input",
-                          class: {
-                            "is-invalid":
-                              _vm.errors && _vm.errors.password_confirmation,
-                          },
-                          attrs: {
-                            id: "password-confirm",
-                            autocomplete: "new-password",
-                            placeholder: "英数字8文字以上で入力してください",
-                            type: _vm.PasswordConfirmType,
-                          },
-                          domProps: {
-                            value: _vm.formData.password_confirmation,
-                          },
-                          on: {
-                            input: function ($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.$set(
-                                _vm.formData,
-                                "password_confirmation",
-                                $event.target.value
-                              )
-                            },
-                          },
-                        }),
-                    _vm._v(" "),
-                    _c(
-                      "span",
-                      {
-                        on: {
-                          click: function ($event) {
-                            _vm.togglePasswordVisibility("password_confirm")
-                          },
-                        },
-                      },
-                      [_c("i", { class: _vm.PasswordConfirmIconClass })]
-                    ),
-                  ]),
-                ]),
-              ]),
-              _vm._v(" "),
-              _c("tr", [
-                _vm._m(10),
-                _vm._v(" "),
-                _c("td", [
-                  _c("div", { staticClass: "p-textarea__form" }, [
-                    _c("textarea", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model.trim",
-                          value: _vm.formData.introduction,
-                          expression: "formData.introduction",
-                          modifiers: { trim: true },
-                        },
-                      ],
-                      staticClass: "c-textarea",
-                      class: {
-                        "is-invalid": _vm.errors && _vm.errors.introduction,
-                      },
-                      attrs: {
-                        maxlength: "50",
-                        id: "introduction",
-                        type: "text",
-                        autocomplete: "introduction",
-                        placeholder: "50文字以内で入力してください",
-                      },
-                      domProps: { value: _vm.formData.introduction },
-                      on: {
-                        keyup: _vm.countCharacters,
-                        input: function ($event) {
-                          if ($event.target.composing) {
-                            return
                           }
-                          _vm.$set(
-                            _vm.formData,
-                            "introduction",
-                            $event.target.value.trim()
-                          )
-                        },
-                        blur: function ($event) {
-                          _vm.$forceUpdate()
-                        },
+                        } else {
+                          _vm.$set(_vm.formData, "password", $$c)
+                        }
                       },
-                    }),
-                    _vm._v(" "),
-                    _c("span", { staticClass: "c-textarea__count" }, [
-                      _vm._v(
-                        _vm._s(_vm.formData.introduction.length) + " / 50文字"
-                      ),
-                    ]),
-                  ]),
-                ]),
-              ]),
-              _vm._v(" "),
-              _c("tr", [
-                _vm._m(11),
-                _vm._v(" "),
-                _c("td", [
-                  _c(
-                    "div",
-                    {
-                      staticClass: "p-icon",
-                      class: { "is-invalid": _vm.errors && _vm.errors.icon },
-                      on: { drop: _vm.handleDrop },
                     },
-                    [
-                      _c("input", {
-                        staticClass: "c-input__hidden",
-                        attrs: { type: "file", id: "icon" },
-                        on: { change: _vm.handleFileChange },
-                      }),
-                      _vm._v(" "),
-                      !_vm.iconPreview && _vm.formData.icon
-                        ? _c("img", {
-                            staticClass: "c-icon",
-                            attrs: {
-                              src: "/storage/icons/" + _vm.formData.icon,
-                              alt: "アップロード顔写真",
-                            },
-                          })
-                        : _vm.iconPreview
-                        ? _c("img", {
-                            staticClass: "c-icon",
-                            attrs: {
-                              src: _vm.iconPreview,
-                              alt: "アップロード顔写真",
-                            },
-                          })
-                        : _c("img", {
-                            staticClass: "c-icon",
-                            attrs: {
-                              src: "/default.png",
-                              alt: "デフォルト顔写真",
-                            },
-                          }),
-                      _vm._v(" "),
-                      !_vm.formData.icon
-                        ? _c("span", [_vm._v("ドラッグ＆ドロップ")])
-                        : _vm._e(),
-                    ]
-                  ),
-                ]),
+                  })
+                : _vm.PasswordType === "radio"
+                ? _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.formData.password,
+                        expression: "formData.password",
+                      },
+                    ],
+                    staticClass: "c-input",
+                    class: { "is-invalid": _vm.errors && _vm.errors.password },
+                    attrs: {
+                      id: "password",
+                      placeholder: "英数字8文字以上で入力してください",
+                      type: "radio",
+                    },
+                    domProps: { checked: _vm._q(_vm.formData.password, null) },
+                    on: {
+                      change: function ($event) {
+                        _vm.$set(_vm.formData, "password", null)
+                      },
+                    },
+                  })
+                : _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.formData.password,
+                        expression: "formData.password",
+                      },
+                    ],
+                    staticClass: "c-input",
+                    class: { "is-invalid": _vm.errors && _vm.errors.password },
+                    attrs: {
+                      id: "password",
+                      placeholder: "英数字8文字以上で入力してください",
+                      type: _vm.PasswordType,
+                    },
+                    domProps: { value: _vm.formData.password },
+                    on: {
+                      input: function ($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.formData, "password", $event.target.value)
+                      },
+                    },
+                  }),
+              _vm._v(" "),
+              _c(
+                "span",
+                {
+                  on: {
+                    click: function ($event) {
+                      _vm.togglePasswordVisibility("password")
+                    },
+                  },
+                },
+                [_c("i", { class: _vm.PasswordIconClass })]
+              ),
+            ]),
+            _vm._v(" "),
+            _c(
+              "label",
+              { staticClass: "c-label", attrs: { for: "password-confirm" } },
+              [_vm._v("パスワード（再入力）")]
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "c-input__password" }, [
+              _vm.PasswordConfirmType === "checkbox"
+                ? _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.formData.password_confirmation,
+                        expression: "formData.password_confirmation",
+                      },
+                    ],
+                    staticClass: "c-input",
+                    class: {
+                      "is-invalid":
+                        _vm.errors && _vm.errors.password_confirmation,
+                    },
+                    attrs: {
+                      id: "password-confirm",
+                      placeholder: "英数字8文字以上で入力してください",
+                      type: "checkbox",
+                    },
+                    domProps: {
+                      checked: Array.isArray(_vm.formData.password_confirmation)
+                        ? _vm._i(_vm.formData.password_confirmation, null) > -1
+                        : _vm.formData.password_confirmation,
+                    },
+                    on: {
+                      change: function ($event) {
+                        var $$a = _vm.formData.password_confirmation,
+                          $$el = $event.target,
+                          $$c = $$el.checked ? true : false
+                        if (Array.isArray($$a)) {
+                          var $$v = null,
+                            $$i = _vm._i($$a, $$v)
+                          if ($$el.checked) {
+                            $$i < 0 &&
+                              _vm.$set(
+                                _vm.formData,
+                                "password_confirmation",
+                                $$a.concat([$$v])
+                              )
+                          } else {
+                            $$i > -1 &&
+                              _vm.$set(
+                                _vm.formData,
+                                "password_confirmation",
+                                $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                              )
+                          }
+                        } else {
+                          _vm.$set(_vm.formData, "password_confirmation", $$c)
+                        }
+                      },
+                    },
+                  })
+                : _vm.PasswordConfirmType === "radio"
+                ? _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.formData.password_confirmation,
+                        expression: "formData.password_confirmation",
+                      },
+                    ],
+                    staticClass: "c-input",
+                    class: {
+                      "is-invalid":
+                        _vm.errors && _vm.errors.password_confirmation,
+                    },
+                    attrs: {
+                      id: "password-confirm",
+                      placeholder: "英数字8文字以上で入力してください",
+                      type: "radio",
+                    },
+                    domProps: {
+                      checked: _vm._q(_vm.formData.password_confirmation, null),
+                    },
+                    on: {
+                      change: function ($event) {
+                        _vm.$set(_vm.formData, "password_confirmation", null)
+                      },
+                    },
+                  })
+                : _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.formData.password_confirmation,
+                        expression: "formData.password_confirmation",
+                      },
+                    ],
+                    staticClass: "c-input",
+                    class: {
+                      "is-invalid":
+                        _vm.errors && _vm.errors.password_confirmation,
+                    },
+                    attrs: {
+                      id: "password-confirm",
+                      placeholder: "英数字8文字以上で入力してください",
+                      type: _vm.PasswordConfirmType,
+                    },
+                    domProps: { value: _vm.formData.password_confirmation },
+                    on: {
+                      input: function ($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(
+                          _vm.formData,
+                          "password_confirmation",
+                          $event.target.value
+                        )
+                      },
+                    },
+                  }),
+              _vm._v(" "),
+              _c(
+                "span",
+                {
+                  on: {
+                    click: function ($event) {
+                      _vm.togglePasswordVisibility("password_confirm")
+                    },
+                  },
+                },
+                [_c("i", { class: _vm.PasswordConfirmIconClass })]
+              ),
+            ]),
+            _vm._v(" "),
+            _c(
+              "label",
+              { staticClass: "c-label", attrs: { for: "introduction" } },
+              [_vm._v("自己紹介")]
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "p-textarea__form" }, [
+              _c("textarea", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model.trim",
+                    value: _vm.formData.introduction,
+                    expression: "formData.introduction",
+                    modifiers: { trim: true },
+                  },
+                ],
+                staticClass: "c-textarea",
+                class: { "is-invalid": _vm.errors && _vm.errors.introduction },
+                attrs: {
+                  maxlength: "50",
+                  id: "introduction",
+                  type: "text",
+                  autocomplete: "introduction",
+                  placeholder: "50文字以内で入力してください",
+                },
+                domProps: { value: _vm.formData.introduction },
+                on: {
+                  keyup: _vm.countCharacters,
+                  input: function ($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(
+                      _vm.formData,
+                      "introduction",
+                      $event.target.value.trim()
+                    )
+                  },
+                  blur: function ($event) {
+                    _vm.$forceUpdate()
+                  },
+                },
+              }),
+              _vm._v(" "),
+              _c("span", { staticClass: "c-textarea__count" }, [
+                _vm._v(_vm._s(_vm.formData.introduction.length) + " / 50文字"),
               ]),
             ]),
             _vm._v(" "),
             _c(
+              "label",
+              { staticClass: "c-label", attrs: { for: "profile-icon" } },
+              [_vm._v("顔写真")]
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "p-profile__icon p-profile__icon--container",
+                class: { "is-invalid": _vm.errors && _vm.errors.icon },
+                on: { drop: _vm.handleDrop },
+              },
+              [
+                _c("input", {
+                  staticClass: "c-input__hidden",
+                  attrs: { type: "file", id: "profile-icon" },
+                  on: { change: _vm.handleFileChange },
+                }),
+                _vm._v(" "),
+                !_vm.iconPreview && _vm.formData.icon
+                  ? _c("img", {
+                      staticClass: "p-profile__icon",
+                      attrs: {
+                        src: "/storage/icons/" + _vm.formData.icon,
+                        alt: "アップロード顔写真",
+                      },
+                    })
+                  : _vm.iconPreview
+                  ? _c("img", {
+                      staticClass: "p-profile__icon",
+                      attrs: {
+                        src: _vm.iconPreview,
+                        alt: "アップロード顔写真",
+                      },
+                    })
+                  : _c("img", {
+                      staticClass: "p-profile__icon",
+                      attrs: { src: "/default.png", alt: "デフォルト顔写真" },
+                    }),
+              ]
+            ),
+            _vm._v(" "),
+            _c(
               "button",
               {
-                staticClass: "c-button c-button__submit c-button__convenience",
+                staticClass:
+                  "c-button c-button__submit c-button__convenience u-mt__m",
                 attrs: { type: "submit" },
               },
-              [_vm._v("プロフィール更新する")]
+              [_vm._v("更新する")]
             ),
           ]
         ),
@@ -47972,140 +47656,17 @@ var render = function () {
     ),
   ])
 }
-var staticRenderFns = [
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("th", [
-      _c("label", { staticClass: "c-label", attrs: { for: "name" } }, [
-        _vm._v("コンビニ名"),
-      ]),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("th", [
-      _c("label", { staticClass: "c-label", attrs: { for: "branch_name" } }, [
-        _vm._v("支店名"),
-      ]),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("th", [
-      _c("label", { staticClass: "c-label", attrs: { for: "address" } }, [
-        _vm._v("郵便番号"),
-      ]),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("th", [
-      _c("label", { staticClass: "c-label", attrs: { for: "prefecture" } }, [
-        _vm._v("都道府県"),
-      ]),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("th", [
-      _c("label", { staticClass: "c-label", attrs: { for: "city" } }, [
-        _vm._v("市区町村"),
-      ]),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("th", [
-      _c("label", { staticClass: "c-label", attrs: { for: "town" } }, [
-        _vm._v("地名・番地"),
-      ]),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("th", [
-      _c("label", { staticClass: "c-label", attrs: { for: "building" } }, [
-        _vm._v("建物名・部屋番号"),
-      ]),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("th", [
-      _c("label", { staticClass: "c-label", attrs: { for: "email" } }, [
-        _vm._v("メールアドレス"),
-      ]),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("th", [
-      _c("label", { staticClass: "c-label", attrs: { for: "password" } }, [
-        _vm._v("パスワード"),
-      ]),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("th", [
-      _c(
-        "label",
-        { staticClass: "c-label", attrs: { for: "password-confirm" } },
-        [_vm._v("パスワード（再入力）")]
-      ),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("th", [
-      _c("label", { staticClass: "c-label", attrs: { for: "introduction" } }, [
-        _vm._v("自己紹介"),
-      ]),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("th", [
-      _c("label", { staticClass: "c-label", attrs: { for: "icon" } }, [
-        _vm._v("顔写真"),
-      ]),
-    ])
-  },
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Convenience/RegisterComponent.vue?vue&type=template&id=0b2c77f2&scoped=true":
-/*!*******************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Convenience/RegisterComponent.vue?vue&type=template&id=0b2c77f2&scoped=true ***!
-  \*******************************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Convenience/RegisterComponent.vue?vue&type=template&id=0b2c77f2":
+/*!*******************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Convenience/RegisterComponent.vue?vue&type=template&id=0b2c77f2 ***!
+  \*******************************************************************************************************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -48119,7 +47680,7 @@ var render = function () {
   var _c = _vm._self._c || _h
   return _c("main", { staticClass: "l-main" }, [
     _c("div", { staticClass: "l-main__convenience" }, [
-      _c("section", { staticClass: "p-register" }, [
+      _c("section", { staticClass: "l-main__wrapper" }, [
         _c("h1", { staticClass: "c-title u-mb__xl" }, [
           _vm._v("コンビニユーザー登録"),
         ]),
@@ -48136,9 +47697,9 @@ var render = function () {
             },
           },
           [
-            _vm.errors && _vm.errors.name
+            _vm.errors && _vm.errors.convenience_name
               ? _c("span", { staticClass: "c-error" }, [
-                  _vm._v(_vm._s(_vm.errors.name[0])),
+                  _vm._v(_vm._s(_vm.errors.convenience_name[0])),
                 ])
               : _vm._e(),
             _vm._v(" "),
@@ -48202,530 +47763,522 @@ var render = function () {
                 ])
               : _vm._e(),
             _vm._v(" "),
-            _c("div", { staticClass: "form-group" }, [
-              _c("label", { staticClass: "c-label", attrs: { for: "name" } }, [
-                _vm._v("コンビニ名"),
-              ]),
-              _vm._v(" "),
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.formData.name,
-                    expression: "formData.name",
-                  },
-                ],
-                staticClass: "c-input",
-                class: { "is-invalid": _vm.errors && _vm.errors.name },
-                attrs: { id: "name", type: "text", autocomplete: "name" },
-                domProps: { value: _vm.formData.name },
-                on: {
-                  input: function ($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.$set(_vm.formData, "name", $event.target.value)
-                  },
+            _c(
+              "label",
+              { staticClass: "c-label", attrs: { for: "convenience_name" } },
+              [_vm._v("コンビニ名")]
+            ),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.formData.convenience_name,
+                  expression: "formData.convenience_name",
                 },
-              }),
-              _vm._v(" "),
-              _c(
-                "label",
-                { staticClass: "c-label", attrs: { for: "branch_name" } },
-                [_vm._v("支店名")]
-              ),
-              _vm._v(" "),
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.formData.branch_name,
-                    expression: "formData.branch_name",
-                  },
-                ],
-                staticClass: "c-input",
-                class: { "is-invalid": _vm.errors && _vm.errors.branch_name },
-                attrs: {
-                  id: "branch_name",
-                  type: "text",
-                  autocomplete: "branch_name",
+              ],
+              staticClass: "c-input",
+              class: {
+                "is-invalid": _vm.errors && _vm.errors.convenience_name,
+              },
+              attrs: {
+                id: "convenience_name",
+                type: "text",
+                autocomplete: "name",
+              },
+              domProps: { value: _vm.formData.convenience_name },
+              on: {
+                input: function ($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(
+                    _vm.formData,
+                    "convenience_name",
+                    $event.target.value
+                  )
                 },
-                domProps: { value: _vm.formData.branch_name },
-                on: {
-                  input: function ($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.$set(_vm.formData, "branch_name", $event.target.value)
-                  },
+              },
+            }),
+            _vm._v(" "),
+            _c(
+              "label",
+              { staticClass: "c-label", attrs: { for: "branch_name" } },
+              [_vm._v("支店名")]
+            ),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.formData.branch_name,
+                  expression: "formData.branch_name",
                 },
-              }),
-              _vm._v(" "),
-              _c(
-                "label",
-                { staticClass: "c-label", attrs: { for: "address" } },
-                [_vm._v("郵便番号")]
-              ),
-              _vm._v(" "),
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.formData.postalcode,
-                    expression: "formData.postalcode",
-                  },
-                ],
-                staticClass: "c-input",
-                class: { "is-invalid": _vm.errors && _vm.errors.address },
-                attrs: {
-                  id: "address",
-                  type: "text",
-                  autocomplete: "address",
-                  placeholder: "郵便番号で住所を簡単入力できます",
+              ],
+              staticClass: "c-input",
+              class: { "is-invalid": _vm.errors && _vm.errors.branch_name },
+              attrs: {
+                id: "branch_name",
+                type: "text",
+                autocomplete: "branch_name",
+              },
+              domProps: { value: _vm.formData.branch_name },
+              on: {
+                input: function ($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.formData, "branch_name", $event.target.value)
                 },
-                domProps: { value: _vm.formData.postalcode },
-                on: {
-                  input: function ($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.$set(_vm.formData, "postalcode", $event.target.value)
-                  },
+              },
+            }),
+            _vm._v(" "),
+            _c("label", { staticClass: "c-label", attrs: { for: "address" } }, [
+              _vm._v("郵便番号"),
+            ]),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.formData.postalcode,
+                  expression: "formData.postalcode",
                 },
-              }),
-              _vm._v(" "),
+              ],
+              staticClass: "c-input",
+              class: { "is-invalid": _vm.errors && _vm.errors.address },
+              attrs: {
+                id: "address",
+                type: "text",
+                autocomplete: "address",
+                placeholder: "郵便番号で住所を簡単入力できます",
+              },
+              domProps: { value: _vm.formData.postalcode },
+              on: {
+                input: function ($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.formData, "postalcode", $event.target.value)
+                },
+              },
+            }),
+            _vm._v(" "),
+            _c("div", { staticClass: "p-register__zip" }, [
               _c(
                 "button",
                 {
-                  staticClass: "c-button c-button__convenience u-mr__s",
+                  staticClass: "c-button c-button__convenience",
                   attrs: { type: "button" },
                   on: { click: _vm.searchAddress },
                 },
                 [_vm._v("郵便番号検索")]
               ),
-              _vm._v(" "),
-              _c(
-                "label",
-                { staticClass: "c-label", attrs: { for: "prefecture" } },
-                [_vm._v("都道府県")]
-              ),
-              _vm._v(" "),
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.formData.prefecture,
-                    expression: "formData.prefecture",
-                  },
-                ],
-                staticClass: "c-input",
-                class: { "is-invalid": _vm.errors && _vm.errors.prefecture },
-                attrs: {
-                  id: "prefecture",
-                  type: "text",
-                  autocomplete: "prefecture",
+            ]),
+            _vm._v(" "),
+            _c(
+              "label",
+              { staticClass: "c-label", attrs: { for: "prefecture" } },
+              [_vm._v("都道府県")]
+            ),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.formData.prefecture,
+                  expression: "formData.prefecture",
                 },
-                domProps: { value: _vm.formData.prefecture },
-                on: {
-                  input: function ($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.$set(_vm.formData, "prefecture", $event.target.value)
-                  },
+              ],
+              staticClass: "c-input",
+              class: { "is-invalid": _vm.errors && _vm.errors.prefecture },
+              attrs: {
+                id: "prefecture",
+                type: "text",
+                autocomplete: "prefecture",
+              },
+              domProps: { value: _vm.formData.prefecture },
+              on: {
+                input: function ($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.formData, "prefecture", $event.target.value)
                 },
-              }),
-              _vm._v(" "),
-              _c("label", { staticClass: "c-label", attrs: { for: "city" } }, [
-                _vm._v("市区町村"),
-              ]),
-              _vm._v(" "),
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.formData.city,
-                    expression: "formData.city",
-                  },
-                ],
-                staticClass: "c-input",
-                class: { "is-invalid": _vm.errors && _vm.errors.city },
-                attrs: { id: "city", type: "text", autocomplete: "city" },
-                domProps: { value: _vm.formData.city },
-                on: {
-                  input: function ($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.$set(_vm.formData, "city", $event.target.value)
-                  },
+              },
+            }),
+            _vm._v(" "),
+            _c("label", { staticClass: "c-label", attrs: { for: "city" } }, [
+              _vm._v("市区町村"),
+            ]),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.formData.city,
+                  expression: "formData.city",
                 },
-              }),
-              _vm._v(" "),
-              _c("label", { staticClass: "c-label", attrs: { for: "town" } }, [
-                _vm._v("地名・番地"),
-              ]),
-              _vm._v(" "),
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.formData.town,
-                    expression: "formData.town",
-                  },
-                ],
-                staticClass: "c-input",
-                class: { "is-invalid": _vm.errors && _vm.errors.town },
-                attrs: { id: "town", type: "text", autocomplete: "town" },
-                domProps: { value: _vm.formData.town },
-                on: {
-                  input: function ($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.$set(_vm.formData, "town", $event.target.value)
-                  },
+              ],
+              staticClass: "c-input",
+              class: { "is-invalid": _vm.errors && _vm.errors.city },
+              attrs: { id: "city", type: "text", autocomplete: "city" },
+              domProps: { value: _vm.formData.city },
+              on: {
+                input: function ($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.formData, "city", $event.target.value)
                 },
-              }),
-              _vm._v(" "),
-              _vm._m(0),
-              _vm._v(" "),
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.formData.building,
-                    expression: "formData.building",
-                  },
-                ],
-                staticClass: "c-input",
-                class: { "is-invalid": _vm.errors && _vm.errors.building },
-                attrs: {
-                  id: "building",
-                  type: "text",
-                  autocomplete: "building",
+              },
+            }),
+            _vm._v(" "),
+            _c("label", { staticClass: "c-label", attrs: { for: "town" } }, [
+              _vm._v("地名・番地"),
+            ]),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.formData.town,
+                  expression: "formData.town",
                 },
-                domProps: { value: _vm.formData.building },
-                on: {
-                  input: function ($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.$set(_vm.formData, "building", $event.target.value)
-                  },
+              ],
+              staticClass: "c-input",
+              class: { "is-invalid": _vm.errors && _vm.errors.town },
+              attrs: { id: "town", type: "text", autocomplete: "town" },
+              domProps: { value: _vm.formData.town },
+              on: {
+                input: function ($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.formData, "town", $event.target.value)
                 },
-              }),
-              _vm._v(" "),
-              _c("label", { staticClass: "c-label", attrs: { for: "email" } }, [
-                _vm._v("メールアドレス"),
-              ]),
-              _vm._v(" "),
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.formData.email,
-                    expression: "formData.email",
-                  },
-                ],
-                staticClass: "c-input",
-                class: { "is-invalid": _vm.errors && _vm.errors.email },
-                attrs: { id: "email", type: "email", autocomplete: "email" },
-                domProps: { value: _vm.formData.email },
-                on: {
-                  input: function ($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.$set(_vm.formData, "email", $event.target.value)
-                  },
+              },
+            }),
+            _vm._v(" "),
+            _c(
+              "label",
+              { staticClass: "c-label", attrs: { for: "building" } },
+              [_vm._v("建物名・部屋番号")]
+            ),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.formData.building,
+                  expression: "formData.building",
                 },
-              }),
-              _vm._v(" "),
-              _c(
-                "label",
-                { staticClass: "c-label", attrs: { for: "password" } },
-                [_vm._v("パスワード")]
-              ),
-              _vm._v(" "),
-              _c("div", { staticClass: "p-input__password" }, [
-                _vm.PasswordType === "checkbox"
-                  ? _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.formData.password,
-                          expression: "formData.password",
-                        },
-                      ],
-                      staticClass: "c-input",
-                      class: {
-                        "is-invalid": _vm.errors && _vm.errors.password,
+              ],
+              staticClass: "c-input",
+              class: { "is-invalid": _vm.errors && _vm.errors.building },
+              attrs: { id: "building", type: "text", autocomplete: "building" },
+              domProps: { value: _vm.formData.building },
+              on: {
+                input: function ($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.formData, "building", $event.target.value)
+                },
+              },
+            }),
+            _vm._v(" "),
+            _c("label", { staticClass: "c-label", attrs: { for: "email" } }, [
+              _vm._v("メールアドレス"),
+            ]),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.formData.email,
+                  expression: "formData.email",
+                },
+              ],
+              staticClass: "c-input",
+              class: { "is-invalid": _vm.errors && _vm.errors.email },
+              attrs: { id: "email", type: "email", autocomplete: "email" },
+              domProps: { value: _vm.formData.email },
+              on: {
+                input: function ($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.formData, "email", $event.target.value)
+                },
+              },
+            }),
+            _vm._v(" "),
+            _c(
+              "label",
+              { staticClass: "c-label", attrs: { for: "password" } },
+              [_vm._v("パスワード")]
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "c-input__password" }, [
+              _vm.PasswordType === "checkbox"
+                ? _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.formData.password,
+                        expression: "formData.password",
                       },
-                      attrs: {
-                        id: "password",
-                        placeholder: "英数字8文字以上で入力してください",
-                        type: "checkbox",
-                      },
-                      domProps: {
-                        checked: Array.isArray(_vm.formData.password)
-                          ? _vm._i(_vm.formData.password, null) > -1
-                          : _vm.formData.password,
-                      },
-                      on: {
-                        change: function ($event) {
-                          var $$a = _vm.formData.password,
-                            $$el = $event.target,
-                            $$c = $$el.checked ? true : false
-                          if (Array.isArray($$a)) {
-                            var $$v = null,
-                              $$i = _vm._i($$a, $$v)
-                            if ($$el.checked) {
-                              $$i < 0 &&
-                                _vm.$set(
-                                  _vm.formData,
-                                  "password",
-                                  $$a.concat([$$v])
-                                )
-                            } else {
-                              $$i > -1 &&
-                                _vm.$set(
-                                  _vm.formData,
-                                  "password",
-                                  $$a.slice(0, $$i).concat($$a.slice($$i + 1))
-                                )
-                            }
-                          } else {
-                            _vm.$set(_vm.formData, "password", $$c)
-                          }
-                        },
-                      },
-                    })
-                  : _vm.PasswordType === "radio"
-                  ? _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.formData.password,
-                          expression: "formData.password",
-                        },
-                      ],
-                      staticClass: "c-input",
-                      class: {
-                        "is-invalid": _vm.errors && _vm.errors.password,
-                      },
-                      attrs: {
-                        id: "password",
-                        placeholder: "英数字8文字以上で入力してください",
-                        type: "radio",
-                      },
-                      domProps: {
-                        checked: _vm._q(_vm.formData.password, null),
-                      },
-                      on: {
-                        change: function ($event) {
-                          _vm.$set(_vm.formData, "password", null)
-                        },
-                      },
-                    })
-                  : _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.formData.password,
-                          expression: "formData.password",
-                        },
-                      ],
-                      staticClass: "c-input",
-                      class: {
-                        "is-invalid": _vm.errors && _vm.errors.password,
-                      },
-                      attrs: {
-                        id: "password",
-                        placeholder: "英数字8文字以上で入力してください",
-                        type: _vm.PasswordType,
-                      },
-                      domProps: { value: _vm.formData.password },
-                      on: {
-                        input: function ($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(
-                            _vm.formData,
-                            "password",
-                            $event.target.value
-                          )
-                        },
-                      },
-                    }),
-                _vm._v(" "),
-                _c(
-                  "span",
-                  {
+                    ],
+                    staticClass: "c-input",
+                    class: { "is-invalid": _vm.errors && _vm.errors.password },
+                    attrs: {
+                      id: "password",
+                      placeholder: "英数字8文字以上で入力してください",
+                      type: "checkbox",
+                    },
+                    domProps: {
+                      checked: Array.isArray(_vm.formData.password)
+                        ? _vm._i(_vm.formData.password, null) > -1
+                        : _vm.formData.password,
+                    },
                     on: {
-                      click: function ($event) {
-                        _vm.togglePasswordVisibility("password")
+                      change: function ($event) {
+                        var $$a = _vm.formData.password,
+                          $$el = $event.target,
+                          $$c = $$el.checked ? true : false
+                        if (Array.isArray($$a)) {
+                          var $$v = null,
+                            $$i = _vm._i($$a, $$v)
+                          if ($$el.checked) {
+                            $$i < 0 &&
+                              _vm.$set(
+                                _vm.formData,
+                                "password",
+                                $$a.concat([$$v])
+                              )
+                          } else {
+                            $$i > -1 &&
+                              _vm.$set(
+                                _vm.formData,
+                                "password",
+                                $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                              )
+                          }
+                        } else {
+                          _vm.$set(_vm.formData, "password", $$c)
+                        }
                       },
                     },
-                  },
-                  [_c("i", { class: _vm.PasswordIconClass })]
-                ),
-              ]),
+                  })
+                : _vm.PasswordType === "radio"
+                ? _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.formData.password,
+                        expression: "formData.password",
+                      },
+                    ],
+                    staticClass: "c-input",
+                    class: { "is-invalid": _vm.errors && _vm.errors.password },
+                    attrs: {
+                      id: "password",
+                      placeholder: "英数字8文字以上で入力してください",
+                      type: "radio",
+                    },
+                    domProps: { checked: _vm._q(_vm.formData.password, null) },
+                    on: {
+                      change: function ($event) {
+                        _vm.$set(_vm.formData, "password", null)
+                      },
+                    },
+                  })
+                : _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.formData.password,
+                        expression: "formData.password",
+                      },
+                    ],
+                    staticClass: "c-input",
+                    class: { "is-invalid": _vm.errors && _vm.errors.password },
+                    attrs: {
+                      id: "password",
+                      placeholder: "英数字8文字以上で入力してください",
+                      type: _vm.PasswordType,
+                    },
+                    domProps: { value: _vm.formData.password },
+                    on: {
+                      input: function ($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.formData, "password", $event.target.value)
+                      },
+                    },
+                  }),
               _vm._v(" "),
               _c(
-                "label",
-                { staticClass: "c-label", attrs: { for: "password-confirm" } },
-                [_vm._v("パスワード（再入力）")]
+                "span",
+                {
+                  on: {
+                    click: function ($event) {
+                      _vm.togglePasswordVisibility("password")
+                    },
+                  },
+                },
+                [_c("i", { class: _vm.PasswordIconClass })]
               ),
-              _vm._v(" "),
-              _c("div", { staticClass: "p-input__password" }, [
-                _vm.PasswordConfirmType === "checkbox"
-                  ? _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.formData.password_confirmation,
-                          expression: "formData.password_confirmation",
-                        },
-                      ],
-                      staticClass: "c-input",
-                      class: {
-                        "is-invalid":
-                          _vm.errors && _vm.errors.password_confirmation,
+            ]),
+            _vm._v(" "),
+            _c(
+              "label",
+              { staticClass: "c-label", attrs: { for: "password-confirm" } },
+              [_vm._v("パスワード（再入力）")]
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "c-input__password" }, [
+              _vm.PasswordConfirmType === "checkbox"
+                ? _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.formData.password_confirmation,
+                        expression: "formData.password_confirmation",
                       },
-                      attrs: {
-                        id: "password-confirm",
-                        placeholder: "英数字8文字以上で入力してください",
-                        type: "checkbox",
+                    ],
+                    staticClass: "c-input",
+                    class: {
+                      "is-invalid":
+                        _vm.errors && _vm.errors.password_confirmation,
+                    },
+                    attrs: {
+                      id: "password-confirm",
+                      placeholder: "英数字8文字以上で入力してください",
+                      type: "checkbox",
+                    },
+                    domProps: {
+                      checked: Array.isArray(_vm.formData.password_confirmation)
+                        ? _vm._i(_vm.formData.password_confirmation, null) > -1
+                        : _vm.formData.password_confirmation,
+                    },
+                    on: {
+                      change: function ($event) {
+                        var $$a = _vm.formData.password_confirmation,
+                          $$el = $event.target,
+                          $$c = $$el.checked ? true : false
+                        if (Array.isArray($$a)) {
+                          var $$v = null,
+                            $$i = _vm._i($$a, $$v)
+                          if ($$el.checked) {
+                            $$i < 0 &&
+                              _vm.$set(
+                                _vm.formData,
+                                "password_confirmation",
+                                $$a.concat([$$v])
+                              )
+                          } else {
+                            $$i > -1 &&
+                              _vm.$set(
+                                _vm.formData,
+                                "password_confirmation",
+                                $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                              )
+                          }
+                        } else {
+                          _vm.$set(_vm.formData, "password_confirmation", $$c)
+                        }
                       },
-                      domProps: {
-                        checked: Array.isArray(
-                          _vm.formData.password_confirmation
+                    },
+                  })
+                : _vm.PasswordConfirmType === "radio"
+                ? _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.formData.password_confirmation,
+                        expression: "formData.password_confirmation",
+                      },
+                    ],
+                    staticClass: "c-input",
+                    class: {
+                      "is-invalid":
+                        _vm.errors && _vm.errors.password_confirmation,
+                    },
+                    attrs: {
+                      id: "password-confirm",
+                      placeholder: "英数字8文字以上で入力してください",
+                      type: "radio",
+                    },
+                    domProps: {
+                      checked: _vm._q(_vm.formData.password_confirmation, null),
+                    },
+                    on: {
+                      change: function ($event) {
+                        _vm.$set(_vm.formData, "password_confirmation", null)
+                      },
+                    },
+                  })
+                : _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.formData.password_confirmation,
+                        expression: "formData.password_confirmation",
+                      },
+                    ],
+                    staticClass: "c-input",
+                    class: {
+                      "is-invalid":
+                        _vm.errors && _vm.errors.password_confirmation,
+                    },
+                    attrs: {
+                      id: "password-confirm",
+                      placeholder: "英数字8文字以上で入力してください",
+                      type: _vm.PasswordConfirmType,
+                    },
+                    domProps: { value: _vm.formData.password_confirmation },
+                    on: {
+                      input: function ($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(
+                          _vm.formData,
+                          "password_confirmation",
+                          $event.target.value
                         )
-                          ? _vm._i(_vm.formData.password_confirmation, null) >
-                            -1
-                          : _vm.formData.password_confirmation,
-                      },
-                      on: {
-                        change: function ($event) {
-                          var $$a = _vm.formData.password_confirmation,
-                            $$el = $event.target,
-                            $$c = $$el.checked ? true : false
-                          if (Array.isArray($$a)) {
-                            var $$v = null,
-                              $$i = _vm._i($$a, $$v)
-                            if ($$el.checked) {
-                              $$i < 0 &&
-                                _vm.$set(
-                                  _vm.formData,
-                                  "password_confirmation",
-                                  $$a.concat([$$v])
-                                )
-                            } else {
-                              $$i > -1 &&
-                                _vm.$set(
-                                  _vm.formData,
-                                  "password_confirmation",
-                                  $$a.slice(0, $$i).concat($$a.slice($$i + 1))
-                                )
-                            }
-                          } else {
-                            _vm.$set(_vm.formData, "password_confirmation", $$c)
-                          }
-                        },
-                      },
-                    })
-                  : _vm.PasswordConfirmType === "radio"
-                  ? _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.formData.password_confirmation,
-                          expression: "formData.password_confirmation",
-                        },
-                      ],
-                      staticClass: "c-input",
-                      class: {
-                        "is-invalid":
-                          _vm.errors && _vm.errors.password_confirmation,
-                      },
-                      attrs: {
-                        id: "password-confirm",
-                        placeholder: "英数字8文字以上で入力してください",
-                        type: "radio",
-                      },
-                      domProps: {
-                        checked: _vm._q(
-                          _vm.formData.password_confirmation,
-                          null
-                        ),
-                      },
-                      on: {
-                        change: function ($event) {
-                          _vm.$set(_vm.formData, "password_confirmation", null)
-                        },
-                      },
-                    })
-                  : _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.formData.password_confirmation,
-                          expression: "formData.password_confirmation",
-                        },
-                      ],
-                      staticClass: "c-input",
-                      class: {
-                        "is-invalid":
-                          _vm.errors && _vm.errors.password_confirmation,
-                      },
-                      attrs: {
-                        id: "password-confirm",
-                        placeholder: "英数字8文字以上で入力してください",
-                        type: _vm.PasswordConfirmType,
-                      },
-                      domProps: { value: _vm.formData.password_confirmation },
-                      on: {
-                        input: function ($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(
-                            _vm.formData,
-                            "password_confirmation",
-                            $event.target.value
-                          )
-                        },
-                      },
-                    }),
-                _vm._v(" "),
-                _c(
-                  "span",
-                  {
-                    on: {
-                      click: function ($event) {
-                        _vm.togglePasswordVisibility("password_confirm")
                       },
                     },
+                  }),
+              _vm._v(" "),
+              _c(
+                "span",
+                {
+                  on: {
+                    click: function ($event) {
+                      _vm.togglePasswordVisibility("password_confirm")
+                    },
                   },
-                  [_c("i", { class: _vm.PasswordConfirmIconClass })]
-                ),
-              ]),
+                },
+                [_c("i", { class: _vm.PasswordConfirmIconClass })]
+              ),
             ]),
             _vm._v(" "),
             _c(
@@ -48735,54 +48288,58 @@ var render = function () {
               1
             ),
             _vm._v(" "),
-            _c("div", { staticClass: "c-checkbox c-checkbox__container" }, [
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.agreement,
-                    expression: "agreement",
+            _c(
+              "div",
+              {
+                staticClass: "c-checkbox c-checkbox__container u-mt__m u-mb__m",
+              },
+              [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.agreement,
+                      expression: "agreement",
+                    },
+                  ],
+                  staticClass: "c-checkbox u-mr__s",
+                  attrs: { type: "checkbox", id: "agreement" },
+                  domProps: {
+                    checked: Array.isArray(_vm.agreement)
+                      ? _vm._i(_vm.agreement, null) > -1
+                      : _vm.agreement,
                   },
-                ],
-                attrs: { type: "checkbox", id: "agreement" },
-                domProps: {
-                  checked: Array.isArray(_vm.agreement)
-                    ? _vm._i(_vm.agreement, null) > -1
-                    : _vm.agreement,
-                },
-                on: {
-                  change: function ($event) {
-                    var $$a = _vm.agreement,
-                      $$el = $event.target,
-                      $$c = $$el.checked ? true : false
-                    if (Array.isArray($$a)) {
-                      var $$v = null,
-                        $$i = _vm._i($$a, $$v)
-                      if ($$el.checked) {
-                        $$i < 0 && (_vm.agreement = $$a.concat([$$v]))
+                  on: {
+                    change: function ($event) {
+                      var $$a = _vm.agreement,
+                        $$el = $event.target,
+                        $$c = $$el.checked ? true : false
+                      if (Array.isArray($$a)) {
+                        var $$v = null,
+                          $$i = _vm._i($$a, $$v)
+                        if ($$el.checked) {
+                          $$i < 0 && (_vm.agreement = $$a.concat([$$v]))
+                        } else {
+                          $$i > -1 &&
+                            (_vm.agreement = $$a
+                              .slice(0, $$i)
+                              .concat($$a.slice($$i + 1)))
+                        }
                       } else {
-                        $$i > -1 &&
-                          (_vm.agreement = $$a
-                            .slice(0, $$i)
-                            .concat($$a.slice($$i + 1)))
+                        _vm.agreement = $$c
                       }
-                    } else {
-                      _vm.agreement = $$c
-                    }
+                    },
                   },
-                },
-              }),
-              _vm._v(" "),
-              _c(
-                "span",
-                {
-                  staticClass: "c-text__agreement",
-                  attrs: { for: "agreement" },
-                },
-                [_vm._v("利用規約に同意します")]
-              ),
-            ]),
+                }),
+                _vm._v(" "),
+                _c(
+                  "span",
+                  { staticClass: "c-text", attrs: { for: "agreement" } },
+                  [_vm._v("利用規約に同意します")]
+                ),
+              ]
+            ),
             _vm._v(" "),
             _c(
               "button",
@@ -48811,18 +48368,7 @@ var render = function () {
     ),
   ])
 }
-var staticRenderFns = [
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("label", { staticClass: "c-label", attrs: { for: "building" } }, [
-      _vm._v("建物名・"),
-      _c("br"),
-      _vm._v("部屋番号"),
-    ])
-  },
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -49124,20 +48670,24 @@ var render = function () {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("main", { staticClass: "l-main" }, [
-    _c("div", { staticClass: "p-profile" }, [
-      _c("div", { staticClass: "p-profile__form" }, [
-        _c("h1", { staticClass: "c-title" }, [_vm._v("退会")]),
+    _c("div", { staticClass: "l-main__convenience" }, [
+      _c("section", { staticClass: "l-main__wrapper" }, [
+        _c("h1", { staticClass: "c-title u-mb__xl" }, [_vm._v("コンビニ退会")]),
         _vm._v(" "),
-        _c("div", { staticClass: "p-container" }, [
-          _c("p", [_vm._v("退会手続きを行いますか？")]),
-          _vm._v(" "),
-          _c("div", { staticClass: "p-withdraw__button" }, [
-            _c(
-              "button",
-              { staticClass: "c-button", on: { click: _vm.withdraw } },
-              [_vm._v("退会する")]
-            ),
+        _c("form", { staticClass: "c-form" }, [
+          _c("h3", { staticClass: "c-title c-title__sub" }, [
+            _vm._v("退会手続きを行いますか？"),
           ]),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              staticClass:
+                "c-button c-button__submit c-button__convenience u-mt__m",
+              on: { click: _vm.withdraw },
+            },
+            [_vm._v("退会する")]
+          ),
         ]),
       ]),
     ]),
@@ -49145,6 +48695,7 @@ var render = function () {
     _c(
       "a",
       {
+        staticClass: "c-link c-link__back u-mt__s u-mb__s",
         on: {
           click: function ($event) {
             _vm.$router.back()
@@ -49276,9 +48827,32 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("p", [_vm._v("これはhome画面です。")])
+  return _c("main", { staticClass: "l-main" }, [
+    _vm._m(0),
+    _vm._v(" "),
+    _c(
+      "a",
+      {
+        on: {
+          click: function ($event) {
+            _vm.$router.back()
+          },
+        },
+      },
+      [_vm._v("前のページに戻る")]
+    ),
+  ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "l-main__common" }, [
+      _c("h1", { staticClass: "c-title u-mb__xl" }, [_vm._v("HOME画面")]),
+    ])
+  },
+]
 render._withStripped = true
 
 
@@ -49411,10 +48985,10 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/PaginationComponent.vue?vue&type=template&id=5cc156e8&scoped=true":
-/*!*********************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/PaginationComponent.vue?vue&type=template&id=5cc156e8&scoped=true ***!
-  \*********************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/PaginationComponent.vue?vue&type=template&id=5cc156e8":
+/*!*********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/PaginationComponent.vue?vue&type=template&id=5cc156e8 ***!
+  \*********************************************************************************************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -49426,90 +49000,92 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "ul",
-    { staticClass: "pagination" },
-    [
-      _c(
-        "li",
-        {
-          class: {
-            inactive: _vm.currentPage == 1,
-            disabled: _vm.currentPage == 1,
-          },
-          on: {
-            click: function ($event) {
-              _vm.changePage(_vm.currentPage - 1)
-            },
-          },
-        },
-        [_vm._v("«")]
-      ),
-      _vm._v(" "),
-      _vm._l(_vm.frontPageRange, function (page) {
-        return _c(
+  return _c("div", { staticClass: "p-pagination u-mt__m" }, [
+    _c(
+      "ul",
+      { staticClass: "c-pagination" },
+      [
+        _c(
           "li",
           {
-            key: page,
             class: {
-              active: _vm.isCurrent(page),
-              inactive: !_vm.isCurrent(page),
+              inactive: _vm.currentPage == 1,
+              disabled: _vm.currentPage == 1,
             },
             on: {
               click: function ($event) {
-                _vm.changePage(page)
+                _vm.changePage(_vm.currentPage - 1)
               },
             },
           },
-          [_vm._v(_vm._s(page))]
-        )
-      }),
-      _vm._v(" "),
-      _vm.front_dot
-        ? _c("li", { staticClass: "inactive disabled" }, [_vm._v("...")])
-        : _vm._e(),
-      _vm._v(" "),
-      _vm._l(_vm.middlePageRange, function (page) {
-        return _c(
+          [_vm._v("«")]
+        ),
+        _vm._v(" "),
+        _vm._l(_vm.frontPageRange, function (page) {
+          return _c(
+            "li",
+            {
+              key: page,
+              class: {
+                active: _vm.isCurrent(page),
+                inactive: !_vm.isCurrent(page),
+              },
+              on: {
+                click: function ($event) {
+                  _vm.changePage(page)
+                },
+              },
+            },
+            [_vm._v(_vm._s(page))]
+          )
+        }),
+        _vm._v(" "),
+        _vm.front_dot
+          ? _c("li", { staticClass: "inactive disabled" }, [_vm._v("...")])
+          : _vm._e(),
+        _vm._v(" "),
+        _vm._l(_vm.middlePageRange, function (page) {
+          return _c(
+            "li",
+            {
+              key: page,
+              class: {
+                active: _vm.isCurrent(page),
+                inactive: !_vm.isCurrent(page),
+              },
+              on: {
+                click: function ($event) {
+                  _vm.changePage(page)
+                },
+              },
+            },
+            [_vm._v(_vm._s(page))]
+          )
+        }),
+        _vm._v(" "),
+        _vm.end_dot
+          ? _c("li", { staticClass: "inactive" }, [_vm._v("...")])
+          : _vm._e(),
+        _vm._v(" "),
+        _c(
           "li",
           {
-            key: page,
             class: {
-              active: _vm.isCurrent(page),
-              inactive: !_vm.isCurrent(page),
+              inactive: _vm.currentPage >= _vm.last_page,
+              disabled: _vm.currentPage >= _vm.last_page,
             },
             on: {
               click: function ($event) {
-                _vm.changePage(page)
+                _vm.changePage(_vm.currentPage + 1)
               },
             },
           },
-          [_vm._v(_vm._s(page))]
-        )
-      }),
-      _vm._v(" "),
-      _vm.end_dot
-        ? _c("li", { staticClass: "inactive" }, [_vm._v("...")])
-        : _vm._e(),
-      _vm._v(" "),
-      _c(
-        "li",
-        {
-          class: {
-            inactive: _vm.currentPage >= _vm.last_page,
-            disabled: _vm.currentPage >= _vm.last_page,
-          },
-          on: {
-            click: function ($event) {
-              _vm.changePage(_vm.currentPage + 1)
-            },
-          },
-        },
-        [_vm._v("»")]
-      ),
-    ],
-    2
-  )
+          [_vm._v("»")]
+        ),
+      ],
+      2
+    ),
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -49544,112 +49120,133 @@ var render = function () {
           "div",
           { staticClass: "p-article__mypage" },
           [
-            _c("section", { staticClass: "p-register u-mr__s" }, [
-              _c(
-                "ul",
-                { staticClass: "p-product__list" },
-                [
-                  !_vm.products.data || _vm.products.data.length === 0
-                    ? _c("li", { staticClass: "p-product__item u-pd__l" }, [
-                        _c("p", [_vm._v("検索結果はありません。")]),
-                      ])
-                    : _vm._l(_vm.products.data, function (product) {
-                        return _c(
-                          "li",
-                          {
-                            key: product.id,
-                            staticClass: "p-product__item u-pd__l",
-                          },
-                          [
-                            _c("div", { staticClass: "c-card u-pdb__s" }, [
-                              _c(
-                                "h3",
-                                { staticClass: "c-card__name u-pdt__s" },
-                                [_vm._v(_vm._s(product.name))]
-                              ),
-                              _vm._v(" "),
-                              _c("img", {
-                                staticClass: "c-card__picture u-m__s",
-                                attrs: {
-                                  src: _vm.getProductPicturePath(product),
-                                  alt: "商品画像",
-                                },
-                              }),
-                              _vm._v(" "),
-                              _c(
-                                "label",
-                                {
-                                  directives: [
-                                    {
-                                      name: "show",
-                                      rawName: "v-show",
-                                      value: product.is_purchased,
-                                      expression: "product.is_purchased",
-                                    },
+            _c("div", { staticClass: "l-main__wrapper" }, [
+              _c("div", { staticClass: "p-product__index" }, [
+                _c(
+                  "ul",
+                  { staticClass: "p-product__list" },
+                  [
+                    !_vm.products.data || _vm.products.data.length === 0
+                      ? _c("li", { staticClass: "p-product__item" }, [
+                          _c("p", { staticClass: "c-text u-pd__xl" }, [
+                            _vm._v("検索結果はありません。"),
+                          ]),
+                        ])
+                      : _vm._l(_vm.products.data, function (product) {
+                          return _c(
+                            "li",
+                            { key: product.id, staticClass: "p-product__item" },
+                            [
+                              _c("div", { staticClass: "c-card u-m__s" }, [
+                                _c(
+                                  "div",
+                                  { staticClass: "p-card__header u-pd__s" },
+                                  [
+                                    _c("h3", { staticClass: "c-card__name" }, [
+                                      _vm._v(_vm._s(product.name)),
+                                    ]),
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  { staticClass: "p-card__container" },
+                                  [
+                                    _c("img", {
+                                      staticClass: "c-card__picture",
+                                      attrs: {
+                                        src: _vm.getProductPicturePath(product),
+                                        alt: "商品画像",
+                                      },
+                                    }),
+                                    _vm._v(" "),
+                                    _c(
+                                      "label",
+                                      {
+                                        directives: [
+                                          {
+                                            name: "show",
+                                            rawName: "v-show",
+                                            value: product.is_purchased,
+                                            expression: "product.is_purchased",
+                                          },
+                                        ],
+                                        staticClass: "c-label__purchase",
+                                      },
+                                      [_vm._v("購入済み")]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "div",
+                                      { staticClass: "p-like p-like__content" },
+                                      [
+                                        !product.liked
+                                          ? _c("i", {
+                                              staticClass:
+                                                "c-icon c-icon__unlike far fa-heart",
+                                              on: {
+                                                click: function ($event) {
+                                                  _vm.productLike(product)
+                                                },
+                                              },
+                                            })
+                                          : _c("i", {
+                                              staticClass:
+                                                "c-icon c-icon__like fas fa-heart",
+                                              on: {
+                                                click: function ($event) {
+                                                  _vm.productUnlike(product)
+                                                },
+                                              },
+                                            }),
+                                        _vm._v(" "),
+                                        _c("span", [
+                                          _vm._v(
+                                            "いいね" +
+                                              _vm._s(product.likes_count)
+                                          ),
+                                        ]),
+                                      ]
+                                    ),
+                                    _vm._v(" "),
+                                    _c("p", { staticClass: "c-card__price" }, [
+                                      _vm._v(_vm._s(product.price) + "円"),
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("p", { staticClass: "c-card__date" }, [
+                                      _vm._v(_vm._s(product.expiration_date)),
+                                    ]),
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  { staticClass: "p-card__footer" },
+                                  [
+                                    _c(
+                                      "router-link",
+                                      {
+                                        staticClass:
+                                          "c-button c-button__common c-button__detail",
+                                        attrs: {
+                                          to: _vm.getProductDetailLink(
+                                            product.id
+                                          ),
+                                        },
+                                      },
+                                      [_vm._v("詳細を見る")]
+                                    ),
                                   ],
-                                  staticClass: "c-label__purchase",
-                                },
-                                [_vm._v("購入済み")]
-                              ),
-                              _vm._v(" "),
-                              !product.liked
-                                ? _c("i", {
-                                    staticClass: "far fa-heart",
-                                    on: {
-                                      click: function ($event) {
-                                        _vm.productLike(product)
-                                      },
-                                    },
-                                  })
-                                : _c("i", {
-                                    staticClass: "fas fa-heart",
-                                    on: {
-                                      click: function ($event) {
-                                        _vm.productUnlike(product)
-                                      },
-                                    },
-                                  }),
-                              _vm._v(" "),
-                              _c("span", [
-                                _vm._v("いいね" + _vm._s(product.likes_count)),
-                              ]),
-                              _vm._v(" "),
-                              _c("p", { staticClass: "c-card__price" }, [
-                                _vm._v("価格 " + _vm._s(product.price) + " 円"),
-                              ]),
-                              _vm._v(" "),
-                              _c("p", { staticClass: "c-card__date" }, [
-                                _vm._v(
-                                  "賞味期限 " + _vm._s(product.expiration_date)
+                                  1
                                 ),
                               ]),
-                              _vm._v(" "),
-                              _c(
-                                "div",
-                                { staticClass: "p-product__button" },
-                                [
-                                  _c(
-                                    "router-link",
-                                    {
-                                      staticClass: "c-button",
-                                      attrs: {
-                                        to: _vm.getProductDetailLink(
-                                          product.id
-                                        ),
-                                      },
-                                    },
-                                    [_vm._v("詳細を見る")]
-                                  ),
-                                ],
-                                1
-                              ),
-                            ]),
-                          ]
-                        )
-                      }),
-                ],
-                2
-              ),
+                            ]
+                          )
+                        }),
+                  ],
+                  2
+                ),
+              ]),
             ]),
             _vm._v(" "),
             _c("search-component", { on: { search: _vm.searchResult } }),
@@ -49703,13 +49300,16 @@ var render = function () {
   var _c = _vm._self._c || _h
   return _c("section", { staticClass: "l-sidebar" }, [
     _c("div", { staticClass: "p-mypage__sidebar" }, [
-      _c("div", { staticClass: "p-search__form" }, [
-        _c("h1", { staticClass: "c-title" }, [_vm._v("商品検索")]),
+      _c("div", { staticClass: "p-search__form u-pd__s" }, [
+        _c("h3", { staticClass: "c-title c-title__sub u-mt__m u-mb__m" }, [
+          _vm._v("絞り込み検索"),
+        ]),
         _vm._v(" "),
-        _c("div", { staticClass: "p-sub__container" }, [
+        _c("div", { staticClass: "p-search__container" }, [
           _c(
             "form",
             {
+              staticClass: "c-form c-form__search",
               on: {
                 submit: function ($event) {
                   $event.preventDefault()
@@ -49718,151 +49318,159 @@ var render = function () {
               },
             },
             [
-              _c("table", [
-                _c("tr", [
-                  _vm._m(0),
-                  _vm._v(" "),
-                  _c("td", [
-                    _c(
-                      "select",
-                      {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.selectedPrefecture,
-                            expression: "selectedPrefecture",
-                          },
-                        ],
-                        on: {
-                          change: function ($event) {
-                            var $$selectedVal = Array.prototype.filter
-                              .call($event.target.options, function (o) {
-                                return o.selected
-                              })
-                              .map(function (o) {
-                                var val = "_value" in o ? o._value : o.value
-                                return val
-                              })
-                            _vm.selectedPrefecture = $event.target.multiple
-                              ? $$selectedVal
-                              : $$selectedVal[0]
-                          },
-                        },
-                      },
-                      [
-                        _c("option", { attrs: { value: "" } }, [
-                          _vm._v("都道府県を選択してください"),
-                        ]),
-                        _vm._v(" "),
-                        _vm._l(_vm.prefectures, function (prefecture) {
-                          return _c("option", { key: prefecture }, [
-                            _vm._v(_vm._s(prefecture)),
-                          ])
-                        }),
-                      ],
-                      2
-                    ),
+              _c("label", { staticClass: "c-label" }, [
+                _vm._v("出品したコンビニがある都道府県"),
+              ]),
+              _vm._v(" "),
+              _c(
+                "select",
+                {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.selectedPrefecture,
+                      expression: "selectedPrefecture",
+                    },
+                  ],
+                  staticClass: "c-selectbox u-mt__s u-mb__s",
+                  on: {
+                    change: function ($event) {
+                      var $$selectedVal = Array.prototype.filter
+                        .call($event.target.options, function (o) {
+                          return o.selected
+                        })
+                        .map(function (o) {
+                          var val = "_value" in o ? o._value : o.value
+                          return val
+                        })
+                      _vm.selectedPrefecture = $event.target.multiple
+                        ? $$selectedVal
+                        : $$selectedVal[0]
+                    },
+                  },
+                },
+                [
+                  _c("option", { attrs: { value: "" } }, [
+                    _vm._v("都道府県を選択"),
                   ]),
+                  _vm._v(" "),
+                  _vm._l(_vm.prefectures, function (prefecture) {
+                    return _c("option", { key: prefecture }, [
+                      _vm._v(_vm._s(prefecture)),
+                    ])
+                  }),
+                ],
+                2
+              ),
+              _vm._v(" "),
+              _c("label", { staticClass: "c-label" }, [_vm._v("最低価格")]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.minPrice,
+                    expression: "minPrice",
+                  },
+                ],
+                staticClass: "c-input c-input__search",
+                attrs: { type: "number", name: "minprice" },
+                domProps: { value: _vm.minPrice },
+                on: {
+                  input: function ($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.minPrice = $event.target.value
+                  },
+                },
+              }),
+              _c("span", { staticClass: "c-text u-ml__s" }, [_vm._v("円")]),
+              _vm._v(" "),
+              _c("label", { staticClass: "c-label" }, [_vm._v("最高価格")]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.maxPrice,
+                    expression: "maxPrice",
+                  },
+                ],
+                staticClass: "c-input c-input__search",
+                attrs: { type: "number", name: "maxprice" },
+                domProps: { value: _vm.maxPrice },
+                on: {
+                  input: function ($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.maxPrice = $event.target.value
+                  },
+                },
+              }),
+              _c("span", { staticClass: "c-text u-ml__s" }, [_vm._v("円")]),
+              _vm._v(" "),
+              _c("label", { staticClass: "c-label" }, [
+                _vm._v("賞味期限切れかどうか"),
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "c-input__radio" }, [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.isExpired,
+                      expression: "isExpired",
+                    },
+                  ],
+                  attrs: { type: "radio", value: "true" },
+                  domProps: { checked: _vm._q(_vm.isExpired, "true") },
+                  on: {
+                    change: function ($event) {
+                      _vm.isExpired = "true"
+                    },
+                  },
+                }),
+                _c("label", { staticClass: "c-text u-ml__s" }, [
+                  _vm._v("賞味期限切れ"),
                 ]),
                 _vm._v(" "),
-                _c("tr", [
-                  _vm._m(1),
-                  _vm._v(" "),
-                  _c("td", [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.minPrice,
-                          expression: "minPrice",
-                        },
-                      ],
-                      attrs: { type: "text", name: "minprice", maxlength: "9" },
-                      domProps: { value: _vm.minPrice },
-                      on: {
-                        input: function ($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.minPrice = $event.target.value
-                        },
-                      },
-                    }),
-                    _vm._v("円〜\n                                "),
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.maxPrice,
-                          expression: "maxPrice",
-                        },
-                      ],
-                      attrs: { type: "text", name: "maxprice", maxlength: "9" },
-                      domProps: { value: _vm.maxPrice },
-                      on: {
-                        input: function ($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.maxPrice = $event.target.value
-                        },
-                      },
-                    }),
-                    _vm._v("円\n                            "),
-                  ]),
-                ]),
-                _vm._v(" "),
-                _c("tr", [
-                  _vm._m(2),
-                  _vm._v(" "),
-                  _c("td", [
-                    _c("div", [
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.isExpired,
-                            expression: "isExpired",
-                          },
-                        ],
-                        attrs: { type: "radio", value: "true" },
-                        domProps: { checked: _vm._q(_vm.isExpired, "true") },
-                        on: {
-                          change: function ($event) {
-                            _vm.isExpired = "true"
-                          },
-                        },
-                      }),
-                      _c("label", [_vm._v("賞味期限切れ")]),
-                      _vm._v(" "),
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.isExpired,
-                            expression: "isExpired",
-                          },
-                        ],
-                        attrs: { type: "radio", value: "false" },
-                        domProps: { checked: _vm._q(_vm.isExpired, "false") },
-                        on: {
-                          change: function ($event) {
-                            _vm.isExpired = "false"
-                          },
-                        },
-                      }),
-                      _c("label", [_vm._v("賞味期限内")]),
-                    ]),
-                  ]),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.isExpired,
+                      expression: "isExpired",
+                    },
+                  ],
+                  attrs: { type: "radio", value: "false" },
+                  domProps: { checked: _vm._q(_vm.isExpired, "false") },
+                  on: {
+                    change: function ($event) {
+                      _vm.isExpired = "false"
+                    },
+                  },
+                }),
+                _c("label", { staticClass: "c-text u-ml__s" }, [
+                  _vm._v("賞味期限内"),
                 ]),
               ]),
               _vm._v(" "),
-              _vm._m(3),
+              _c(
+                "button",
+                {
+                  staticClass:
+                    "c-button c-button__submit c-button__common u-mt__m u-mb__m",
+                  attrs: { type: "submit" },
+                },
+                [_vm._v("検索する")]
+              ),
             ]
           ),
         ]),
@@ -49870,36 +49478,7 @@ var render = function () {
     ]),
   ])
 }
-var staticRenderFns = [
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("th", [_c("label", [_vm._v("都道府県")])])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("th", [_c("label", [_vm._v("価格")])])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("th", [_c("label", [_vm._v("賞味期限切れかどうか")])])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "p-search__button" }, [
-      _c("button", { staticClass: "c-button", attrs: { type: "submit" } }, [
-        _vm._v("検索"),
-      ]),
-    ])
-  },
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -50329,7 +49908,7 @@ var render = function () {
   var _c = _vm._self._c || _h
   return _c("main", { staticClass: "l-main" }, [
     _c("div", { staticClass: "l-main__user" }, [
-      _c("section", { staticClass: "p-register" }, [
+      _c("section", { staticClass: "l-main__wrapper" }, [
         _c("h1", { staticClass: "c-title u-mb__xl" }, [
           _vm._v("利用者ログイン"),
         ]),
@@ -50358,222 +49937,207 @@ var render = function () {
                 ])
               : _vm._e(),
             _vm._v(" "),
-            _c("table", [
-              _c("tr", [
-                _vm._m(0),
-                _vm._v(" "),
-                _c("td", [
-                  _c("input", {
+            _c("label", { staticClass: "c-label", attrs: { for: "email" } }, [
+              _vm._v("メールアドレス"),
+            ]),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.formData.email,
+                  expression: "formData.email",
+                },
+              ],
+              staticClass: "c-input",
+              class: { "is-invalid": _vm.errors && _vm.errors.email },
+              attrs: { id: "email", type: "email", autocomplete: "email" },
+              domProps: { value: _vm.formData.email },
+              on: {
+                input: function ($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.formData, "email", $event.target.value)
+                },
+              },
+            }),
+            _vm._v(" "),
+            _c(
+              "label",
+              { staticClass: "c-label", attrs: { for: "password" } },
+              [_vm._v("パスワード")]
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "c-input__password" }, [
+              _vm.PasswordType === "checkbox"
+                ? _c("input", {
                     directives: [
                       {
                         name: "model",
                         rawName: "v-model",
-                        value: _vm.formData.email,
-                        expression: "formData.email",
+                        value: _vm.formData.password,
+                        expression: "formData.password",
                       },
                     ],
                     staticClass: "c-input",
-                    class: { "is-invalid": _vm.errors && _vm.errors.email },
+                    class: { "is-invalid": _vm.errors && _vm.errors.password },
                     attrs: {
-                      id: "email",
-                      type: "email",
-                      autocomplete: "email",
+                      id: "password",
+                      placeholder: "英数字8文字以上で入力してください",
+                      type: "checkbox",
                     },
-                    domProps: { value: _vm.formData.email },
+                    domProps: {
+                      checked: Array.isArray(_vm.formData.password)
+                        ? _vm._i(_vm.formData.password, null) > -1
+                        : _vm.formData.password,
+                    },
+                    on: {
+                      change: function ($event) {
+                        var $$a = _vm.formData.password,
+                          $$el = $event.target,
+                          $$c = $$el.checked ? true : false
+                        if (Array.isArray($$a)) {
+                          var $$v = null,
+                            $$i = _vm._i($$a, $$v)
+                          if ($$el.checked) {
+                            $$i < 0 &&
+                              _vm.$set(
+                                _vm.formData,
+                                "password",
+                                $$a.concat([$$v])
+                              )
+                          } else {
+                            $$i > -1 &&
+                              _vm.$set(
+                                _vm.formData,
+                                "password",
+                                $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                              )
+                          }
+                        } else {
+                          _vm.$set(_vm.formData, "password", $$c)
+                        }
+                      },
+                    },
+                  })
+                : _vm.PasswordType === "radio"
+                ? _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.formData.password,
+                        expression: "formData.password",
+                      },
+                    ],
+                    staticClass: "c-input",
+                    class: { "is-invalid": _vm.errors && _vm.errors.password },
+                    attrs: {
+                      id: "password",
+                      placeholder: "英数字8文字以上で入力してください",
+                      type: "radio",
+                    },
+                    domProps: { checked: _vm._q(_vm.formData.password, null) },
+                    on: {
+                      change: function ($event) {
+                        _vm.$set(_vm.formData, "password", null)
+                      },
+                    },
+                  })
+                : _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.formData.password,
+                        expression: "formData.password",
+                      },
+                    ],
+                    staticClass: "c-input",
+                    class: { "is-invalid": _vm.errors && _vm.errors.password },
+                    attrs: {
+                      id: "password",
+                      placeholder: "英数字8文字以上で入力してください",
+                      type: _vm.PasswordType,
+                    },
+                    domProps: { value: _vm.formData.password },
                     on: {
                       input: function ($event) {
                         if ($event.target.composing) {
                           return
                         }
-                        _vm.$set(_vm.formData, "email", $event.target.value)
+                        _vm.$set(_vm.formData, "password", $event.target.value)
                       },
                     },
                   }),
-                ]),
-              ]),
-              _vm._v(" "),
-              _c("tr", [
-                _vm._m(1),
-                _vm._v(" "),
-                _c("td", [
-                  _c("div", { staticClass: "p-input__password" }, [
-                    _vm.PasswordType === "checkbox"
-                      ? _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.formData.password,
-                              expression: "formData.password",
-                            },
-                          ],
-                          staticClass: "c-input",
-                          class: {
-                            "is-invalid": _vm.errors && _vm.errors.password,
-                          },
-                          attrs: {
-                            id: "password",
-                            placeholder: "英数字8文字以上で入力してください",
-                            type: "checkbox",
-                          },
-                          domProps: {
-                            checked: Array.isArray(_vm.formData.password)
-                              ? _vm._i(_vm.formData.password, null) > -1
-                              : _vm.formData.password,
-                          },
-                          on: {
-                            change: function ($event) {
-                              var $$a = _vm.formData.password,
-                                $$el = $event.target,
-                                $$c = $$el.checked ? true : false
-                              if (Array.isArray($$a)) {
-                                var $$v = null,
-                                  $$i = _vm._i($$a, $$v)
-                                if ($$el.checked) {
-                                  $$i < 0 &&
-                                    _vm.$set(
-                                      _vm.formData,
-                                      "password",
-                                      $$a.concat([$$v])
-                                    )
-                                } else {
-                                  $$i > -1 &&
-                                    _vm.$set(
-                                      _vm.formData,
-                                      "password",
-                                      $$a
-                                        .slice(0, $$i)
-                                        .concat($$a.slice($$i + 1))
-                                    )
-                                }
-                              } else {
-                                _vm.$set(_vm.formData, "password", $$c)
-                              }
-                            },
-                          },
-                        })
-                      : _vm.PasswordType === "radio"
-                      ? _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.formData.password,
-                              expression: "formData.password",
-                            },
-                          ],
-                          staticClass: "c-input",
-                          class: {
-                            "is-invalid": _vm.errors && _vm.errors.password,
-                          },
-                          attrs: {
-                            id: "password",
-                            placeholder: "英数字8文字以上で入力してください",
-                            type: "radio",
-                          },
-                          domProps: {
-                            checked: _vm._q(_vm.formData.password, null),
-                          },
-                          on: {
-                            change: function ($event) {
-                              _vm.$set(_vm.formData, "password", null)
-                            },
-                          },
-                        })
-                      : _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.formData.password,
-                              expression: "formData.password",
-                            },
-                          ],
-                          staticClass: "c-input",
-                          class: {
-                            "is-invalid": _vm.errors && _vm.errors.password,
-                          },
-                          attrs: {
-                            id: "password",
-                            placeholder: "英数字8文字以上で入力してください",
-                            type: _vm.PasswordType,
-                          },
-                          domProps: { value: _vm.formData.password },
-                          on: {
-                            input: function ($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.$set(
-                                _vm.formData,
-                                "password",
-                                $event.target.value
-                              )
-                            },
-                          },
-                        }),
-                    _vm._v(" "),
-                    _c(
-                      "span",
-                      {
-                        on: {
-                          click: function ($event) {
-                            _vm.togglePasswordVisibility("password")
-                          },
-                        },
-                      },
-                      [_c("i", { class: _vm.PasswordIconClass })]
-                    ),
-                  ]),
-                ]),
-              ]),
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "c-checkbox c-checkbox__container" }, [
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.remember,
-                    expression: "remember",
-                  },
-                ],
-                attrs: { type: "checkbox", id: "remember" },
-                domProps: {
-                  checked: Array.isArray(_vm.remember)
-                    ? _vm._i(_vm.remember, null) > -1
-                    : _vm.remember,
-                },
-                on: {
-                  change: function ($event) {
-                    var $$a = _vm.remember,
-                      $$el = $event.target,
-                      $$c = $$el.checked ? true : false
-                    if (Array.isArray($$a)) {
-                      var $$v = null,
-                        $$i = _vm._i($$a, $$v)
-                      if ($$el.checked) {
-                        $$i < 0 && (_vm.remember = $$a.concat([$$v]))
-                      } else {
-                        $$i > -1 &&
-                          (_vm.remember = $$a
-                            .slice(0, $$i)
-                            .concat($$a.slice($$i + 1)))
-                      }
-                    } else {
-                      _vm.remember = $$c
-                    }
-                  },
-                },
-              }),
               _vm._v(" "),
               _c(
                 "span",
-                { staticClass: "c-text__center", attrs: { for: "remember" } },
-                [_vm._v("パスワードを保持する")]
+                {
+                  on: {
+                    click: function ($event) {
+                      _vm.togglePasswordVisibility("password")
+                    },
+                  },
+                },
+                [_c("i", { class: _vm.PasswordIconClass })]
               ),
             ]),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "c-checkbox c-checkbox__container u-mt__m u-mb__m",
+              },
+              [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.remember,
+                      expression: "remember",
+                    },
+                  ],
+                  staticClass: "c-checkbox u-mr__s",
+                  attrs: { type: "checkbox", id: "remember" },
+                  domProps: {
+                    checked: Array.isArray(_vm.remember)
+                      ? _vm._i(_vm.remember, null) > -1
+                      : _vm.remember,
+                  },
+                  on: {
+                    change: function ($event) {
+                      var $$a = _vm.remember,
+                        $$el = $event.target,
+                        $$c = $$el.checked ? true : false
+                      if (Array.isArray($$a)) {
+                        var $$v = null,
+                          $$i = _vm._i($$a, $$v)
+                        if ($$el.checked) {
+                          $$i < 0 && (_vm.remember = $$a.concat([$$v]))
+                        } else {
+                          $$i > -1 &&
+                            (_vm.remember = $$a
+                              .slice(0, $$i)
+                              .concat($$a.slice($$i + 1)))
+                        }
+                      } else {
+                        _vm.remember = $$c
+                      }
+                    },
+                  },
+                }),
+                _vm._v(" "),
+                _c(
+                  "span",
+                  { staticClass: "c-text", attrs: { for: "remember" } },
+                  [_vm._v("パスワードを保持する")]
+                ),
+              ]
+            ),
             _vm._v(" "),
             _c(
               "a",
@@ -50611,28 +50175,7 @@ var render = function () {
     ),
   ])
 }
-var staticRenderFns = [
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("th", [
-      _c("label", { staticClass: "c-label", attrs: { for: "email" } }, [
-        _vm._v("メールアドレス"),
-      ]),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("th", [
-      _c("label", { staticClass: "c-label", attrs: { for: "password" } }, [
-        _vm._v("パスワード"),
-      ]),
-    ])
-  },
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -50689,60 +50232,158 @@ var render = function () {
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "p-article__mypage" }, [
-        _c("section", { staticClass: "p-register u-mr__s" }, [
-          _c("div", { staticClass: "p-mypage__purchased u-pd__xl" }, [
-            _c("h2", { staticClass: "c-title c-title__sub" }, [
-              _vm._v("購入した商品"),
-            ]),
-            _c("span", { staticClass: "c-text c-text__max" }, [
-              _vm._v("最大5件表示"),
+        _c("section", { staticClass: "l-main__wrapper" }, [
+          _c("div", { staticClass: "l-container" }, [
+            _c("div", { staticClass: "p-mypage__purchased" }, [
+              _c("h2", { staticClass: "c-title c-title__sub" }, [
+                _vm._v("購入した商品"),
+              ]),
+              _c("span", { staticClass: "c-text c-text__max" }, [
+                _vm._v("最大5件表示"),
+              ]),
+              _vm._v(" "),
+              _vm.purchasedProducts.length === 0
+                ? _c("div", [_vm._m(0)])
+                : _c("div", [
+                    _c(
+                      "ul",
+                      { staticClass: "p-product__list" },
+                      _vm._l(_vm.purchasedProducts, function (product) {
+                        return _c(
+                          "li",
+                          { key: product.id, staticClass: "p-product__item" },
+                          [
+                            _c("div", { staticClass: "c-card u-m__s" }, [
+                              _c(
+                                "h3",
+                                { staticClass: "c-card__name u-pd__s" },
+                                [_vm._v(_vm._s(product.name))]
+                              ),
+                              _vm._v(" "),
+                              _c("img", {
+                                staticClass: "c-card__picture",
+                                attrs: {
+                                  src: _vm.getProductPicturePath(product),
+                                  alt: "商品画像",
+                                },
+                              }),
+                              _vm._v(" "),
+                              _c("p", { staticClass: "c-card__price" }, [
+                                _vm._v(_vm._s(product.price) + "円"),
+                              ]),
+                              _vm._v(" "),
+                              _c("p", { staticClass: "c-card__date" }, [
+                                _vm._v(_vm._s(product.expiration_date)),
+                              ]),
+                              _vm._v(" "),
+                              _c(
+                                "div",
+                                { staticClass: "p-product__button" },
+                                [
+                                  _c(
+                                    "router-link",
+                                    {
+                                      staticClass: "c-button",
+                                      attrs: {
+                                        to: _vm.getProductDetailLink(
+                                          product.id
+                                        ),
+                                      },
+                                    },
+                                    [_vm._v("詳細を見る")]
+                                  ),
+                                ],
+                                1
+                              ),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "p-product__button" }, [
+                                product.is_purchased === true &&
+                                product.purchased_id === _vm.loginId
+                                  ? _c(
+                                      "button",
+                                      {
+                                        staticClass:
+                                          "c-button c-button__cancel",
+                                        on: { click: _vm.cancelPurchase },
+                                      },
+                                      [_vm._v("購入をキャンセルする")]
+                                    )
+                                  : _vm._e(),
+                              ]),
+                            ]),
+                          ]
+                        )
+                      })
+                    ),
+                  ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "c-link__products u-mt__s" },
+                [
+                  _c(
+                    "router-link",
+                    {
+                      staticClass: "c-link",
+                      attrs: { to: { name: "user.products.purchased" } },
+                    },
+                    [_vm._v("全件表示")]
+                  ),
+                ],
+                1
+              ),
             ]),
             _vm._v(" "),
-            _vm.purchasedProducts.length === 0
-              ? _c("div", [_vm._m(0)])
-              : _c("div", [
-                  _c(
-                    "ul",
-                    { staticClass: "p-product__list" },
-                    _vm._l(_vm.purchasedProducts, function (product) {
-                      return _c(
-                        "li",
-                        {
-                          key: product.id,
-                          staticClass: "p-product__item u-pd__l",
-                        },
-                        [
-                          _c("div", { staticClass: "c-card u-pdb__s" }, [
-                            _c("h3", { staticClass: "c-card__name u-pdt__s" }, [
-                              _vm._v(_vm._s(product.name)),
-                            ]),
-                            _vm._v(" "),
-                            _c("img", {
-                              staticClass: "c-card__picture u-m__s",
-                              attrs: {
-                                src: _vm.getProductPicturePath(product),
-                                alt: "商品画像",
-                              },
-                            }),
-                            _vm._v(" "),
-                            _c("p", { staticClass: "c-card__price" }, [
-                              _vm._v("価格 " + _vm._s(product.price) + " 円"),
-                            ]),
-                            _vm._v(" "),
-                            _c("p", { staticClass: "c-card__date" }, [
-                              _vm._v(
-                                "賞味期限 " + _vm._s(product.expiration_date)
-                              ),
-                            ]),
-                            _vm._v(" "),
+            _c("div", { staticClass: "p-mypage__liked" }, [
+              _c("h2", { staticClass: "c-title c-title__sub" }, [
+                _vm._v("お気に入り商品"),
+              ]),
+              _c("span", { staticClass: "c-text c-text__max" }, [
+                _vm._v("最大5件表示"),
+              ]),
+              _vm._v(" "),
+              _vm.likedProducts.length === 0
+                ? _c("div", [_vm._m(1)])
+                : _c("div", [
+                    _c(
+                      "ul",
+                      { staticClass: "p-product__list" },
+                      _vm._l(_vm.likedProducts, function (product) {
+                        return _c(
+                          "li",
+                          { key: product.id, staticClass: "p-product__item" },
+                          [
                             _c(
                               "div",
-                              { staticClass: "p-product__button" },
+                              { staticClass: "c-card u-m__s" },
                               [
+                                _c(
+                                  "h3",
+                                  { staticClass: "c-card__name u-pd__s" },
+                                  [_vm._v(_vm._s(product.name))]
+                                ),
+                                _vm._v(" "),
+                                _c("img", {
+                                  staticClass: "c-card__picture",
+                                  attrs: {
+                                    src: _vm.getProductPicturePath(product),
+                                    alt: "商品画像",
+                                  },
+                                }),
+                                _vm._v(" "),
+                                _c("p", { staticClass: "c-card__price" }, [
+                                  _vm._v(_vm._s(product.price) + "円"),
+                                ]),
+                                _vm._v(" "),
+                                _c("p", { staticClass: "c-card__date" }, [
+                                  _vm._v(_vm._s(product.expiration_date)),
+                                ]),
+                                _vm._v(" "),
                                 _c(
                                   "router-link",
                                   {
-                                    staticClass: "c-button",
+                                    staticClass:
+                                      "c-button c-button__user c-button__detail",
                                     attrs: {
                                       to: _vm.getProductDetailLink(product.id),
                                     },
@@ -50752,129 +50393,28 @@ var render = function () {
                               ],
                               1
                             ),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "p-product__button" }, [
-                              product.is_purchased === true &&
-                              product.purchased_id === _vm.loginId
-                                ? _c(
-                                    "button",
-                                    {
-                                      staticClass: "c-button c-button__cancel",
-                                      on: { click: _vm.cancelPurchase },
-                                    },
-                                    [_vm._v("購入をキャンセルする")]
-                                  )
-                                : _vm._e(),
-                            ]),
-                          ]),
-                        ]
-                      )
-                    })
-                  ),
-                ]),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "c-link__products u-mt__s" },
-              [
-                _c(
-                  "router-link",
-                  {
-                    staticClass: "c-link",
-                    attrs: { to: { name: "user.products.purchased" } },
-                  },
-                  [_vm._v("全件表示")]
-                ),
-              ],
-              1
-            ),
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "p-mypage__liked u-mt__xl u-pd__xl" }, [
-            _c("h2", { staticClass: "c-title c-title__sub" }, [
-              _vm._v("お気に入り商品"),
-            ]),
-            _c("span", { staticClass: "c-text c-text__max" }, [
-              _vm._v("最大5件表示"),
-            ]),
-            _vm._v(" "),
-            _vm.likedProducts.length === 0
-              ? _c("div", [_vm._m(1)])
-              : _c("div", [
+                          ]
+                        )
+                      })
+                    ),
+                  ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "c-link__products u-mt__s" },
+                [
                   _c(
-                    "ul",
-                    { staticClass: "p-product__list" },
-                    _vm._l(_vm.likedProducts, function (product) {
-                      return _c(
-                        "li",
-                        {
-                          key: product.id,
-                          staticClass: "p-product__item u-pd__l",
-                        },
-                        [
-                          _c(
-                            "div",
-                            { staticClass: "c-card u-pdb__s" },
-                            [
-                              _c(
-                                "h3",
-                                { staticClass: "c-card__name u-pdt__s" },
-                                [_vm._v(_vm._s(product.name))]
-                              ),
-                              _vm._v(" "),
-                              _c("img", {
-                                staticClass: "c-card__picture u-m__s",
-                                attrs: {
-                                  src: _vm.getProductPicturePath(product),
-                                  alt: "商品画像",
-                                },
-                              }),
-                              _vm._v(" "),
-                              _c("p", { staticClass: "c-card__price" }, [
-                                _vm._v("価格 " + _vm._s(product.price) + " 円"),
-                              ]),
-                              _vm._v(" "),
-                              _c("p", { staticClass: "c-card__date" }, [
-                                _vm._v(
-                                  "賞味期限 " + _vm._s(product.expiration_date)
-                                ),
-                              ]),
-                              _vm._v(" "),
-                              _c(
-                                "router-link",
-                                {
-                                  staticClass:
-                                    "c-button c-button__user c-button__detail",
-                                  attrs: {
-                                    to: _vm.getProductDetailLink(product.id),
-                                  },
-                                },
-                                [_vm._v("詳細を見る")]
-                              ),
-                            ],
-                            1
-                          ),
-                        ]
-                      )
-                    })
+                    "router-link",
+                    {
+                      staticClass: "c-link",
+                      attrs: { to: { name: "user.products.liked" } },
+                    },
+                    [_vm._v("全件表示")]
                   ),
-                ]),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "c-link__products u-mt__s" },
-              [
-                _c(
-                  "router-link",
-                  {
-                    staticClass: "c-link",
-                    attrs: { to: { name: "user.products.liked" } },
-                  },
-                  [_vm._v("全件表示")]
-                ),
-              ],
-              1
-            ),
+                ],
+                1
+              ),
+            ]),
           ]),
         ]),
         _vm._v(" "),
@@ -50936,7 +50476,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("ul", { staticClass: "p-product__list" }, [
-      _c("p", { staticClass: "u-pd__xl" }, [
+      _c("p", { staticClass: "c-text u-pd__xl" }, [
         _vm._v("購入した商品はありません。"),
       ]),
     ])
@@ -50946,7 +50486,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("ul", { staticClass: "p-product__list" }, [
-      _c("p", { staticClass: "u-pd__xl" }, [
+      _c("p", { staticClass: "c-text u-pd__xl" }, [
         _vm._v("お気に入り登録した商品はありません。"),
       ]),
     ])
@@ -51379,529 +50919,483 @@ var render = function () {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("main", { staticClass: "l-main" }, [
-    _c("div", { staticClass: "p-profile" }, [
-      _c("div", { staticClass: "p-profile__form" }, [
-        _c("h1", { staticClass: "c-title" }, [_vm._v("プロフィール編集")]),
+    _c("div", { staticClass: "l-main__user" }, [
+      _c("section", { staticClass: "l-main__wrapper" }, [
+        _c("h1", { staticClass: "c-title u-mb__xl" }, [
+          _vm._v("利用者プロフィール編集"),
+        ]),
         _vm._v(" "),
-        _c("div", { staticClass: "p-container" }, [
-          _c(
-            "form",
-            {
-              on: {
-                submit: function ($event) {
-                  $event.preventDefault()
-                  return _vm.submitForm($event)
-                },
+        _c(
+          "form",
+          {
+            staticClass: "c-form",
+            on: {
+              submit: function ($event) {
+                $event.preventDefault()
+                return _vm.submitForm($event)
               },
             },
-            [
-              _vm.errors && _vm.errors.name
-                ? _c("span", { staticClass: "c-error" }, [
-                    _vm._v(_vm._s(_vm.errors.name[0])),
-                  ])
-                : _vm._e(),
-              _vm._v(" "),
-              _vm.errors && _vm.errors.email
-                ? _c("span", { staticClass: "c-error" }, [
-                    _vm._v(_vm._s(_vm.errors.email[0])),
-                  ])
-                : _vm._e(),
-              _vm._v(" "),
-              _vm.errors && _vm.errors.password
-                ? _c("span", { staticClass: "c-error" }, [
-                    _vm._v(_vm._s(_vm.errors.password[0])),
-                  ])
-                : _vm._e(),
-              _vm._v(" "),
-              _vm.errors && _vm.errors.password_confirmation
-                ? _c("span", { staticClass: "c-error" }, [
-                    _vm._v(_vm._s(_vm.errors.password_confirmation[0])),
-                  ])
-                : _vm._e(),
-              _vm._v(" "),
-              _vm.errors && _vm.errors.introduction
-                ? _c("span", { staticClass: "c-error" }, [
-                    _vm._v(_vm._s(_vm.errors.introduction[0])),
-                  ])
-                : _vm._e(),
-              _vm._v(" "),
-              _vm.errors && _vm.errors.icon
-                ? _c("span", { staticClass: "c-error" }, [
-                    _vm._v(_vm._s(_vm.errors.icon[0])),
-                  ])
-                : _vm._e(),
-              _vm._v(" "),
-              _c("table", [
-                _c("tr", [
-                  _vm._m(0),
-                  _vm._v(" "),
-                  _c("td", [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.formData.name,
-                          expression: "formData.name",
-                        },
-                      ],
-                      staticClass: "c-input",
-                      class: { "is-invalid": _vm.errors && _vm.errors.name },
-                      attrs: { id: "name", type: "text", autocomplete: "name" },
-                      domProps: { value: _vm.formData.name },
-                      on: {
-                        input: function ($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(_vm.formData, "name", $event.target.value)
-                        },
-                      },
-                    }),
-                  ]),
-                ]),
-                _vm._v(" "),
-                _c("tr", [
-                  _vm._m(1),
-                  _vm._v(" "),
-                  _c("td", [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.formData.email,
-                          expression: "formData.email",
-                        },
-                      ],
-                      staticClass: "c-input",
-                      class: { "is-invalid": _vm.errors && _vm.errors.email },
-                      attrs: {
-                        id: "email",
-                        type: "email",
-                        autocomplete: "email",
-                      },
-                      domProps: { value: _vm.formData.email },
-                      on: {
-                        input: function ($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(_vm.formData, "email", $event.target.value)
-                        },
-                      },
-                    }),
-                  ]),
-                ]),
-                _vm._v(" "),
-                _c("tr", [
-                  _vm._m(2),
-                  _vm._v(" "),
-                  _c("td", [
-                    _c("div", { staticClass: "p-input__password" }, [
-                      _vm.PasswordType === "checkbox"
-                        ? _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.formData.password,
-                                expression: "formData.password",
-                              },
-                            ],
-                            staticClass: "c-input",
-                            class: {
-                              "is-invalid": _vm.errors && _vm.errors.password,
-                            },
-                            attrs: {
-                              id: "password",
-                              placeholder: "英数字8文字以上で入力してください",
-                              type: "checkbox",
-                            },
-                            domProps: {
-                              checked: Array.isArray(_vm.formData.password)
-                                ? _vm._i(_vm.formData.password, null) > -1
-                                : _vm.formData.password,
-                            },
-                            on: {
-                              change: function ($event) {
-                                var $$a = _vm.formData.password,
-                                  $$el = $event.target,
-                                  $$c = $$el.checked ? true : false
-                                if (Array.isArray($$a)) {
-                                  var $$v = null,
-                                    $$i = _vm._i($$a, $$v)
-                                  if ($$el.checked) {
-                                    $$i < 0 &&
-                                      _vm.$set(
-                                        _vm.formData,
-                                        "password",
-                                        $$a.concat([$$v])
-                                      )
-                                  } else {
-                                    $$i > -1 &&
-                                      _vm.$set(
-                                        _vm.formData,
-                                        "password",
-                                        $$a
-                                          .slice(0, $$i)
-                                          .concat($$a.slice($$i + 1))
-                                      )
-                                  }
-                                } else {
-                                  _vm.$set(_vm.formData, "password", $$c)
-                                }
-                              },
-                            },
-                          })
-                        : _vm.PasswordType === "radio"
-                        ? _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.formData.password,
-                                expression: "formData.password",
-                              },
-                            ],
-                            staticClass: "c-input",
-                            class: {
-                              "is-invalid": _vm.errors && _vm.errors.password,
-                            },
-                            attrs: {
-                              id: "password",
-                              placeholder: "英数字8文字以上で入力してください",
-                              type: "radio",
-                            },
-                            domProps: {
-                              checked: _vm._q(_vm.formData.password, null),
-                            },
-                            on: {
-                              change: function ($event) {
-                                _vm.$set(_vm.formData, "password", null)
-                              },
-                            },
-                          })
-                        : _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.formData.password,
-                                expression: "formData.password",
-                              },
-                            ],
-                            staticClass: "c-input",
-                            class: {
-                              "is-invalid": _vm.errors && _vm.errors.password,
-                            },
-                            attrs: {
-                              id: "password",
-                              placeholder: "英数字8文字以上で入力してください",
-                              type: _vm.PasswordType,
-                            },
-                            domProps: { value: _vm.formData.password },
-                            on: {
-                              input: function ($event) {
-                                if ($event.target.composing) {
-                                  return
-                                }
-                                _vm.$set(
-                                  _vm.formData,
-                                  "password",
-                                  $event.target.value
-                                )
-                              },
-                            },
-                          }),
-                      _vm._v(" "),
-                      _c(
-                        "span",
-                        {
-                          on: {
-                            click: function ($event) {
-                              _vm.togglePasswordVisibility("password")
-                            },
-                          },
-                        },
-                        [_c("i", { class: _vm.PasswordIconClass })]
-                      ),
-                    ]),
-                  ]),
-                ]),
-                _vm._v(" "),
-                _c("tr", [
-                  _vm._m(3),
-                  _vm._v(" "),
-                  _c("td", [
-                    _c("div", { staticClass: "p-input__password" }, [
-                      _vm.PasswordConfirmType === "checkbox"
-                        ? _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.formData.password_confirmation,
-                                expression: "formData.password_confirmation",
-                              },
-                            ],
-                            staticClass: "c-input",
-                            class: {
-                              "is-invalid":
-                                _vm.errors && _vm.errors.password_confirmation,
-                            },
-                            attrs: {
-                              id: "password-confirm",
-                              placeholder: "英数字8文字以上で入力してください",
-                              type: "checkbox",
-                            },
-                            domProps: {
-                              checked: Array.isArray(
-                                _vm.formData.password_confirmation
-                              )
-                                ? _vm._i(
-                                    _vm.formData.password_confirmation,
-                                    null
-                                  ) > -1
-                                : _vm.formData.password_confirmation,
-                            },
-                            on: {
-                              change: function ($event) {
-                                var $$a = _vm.formData.password_confirmation,
-                                  $$el = $event.target,
-                                  $$c = $$el.checked ? true : false
-                                if (Array.isArray($$a)) {
-                                  var $$v = null,
-                                    $$i = _vm._i($$a, $$v)
-                                  if ($$el.checked) {
-                                    $$i < 0 &&
-                                      _vm.$set(
-                                        _vm.formData,
-                                        "password_confirmation",
-                                        $$a.concat([$$v])
-                                      )
-                                  } else {
-                                    $$i > -1 &&
-                                      _vm.$set(
-                                        _vm.formData,
-                                        "password_confirmation",
-                                        $$a
-                                          .slice(0, $$i)
-                                          .concat($$a.slice($$i + 1))
-                                      )
-                                  }
-                                } else {
-                                  _vm.$set(
-                                    _vm.formData,
-                                    "password_confirmation",
-                                    $$c
-                                  )
-                                }
-                              },
-                            },
-                          })
-                        : _vm.PasswordConfirmType === "radio"
-                        ? _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.formData.password_confirmation,
-                                expression: "formData.password_confirmation",
-                              },
-                            ],
-                            staticClass: "c-input",
-                            class: {
-                              "is-invalid":
-                                _vm.errors && _vm.errors.password_confirmation,
-                            },
-                            attrs: {
-                              id: "password-confirm",
-                              placeholder: "英数字8文字以上で入力してください",
-                              type: "radio",
-                            },
-                            domProps: {
-                              checked: _vm._q(
-                                _vm.formData.password_confirmation,
-                                null
-                              ),
-                            },
-                            on: {
-                              change: function ($event) {
-                                _vm.$set(
-                                  _vm.formData,
-                                  "password_confirmation",
-                                  null
-                                )
-                              },
-                            },
-                          })
-                        : _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.formData.password_confirmation,
-                                expression: "formData.password_confirmation",
-                              },
-                            ],
-                            staticClass: "c-input",
-                            class: {
-                              "is-invalid":
-                                _vm.errors && _vm.errors.password_confirmation,
-                            },
-                            attrs: {
-                              id: "password-confirm",
-                              placeholder: "英数字8文字以上で入力してください",
-                              type: _vm.PasswordConfirmType,
-                            },
-                            domProps: {
-                              value: _vm.formData.password_confirmation,
-                            },
-                            on: {
-                              input: function ($event) {
-                                if ($event.target.composing) {
-                                  return
-                                }
-                                _vm.$set(
-                                  _vm.formData,
-                                  "password_confirmation",
-                                  $event.target.value
-                                )
-                              },
-                            },
-                          }),
-                      _vm._v(" "),
-                      _c(
-                        "span",
-                        {
-                          on: {
-                            click: function ($event) {
-                              _vm.togglePasswordVisibility("password_confirm")
-                            },
-                          },
-                        },
-                        [_c("i", { class: _vm.PasswordConfirmIconClass })]
-                      ),
-                    ]),
-                  ]),
-                ]),
-                _vm._v(" "),
-                _c("tr", [
-                  _vm._m(4),
-                  _vm._v(" "),
-                  _c("td", [
-                    _c("div", { staticClass: "p-textarea__form" }, [
-                      _c("textarea", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model.trim",
-                            value: _vm.formData.introduction,
-                            expression: "formData.introduction",
-                            modifiers: { trim: true },
-                          },
-                        ],
-                        staticClass: "c-textarea",
-                        class: {
-                          "is-invalid": _vm.errors && _vm.errors.introduction,
-                        },
-                        attrs: {
-                          maxlength: "50",
-                          id: "introduction",
-                          type: "text",
-                          autocomplete: "introduction",
-                          placeholder: "50文字以内で入力してください",
-                        },
-                        domProps: { value: _vm.formData.introduction },
-                        on: {
-                          keyup: _vm.countCharacters,
-                          input: function ($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.$set(
-                              _vm.formData,
-                              "introduction",
-                              $event.target.value.trim()
-                            )
-                          },
-                          blur: function ($event) {
-                            _vm.$forceUpdate()
-                          },
-                        },
-                      }),
-                      _vm._v(" "),
-                      _c("span", { staticClass: "c-textarea__count" }, [
-                        _vm._v(
-                          _vm._s(_vm.formData.introduction.length) + " / 50文字"
-                        ),
-                      ]),
-                    ]),
-                  ]),
-                ]),
-                _vm._v(" "),
-                _c("tr", [
-                  _vm._m(5),
-                  _vm._v(" "),
-                  _c("td", [
-                    _c(
-                      "div",
+          },
+          [
+            _vm.errors && _vm.errors.name
+              ? _c("span", { staticClass: "c-error" }, [
+                  _vm._v(_vm._s(_vm.errors.name[0])),
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.errors && _vm.errors.email
+              ? _c("span", { staticClass: "c-error" }, [
+                  _vm._v(_vm._s(_vm.errors.email[0])),
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.errors && _vm.errors.password
+              ? _c("span", { staticClass: "c-error" }, [
+                  _vm._v(_vm._s(_vm.errors.password[0])),
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.errors && _vm.errors.password_confirmation
+              ? _c("span", { staticClass: "c-error" }, [
+                  _vm._v(_vm._s(_vm.errors.password_confirmation[0])),
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.errors && _vm.errors.introduction
+              ? _c("span", { staticClass: "c-error" }, [
+                  _vm._v(_vm._s(_vm.errors.introduction[0])),
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.errors && _vm.errors.icon
+              ? _c("span", { staticClass: "c-error" }, [
+                  _vm._v(_vm._s(_vm.errors.icon[0])),
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            _c("label", { staticClass: "c-label", attrs: { for: "name" } }, [
+              _vm._v("お名前"),
+            ]),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.formData.name,
+                  expression: "formData.name",
+                },
+              ],
+              staticClass: "c-input",
+              class: { "is-invalid": _vm.errors && _vm.errors.name },
+              attrs: { id: "name", type: "name", autocomplete: "name" },
+              domProps: { value: _vm.formData.name },
+              on: {
+                input: function ($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.formData, "name", $event.target.value)
+                },
+              },
+            }),
+            _vm._v(" "),
+            _c("label", { staticClass: "c-label", attrs: { for: "email" } }, [
+              _vm._v("メールアドレス"),
+            ]),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.formData.email,
+                  expression: "formData.email",
+                },
+              ],
+              staticClass: "c-input",
+              class: { "is-invalid": _vm.errors && _vm.errors.email },
+              attrs: { id: "email", type: "email", autocomplete: "email" },
+              domProps: { value: _vm.formData.email },
+              on: {
+                input: function ($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.formData, "email", $event.target.value)
+                },
+              },
+            }),
+            _vm._v(" "),
+            _c(
+              "label",
+              { staticClass: "c-label", attrs: { for: "password" } },
+              [_vm._v("パスワード")]
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "c-input__password" }, [
+              _vm.PasswordType === "checkbox"
+                ? _c("input", {
+                    directives: [
                       {
-                        staticClass: "p-icon",
-                        class: { "is-invalid": _vm.errors && _vm.errors.icon },
-                        on: { drop: _vm.handleDrop },
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.formData.password,
+                        expression: "formData.password",
                       },
-                      [
-                        _c("input", {
-                          staticClass: "c-input__hidden",
-                          attrs: { type: "file", id: "icon" },
-                          on: { change: _vm.handleFileChange },
-                        }),
-                        _vm._v(" "),
-                        !_vm.iconPreview && _vm.formData.icon
-                          ? _c("img", {
-                              staticClass: "c-icon",
-                              attrs: {
-                                src: "/storage/icons/" + _vm.formData.icon,
-                                alt: "アップロード顔写真",
-                              },
-                            })
-                          : _vm.iconPreview
-                          ? _c("img", {
-                              staticClass: "c-icon",
-                              attrs: {
-                                src: _vm.iconPreview,
-                                alt: "アップロード顔写真",
-                              },
-                            })
-                          : _c("img", {
-                              staticClass: "c-icon",
-                              attrs: {
-                                src: "/default.png",
-                                alt: "デフォルト顔写真",
-                              },
-                            }),
-                        _vm._v(" "),
-                        !_vm.formData.icon
-                          ? _c("span", [_vm._v("ドラッグ＆ドロップ")])
-                          : _vm._e(),
-                      ]
-                    ),
-                  ]),
-                ]),
-              ]),
+                    ],
+                    staticClass: "c-input",
+                    class: { "is-invalid": _vm.errors && _vm.errors.password },
+                    attrs: {
+                      id: "password",
+                      placeholder: "英数字8文字以上で入力してください",
+                      type: "checkbox",
+                    },
+                    domProps: {
+                      checked: Array.isArray(_vm.formData.password)
+                        ? _vm._i(_vm.formData.password, null) > -1
+                        : _vm.formData.password,
+                    },
+                    on: {
+                      change: function ($event) {
+                        var $$a = _vm.formData.password,
+                          $$el = $event.target,
+                          $$c = $$el.checked ? true : false
+                        if (Array.isArray($$a)) {
+                          var $$v = null,
+                            $$i = _vm._i($$a, $$v)
+                          if ($$el.checked) {
+                            $$i < 0 &&
+                              _vm.$set(
+                                _vm.formData,
+                                "password",
+                                $$a.concat([$$v])
+                              )
+                          } else {
+                            $$i > -1 &&
+                              _vm.$set(
+                                _vm.formData,
+                                "password",
+                                $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                              )
+                          }
+                        } else {
+                          _vm.$set(_vm.formData, "password", $$c)
+                        }
+                      },
+                    },
+                  })
+                : _vm.PasswordType === "radio"
+                ? _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.formData.password,
+                        expression: "formData.password",
+                      },
+                    ],
+                    staticClass: "c-input",
+                    class: { "is-invalid": _vm.errors && _vm.errors.password },
+                    attrs: {
+                      id: "password",
+                      placeholder: "英数字8文字以上で入力してください",
+                      type: "radio",
+                    },
+                    domProps: { checked: _vm._q(_vm.formData.password, null) },
+                    on: {
+                      change: function ($event) {
+                        _vm.$set(_vm.formData, "password", null)
+                      },
+                    },
+                  })
+                : _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.formData.password,
+                        expression: "formData.password",
+                      },
+                    ],
+                    staticClass: "c-input",
+                    class: { "is-invalid": _vm.errors && _vm.errors.password },
+                    attrs: {
+                      id: "password",
+                      placeholder: "英数字8文字以上で入力してください",
+                      type: _vm.PasswordType,
+                    },
+                    domProps: { value: _vm.formData.password },
+                    on: {
+                      input: function ($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.formData, "password", $event.target.value)
+                      },
+                    },
+                  }),
               _vm._v(" "),
-              _vm._m(6),
-            ]
-          ),
-        ]),
+              _c(
+                "span",
+                {
+                  on: {
+                    click: function ($event) {
+                      _vm.togglePasswordVisibility("password")
+                    },
+                  },
+                },
+                [_c("i", { class: _vm.PasswordIconClass })]
+              ),
+            ]),
+            _vm._v(" "),
+            _c(
+              "label",
+              { staticClass: "c-label", attrs: { for: "password-confirm" } },
+              [_vm._v("パスワード（再入力）")]
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "c-input__password" }, [
+              _vm.PasswordConfirmType === "checkbox"
+                ? _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.formData.password_confirmation,
+                        expression: "formData.password_confirmation",
+                      },
+                    ],
+                    staticClass: "c-input",
+                    class: {
+                      "is-invalid":
+                        _vm.errors && _vm.errors.password_confirmation,
+                    },
+                    attrs: {
+                      id: "password-confirm",
+                      placeholder: "英数字8文字以上で入力してください",
+                      type: "checkbox",
+                    },
+                    domProps: {
+                      checked: Array.isArray(_vm.formData.password_confirmation)
+                        ? _vm._i(_vm.formData.password_confirmation, null) > -1
+                        : _vm.formData.password_confirmation,
+                    },
+                    on: {
+                      change: function ($event) {
+                        var $$a = _vm.formData.password_confirmation,
+                          $$el = $event.target,
+                          $$c = $$el.checked ? true : false
+                        if (Array.isArray($$a)) {
+                          var $$v = null,
+                            $$i = _vm._i($$a, $$v)
+                          if ($$el.checked) {
+                            $$i < 0 &&
+                              _vm.$set(
+                                _vm.formData,
+                                "password_confirmation",
+                                $$a.concat([$$v])
+                              )
+                          } else {
+                            $$i > -1 &&
+                              _vm.$set(
+                                _vm.formData,
+                                "password_confirmation",
+                                $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                              )
+                          }
+                        } else {
+                          _vm.$set(_vm.formData, "password_confirmation", $$c)
+                        }
+                      },
+                    },
+                  })
+                : _vm.PasswordConfirmType === "radio"
+                ? _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.formData.password_confirmation,
+                        expression: "formData.password_confirmation",
+                      },
+                    ],
+                    staticClass: "c-input",
+                    class: {
+                      "is-invalid":
+                        _vm.errors && _vm.errors.password_confirmation,
+                    },
+                    attrs: {
+                      id: "password-confirm",
+                      placeholder: "英数字8文字以上で入力してください",
+                      type: "radio",
+                    },
+                    domProps: {
+                      checked: _vm._q(_vm.formData.password_confirmation, null),
+                    },
+                    on: {
+                      change: function ($event) {
+                        _vm.$set(_vm.formData, "password_confirmation", null)
+                      },
+                    },
+                  })
+                : _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.formData.password_confirmation,
+                        expression: "formData.password_confirmation",
+                      },
+                    ],
+                    staticClass: "c-input",
+                    class: {
+                      "is-invalid":
+                        _vm.errors && _vm.errors.password_confirmation,
+                    },
+                    attrs: {
+                      id: "password-confirm",
+                      placeholder: "英数字8文字以上で入力してください",
+                      type: _vm.PasswordConfirmType,
+                    },
+                    domProps: { value: _vm.formData.password_confirmation },
+                    on: {
+                      input: function ($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(
+                          _vm.formData,
+                          "password_confirmation",
+                          $event.target.value
+                        )
+                      },
+                    },
+                  }),
+              _vm._v(" "),
+              _c(
+                "span",
+                {
+                  on: {
+                    click: function ($event) {
+                      _vm.togglePasswordVisibility("password_confirm")
+                    },
+                  },
+                },
+                [_c("i", { class: _vm.PasswordConfirmIconClass })]
+              ),
+            ]),
+            _vm._v(" "),
+            _c(
+              "label",
+              { staticClass: "c-label", attrs: { for: "introduction" } },
+              [_vm._v("自己紹介")]
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "p-textarea__form" }, [
+              _c("textarea", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model.trim",
+                    value: _vm.formData.introduction,
+                    expression: "formData.introduction",
+                    modifiers: { trim: true },
+                  },
+                ],
+                staticClass: "c-textarea",
+                class: { "is-invalid": _vm.errors && _vm.errors.introduction },
+                attrs: {
+                  maxlength: "50",
+                  id: "introduction",
+                  type: "text",
+                  autocomplete: "introduction",
+                  placeholder: "50文字以内で入力してください",
+                },
+                domProps: { value: _vm.formData.introduction },
+                on: {
+                  keyup: _vm.countCharacters,
+                  input: function ($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(
+                      _vm.formData,
+                      "introduction",
+                      $event.target.value.trim()
+                    )
+                  },
+                  blur: function ($event) {
+                    _vm.$forceUpdate()
+                  },
+                },
+              }),
+              _vm._v(" "),
+              _c("span", { staticClass: "c-textarea__count" }, [
+                _vm._v(_vm._s(_vm.formData.introduction.length) + " / 50文字"),
+              ]),
+            ]),
+            _vm._v(" "),
+            _c(
+              "label",
+              { staticClass: "c-label", attrs: { for: "profile-icon" } },
+              [_vm._v("顔写真")]
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "p-profile__icon p-profile__icon--container",
+                class: { "is-invalid": _vm.errors && _vm.errors.icon },
+                on: { drop: _vm.handleDrop },
+              },
+              [
+                _c("input", {
+                  staticClass: "c-input__hidden",
+                  attrs: { type: "file", id: "profile-icon" },
+                  on: { change: _vm.handleFileChange },
+                }),
+                _vm._v(" "),
+                !_vm.iconPreview && _vm.formData.icon
+                  ? _c("img", {
+                      staticClass: "p-profile__icon",
+                      attrs: {
+                        src: "/storage/icons/" + _vm.formData.icon,
+                        alt: "アップロード顔写真",
+                      },
+                    })
+                  : _vm.iconPreview
+                  ? _c("img", {
+                      staticClass: "p-profile__icon",
+                      attrs: {
+                        src: _vm.iconPreview,
+                        alt: "アップロード顔写真",
+                      },
+                    })
+                  : _c("img", {
+                      staticClass: "p-profile__icon",
+                      attrs: { src: "/default.png", alt: "デフォルト顔写真" },
+                    }),
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "c-button c-button__submit c-button__user u-mt__m",
+                attrs: { type: "submit" },
+              },
+              [_vm._v("更新する")]
+            ),
+          ]
+        ),
       ]),
     ]),
     _vm._v(" "),
     _c(
       "a",
       {
+        staticClass: "c-link c-link__back u-mt__s u-mb__s",
         on: {
           click: function ($event) {
             _vm.$router.back()
@@ -51912,80 +51406,7 @@ var render = function () {
     ),
   ])
 }
-var staticRenderFns = [
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("th", [
-      _c("label", { staticClass: "c-label", attrs: { for: "name" } }, [
-        _vm._v("お名前"),
-      ]),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("th", [
-      _c("label", { staticClass: "c-label", attrs: { for: "email" } }, [
-        _vm._v("メールアドレス"),
-      ]),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("th", [
-      _c("label", { staticClass: "c-label", attrs: { for: "password" } }, [
-        _vm._v("パスワード"),
-      ]),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("th", [
-      _c(
-        "label",
-        { staticClass: "c-label", attrs: { for: "password-confirm" } },
-        [_vm._v("パスワード（再入力）")]
-      ),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("th", [
-      _c("label", { staticClass: "c-label", attrs: { for: "introduction" } }, [
-        _vm._v("自己紹介"),
-      ]),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("th", [
-      _c("label", { staticClass: "c-label", attrs: { for: "icon" } }, [
-        _vm._v("顔写真"),
-      ]),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "p-profile__button" }, [
-      _c("button", { staticClass: "c-button", attrs: { type: "submit" } }, [
-        _vm._v("更新する"),
-      ]),
-    ])
-  },
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -52009,7 +51430,7 @@ var render = function () {
   var _c = _vm._self._c || _h
   return _c("main", { staticClass: "l-main" }, [
     _c("div", { staticClass: "l-main__user" }, [
-      _c("section", { staticClass: "p-register" }, [
+      _c("section", { staticClass: "l-main__wrapper" }, [
         _c("h1", { staticClass: "c-title u-mb__xl" }, [
           _vm._v("利用者ユーザー登録"),
         ]),
@@ -52056,361 +51477,317 @@ var render = function () {
                 ])
               : _vm._e(),
             _vm._v(" "),
-            _c("table", [
-              _c("tr", [
-                _vm._m(0),
-                _vm._v(" "),
-                _c("td", [
-                  _c("input", {
+            _c("label", { staticClass: "c-label", attrs: { for: "name" } }, [
+              _vm._v("お名前"),
+            ]),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.formData.name,
+                  expression: "formData.name",
+                },
+              ],
+              staticClass: "c-input",
+              class: { "is-invalid": _vm.errors && _vm.errors.name },
+              attrs: { id: "name", type: "name", autocomplete: "name" },
+              domProps: { value: _vm.formData.name },
+              on: {
+                input: function ($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.formData, "name", $event.target.value)
+                },
+              },
+            }),
+            _vm._v(" "),
+            _c("label", { staticClass: "c-label", attrs: { for: "email" } }, [
+              _vm._v("メールアドレス"),
+            ]),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.formData.email,
+                  expression: "formData.email",
+                },
+              ],
+              staticClass: "c-input",
+              class: { "is-invalid": _vm.errors && _vm.errors.email },
+              attrs: { id: "email", type: "email", autocomplete: "email" },
+              domProps: { value: _vm.formData.email },
+              on: {
+                input: function ($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.formData, "email", $event.target.value)
+                },
+              },
+            }),
+            _vm._v(" "),
+            _c(
+              "label",
+              { staticClass: "c-label", attrs: { for: "password" } },
+              [_vm._v("パスワード")]
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "c-input__password" }, [
+              _vm.PasswordType === "checkbox"
+                ? _c("input", {
                     directives: [
                       {
                         name: "model",
                         rawName: "v-model",
-                        value: _vm.formData.name,
-                        expression: "formData.name",
+                        value: _vm.formData.password,
+                        expression: "formData.password",
                       },
                     ],
                     staticClass: "c-input",
-                    class: { "is-invalid": _vm.errors && _vm.errors.name },
-                    attrs: { id: "name", type: "name", autocomplete: "name" },
-                    domProps: { value: _vm.formData.name },
-                    on: {
-                      input: function ($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(_vm.formData, "name", $event.target.value)
-                      },
-                    },
-                  }),
-                ]),
-              ]),
-              _vm._v(" "),
-              _c("tr", [
-                _vm._m(1),
-                _vm._v(" "),
-                _c("td", [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.formData.email,
-                        expression: "formData.email",
-                      },
-                    ],
-                    staticClass: "c-input",
-                    class: { "is-invalid": _vm.errors && _vm.errors.email },
+                    class: { "is-invalid": _vm.errors && _vm.errors.password },
                     attrs: {
-                      id: "email",
-                      type: "email",
-                      autocomplete: "email",
+                      id: "password",
+                      placeholder: "英数字8文字以上で入力してください",
+                      type: "checkbox",
                     },
-                    domProps: { value: _vm.formData.email },
+                    domProps: {
+                      checked: Array.isArray(_vm.formData.password)
+                        ? _vm._i(_vm.formData.password, null) > -1
+                        : _vm.formData.password,
+                    },
                     on: {
-                      input: function ($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(_vm.formData, "email", $event.target.value)
-                      },
-                    },
-                  }),
-                ]),
-              ]),
-              _vm._v(" "),
-              _c("tr", [
-                _vm._m(2),
-                _vm._v(" "),
-                _c("td", [
-                  _c("div", { staticClass: "p-input__password" }, [
-                    _vm.PasswordType === "checkbox"
-                      ? _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.formData.password,
-                              expression: "formData.password",
-                            },
-                          ],
-                          staticClass: "c-input",
-                          class: {
-                            "is-invalid": _vm.errors && _vm.errors.password,
-                          },
-                          attrs: {
-                            id: "password",
-                            placeholder: "英数字8文字以上で入力してください",
-                            type: "checkbox",
-                          },
-                          domProps: {
-                            checked: Array.isArray(_vm.formData.password)
-                              ? _vm._i(_vm.formData.password, null) > -1
-                              : _vm.formData.password,
-                          },
-                          on: {
-                            change: function ($event) {
-                              var $$a = _vm.formData.password,
-                                $$el = $event.target,
-                                $$c = $$el.checked ? true : false
-                              if (Array.isArray($$a)) {
-                                var $$v = null,
-                                  $$i = _vm._i($$a, $$v)
-                                if ($$el.checked) {
-                                  $$i < 0 &&
-                                    _vm.$set(
-                                      _vm.formData,
-                                      "password",
-                                      $$a.concat([$$v])
-                                    )
-                                } else {
-                                  $$i > -1 &&
-                                    _vm.$set(
-                                      _vm.formData,
-                                      "password",
-                                      $$a
-                                        .slice(0, $$i)
-                                        .concat($$a.slice($$i + 1))
-                                    )
-                                }
-                              } else {
-                                _vm.$set(_vm.formData, "password", $$c)
-                              }
-                            },
-                          },
-                        })
-                      : _vm.PasswordType === "radio"
-                      ? _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.formData.password,
-                              expression: "formData.password",
-                            },
-                          ],
-                          staticClass: "c-input",
-                          class: {
-                            "is-invalid": _vm.errors && _vm.errors.password,
-                          },
-                          attrs: {
-                            id: "password",
-                            placeholder: "英数字8文字以上で入力してください",
-                            type: "radio",
-                          },
-                          domProps: {
-                            checked: _vm._q(_vm.formData.password, null),
-                          },
-                          on: {
-                            change: function ($event) {
-                              _vm.$set(_vm.formData, "password", null)
-                            },
-                          },
-                        })
-                      : _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.formData.password,
-                              expression: "formData.password",
-                            },
-                          ],
-                          staticClass: "c-input",
-                          class: {
-                            "is-invalid": _vm.errors && _vm.errors.password,
-                          },
-                          attrs: {
-                            id: "password",
-                            placeholder: "英数字8文字以上で入力してください",
-                            type: _vm.PasswordType,
-                          },
-                          domProps: { value: _vm.formData.password },
-                          on: {
-                            input: function ($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
+                      change: function ($event) {
+                        var $$a = _vm.formData.password,
+                          $$el = $event.target,
+                          $$c = $$el.checked ? true : false
+                        if (Array.isArray($$a)) {
+                          var $$v = null,
+                            $$i = _vm._i($$a, $$v)
+                          if ($$el.checked) {
+                            $$i < 0 &&
                               _vm.$set(
                                 _vm.formData,
                                 "password",
-                                $event.target.value
+                                $$a.concat([$$v])
                               )
-                            },
-                          },
-                        }),
-                    _vm._v(" "),
-                    _c(
-                      "span",
-                      {
-                        on: {
-                          click: function ($event) {
-                            _vm.togglePasswordVisibility("password")
-                          },
-                        },
+                          } else {
+                            $$i > -1 &&
+                              _vm.$set(
+                                _vm.formData,
+                                "password",
+                                $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                              )
+                          }
+                        } else {
+                          _vm.$set(_vm.formData, "password", $$c)
+                        }
                       },
-                      [_c("i", { class: _vm.PasswordIconClass })]
-                    ),
-                  ]),
-                ]),
-              ]),
+                    },
+                  })
+                : _vm.PasswordType === "radio"
+                ? _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.formData.password,
+                        expression: "formData.password",
+                      },
+                    ],
+                    staticClass: "c-input",
+                    class: { "is-invalid": _vm.errors && _vm.errors.password },
+                    attrs: {
+                      id: "password",
+                      placeholder: "英数字8文字以上で入力してください",
+                      type: "radio",
+                    },
+                    domProps: { checked: _vm._q(_vm.formData.password, null) },
+                    on: {
+                      change: function ($event) {
+                        _vm.$set(_vm.formData, "password", null)
+                      },
+                    },
+                  })
+                : _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.formData.password,
+                        expression: "formData.password",
+                      },
+                    ],
+                    staticClass: "c-input",
+                    class: { "is-invalid": _vm.errors && _vm.errors.password },
+                    attrs: {
+                      id: "password",
+                      placeholder: "英数字8文字以上で入力してください",
+                      type: _vm.PasswordType,
+                    },
+                    domProps: { value: _vm.formData.password },
+                    on: {
+                      input: function ($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.formData, "password", $event.target.value)
+                      },
+                    },
+                  }),
               _vm._v(" "),
-              _c("tr", [
-                _vm._m(3),
-                _vm._v(" "),
-                _c("td", [
-                  _c("div", { staticClass: "p-input__password" }, [
-                    _vm.PasswordConfirmType === "checkbox"
-                      ? _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.formData.password_confirmation,
-                              expression: "formData.password_confirmation",
-                            },
-                          ],
-                          staticClass: "c-input",
-                          class: {
-                            "is-invalid":
-                              _vm.errors && _vm.errors.password_confirmation,
-                          },
-                          attrs: {
-                            id: "password-confirm",
-                            placeholder: "英数字8文字以上で入力してください",
-                            type: "checkbox",
-                          },
-                          domProps: {
-                            checked: Array.isArray(
-                              _vm.formData.password_confirmation
-                            )
-                              ? _vm._i(
-                                  _vm.formData.password_confirmation,
-                                  null
-                                ) > -1
-                              : _vm.formData.password_confirmation,
-                          },
-                          on: {
-                            change: function ($event) {
-                              var $$a = _vm.formData.password_confirmation,
-                                $$el = $event.target,
-                                $$c = $$el.checked ? true : false
-                              if (Array.isArray($$a)) {
-                                var $$v = null,
-                                  $$i = _vm._i($$a, $$v)
-                                if ($$el.checked) {
-                                  $$i < 0 &&
-                                    _vm.$set(
-                                      _vm.formData,
-                                      "password_confirmation",
-                                      $$a.concat([$$v])
-                                    )
-                                } else {
-                                  $$i > -1 &&
-                                    _vm.$set(
-                                      _vm.formData,
-                                      "password_confirmation",
-                                      $$a
-                                        .slice(0, $$i)
-                                        .concat($$a.slice($$i + 1))
-                                    )
-                                }
-                              } else {
-                                _vm.$set(
-                                  _vm.formData,
-                                  "password_confirmation",
-                                  $$c
-                                )
-                              }
-                            },
-                          },
-                        })
-                      : _vm.PasswordConfirmType === "radio"
-                      ? _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.formData.password_confirmation,
-                              expression: "formData.password_confirmation",
-                            },
-                          ],
-                          staticClass: "c-input",
-                          class: {
-                            "is-invalid":
-                              _vm.errors && _vm.errors.password_confirmation,
-                          },
-                          attrs: {
-                            id: "password-confirm",
-                            placeholder: "英数字8文字以上で入力してください",
-                            type: "radio",
-                          },
-                          domProps: {
-                            checked: _vm._q(
-                              _vm.formData.password_confirmation,
-                              null
-                            ),
-                          },
-                          on: {
-                            change: function ($event) {
-                              _vm.$set(
-                                _vm.formData,
-                                "password_confirmation",
-                                null
-                              )
-                            },
-                          },
-                        })
-                      : _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.formData.password_confirmation,
-                              expression: "formData.password_confirmation",
-                            },
-                          ],
-                          staticClass: "c-input",
-                          class: {
-                            "is-invalid":
-                              _vm.errors && _vm.errors.password_confirmation,
-                          },
-                          attrs: {
-                            id: "password-confirm",
-                            placeholder: "英数字8文字以上で入力してください",
-                            type: _vm.PasswordConfirmType,
-                          },
-                          domProps: {
-                            value: _vm.formData.password_confirmation,
-                          },
-                          on: {
-                            input: function ($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.$set(
-                                _vm.formData,
-                                "password_confirmation",
-                                $event.target.value
-                              )
-                            },
-                          },
-                        }),
-                    _vm._v(" "),
-                    _c(
-                      "span",
+              _c(
+                "span",
+                {
+                  on: {
+                    click: function ($event) {
+                      _vm.togglePasswordVisibility("password")
+                    },
+                  },
+                },
+                [_c("i", { class: _vm.PasswordIconClass })]
+              ),
+            ]),
+            _vm._v(" "),
+            _c(
+              "label",
+              { staticClass: "c-label", attrs: { for: "password-confirm" } },
+              [_vm._v("パスワード（再入力）")]
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "c-input__password" }, [
+              _vm.PasswordConfirmType === "checkbox"
+                ? _c("input", {
+                    directives: [
                       {
-                        on: {
-                          click: function ($event) {
-                            _vm.togglePasswordVisibility("password_confirm")
-                          },
-                        },
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.formData.password_confirmation,
+                        expression: "formData.password_confirmation",
                       },
-                      [_c("i", { class: _vm.PasswordConfirmIconClass })]
-                    ),
-                  ]),
-                ]),
-              ]),
+                    ],
+                    staticClass: "c-input",
+                    class: {
+                      "is-invalid":
+                        _vm.errors && _vm.errors.password_confirmation,
+                    },
+                    attrs: {
+                      id: "password-confirm",
+                      placeholder: "英数字8文字以上で入力してください",
+                      type: "checkbox",
+                    },
+                    domProps: {
+                      checked: Array.isArray(_vm.formData.password_confirmation)
+                        ? _vm._i(_vm.formData.password_confirmation, null) > -1
+                        : _vm.formData.password_confirmation,
+                    },
+                    on: {
+                      change: function ($event) {
+                        var $$a = _vm.formData.password_confirmation,
+                          $$el = $event.target,
+                          $$c = $$el.checked ? true : false
+                        if (Array.isArray($$a)) {
+                          var $$v = null,
+                            $$i = _vm._i($$a, $$v)
+                          if ($$el.checked) {
+                            $$i < 0 &&
+                              _vm.$set(
+                                _vm.formData,
+                                "password_confirmation",
+                                $$a.concat([$$v])
+                              )
+                          } else {
+                            $$i > -1 &&
+                              _vm.$set(
+                                _vm.formData,
+                                "password_confirmation",
+                                $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                              )
+                          }
+                        } else {
+                          _vm.$set(_vm.formData, "password_confirmation", $$c)
+                        }
+                      },
+                    },
+                  })
+                : _vm.PasswordConfirmType === "radio"
+                ? _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.formData.password_confirmation,
+                        expression: "formData.password_confirmation",
+                      },
+                    ],
+                    staticClass: "c-input",
+                    class: {
+                      "is-invalid":
+                        _vm.errors && _vm.errors.password_confirmation,
+                    },
+                    attrs: {
+                      id: "password-confirm",
+                      placeholder: "英数字8文字以上で入力してください",
+                      type: "radio",
+                    },
+                    domProps: {
+                      checked: _vm._q(_vm.formData.password_confirmation, null),
+                    },
+                    on: {
+                      change: function ($event) {
+                        _vm.$set(_vm.formData, "password_confirmation", null)
+                      },
+                    },
+                  })
+                : _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.formData.password_confirmation,
+                        expression: "formData.password_confirmation",
+                      },
+                    ],
+                    staticClass: "c-input",
+                    class: {
+                      "is-invalid":
+                        _vm.errors && _vm.errors.password_confirmation,
+                    },
+                    attrs: {
+                      id: "password-confirm",
+                      placeholder: "英数字8文字以上で入力してください",
+                      type: _vm.PasswordConfirmType,
+                    },
+                    domProps: { value: _vm.formData.password_confirmation },
+                    on: {
+                      input: function ($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(
+                          _vm.formData,
+                          "password_confirmation",
+                          $event.target.value
+                        )
+                      },
+                    },
+                  }),
+              _vm._v(" "),
+              _c(
+                "span",
+                {
+                  on: {
+                    click: function ($event) {
+                      _vm.togglePasswordVisibility("password_confirm")
+                    },
+                  },
+                },
+                [_c("i", { class: _vm.PasswordConfirmIconClass })]
+              ),
             ]),
             _vm._v(" "),
             _c(
@@ -52420,54 +51797,58 @@ var render = function () {
               1
             ),
             _vm._v(" "),
-            _c("div", { staticClass: "c-checkbox c-checkbox__container" }, [
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.agreement,
-                    expression: "agreement",
+            _c(
+              "div",
+              {
+                staticClass: "c-checkbox c-checkbox__container u-mt__m u-mb__m",
+              },
+              [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.agreement,
+                      expression: "agreement",
+                    },
+                  ],
+                  staticClass: "c-checkbox u-mr__s",
+                  attrs: { type: "checkbox", id: "agreement" },
+                  domProps: {
+                    checked: Array.isArray(_vm.agreement)
+                      ? _vm._i(_vm.agreement, null) > -1
+                      : _vm.agreement,
                   },
-                ],
-                attrs: { type: "checkbox", id: "agreement" },
-                domProps: {
-                  checked: Array.isArray(_vm.agreement)
-                    ? _vm._i(_vm.agreement, null) > -1
-                    : _vm.agreement,
-                },
-                on: {
-                  change: function ($event) {
-                    var $$a = _vm.agreement,
-                      $$el = $event.target,
-                      $$c = $$el.checked ? true : false
-                    if (Array.isArray($$a)) {
-                      var $$v = null,
-                        $$i = _vm._i($$a, $$v)
-                      if ($$el.checked) {
-                        $$i < 0 && (_vm.agreement = $$a.concat([$$v]))
+                  on: {
+                    change: function ($event) {
+                      var $$a = _vm.agreement,
+                        $$el = $event.target,
+                        $$c = $$el.checked ? true : false
+                      if (Array.isArray($$a)) {
+                        var $$v = null,
+                          $$i = _vm._i($$a, $$v)
+                        if ($$el.checked) {
+                          $$i < 0 && (_vm.agreement = $$a.concat([$$v]))
+                        } else {
+                          $$i > -1 &&
+                            (_vm.agreement = $$a
+                              .slice(0, $$i)
+                              .concat($$a.slice($$i + 1)))
+                        }
                       } else {
-                        $$i > -1 &&
-                          (_vm.agreement = $$a
-                            .slice(0, $$i)
-                            .concat($$a.slice($$i + 1)))
+                        _vm.agreement = $$c
                       }
-                    } else {
-                      _vm.agreement = $$c
-                    }
+                    },
                   },
-                },
-              }),
-              _vm._v(" "),
-              _c(
-                "span",
-                {
-                  staticClass: "c-text__agreement",
-                  attrs: { for: "agreement" },
-                },
-                [_vm._v("利用規約に同意します")]
-              ),
-            ]),
+                }),
+                _vm._v(" "),
+                _c(
+                  "span",
+                  { staticClass: "c-text", attrs: { for: "agreement" } },
+                  [_vm._v("利用規約に同意します")]
+                ),
+              ]
+            ),
             _vm._v(" "),
             _c(
               "button",
@@ -52496,50 +51877,7 @@ var render = function () {
     ),
   ])
 }
-var staticRenderFns = [
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("th", [
-      _c("label", { staticClass: "c-label", attrs: { for: "name" } }, [
-        _vm._v("お名前"),
-      ]),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("th", [
-      _c("label", { staticClass: "c-label", attrs: { for: "email" } }, [
-        _vm._v("メールアドレス"),
-      ]),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("th", [
-      _c("label", { staticClass: "c-label", attrs: { for: "password" } }, [
-        _vm._v("パスワード"),
-      ]),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("th", [
-      _c(
-        "label",
-        { staticClass: "c-label", attrs: { for: "password-confirm" } },
-        [_vm._v("パスワード"), _c("br"), _vm._v("（再入力）")]
-      ),
-    ])
-  },
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -52841,20 +52179,23 @@ var render = function () {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("main", { staticClass: "l-main" }, [
-    _c("div", { staticClass: "p-profile" }, [
-      _c("div", { staticClass: "p-profile__form" }, [
-        _c("h1", { staticClass: "c-title" }, [_vm._v("退会")]),
+    _c("div", { staticClass: "l-main__user" }, [
+      _c("section", { staticClass: "l-main__wrapper" }, [
+        _c("h1", { staticClass: "c-title u-mb__xl" }, [_vm._v("コンビニ退会")]),
         _vm._v(" "),
-        _c("div", { staticClass: "p-container" }, [
-          _c("p", [_vm._v("退会手続きを行いますか？")]),
-          _vm._v(" "),
-          _c("div", { staticClass: "p-withdraw__button" }, [
-            _c(
-              "button",
-              { staticClass: "c-button", on: { click: _vm.withdraw } },
-              [_vm._v("退会する")]
-            ),
+        _c("form", { staticClass: "c-form" }, [
+          _c("h3", { staticClass: "c-title c-title__sub" }, [
+            _vm._v("退会手続きを行いますか？"),
           ]),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              staticClass: "c-button c-button__submit c-button__user u-mt__m",
+              on: { click: _vm.withdraw },
+            },
+            [_vm._v("退会する")]
+          ),
         ]),
       ]),
     ]),
@@ -52862,6 +52203,7 @@ var render = function () {
     _c(
       "a",
       {
+        staticClass: "c-link c-link__back u-mt__s u-mb__s",
         on: {
           click: function ($event) {
             _vm.$router.back()
@@ -69407,11 +68749,9 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _RegisterComponent_vue_vue_type_template_id_0b2c77f2_scoped_true__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./RegisterComponent.vue?vue&type=template&id=0b2c77f2&scoped=true */ "./resources/js/components/Convenience/RegisterComponent.vue?vue&type=template&id=0b2c77f2&scoped=true");
+/* harmony import */ var _RegisterComponent_vue_vue_type_template_id_0b2c77f2__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./RegisterComponent.vue?vue&type=template&id=0b2c77f2 */ "./resources/js/components/Convenience/RegisterComponent.vue?vue&type=template&id=0b2c77f2");
 /* harmony import */ var _RegisterComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./RegisterComponent.vue?vue&type=script&lang=js */ "./resources/js/components/Convenience/RegisterComponent.vue?vue&type=script&lang=js");
-/* empty/unused harmony star reexport *//* harmony import */ var _RegisterComponent_vue_vue_type_style_index_0_id_0b2c77f2_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./RegisterComponent.vue?vue&type=style&index=0&id=0b2c77f2&scoped=true&lang=css */ "./resources/js/components/Convenience/RegisterComponent.vue?vue&type=style&index=0&id=0b2c77f2&scoped=true&lang=css");
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -69419,13 +68759,13 @@ __webpack_require__.r(__webpack_exports__);
 
 /* normalize component */
 
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
   _RegisterComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"],
-  _RegisterComponent_vue_vue_type_template_id_0b2c77f2_scoped_true__WEBPACK_IMPORTED_MODULE_0__["render"],
-  _RegisterComponent_vue_vue_type_template_id_0b2c77f2_scoped_true__WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  _RegisterComponent_vue_vue_type_template_id_0b2c77f2__WEBPACK_IMPORTED_MODULE_0__["render"],
+  _RegisterComponent_vue_vue_type_template_id_0b2c77f2__WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
   null,
-  "0b2c77f2",
+  null,
   null
   
 )
@@ -69451,35 +68791,19 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/Convenience/RegisterComponent.vue?vue&type=style&index=0&id=0b2c77f2&scoped=true&lang=css":
-/*!***************************************************************************************************************************!*\
-  !*** ./resources/js/components/Convenience/RegisterComponent.vue?vue&type=style&index=0&id=0b2c77f2&scoped=true&lang=css ***!
-  \***************************************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_RegisterComponent_vue_vue_type_style_index_0_id_0b2c77f2_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/style-loader!../../../../node_modules/css-loader??ref--6-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--6-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./RegisterComponent.vue?vue&type=style&index=0&id=0b2c77f2&scoped=true&lang=css */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Convenience/RegisterComponent.vue?vue&type=style&index=0&id=0b2c77f2&scoped=true&lang=css");
-/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_RegisterComponent_vue_vue_type_style_index_0_id_0b2c77f2_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_RegisterComponent_vue_vue_type_style_index_0_id_0b2c77f2_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_RegisterComponent_vue_vue_type_style_index_0_id_0b2c77f2_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_RegisterComponent_vue_vue_type_style_index_0_id_0b2c77f2_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-
-
-/***/ }),
-
-/***/ "./resources/js/components/Convenience/RegisterComponent.vue?vue&type=template&id=0b2c77f2&scoped=true":
-/*!*************************************************************************************************************!*\
-  !*** ./resources/js/components/Convenience/RegisterComponent.vue?vue&type=template&id=0b2c77f2&scoped=true ***!
-  \*************************************************************************************************************/
+/***/ "./resources/js/components/Convenience/RegisterComponent.vue?vue&type=template&id=0b2c77f2":
+/*!*************************************************************************************************!*\
+  !*** ./resources/js/components/Convenience/RegisterComponent.vue?vue&type=template&id=0b2c77f2 ***!
+  \*************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_RegisterComponent_vue_vue_type_template_id_0b2c77f2_scoped_true__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./RegisterComponent.vue?vue&type=template&id=0b2c77f2&scoped=true */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Convenience/RegisterComponent.vue?vue&type=template&id=0b2c77f2&scoped=true");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_RegisterComponent_vue_vue_type_template_id_0b2c77f2_scoped_true__WEBPACK_IMPORTED_MODULE_0__["render"]; });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_RegisterComponent_vue_vue_type_template_id_0b2c77f2__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./RegisterComponent.vue?vue&type=template&id=0b2c77f2 */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Convenience/RegisterComponent.vue?vue&type=template&id=0b2c77f2");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_RegisterComponent_vue_vue_type_template_id_0b2c77f2__WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_RegisterComponent_vue_vue_type_template_id_0b2c77f2_scoped_true__WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_RegisterComponent_vue_vue_type_template_id_0b2c77f2__WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
@@ -69908,11 +69232,9 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _PaginationComponent_vue_vue_type_template_id_5cc156e8_scoped_true__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./PaginationComponent.vue?vue&type=template&id=5cc156e8&scoped=true */ "./resources/js/components/PaginationComponent.vue?vue&type=template&id=5cc156e8&scoped=true");
+/* harmony import */ var _PaginationComponent_vue_vue_type_template_id_5cc156e8__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./PaginationComponent.vue?vue&type=template&id=5cc156e8 */ "./resources/js/components/PaginationComponent.vue?vue&type=template&id=5cc156e8");
 /* harmony import */ var _PaginationComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./PaginationComponent.vue?vue&type=script&lang=js */ "./resources/js/components/PaginationComponent.vue?vue&type=script&lang=js");
-/* empty/unused harmony star reexport *//* harmony import */ var _PaginationComponent_vue_vue_type_style_index_0_id_5cc156e8_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./PaginationComponent.vue?vue&type=style&index=0&id=5cc156e8&scoped=true&lang=css */ "./resources/js/components/PaginationComponent.vue?vue&type=style&index=0&id=5cc156e8&scoped=true&lang=css");
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -69920,13 +69242,13 @@ __webpack_require__.r(__webpack_exports__);
 
 /* normalize component */
 
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
   _PaginationComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"],
-  _PaginationComponent_vue_vue_type_template_id_5cc156e8_scoped_true__WEBPACK_IMPORTED_MODULE_0__["render"],
-  _PaginationComponent_vue_vue_type_template_id_5cc156e8_scoped_true__WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  _PaginationComponent_vue_vue_type_template_id_5cc156e8__WEBPACK_IMPORTED_MODULE_0__["render"],
+  _PaginationComponent_vue_vue_type_template_id_5cc156e8__WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
   null,
-  "5cc156e8",
+  null,
   null
   
 )
@@ -69952,35 +69274,19 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/PaginationComponent.vue?vue&type=style&index=0&id=5cc156e8&scoped=true&lang=css":
-/*!*****************************************************************************************************************!*\
-  !*** ./resources/js/components/PaginationComponent.vue?vue&type=style&index=0&id=5cc156e8&scoped=true&lang=css ***!
-  \*****************************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_PaginationComponent_vue_vue_type_style_index_0_id_5cc156e8_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/style-loader!../../../node_modules/css-loader??ref--6-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/src??ref--6-2!../../../node_modules/vue-loader/lib??vue-loader-options!./PaginationComponent.vue?vue&type=style&index=0&id=5cc156e8&scoped=true&lang=css */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/PaginationComponent.vue?vue&type=style&index=0&id=5cc156e8&scoped=true&lang=css");
-/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_PaginationComponent_vue_vue_type_style_index_0_id_5cc156e8_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_PaginationComponent_vue_vue_type_style_index_0_id_5cc156e8_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_PaginationComponent_vue_vue_type_style_index_0_id_5cc156e8_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_PaginationComponent_vue_vue_type_style_index_0_id_5cc156e8_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-
-
-/***/ }),
-
-/***/ "./resources/js/components/PaginationComponent.vue?vue&type=template&id=5cc156e8&scoped=true":
-/*!***************************************************************************************************!*\
-  !*** ./resources/js/components/PaginationComponent.vue?vue&type=template&id=5cc156e8&scoped=true ***!
-  \***************************************************************************************************/
+/***/ "./resources/js/components/PaginationComponent.vue?vue&type=template&id=5cc156e8":
+/*!***************************************************************************************!*\
+  !*** ./resources/js/components/PaginationComponent.vue?vue&type=template&id=5cc156e8 ***!
+  \***************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PaginationComponent_vue_vue_type_template_id_5cc156e8_scoped_true__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./PaginationComponent.vue?vue&type=template&id=5cc156e8&scoped=true */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/PaginationComponent.vue?vue&type=template&id=5cc156e8&scoped=true");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PaginationComponent_vue_vue_type_template_id_5cc156e8_scoped_true__WEBPACK_IMPORTED_MODULE_0__["render"]; });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PaginationComponent_vue_vue_type_template_id_5cc156e8__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./PaginationComponent.vue?vue&type=template&id=5cc156e8 */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/PaginationComponent.vue?vue&type=template&id=5cc156e8");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PaginationComponent_vue_vue_type_template_id_5cc156e8__WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PaginationComponent_vue_vue_type_template_id_5cc156e8_scoped_true__WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PaginationComponent_vue_vue_type_template_id_5cc156e8__WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
@@ -71010,6 +70316,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_Convenience_ProductSaleIndexComponent_vue__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ./components/Convenience/ProductSaleIndexComponent.vue */ "./resources/js/components/Convenience/ProductSaleIndexComponent.vue");
 /* harmony import */ var _components_Convenience_ProductPurchaseIndexComponent_vue__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ./components/Convenience/ProductPurchaseIndexComponent.vue */ "./resources/js/components/Convenience/ProductPurchaseIndexComponent.vue");
 /* harmony import */ var _components_ProductAllIndexComponent_vue__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ./components/ProductAllIndexComponent.vue */ "./resources/js/components/ProductAllIndexComponent.vue");
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == _typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw new Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(_typeof(e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw new Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, "catch": function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw new Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
 
 
@@ -71221,18 +70531,40 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
 var publicPaths = ['/home', '/terms', '/user/register', '/convenience/register', '/user/login', '/convenience/login', '/user/password/email', '/convenience/password/email', '/user/password/reset/:token', '/convenience/password/reset/:token'];
 
 // セッションタイムアウトした場合のナビゲーションガード
-router.beforeEach(function (to, from, next) {
-  var isLogin = _store__WEBPACK_IMPORTED_MODULE_2__["default"].getters['auth/check'];
-  console.log('現在のパス:', to.path);
+router.beforeEach( /*#__PURE__*/function () {
+  var _ref = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(to, from, next) {
+    var isLogin;
+    return _regeneratorRuntime().wrap(function _callee$(_context) {
+      while (1) switch (_context.prev = _context.next) {
+        case 0:
+          // セッションタイムアウトした場合の処理
+          isLogin = _store__WEBPACK_IMPORTED_MODULE_2__["default"].getters['auth/check'];
+          console.log('現在のパス:', to.path);
 
-  // セッションタイムアウトして、現在パスが公開パスではない場合はHOME画面にリダイレクト
-  if (!isLogin && !publicPaths.includes(to.path)) {
-    console.log('セッションタイムアウトのため、リダイレクトします');
-    next('/home');
-  } else {
-    next();
-  }
-});
+          // セッションタイムアウトして、現在パスが公開パスではない場合はHOME画面にリダイレクト
+          if (!(!isLogin && !publicPaths.includes(to.path))) {
+            _context.next = 7;
+            break;
+          }
+          console.log('セッションタイムアウトのため、リダイレクトします');
+          next('/home');
+          _context.next = 10;
+          break;
+        case 7:
+          _context.next = 9;
+          return _store__WEBPACK_IMPORTED_MODULE_2__["default"].dispatch('auth/currentUser');
+        case 9:
+          next();
+        case 10:
+        case "end":
+          return _context.stop();
+      }
+    }, _callee);
+  }));
+  return function (_x, _x2, _x3) {
+    return _ref.apply(this, arguments);
+  };
+}());
 /* harmony default export */ __webpack_exports__["default"] = (router);
 
 /***/ }),

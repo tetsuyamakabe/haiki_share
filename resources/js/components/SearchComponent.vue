@@ -1,44 +1,33 @@
 <template>
     <section class="l-sidebar">
         <div class="p-mypage__sidebar">
-            <div class="p-search__form">
-                <h1 class="c-title">商品検索</h1>
-                <div class="p-sub__container">
-                    <form @submit.prevent="submitForm">
-                        <table>
-                            <tr>
-                                <th><label>都道府県</label></th>
-                                <td>
-                                    <select v-model="selectedPrefecture">
-                                        <option value="">都道府県を選択してください</option>
-                                        <option v-for="prefecture in prefectures" :key="prefecture">{{ prefecture }}</option>
-                                    </select>
-                                </td>
-                            </tr>
+            <div class="p-search__form u-pd__s">
+                <h3 class="c-title c-title__sub u-mt__m u-mb__m">絞り込み検索</h3>
+                <div class="p-search__container">
+                    <form @submit.prevent="submitForm" class="c-form c-form__search">
 
-                            <tr>
-                                <th><label>価格</label></th>
-                                <td>
-                                    <input type="text" name="minprice" maxlength="9" v-model="minPrice">円〜
-                                    <input type="text" name="maxprice" maxlength="9" v-model="maxPrice">円
-                                </td>
-                            </tr>
-                
-                            <tr>
-                                <th><label>賞味期限切れかどうか</label></th>
-                                <td>
-                                    <div>
-                                        <input type="radio" value="true" v-model="isExpired"><label>賞味期限切れ</label>
-                                        <input type="radio" value="false" v-model="isExpired"><label>賞味期限内</label>
-                                    </div>
-                                </td>
-                            </tr>
-                        </table>
+                        <!-- 都道府県 -->
+                        <label class="c-label">出品したコンビニがある都道府県</label>
+                        <select class="c-selectbox u-mt__s u-mb__s" v-model="selectedPrefecture">
+                            <option value="">都道府県を選択</option>
+                            <option v-for="prefecture in prefectures" :key="prefecture">{{ prefecture }}</option>
+                        </select>
+
+                        <!-- 価格 -->
+                        <label class="c-label">最低価格</label>
+                        <input class="c-input c-input__search" type="number" name="minprice" v-model="minPrice"><span class="c-text u-ml__s">円</span>
+                        <label class="c-label">最高価格</label>
+                        <input class="c-input c-input__search" type="number" name="maxprice" v-model="maxPrice"><span class="c-text u-ml__s">円</span>
+
+                        <!-- 賞味期限切れかどうか -->
+                        <label class="c-label">賞味期限切れかどうか</label>
+                        <div class="c-input__radio">
+                            <input type="radio" value="true" v-model="isExpired"><label class="c-text u-ml__s">賞味期限切れ</label>
+                            <input type="radio" value="false" v-model="isExpired"><label class="c-text u-ml__s">賞味期限内</label>
+                        </div>
 
                         <!-- 検索ボタン -->
-                        <div class="p-search__button">
-                            <button type="submit" class="c-button">検索</button>
-                        </div>
+                        <button type="submit" class="c-button c-button__submit c-button__common u-mt__m u-mb__m">検索する</button>
                     </form>
                 </div>
             </div>
@@ -54,8 +43,8 @@ export default {
         return {
             prefectures: [],
             selectedPrefecture: '', // 都道府県
-            minPrice: '', // 最小価格
-            maxPrice: '', // 最大価格
+            minPrice: 0, // 最小価格
+            maxPrice: 0, // 最大価格
             isExpired: false // 賞味期限切れかどうか
         };
     },

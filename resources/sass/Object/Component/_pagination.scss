@@ -1,0 +1,30 @@
+.c-pagination {
+    display: flex;
+    list-style-type: none;
+
+    & li {
+        border: 1px solid #434343;
+        padding: 16px 24px;
+        text-align: center;
+        @include mq(sm){
+            padding: 8px;
+        }  
+    }
+
+    & .active {
+        background-color: #32cd32;
+        color: #fefefe;
+    }
+
+    &.inactive{
+        color: #32cd32;
+    }
+
+    & li + li {
+        border-left: none;
+    }
+}
+
+.disabled {
+    cursor: not-allowed;
+}

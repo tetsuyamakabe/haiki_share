@@ -24,7 +24,7 @@ class ProfileRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string|max:255',
+            'convenience_name' => 'required|string|max:255',
             'branch_name' => 'required', 'string', 'max:255',
             'prefecture' => 'required', 'string', 'max:255',
             'city' => 'required', 'string', 'max:255',

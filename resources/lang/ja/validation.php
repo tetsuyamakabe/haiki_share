@@ -154,7 +154,8 @@ return [
     */
 
     'attributes' => [
-        'name' => '名前',
+        'name' => 'お名前',
+        'convenience_name' => 'コンビニ名',
         'branch_name' => '支店名',
         'prefecture' => '都道府県',
         'city' => '市区町村',

@@ -1,87 +1,58 @@
 <template>
     <main class="l-main">
-        <div class="p-profile">
-            <div class="p-profile__form">
-                <h1 class="c-title">プロフィール編集</h1>
-                <div class="p-container">
-                    <form @submit.prevent="submitForm">
+        <div class="l-main__user">
+            <section class="l-main__wrapper">
+                <h1 class="c-title u-mb__xl">利用者プロフィール編集</h1>
+                <form @submit.prevent="submitForm" class="c-form">
 
-                        <!-- バリデーションエラーメッセージ -->
-                        <span v-if="errors && errors.name" class="c-error">{{ errors.name[0] }}</span>
-                        <span v-if="errors && errors.email" class="c-error">{{ errors.email[0] }}</span>
-                        <span v-if="errors && errors.password" class="c-error">{{ errors.password[0] }}</span>
-                        <span v-if="errors && errors.password_confirmation" class="c-error">{{ errors.password_confirmation[0] }}</span>
-                        <span v-if="errors && errors.introduction" class="c-error">{{ errors.introduction[0] }}</span>
-                        <span v-if="errors && errors.icon" class="c-error">{{ errors.icon[0] }}</span>
+                    <!-- バリデーションエラーメッセージ -->
+                    <span v-if="errors && errors.name" class="c-error">{{ errors.name[0] }}</span>
+                    <span v-if="errors && errors.email" class="c-error">{{ errors.email[0] }}</span>
+                    <span v-if="errors && errors.password" class="c-error">{{ errors.password[0] }}</span>
+                    <span v-if="errors && errors.password_confirmation" class="c-error">{{ errors.password_confirmation[0] }}</span>
+                    <span v-if="errors && errors.introduction" class="c-error">{{ errors.introduction[0] }}</span>
+                    <span v-if="errors && errors.icon" class="c-error">{{ errors.icon[0] }}</span>
 
-                        <table>
-                            <tr>
-                                <th><label for="name" class="c-label">お名前</label></th>
-                                <td>
-                                    <input v-model="formData.name" id="name" type="text" class="c-input" :class="{ 'is-invalid': errors && errors.name }" autocomplete="name">
-                                </td>
-                            </tr>
+                    <!-- お名前 -->
+                    <label for="name" class="c-label">お名前</label>
+                    <input v-model="formData.name" id="name" type="name" class="c-input" :class="{ 'is-invalid': errors && errors.name }" autocomplete="name">
+                    <!-- メールアドレス -->
+                    <label for="email" class="c-label">メールアドレス</label>
+                    <input v-model="formData.email" id="email" type="email" class="c-input" :class="{ 'is-invalid': errors && errors.email }" autocomplete="email">
+                    <!-- パスワード -->
+                    <label for="password" class="c-label">パスワード</label>
+                    <div class="c-input__password">
+                        <input v-model="formData.password" id="password" :type="PasswordType" class="c-input" :class="{ 'is-invalid': errors && errors.password }" placeholder="英数字8文字以上で入力してください">
+                        <span @click="togglePasswordVisibility('password')"><i :class="PasswordIconClass"></i></span>
+                    </div>
+                    <!-- パスワード（再入力） -->
+                    <label for="password-confirm" class="c-label">パスワード（再入力）</label>
+                    <div class="c-input__password">
+                        <input v-model="formData.password_confirmation" id="password-confirm" :type="PasswordConfirmType" class="c-input" :class="{ 'is-invalid': errors && errors.password_confirmation }" placeholder="英数字8文字以上で入力してください">
+                        <span @click="togglePasswordVisibility('password_confirm')"><i :class="PasswordConfirmIconClass"></i></span>
+                    </div>
+                    <!-- 自己紹介 -->
+                    <label for="introduction" class="c-label">自己紹介</label>
+                    <div class="p-textarea__form">
+                        <textarea v-model.trim="formData.introduction" maxlength="50" id="introduction" type="text" class="c-textarea" autocomplete="introduction" @keyup="countCharacters" :class="{ 'is-invalid': errors && errors.introduction }" placeholder="50文字以内で入力してください"></textarea>
+                        <span class="c-textarea__count">{{ formData.introduction.length }} / 50文字</span>
+                    </div>
+                    <!-- 顔写真 -->
+                    <label for="profile-icon" class="c-label">顔写真</label>
+                    <div class="p-profile__icon p-profile__icon--container" @drop="handleDrop" :class="{ 'is-invalid': errors && errors.icon }">
+                        <input type="file" id="profile-icon" @change="handleFileChange" class="c-input__hidden">
+                        <img v-if="!iconPreview && formData.icon" :src="'/storage/icons/' + formData.icon" alt="アップロード顔写真" class="p-profile__icon">
+                        <img v-else-if="iconPreview" :src="iconPreview" alt="アップロード顔写真" class="p-profile__icon">
+                        <img v-else src="/default.png" alt="デフォルト顔写真" class="p-profile__icon">
+                    </div>
 
-                            <tr>
-                                <th><label for="email" class="c-label">メールアドレス</label></th>
-                                <td>
-                                    <input v-model="formData.email" id="email" type="email" class="c-input" :class="{ 'is-invalid': errors && errors.email }" autocomplete="email">
-                                </td>
-                            </tr>
+                    <!-- 更新ボタン -->
+                    <button type="submit" class="c-button c-button__submit c-button__user u-mt__m">更新する</button>
 
-                            <tr>
-                                <th><label for="password" class="c-label">パスワード</label></th>
-                                <td>
-                                    <div class="p-input__password">
-                                        <input v-model="formData.password" id="password" :type="PasswordType" class="c-input" :class="{ 'is-invalid': errors && errors.password }" placeholder="英数字8文字以上で入力してください">
-                                        <span @click="togglePasswordVisibility('password')"><i :class="PasswordIconClass"></i></span>
-                                    </div>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <th><label for="password-confirm" class="c-label">パスワード（再入力）</label></th>
-                                <td>
-                                    <div class="p-input__password">
-                                        <input v-model="formData.password_confirmation" id="password-confirm" :type="PasswordConfirmType" class="c-input" :class="{ 'is-invalid': errors && errors.password_confirmation }" placeholder="英数字8文字以上で入力してください">
-                                        <span @click="togglePasswordVisibility('password_confirm')"><i :class="PasswordConfirmIconClass"></i></span>
-                                    </div>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <th><label for="introduction" class="c-label">自己紹介</label></th>
-                                <td>
-                                    <div class="p-textarea__form">
-                                        <textarea v-model.trim="formData.introduction" maxlength="50" id="introduction" type="text" class="c-textarea" autocomplete="introduction" @keyup="countCharacters" :class="{ 'is-invalid': errors && errors.introduction }" placeholder="50文字以内で入力してください"></textarea>
-                                        <span class="c-textarea__count">{{ formData.introduction.length }} / 50文字</span>
-                                    </div>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <th><label for="icon" class="c-label">顔写真</label></th>
-                                <td>
-                                    <div class="p-icon" @drop="handleDrop" :class="{ 'is-invalid': errors && errors.icon }">
-                                        <input type="file" id="icon" @change="handleFileChange" class="c-input__hidden">
-                                        <img v-if="!iconPreview && formData.icon" :src="'/storage/icons/' + formData.icon" alt="アップロード顔写真" class="c-icon">
-                                        <img v-else-if="iconPreview" :src="iconPreview" alt="アップロード顔写真" class="c-icon">
-                                        <img v-else src="/default.png" alt="デフォルト顔写真" class="c-icon">
-                                        <span v-if="!formData.icon">ドラッグ＆ドロップ</span>
-                                    </div>
-                                </td>
-                            </tr>
-                        </table>
-
-                        <!-- 更新ボタン -->
-                        <div class="p-profile__button">
-                            <button type="submit" class="c-button">更新する</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
+                </form>
+            </section>
         </div>
-        <a @click="$router.back()">前のページに戻る</a>
+        <a @click="$router.back()" class="c-link c-link__back u-mt__s u-mb__s">前のページに戻る</a>
     </main>
 </template>
 
