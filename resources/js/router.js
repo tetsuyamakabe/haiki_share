@@ -78,18 +78,6 @@ const router = new VueRouter({
             name: 'convenience.login',
             component: ConvenienceLoginComponent,
         },
-        // 利用者側ログアウト画面
-        {
-            path: '/user/logout',
-            name: 'user.logout',
-            component: UserLogoutComponent
-        },
-        // コンビニ側ログアウト画面
-        {
-            path: '/convenience/logout',
-            name: 'convenience.logout',
-            component: ConvenienceLogoutComponent
-        },
         // 利用者側マイページ画面
         {
             path: '/user/mypage',
@@ -226,16 +214,12 @@ router.beforeEach(async (to, from, next) => {
     const isLogin = store.getters['auth/check'];
     console.log('現在のパス:', to.path);
 
-    const user = store.state.auth.user;
-    if (!user) { // ユーザー情報がstoreにあるかどうかを確認
-        await store.dispatch('auth/currentUser'); // ログイン状態を保持
-    }
-
     // セッションタイムアウトして、現在パスが公開パスではない場合はHOME画面にリダイレクト
     if (!isLogin && !publicPaths.includes(to.path)) {
         console.log('セッションタイムアウトのため、リダイレクトします');
         next('/home');
     } else {
+        await store.dispatch('auth/currentUser'); // ログイン状態を保持
         next();
     }
 });
