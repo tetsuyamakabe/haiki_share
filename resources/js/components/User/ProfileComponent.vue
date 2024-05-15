@@ -106,8 +106,14 @@ export default {
                 this.formData.introduction = this.user.introduction || '';
                 this.formData.icon = this.user.icon || '';
             }).catch(error => {
+                // 失敗時の処理
                 console.error('プロフィール取得失敗:', error.response.data);
-                this.errors = error.response.data;
+                // 401 Unauthorizedの場合、リダイレクトする
+                if (error.response.status === 401) {
+                    redirectToLoginPage();
+                } else {
+                    this.errors = error.response.data;
+                }
             });
         },
 
