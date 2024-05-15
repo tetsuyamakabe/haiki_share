@@ -5,6 +5,11 @@
                 <h1 class="c-title u-mb__xl">コンビニ退会</h1>
                 <form class="c-form">
                     <h3 class="c-title c-title__sub">退会手続きを行いますか？</h3>
+                    <div class="p-article">
+                        <p class="c-text__withdraw u-mt__m u-mb__m">
+                            退会手続き前に必ずご確認ください。退会しますとすべての登録情報が削除され、会員様向けのサービスをご利用いただけなくなります。
+                        </p>
+                    </div>
                     <!-- 退会ボタン -->
                     <button @click="withdraw" class="c-button c-button__submit c-button__user u-mt__m">退会する</button>
                 </form>

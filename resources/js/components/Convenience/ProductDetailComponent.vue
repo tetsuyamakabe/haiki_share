@@ -1,41 +1,40 @@
 <template>
     <main class="l-main">
-        <div class="p-profile">
-            <div class="p-product__form">
-                <h1 class="c-title">商品詳細</h1>
-                <div class="p-container">
-                    <table>
-                        <h1>{{ product.name }}</h1>
-                        <tr>
-                            <th><label for="price" class="c-label">価格</label></th>
-                            <td>{{ product.price }}</td>
-                        </tr>
+        <div class="l-main__convenience">
+            <h1 class="c-title u-mb__xl">商品詳細</h1>
+                <section class="l-main__wrapper">
+                    <div class="l-container">
+                        <h1 class="c-title">{{ product.name }}</h1>
+                        <div class="p-product">
+                            <!-- いいねアイコン -->
+                            <div class="p-like p-like__content">
+                                <i v-if="!product.liked" class="c-icon c-icon__unlike far fa-heart" @click="productLike(product)"></i>
+                                <i v-else class="c-icon c-icon__like fas fa-heart" @click="productUnlike(product)"></i>
+                                <span>いいね{{ product.likes_count }}</span>
+                            </div>
+                            <!-- エックスのシェアボタン -->
+                            <div class="p-like p-like__content">
+                                <button class="c-button c-button__share" @click="twitterShare"><i class="fa-brands fa-x-twitter c-icon__share">でシェアする</i></button>
+                            </div>
 
-                        <tr>
-                            <th><label for="category" class="c-label">カテゴリ名</label></th>
-                            <td>{{ getCategoryName(product.category_id) }}</td>
-                        </tr>
-
-                        <tr>
-                            <th><label for="expiration_date" class="c-label">賞味期限</label></th>
-                            <td>{{ product.expiration_date }}</td>
-                        </tr>
-
-                        <tr>
-                            <!-- 【TODO】 商品画像を複数枚あっても表示できるように画像スライダーを使う -->
-                            <th><label for="product_picture" class="c-label">商品画像</label></th>
-                            <td><img v-if="product.pictures && product.pictures.length > 0" :src="'/storage/product_pictures/' + product.pictures[0].file" alt="商品画像" class="c-product__picture"></td>
-                        </tr>
-                    </table>
+                            <div class="p-product__picture">
+                                <!-- 商品画像 -->
+                                <img class="c-product__picture--detail" :src="getProductPicturePath(product)" alt="商品画像">
+                            </div>
+                        </div>
+                        <div class="p-product__detail">
+                            <p class="c-card__price u-mt__s u-mb__s">価格：{{ product.price }}円</p>
+                            <p class="c-card__category u-mt__s u-mb__s">カテゴリ：{{ getCategoryName(product.category_id) }}</p>
+                            <p class="c-card__date u-mt__s u-mb__s">賞味期限：{{ formatDate(product.expiration_date) }}</p>
+                        </div>
+                    </div>
 
                     <!-- コンビニ側の購入ボタンは自店舗・他店舗に限らず購入ボタンをクリックできないようにする -->
-                    <div class="p-product__button">
-                        <button class="c-button c-button__purchase" :disabled="true">購入する</button>
-                    </div>
-                </div>
+                    <button class="c-button c-button__submit c-button__purchase" :disabled="true">コンビニユーザーは購入できません</button>
+
+                </section>
             </div>
-        </div>
-        <a @click="$router.back()">前のページに戻る</a>
+        <a @click="$router.back()" class="c-link c-link__back u-mt__s u-mb__s">前のページに戻る</a>
     </main>
 </template>
 
@@ -61,7 +60,10 @@ export default {
         getProduct() {
             axios.get('/api/products/'+ this.productId).then(response => {
                 this.product = response.data.product;
+                this.category = response.data.product.category;
                 console.log('APIからのレスポンス:', response.data);
+                console.log('this.productは、', this.product);
+                console.log('this.categoryは、', this.category);
             }).catch(error => {
                 console.error('商品情報取得失敗:', error.response.data);
                 this.errors = error.response.data;
@@ -70,13 +72,63 @@ export default {
 
         // カテゴリIDからカテゴリ名を取得するメソッド
         getCategoryName(categoryId) {
-            for (let i = 0; i < this.categories.length; i++) {
-                if (this.categories[i].id === categoryId) {
-                    return this.categories[i].name;
-                }
+            if (this.category && this.category.id === categoryId) {
+                return this.category.name;
             }
             return '';
         },
+
+        // 商品画像のパスを取得するメソッド
+        getProductPicturePath(product) {
+            console.log('productは、', product);
+            if (product.pictures && product.pictures.length > 0) {
+                return '/storage/product_pictures/' + product.pictures[0].file;
+            } else {
+                return '/storage/product_pictures/no_image.png';
+            }
+        },
+
+        // 日付をフォーマットするメソッド
+        formatDate(dateString) {
+            const date = new Date(dateString);
+            const year = date.getFullYear();
+            const month = ('0' + (date.getMonth() + 1)).slice(-2); // 月は 0 から始まるため +1
+            const day = ('0' + date.getDate()).slice(-2);
+            return `${year}年${month}月${day}日`;
+        },
+
+        // Twitterのシェアボタン
+        twitterShare(){
+            const shareURL = 'https://twitter.com/intent/tweet?text=' + "haiki share 商品をシェアする" + "%20%23haikishare" + '&url=' + "https://haikishare.com/user/products/detail/" + this.productId;  
+            location.href = shareURL
+        },
+
+        // 商品お気に入り登録
+        productLike(product) {
+            axios.post('/api/user/like/' + product.id).then(response => {
+                console.log(product.id, 'の商品をお気に入り登録しました。');
+                product.liked = true;
+                console.log('this.likedは、', product.liked);
+                product.likes_count++;
+                console.log('product.likes_countは、', product.likes_count);
+            }).catch(error => {
+                console.error('商品のお気に入り登録失敗:', error);
+            });
+        },
+
+        // 商品お気に入り解除
+        productUnlike(product) {
+            axios.post('/api/user/unlike/' + product.id).then(response => {
+                console.log(product.id, 'の商品をお気に入り解除しました。');
+                product.liked = false;
+                console.log('product.likedは、', product.liked);
+                product.likes_count--;
+                console.log('product.likes_count', product.likes_count);
+            }).catch(error => {
+                console.error('商品のお気に入り解除失敗:', error);
+            });
+        },
+
     },
 }
 </script>

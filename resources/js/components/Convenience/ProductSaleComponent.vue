@@ -1,77 +1,50 @@
 <template>
     <main class="l-main">
-        <div class="p-profile">
-            <div class="p-product__form">
-                <h1 class="c-title">商品出品</h1>
-                <div class="p-container">
-                    <form @submit.prevent="submitForm">
+        <div class="l-main__convenience">
+            <section class="l-main__wrapper">
+                <h1 class="c-title u-mb__xl">コンビニ商品出品画面</h1>
+                <form @submit.prevent="submitForm" class="c-form">
 
-                        <!-- バリデーションエラーメッセージ -->
-                        <span v-if="errors && errors.name" class="c-error">{{ errors.name[0] }}</span>
-                        <span v-if="errors && errors.price" class="c-error">{{ errors.price[0] }}</span>
-                        <span v-if="errors && errors.category" class="c-error">{{ errors.category[0] }}</span>
-                        <span v-if="errors && errors.expiration_date" class="c-error">{{ errors.expiration_date[0] }}</span>
-                        <span v-if="errors && errors.product_picture" class="c-error">{{ errors.product_picture[0] }}</span>
+                    <!-- バリデーションエラーメッセージ -->
+                    <span v-if="errors && errors.name" class="c-error">{{ errors.name[0] }}</span>
+                    <span v-if="errors && errors.price" class="c-error">{{ errors.price[0] }}</span>
+                    <span v-if="errors && errors.category" class="c-error">{{ errors.category[0] }}</span>
+                    <span v-if="errors && errors.expiration_date" class="c-error">{{ errors.expiration_date[0] }}</span>
+                    <span v-if="errors && errors.product_picture" class="c-error">{{ errors.product_picture[0] }}</span>
 
-                        <table>
-                            <tr>
-                                <th><label for="name" class="c-label">商品名</label></th>
-                                <td>
-                                    <input v-model="formData.name" id="name" type="text" class="c-input" :class="{ 'is-invalid': errors && errors.name }" autocomplete="name">
-                                </td>
-                            </tr>
+                    <!-- 商品名 -->
+                    <label for="name" class="c-label">商品名</label>
+                    <input v-model="formData.name" id="name" type="text" class="c-input" :class="{ 'is-invalid': errors && errors.name }" autocomplete="name">
+                    <!-- 価格 -->
+                    <label for="price" class="c-label">価格</label>
+                    <input v-model="formData.price" id="price" type="text" class="c-input" :class="{ 'is-invalid': errors && errors.price }" autocomplete="price">
+                    <!-- カテゴリ名 -->
+                    <label for="category" class="c-label">カテゴリ名</label>
+                    <select v-model="formData.category" id="category" class="c-input" :class="{ 'is-invalid': errors && errors.category }">
+                        <option value="">カテゴリを選択してください</option>
+                        <option v-for="category in categories" :value="category.id">{{ category.name }}</option>
+                    </select>
+                    <!-- 賞味期限 -->
+                    <label for="expiration_date" class="c-label">賞味期限</label>
+                    <div class="p-text__form">
+                        <input v-model="formData.expiration_date" id="expiration_date" type="text" class="c-input" :class="{ 'is-invalid': errors && errors.expiration_date }" placeholder="（例）2024年4月10日の場合　20240410　と入力">
+                        <span class="c-text c-text__attention">賞味期限は西暦・半角数字8桁で入力してください</span>
+                    </div>
+                    <!-- 商品画像 -->
+                    <label class="c-label">商品画像</label>
+                    <div class="p-product__picture p-product__picture--container" @drop="handleDrop" :class="{ 'is-invalid': errors && errors.product_picture }">
+                        <input type="file" id="product_picture" @change="handleFileChange" class="c-input__hidden">
+                        <img v-if="!picturePreview && formData.product_picture !== ''" :src="'/storage/product_pictures/' + formData.product_picture" alt="アップロード商品画像" class="c-product__picture">
+                        <img v-else-if="picturePreview" :src="picturePreview" alt="アップロード商品画像" class="c-product__picture">
+                        <img v-else src="/storage/product_pictures/no_image.png" alt="NO_IMAGE" class="c-product__picture">
+                    </div>
 
-                            <tr>
-                                <th><label for="price" class="c-label">価格</label></th>
-                                <td>
-                                    <input v-model="formData.price" id="price" type="text" class="c-input" :class="{ 'is-invalid': errors && errors.price }" autocomplete="price">
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <th><label for="category" class="c-label">カテゴリ名</label></th>
-                                <td>
-                                    <select v-model="formData.category" id="category" class="c-input" :class="{ 'is-invalid': errors && errors.category }">
-                                        <option value="">カテゴリを選択してください</option>
-                                        <option v-for="category in categories" :value="category.id">{{ category.name }}</option>
-                                    </select>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <th><label for="expiration_date" class="c-label">賞味期限</label></th>
-                                <td>
-                                    <div class="p-text__form">
-                                        <input v-model="formData.expiration_date" id="expiration_date" type="text" class="c-input" :class="{ 'is-invalid': errors && errors.expiration_date }" placeholder="（例）2024年4月10日の場合　20240410　と入力">
-                                        <span class="c-text">賞味期限は半角数字で入力してください</span>
-                                    </div>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <th><label class="c-label">商品画像</label></th>
-                                <td>
-                                    <div v-for="(input, index) in imageInputs" :key="index" class="p-product__picture" :class="{ 'is-invalid': errors && errors.product_picture }">
-                                        <input type="file" :id="'product_picture_' + index" @change="handleFileChange(index)" class="c-input__hidden">
-                                        <img v-if="!picturePreview[index] && formData.product_pictures[index]" :src="'/storage/product_pictures/' + formData.product_pictures[index]" alt="アップロード商品画像" class="c-product__picture">
-                                        <img v-else-if="picturePreview[index]" :src="picturePreview[index]" alt="アップロード商品画像" class="c-product__picture">
-                                        <img v-else src="/storage/product_pictures/no_image.png" alt="NO_IMAGE" class="c-product__picture">
-                                    </div>
-                                    <button @click="addImageInput" class="c-button">画像追加</button>
-                                </td>
-                            </tr>
-
-                        </table>
-
-                        <!-- 商品出品ボタン -->
-                        <div class="p-product__button">
-                            <button type="submit" class="c-button">出品する</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
+                    <!-- 商品更新ボタン -->
+                    <button type="submit" class="c-button c-button__submit c-button__convenience u-mt__m">出品する</button>
+                </form>
+            </section>
         </div>
-        <a @click="$router.back()">前のページに戻る</a>
+        <a @click="$router.back()" class="c-link c-link__back u-mt__s u-mb__s">前のページに戻る</a>
     </main>
 </template>
 
@@ -86,12 +59,11 @@ export default {
                 price: '',
                 category: '',
                 expiration_date: '',
-                product_pictures: [], // ファイルの配列を追加
+                product_picture: '',
             },
             categories: [],
-            picturePreview: [],
+            picturePreview: '',
             errors: null,
-            imageInputs: [0], // 初期の画像入力フィールドの数
         };
     },
 
@@ -148,11 +120,7 @@ export default {
             formData.append('price', this.formData.price);
             formData.append('category', this.formData.category);
             formData.append('expiration_date', this.formattedExpirationDate);
-             // 画像ファイルを追加
-             this.formData.product_pictures.forEach((file, index) => {
-                formData.append('product_picture', this.formData.product_pictures[index], file);
-
-            });
+            formData.append('product_picture', this.formData.product_picture);
 
             axios.post('/api/convenience/products/sale', formData, config).then(response => {
                 console.log('商品を投稿します。');
@@ -170,24 +138,24 @@ export default {
         },
 
         // ファイルが選択されたときの処理
-        handleFileChange(index) {
+        handleFileChange(event) {
             const file = event.target.files[0];
             console.log('選択されたファイル:', file);
             // プレビューを表示する
-            this.previewImage(file, index);
-            // formData.product_picturesにファイルオブジェクトを設定
-            this.formData.product_pictures[index] = file;
+            this.previewImage(file);
+            // formData.product_pictureにファイルオブジェクトを設定
+            this.formData.product_picture = file;
         },
 
         // 画像のプレビューを表示するメソッド
-        previewImage(file, index) {
+        previewImage(file) {
             const reader = new FileReader();
             reader.onload = (e) => {
-                // プレビュー画像のURLを生成し、picturePreviewに設定
-                this.$set(this.picturePreview, index, e.target.result);
+                // プレビュー画像のURLを生成し、formDataに設定
+                this.picturePreview = e.target.result;
             };
             reader.readAsDataURL(file);
-        },
+        }
     }
 }
 </script>

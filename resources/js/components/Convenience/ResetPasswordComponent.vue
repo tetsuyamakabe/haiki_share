@@ -1,47 +1,35 @@
 <template>
     <main class="l-main">
-        <div class="p-register">
-            <div class="p-register__form">
-                <h1 class="c-title">パスワード変更メール送信</h1>
-                <form @submit.prevent="resetPassword">
+        <div class="l-main__convenience">
+            <section class="l-main__wrapper">
+                <h1 class="c-title u-mb__xl">利用者パスワード変更</h1>
+                <form @submit.prevent="resetPassword" class="c-form">
 
                     <!-- バリデーションエラーメッセージ -->
                     <span v-if="errors && errors.oldPassword" class="c-error">{{ errors.oldPassword[0] }}</span>
                     <span v-if="errors && errors.newPassword" class="c-error">{{ errors.newPassword[0] }}</span>
                     <span v-if="errors && errors.password_confirmation" class="c-error">{{ errors.password_confirmation[0] }}</span>
 
-                    <!-- 【TODO】 type="pasword"を検証のため削除しているので追加 -->
-                    <table>
-                        <tr>
-                            <th><label for="old_password" class="c-label">古いパスワード</label></th>
-                            <td>
-                                <input v-model="formData.oldPassword" id="old_password" class="c-input" :class="{ 'is-invalid': errors && errors.oldPassword }" placeholder="英数字8文字以上で入力してください">
-                            </td>
-                        </tr>
-                        <tr>
-                            <th><label for="new_password" class="c-label">新しいパスワード</label></th>
-                            <td>
-                                <input v-model="formData.newPassword" id="new_password" class="c-input" :class="{ 'is-invalid': errors && errors.newPassword }" placeholder="英数字8文字以上で入力してください">
-                            </td>
-                        </tr>
-                        <tr>
-                            <th><label for="password-confirm" class="c-label">新しいパスワード（再入力）</label></th>
-                            <td>
-                                <input v-model="formData.password_confirmation" id="password_confirm" class="c-input" :class="{ 'is-invalid': errors && errors.password_confirmation }" placeholder="英数字8文字以上で入力してください">
-                            </td>
-                        </tr>
-                    </table>
+                    <!-- 古いパスワード -->
+                    <label for="old_password" class="c-label">古いパスワード</label>
+                    <input v-model="formData.oldPassword" id="old_password" class="c-input" :class="{ 'is-invalid': errors && errors.oldPassword }" placeholder="英数字8文字以上で入力してください">
+                    <!-- 新しいパスワード -->
+                    <label for="new_password" class="c-label">新しいパスワード</label>
+                    <input v-model="formData.newPassword" id="new_password" class="c-input" :class="{ 'is-invalid': errors && errors.newPassword }" placeholder="英数字8文字以上で入力してください">
+                    <!-- 新しいパスワード（再入力） -->
+                    <label for="password-confirm" class="c-label">新しいパスワード（再入力）</label>
+                    <input v-model="formData.password_confirmation" id="password_confirm" class="c-input" :class="{ 'is-invalid': errors && errors.password_confirmation }" placeholder="英数字8文字以上で入力してください">
 
                     <input type="hidden" name="token" v-model="token">
                     <input type="hidden" name="email" v-model="email">
 
-                    <div class="p-resetpassword__button">
-                        <button type="submit" class="c-button">変更する</button>
-                    </div>
+                    <!-- メール送信ボタン -->
+                    <button type="submit" class="c-button c-button__submit c-button__convenience u-mt__m">パスワードを変更する</button>
+
                 </form>
-            </div>
+            </section>
         </div>
-        <a @click="$router.back()">前のページに戻る</a>
+        <a @click="$router.back()" class="c-link c-link__back u-mt__s u-mb__s">前のページに戻る</a>
     </main>
 </template>
 

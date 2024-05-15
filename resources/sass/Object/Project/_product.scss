@@ -18,23 +18,14 @@
         }
     }
 
-    &__picture {
-        position: relative;
-        width: 200px;
-        height: 200px;
-        border: 1px solid #000;
-        border-radius: 5%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin: 16px 8px;
-        padding: 8px;
-    }
-
     &__index {
         background: #fefefe;
         padding: 24px 58px;
-
+        &--like,
+        &--purchased,
+        &--sale {
+            padding: 30px;
+        }
         @include mq(sm){
             padding: 8px;
         }
@@ -52,7 +43,13 @@
         width: 320px;
     }
 
-    &__button {
-        display: flex;
+    &__picture {
+        &--container {
+            position: relative;
+            height: 100%;
+            border: 1px solid #000;
+            margin: auto;
+            padding: 8px;
+        }
     }
 }

@@ -7,4 +7,19 @@
         display: flex;
         justify-content: flex-end;
     }
+
+    &__withdraw {
+        font-weight: bold;
+        line-height: 1.5;
+    }
+
+    &__attention {
+        position: absolute;
+        font-size: 12px;
+        right: 0px;
+        bottom: -3px;
+        @include mq(sm){
+            font-size: 8px;
+        }
+    }
 }

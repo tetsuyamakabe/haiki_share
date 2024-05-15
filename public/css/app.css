@@ -557,12 +557,25 @@ body {
 }
 
 .c-button:hover {
-  color: #fefefe;
   font-weight: bold;
   cursor: pointer;
 }
 
-.c-button__detail {
+.c-button__detail,
+.c-button__edit {
+  display: block;
+  color: #434343;
+  font-size: 16px;
+  padding: 8px;
+  margin: 8px;
+}
+
+.c-button__share {
+  background: #000;
+  padding: 8px;
+}
+
+.c-button__purchase {
   display: block;
   color: #434343;
   font-size: 16px;
@@ -607,6 +620,7 @@ body {
 }
 
 .c-card__price,
+.c-card__category,
 .c-card__date {
   text-align: center;
 }
@@ -668,6 +682,10 @@ body {
   color: #999;
 }
 
+.c-icon__share {
+  color: #fff;
+}
+
 .c-input {
   background: #f6f5f4;
   width: 100%;
@@ -680,7 +698,7 @@ body {
 
 @media screen and (max-width: 414px) {
   .c-input {
-    height: 24px;
+    height: 32px;
     margin: 8px 0;
     font-size: 12px;
   }
@@ -801,7 +819,19 @@ body {
 }
 
 .c-product__picture {
-  width: 50%;
+  width: 100%;
+}
+
+.c-product__picture--detail {
+  display: block;
+  margin: auto;
+  max-width: 700px;
+}
+
+@media screen and (max-width: 414px) {
+  .c-product__picture--detail {
+    width: 100%;
+  }
 }
 
 .c-product__name {
@@ -835,6 +865,24 @@ body {
 .c-text__max {
   display: flex;
   justify-content: flex-end;
+}
+
+.c-text__withdraw {
+  font-weight: bold;
+  line-height: 1.5;
+}
+
+.c-text__attention {
+  position: absolute;
+  font-size: 12px;
+  right: 0px;
+  bottom: -3px;
+}
+
+@media screen and (max-width: 414px) {
+  .c-text__attention {
+    font-size: 8px;
+  }
 }
 
 .c-textarea {
@@ -968,22 +1016,15 @@ body {
   }
 }
 
-.p-product__picture {
-  position: relative;
-  width: 200px;
-  height: 200px;
-  border: 1px solid #000;
-  border-radius: 5%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 16px 8px;
-  padding: 8px;
-}
-
 .p-product__index {
   background: #fefefe;
   padding: 24px 58px;
+}
+
+.p-product__index--like,
+.p-product__index--purchased,
+.p-product__index--sale {
+  padding: 30px;
 }
 
 @media screen and (max-width: 414px) {
@@ -1004,8 +1045,12 @@ body {
   width: 320px;
 }
 
-.p-product__button {
-  display: flex;
+.p-product__picture--container {
+  position: relative;
+  height: 100%;
+  border: 1px solid #000;
+  margin: auto;
+  padding: 8px;
 }
 
 .p-profile {

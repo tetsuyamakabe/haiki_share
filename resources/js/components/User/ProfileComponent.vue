@@ -80,6 +80,13 @@ export default {
         };
     },
 
+    computed: {
+        // ログインユーザーかどうか
+        isLogin() {
+            return this.$store.getters['auth/check'];
+        },
+    },
+
     created() {
         this.getProfile(); // プロフィール情報を取得
     },
@@ -189,3 +196,12 @@ export default {
     }
 }
 </script>
+
+<style>
+.notification {
+  background-color: #ff0000;
+  color: #ffffff;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+</style>

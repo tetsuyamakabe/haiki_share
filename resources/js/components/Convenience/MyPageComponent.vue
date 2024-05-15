@@ -21,7 +21,7 @@
                                             <h3 class="c-card__name u-pd__s">{{ product.name }}</h3>
                                             <img class="c-card__picture" :src="getProductPicturePath(product)" alt="商品画像">
                                             <p class="c-card__price">{{ product.price }}円</p>
-                                            <p class="c-card__date">{{ product.expiration_date }}</p>
+                                            <p class="c-card__date">{{ formatDate(product.expiration_date) }}</p>
                                         </div>
                                     </li>
                                 </ul>
@@ -46,7 +46,7 @@
                                             <h3 class="c-card__name u-pd__s">{{ product.name }}</h3>
                                             <img class="c-card__picture" :src="getProductPicturePath(product)" alt="商品画像">
                                             <p class="c-card__price">{{ product.price }}円</p>
-                                            <p class="c-card__date">{{ product.expiration_date }}</p>
+                                            <p class="c-card__date">{{ formatDate(product.expiration_date) }}</p>
                                         </div>
                                     </li>
                                 </ul>
@@ -107,6 +107,15 @@ export default {
             } else {
                 return '/storage/product_pictures/no_image.png';
             }
+        },
+
+        // 日付をフォーマットするメソッド
+        formatDate(dateString) {
+            const date = new Date(dateString);
+            const year = date.getFullYear();
+            const month = ('0' + (date.getMonth() + 1)).slice(-2); // 月は 0 から始まるため +1
+            const day = ('0' + date.getDate()).slice(-2);
+            return `${year}年${month}月${day}日`;
         },
     }
 };
