@@ -9,7 +9,6 @@ import TermsComponent from './components/TermsComponent.vue'; // 利用規約ペ
 // 利用者側
 import UserRegisterComponent from './components/User/RegisterComponent.vue'; // ユーザー登録画面
 import UserLoginComponent from './components/User/LoginComponent.vue'; // ログイン画面
-import UserLogoutComponent from './components/User/LogoutComponent.vue'; // ログアウト画面
 import UserMyPageComponent from './components/User/MyPageComponent.vue'; // マイページ画面
 import UserForgotPasswordComponent from './components/User/ForgotPasswordComponent.vue'; // パスワードメール送信画面
 import UserResetPasswordPasswordComponent from './components/User/ResetPasswordComponent.vue'; // パスワードリセット画面
@@ -22,7 +21,6 @@ import UserPurchasedProductComponent from './components/User/ProductPurchasedCom
 // コンビニ側
 import ConvenienceRegisterComponent from './components/Convenience/RegisterComponent.vue'; // ユーザー登録画面
 import ConvenienceLoginComponent from './components/Convenience/LoginComponent.vue' // ログイン画面
-import ConvenienceLogoutComponent from './components/Convenience/LogoutComponent.vue'; // ログアウト画面
 import ConvenienceMyPageComponent from './components/Convenience/MyPageComponent.vue' // マイページ画面
 import ConvenienceForgotPasswordComponent from './components/Convenience/ForgotPasswordComponent.vue'; // パスワードメール送信画面
 import ConvenienceResetPasswordPasswordComponent from './components/Convenience/ResetPasswordComponent.vue' // パスワードリセット画面

@@ -51,7 +51,7 @@ class ProductController extends Controller
     public function getAllProducts(Request $request)
     {
         $userId = auth()->id();
-        $query = Product::with('pictures')->withCount('likes'); // withCountでいいね数の取得
+        $query = Product::with(['pictures', 'category'])->withCount('likes'); // withCountでいいね数の取得
 
         // 出品しているコンビニがある都道府県
         $prefecture = $request->input('prefecture');

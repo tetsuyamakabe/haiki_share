@@ -1,91 +1,59 @@
 <template>
     <main class="l-main">
-        <div class="p-profile">
-            <div class="p-product__form">
-                <h1 class="c-title">商品編集</h1>
-                <div class="p-container">
-                    <form @submit.prevent="submitForm">
+        <div class="l-main__convenience">
+            <section class="l-main__wrapper">
+                <h1 class="c-title u-mb__xl">コンビニ商品編集画面</h1>
+                <form @submit.prevent="submitForm" class="c-form">
 
-                        <!-- バリデーションエラーメッセージ -->
-                        <span v-if="errors && errors.name" class="c-error">{{ errors.name[0] }}</span>
-                        <span v-if="errors && errors.price" class="c-error">{{ errors.price[0] }}</span>
-                        <span v-if="errors && errors.category" class="c-error">{{ errors.category[0] }}</span>
-                        <span v-if="errors && errors.expiration_date" class="c-error">{{ errors.expiration_date[0] }}</span>
-                        <span v-if="errors && errors.product_picture" class="c-error">{{ errors.product_picture[0] }}</span>
+                    <!-- バリデーションエラーメッセージ -->
+                    <span v-if="errors && errors.name" class="c-error">{{ errors.name[0] }}</span>
+                    <span v-if="errors && errors.price" class="c-error">{{ errors.price[0] }}</span>
+                    <span v-if="errors && errors.category" class="c-error">{{ errors.category[0] }}</span>
+                    <span v-if="errors && errors.expiration_date" class="c-error">{{ errors.expiration_date[0] }}</span>
+                    <span v-if="errors && errors.product_picture" class="c-error">{{ errors.product_picture[0] }}</span>
 
-                        <table>
-                            <tr>
-                                <th><label for="name" class="c-label">商品名</label></th>
-                                <td>
-                                    <input v-model="formData.name" id="name" type="text" class="c-input" :class="{ 'is-invalid': errors && errors.name }" autocomplete="name">
-                                </td>
-                            </tr>
+                    <!-- 商品名 -->
+                    <label for="name" class="c-label">商品名</label>
+                    <input v-model="formData.name" id="name" type="text" class="c-input" :class="{ 'is-invalid': errors && errors.name }" autocomplete="name">
+                    <!-- 価格 -->
+                    <label for="price" class="c-label">価格</label>
+                    <input v-model="formData.price" id="price" type="number" class="c-input" :class="{ 'is-invalid': errors && errors.price }" autocomplete="price">
+                    <!-- カテゴリ名 -->
+                    <label for="category" class="c-label">カテゴリ名</label>
+                    <select v-model="formData.category" id="category" class="c-input" :class="{ 'is-invalid': errors && errors.category }">
+                        <option value="">カテゴリを選択してください</option>
+                        <option v-for="category in categories" :value="category.id">{{ category.name }}</option>
+                    </select>
+                    <!-- 賞味期限 -->
+                    <label for="expiration_date" class="c-label">賞味期限</label>
+                    <div class="p-text__form">
+                        <input v-model="formData.expiration_date" id="expiration_date" type="text" class="c-input" :class="{ 'is-invalid': errors && errors.expiration_date }" placeholder="（例）2024年4月10日の場合　20240410　と入力">
+                        <span class="c-text c-text__attention">賞味期限は西暦・半角数字8桁で入力してください</span>
+                    </div>
+                    <!-- 商品画像 -->
+                    <label for="product_picture" class="c-label">商品画像</label>
+                    <div class="p-product__picture p-product__picture--container" @drop="handleDrop" :class="{ 'is-invalid': errors && errors.product_picture }">
+                        <input type="file" id="product_picture" @change="handleFileChange" class="c-input__hidden">
+                        <img v-if="!picturePreview && formData.product_picture !== ''" :src="'/storage/product_pictures/' + formData.product_picture" alt="アップロード商品画像" class="c-product__picture">
+                        <img v-else-if="picturePreview" :src="picturePreview" alt="アップロード商品画像" class="c-product__picture">
+                        <img v-else src="/storage/product_pictures/no_image.png" alt="NO_IMAGE" class="c-product__picture">
+                    </div>
 
-                            <tr>
-                                <th><label for="price" class="c-label">価格</label></th>
-                                <td>
-                                    <input v-model="formData.price" id="price" type="text" class="c-input" :class="{ 'is-invalid': errors && errors.price }" autocomplete="price">
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <th><label for="category" class="c-label">カテゴリ名</label></th>
-                                <td>
-                                    <select v-model="formData.category" id="category" class="c-input" :class="{ 'is-invalid': errors && errors.category }">
-                                        <option value="">カテゴリを選択してください</option>
-                                        <option v-for="category in categories" :value="category.id">{{ category.name }}</option>
-                                    </select>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <th><label for="expiration_date" class="c-label">賞味期限</label></th>
-                                <td>
-                                    <div class="p-text__form">
-                                        <input v-model="formData.expiration_date" id="expiration_date" type="text" class="c-input" :class="{ 'is-invalid': errors && errors.expiration_date }" placeholder="（例）2024年4月10日の場合　20240410　と入力">
-                                        <span class="c-text">賞味期限は半角数字で入力してください</span>
-                                    </div>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <!-- 【TODO】 商品画像を最大3枚アップロードできるようにする -->
-                                <th><label for="product_picture" class="c-label">商品画像</label></th>
-                                <td>
-                                    <div class="p-product__picture" @drop="handleDrop" :class="{ 'is-invalid': errors && errors.product_picture }">
-                                        <input type="file" id="product_picture" @change="handleFileChange" class="c-input__hidden">
-                                        <img v-if="!picturePreview && formData.product_picture !== ''" :src="'/storage/product_pictures/' + formData.product_picture" alt="アップロード商品画像" class="c-product__picture">
-                                        <img v-else-if="picturePreview" :src="picturePreview" alt="アップロード商品画像" class="c-product__picture">
-                                        <img v-else src="/storage/product_pictures/no_image.png" alt="NO_IMAGE" class="c-product__picture">
-                                    </div>
-                                </td>
-                            </tr>
-
-                        </table>
-
-                        <!-- 商品情報更新ボタン -->
-                        <div class="p-product__button">
-                            <button type="submit" class="c-button">更新する</button>
-                        </div>
-                        <!-- 商品削除ボタン -->
-                        <product-delete-component :product-id="productId"></product-delete-component>
-                    </form>
-                </div>
-            </div>
+                    <!-- 商品更新ボタン -->
+                    <button type="submit" class="c-button c-button__submit c-button__convenience u-mt__m">更新する</button>
+                    <!-- 商品削除ボタン -->
+                    <button class="c-button c-button__submit c-button__convenience u-mt__m" @click="deleteProduct">削除する</button>
+                </form>
+            </section>
         </div>
-        <a @click="$router.back()">前のページに戻る</a>
+        <a @click="$router.back()" class="c-link c-link__back u-mt__s u-mb__s">前のページに戻る</a>
     </main>
 </template>
 
 <script>
 import axios from 'axios';
-import ProductDeleteComponent from './ProductDeleteComponent.vue'; // 商品削除コンポーネント
 
 export default {
-    components: {
-        ProductDeleteComponent
-    },
-
     data() {
         return {
             formData: {
@@ -148,7 +116,7 @@ export default {
                 this.formData.name = this.product.name || '';
                 this.formData.price = this.product.price || '';
                 this.formData.category = this.product.category.id || '';
-                this.formData.expiration_date = this.product.expiration_date || '';
+                this.formData.expiration_date = this.product.expiration_date.replace(/-/g, '') || ''; // YY-MM-DD形式からハイフンだけを取り除く
                 this.formData.product_picture = this.product.pictures[0].file || '';
             }).catch(error => {
                 console.error('商品情報取得失敗:', error.response.data);
@@ -183,6 +151,18 @@ export default {
                 this.$router.push({ name: 'convenience.products.sale' }); // 商品更新処理後、出品した商品一覧画面に遷移
             }).catch(error => {
                 console.error('商品編集失敗:', error.response.data);
+                this.errors = error.response.data.errors;
+            });
+        },
+
+        // 商品削除処理をサーバー側に送信するメソッド
+        deleteProduct() {
+            const productId = this.productId;
+            axios.delete('/api/convenience/products/' + productId).then(response => {
+                console.log('商品情報を削除します。');
+                this.$router.push({ name: 'convenience.products.sale' }); // 商品削除処理後、出品した商品一覧画面に遷移
+            }).catch(error => {
+                console.error('商品削除失敗:', error.response.data);
                 this.errors = error.response.data.errors;
             });
         },

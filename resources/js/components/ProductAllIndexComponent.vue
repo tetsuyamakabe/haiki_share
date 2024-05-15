@@ -20,13 +20,14 @@
                                     <div class="p-card__container">
                                         <img class="c-card__picture" :src="getProductPicturePath(product)" alt="商品画像">
                                         <label v-show="product.is_purchased" class="c-label__purchase">購入済み</label>
+                                        <!-- いいねアイコン -->
                                         <div class="p-like p-like__content">
                                             <i v-if="!product.liked" class="c-icon c-icon__unlike far fa-heart" @click="productLike(product)"></i>
                                             <i v-else class="c-icon c-icon__like fas fa-heart" @click="productUnlike(product)"></i>
                                             <span>いいね{{ product.likes_count }}</span>
                                         </div>
                                         <p class="c-card__price">{{ product.price }}円</p>
-                                        <p class="c-card__date">{{ product.expiration_date }}</p>
+                                        <p class="c-card__price">{{ formatDate(product.expiration_date) }}</p>
                                     </div>
                                     <div class="p-card__footer">
                                         <router-link :to="getProductDetailLink(product.id)" class="c-button c-button__common c-button__detail">詳細を見る</router-link>
@@ -160,6 +161,15 @@ export default {
             } else {
                 return '/storage/product_pictures/no_image.png';
             }
+        },
+
+        // 日付をフォーマットするメソッド
+        formatDate(dateString) {
+            const date = new Date(dateString);
+            const year = date.getFullYear();
+            const month = ('0' + (date.getMonth() + 1)).slice(-2); // 月は 0 から始まるため +1
+            const day = ('0' + date.getDate()).slice(-2);
+            return `${year}年${month}月${day}日`;
         },
 
         // 商品詳細画面のリンクを返すメソッド

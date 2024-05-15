@@ -1,30 +1,24 @@
 <template>
     <main class="l-main">
-        <div class="p-register">
-            <div class="p-register__form">
-                <h1 class="c-title">パスワード変更メール送信</h1>
-                <div class="p-container">
-                    <form @submit.prevent="sendResetLink">
+        <div class="l-main__convenience">
+            <section class="l-main__wrapper">
+                <h1 class="c-title u-mb__xl">コンビニパスワード変更メール送信</h1>
+                <form @submit.prevent="sendResetLink" class="c-form">
 
-                        <!-- バリデーションエラーメッセージ -->
-                        <span v-if="errors && errors.email" class="c-error">{{ errors.email[0] }}</span>
+                    <!-- バリデーションエラーメッセージ -->
+                    <span v-if="errors && errors.email" class="c-error">{{ errors.email[0] }}</span>
 
-                        <table>
-                            <tr>
-                                <th><label for="email" class="c-label">メールアドレス</label></th>
-                                <td>
-                                    <input v-model="formData.email" id="email" type="email" class="c-input" :class="{ 'is-invalid': errors && errors.email }" autocomplete="email">
-                                </td>
-                            </tr>
-                        </table>
-                        <div class="p-forgotpassword__button">
-                            <button type="submit" class="c-button">送信する</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
+                    <!-- メールアドレス -->
+                    <label for="email" class="c-label">メールアドレス</label>
+                    <input v-model="formData.email" id="email" type="email" class="c-input" :class="{ 'is-invalid': errors && errors.email }" autocomplete="email">
+
+                    <!-- メール送信ボタン -->
+                    <button type="submit" class="c-button c-button__submit c-button__convenience u-mt__m">パスワード変更メールを送信する</button>
+
+                </form>
+            </section>
         </div>
-        <a @click="$router.back()">前のページに戻る</a>
+        <a @click="$router.back()" class="c-link c-link__back u-mt__s u-mb__s">前のページに戻る</a>
     </main>
 </template>
 
