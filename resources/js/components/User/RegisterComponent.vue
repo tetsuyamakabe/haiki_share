@@ -2,7 +2,6 @@
     <main class="l-main">
         <div class="l-main__user">
             <section class="l-main__wrapper">
-                <div v-if="notification === ''" class="notification">{{ notification }}</div>
                 <h1 class="c-title u-mb__xl">利用者ユーザー登録</h1>
                 <form @submit.prevent="submitForm" class="c-form">
 
@@ -53,7 +52,7 @@
 </template>
 
 <script>
-import axios from '../../axiosErrorHandler';
+import axios from 'axios';
 import TermsComponent from '../TermsComponent.vue'; // 利用規約
 
 export default {
@@ -76,19 +75,7 @@ export default {
             PasswordConfirmType: 'password', // パスワード（再入力）の初期設定
             PasswordIconClass: 'far fa-eye-slash', // 初期アイコン
             PasswordConfirmIconClass: 'far fa-eye-slash', // 初期アイコン
-            notification: ''
         };
-    },
-
-    computed: {
-        // フラッシュメッセージの表示
-        notification() {
-            return this.$store.state.notification;
-        }
-    },
-
-    mounted() {
-        this.$store.commit('setNotification', null);
     },
 
     methods: {

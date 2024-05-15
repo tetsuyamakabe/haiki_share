@@ -8542,8 +8542,15 @@ __webpack_require__.r(__webpack_exports__);
         _this.formData.introduction = _this.user.introduction || '';
         _this.formData.icon = _this.user.icon || '';
       })["catch"](function (error) {
+        // 失敗時の処理
         console.error('プロフィール取得失敗:', error.response.data);
-        _this.errors = error.response.data;
+        if (error.response.status === 401) {
+          // 401 Unauthorizedの場合、リダイレクトする
+          redirectToLoginPage();
+        } else {
+          // その他のエラーの場合、エラー情報をセットする
+          _this.errors = error.response.data;
+        }
       });
     },
     // 入力された値をサーバー側に送信するメソッド
@@ -8640,9 +8647,9 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _axiosErrorHandler__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../axiosErrorHandler */ "./resources/js/axiosErrorHandler.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _TermsComponent_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../TermsComponent.vue */ "./resources/js/components/TermsComponent.vue");
-//
 //
 //
 //
@@ -8722,26 +8729,15 @@ __webpack_require__.r(__webpack_exports__);
       // パスワード（再入力）の初期設定
       PasswordIconClass: 'far fa-eye-slash',
       // 初期アイコン
-      PasswordConfirmIconClass: 'far fa-eye-slash',
-      // 初期アイコン
-      notification: ''
+      PasswordConfirmIconClass: 'far fa-eye-slash' // 初期アイコン
     };
-  },
-  computed: {
-    // フラッシュメッセージの表示
-    notification: function notification() {
-      return this.$store.state.notification;
-    }
-  },
-  mounted: function mounted() {
-    this.$store.commit('setNotification', null);
   },
   methods: {
     // 入力された値をサーバー側に送信するメソッド
     submitForm: function submitForm() {
       var _this = this;
       this.formData.agreement = this.agreement;
-      _axiosErrorHandler__WEBPACK_IMPORTED_MODULE_0__["default"].post('/api/user/register', this.formData).then(function (response) {
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/user/register', this.formData).then(function (response) {
         console.log('ユーザー登録します。');
         _this.$router.push({
           name: 'user.mypage'
@@ -51402,12 +51398,6 @@ var render = function () {
   return _c("main", { staticClass: "l-main" }, [
     _c("div", { staticClass: "l-main__user" }, [
       _c("section", { staticClass: "l-main__wrapper" }, [
-        _vm.notification !== null && _vm.notification !== ""
-          ? _c("div", { staticClass: "notification" }, [
-              _vm._v(_vm._s(_vm.notification)),
-            ])
-          : _vm._e(),
-        _vm._v(" "),
         _c("h1", { staticClass: "c-title u-mb__xl" }, [
           _vm._v("利用者ユーザー登録"),
         ]),
@@ -67809,47 +67799,6 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/CustomError.js":
-/*!*************************************!*\
-  !*** ./resources/js/CustomError.js ***!
-  \*************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, _toPropertyKey(descriptor.key), descriptor); } }
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
-function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : String(i); }
-function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-function _callSuper(t, o, e) { return o = _getPrototypeOf(o), _possibleConstructorReturn(t, _isNativeReflectConstruct() ? Reflect.construct(o, e || [], _getPrototypeOf(t).constructor) : o.apply(t, e)); }
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } else if (call !== void 0) { throw new TypeError("Derived constructors may only return object or undefined"); } return _assertThisInitialized(self); }
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); Object.defineProperty(subClass, "prototype", { writable: false }); if (superClass) _setPrototypeOf(subClass, superClass); }
-function _wrapNativeSuper(Class) { var _cache = typeof Map === "function" ? new Map() : undefined; _wrapNativeSuper = function _wrapNativeSuper(Class) { if (Class === null || !_isNativeFunction(Class)) return Class; if (typeof Class !== "function") { throw new TypeError("Super expression must either be null or a function"); } if (typeof _cache !== "undefined") { if (_cache.has(Class)) return _cache.get(Class); _cache.set(Class, Wrapper); } function Wrapper() { return _construct(Class, arguments, _getPrototypeOf(this).constructor); } Wrapper.prototype = Object.create(Class.prototype, { constructor: { value: Wrapper, enumerable: false, writable: true, configurable: true } }); return _setPrototypeOf(Wrapper, Class); }; return _wrapNativeSuper(Class); }
-function _construct(t, e, r) { if (_isNativeReflectConstruct()) return Reflect.construct.apply(null, arguments); var o = [null]; o.push.apply(o, e); var p = new (t.bind.apply(t, o))(); return r && _setPrototypeOf(p, r.prototype), p; }
-function _isNativeReflectConstruct() { try { var t = !Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); } catch (t) {} return (_isNativeReflectConstruct = function _isNativeReflectConstruct() { return !!t; })(); }
-function _isNativeFunction(fn) { try { return Function.toString.call(fn).indexOf("[native code]") !== -1; } catch (e) { return typeof fn === "function"; } }
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-var CustomError = /*#__PURE__*/function (_Error) {
-  _inherits(CustomError, _Error);
-  function CustomError(message, status) {
-    var _this;
-    _classCallCheck(this, CustomError);
-    _this = _callSuper(this, CustomError, [message]);
-    _this.name = _this.constructor.name;
-    _this.status = status;
-    return _this;
-  }
-  return _createClass(CustomError);
-}( /*#__PURE__*/_wrapNativeSuper(Error));
-/* harmony default export */ __webpack_exports__["default"] = (CustomError);
-
-/***/ }),
-
 /***/ "./resources/js/app.js":
 /*!*****************************!*\
   !*** ./resources/js/app.js ***!
@@ -67902,63 +67851,6 @@ var createApp = /*#__PURE__*/function () {
   };
 }();
 createApp();
-
-/***/ }),
-
-/***/ "./resources/js/axiosErrorHandler.js":
-/*!*******************************************!*\
-  !*** ./resources/js/axiosErrorHandler.js ***!
-  \*******************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./store */ "./resources/js/store/index.js");
-/* harmony import */ var _CustomError__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./CustomError */ "./resources/js/CustomError.js");
-
-
-
-
-// リダイレクト先の定義
-var redirectToLoginPage = function redirectToLoginPage() {
-  window.location.href = '/home';
-};
-
-// レスポンスのinterceptorを設定
-axios__WEBPACK_IMPORTED_MODULE_0___default.a.interceptors.response.use(function (response) {
-  // 成功時の処理
-  return response;
-}, function (error) {
-  var _error$response, _error$response2;
-  // 失敗時の処理
-  switch ((_error$response = error.response) === null || _error$response === void 0 ? void 0 : _error$response.status) {
-    case 401:
-      _store__WEBPACK_IMPORTED_MODULE_1__["default"].dispatch('showNotification', 'ログインが必要です。');
-      redirectToLoginPage();
-      throw new _CustomError__WEBPACK_IMPORTED_MODULE_2__["default"]('Unauthorized', 401);
-    // HTTP 401 Unauthorized
-    case 403:
-      _store__WEBPACK_IMPORTED_MODULE_1__["default"].dispatch('showNotification', 'エラーが発生しました。しばらく経ってからやり直してください。');
-      throw new _CustomError__WEBPACK_IMPORTED_MODULE_2__["default"]('Forbidden', 403);
-    // HTTP 403 Forbidden
-    case 404:
-      _store__WEBPACK_IMPORTED_MODULE_1__["default"].dispatch('showNotification', 'お探しのページは見つかりませんでした。');
-      throw new _CustomError__WEBPACK_IMPORTED_MODULE_2__["default"]('Not found', 404);
-    // HTTP 403 Not Found
-    case 500:
-      _store__WEBPACK_IMPORTED_MODULE_1__["default"].dispatch('showNotification', 'エラーが発生しました。しばらく経ってからやり直してください。');
-      throw new _CustomError__WEBPACK_IMPORTED_MODULE_2__["default"]('Internal server error', 500);
-    // HTTP 500 Internal server error
-    default:
-      _store__WEBPACK_IMPORTED_MODULE_1__["default"].dispatch('showNotification', '予期せぬエラーが発生しました。しばらく経ってからやり直してください。');
-      throw new _CustomError__WEBPACK_IMPORTED_MODULE_2__["default"]('An error occurred', (_error$response2 = error.response) === null || _error$response2 === void 0 ? void 0 : _error$response2.status);
-    // その他のエラー
-  }
-});
-/* harmony default export */ __webpack_exports__["default"] = (axios__WEBPACK_IMPORTED_MODULE_0___default.a);
 
 /***/ }),
 
@@ -70501,8 +70393,8 @@ var state = {
   notification: ''
 };
 var mutations = {
-  setNotification: function setNotification(state, message) {
-    state.notification = message;
+  clearNotification: function clearNotification(state) {
+    state.notification = null;
   }
 };
 var actions = {
