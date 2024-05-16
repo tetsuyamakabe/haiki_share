@@ -5,6 +5,8 @@ import store from './store';
 // 共通コンポーネント
 import HomeComponent from "./components/HomeComponent"; // HOME画面
 import TermsComponent from './components/TermsComponent.vue'; // 利用規約ページ
+import ErrorComponent from './components/ErrorComponent.vue'; // エラーページ
+import NotFoundComponent from './components/NotFoundComponent.vue' // NotFoundページ
 
 // 利用者側
 import UserRegisterComponent from './components/User/RegisterComponent.vue'; // ユーザー登録画面
@@ -51,6 +53,18 @@ const router = new VueRouter({
             path: '/terms',
             name: 'terms',
             component: TermsComponent
+        },
+        // エラーページ
+        {
+            path: '/500',
+            name: 'error',
+            component: ErrorComponent
+        },
+        // NotFoundページ
+        {
+            path: '/404',
+            name: 'NotFound',
+            component: NotFoundComponent
         },
         // 利用者側ユーザー登録画面
         {

@@ -1,10 +1,5 @@
 import axios from 'axios';
-import CustomError from './CustomError';
-
-// リダイレクト先の定義
-const redirectToLoginPage = () => {
-    window.location.href = '/home';
-};
+import router from './router';
 
 // レスポンスのinterceptorを設定
 axios.interceptors.response.use(
@@ -17,8 +12,17 @@ axios.interceptors.response.use(
         // 失敗時の処理
         switch (error.response?.status) {
             case 401:
-                redirectToLoginPage();
-                throw new CustomError('Unauthorized', 401); // HTTP 401 Unauthorized
+                router.push('/home');
+            break;
+            case 404:
+                router.push('/404');
+            break;
+            case 500:
+                router.push('/500');
+            break;
+            case 422:
+                this.errors = error.response.data.errors;
+            break;
         }
     }
 );

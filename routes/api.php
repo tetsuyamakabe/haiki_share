@@ -24,6 +24,11 @@ Route::get('categories', 'Products\Convenience\ProductController@getCategories')
 Route::get('prefecture', 'Products\User\ProductController@getPrefecture'); // 出品しているコンビニがある都道府県の取得
 
 Route::get('/user', fn() => Auth::user())->name('user'); // ユーザー情報の取得
+// トークンリフレッシュ
+Route::get('/reflesh-token', function (Illuminate\Http\Request $request) {
+    $request->session()->regenerateToken();
+    return response()->json();
+});
 
 // 利用者側
 Route::post('/user/register', 'Auth\User\RegisterController@create'); // ユーザー登録処理
