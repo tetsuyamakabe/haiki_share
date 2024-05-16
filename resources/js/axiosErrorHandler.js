@@ -20,9 +20,8 @@ axios.interceptors.response.use(
             case 500:
                 router.push('/500');
             break;
-            case 422:
-                this.errors = error.response.data.errors;
-            break;
+
+            default:
         }
     }
 );
