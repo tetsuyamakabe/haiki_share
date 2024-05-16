@@ -66,6 +66,7 @@ export default {
                 await this.$store.dispatch('auth/currentUser'); // ログイン状態を保持
                 this.$router.push({ name: 'user.mypage' }); // ログイン後、マイページに遷移
             } catch (error) {
+                console.log('errorは、', error);
                 console.error('ログイン失敗:', error.response.data);
                 this.errors = error.response.data.errors;
             }

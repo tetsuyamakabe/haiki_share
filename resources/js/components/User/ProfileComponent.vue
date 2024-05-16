@@ -57,7 +57,7 @@
 </template>
 
 <script>
-import axios from '../../axiosErrorHandler';
+import axios from 'axios';
 
 export default {
     data() {
@@ -105,6 +105,15 @@ export default {
                 this.formData.password_confirmation = ''; // 編集前のパスワード（再入力）は非表示（入力フォームを空）にする
                 this.formData.introduction = this.user.introduction || '';
                 this.formData.icon = this.user.icon || '';
+            }).catch(error => {
+                console.error('プロフィール情報取得失敗:', error.response.data);
+                if (error.response.status === 401) {
+                    // 401エラーの場合はHOME画面にリダイレクト
+                    this.$router.push({ name: 'home' });
+                } else {
+                    // その他のエラーの場合はエラーメッセージを表示
+                    this.errors = error.response.data.errors;
+                }
             });
         },
 
