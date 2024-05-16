@@ -57,7 +57,7 @@
 </template>
 
 <script>
-import axios from 'axios';
+import axios from '../../axiosErrorHandler';
 
 export default {
     data() {
@@ -105,15 +105,6 @@ export default {
                 this.formData.password_confirmation = ''; // 編集前のパスワード（再入力）は非表示（入力フォームを空）にする
                 this.formData.introduction = this.user.introduction || '';
                 this.formData.icon = this.user.icon || '';
-            }).catch(error => {
-                // 失敗時の処理
-                console.error('プロフィール取得失敗:', error.response.data);
-                // 401 Unauthorizedの場合、リダイレクトする
-                if (error.response.status === 401) {
-                    redirectToLoginPage();
-                } else {
-                    this.errors = error.response.data;
-                }
             });
         },
 
@@ -202,12 +193,3 @@ export default {
     }
 }
 </script>
-
-<style>
-.notification {
-  background-color: #ff0000;
-  color: #ffffff;
-  padding: 10px;
-  margin-bottom: 10px;
-}
-</style>

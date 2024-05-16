@@ -34,7 +34,7 @@ class MyPageController extends Controller
     }
 
     // プロフィール情報の取得処理
-   public function getProfile(Request $request)
+    public function getProfile(Request $request)
     {
         $user = Auth::user();
         \Log::info('$userは、', [$user]);
