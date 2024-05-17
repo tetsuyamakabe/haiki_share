@@ -4,9 +4,11 @@
             <h1 class="c-title u-mb__xl">利用者お気に入り登録商品一覧</h1>
             <div class="l-main__wrapper">
                 <div class="p-product__index p-product__index--like">
+                    <!-- 全体件数と1ページの表示件数を表示 -->
+                    <p class="c-text">{{ products.data ? products.data.length : 0 }}件表示 / 全{{ products.total ? products.total : 0 }}件中</p>
                     <ul class="p-product__list">
                         <!-- お気に入り登録商品がない場合 -->
-                        <li v-if="!products || products.length === 0" class="p-product__item">
+                        <li v-if="!products.data || products.data.length === 0" class="p-product__item">
                             <p class="c-text u-pd__xl">お気に入り登録された商品はありません。</p>
                         </li>
                         <!-- お気に入り登録商品一覧を表示 -->

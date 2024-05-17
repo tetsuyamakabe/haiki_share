@@ -1,13 +1,15 @@
 <template>
     <main class="l-main">
         <div class="l-main__user">
-            <h1 class="c-title u-mb__xl">利用者購入済み商品一覧</h1>
+            <h1 class="c-title u-mb__xl">利用者購入した商品一覧</h1>
             <div class="l-main__wrapper">
                 <div class="p-product__index p-product__index--purchased">
+                    <!-- 全体件数と1ページの表示件数を表示 -->
+                    <p class="c-text">{{ products.data ? products.data.length : 0 }}件表示 / 全{{ products.total ? products.total : 0 }}件中</p>
                     <ul class="p-product__list">
                         <!-- 購入済み商品がない場合 -->
-                        <li v-if="!products || products.length === 0" class="p-product__item">
-                            <p class="c-text u-pd__xl">購入済み商品はありません。</p>
+                        <li v-if="!products.data || products.data.length === 0" class="p-product__item">
+                            <p class="c-text u-pd__xl">購入した商品はありません。</p>
                         </li>
                         <!-- 購入済み商品一覧を表示 -->
                         <li v-else v-for="product in products" :key="product.id" class="p-product__item">

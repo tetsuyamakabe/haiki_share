@@ -18,10 +18,16 @@
                                 <ul class="p-product__list">
                                     <li v-for="product in saleProducts" :key="product.id" class="p-product__item">
                                         <div class="c-card u-m__s">
-                                            <h3 class="c-card__name u-pd__s">{{ product.name }}</h3>
-                                            <img class="c-card__picture" :src="getProductPicturePath(product)" alt="商品画像">
-                                            <p class="c-card__price">{{ product.price }}円</p>
-                                            <p class="c-card__date">{{ formatDate(product.expiration_date) }}</p>
+                                            <div class="p-card__header u-pd__s">
+                                                <h3 class="c-card__name u-pd__s">{{ product.name }}</h3>
+                                            </div>
+                                            <div class="p-card__container">
+                                                <img class="c-card__picture" :src="getProductPicturePath(product)" alt="商品画像">
+                                            </div>
+                                            <div class="p-card__footer">
+                                                <p class="c-card__price">{{ product.price }}円</p>
+                                                <p class="c-card__date">{{ formatDate(product.expiration_date) }}</p>
+                                            </div>
                                         </div>
                                     </li>
                                 </ul>
@@ -43,10 +49,16 @@
                                 <ul class="p-product__list">
                                     <li v-for="product in purchaseProducts" :key="product.id" class="p-product__item">
                                         <div class="c-card u-m__s">
-                                            <h3 class="c-card__name u-pd__s">{{ product.name }}</h3>
-                                            <img class="c-card__picture" :src="getProductPicturePath(product)" alt="商品画像">
-                                            <p class="c-card__price">{{ product.price }}円</p>
-                                            <p class="c-card__date">{{ formatDate(product.expiration_date) }}</p>
+                                            <div class="p-card__header u-pd__s">
+                                                <h3 class="c-card__name u-pd__s">{{ product.name }}</h3>
+                                            </div>
+                                            <div class="p-card__container">
+                                                <img class="c-card__picture" :src="getProductPicturePath(product)" alt="商品画像">
+                                            </div>
+                                            <div class="p-card__footer">
+                                                <p class="c-card__price">{{ product.price }}円</p>
+                                                <p class="c-card__date">{{ formatDate(product.expiration_date) }}</p>
+                                            </div>
                                         </div>
                                     </li>
                                 </ul>

@@ -5,6 +5,8 @@
             <div class="p-article__mypage">
                 <div class="l-main__wrapper">
                     <div class="p-product__index">
+                        <!-- 全体件数と1ページの表示件数を表示 -->
+                        <p class="c-text">{{ products.data ? products.data.length : 0 }}件表示 / 全{{ products.total ? products.total : 0 }}件中</p>
                         <ul class="p-product__list">
                             <!-- 検索結果がない場合 -->
                             <li v-if="!products.data || products.data.length === 0" class="p-product__item">
@@ -114,6 +116,7 @@ export default {
 
         // ページが変更されたときの処理
         onPageChange(page) {
+            console.log('onPageChangeメソッドのpageは、', page);
             if (this.currentPage !== page) { // 現在のページ番号と新しいページ番号が異なるか
                 this.currentPage = page; // ページ番号を更新
                 const params = Object.assign({}, this.$route.query);
@@ -141,7 +144,7 @@ export default {
             const params = Object.assign({}, this.$route.query); // クエリパラメータのコピーを作成
             console.log('paramsは、', params);
             axios.get('/api/products', { params: params }).then(response => {
-                console.log('paramsは、', params);
+                console.log('curent_pageは、', response.data.products.current_page);
                 console.log('getProductのAPIからのレスポンス:', response.data);
                 this.products = response.data.products;
                 console.log('productsは、', this.products);

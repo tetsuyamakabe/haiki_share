@@ -7,4 +7,17 @@
     @include mq(sm){
         font-size: 12px;
     }
+
+    &__purchase {
+        position: absolute;
+        top: 25%;
+        left: 25%;
+        opacity: 0.8;
+        padding: 16px;
+        background: #ff0000;
+        color: #fff;
+        text-align: center;
+        font-weight: bold;
+        border-radius: 5px;
+    }
 }

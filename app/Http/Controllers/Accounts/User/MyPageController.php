@@ -37,7 +37,7 @@ class MyPageController extends Controller
     public function getProfile(Request $request)
     {
         $user = Auth::user();
-        \Log::info('$userは、', [$user]);
+        // \Log::info('$userは、', [$user]);
         return response()->json(['user' => $user]);
     }
 

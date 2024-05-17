@@ -113,8 +113,18 @@ class ProductController extends Controller
             if (!$convenience) {
                 return response()->json(['error' => 'コンビニが見つかりません'], 404);
             }
-            $product = Product::with('pictures')->where('convenience_store_id', $convenience->id)->paginate(10);
-            return response()->json(['products' => $product]);
+            
+            $products = Product::with('pictures')->where('convenience_store_id', $convenience->id)->paginate(10);
+            
+            // 購入情報を取得し、各商品に is_purchased プロパティを設定する
+            foreach ($products as $product) {
+                $purchase = Purchase::where('product_id', $product->id)->first();
+                $purchasedId = $purchase ? $purchase->purchaser->id : null;
+                $product->is_purchased = $purchase ? true : false;
+                $product->purchased_id = $purchasedId;
+            }
+
+            return response()->json(['products' => $products]);
         } catch (\Exception $e) {
             return response()->json(['error' => '商品が見つかりません'], 404);
         }
