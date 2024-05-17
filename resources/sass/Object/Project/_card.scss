@@ -2,4 +2,9 @@
     &__header {
         min-height: 48px;
     }
+
+    &__container {
+        position: relative;
+        display: inline-block;
+    }
 }

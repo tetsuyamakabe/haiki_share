@@ -306,7 +306,7 @@ body {
 .l-main__wrapper {
   padding: 40px;
   border: 0.5px solid #434343;
-  min-width: 819px;
+  min-width: 73%;
 }
 
 @media screen and (max-width: 414px) {
@@ -568,6 +568,7 @@ body {
   font-size: 16px;
   padding: 8px;
   margin: 8px;
+  text-align: center;
 }
 
 .c-button__share {
@@ -603,6 +604,7 @@ body {
 }
 
 .c-card__picture {
+  display: block;
   width: 100%;
   height: 150px;
   min-width: 200px;
@@ -757,6 +759,19 @@ body {
   .c-label {
     font-size: 12px;
   }
+}
+
+.c-label__purchase {
+  position: absolute;
+  top: 25%;
+  left: 25%;
+  opacity: 0.8;
+  padding: 16px;
+  background: #ff0000;
+  color: #fff;
+  text-align: center;
+  font-weight: bold;
+  border-radius: 5px;
 }
 
 .c-link {
@@ -954,6 +969,11 @@ body {
   min-height: 48px;
 }
 
+.p-card__container {
+  position: relative;
+  display: inline-block;
+}
+
 .p-like {
   display: flex;
   align-items: center;
@@ -963,7 +983,6 @@ body {
 .p-mypage__sidebar {
   display: flex;
   flex-direction: column;
-  width: 180px;
 }
 
 @media screen and (max-width: 414px) {
@@ -1018,7 +1037,7 @@ body {
 
 .p-product__index {
   background: #fefefe;
-  padding: 24px 58px;
+  padding: 24px 40px;
 }
 
 .p-product__index--like,

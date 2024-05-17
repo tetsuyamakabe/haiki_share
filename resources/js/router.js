@@ -227,7 +227,7 @@ router.beforeEach(async (to, from, next) => {
     console.log('現在のパス:', to.path);
 
     // セッションタイムアウトして、現在パスが公開パスではない場合はHOME画面にリダイレクト
-    if (!isLogin && !publicPaths.includes(to.path)) {
+    if (!isLogin && !publicPaths.includes(to.path) && !to.path.includes('/password/reset')) { // パスワードリセット画面のパスは除外
         console.log('セッションタイムアウトのため、リダイレクトします');
         next('/home');
     } else {

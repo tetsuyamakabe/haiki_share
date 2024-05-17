@@ -4,9 +4,11 @@
             <h1 class="c-title u-mb__xl">コンビニ購入された商品一覧</h1>
             <div class="l-main__wrapper">
                 <div class="p-product__index p-product__index--purchased">
+                    <!-- 全体件数と1ページの表示件数を表示 -->
+                    <p class="c-text">{{ products.data ? products.data.length : 0 }}件表示 / 全{{ products.total ? products.total : 0 }}件中</p>
                     <ul class="p-product__list">
                         <!-- 購入された商品がない場合 -->
-                        <li v-if="!products || products.data.length === 0" class="p-product__item">
+                        <li v-if="!products.data || products.data.length === 0" class="p-product__item">
                             <p class="c-text u-pd__xl">購入された商品はありません。</p>
                         </li>
                         <!-- 購入された商品一覧を表示 -->

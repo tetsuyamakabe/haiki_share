@@ -38,7 +38,7 @@
 </template>
   
 <script>
-import axios from 'axios';
+import axios from '../../axiosErrorHandler';
 
 export default {
     data() {

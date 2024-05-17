@@ -13,15 +13,16 @@ axios.interceptors.response.use(
         switch (error.response?.status) {
             case 401:
                 router.push('/home');
-            break;
+                break;
             case 404:
                 router.push('/404');
-            break;
+                break;
             case 500:
                 router.push('/500');
-            break;
-
+                break;
             default:
+                // 未定義のエラーコードの場合はPromise.reject()を返す
+                return Promise.reject(error);
         }
     }
 );
