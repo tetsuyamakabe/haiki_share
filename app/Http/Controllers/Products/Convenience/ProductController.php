@@ -86,7 +86,7 @@ class ProductController extends Controller
         }
 
         // コレクションを取得
-        $products = $query->paginate(4);
+        $products = $query->orderBy('created_at', 'desc')->paginate(4);
 
         // 各商品に対して処理を行う
         foreach ($products as $product) {

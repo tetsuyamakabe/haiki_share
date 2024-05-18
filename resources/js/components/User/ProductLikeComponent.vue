@@ -76,27 +76,19 @@ export default {
 
     methods: {
         // URLを作成する
-        createURL(params) {
-            console.log('検索URLを作成します');
-            // URLの組み立て
-            let url = `/user/products/liked`;
-
-            if (params && params.page) {
-                url += `?page=${params.page}`;
-            } else {
-                url += `?page=${this.currentPage}`;
+        onPageChange(page) {
+            console.log('onPageChangeメソッドのpageは、', page);
+            if (this.currentPage !== page) { // 現在のページ番号と新しいページ番号が異なるか
+                this.currentPage = page; // ページ番号を更新
+                const params = Object.assign({}, this.$route.query);
+                params.page = page; // 新しいページ番号にする
+                this.createURL(params); // 新しいURLを生成して画面遷移
             }
-
-            console.log('検索URL:', url);
-            // ページ遷移
-            // if (this.$route.fullPath !== url) { // 現在のURLと新しいURLが異なるか
-                this.$router.push(url);
-                this.getProduct();
-            // }
         },
 
         // ページが変更されたときの処理
         onPageChange(page) {
+            console.log('onPageChangeメソッドのpageは、', page);
             if (this.currentPage !== page) { // 現在のページ番号と新しいページ番号が異なるか
                 this.currentPage = page; // ページ番号を更新
                 const params = Object.assign({}, this.$route.query);
@@ -110,7 +102,6 @@ export default {
             console.log('お気に入り登録商品情報を取得します');
             // 現在のルートのクエリパラメータを取得
             const params = Object.assign({}, this.$route.query); // クエリパラメータのコピーを作成
-            params.page = this.currentPage; // ページ番号を設定
             console.log('paramsは、', params, 'this.currentPageは、', this.currentPage);
             axios.get('/api/user/products/liked', { params: params }).then(response => {
                 console.log('curent_pageは、', response.data.products.current_page);

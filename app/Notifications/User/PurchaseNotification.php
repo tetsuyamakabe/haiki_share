@@ -11,15 +11,19 @@ class PurchaseNotification extends Notification
 {
     use Queueable;
     protected $product;
+    protected $convenience;
+    protected $formattedExpirationDate;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct($product)
+    public function __construct($product, $convenience, $formattedExpirationDate)
     {
         $this->product = $product;
+        $this->convenience = $convenience;
+        $this->formattedExpirationDate = $formattedExpirationDate;
     }
 
     /**
@@ -41,9 +45,16 @@ class PurchaseNotification extends Notification
      */
     public function toMail($notifiable)
     {
-        return (new MailMessage)
-                    ->subject('【' . config('app.name') . '】商品購入完了メール')
-                    ->view('products.purchase', ['product' => $this->product]);
+        $mail = (new MailMessage)
+            ->subject('【' . config('app.name') . '】商品購入完了メール');
+
+        if ($notifiable->role === 'user') {
+            $mail->view('products.user.purchase', ['product' => $this->product, 'convenience' => $this->convenience, 'formattedExpirationDate' => $this->formattedExpirationDate]);
+        } elseif ($notifiable->role === 'convenience') {
+            $mail->view('products.convenience.purchase', ['product' => $this->product, 'convenience' => $this->convenience, 'formattedExpirationDate' => $this->formattedExpirationDate]);
+        }
+
+        return $mail;
     }
 
     /**

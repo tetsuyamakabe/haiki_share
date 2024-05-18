@@ -83,14 +83,14 @@ export default {
 
             console.log('検索URL:', url);
             // ページ遷移
-            // if (this.$route.fullPath !== url) { // 現在のURLと新しいURLが異なるか
-                this.$router.push(url);
-                this.getProduct();
-            // }
+            this.$router.push(url).then(() => {
+                this.getProduct(); // ページ遷移が完了した後にgetProductを呼び出す
+            });
         },
 
         // ページが変更されたときの処理
         onPageChange(page) {
+            console.log('onPageChangeメソッドのpageは、', page);
             if (this.currentPage !== page) { // 現在のページ番号と新しいページ番号が異なるか
                 this.currentPage = page; // ページ番号を更新
                 const params = Object.assign({}, this.$route.query);
@@ -104,7 +104,6 @@ export default {
             console.log('購入された商品情報を取得します');
             // 現在のルートのクエリパラメータを取得
             const params = Object.assign({}, this.$route.query); // クエリパラメータのコピーを作成
-            params.page = this.currentPage; // ページ番号を設定
             console.log('paramsは、', params, 'this.currentPageは、', this.currentPage);
             axios.get('/api/convenience/products/purchased', { params: params }).then(response => {
                 console.log('curent_pageは、', response.data.products.current_page);

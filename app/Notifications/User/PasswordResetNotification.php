@@ -42,11 +42,12 @@ class PasswordResetNotification extends Notification
      */
     public function toMail($notifiable): MailMessage
     {
-        $url = route('user.password.reset', ['token' => $this->token, 'email' => $notifiable->getEmailForPasswordReset()]);
-        $count = config('auth.passwords.users.expire');
-        return (new MailMessage())
-            ->subject('【' . config('app.name') . '】パスワード再設定')
-            ->markdown('auth.user.mail.passwordreset', ['reset_url' => $url, 'count' => $count]);
+        $mail = (new MailMessage)
+            ->subject('【' . config('app.name') . '】パスワード再設定');
+            $url = route('user.password.reset', ['token' => $this->token, 'email' => $notifiable->getEmailForPasswordReset()]);
+            $count = config('auth.passwords.users.expire');
+            $mail->view('auth.user.passwordreset', ['reset_url' => $url, 'count' => $count]);
+        return $mail;
     }
 
     /**
