@@ -2,10 +2,10 @@
     display: inline;
     text-align: center;
     text-decoration: none;
-    color: #434343;
+    color: $font-color_default;
 
     @include mq(sm){
-        font-size: 12px;
+        font-size: $font-size_m;
     }
 
     &:hover {
@@ -19,5 +19,4 @@
     &__back {
         display: inline-block;
     }
-
 }

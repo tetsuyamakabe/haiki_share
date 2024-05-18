@@ -3,17 +3,18 @@
     list-style-type: none;
 
     & li {
-        border: 1px solid #434343;
-        padding: 16px 24px;
+        border: 1px solid $boader-color_default;
+        padding: $space_l;
         text-align: center;
-        @include mq(sm){
-            padding: 8px;
+
+        @include mq(sm) {
+            padding: $space_s;
         }  
     }
 
     & .active {
         background-color: #32cd32;
-        color: #fefefe;
+        color: $font-color_sub;
     }
 
     &.inactive{

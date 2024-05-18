@@ -6,67 +6,67 @@
                 <form @submit.prevent="submitForm" class="c-form">
 
                     <!-- バリデーションエラーメッセージ -->
-                    <span v-if="errors && errors.convenience_name" class="c-error">{{ errors.convenience_name[0] }}</span>
-                    <span v-if="errors && errors.branch_name" class="c-error">{{ errors.branch_name[0] }}</span>
-                    <span v-if="errors && errors.address" class="c-error">{{ errors.address[0] }}</span>
-                    <span v-if="errors && errors.prefecture" class="c-error">{{ errors.prefecture[0] }}</span>
-                    <span v-if="errors && errors.city" class="c-error">{{ errors.city[0] }}</span>
-                    <span v-if="errors && errors.town" class="c-error">{{ errors.town[0] }}</span>
-                    <span v-if="errors && errors.building" class="c-error">{{ errors.building[0] }}</span>
-                    <span v-if="errors && errors.email" class="c-error">{{ errors.email[0] }}</span>
-                    <span v-if="errors && errors.password" class="c-error">{{ errors.password[0] }}</span>
-                    <span v-if="errors && errors.password_confirmation" class="c-error">{{ errors.password_confirmation[0] }}</span>
-                    <span v-if="errors && errors.introduction" class="c-error">{{ errors.introduction[0] }}</span>
-                    <span v-if="errors && errors.icon" class="c-error">{{ errors.icon[0] }}</span>
+                    <span v-if="errors && errors.convenience_name" class="c-error u-mt__s u-mb__s">{{ errors.convenience_name[0] }}</span>
+                    <span v-if="errors && errors.branch_name" class="c-error u-mt__s u-mb__s">{{ errors.branch_name[0] }}</span>
+                    <span v-if="errors && errors.address" class="c-error u-mt__s u-mb__s">{{ errors.address[0] }}</span>
+                    <span v-if="errors && errors.prefecture" class="c-error u-mt__s u-mb__s">{{ errors.prefecture[0] }}</span>
+                    <span v-if="errors && errors.city" class="c-error u-mt__s u-mb__s">{{ errors.city[0] }}</span>
+                    <span v-if="errors && errors.town" class="c-error u-mt__s u-mb__s">{{ errors.town[0] }}</span>
+                    <span v-if="errors && errors.building" class="c-error u-mt__s u-mb__s">{{ errors.building[0] }}</span>
+                    <span v-if="errors && errors.email" class="c-error u-mt__s u-mb__s">{{ errors.email[0] }}</span>
+                    <span v-if="errors && errors.password" class="c-error u-mt__s u-mb__s">{{ errors.password[0] }}</span>
+                    <span v-if="errors && errors.password_confirmation" class="c-error u-mt__s u-mb__s">{{ errors.password_confirmation[0] }}</span>
+                    <span v-if="errors && errors.introduction" class="c-error u-mt__s u-mb__s">{{ errors.introduction[0] }}</span>
+                    <span v-if="errors && errors.icon" class="c-error u-mt__s u-mb__s">{{ errors.icon[0] }}</span>
 
                     <!-- コンビニ名 -->
                     <label for="convenience_name" class="c-label">コンビニ名</label>
-                    <input v-model="formData.convenience_name" id="convenience_name" type="text" class="c-input" :class="{ 'is-invalid': errors && errors.convenience_name }" autocomplete="name">
+                    <input v-model="formData.convenience_name" id="convenience_name" type="text" class="c-input u-pd__s u-mt__m u-mb__m" :class="{ 'is-invalid': errors && errors.convenience_name }" autocomplete="name">
                     <!-- 支店名 -->
                     <label for="branch_name" class="c-label">支店名</label>
-                    <input v-model="formData.branch_name" id="branch_name" type="text" class="c-input" :class="{ 'is-invalid': errors && errors.branch_name }" autocomplete="branch_name">
+                    <input v-model="formData.branch_name" id="branch_name" type="text" class="c-input u-pd__s u-mt__m u-mb__m" :class="{ 'is-invalid': errors && errors.branch_name }" autocomplete="branch_name">
                     <!-- 郵便番号 -->
                     <label for="address" class="c-label">郵便番号</label>
-                    <input v-model="formData.postalcode" id="address" type="text" class="c-input" :class="{ 'is-invalid': errors && errors.address }" autocomplete="address" placeholder="郵便番号で住所を簡単入力できます">
+                    <input v-model="formData.postalcode" id="address" type="text" class="c-input u-pd__s u-mt__m u-mb__m" :class="{ 'is-invalid': errors && errors.address }" autocomplete="address" placeholder="郵便番号で住所を簡単入力できます">
                     <div class="p-register__zip">
                         <button type="button" class="c-button c-button__convenience" @click="searchAddress">郵便番号検索</button>
                     </div>
                     <!-- 都道府県 -->
                     <label for="prefecture" class="c-label">都道府県</label>
-                    <input v-model="formData.prefecture" id="prefecture" type="text" class="c-input" :class="{ 'is-invalid': errors && errors.prefecture }" autocomplete="prefecture">
+                    <input v-model="formData.prefecture" id="prefecture" type="text" class="c-input u-pd__s u-mt__m u-mb__m" :class="{ 'is-invalid': errors && errors.prefecture }" autocomplete="prefecture">
                     <!-- 市区町村 -->
                     <label for="city" class="c-label">市区町村</label>
-                    <input v-model="formData.city" id="city" type="text" class="c-input" :class="{ 'is-invalid': errors && errors.city }" autocomplete="city">
+                    <input v-model="formData.city" id="city" type="text" class="c-input u-pd__s u-mt__m u-mb__m" :class="{ 'is-invalid': errors && errors.city }" autocomplete="city">
                     <!-- 地名・番地 -->
                     <label for="town" class="c-label">地名・番地</label>
-                    <input v-model="formData.town" id="town" type="text" class="c-input" :class="{ 'is-invalid': errors && errors.town }" autocomplete="town">
+                    <input v-model="formData.town" id="town" type="text" class="c-input u-pd__s u-mt__m u-mb__m" :class="{ 'is-invalid': errors && errors.town }" autocomplete="town">
                     <!-- 建物名・部屋番号 -->
                     <label for="building" class="c-label">建物名・部屋番号</label>
-                    <input v-model="formData.building" id="building" type="text" class="c-input" :class="{ 'is-invalid': errors && errors.building }" autocomplete="building">
+                    <input v-model="formData.building" id="building" type="text" class="c-input u-pd__s u-mt__m u-mb__m" :class="{ 'is-invalid': errors && errors.building }" autocomplete="building">
                     <!-- メールアドレス -->
                     <label for="email" class="c-label">メールアドレス</label>
-                    <input v-model="formData.email" id="email" type="email" class="c-input" :class="{ 'is-invalid': errors && errors.email }" autocomplete="email">
+                    <input v-model="formData.email" id="email" type="email" class="c-input u-pd__s u-mt__m u-mb__m" :class="{ 'is-invalid': errors && errors.email }" autocomplete="email">
                     <!-- パスワード -->
                     <label for="password" class="c-label">パスワード</label>
                     <div class="c-input__password">
-                        <input v-model="formData.password" id="password" :type="PasswordType" class="c-input" :class="{ 'is-invalid': errors && errors.password }" placeholder="英数字8文字以上で入力してください">
+                        <input v-model="formData.password" id="password" :type="PasswordType" class="c-input u-pd__s u-mt__m u-mb__m" :class="{ 'is-invalid': errors && errors.password }" placeholder="英数字8文字以上で入力してください">
                         <span @click="togglePasswordVisibility('password')"><i :class="PasswordIconClass"></i></span>
                     </div>
                     <!-- パスワード（再入力） -->
                     <label for="password-confirm" class="c-label">パスワード（再入力）</label>
                     <div class="c-input__password">
-                        <input v-model="formData.password_confirmation" id="password-confirm" :type="PasswordConfirmType" class="c-input" :class="{ 'is-invalid': errors && errors.password_confirmation }" placeholder="英数字8文字以上で入力してください">
+                        <input v-model="formData.password_confirmation" id="password-confirm" :type="PasswordConfirmType" class="c-input u-pd__s u-mt__m u-mb__m" :class="{ 'is-invalid': errors && errors.password_confirmation }" placeholder="英数字8文字以上で入力してください">
                         <span @click="togglePasswordVisibility('password_confirm')"><i :class="PasswordConfirmIconClass"></i></span>
                     </div>
                     <!-- 自己紹介 -->
                     <label for="introduction" class="c-label">自己紹介</label>
                     <div class="p-textarea__form">
-                        <textarea v-model.trim="formData.introduction" maxlength="50" id="introduction" type="text" class="c-textarea" autocomplete="introduction" @keyup="countCharacters" :class="{ 'is-invalid': errors && errors.introduction }" placeholder="50文字以内で入力してください"></textarea>
+                        <textarea v-model.trim="formData.introduction" maxlength="50" id="introduction" type="text" class="c-textarea u-pd__s u-mt__m u-mb__m" autocomplete="introduction" @keyup="countCharacters" :class="{ 'is-invalid': errors && errors.introduction }" placeholder="50文字以内で入力してください"></textarea>
                         <span class="c-textarea__count">{{ formData.introduction.length }} / 50文字</span>
                     </div>
                     <!-- 顔写真 -->
                     <label for="profile-icon" class="c-label">顔写真</label>
-                    <div class="p-profile__icon p-profile__icon--container" @drop="handleDrop" :class="{ 'is-invalid': errors && errors.icon }">
+                    <div class="p-profile__icon p-profile__icon--container u-pd__s" @drop="handleDrop" :class="{ 'is-invalid': errors && errors.icon }">
                         <input type="file" id="profile-icon" @change="handleFileChange" class="c-input__hidden">
                         <img v-if="!iconPreview && formData.icon" :src="'/storage/icons/' + formData.icon" alt="アップロード顔写真" class="p-profile__icon">
                         <img v-else-if="iconPreview" :src="iconPreview" alt="アップロード顔写真" class="p-profile__icon">
@@ -74,7 +74,7 @@
                     </div>
 
                     <!-- 更新ボタン -->
-                    <button type="submit" class="c-button c-button__submit c-button__convenience u-mt__m">更新する</button>
+                    <button type="submit" class="c-button c-button__submit c-button__convenience u-pd__s u-mt__m">更新する</button>
 
                 </form>
             </section>

@@ -1,6 +1,6 @@
 .c-text {
-    @include mq(sm){
-        font-size: 12px;
+    @include mq(sm) {
+        font-size: $font-size_m;
     }
 
     &__max {
@@ -15,11 +15,12 @@
 
     &__attention {
         position: absolute;
-        font-size: 12px;
         right: 0px;
         bottom: -3px;
-        @include mq(sm){
-            font-size: 8px;
+        font-size: $font-size_m;
+
+        @include mq(sm) {
+            font-size: $font-size_s;
         }
     }
 }

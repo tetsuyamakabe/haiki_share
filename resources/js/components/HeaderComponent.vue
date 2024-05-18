@@ -1,5 +1,5 @@
 <template>
-    <header class="l-header">
+    <header class="l-header u-pdr__xl u-pdl__xl">
         <div class="l-header__inner">
             <router-link class="l-header__title" :to="{ name: 'home' }">
                 haiki share

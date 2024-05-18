@@ -104,7 +104,8 @@ class ProductController extends Controller
     public function getPurchasedProducts()
     {
         $user = Auth::user();
-        $products = $user->purchases()->with('product.pictures')->get();
+        $products = $user->purchases()->with('product.pictures')
+            ->orderBy('created_at', 'desc')->paginate(4);
         return response()->json(['products' => $products]);
     }
 

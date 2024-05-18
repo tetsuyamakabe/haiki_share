@@ -1,15 +1,14 @@
 .c-button {
-    text-decoration: none;
     border-radius: 3px;
-    background: #fefefe;
+    text-decoration: none;
+    font-size: $font-size_default;
+    background: $background-color_sub;
 
-    @include mq(sm){
-        font-size: 8px;
+    @include mq(sm) {
+        font-size: $font-size_m;
     }
 
     &__submit {
-        padding: 8px;
-        font-size: 16px;
         transition: 0.3s;
         width: 100%;
         font-weight: bold;
@@ -42,29 +41,31 @@
     }
 
     &__detail,
-    &__edit {
+    &__edit,
+    &__cancel {
         display: block;
-        color: #434343;
-        font-size: 16px;
-        padding: 8px;
-        margin: 8px;
         text-align: center;
+        color: $font-color_default;
+        padding: $space_s;
+        margin: $space_s;
+
+        @include mq(sm) {
+            font-size: $font-size_s;
+        }
     }
+
 
     &__share {
         background: #000;
-        padding: 8px;
+        border: #000;
     }
 
     &__purchase {
         display: block;
-        color: #434343;
-        font-size: 16px;
-        padding: 8px;
-        margin: 8px;
+        color: $font-color_default;
 
         &:disabled{
-            background: #ccc;
+            background: $background-color_sub;
             cursor: not-allowed;
         }
     }

@@ -18,39 +18,36 @@ $green: #38c172;
 $teal: #4dc0b5;
 $cyan: #6cb2eb;
 
+// 変数
+$font-color_default: #434343;
+$font-color_msg: #ff0000;
+$color_corp: #82765c; // 要修正
+$font-color_sub: #fefefe;
 
-//===========================
-//変数
-//===========================
-$font-color_default: #333;
-$font-color_link-1: #333;
-$font-color_link-2: #fff;
-$font-color_main: #f66d9b;
-$font-color_hover: #fff;
-$font-color_hover2: #ff0000;
-$color_corp: #82765c;
-$font-color-sub1: #ccc;
-$font-color-sub2: #000;
-$font-color-sub3: #fff;
+$font-color_like: #ff7fbf;
+$font-color_unlike: #999;
 
-
-$background-color_sub1: #333;
-$background-color_sub2: #fff;
-$background-color_sub3: #ccc;
 $background-color_main: #f6f5f4;
-$background-color_main2: #f66d9b;
-$background-color_hover: #f66d9b;
-$background-color_hover2: #000;
+$background-color_sub: #fefefe;
+$background-color_sub2: #eee;
+$background-color_sub3: #434343;
+$background-color_btn: #ffa500;
+$background-color_valid: #ffcccc;
+$background-color_label: #ff0000;
+
+$boader-color_default: #434343;
+
+$twitter-share_color: #000;
 
 $site-width: 980px;
 
-$font-size_s: 12px;
-$font-size_m: 14px;
+$font-size_s: 8px;
+$font-size_m: 12px;
 $font-size_default: 16px;
-$font-size_l: 18px;
-$font-size_xl: 24px;
-$font-size_xxl: 30px;
-$font-size_3l: 40px;
+$font-size_l: 24px;
+$font-size_xl: 32px;
+$font-size_xxl: 40px;
+$font-size_3l: 48px;
 
 $space_s: 8px;
 $space_m: 16px;
@@ -61,7 +58,7 @@ $space_3l: 48px;
 
 $font-family_default: Quicksand, 游ゴシック体, "Yu Gothic", YuGothic, "ヒラギノ角ゴシック Pro", "Hiragino Kaku Gothic Pro", メイリオ, Meiryo, Osaka, "ＭＳ Ｐゴシック", "MS PGothic", sans-serif;
 
-$font-family_corp: 'Robot', sans-serif;
+$font-family_corp: 'Arial', sans-serif;
 
 //マップ型変数
 $breakpoints: (
@@ -71,15 +68,7 @@ $breakpoints: (
     'xl': 'screen and (max-width: 1200px)',
 ) !default;
 
-//===========================
-//mixin
-//===========================
-@mixin mq($breakpoint: md){
-    @media #{map-get($breakpoints, $breakpoint)}{
-        @content;
-    }
-}
-
+// mixin
 @mixin mq($breakpoint: sm){
     @media #{map-get($breakpoints, $breakpoint)}{
         @content;

@@ -5833,13 +5833,17 @@ __webpack_require__.r(__webpack_exports__);
       console.log('購入された商品情報を取得します');
       // 現在のルートのクエリパラメータを取得
       var params = Object.assign({}, this.$route.query); // クエリパラメータのコピーを作成
+      params.page = this.currentPage; // ページ番号を設定
+      console.log('paramsは、', params, 'this.currentPageは、', this.currentPage);
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/convenience/products/purchased', {
         params: params
       }).then(function (response) {
+        console.log('curent_pageは、', response.data.products.current_page);
+        console.log('getProductのAPIからのレスポンス:', response.data);
         _this.products = response.data.products;
-        console.log('商品一覧:', _this.products);
-        console.log('APIからのレスポンス:', response.data);
+        console.log('this.productsは、', _this.products);
         _this.lastPage = response.data.products.last_page;
+        console.log('this.lastPageは、', _this.lastPage);
       })["catch"](function (error) {
         console.error('商品情報取得失敗:', error.response.data);
         _this.errors = error.response.data;
@@ -6158,13 +6162,17 @@ __webpack_require__.r(__webpack_exports__);
       console.log('出品した商品情報を取得します');
       // 現在のルートのクエリパラメータを取得
       var params = Object.assign({}, this.$route.query); // クエリパラメータのコピーを作成
+      params.page = this.currentPage; // ページ番号を設定
+      console.log('paramsは、', params, 'this.currentPageは、', this.currentPage);
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/convenience/products', {
         params: params
       }).then(function (response) {
+        console.log('curent_pageは、', response.data.products.current_page);
+        console.log('getProductのAPIからのレスポンス:', response.data);
         _this.products = response.data.products;
-        console.log('商品一覧:', _this.products);
-        console.log('APIからのレスポンス:', response.data);
+        console.log('productsは、', _this.products);
         _this.lastPage = response.data.products.last_page;
+        console.log('this.lastPageは、', _this.lastPage);
       })["catch"](function (error) {
         console.error('商品情報取得失敗:', error.response.data);
         _this.errors = error.response.data;
@@ -6844,6 +6852,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({});
 
@@ -7142,6 +7151,117 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/PrivacyPolicyComponent.vue?vue&type=script&lang=js":
+/*!********************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/PrivacyPolicyComponent.vue?vue&type=script&lang=js ***!
+  \********************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ProductAllIndexComponent.vue?vue&type=script&lang=js":
 /*!**********************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ProductAllIndexComponent.vue?vue&type=script&lang=js ***!
@@ -7237,6 +7357,7 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     // URLを作成する
     createURL: function createURL(params) {
+      var _this = this;
       console.log('検索URLを作成します');
       // URLの組み立て
       var url = "/products";
@@ -7259,10 +7380,9 @@ __webpack_require__.r(__webpack_exports__);
       }
       console.log('検索URL:', url);
       // ページ遷移
-      // if (this.$route.fullPath !== url) { // 現在のURLと新しいURLが異なるか
-      this.$router.push(url);
-      this.getProduct();
-      // }
+      this.$router.push(url).then(function () {
+        _this.getProduct(); // ページ遷移が完了した後にgetProductを呼び出す
+      });
     },
     // ページが変更されたときの処理
     onPageChange: function onPageChange(page) {
@@ -7277,6 +7397,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     // 検索結果を表示する
     searchResult: function searchResult(params) {
+      console.log('searchResultのparamsは、', params);
       // 前回の検索条件が同じであればページ遷移を行わずに検索結果を再取得する
       if (JSON.stringify(params) === JSON.stringify(this.lastParams)) {
         this.getProduct(params); // 前回と同じ検索条件での再取得
@@ -7288,23 +7409,24 @@ __webpack_require__.r(__webpack_exports__);
     },
     // 商品情報をサーバーから取得
     getProduct: function getProduct() {
-      var _this = this;
+      var _this2 = this;
       console.log('すべての商品情報を取得します');
       // 現在のルートのクエリパラメータを取得
       var params = Object.assign({}, this.$route.query); // クエリパラメータのコピーを作成
-      console.log('paramsは、', params);
+      params.page = this.currentPage; // ページ番号を設定
+      console.log('paramsは、', params, 'this.currentPageは、', this.currentPage);
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/products', {
         params: params
       }).then(function (response) {
         console.log('curent_pageは、', response.data.products.current_page);
         console.log('getProductのAPIからのレスポンス:', response.data);
-        _this.products = response.data.products;
-        console.log('productsは、', _this.products);
-        _this.lastPage = response.data.products.last_page;
-        console.log('this.lastPageは、', _this.lastPage);
+        _this2.products = response.data.products;
+        console.log('productsは、', _this2.products);
+        _this2.lastPage = response.data.products.last_page;
+        console.log('this.lastPageは、', _this2.lastPage);
       })["catch"](function (error) {
         console.error('商品情報取得失敗:', error.response.data);
-        _this.errors = error.response.data;
+        _this2.errors = error.response.data;
       });
     },
     // 商品画像のパスを取得するメソッド
@@ -7433,7 +7555,7 @@ __webpack_require__.r(__webpack_exports__);
       // 最小価格
       maxPrice: 0,
       // 最大価格
-      isExpired: false // 賞味期限切れかどうか
+      isExpired: '' // 賞味期限切れかどうか
     };
   },
   created: function created() {
@@ -7485,6 +7607,30 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -7767,8 +7913,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-//
-//
 //
 //
 //
@@ -8243,13 +8387,17 @@ __webpack_require__.r(__webpack_exports__);
       console.log('お気に入り登録商品情報を取得します');
       // 現在のルートのクエリパラメータを取得
       var params = Object.assign({}, this.$route.query); // クエリパラメータのコピーを作成
+      params.page = this.currentPage; // ページ番号を設定
+      console.log('paramsは、', params, 'this.currentPageは、', this.currentPage);
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/user/products/liked', {
         params: params
       }).then(function (response) {
+        console.log('curent_pageは、', response.data.products.current_page);
+        console.log('getProductのAPIからのレスポンス:', response.data);
         _this.products = response.data.products;
-        console.log('商品一覧:', _this.products);
-        console.log('APIからのレスポンス:', response.data);
+        console.log('productsは、', _this.products);
         _this.lastPage = response.data.products.last_page;
+        console.log('this.lastPageは、', _this.lastPage);
       })["catch"](function (error) {
         console.error('商品情報取得失敗:', error.response.data);
         _this.errors = error.response.data;
@@ -8362,12 +8510,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
 
 
  // ページネーションコンポーネント
@@ -8426,13 +8568,17 @@ __webpack_require__.r(__webpack_exports__);
       console.log('購入済み商品情報を取得します');
       // 現在のルートのクエリパラメータを取得
       var params = Object.assign({}, this.$route.query); // クエリパラメータのコピーを作成
+      params.page = this.currentPage; // ページ番号を設定
+      console.log('paramsは、', params, 'this.currentPageは、', this.currentPage);
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/user/products/purchased', {
         params: params
       }).then(function (response) {
+        console.log('curent_pageは、', response.data.products.current_page);
+        console.log('getProductのAPIからのレスポンス:', response.data);
         _this.products = response.data.products;
-        console.log('商品一覧:', _this.products);
-        console.log('APIからのレスポンス:', response.data);
+        console.log('productsは、', _this.products);
         _this.lastPage = response.data.products.last_page;
+        console.log('this.lastPageは、', _this.lastPage);
       })["catch"](function (error) {
         console.error('商品情報取得失敗:', error.response.data);
         _this.errors = error.response.data;
@@ -8502,8 +8648,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _axiosErrorHandler__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../axiosErrorHandler */ "./resources/js/axiosErrorHandler.js");
 //
 //
 //
@@ -8602,7 +8747,7 @@ __webpack_require__.r(__webpack_exports__);
     getProfile: function getProfile() {
       var _this = this;
       console.log('プロフィールを取得します');
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/user/mypage/profile').then(function (response) {
+      _axiosErrorHandler__WEBPACK_IMPORTED_MODULE_0__["default"].get('/api/user/mypage/profile').then(function (response) {
         _this.user = response.data.user;
         console.log('APIからのレスポンス:', response.data);
         // 取得したプロフィール情報をformDataに入れる
@@ -8637,7 +8782,7 @@ __webpack_require__.r(__webpack_exports__);
       if (this.formData.icon !== '') {
         formData.append('icon', this.formData.icon);
       }
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/user/mypage/profile', formData, config).then(function (response) {
+      _axiosErrorHandler__WEBPACK_IMPORTED_MODULE_0__["default"].post('/api/user/mypage/profile', formData, config).then(function (response) {
         _this2.message = response.data.message;
         console.log('this.messageは、', _this2.message);
         console.log('プロフィールを更新します。');
@@ -8646,8 +8791,6 @@ __webpack_require__.r(__webpack_exports__);
         });
       })["catch"](function (error) {
         console.log('errorは、', error);
-        console.log(response);
-        console.log(response.data);
         console.error('プロフィール編集失敗:', error.response.data);
         _this2.errors = error.response.data.errors;
       });
@@ -44557,7 +44700,7 @@ var render = function () {
           },
           [
             _vm.errors && _vm.errors.email
-              ? _c("span", { staticClass: "c-error" }, [
+              ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
                   _vm._v(_vm._s(_vm.errors.email[0])),
                 ])
               : _vm._e(),
@@ -44575,7 +44718,7 @@ var render = function () {
                   expression: "formData.email",
                 },
               ],
-              staticClass: "c-input",
+              staticClass: "c-input u-pd__s u-mt__m u-mb__m",
               class: { "is-invalid": _vm.errors && _vm.errors.email },
               attrs: { id: "email", type: "email", autocomplete: "email" },
               domProps: { value: _vm.formData.email },
@@ -44593,7 +44736,7 @@ var render = function () {
               "button",
               {
                 staticClass:
-                  "c-button c-button__submit c-button__convenience u-mt__m",
+                  "c-button c-button__submit c-button__convenience u-pd__s u-mt__m",
                 attrs: { type: "submit" },
               },
               [_vm._v("パスワード変更メールを送信する")]
@@ -44659,13 +44802,13 @@ var render = function () {
           },
           [
             _vm.errors && _vm.errors.email
-              ? _c("span", { staticClass: "c-error" }, [
+              ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
                   _vm._v(_vm._s(_vm.errors.email[0])),
                 ])
               : _vm._e(),
             _vm._v(" "),
             _vm.errors && _vm.errors.password
-              ? _c("span", { staticClass: "c-error" }, [
+              ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
                   _vm._v(_vm._s(_vm.errors.password[0])),
                 ])
               : _vm._e(),
@@ -44683,7 +44826,7 @@ var render = function () {
                   expression: "formData.email",
                 },
               ],
-              staticClass: "c-input",
+              staticClass: "c-input u-pd__s u-mt__m u-mb__m",
               class: { "is-invalid": _vm.errors && _vm.errors.email },
               attrs: { id: "email", type: "email", autocomplete: "email" },
               domProps: { value: _vm.formData.email },
@@ -44714,7 +44857,7 @@ var render = function () {
                         expression: "formData.password",
                       },
                     ],
-                    staticClass: "c-input",
+                    staticClass: "c-input u-pd__s u-mt__m u-mb__m",
                     class: { "is-invalid": _vm.errors && _vm.errors.password },
                     attrs: {
                       id: "password",
@@ -44765,7 +44908,7 @@ var render = function () {
                         expression: "formData.password",
                       },
                     ],
-                    staticClass: "c-input",
+                    staticClass: "c-input u-pd__s u-mt__m u-mb__m",
                     class: { "is-invalid": _vm.errors && _vm.errors.password },
                     attrs: {
                       id: "password",
@@ -44788,7 +44931,7 @@ var render = function () {
                         expression: "formData.password",
                       },
                     ],
-                    staticClass: "c-input",
+                    staticClass: "c-input u-pd__s u-mt__m u-mb__m",
                     class: { "is-invalid": _vm.errors && _vm.errors.password },
                     attrs: {
                       id: "password",
@@ -44885,7 +45028,7 @@ var render = function () {
               "button",
               {
                 staticClass:
-                  "c-button c-button__submit c-button__convenience u-mt__m",
+                  "c-button c-button__submit c-button__convenience u-pd__s u-mt__m",
                 attrs: { type: "submit" },
               },
               [_vm._v("ログインする")]
@@ -45233,7 +45376,7 @@ var render = function () {
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "p-product" }, [
-            _c("div", { staticClass: "p-like p-like__content" }, [
+            _c("div", { staticClass: "p-like p-like__content u-pdr__s" }, [
               !_vm.product.liked
                 ? _c("i", {
                     staticClass: "c-icon c-icon__unlike far fa-heart",
@@ -45259,7 +45402,7 @@ var render = function () {
               _c(
                 "button",
                 {
-                  staticClass: "c-button c-button__share",
+                  staticClass: "c-button c-button__share u-pd__s",
                   on: { click: _vm.twitterShare },
                 },
                 [
@@ -45307,7 +45450,8 @@ var render = function () {
         _c(
           "button",
           {
-            staticClass: "c-button c-button__submit c-button__purchase",
+            staticClass:
+              "c-button c-button__submit c-button__purchase u-pd__s u-m__s",
             attrs: { disabled: true },
           },
           [_vm._v("コンビニユーザーは購入できません")]
@@ -45371,31 +45515,31 @@ var render = function () {
           },
           [
             _vm.errors && _vm.errors.name
-              ? _c("span", { staticClass: "c-error" }, [
+              ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
                   _vm._v(_vm._s(_vm.errors.name[0])),
                 ])
               : _vm._e(),
             _vm._v(" "),
             _vm.errors && _vm.errors.price
-              ? _c("span", { staticClass: "c-error" }, [
+              ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
                   _vm._v(_vm._s(_vm.errors.price[0])),
                 ])
               : _vm._e(),
             _vm._v(" "),
             _vm.errors && _vm.errors.category
-              ? _c("span", { staticClass: "c-error" }, [
+              ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
                   _vm._v(_vm._s(_vm.errors.category[0])),
                 ])
               : _vm._e(),
             _vm._v(" "),
             _vm.errors && _vm.errors.expiration_date
-              ? _c("span", { staticClass: "c-error" }, [
+              ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
                   _vm._v(_vm._s(_vm.errors.expiration_date[0])),
                 ])
               : _vm._e(),
             _vm._v(" "),
             _vm.errors && _vm.errors.product_picture
-              ? _c("span", { staticClass: "c-error" }, [
+              ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
                   _vm._v(_vm._s(_vm.errors.product_picture[0])),
                 ])
               : _vm._e(),
@@ -45413,7 +45557,7 @@ var render = function () {
                   expression: "formData.name",
                 },
               ],
-              staticClass: "c-input",
+              staticClass: "c-input u-pd__s u-mt__m u-mb__m",
               class: { "is-invalid": _vm.errors && _vm.errors.name },
               attrs: { id: "name", type: "text", autocomplete: "name" },
               domProps: { value: _vm.formData.name },
@@ -45440,7 +45584,7 @@ var render = function () {
                   expression: "formData.price",
                 },
               ],
-              staticClass: "c-input",
+              staticClass: "c-input u-pd__s u-mt__m u-mb__m",
               class: { "is-invalid": _vm.errors && _vm.errors.price },
               attrs: { id: "price", type: "number", autocomplete: "price" },
               domProps: { value: _vm.formData.price },
@@ -45471,7 +45615,7 @@ var render = function () {
                     expression: "formData.category",
                   },
                 ],
-                staticClass: "c-input",
+                staticClass: "c-input u-pd__s u-mt__m u-mb__m",
                 class: { "is-invalid": _vm.errors && _vm.errors.category },
                 attrs: { id: "category" },
                 on: {
@@ -45522,7 +45666,7 @@ var render = function () {
                     expression: "formData.expiration_date",
                   },
                 ],
-                staticClass: "c-input",
+                staticClass: "c-input u-pd__s u-mt__m u-mb__m",
                 class: {
                   "is-invalid": _vm.errors && _vm.errors.expiration_date,
                 },
@@ -45560,7 +45704,8 @@ var render = function () {
             _c(
               "div",
               {
-                staticClass: "p-product__picture p-product__picture--container",
+                staticClass:
+                  "p-product__picture p-product__picture--container u-pd__s",
                 class: {
                   "is-invalid": _vm.errors && _vm.errors.product_picture,
                 },
@@ -45605,7 +45750,7 @@ var render = function () {
               "button",
               {
                 staticClass:
-                  "c-button c-button__submit c-button__convenience u-mt__m",
+                  "c-button c-button__submit c-button__convenience u-pd__s u-mt__m",
                 attrs: { type: "submit" },
               },
               [_vm._v("更新する")]
@@ -45615,7 +45760,7 @@ var render = function () {
               "button",
               {
                 staticClass:
-                  "c-button c-button__submit c-button__convenience u-mt__m",
+                  "c-button c-button__submit c-button__convenience u-pd__s u-mt__m",
                 on: { click: _vm.deleteProduct },
               },
               [_vm._v("削除する")]
@@ -45730,7 +45875,7 @@ var render = function () {
                                         expression: "product.is_purchased",
                                       },
                                     ],
-                                    staticClass: "c-label__purchase",
+                                    staticClass: "c-label__purchase u-pd__m",
                                   },
                                   [_vm._v("購入済み")]
                                 ),
@@ -45756,7 +45901,7 @@ var render = function () {
                                     "router-link",
                                     {
                                       staticClass:
-                                        "c-button c-button__convenience c-button__detail",
+                                        "c-button c-button__convenience c-button__detail u-pd__s u-m__s",
                                       attrs: {
                                         to: _vm.getProductDetailLink(
                                           product.id
@@ -45843,31 +45988,31 @@ var render = function () {
           },
           [
             _vm.errors && _vm.errors.name
-              ? _c("span", { staticClass: "c-error" }, [
+              ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
                   _vm._v(_vm._s(_vm.errors.name[0])),
                 ])
               : _vm._e(),
             _vm._v(" "),
             _vm.errors && _vm.errors.price
-              ? _c("span", { staticClass: "c-error" }, [
+              ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
                   _vm._v(_vm._s(_vm.errors.price[0])),
                 ])
               : _vm._e(),
             _vm._v(" "),
             _vm.errors && _vm.errors.category
-              ? _c("span", { staticClass: "c-error" }, [
+              ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
                   _vm._v(_vm._s(_vm.errors.category[0])),
                 ])
               : _vm._e(),
             _vm._v(" "),
             _vm.errors && _vm.errors.expiration_date
-              ? _c("span", { staticClass: "c-error" }, [
+              ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
                   _vm._v(_vm._s(_vm.errors.expiration_date[0])),
                 ])
               : _vm._e(),
             _vm._v(" "),
             _vm.errors && _vm.errors.product_picture
-              ? _c("span", { staticClass: "c-error" }, [
+              ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
                   _vm._v(_vm._s(_vm.errors.product_picture[0])),
                 ])
               : _vm._e(),
@@ -45885,7 +46030,7 @@ var render = function () {
                   expression: "formData.name",
                 },
               ],
-              staticClass: "c-input",
+              staticClass: "c-input u-pd__s u-mt__m u-mb__m",
               class: { "is-invalid": _vm.errors && _vm.errors.name },
               attrs: { id: "name", type: "text", autocomplete: "name" },
               domProps: { value: _vm.formData.name },
@@ -45912,7 +46057,7 @@ var render = function () {
                   expression: "formData.price",
                 },
               ],
-              staticClass: "c-input",
+              staticClass: "c-input u-pd__s u-mt__m u-mb__m",
               class: { "is-invalid": _vm.errors && _vm.errors.price },
               attrs: { id: "price", type: "text", autocomplete: "price" },
               domProps: { value: _vm.formData.price },
@@ -45943,7 +46088,7 @@ var render = function () {
                     expression: "formData.category",
                   },
                 ],
-                staticClass: "c-input",
+                staticClass: "c-input u-pd__s u-mt__m u-mb__m",
                 class: { "is-invalid": _vm.errors && _vm.errors.category },
                 attrs: { id: "category" },
                 on: {
@@ -45994,7 +46139,7 @@ var render = function () {
                     expression: "formData.expiration_date",
                   },
                 ],
-                staticClass: "c-input",
+                staticClass: "c-input u-pd__s u-mt__m u-mb__m",
                 class: {
                   "is-invalid": _vm.errors && _vm.errors.expiration_date,
                 },
@@ -46028,7 +46173,8 @@ var render = function () {
             _c(
               "div",
               {
-                staticClass: "p-product__picture p-product__picture--container",
+                staticClass:
+                  "p-product__picture p-product__picture--container u-pd__s",
                 class: {
                   "is-invalid": _vm.errors && _vm.errors.product_picture,
                 },
@@ -46073,7 +46219,7 @@ var render = function () {
               "button",
               {
                 staticClass:
-                  "c-button c-button__submit c-button__convenience u-mt__m",
+                  "c-button c-button__submit c-button__convenience u-pd__s u-mt__m",
                 attrs: { type: "submit" },
               },
               [_vm._v("出品する")]
@@ -46198,7 +46344,7 @@ var render = function () {
                                     "router-link",
                                     {
                                       staticClass:
-                                        "c-button c-button__convenience c-button__detail",
+                                        "c-button c-button__convenience c-button__detail u-pd__s u-m__s",
                                       attrs: {
                                         to: _vm.getProductDetailLink(
                                           product.id
@@ -46213,7 +46359,7 @@ var render = function () {
                                         "router-link",
                                         {
                                           staticClass:
-                                            "c-button c-button__convenience c-button__edit",
+                                            "c-button c-button__convenience c-button__edit u-pd__s u-m__s",
                                           attrs: {
                                             to: _vm.getProductEditLink(
                                               product.id
@@ -46301,73 +46447,73 @@ var render = function () {
           },
           [
             _vm.errors && _vm.errors.convenience_name
-              ? _c("span", { staticClass: "c-error" }, [
+              ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
                   _vm._v(_vm._s(_vm.errors.convenience_name[0])),
                 ])
               : _vm._e(),
             _vm._v(" "),
             _vm.errors && _vm.errors.branch_name
-              ? _c("span", { staticClass: "c-error" }, [
+              ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
                   _vm._v(_vm._s(_vm.errors.branch_name[0])),
                 ])
               : _vm._e(),
             _vm._v(" "),
             _vm.errors && _vm.errors.address
-              ? _c("span", { staticClass: "c-error" }, [
+              ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
                   _vm._v(_vm._s(_vm.errors.address[0])),
                 ])
               : _vm._e(),
             _vm._v(" "),
             _vm.errors && _vm.errors.prefecture
-              ? _c("span", { staticClass: "c-error" }, [
+              ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
                   _vm._v(_vm._s(_vm.errors.prefecture[0])),
                 ])
               : _vm._e(),
             _vm._v(" "),
             _vm.errors && _vm.errors.city
-              ? _c("span", { staticClass: "c-error" }, [
+              ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
                   _vm._v(_vm._s(_vm.errors.city[0])),
                 ])
               : _vm._e(),
             _vm._v(" "),
             _vm.errors && _vm.errors.town
-              ? _c("span", { staticClass: "c-error" }, [
+              ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
                   _vm._v(_vm._s(_vm.errors.town[0])),
                 ])
               : _vm._e(),
             _vm._v(" "),
             _vm.errors && _vm.errors.building
-              ? _c("span", { staticClass: "c-error" }, [
+              ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
                   _vm._v(_vm._s(_vm.errors.building[0])),
                 ])
               : _vm._e(),
             _vm._v(" "),
             _vm.errors && _vm.errors.email
-              ? _c("span", { staticClass: "c-error" }, [
+              ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
                   _vm._v(_vm._s(_vm.errors.email[0])),
                 ])
               : _vm._e(),
             _vm._v(" "),
             _vm.errors && _vm.errors.password
-              ? _c("span", { staticClass: "c-error" }, [
+              ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
                   _vm._v(_vm._s(_vm.errors.password[0])),
                 ])
               : _vm._e(),
             _vm._v(" "),
             _vm.errors && _vm.errors.password_confirmation
-              ? _c("span", { staticClass: "c-error" }, [
+              ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
                   _vm._v(_vm._s(_vm.errors.password_confirmation[0])),
                 ])
               : _vm._e(),
             _vm._v(" "),
             _vm.errors && _vm.errors.introduction
-              ? _c("span", { staticClass: "c-error" }, [
+              ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
                   _vm._v(_vm._s(_vm.errors.introduction[0])),
                 ])
               : _vm._e(),
             _vm._v(" "),
             _vm.errors && _vm.errors.icon
-              ? _c("span", { staticClass: "c-error" }, [
+              ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
                   _vm._v(_vm._s(_vm.errors.icon[0])),
                 ])
               : _vm._e(),
@@ -46387,7 +46533,7 @@ var render = function () {
                   expression: "formData.convenience_name",
                 },
               ],
-              staticClass: "c-input",
+              staticClass: "c-input u-pd__s u-mt__m u-mb__m",
               class: {
                 "is-invalid": _vm.errors && _vm.errors.convenience_name,
               },
@@ -46426,7 +46572,7 @@ var render = function () {
                   expression: "formData.branch_name",
                 },
               ],
-              staticClass: "c-input",
+              staticClass: "c-input u-pd__s u-mt__m u-mb__m",
               class: { "is-invalid": _vm.errors && _vm.errors.branch_name },
               attrs: {
                 id: "branch_name",
@@ -46457,7 +46603,7 @@ var render = function () {
                   expression: "formData.postalcode",
                 },
               ],
-              staticClass: "c-input",
+              staticClass: "c-input u-pd__s u-mt__m u-mb__m",
               class: { "is-invalid": _vm.errors && _vm.errors.address },
               attrs: {
                 id: "address",
@@ -46503,7 +46649,7 @@ var render = function () {
                   expression: "formData.prefecture",
                 },
               ],
-              staticClass: "c-input",
+              staticClass: "c-input u-pd__s u-mt__m u-mb__m",
               class: { "is-invalid": _vm.errors && _vm.errors.prefecture },
               attrs: {
                 id: "prefecture",
@@ -46534,7 +46680,7 @@ var render = function () {
                   expression: "formData.city",
                 },
               ],
-              staticClass: "c-input",
+              staticClass: "c-input u-pd__s u-mt__m u-mb__m",
               class: { "is-invalid": _vm.errors && _vm.errors.city },
               attrs: { id: "city", type: "text", autocomplete: "city" },
               domProps: { value: _vm.formData.city },
@@ -46561,7 +46707,7 @@ var render = function () {
                   expression: "formData.town",
                 },
               ],
-              staticClass: "c-input",
+              staticClass: "c-input u-pd__s u-mt__m u-mb__m",
               class: { "is-invalid": _vm.errors && _vm.errors.town },
               attrs: { id: "town", type: "text", autocomplete: "town" },
               domProps: { value: _vm.formData.town },
@@ -46590,7 +46736,7 @@ var render = function () {
                   expression: "formData.building",
                 },
               ],
-              staticClass: "c-input",
+              staticClass: "c-input u-pd__s u-mt__m u-mb__m",
               class: { "is-invalid": _vm.errors && _vm.errors.building },
               attrs: { id: "building", type: "text", autocomplete: "building" },
               domProps: { value: _vm.formData.building },
@@ -46617,7 +46763,7 @@ var render = function () {
                   expression: "formData.email",
                 },
               ],
-              staticClass: "c-input",
+              staticClass: "c-input u-pd__s u-mt__m u-mb__m",
               class: { "is-invalid": _vm.errors && _vm.errors.email },
               attrs: { id: "email", type: "email", autocomplete: "email" },
               domProps: { value: _vm.formData.email },
@@ -46648,7 +46794,7 @@ var render = function () {
                         expression: "formData.password",
                       },
                     ],
-                    staticClass: "c-input",
+                    staticClass: "c-input u-pd__s u-mt__m u-mb__m",
                     class: { "is-invalid": _vm.errors && _vm.errors.password },
                     attrs: {
                       id: "password",
@@ -46699,7 +46845,7 @@ var render = function () {
                         expression: "formData.password",
                       },
                     ],
-                    staticClass: "c-input",
+                    staticClass: "c-input u-pd__s u-mt__m u-mb__m",
                     class: { "is-invalid": _vm.errors && _vm.errors.password },
                     attrs: {
                       id: "password",
@@ -46722,7 +46868,7 @@ var render = function () {
                         expression: "formData.password",
                       },
                     ],
-                    staticClass: "c-input",
+                    staticClass: "c-input u-pd__s u-mt__m u-mb__m",
                     class: { "is-invalid": _vm.errors && _vm.errors.password },
                     attrs: {
                       id: "password",
@@ -46770,7 +46916,7 @@ var render = function () {
                         expression: "formData.password_confirmation",
                       },
                     ],
-                    staticClass: "c-input",
+                    staticClass: "c-input u-pd__s u-mt__m u-mb__m",
                     class: {
                       "is-invalid":
                         _vm.errors && _vm.errors.password_confirmation,
@@ -46824,7 +46970,7 @@ var render = function () {
                         expression: "formData.password_confirmation",
                       },
                     ],
-                    staticClass: "c-input",
+                    staticClass: "c-input u-pd__s u-mt__m u-mb__m",
                     class: {
                       "is-invalid":
                         _vm.errors && _vm.errors.password_confirmation,
@@ -46852,7 +46998,7 @@ var render = function () {
                         expression: "formData.password_confirmation",
                       },
                     ],
-                    staticClass: "c-input",
+                    staticClass: "c-input u-pd__s u-mt__m u-mb__m",
                     class: {
                       "is-invalid":
                         _vm.errors && _vm.errors.password_confirmation,
@@ -46907,7 +47053,7 @@ var render = function () {
                     modifiers: { trim: true },
                   },
                 ],
-                staticClass: "c-textarea",
+                staticClass: "c-textarea u-pd__s u-mt__m u-mb__m",
                 class: { "is-invalid": _vm.errors && _vm.errors.introduction },
                 attrs: {
                   maxlength: "50",
@@ -46949,7 +47095,8 @@ var render = function () {
             _c(
               "div",
               {
-                staticClass: "p-profile__icon p-profile__icon--container",
+                staticClass:
+                  "p-profile__icon p-profile__icon--container u-pd__s",
                 class: { "is-invalid": _vm.errors && _vm.errors.icon },
                 on: { drop: _vm.handleDrop },
               },
@@ -46987,7 +47134,7 @@ var render = function () {
               "button",
               {
                 staticClass:
-                  "c-button c-button__submit c-button__convenience u-mt__m",
+                  "c-button c-button__submit c-button__convenience u-pd__s u-mt__m",
                 attrs: { type: "submit" },
               },
               [_vm._v("更新する")]
@@ -47053,67 +47200,67 @@ var render = function () {
           },
           [
             _vm.errors && _vm.errors.convenience_name
-              ? _c("span", { staticClass: "c-error" }, [
+              ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
                   _vm._v(_vm._s(_vm.errors.convenience_name[0])),
                 ])
               : _vm._e(),
             _vm._v(" "),
             _vm.errors && _vm.errors.branch_name
-              ? _c("span", { staticClass: "c-error" }, [
+              ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
                   _vm._v(_vm._s(_vm.errors.branch_name[0])),
                 ])
               : _vm._e(),
             _vm._v(" "),
             _vm.errors && _vm.errors.address
-              ? _c("span", { staticClass: "c-error" }, [
+              ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
                   _vm._v(_vm._s(_vm.errors.address[0])),
                 ])
               : _vm._e(),
             _vm._v(" "),
             _vm.errors && _vm.errors.prefecture
-              ? _c("span", { staticClass: "c-error" }, [
+              ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
                   _vm._v(_vm._s(_vm.errors.prefecture[0])),
                 ])
               : _vm._e(),
             _vm._v(" "),
             _vm.errors && _vm.errors.city
-              ? _c("span", { staticClass: "c-error" }, [
+              ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
                   _vm._v(_vm._s(_vm.errors.city[0])),
                 ])
               : _vm._e(),
             _vm._v(" "),
             _vm.errors && _vm.errors.town
-              ? _c("span", { staticClass: "c-error" }, [
+              ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
                   _vm._v(_vm._s(_vm.errors.town[0])),
                 ])
               : _vm._e(),
             _vm._v(" "),
             _vm.errors && _vm.errors.building
-              ? _c("span", { staticClass: "c-error" }, [
+              ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
                   _vm._v(_vm._s(_vm.errors.building[0])),
                 ])
               : _vm._e(),
             _vm._v(" "),
             _vm.errors && _vm.errors.email
-              ? _c("span", { staticClass: "c-error" }, [
+              ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
                   _vm._v(_vm._s(_vm.errors.email[0])),
                 ])
               : _vm._e(),
             _vm._v(" "),
             _vm.errors && _vm.errors.password
-              ? _c("span", { staticClass: "c-error" }, [
+              ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
                   _vm._v(_vm._s(_vm.errors.password[0])),
                 ])
               : _vm._e(),
             _vm._v(" "),
             _vm.errors && _vm.errors.password_confirmation
-              ? _c("span", { staticClass: "c-error" }, [
+              ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
                   _vm._v(_vm._s(_vm.errors.password_confirmation[0])),
                 ])
               : _vm._e(),
             _vm._v(" "),
             _vm.errors && !_vm.agreement
-              ? _c("span", { staticClass: "c-error" }, [
+              ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
                   _vm._v("利用規約に同意する必要があります。"),
                 ])
               : _vm._e(),
@@ -47133,7 +47280,7 @@ var render = function () {
                   expression: "formData.convenience_name",
                 },
               ],
-              staticClass: "c-input",
+              staticClass: "c-input u-pd__s u-mt__m u-mb__m",
               class: {
                 "is-invalid": _vm.errors && _vm.errors.convenience_name,
               },
@@ -47172,7 +47319,7 @@ var render = function () {
                   expression: "formData.branch_name",
                 },
               ],
-              staticClass: "c-input",
+              staticClass: "c-input u-pd__s u-mt__m u-mb__m",
               class: { "is-invalid": _vm.errors && _vm.errors.branch_name },
               attrs: {
                 id: "branch_name",
@@ -47203,7 +47350,7 @@ var render = function () {
                   expression: "formData.postalcode",
                 },
               ],
-              staticClass: "c-input",
+              staticClass: "c-input u-pd__s u-mt__m u-mb__m",
               class: { "is-invalid": _vm.errors && _vm.errors.address },
               attrs: {
                 id: "address",
@@ -47249,7 +47396,7 @@ var render = function () {
                   expression: "formData.prefecture",
                 },
               ],
-              staticClass: "c-input",
+              staticClass: "c-input u-pd__s u-mt__m u-mb__m",
               class: { "is-invalid": _vm.errors && _vm.errors.prefecture },
               attrs: {
                 id: "prefecture",
@@ -47280,7 +47427,7 @@ var render = function () {
                   expression: "formData.city",
                 },
               ],
-              staticClass: "c-input",
+              staticClass: "c-input u-pd__s u-mt__m u-mb__m",
               class: { "is-invalid": _vm.errors && _vm.errors.city },
               attrs: { id: "city", type: "text", autocomplete: "city" },
               domProps: { value: _vm.formData.city },
@@ -47307,7 +47454,7 @@ var render = function () {
                   expression: "formData.town",
                 },
               ],
-              staticClass: "c-input",
+              staticClass: "c-input u-pd__s u-mt__m u-mb__m",
               class: { "is-invalid": _vm.errors && _vm.errors.town },
               attrs: { id: "town", type: "text", autocomplete: "town" },
               domProps: { value: _vm.formData.town },
@@ -47336,7 +47483,7 @@ var render = function () {
                   expression: "formData.building",
                 },
               ],
-              staticClass: "c-input",
+              staticClass: "c-input u-pd__s u-mt__m u-mb__m",
               class: { "is-invalid": _vm.errors && _vm.errors.building },
               attrs: { id: "building", type: "text", autocomplete: "building" },
               domProps: { value: _vm.formData.building },
@@ -47363,7 +47510,7 @@ var render = function () {
                   expression: "formData.email",
                 },
               ],
-              staticClass: "c-input",
+              staticClass: "c-input u-pd__s u-mt__m u-mb__m",
               class: { "is-invalid": _vm.errors && _vm.errors.email },
               attrs: { id: "email", type: "email", autocomplete: "email" },
               domProps: { value: _vm.formData.email },
@@ -47394,7 +47541,7 @@ var render = function () {
                         expression: "formData.password",
                       },
                     ],
-                    staticClass: "c-input",
+                    staticClass: "c-input u-pd__s u-mt__m u-mb__m",
                     class: { "is-invalid": _vm.errors && _vm.errors.password },
                     attrs: {
                       id: "password",
@@ -47445,7 +47592,7 @@ var render = function () {
                         expression: "formData.password",
                       },
                     ],
-                    staticClass: "c-input",
+                    staticClass: "c-input u-pd__s u-mt__m u-mb__m",
                     class: { "is-invalid": _vm.errors && _vm.errors.password },
                     attrs: {
                       id: "password",
@@ -47468,7 +47615,7 @@ var render = function () {
                         expression: "formData.password",
                       },
                     ],
-                    staticClass: "c-input",
+                    staticClass: "c-input u-pd__s u-mt__m u-mb__m",
                     class: { "is-invalid": _vm.errors && _vm.errors.password },
                     attrs: {
                       id: "password",
@@ -47516,7 +47663,7 @@ var render = function () {
                         expression: "formData.password_confirmation",
                       },
                     ],
-                    staticClass: "c-input",
+                    staticClass: "c-input u-pd__s u-mt__m u-mb__m",
                     class: {
                       "is-invalid":
                         _vm.errors && _vm.errors.password_confirmation,
@@ -47570,7 +47717,7 @@ var render = function () {
                         expression: "formData.password_confirmation",
                       },
                     ],
-                    staticClass: "c-input",
+                    staticClass: "c-input u-pd__s u-mt__m u-mb__m",
                     class: {
                       "is-invalid":
                         _vm.errors && _vm.errors.password_confirmation,
@@ -47598,7 +47745,7 @@ var render = function () {
                         expression: "formData.password_confirmation",
                       },
                     ],
-                    staticClass: "c-input",
+                    staticClass: "c-input u-pd__s u-mt__m u-mb__m",
                     class: {
                       "is-invalid":
                         _vm.errors && _vm.errors.password_confirmation,
@@ -47638,7 +47785,7 @@ var render = function () {
             _vm._v(" "),
             _c(
               "div",
-              { staticClass: "p-register__terms" },
+              { staticClass: "p-register__terms u-pd__s u-m__s" },
               [_c("terms-component")],
               1
             ),
@@ -47699,7 +47846,8 @@ var render = function () {
             _c(
               "button",
               {
-                staticClass: "c-button c-button__submit c-button__convenience",
+                staticClass:
+                  "c-button c-button__submit c-button__convenience u-pd__s",
                 attrs: { type: "submit" },
               },
               [_vm._v("ユーザー登録する")]
@@ -47765,19 +47913,19 @@ var render = function () {
           },
           [
             _vm.errors && _vm.errors.oldPassword
-              ? _c("span", { staticClass: "c-error" }, [
+              ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
                   _vm._v(_vm._s(_vm.errors.oldPassword[0])),
                 ])
               : _vm._e(),
             _vm._v(" "),
             _vm.errors && _vm.errors.newPassword
-              ? _c("span", { staticClass: "c-error" }, [
+              ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
                   _vm._v(_vm._s(_vm.errors.newPassword[0])),
                 ])
               : _vm._e(),
             _vm._v(" "),
             _vm.errors && _vm.errors.password_confirmation
-              ? _c("span", { staticClass: "c-error" }, [
+              ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
                   _vm._v(_vm._s(_vm.errors.password_confirmation[0])),
                 ])
               : _vm._e(),
@@ -47797,7 +47945,7 @@ var render = function () {
                   expression: "formData.oldPassword",
                 },
               ],
-              staticClass: "c-input",
+              staticClass: "c-input u-pd__s u-mt__m u-mb__m",
               class: { "is-invalid": _vm.errors && _vm.errors.oldPassword },
               attrs: {
                 id: "old_password",
@@ -47829,7 +47977,7 @@ var render = function () {
                   expression: "formData.newPassword",
                 },
               ],
-              staticClass: "c-input",
+              staticClass: "c-input u-pd__s u-mt__m u-mb__m",
               class: { "is-invalid": _vm.errors && _vm.errors.newPassword },
               attrs: {
                 id: "new_password",
@@ -47861,7 +48009,7 @@ var render = function () {
                   expression: "formData.password_confirmation",
                 },
               ],
-              staticClass: "c-input",
+              staticClass: "c-input u-pd__s u-mt__m u-mb__m",
               class: {
                 "is-invalid": _vm.errors && _vm.errors.password_confirmation,
               },
@@ -47930,7 +48078,7 @@ var render = function () {
               "button",
               {
                 staticClass:
-                  "c-button c-button__submit c-button__convenience u-mt__m",
+                  "c-button c-button__submit c-button__convenience u-pd__s u-mt__m",
                 attrs: { type: "submit" },
               },
               [_vm._v("パスワードを変更する")]
@@ -47992,7 +48140,7 @@ var render = function () {
             "button",
             {
               staticClass:
-                "c-button c-button__submit c-button__convenience u-mt__m",
+                "c-button c-button__submit c-button__convenience u-pd__s u-mt__m",
               on: { click: _vm.withdraw },
             },
             [_vm._v("退会する")]
@@ -48103,13 +48251,13 @@ var render = function () {
     _vm._v(" "),
     _c(
       "div",
-      { attrs: { id: "l-footer__inner" } },
+      { staticClass: "u-pd__xxl", attrs: { id: "l-footer__inner" } },
       [
         _c("span", { attrs: { id: "l-footer__text" } }, [_vm._v("Copyright")]),
         _vm._v(" "),
         _c(
           "router-link",
-          { staticClass: "l-footer__link", attrs: { to: { name: "home" } } },
+          { staticClass: "c-link", attrs: { to: { name: "home" } } },
           [_vm._v("\n                haiki share\n            ")]
         ),
         _vm._v(" "),
@@ -48118,9 +48266,22 @@ var render = function () {
         ]),
         _vm._v(" "),
         _c(
-          "router-link",
-          { staticClass: "l-footer__link", attrs: { to: { name: "terms" } } },
-          [_vm._v("\n            利用規約\n        ")]
+          "div",
+          { staticClass: "l-footer__link" },
+          [
+            _c(
+              "router-link",
+              { staticClass: "c-link", attrs: { to: { name: "terms" } } },
+              [_vm._v("利用規約")]
+            ),
+            _vm._v(" "),
+            _c(
+              "router-link",
+              { staticClass: "c-link", attrs: { to: { name: "privacy" } } },
+              [_vm._v("プライバシーポリシー")]
+            ),
+          ],
+          1
         ),
       ],
       1
@@ -48158,7 +48319,7 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("header", { staticClass: "l-header" }, [
+  return _c("header", { staticClass: "l-header u-pdr__xl u-pdl__xl" }, [
     _c(
       "div",
       { staticClass: "l-header__inner" },
@@ -48512,6 +48673,341 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/PrivacyPolicyComponent.vue?vue&type=template&id=27c59c24":
+/*!************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/PrivacyPolicyComponent.vue?vue&type=template&id=27c59c24 ***!
+  \************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function () {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _vm._m(0)
+}
+var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("main", { staticClass: "l-main" }, [
+      _c(
+        "article",
+        { staticClass: "l-main__wrapper l-main__wrapper--policy" },
+        [
+          _c("h1", { staticClass: "c-title c-title__header u-mb__xl" }, [
+            _vm._v("プライバシーポリシー"),
+          ]),
+          _vm._v(" "),
+          _c("section", { staticClass: "p-policy u-pdt__m u-pdb__m" }, [
+            _vm._v(
+              "\n            haiki share（以下，「当社」といいます。）は，本ウェブサイト上で提供するサービス（以下,「本サービス」といいます。）における，ユーザーの個人情報の取扱いについて，以下のとおりプライバシーポリシー（以下，「本ポリシー」といいます。）を定めます。\n        "
+            ),
+          ]),
+          _vm._v(" "),
+          _c("section", { staticClass: "p-policy u-pdt__m u-pdb__m" }, [
+            _c("h2", { staticClass: "c-title c-title__policy" }, [
+              _vm._v("第1条（個人情報）"),
+            ]),
+            _vm._v(" "),
+            _c("p", [
+              _vm._v(
+                "「個人情報」とは，個人情報保護法にいう「個人情報」を指すものとし，生存する個人に関する情報であって，当該情報に含まれる氏名，生年月日，住所，電話番号，連絡先その他の記述等により特定の個人を識別できる情報及び容貌，指紋，声紋にかかるデータ，及び健康保険証の保険者番号などの当該情報単体から特定の個人を識別できる情報（個人識別情報）を指します。"
+              ),
+            ]),
+          ]),
+          _vm._v(" "),
+          _c("section", { staticClass: "p-policy u-pdt__m u-pdb__m" }, [
+            _c("h2", { staticClass: "c-title c-title__policy" }, [
+              _vm._v("第2条（個人情報の収集方法）"),
+            ]),
+            _vm._v(" "),
+            _c("p", [
+              _vm._v(
+                "当社は，ユーザーが利用登録をする際に氏名，生年月日，住所，電話番号，メールアドレス，銀行口座番号，クレジットカード番号，運転免許証番号などの個人情報をお尋ねすることがあります。また，ユーザーと提携先などとの間でなされたユーザーの個人情報を含む取引記録や決済に関する情報を,当社の提携先（情報提供元，広告主，広告配信先などを含みます。以下，｢提携先｣といいます。）などから収集することがあります。"
+              ),
+            ]),
+          ]),
+          _vm._v(" "),
+          _c("section", { staticClass: "p-policy u-pdt__m u-pdb__m" }, [
+            _c("h2", { staticClass: "c-title c-title__policy" }, [
+              _vm._v("第3条（個人情報を収集・利用する目的）"),
+            ]),
+            _vm._v(" "),
+            _c("p", [
+              _vm._v(
+                "当社が個人情報を収集・利用する目的は，以下のとおりです。"
+              ),
+            ]),
+            _vm._v(" "),
+            _c("p", [_vm._v("1、当社サービスの提供・運営のため")]),
+            _vm._v(" "),
+            _c("p", [
+              _vm._v(
+                "2、ユーザーからのお問い合わせに回答するため（本人確認を行うことを含む）"
+              ),
+            ]),
+            _vm._v(" "),
+            _c("p", [
+              _vm._v(
+                "3、ユーザーが利用中のサービスの新機能，更新情報，キャンペーン等及び当社が提供する他のサービスの案内のメールを送付するため"
+              ),
+            ]),
+            _vm._v(" "),
+            _c("p", [
+              _vm._v(
+                "4、メンテナンス，重要なお知らせなど必要に応じたご連絡のため"
+              ),
+            ]),
+            _vm._v(" "),
+            _c("p", [
+              _vm._v(
+                "5、利用規約に違反したユーザーや，不正・不当な目的でサービスを利用しようとするユーザーの特定をし，ご利用をお断りするため"
+              ),
+            ]),
+            _vm._v(" "),
+            _c("p", [
+              _vm._v(
+                "6、ユーザーにご自身の登録情報の閲覧や変更，削除，ご利用状況の閲覧を行っていただくため"
+              ),
+            ]),
+            _vm._v(" "),
+            _c("p", [
+              _vm._v(
+                "7、有料サービスにおいて，ユーザーに利用料金を請求するため"
+              ),
+            ]),
+            _vm._v(" "),
+            _c("p", [_vm._v("8、上記の利用目的に付随する目的")]),
+          ]),
+          _vm._v(" "),
+          _c("section", { staticClass: "p-policy u-pdt__m u-pdb__m" }, [
+            _c("h2", { staticClass: "c-title c-title__policy" }, [
+              _vm._v("第4条（利用目的の変更）"),
+            ]),
+            _vm._v(" "),
+            _c("p", [
+              _vm._v(
+                "当社は，利用目的が変更前と関連性を有すると合理的に認められる場合に限り，個人情報の利用目的を変更するものとします。"
+              ),
+            ]),
+            _vm._v(" "),
+            _c("p", [
+              _vm._v(
+                "利用目的の変更を行った場合には，変更後の目的について，当社所定の方法により，ユーザーに通知し，または本ウェブサイト上に公表するものとします。"
+              ),
+            ]),
+          ]),
+          _vm._v(" "),
+          _c("section", { staticClass: "p-policy u-pdt__m u-pdb__m" }, [
+            _c("h2", { staticClass: "c-title c-title__policy" }, [
+              _vm._v("第5条（個人情報の第三者提供）"),
+            ]),
+            _vm._v(" "),
+            _c("p", [
+              _vm._v(
+                "当社は，次に掲げる場合を除いて，あらかじめユーザーの同意を得ることなく，第三者に個人情報を提供することはありません。ただし，個人情報保護法その他の法令で認められる場合を除きます。"
+              ),
+            ]),
+            _vm._v(" "),
+            _c("p", [
+              _vm._v(
+                "1、人の生命，身体または財産の保護のために必要がある場合であって，本人の同意を得ることが困難であるとき"
+              ),
+            ]),
+            _vm._v(" "),
+            _c("p", [
+              _vm._v(
+                "2、公衆衛生の向上または児童の健全な育成の推進のために特に必要がある場合であって，本人の同意を得ることが困難であるとき"
+              ),
+            ]),
+            _vm._v(" "),
+            _c("p", [
+              _vm._v(
+                "3、国の機関もしくは地方公共団体またはその委託を受けた者が法令の定める事務を遂行することに対して協力する必要がある場合であって，本人の同意を得ることにより当該事務の遂行に支障を及ぼすおそれがあるとき"
+              ),
+            ]),
+            _vm._v(" "),
+            _c("p", [
+              _vm._v(
+                "4、予め次の事項を告知あるいは公表し，かつ当社が個人情報保護委員会に届出をしたとき"
+              ),
+            ]),
+            _vm._v(" "),
+            _c("p", [_vm._v("（1）利用目的に第三者への提供を含むこと")]),
+            _vm._v(" "),
+            _c("p", [_vm._v("（2）第三者に提供されるデータの項目")]),
+            _vm._v(" "),
+            _c("p", [_vm._v("（3）第三者への提供の手段または方法")]),
+            _vm._v(" "),
+            _c("p", [
+              _vm._v(
+                "（4）本人の求めに応じて個人情報の第三者への提供を停止すること"
+              ),
+            ]),
+            _vm._v(" "),
+            _c("p", [_vm._v("（5）本人の求めを受け付ける方法")]),
+            _vm._v(" "),
+            _c("p", [
+              _vm._v(
+                "5、前項の定めにかかわらず，次に掲げる場合には，当該情報の提供先は第三者に該当しないものとします。"
+              ),
+            ]),
+            _vm._v(" "),
+            _c("p", [
+              _vm._v(
+                "（1）当社が利用目的の達成に必要な範囲内において個人情報の取扱いの全部または一部を委託する場合"
+              ),
+            ]),
+            _vm._v(" "),
+            _c("p", [
+              _vm._v(
+                "（2）合併その他の事由による事業の承継に伴って個人情報が提供される場合"
+              ),
+            ]),
+            _vm._v(" "),
+            _c("p", [
+              _vm._v(
+                "（3）個人情報を特定の者との間で共同して利用する場合であって，その旨並びに共同して利用される個人情報の項目，共同して利用する者の範囲，利用する者の利用目的および当該個人情報の管理について責任を有する者の氏名または名称について，あらかじめ本人に通知し，または本人が容易に知り得る状態に置いた場合"
+              ),
+            ]),
+          ]),
+          _vm._v(" "),
+          _c("section", { staticClass: "p-policy u-pdt__m u-pdb__m" }, [
+            _c("h2", { staticClass: "c-title c-title__policy" }, [
+              _vm._v("第6条（個人情報の開示）"),
+            ]),
+            _vm._v(" "),
+            _c("p", [
+              _vm._v(
+                "当社は，本人から個人情報の開示を求められたときは，本人に対し，遅滞なくこれを開示します。ただし，開示することにより次のいずれかに該当する場合は，その全部または一部を開示しないこともあり，開示しない決定をした場合には，その旨を遅滞なく通知します。なお，個人情報の開示に際しては，1件あたり1，000円の手数料を申し受けます。"
+              ),
+            ]),
+            _vm._v(" "),
+            _c("p", [
+              _vm._v(
+                "1、本人または第三者の生命，身体，財産その他の権利利益を害するおそれがある場合"
+              ),
+            ]),
+            _vm._v(" "),
+            _c("p", [
+              _vm._v(
+                "2、当社の業務の適正な実施に著しい支障を及ぼすおそれがある場合"
+              ),
+            ]),
+            _vm._v(" "),
+            _c("p", [_vm._v("3、その他法令に違反することとなる場合")]),
+            _vm._v(" "),
+            _c("p", [
+              _vm._v(
+                "前項の定めにかかわらず，履歴情報および特性情報などの個人情報以外の情報については，原則として開示いたしません。"
+              ),
+            ]),
+          ]),
+          _vm._v(" "),
+          _c("section", { staticClass: "p-policy u-pdt__m u-pdb__m" }, [
+            _c("h2", { staticClass: "c-title c-title__policy" }, [
+              _vm._v("第7条（個人情報の訂正および削除）"),
+            ]),
+            _vm._v(" "),
+            _c("p", [
+              _vm._v(
+                "ユーザーは，当社の保有する自己の個人情報が誤った情報である場合には，当社が定める手続きにより，当社に対して個人情報の訂正，追加または削除（以下，「訂正等」といいます。）を請求することができます。"
+              ),
+            ]),
+            _vm._v(" "),
+            _c("p", [
+              _vm._v(
+                "当社は，ユーザーから前項の請求を受けてその請求に応じる必要があると判断した場合には，遅滞なく，当該個人情報の訂正等を行うものとします。"
+              ),
+            ]),
+            _vm._v(" "),
+            _c("p", [
+              _vm._v(
+                "当社は，前項の規定に基づき訂正等を行った場合，または訂正等を行わない旨の決定をしたときは遅滞なく，これをユーザーに通知します。"
+              ),
+            ]),
+          ]),
+          _vm._v(" "),
+          _c("section", { staticClass: "p-policy u-pdt__m u-pdb__m" }, [
+            _c("h2", { staticClass: "c-title c-title__policy" }, [
+              _vm._v("第8条（個人情報の利用停止等）"),
+            ]),
+            _vm._v(" "),
+            _c("p", [
+              _vm._v(
+                "当社は，本人から，個人情報が，利用目的の範囲を超えて取り扱われているという理由，または不正の手段により取得されたものであるという理由により，その利用の停止または消去（以下，「利用停止等」といいます。）を求められた場合には，遅滞なく必要な調査を行います。"
+              ),
+            ]),
+            _vm._v(" "),
+            _c("p", [
+              _vm._v(
+                "前項の調査結果に基づき，その請求に応じる必要があると判断した場合には，遅滞なく，当該個人情報の利用停止等を行います。"
+              ),
+            ]),
+            _vm._v(" "),
+            _c("p", [
+              _vm._v(
+                "当社は，前項の規定に基づき利用停止等を行った場合，または利用停止等を行わない旨の決定をしたときは，遅滞なく，これをユーザーに通知します。"
+              ),
+            ]),
+            _vm._v(" "),
+            _c("p", [
+              _vm._v(
+                "前2項にかかわらず，利用停止等に多額の費用を有する場合その他利用停止等を行うことが困難な場合であって，ユーザーの権利利益を保護するために必要なこれに代わるべき措置をとれる場合は，この代替策を講じるものとします。"
+              ),
+            ]),
+          ]),
+          _vm._v(" "),
+          _c("section", { staticClass: "p-policy u-pdt__m u-pdb__m" }, [
+            _c("h2", { staticClass: "c-title c-title__policy" }, [
+              _vm._v("第9条（プライバシーポリシーの変更）"),
+            ]),
+            _vm._v(" "),
+            _c("p", [
+              _vm._v(
+                "本ポリシーの内容は，法令その他本ポリシーに別段の定めのある事項を除いて，ユーザーに通知することなく，変更することができるものとします。"
+              ),
+            ]),
+            _vm._v(" "),
+            _c("p", [
+              _vm._v(
+                "当社が別途定める場合を除いて，変更後のプライバシーポリシーは，本ウェブサイトに掲載したときから効力を生じるものとします。"
+              ),
+            ]),
+          ]),
+          _vm._v(" "),
+          _c("section", { staticClass: "p-policy u-pdt__m u-pdb__m" }, [
+            _c("h2", { staticClass: "c-title c-title__policy" }, [
+              _vm._v("第10条（お問い合わせ窓口）"),
+            ]),
+            _vm._v(" "),
+            _c("p", [
+              _vm._v(
+                "本ポリシーに関するお問い合わせは，下記の窓口までお願いいたします。"
+              ),
+            ]),
+            _vm._v(" "),
+            _c("p", [_vm._v("Eメールアドレス：haikishare.com")]),
+          ]),
+          _vm._v(" "),
+          _c("p", [_vm._v("以上")]),
+        ]
+      ),
+    ])
+  },
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ProductAllIndexComponent.vue?vue&type=template&id=a686fff0":
 /*!**************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ProductAllIndexComponent.vue?vue&type=template&id=a686fff0 ***!
@@ -48598,14 +49094,18 @@ var render = function () {
                                             expression: "product.is_purchased",
                                           },
                                         ],
-                                        staticClass: "c-label__purchase",
+                                        staticClass:
+                                          "c-label__purchase u-pd__m",
                                       },
                                       [_vm._v("購入済み")]
                                     ),
                                     _vm._v(" "),
                                     _c(
                                       "div",
-                                      { staticClass: "p-like p-like__content" },
+                                      {
+                                        staticClass:
+                                          "p-like p-like__content u-pdr__s",
+                                      },
                                       [
                                         !product.liked
                                           ? _c("i", {
@@ -48660,7 +49160,7 @@ var render = function () {
                                       "router-link",
                                       {
                                         staticClass:
-                                          "c-button c-button__common c-button__detail",
+                                          "c-button c-button__common c-button__detail u-pd__s u-m__s",
                                         attrs: {
                                           to: _vm.getProductDetailLink(
                                             product.id
@@ -48742,7 +49242,7 @@ var render = function () {
           _c(
             "form",
             {
-              staticClass: "c-form c-form__search",
+              staticClass: "c-form u-pd__s",
               on: {
                 submit: function ($event) {
                   $event.preventDefault()
@@ -48808,7 +49308,7 @@ var render = function () {
                     expression: "minPrice",
                   },
                 ],
-                staticClass: "c-input c-input__search",
+                staticClass: "c-input c-input__search u-mt__s u-mb__s",
                 attrs: { type: "number", name: "minprice" },
                 domProps: { value: _vm.minPrice },
                 on: {
@@ -48833,7 +49333,7 @@ var render = function () {
                     expression: "maxPrice",
                   },
                 ],
-                staticClass: "c-input c-input__search",
+                staticClass: "c-input c-input__search u-mt__s u-mb__s",
                 attrs: { type: "number", name: "maxprice" },
                 domProps: { value: _vm.maxPrice },
                 on: {
@@ -48851,7 +49351,7 @@ var render = function () {
                 _vm._v("賞味期限切れかどうか"),
               ]),
               _vm._v(" "),
-              _c("div", { staticClass: "c-input__radio" }, [
+              _c("div", { staticClass: "c-input__radio u-mt__s u-mb__s" }, [
                 _c("input", {
                   directives: [
                     {
@@ -48899,7 +49399,7 @@ var render = function () {
                 "button",
                 {
                   staticClass:
-                    "c-button c-button__submit c-button__common u-mt__m u-mb__m",
+                    "c-button c-button__submit c-button__common u-pd__s u-mt__m u-mb__m",
                   attrs: { type: "submit" },
                 },
                 [_vm._v("検索する")]
@@ -48940,18 +49440,22 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("html", { attrs: { lang: "ja" } }, [
-      _c("head"),
-      _vm._v(" "),
-      _c("body", [
-        _c("div", { staticClass: "p-article" }, [
+    return _c("main", { staticClass: "l-main" }, [
+      _c("article", { staticClass: "l-main__wrapper l-main__wrapper--terms" }, [
+        _c("h1", { staticClass: "c-title c-title__header u-mb__xl" }, [
+          _vm._v("利用規約"),
+        ]),
+        _vm._v(" "),
+        _c("section", { staticClass: "p-terms u-pdt__m u-pdb__m" }, [
           _c("p", [
             _vm._v(
               "この利用規約（以下、「本規約」といいます。）は、haiki share（以下、「当社」といいます。）がこのECサイト上で提供するサービス（以下、「本サービス」といいます。）の利用条件を定めるものです。登録会員の皆さま（以下、「会員さま」といいます。）には、本規約に従って、本サービスをご利用いただきます。"
             ),
           ]),
-          _vm._v(" "),
-          _c("h2", { staticClass: "c-title__terms" }, [
+        ]),
+        _vm._v(" "),
+        _c("section", { staticClass: "p-terms u-pdt__m u-pdb__m" }, [
+          _c("h2", { staticClass: "c-title c-title__terms" }, [
             _vm._v("第1条（適用）"),
           ]),
           _vm._v(" "),
@@ -48960,8 +49464,10 @@ var staticRenderFns = [
               "本規約は、会員さまと当社との間の本サービスの利用に関わる一切の関係に適用されるものとします。"
             ),
           ]),
-          _vm._v(" "),
-          _c("h2", { staticClass: "c-title__terms" }, [
+        ]),
+        _vm._v(" "),
+        _c("section", { staticClass: "p-terms u-pdt__m u-pdb__m" }, [
+          _c("h2", { staticClass: "c-title c-title__terms" }, [
             _vm._v("第2条（利用登録）"),
           ]),
           _vm._v(" "),
@@ -48988,8 +49494,10 @@ var staticRenderFns = [
           _c("p", [
             _vm._v("（3）その他、当社が利用登録を相当でないと判断した場合"),
           ]),
-          _vm._v(" "),
-          _c("h2", { staticClass: "c-title__terms" }, [
+        ]),
+        _vm._v(" "),
+        _c("section", { staticClass: "p-terms u-pdt__m u-pdb__m" }, [
+          _c("h2", { staticClass: "c-title c-title__terms" }, [
             _vm._v("第3条（会員さまIDおよびパスワードの管理）"),
           ]),
           _vm._v(" "),
@@ -49004,8 +49512,10 @@ var staticRenderFns = [
               "会員さまは、いかなる場合にも、会員さまIDおよびパスワードを第三者に譲渡または貸与することはできません。当社は、会員さまIDとパスワードの組み合わせが登録情報と一致してログインされた場合には、その会員さまIDを登録している会員さま自身による利用とみなします。"
             ),
           ]),
-          _vm._v(" "),
-          _c("h2", { staticClass: "c-title__terms" }, [
+        ]),
+        _vm._v(" "),
+        _c("section", { staticClass: "p-terms u-pdt__m u-pdb__m" }, [
+          _c("h2", { staticClass: "c-title c-title__terms" }, [
             _vm._v("第4条（利用料金および支払方法）"),
           ]),
           _vm._v(" "),
@@ -49014,8 +49524,10 @@ var staticRenderFns = [
               "会員さまは、本サービス利用の対価として、当社が別途定め、本ウェブサイトに表示する利用料金を、当社が指定する方法により支払うものとします。"
             ),
           ]),
-          _vm._v(" "),
-          _c("h2", { staticClass: "c-title__terms" }, [
+        ]),
+        _vm._v(" "),
+        _c("section", { staticClass: "p-terms u-pdt__m u-pdb__m" }, [
+          _c("h2", { staticClass: "c-title c-title__terms" }, [
             _vm._v("第5条（禁止事項）"),
           ]),
           _vm._v(" "),
@@ -49054,8 +49566,10 @@ var staticRenderFns = [
           ]),
           _vm._v(" "),
           _c("p", [_vm._v("（8）その他、当社が不適切と判断する行為")]),
-          _vm._v(" "),
-          _c("h2", { staticClass: "c-title__terms" }, [
+        ]),
+        _vm._v(" "),
+        _c("section", { staticClass: "p-terms u-pdt__m u-pdb__m" }, [
+          _c("h2", { staticClass: "c-title c-title__terms" }, [
             _vm._v("第6条（本サービスの提供の停止等）"),
           ]),
           _vm._v(" "),
@@ -49090,8 +49604,10 @@ var staticRenderFns = [
               "当社は、本サービスの提供の停止または中断により、会員さままたは第三者が被ったいかなる不利益または損害について、理由を問わず一切の責任を負わないものとします。"
             ),
           ]),
-          _vm._v(" "),
-          _c("h2", { staticClass: "c-title__terms" }, [
+        ]),
+        _vm._v(" "),
+        _c("section", { staticClass: "p-terms u-pdt__m u-pdb__m" }, [
+          _c("h2", { staticClass: "c-title c-title__terms" }, [
             _vm._v("第7条（利用制限および登録抹消）"),
           ]),
           _vm._v(" "),
@@ -49118,8 +49634,10 @@ var staticRenderFns = [
               "当社は、本条に基づき当社が行った行為により会員さまに生じた損害について、一切の責任を負いません。"
             ),
           ]),
-          _vm._v(" "),
-          _c("h2", { staticClass: "c-title__terms" }, [
+        ]),
+        _vm._v(" "),
+        _c("section", { staticClass: "p-terms u-pdt__m u-pdb__m" }, [
+          _c("h2", { staticClass: "c-title c-title__terms" }, [
             _vm._v("第8条（免責事項）"),
           ]),
           _vm._v(" "),
@@ -49134,8 +49652,10 @@ var staticRenderFns = [
               "当社は、本サービスに関して、会員さまと他の会員さままたは第三者との間において生じた取引、連絡または紛争等について一切責任を負いません。"
             ),
           ]),
-          _vm._v(" "),
-          _c("h2", { staticClass: "c-title__terms" }, [
+        ]),
+        _vm._v(" "),
+        _c("section", { staticClass: "p-terms u-pdt__m u-pdb__m" }, [
+          _c("h2", { staticClass: "c-title c-title__terms" }, [
             _vm._v("第9条（サービス内容の変更等）"),
           ]),
           _vm._v(" "),
@@ -49144,8 +49664,10 @@ var staticRenderFns = [
               "当社は、会員さまに通知することなく、本サービスの内容を変更しまたは本サービスの提供を中止することができるものとし、これによって会員さまに生じた損害について一切の責任を負いません。"
             ),
           ]),
-          _vm._v(" "),
-          _c("h2", { staticClass: "c-title__terms" }, [
+        ]),
+        _vm._v(" "),
+        _c("section", { staticClass: "p-terms u-pdt__m u-pdb__m" }, [
+          _c("h2", { staticClass: "c-title c-title__terms" }, [
             _vm._v("第10条（利用規約の変更）"),
           ]),
           _vm._v(" "),
@@ -49154,8 +49676,10 @@ var staticRenderFns = [
               "当社は、必要と判断した場合には、会員さまに通知することなくいつでも本規約を変更することができるものとします。"
             ),
           ]),
-          _vm._v(" "),
-          _c("h2", { staticClass: "c-title__terms" }, [
+        ]),
+        _vm._v(" "),
+        _c("section", { staticClass: "p-terms u-pdt__m u-pdb__m" }, [
+          _c("h2", { staticClass: "c-title c-title__terms" }, [
             _vm._v("第11条（通知または連絡）"),
           ]),
           _vm._v(" "),
@@ -49164,8 +49688,10 @@ var staticRenderFns = [
               "会員さまと当社との間の通知または連絡は、当社の定める方法によって行うものとします。"
             ),
           ]),
-          _vm._v(" "),
-          _c("h2", { staticClass: "c-title__terms" }, [
+        ]),
+        _vm._v(" "),
+        _c("section", { staticClass: "p-terms u-pdt__m u-pdb__m" }, [
+          _c("h2", { staticClass: "c-title c-title__terms" }, [
             _vm._v("第12条（権利義務の譲渡の禁止）"),
           ]),
           _vm._v(" "),
@@ -49174,8 +49700,10 @@ var staticRenderFns = [
               "会員さまは、当社の書面による事前の承諾なく、利用契約上の地位または本規約に基づく権利もしくは義務を第三者に譲渡し、または担保に供することはできません。"
             ),
           ]),
-          _vm._v(" "),
-          _c("h2", { staticClass: "c-title__terms" }, [
+        ]),
+        _vm._v(" "),
+        _c("section", { staticClass: "p-terms u-pdt__m u-pdb__m" }, [
+          _c("h2", { staticClass: "c-title c-title__terms" }, [
             _vm._v("第13条（準拠法・裁判管轄）"),
           ]),
           _vm._v(" "),
@@ -49188,9 +49716,9 @@ var staticRenderFns = [
               "本サービスに関して紛争が生じた場合には、当社の本店所在地を管轄する裁判所を専属的合意管轄とします。"
             ),
           ]),
-          _vm._v(" "),
-          _c("p", [_vm._v("以上")]),
         ]),
+        _vm._v(" "),
+        _c("p", [_vm._v("以上")]),
       ]),
     ])
   },
@@ -49236,7 +49764,7 @@ var render = function () {
           },
           [
             _vm.errors && _vm.errors.email
-              ? _c("span", { staticClass: "c-error" }, [
+              ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
                   _vm._v(_vm._s(_vm.errors.email[0])),
                 ])
               : _vm._e(),
@@ -49254,7 +49782,7 @@ var render = function () {
                   expression: "formData.email",
                 },
               ],
-              staticClass: "c-input",
+              staticClass: "c-input u-pd__s u-mt__m u-mb__m",
               class: { "is-invalid": _vm.errors && _vm.errors.email },
               attrs: { id: "email", type: "email", autocomplete: "email" },
               domProps: { value: _vm.formData.email },
@@ -49271,7 +49799,8 @@ var render = function () {
             _c(
               "button",
               {
-                staticClass: "c-button c-button__submit c-button__user u-mt__m",
+                staticClass:
+                  "c-button c-button__submit c-button__user u-pd__s u-mt__m",
                 attrs: { type: "submit" },
               },
               [_vm._v("パスワード変更メールを送信する")]
@@ -49337,13 +49866,13 @@ var render = function () {
           },
           [
             _vm.errors && _vm.errors.email
-              ? _c("span", { staticClass: "c-error" }, [
+              ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
                   _vm._v(_vm._s(_vm.errors.email[0])),
                 ])
               : _vm._e(),
             _vm._v(" "),
             _vm.errors && _vm.errors.password
-              ? _c("span", { staticClass: "c-error" }, [
+              ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
                   _vm._v(_vm._s(_vm.errors.password[0])),
                 ])
               : _vm._e(),
@@ -49361,7 +49890,7 @@ var render = function () {
                   expression: "formData.email",
                 },
               ],
-              staticClass: "c-input",
+              staticClass: "c-input u-pd__s u-mt__m u-mb__m",
               class: { "is-invalid": _vm.errors && _vm.errors.email },
               attrs: { id: "email", type: "email", autocomplete: "email" },
               domProps: { value: _vm.formData.email },
@@ -49392,7 +49921,7 @@ var render = function () {
                         expression: "formData.password",
                       },
                     ],
-                    staticClass: "c-input",
+                    staticClass: "c-input u-pd__s u-mt__m u-mb__m",
                     class: { "is-invalid": _vm.errors && _vm.errors.password },
                     attrs: {
                       id: "password",
@@ -49443,7 +49972,7 @@ var render = function () {
                         expression: "formData.password",
                       },
                     ],
-                    staticClass: "c-input",
+                    staticClass: "c-input u-pd__s u-mt__m u-mb__m",
                     class: { "is-invalid": _vm.errors && _vm.errors.password },
                     attrs: {
                       id: "password",
@@ -49466,7 +49995,7 @@ var render = function () {
                         expression: "formData.password",
                       },
                     ],
-                    staticClass: "c-input",
+                    staticClass: "c-input u-pd__s u-mt__m u-mb__m",
                     class: { "is-invalid": _vm.errors && _vm.errors.password },
                     attrs: {
                       id: "password",
@@ -49562,7 +50091,8 @@ var render = function () {
             _c(
               "button",
               {
-                staticClass: "c-button c-button__submit c-button__user u-mt__m",
+                staticClass:
+                  "c-button c-button__submit c-button__user u-pd__s u-mt__m",
                 attrs: { type: "submit" },
               },
               [_vm._v("ログインする")]
@@ -49680,7 +50210,7 @@ var render = function () {
                                       "router-link",
                                       {
                                         staticClass:
-                                          "c-button c-button__user c-button__detail",
+                                          "c-button c-button__user c-button__detail u-pd__s u-m__s",
                                         attrs: {
                                           to: _vm.getProductDetailLink(
                                             product.product.id
@@ -49689,19 +50219,12 @@ var render = function () {
                                       },
                                       [_vm._v("詳細を見る")]
                                     ),
-                                  ],
-                                  1
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "div",
-                                  { staticClass: "p-product__button" },
-                                  [
+                                    _vm._v(" "),
                                     _c(
                                       "button",
                                       {
                                         staticClass:
-                                          "c-button c-button__user c-button__detail",
+                                          "c-button c-button__user c-button__cancel u-pd__s u-m__s",
                                         on: {
                                           click: function ($event) {
                                             _vm.cancelPurchase(
@@ -49712,7 +50235,8 @@ var render = function () {
                                       },
                                       [_vm._v("購入をキャンセルする")]
                                     ),
-                                  ]
+                                  ],
+                                  1
                                 ),
                               ]),
                             ]),
@@ -49945,7 +50469,7 @@ var render = function () {
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "p-product" }, [
-            _c("div", { staticClass: "p-like p-like__content" }, [
+            _c("div", { staticClass: "p-like p-like__content u-pdr__s" }, [
               !_vm.product.liked
                 ? _c("i", {
                     staticClass: "c-icon c-icon__unlike far fa-heart",
@@ -49971,7 +50495,7 @@ var render = function () {
               _c(
                 "button",
                 {
-                  staticClass: "c-button c-button__share",
+                  staticClass: "c-button c-button__share u-pd__s",
                   on: { click: _vm.twitterShare },
                 },
                 [
@@ -50020,7 +50544,7 @@ var render = function () {
           ? _c(
               "button",
               {
-                staticClass: "c-button c-button__submit c-button__user",
+                staticClass: "c-button c-button__submit c-button__user u-pd__s",
                 on: { click: _vm.purchaseProduct },
               },
               [_vm._v("購入する")]
@@ -50030,14 +50554,16 @@ var render = function () {
           ? _c(
               "button",
               {
-                staticClass: "c-button c-button__submit c-button__user",
+                staticClass: "c-button c-button__submit c-button__user u-pd__s",
                 on: { click: _vm.cancelPurchase },
               },
               [_vm._v("購入をキャンセルする")]
             )
           : _c(
               "button",
-              { staticClass: "c-button c-button__submit c-button__user" },
+              {
+                staticClass: "c-button c-button__submit c-button__user u-pd__s",
+              },
               [_vm._v("購入済み")]
             ),
       ]),
@@ -50148,14 +50674,17 @@ var render = function () {
                                         expression: "product.is_purchased",
                                       },
                                     ],
-                                    staticClass: "c-label__purchase",
+                                    staticClass: "c-label__purchase u-pd__m",
                                   },
                                   [_vm._v("購入済み")]
                                 ),
                                 _vm._v(" "),
                                 _c(
                                   "div",
-                                  { staticClass: "p-like p-like__content" },
+                                  {
+                                    staticClass:
+                                      "p-like p-like__content u-pdr__s",
+                                  },
                                   [
                                     !product.product.liked
                                       ? _c("i", {
@@ -50209,7 +50738,7 @@ var render = function () {
                                     "router-link",
                                     {
                                       staticClass:
-                                        "c-button c-button__user c-button__detail",
+                                        "c-button c-button__user c-button__detail u-pd__s u-m__s",
                                       attrs: {
                                         to: _vm.getProductDetailLink(
                                           product.product.id
@@ -50309,7 +50838,7 @@ var render = function () {
                           _vm._v("購入した商品はありません。"),
                         ]),
                       ])
-                    : _vm._l(_vm.products, function (product) {
+                    : _vm._l(_vm.products.data, function (product) {
                         return _c(
                           "li",
                           { key: product.id, staticClass: "p-product__item" },
@@ -50320,7 +50849,7 @@ var render = function () {
                                 { staticClass: "p-card__header u-pd__s" },
                                 [
                                   _c("h3", { staticClass: "c-card__name" }, [
-                                    _vm._v(_vm._s(product.name)),
+                                    _vm._v(_vm._s(product.product.name)),
                                   ]),
                                 ]
                               ),
@@ -50345,51 +50874,21 @@ var render = function () {
                                         expression: "product.is_purchased",
                                       },
                                     ],
-                                    staticClass: "c-label__purchase",
+                                    staticClass: "c-label__purchase u-pd__m",
                                   },
                                   [_vm._v("購入済み")]
                                 ),
                                 _vm._v(" "),
-                                _c(
-                                  "div",
-                                  { staticClass: "p-like p-like__content" },
-                                  [
-                                    !product.liked
-                                      ? _c("i", {
-                                          staticClass:
-                                            "c-icon c-icon__unlike far fa-heart",
-                                          on: {
-                                            click: function ($event) {
-                                              _vm.productLike(product)
-                                            },
-                                          },
-                                        })
-                                      : _c("i", {
-                                          staticClass:
-                                            "c-icon c-icon__like fas fa-heart",
-                                          on: {
-                                            click: function ($event) {
-                                              _vm.productUnlike(product)
-                                            },
-                                          },
-                                        }),
-                                    _vm._v(" "),
-                                    _c("span", [
-                                      _vm._v(
-                                        "いいね" + _vm._s(product.likes_count)
-                                      ),
-                                    ]),
-                                  ]
-                                ),
-                                _vm._v(" "),
                                 _c("p", { staticClass: "c-card__price" }, [
-                                  _vm._v(_vm._s(product.price) + "円"),
+                                  _vm._v(_vm._s(product.product.price) + "円"),
                                 ]),
                                 _vm._v(" "),
                                 _c("p", { staticClass: "c-card__price" }, [
                                   _vm._v(
                                     _vm._s(
-                                      _vm.formatDate(product.expiration_date)
+                                      _vm.formatDate(
+                                        product.product.expiration_date
+                                      )
                                     )
                                   ),
                                 ]),
@@ -50403,10 +50902,10 @@ var render = function () {
                                     "router-link",
                                     {
                                       staticClass:
-                                        "c-button c-button__user c-button__detail",
+                                        "c-button c-button__user c-button__detail u-pd__s u-m__s",
                                       attrs: {
                                         to: _vm.getProductDetailLink(
-                                          product.id
+                                          product.product.id
                                         ),
                                       },
                                     },
@@ -50490,37 +50989,37 @@ var render = function () {
           },
           [
             _vm.errors && _vm.errors.name
-              ? _c("span", { staticClass: "c-error" }, [
+              ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
                   _vm._v(_vm._s(_vm.errors.name[0])),
                 ])
               : _vm._e(),
             _vm._v(" "),
             _vm.errors && _vm.errors.email
-              ? _c("span", { staticClass: "c-error" }, [
+              ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
                   _vm._v(_vm._s(_vm.errors.email[0])),
                 ])
               : _vm._e(),
             _vm._v(" "),
             _vm.errors && _vm.errors.password
-              ? _c("span", { staticClass: "c-error" }, [
+              ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
                   _vm._v(_vm._s(_vm.errors.password[0])),
                 ])
               : _vm._e(),
             _vm._v(" "),
             _vm.errors && _vm.errors.password_confirmation
-              ? _c("span", { staticClass: "c-error" }, [
+              ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
                   _vm._v(_vm._s(_vm.errors.password_confirmation[0])),
                 ])
               : _vm._e(),
             _vm._v(" "),
             _vm.errors && _vm.errors.introduction
-              ? _c("span", { staticClass: "c-error" }, [
+              ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
                   _vm._v(_vm._s(_vm.errors.introduction[0])),
                 ])
               : _vm._e(),
             _vm._v(" "),
             _vm.errors && _vm.errors.icon
-              ? _c("span", { staticClass: "c-error" }, [
+              ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
                   _vm._v(_vm._s(_vm.errors.icon[0])),
                 ])
               : _vm._e(),
@@ -50538,7 +51037,7 @@ var render = function () {
                   expression: "formData.name",
                 },
               ],
-              staticClass: "c-input",
+              staticClass: "c-input u-pd__s u-mt__m u-mb__m",
               class: { "is-invalid": _vm.errors && _vm.errors.name },
               attrs: { id: "name", type: "name", autocomplete: "name" },
               domProps: { value: _vm.formData.name },
@@ -50565,7 +51064,7 @@ var render = function () {
                   expression: "formData.email",
                 },
               ],
-              staticClass: "c-input",
+              staticClass: "c-input u-pd__s u-mt__m u-mb__m",
               class: { "is-invalid": _vm.errors && _vm.errors.email },
               attrs: { id: "email", type: "email", autocomplete: "email" },
               domProps: { value: _vm.formData.email },
@@ -50596,7 +51095,7 @@ var render = function () {
                         expression: "formData.password",
                       },
                     ],
-                    staticClass: "c-input",
+                    staticClass: "c-input u-pd__s u-mt__m u-mb__m",
                     class: { "is-invalid": _vm.errors && _vm.errors.password },
                     attrs: {
                       id: "password",
@@ -50647,7 +51146,7 @@ var render = function () {
                         expression: "formData.password",
                       },
                     ],
-                    staticClass: "c-input",
+                    staticClass: "c-input u-pd__s u-mt__m u-mb__m",
                     class: { "is-invalid": _vm.errors && _vm.errors.password },
                     attrs: {
                       id: "password",
@@ -50670,7 +51169,7 @@ var render = function () {
                         expression: "formData.password",
                       },
                     ],
-                    staticClass: "c-input",
+                    staticClass: "c-input u-pd__s u-mt__m u-mb__m",
                     class: { "is-invalid": _vm.errors && _vm.errors.password },
                     attrs: {
                       id: "password",
@@ -50718,7 +51217,7 @@ var render = function () {
                         expression: "formData.password_confirmation",
                       },
                     ],
-                    staticClass: "c-input",
+                    staticClass: "c-input u-pd__s u-mt__m u-mb__m",
                     class: {
                       "is-invalid":
                         _vm.errors && _vm.errors.password_confirmation,
@@ -50772,7 +51271,7 @@ var render = function () {
                         expression: "formData.password_confirmation",
                       },
                     ],
-                    staticClass: "c-input",
+                    staticClass: "c-input u-pd__s u-mt__m u-mb__m",
                     class: {
                       "is-invalid":
                         _vm.errors && _vm.errors.password_confirmation,
@@ -50800,7 +51299,7 @@ var render = function () {
                         expression: "formData.password_confirmation",
                       },
                     ],
-                    staticClass: "c-input",
+                    staticClass: "c-input u-pd__s u-mt__m u-mb__m",
                     class: {
                       "is-invalid":
                         _vm.errors && _vm.errors.password_confirmation,
@@ -50855,7 +51354,7 @@ var render = function () {
                     modifiers: { trim: true },
                   },
                 ],
-                staticClass: "c-textarea",
+                staticClass: "c-textarea u-pd__s u-mt__m u-mb__m",
                 class: { "is-invalid": _vm.errors && _vm.errors.introduction },
                 attrs: {
                   maxlength: "50",
@@ -50897,7 +51396,8 @@ var render = function () {
             _c(
               "div",
               {
-                staticClass: "p-profile__icon p-profile__icon--container",
+                staticClass:
+                  "p-profile__icon p-profile__icon--container u-pd__s",
                 class: { "is-invalid": _vm.errors && _vm.errors.icon },
                 on: { drop: _vm.handleDrop },
               },
@@ -50934,7 +51434,8 @@ var render = function () {
             _c(
               "button",
               {
-                staticClass: "c-button c-button__submit c-button__user u-mt__m",
+                staticClass:
+                  "c-button c-button__submit c-button__user u-pd__s u-mt__m",
                 attrs: { type: "submit" },
               },
               [_vm._v("更新する")]
@@ -51000,31 +51501,31 @@ var render = function () {
           },
           [
             _vm.errors && _vm.errors.name
-              ? _c("span", { staticClass: "c-error" }, [
+              ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
                   _vm._v(_vm._s(_vm.errors.name[0])),
                 ])
               : _vm._e(),
             _vm._v(" "),
             _vm.errors && _vm.errors.email
-              ? _c("span", { staticClass: "c-error" }, [
+              ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
                   _vm._v(_vm._s(_vm.errors.email[0])),
                 ])
               : _vm._e(),
             _vm._v(" "),
             _vm.errors && _vm.errors.password
-              ? _c("span", { staticClass: "c-error" }, [
+              ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
                   _vm._v(_vm._s(_vm.errors.password[0])),
                 ])
               : _vm._e(),
             _vm._v(" "),
             _vm.errors && _vm.errors.password_confirmation
-              ? _c("span", { staticClass: "c-error" }, [
+              ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
                   _vm._v(_vm._s(_vm.errors.password_confirmation[0])),
                 ])
               : _vm._e(),
             _vm._v(" "),
             _vm.errors && !_vm.agreement
-              ? _c("span", { staticClass: "c-error" }, [
+              ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
                   _vm._v("利用規約に同意する必要があります。"),
                 ])
               : _vm._e(),
@@ -51042,7 +51543,7 @@ var render = function () {
                   expression: "formData.name",
                 },
               ],
-              staticClass: "c-input",
+              staticClass: "c-input u-pd__s u-mt__m u-mb__m",
               class: { "is-invalid": _vm.errors && _vm.errors.name },
               attrs: { id: "name", type: "name", autocomplete: "name" },
               domProps: { value: _vm.formData.name },
@@ -51069,7 +51570,7 @@ var render = function () {
                   expression: "formData.email",
                 },
               ],
-              staticClass: "c-input",
+              staticClass: "c-input u-pd__s u-mt__m u-mb__m",
               class: { "is-invalid": _vm.errors && _vm.errors.email },
               attrs: { id: "email", type: "email", autocomplete: "email" },
               domProps: { value: _vm.formData.email },
@@ -51100,7 +51601,7 @@ var render = function () {
                         expression: "formData.password",
                       },
                     ],
-                    staticClass: "c-input",
+                    staticClass: "c-input u-pd__s u-mt__m u-mb__m",
                     class: { "is-invalid": _vm.errors && _vm.errors.password },
                     attrs: {
                       id: "password",
@@ -51151,7 +51652,7 @@ var render = function () {
                         expression: "formData.password",
                       },
                     ],
-                    staticClass: "c-input",
+                    staticClass: "c-input u-pd__s u-mt__m u-mb__m",
                     class: { "is-invalid": _vm.errors && _vm.errors.password },
                     attrs: {
                       id: "password",
@@ -51174,7 +51675,7 @@ var render = function () {
                         expression: "formData.password",
                       },
                     ],
-                    staticClass: "c-input",
+                    staticClass: "c-input u-pd__s u-mt__m u-mb__m",
                     class: { "is-invalid": _vm.errors && _vm.errors.password },
                     attrs: {
                       id: "password",
@@ -51222,7 +51723,7 @@ var render = function () {
                         expression: "formData.password_confirmation",
                       },
                     ],
-                    staticClass: "c-input",
+                    staticClass: "c-input u-pd__s u-mt__m u-mb__m",
                     class: {
                       "is-invalid":
                         _vm.errors && _vm.errors.password_confirmation,
@@ -51276,7 +51777,7 @@ var render = function () {
                         expression: "formData.password_confirmation",
                       },
                     ],
-                    staticClass: "c-input",
+                    staticClass: "c-input u-pd__s u-mt__m u-mb__m",
                     class: {
                       "is-invalid":
                         _vm.errors && _vm.errors.password_confirmation,
@@ -51304,7 +51805,7 @@ var render = function () {
                         expression: "formData.password_confirmation",
                       },
                     ],
-                    staticClass: "c-input",
+                    staticClass: "c-input u-pd__s u-mt__m u-mb__m",
                     class: {
                       "is-invalid":
                         _vm.errors && _vm.errors.password_confirmation,
@@ -51344,7 +51845,7 @@ var render = function () {
             _vm._v(" "),
             _c(
               "div",
-              { staticClass: "p-register__terms" },
+              { staticClass: "p-register__terms u-pd__s u-m__s" },
               [_c("terms-component")],
               1
             ),
@@ -51405,7 +51906,7 @@ var render = function () {
             _c(
               "button",
               {
-                staticClass: "c-button c-button__submit c-button__user",
+                staticClass: "c-button c-button__submit c-button__user u-pd__s",
                 attrs: { type: "submit" },
               },
               [_vm._v("ユーザー登録する")]
@@ -51471,19 +51972,19 @@ var render = function () {
           },
           [
             _vm.errors && _vm.errors.oldPassword
-              ? _c("span", { staticClass: "c-error" }, [
+              ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
                   _vm._v(_vm._s(_vm.errors.oldPassword[0])),
                 ])
               : _vm._e(),
             _vm._v(" "),
             _vm.errors && _vm.errors.newPassword
-              ? _c("span", { staticClass: "c-error" }, [
+              ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
                   _vm._v(_vm._s(_vm.errors.newPassword[0])),
                 ])
               : _vm._e(),
             _vm._v(" "),
             _vm.errors && _vm.errors.password_confirmation
-              ? _c("span", { staticClass: "c-error" }, [
+              ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
                   _vm._v(_vm._s(_vm.errors.password_confirmation[0])),
                 ])
               : _vm._e(),
@@ -51503,7 +52004,7 @@ var render = function () {
                   expression: "formData.oldPassword",
                 },
               ],
-              staticClass: "c-input",
+              staticClass: "c-input u-pd__s u-mt__m u-mb__m",
               class: { "is-invalid": _vm.errors && _vm.errors.oldPassword },
               attrs: {
                 id: "old_password",
@@ -51535,7 +52036,7 @@ var render = function () {
                   expression: "formData.newPassword",
                 },
               ],
-              staticClass: "c-input",
+              staticClass: "c-input u-pd__s u-mt__m u-mb__m",
               class: { "is-invalid": _vm.errors && _vm.errors.newPassword },
               attrs: {
                 id: "new_password",
@@ -51567,7 +52068,7 @@ var render = function () {
                   expression: "formData.password_confirmation",
                 },
               ],
-              staticClass: "c-input",
+              staticClass: "c-input u-pd__s u-mt__m u-mb__m",
               class: {
                 "is-invalid": _vm.errors && _vm.errors.password_confirmation,
               },
@@ -51635,7 +52136,8 @@ var render = function () {
             _c(
               "button",
               {
-                staticClass: "c-button c-button__submit c-button__user u-mt__m",
+                staticClass:
+                  "c-button c-button__submit c-button__user u-pd__s u-mt__m",
                 attrs: { type: "submit" },
               },
               [_vm._v("パスワードを変更する")]
@@ -51696,7 +52198,8 @@ var render = function () {
           _c(
             "button",
             {
-              staticClass: "c-button c-button__submit c-button__user u-mt__m",
+              staticClass:
+                "c-button c-button__submit c-button__user u-pd__s u-mt__m",
               on: { click: _vm.withdraw },
             },
             [_vm._v("退会する")]
@@ -68851,6 +69354,75 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/PrivacyPolicyComponent.vue":
+/*!************************************************************!*\
+  !*** ./resources/js/components/PrivacyPolicyComponent.vue ***!
+  \************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _PrivacyPolicyComponent_vue_vue_type_template_id_27c59c24__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./PrivacyPolicyComponent.vue?vue&type=template&id=27c59c24 */ "./resources/js/components/PrivacyPolicyComponent.vue?vue&type=template&id=27c59c24");
+/* harmony import */ var _PrivacyPolicyComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./PrivacyPolicyComponent.vue?vue&type=script&lang=js */ "./resources/js/components/PrivacyPolicyComponent.vue?vue&type=script&lang=js");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _PrivacyPolicyComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"],
+  _PrivacyPolicyComponent_vue_vue_type_template_id_27c59c24__WEBPACK_IMPORTED_MODULE_0__["render"],
+  _PrivacyPolicyComponent_vue_vue_type_template_id_27c59c24__WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/PrivacyPolicyComponent.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/PrivacyPolicyComponent.vue?vue&type=script&lang=js":
+/*!************************************************************************************!*\
+  !*** ./resources/js/components/PrivacyPolicyComponent.vue?vue&type=script&lang=js ***!
+  \************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_PrivacyPolicyComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./PrivacyPolicyComponent.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/PrivacyPolicyComponent.vue?vue&type=script&lang=js");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_PrivacyPolicyComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/PrivacyPolicyComponent.vue?vue&type=template&id=27c59c24":
+/*!******************************************************************************************!*\
+  !*** ./resources/js/components/PrivacyPolicyComponent.vue?vue&type=template&id=27c59c24 ***!
+  \******************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PrivacyPolicyComponent_vue_vue_type_template_id_27c59c24__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./PrivacyPolicyComponent.vue?vue&type=template&id=27c59c24 */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/PrivacyPolicyComponent.vue?vue&type=template&id=27c59c24");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PrivacyPolicyComponent_vue_vue_type_template_id_27c59c24__WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PrivacyPolicyComponent_vue_vue_type_template_id_27c59c24__WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/components/ProductAllIndexComponent.vue":
 /*!**************************************************************!*\
   !*** ./resources/js/components/ProductAllIndexComponent.vue ***!
@@ -69763,31 +70335,32 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./store */ "./resources/js/store/index.js");
 /* harmony import */ var _components_HomeComponent__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/HomeComponent */ "./resources/js/components/HomeComponent.vue");
 /* harmony import */ var _components_TermsComponent_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/TermsComponent.vue */ "./resources/js/components/TermsComponent.vue");
-/* harmony import */ var _components_ErrorComponent_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/ErrorComponent.vue */ "./resources/js/components/ErrorComponent.vue");
-/* harmony import */ var _components_NotFoundComponent_vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/NotFoundComponent.vue */ "./resources/js/components/NotFoundComponent.vue");
-/* harmony import */ var _components_User_RegisterComponent_vue__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/User/RegisterComponent.vue */ "./resources/js/components/User/RegisterComponent.vue");
-/* harmony import */ var _components_User_LoginComponent_vue__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/User/LoginComponent.vue */ "./resources/js/components/User/LoginComponent.vue");
-/* harmony import */ var _components_User_MyPageComponent_vue__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/User/MyPageComponent.vue */ "./resources/js/components/User/MyPageComponent.vue");
-/* harmony import */ var _components_User_ForgotPasswordComponent_vue__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./components/User/ForgotPasswordComponent.vue */ "./resources/js/components/User/ForgotPasswordComponent.vue");
-/* harmony import */ var _components_User_ResetPasswordComponent_vue__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./components/User/ResetPasswordComponent.vue */ "./resources/js/components/User/ResetPasswordComponent.vue");
-/* harmony import */ var _components_User_ProfileComponent_vue__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./components/User/ProfileComponent.vue */ "./resources/js/components/User/ProfileComponent.vue");
-/* harmony import */ var _components_User_WithdrawComponent_vue__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./components/User/WithdrawComponent.vue */ "./resources/js/components/User/WithdrawComponent.vue");
-/* harmony import */ var _components_User_ProductDetailComponent_vue__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./components/User/ProductDetailComponent.vue */ "./resources/js/components/User/ProductDetailComponent.vue");
-/* harmony import */ var _components_User_ProductLikeComponent_vue__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./components/User/ProductLikeComponent.vue */ "./resources/js/components/User/ProductLikeComponent.vue");
-/* harmony import */ var _components_User_ProductPurchasedComponent_vue__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./components/User/ProductPurchasedComponent.vue */ "./resources/js/components/User/ProductPurchasedComponent.vue");
-/* harmony import */ var _components_Convenience_RegisterComponent_vue__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./components/Convenience/RegisterComponent.vue */ "./resources/js/components/Convenience/RegisterComponent.vue");
-/* harmony import */ var _components_Convenience_LoginComponent_vue__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./components/Convenience/LoginComponent.vue */ "./resources/js/components/Convenience/LoginComponent.vue");
-/* harmony import */ var _components_Convenience_MyPageComponent_vue__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./components/Convenience/MyPageComponent.vue */ "./resources/js/components/Convenience/MyPageComponent.vue");
-/* harmony import */ var _components_Convenience_ForgotPasswordComponent_vue__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./components/Convenience/ForgotPasswordComponent.vue */ "./resources/js/components/Convenience/ForgotPasswordComponent.vue");
-/* harmony import */ var _components_Convenience_ResetPasswordComponent_vue__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./components/Convenience/ResetPasswordComponent.vue */ "./resources/js/components/Convenience/ResetPasswordComponent.vue");
-/* harmony import */ var _components_Convenience_ProfileComponent_vue__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./components/Convenience/ProfileComponent.vue */ "./resources/js/components/Convenience/ProfileComponent.vue");
-/* harmony import */ var _components_Convenience_WithdrawComponent_vue__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./components/Convenience/WithdrawComponent.vue */ "./resources/js/components/Convenience/WithdrawComponent.vue");
-/* harmony import */ var _components_Convenience_ProductDetailComponent_vue__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./components/Convenience/ProductDetailComponent.vue */ "./resources/js/components/Convenience/ProductDetailComponent.vue");
-/* harmony import */ var _components_Convenience_ProductSaleComponent_vue__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./components/Convenience/ProductSaleComponent.vue */ "./resources/js/components/Convenience/ProductSaleComponent.vue");
-/* harmony import */ var _components_Convenience_ProductEditComponent_vue__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ./components/Convenience/ProductEditComponent.vue */ "./resources/js/components/Convenience/ProductEditComponent.vue");
-/* harmony import */ var _components_Convenience_ProductSaleIndexComponent_vue__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ./components/Convenience/ProductSaleIndexComponent.vue */ "./resources/js/components/Convenience/ProductSaleIndexComponent.vue");
-/* harmony import */ var _components_Convenience_ProductPurchaseIndexComponent_vue__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ./components/Convenience/ProductPurchaseIndexComponent.vue */ "./resources/js/components/Convenience/ProductPurchaseIndexComponent.vue");
-/* harmony import */ var _components_ProductAllIndexComponent_vue__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ./components/ProductAllIndexComponent.vue */ "./resources/js/components/ProductAllIndexComponent.vue");
+/* harmony import */ var _components_PrivacyPolicyComponent_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/PrivacyPolicyComponent.vue */ "./resources/js/components/PrivacyPolicyComponent.vue");
+/* harmony import */ var _components_ErrorComponent_vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/ErrorComponent.vue */ "./resources/js/components/ErrorComponent.vue");
+/* harmony import */ var _components_NotFoundComponent_vue__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/NotFoundComponent.vue */ "./resources/js/components/NotFoundComponent.vue");
+/* harmony import */ var _components_User_RegisterComponent_vue__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/User/RegisterComponent.vue */ "./resources/js/components/User/RegisterComponent.vue");
+/* harmony import */ var _components_User_LoginComponent_vue__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/User/LoginComponent.vue */ "./resources/js/components/User/LoginComponent.vue");
+/* harmony import */ var _components_User_MyPageComponent_vue__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./components/User/MyPageComponent.vue */ "./resources/js/components/User/MyPageComponent.vue");
+/* harmony import */ var _components_User_ForgotPasswordComponent_vue__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./components/User/ForgotPasswordComponent.vue */ "./resources/js/components/User/ForgotPasswordComponent.vue");
+/* harmony import */ var _components_User_ResetPasswordComponent_vue__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./components/User/ResetPasswordComponent.vue */ "./resources/js/components/User/ResetPasswordComponent.vue");
+/* harmony import */ var _components_User_ProfileComponent_vue__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./components/User/ProfileComponent.vue */ "./resources/js/components/User/ProfileComponent.vue");
+/* harmony import */ var _components_User_WithdrawComponent_vue__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./components/User/WithdrawComponent.vue */ "./resources/js/components/User/WithdrawComponent.vue");
+/* harmony import */ var _components_User_ProductDetailComponent_vue__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./components/User/ProductDetailComponent.vue */ "./resources/js/components/User/ProductDetailComponent.vue");
+/* harmony import */ var _components_User_ProductLikeComponent_vue__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./components/User/ProductLikeComponent.vue */ "./resources/js/components/User/ProductLikeComponent.vue");
+/* harmony import */ var _components_User_ProductPurchasedComponent_vue__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./components/User/ProductPurchasedComponent.vue */ "./resources/js/components/User/ProductPurchasedComponent.vue");
+/* harmony import */ var _components_Convenience_RegisterComponent_vue__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./components/Convenience/RegisterComponent.vue */ "./resources/js/components/Convenience/RegisterComponent.vue");
+/* harmony import */ var _components_Convenience_LoginComponent_vue__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./components/Convenience/LoginComponent.vue */ "./resources/js/components/Convenience/LoginComponent.vue");
+/* harmony import */ var _components_Convenience_MyPageComponent_vue__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./components/Convenience/MyPageComponent.vue */ "./resources/js/components/Convenience/MyPageComponent.vue");
+/* harmony import */ var _components_Convenience_ForgotPasswordComponent_vue__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./components/Convenience/ForgotPasswordComponent.vue */ "./resources/js/components/Convenience/ForgotPasswordComponent.vue");
+/* harmony import */ var _components_Convenience_ResetPasswordComponent_vue__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./components/Convenience/ResetPasswordComponent.vue */ "./resources/js/components/Convenience/ResetPasswordComponent.vue");
+/* harmony import */ var _components_Convenience_ProfileComponent_vue__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./components/Convenience/ProfileComponent.vue */ "./resources/js/components/Convenience/ProfileComponent.vue");
+/* harmony import */ var _components_Convenience_WithdrawComponent_vue__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./components/Convenience/WithdrawComponent.vue */ "./resources/js/components/Convenience/WithdrawComponent.vue");
+/* harmony import */ var _components_Convenience_ProductDetailComponent_vue__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./components/Convenience/ProductDetailComponent.vue */ "./resources/js/components/Convenience/ProductDetailComponent.vue");
+/* harmony import */ var _components_Convenience_ProductSaleComponent_vue__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ./components/Convenience/ProductSaleComponent.vue */ "./resources/js/components/Convenience/ProductSaleComponent.vue");
+/* harmony import */ var _components_Convenience_ProductEditComponent_vue__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ./components/Convenience/ProductEditComponent.vue */ "./resources/js/components/Convenience/ProductEditComponent.vue");
+/* harmony import */ var _components_Convenience_ProductSaleIndexComponent_vue__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ./components/Convenience/ProductSaleIndexComponent.vue */ "./resources/js/components/Convenience/ProductSaleIndexComponent.vue");
+/* harmony import */ var _components_Convenience_ProductPurchaseIndexComponent_vue__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ./components/Convenience/ProductPurchaseIndexComponent.vue */ "./resources/js/components/Convenience/ProductPurchaseIndexComponent.vue");
+/* harmony import */ var _components_ProductAllIndexComponent_vue__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ./components/ProductAllIndexComponent.vue */ "./resources/js/components/ProductAllIndexComponent.vue");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == _typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw new Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(_typeof(e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw new Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, "catch": function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw new Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -69799,6 +70372,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 // 共通コンポーネント
  // HOME画面
  // 利用規約ページ
+ // プライバシーポリシーページ
  // エラーページ
  // NotFoundページ
 
@@ -69847,160 +70421,166 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
     name: 'terms',
     component: _components_TermsComponent_vue__WEBPACK_IMPORTED_MODULE_4__["default"]
   },
+  // プライバシーポリシーページ
+  {
+    path: '/privacy',
+    name: 'privacy',
+    component: _components_PrivacyPolicyComponent_vue__WEBPACK_IMPORTED_MODULE_5__["default"]
+  },
   // エラーページ
   {
     path: '/500',
     name: 'error',
-    component: _components_ErrorComponent_vue__WEBPACK_IMPORTED_MODULE_5__["default"]
+    component: _components_ErrorComponent_vue__WEBPACK_IMPORTED_MODULE_6__["default"]
   },
   // NotFoundページ
   {
     path: '/404',
     name: 'NotFound',
-    component: _components_NotFoundComponent_vue__WEBPACK_IMPORTED_MODULE_6__["default"]
+    component: _components_NotFoundComponent_vue__WEBPACK_IMPORTED_MODULE_7__["default"]
   },
   // 利用者側ユーザー登録画面
   {
     path: '/user/register',
     name: 'user.register',
-    component: _components_User_RegisterComponent_vue__WEBPACK_IMPORTED_MODULE_7__["default"]
+    component: _components_User_RegisterComponent_vue__WEBPACK_IMPORTED_MODULE_8__["default"]
   },
   // コンビニ側ユーザー登録画面
   {
     path: '/convenience/register',
     name: 'convenience.register',
-    component: _components_Convenience_RegisterComponent_vue__WEBPACK_IMPORTED_MODULE_17__["default"]
+    component: _components_Convenience_RegisterComponent_vue__WEBPACK_IMPORTED_MODULE_18__["default"]
   },
   // 利用者側ログイン画面
   {
     path: '/user/login',
     name: 'user.login',
-    component: _components_User_LoginComponent_vue__WEBPACK_IMPORTED_MODULE_8__["default"]
+    component: _components_User_LoginComponent_vue__WEBPACK_IMPORTED_MODULE_9__["default"]
   },
   // コンビニ側ログイン画面
   {
     path: '/convenience/login',
     name: 'convenience.login',
-    component: _components_Convenience_LoginComponent_vue__WEBPACK_IMPORTED_MODULE_18__["default"]
+    component: _components_Convenience_LoginComponent_vue__WEBPACK_IMPORTED_MODULE_19__["default"]
   },
   // 利用者側マイページ画面
   {
     path: '/user/mypage',
     name: 'user.mypage',
-    component: _components_User_MyPageComponent_vue__WEBPACK_IMPORTED_MODULE_9__["default"]
+    component: _components_User_MyPageComponent_vue__WEBPACK_IMPORTED_MODULE_10__["default"]
   },
   // コンビニ側マイページ画面
   {
     path: '/convenience/mypage',
     name: 'convenience.mypage',
-    component: _components_Convenience_MyPageComponent_vue__WEBPACK_IMPORTED_MODULE_19__["default"]
+    component: _components_Convenience_MyPageComponent_vue__WEBPACK_IMPORTED_MODULE_20__["default"]
   },
   // 利用者側パスワードメール送信画面
   {
     path: '/user/password/email',
     name: 'user.password.email',
-    component: _components_User_ForgotPasswordComponent_vue__WEBPACK_IMPORTED_MODULE_10__["default"]
+    component: _components_User_ForgotPasswordComponent_vue__WEBPACK_IMPORTED_MODULE_11__["default"]
   },
   // コンビニ側パスワードメール送信画面
   {
     path: '/convenience/password/email',
     name: 'convenience.password.email',
-    component: _components_Convenience_ForgotPasswordComponent_vue__WEBPACK_IMPORTED_MODULE_20__["default"]
+    component: _components_Convenience_ForgotPasswordComponent_vue__WEBPACK_IMPORTED_MODULE_21__["default"]
   },
   // 利用者側パスワードリセット画面
   {
     path: '/user/password/reset/:token',
     name: 'user.password.reset',
-    component: _components_User_ResetPasswordComponent_vue__WEBPACK_IMPORTED_MODULE_11__["default"]
+    component: _components_User_ResetPasswordComponent_vue__WEBPACK_IMPORTED_MODULE_12__["default"]
   },
   // コンビニ側パスワードリセット画面
   {
     path: '/convenience/password/reset/:token',
     name: 'convenience.password.reset',
-    component: _components_Convenience_ResetPasswordComponent_vue__WEBPACK_IMPORTED_MODULE_21__["default"]
+    component: _components_Convenience_ResetPasswordComponent_vue__WEBPACK_IMPORTED_MODULE_22__["default"]
   },
   // 利用者側プロフィール編集画面
   {
     path: '/user/mypage/profile',
     name: 'user.profile',
-    component: _components_User_ProfileComponent_vue__WEBPACK_IMPORTED_MODULE_12__["default"]
+    component: _components_User_ProfileComponent_vue__WEBPACK_IMPORTED_MODULE_13__["default"]
   },
   // コンビニ側プロフィール編集画面
   {
     path: '/convenience/mypage/profile',
     name: 'convenience.profile',
-    component: _components_Convenience_ProfileComponent_vue__WEBPACK_IMPORTED_MODULE_22__["default"]
+    component: _components_Convenience_ProfileComponent_vue__WEBPACK_IMPORTED_MODULE_23__["default"]
   },
   // 利用者側退会画面
   {
     path: '/user/mypage/withdraw',
     name: 'user.withdraw',
-    component: _components_User_WithdrawComponent_vue__WEBPACK_IMPORTED_MODULE_13__["default"]
+    component: _components_User_WithdrawComponent_vue__WEBPACK_IMPORTED_MODULE_14__["default"]
   },
   // コンビニ側退会画面
   {
     path: '/convenience/mypage/withdraw',
     name: 'convenience.withdraw',
-    component: _components_Convenience_WithdrawComponent_vue__WEBPACK_IMPORTED_MODULE_23__["default"]
+    component: _components_Convenience_WithdrawComponent_vue__WEBPACK_IMPORTED_MODULE_24__["default"]
   },
   // 商品出品画面
   {
     path: '/convenience/products/create',
     name: 'convenience.products.create',
-    component: _components_Convenience_ProductSaleComponent_vue__WEBPACK_IMPORTED_MODULE_25__["default"]
+    component: _components_Convenience_ProductSaleComponent_vue__WEBPACK_IMPORTED_MODULE_26__["default"]
   },
   // 商品編集画面
   {
     path: '/convenience/products/edit/:productId',
     name: 'convenience.products.edit',
-    component: _components_Convenience_ProductEditComponent_vue__WEBPACK_IMPORTED_MODULE_26__["default"]
+    component: _components_Convenience_ProductEditComponent_vue__WEBPACK_IMPORTED_MODULE_27__["default"]
   },
   // 出品した商品一覧画面
   {
     path: '/convenience/products/sale',
     name: 'convenience.products.sale',
-    component: _components_Convenience_ProductSaleIndexComponent_vue__WEBPACK_IMPORTED_MODULE_27__["default"]
+    component: _components_Convenience_ProductSaleIndexComponent_vue__WEBPACK_IMPORTED_MODULE_28__["default"]
   },
   // 購入された商品一覧画面
   {
     path: '/convenience/products/purchase',
     name: 'convenience.products.purchase',
-    component: _components_Convenience_ProductPurchaseIndexComponent_vue__WEBPACK_IMPORTED_MODULE_28__["default"]
+    component: _components_Convenience_ProductPurchaseIndexComponent_vue__WEBPACK_IMPORTED_MODULE_29__["default"]
   },
   // 商品一覧画面
   {
     path: '/products',
     name: 'products',
-    component: _components_ProductAllIndexComponent_vue__WEBPACK_IMPORTED_MODULE_29__["default"]
+    component: _components_ProductAllIndexComponent_vue__WEBPACK_IMPORTED_MODULE_30__["default"]
   },
   // 利用者側商品詳細画面
   {
     path: '/user/products/detail/:productId',
     name: 'user.products.detail',
-    component: _components_User_ProductDetailComponent_vue__WEBPACK_IMPORTED_MODULE_14__["default"]
+    component: _components_User_ProductDetailComponent_vue__WEBPACK_IMPORTED_MODULE_15__["default"]
   },
   // コンビニ側商品詳細画面
   {
     path: '/convenience/products/detail/:productId',
     name: 'convenience.products.detail',
-    component: _components_Convenience_ProductDetailComponent_vue__WEBPACK_IMPORTED_MODULE_24__["default"]
+    component: _components_Convenience_ProductDetailComponent_vue__WEBPACK_IMPORTED_MODULE_25__["default"]
   },
   // 利用者側お気に入り登録した商品一覧画面
   {
     path: '/user/products/liked',
     name: 'user.products.liked',
-    component: _components_User_ProductLikeComponent_vue__WEBPACK_IMPORTED_MODULE_15__["default"]
+    component: _components_User_ProductLikeComponent_vue__WEBPACK_IMPORTED_MODULE_16__["default"]
   },
   // 利用者側購入した商品一覧画面
   {
     path: '/user/products/purchased',
     name: 'user.products.purchased',
-    component: _components_User_ProductPurchasedComponent_vue__WEBPACK_IMPORTED_MODULE_16__["default"]
+    component: _components_User_ProductPurchasedComponent_vue__WEBPACK_IMPORTED_MODULE_17__["default"]
   }]
 });
 
-// セッションが必要ないパス（HOME画面、利用規約、ユーザー登録画面、ログイン画面、パスワードメール送信画面、パスワードリセット画面）
-var publicPaths = ['/home', '/terms', '/user/register', '/convenience/register', '/user/login', '/convenience/login', '/user/password/email', '/convenience/password/email', '/user/password/reset/:token', '/convenience/password/reset/:token'];
+// セッションが必要ないパス（HOME画面、利用規約、プライバシーポリシー、ユーザー登録画面、ログイン画面、パスワードメール送信画面、パスワードリセット画面）
+var publicPaths = ['/home', '/terms', '/privacy', '/user/register', '/convenience/register', '/user/login', '/convenience/login', '/user/password/email', '/convenience/password/email', '/user/password/reset/:token', '/convenience/password/reset/:token'];
 
 // セッションタイムアウトした場合のナビゲーションガード
 router.beforeEach( /*#__PURE__*/function () {

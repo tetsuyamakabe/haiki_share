@@ -4,7 +4,7 @@
             <div class="p-search__form u-pd__s">
                 <h3 class="c-title c-title__sub u-mt__m u-mb__m">絞り込み検索</h3>
                 <div class="p-search__container">
-                    <form @submit.prevent="submitForm" class="c-form c-form__search">
+                    <form @submit.prevent="submitForm" class="c-form u-pd__s">
 
                         <!-- 都道府県 -->
                         <label class="c-label">出品したコンビニがある都道府県</label>
@@ -15,19 +15,19 @@
 
                         <!-- 価格 -->
                         <label class="c-label">最低価格</label>
-                        <input class="c-input c-input__search" type="number" name="minprice" v-model="minPrice"><span class="c-text u-ml__s">円</span>
+                        <input class="c-input c-input__search u-mt__s u-mb__s" type="number" name="minprice" v-model="minPrice"><span class="c-text u-ml__s">円</span>
                         <label class="c-label">最高価格</label>
-                        <input class="c-input c-input__search" type="number" name="maxprice" v-model="maxPrice"><span class="c-text u-ml__s">円</span>
+                        <input class="c-input c-input__search u-mt__s u-mb__s" type="number" name="maxprice" v-model="maxPrice"><span class="c-text u-ml__s">円</span>
 
                         <!-- 賞味期限切れかどうか -->
                         <label class="c-label">賞味期限切れかどうか</label>
-                        <div class="c-input__radio">
+                        <div class="c-input__radio u-mt__s u-mb__s">
                             <input type="radio" value="true" v-model="isExpired"><label class="c-text u-ml__s">賞味期限切れ</label>
                             <input type="radio" value="false" v-model="isExpired"><label class="c-text u-ml__s">賞味期限内</label>
                         </div>
 
                         <!-- 検索ボタン -->
-                        <button type="submit" class="c-button c-button__submit c-button__common u-mt__m u-mb__m">検索する</button>
+                        <button type="submit" class="c-button c-button__submit c-button__common u-pd__s u-mt__m u-mb__m">検索する</button>
                     </form>
                 </div>
             </div>
@@ -45,7 +45,7 @@ export default {
             selectedPrefecture: '', // 都道府県
             minPrice: 0, // 最小価格
             maxPrice: 0, // 最大価格
-            isExpired: false // 賞味期限切れかどうか
+            isExpired: '' // 賞味期限切れかどうか
         };
     },
 

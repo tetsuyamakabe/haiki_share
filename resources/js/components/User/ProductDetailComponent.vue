@@ -7,14 +7,14 @@
                         <h1 class="c-title">{{ product.name }}</h1>
                         <div class="p-product">
                             <!-- いいねアイコン -->
-                            <div class="p-like p-like__content">
+                            <div class="p-like p-like__content u-pdr__s">
                                 <i v-if="!product.liked" class="c-icon c-icon__unlike far fa-heart" @click="productLike(product)"></i>
                                 <i v-else class="c-icon c-icon__like fas fa-heart" @click="productUnlike(product)"></i>
                                 <span>いいね{{ product.likes_count }}</span>
                             </div>
                             <!-- エックスのシェアボタン -->
                             <div class="p-like p-like__content">
-                                <button class="c-button c-button__share" @click="twitterShare"><i class="fa-brands fa-x-twitter c-icon__share">でシェアする</i></button>
+                                <button class="c-button c-button__share u-pd__s" @click="twitterShare"><i class="fa-brands fa-x-twitter c-icon__share">でシェアする</i></button>
                             </div>
 
                             <div class="p-product__picture">
@@ -30,9 +30,9 @@
                     </div>
 
                     <!-- 利用者側の購入ボタンは購入済みの購入ボタンは購入できない・自分が購入した商品の場合は、「購入をキャンセルする」ボタンが表示される -->
-                    <button v-if="product.is_purchased === false" class="c-button c-button__submit c-button__user" @click="purchaseProduct">購入する</button>
-                    <button v-else-if="product.is_purchased === true && product.purchased_id === loginId" class="c-button c-button__submit c-button__user" @click="cancelPurchase">購入をキャンセルする</button>
-                    <button v-else class="c-button c-button__submit c-button__user">購入済み</button>
+                    <button v-if="product.is_purchased === false" class="c-button c-button__submit c-button__user u-pd__s" @click="purchaseProduct">購入する</button>
+                    <button v-else-if="product.is_purchased === true && product.purchased_id === loginId" class="c-button c-button__submit c-button__user u-pd__s" @click="cancelPurchase">購入をキャンセルする</button>
+                    <button v-else class="c-button c-button__submit c-button__user u-pd__s">購入済み</button>
 
                 </section>
             </div>

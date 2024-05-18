@@ -1,3 +1,8 @@
 .l-sidebar {
-    background: #f5f5f5;
+    width: 25%;
+    background: $background-color_sub2;
+
+    @include mq(sm) {
+        width: 100%;
+    }
 }

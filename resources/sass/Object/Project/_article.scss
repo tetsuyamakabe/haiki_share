@@ -1,15 +1,15 @@
 .p-article {
+    font-size: $font-size_m;
+
     &__mypage {
         display: flex;
 
-        @include mq(sm){
+        @include mq(sm) {
             display: block;
         }
     }
 
-    font-size: 12px;
-
-    @include mq(sm){
-        font-size: 8px;
+    @include mq(sm) {
+        font-size: $font-size_s;
     }
 }

@@ -6,40 +6,40 @@
                 <form @submit.prevent="submitForm" class="c-form">
 
                     <!-- バリデーションエラーメッセージ -->
-                    <span v-if="errors && errors.name" class="c-error">{{ errors.name[0] }}</span>
-                    <span v-if="errors && errors.email" class="c-error">{{ errors.email[0] }}</span>
-                    <span v-if="errors && errors.password" class="c-error">{{ errors.password[0] }}</span>
-                    <span v-if="errors && errors.password_confirmation" class="c-error">{{ errors.password_confirmation[0] }}</span>
-                    <span v-if="errors && errors.introduction" class="c-error">{{ errors.introduction[0] }}</span>
-                    <span v-if="errors && errors.icon" class="c-error">{{ errors.icon[0] }}</span>
+                    <span v-if="errors && errors.name" class="c-error u-mt__s u-mb__s">{{ errors.name[0] }}</span>
+                    <span v-if="errors && errors.email" class="c-error u-mt__s u-mb__s">{{ errors.email[0] }}</span>
+                    <span v-if="errors && errors.password" class="c-error u-mt__s u-mb__s">{{ errors.password[0] }}</span>
+                    <span v-if="errors && errors.password_confirmation" class="c-error u-mt__s u-mb__s">{{ errors.password_confirmation[0] }}</span>
+                    <span v-if="errors && errors.introduction" class="c-error u-mt__s u-mb__s">{{ errors.introduction[0] }}</span>
+                    <span v-if="errors && errors.icon" class="c-error u-mt__s u-mb__s">{{ errors.icon[0] }}</span>
 
                     <!-- お名前 -->
                     <label for="name" class="c-label">お名前</label>
-                    <input v-model="formData.name" id="name" type="name" class="c-input" :class="{ 'is-invalid': errors && errors.name }" autocomplete="name">
+                    <input v-model="formData.name" id="name" type="name" class="c-input u-pd__s u-mt__m u-mb__m" :class="{ 'is-invalid': errors && errors.name }" autocomplete="name">
                     <!-- メールアドレス -->
                     <label for="email" class="c-label">メールアドレス</label>
-                    <input v-model="formData.email" id="email" type="email" class="c-input" :class="{ 'is-invalid': errors && errors.email }" autocomplete="email">
+                    <input v-model="formData.email" id="email" type="email" class="c-input u-pd__s u-mt__m u-mb__m" :class="{ 'is-invalid': errors && errors.email }" autocomplete="email">
                     <!-- パスワード -->
                     <label for="password" class="c-label">パスワード</label>
                     <div class="c-input__password">
-                        <input v-model="formData.password" id="password" :type="PasswordType" class="c-input" :class="{ 'is-invalid': errors && errors.password }" placeholder="英数字8文字以上で入力してください">
+                        <input v-model="formData.password" id="password" :type="PasswordType" class="c-input u-pd__s u-mt__m u-mb__m" :class="{ 'is-invalid': errors && errors.password }" placeholder="英数字8文字以上で入力してください">
                         <span @click="togglePasswordVisibility('password')"><i :class="PasswordIconClass"></i></span>
                     </div>
                     <!-- パスワード（再入力） -->
                     <label for="password-confirm" class="c-label">パスワード（再入力）</label>
                     <div class="c-input__password">
-                        <input v-model="formData.password_confirmation" id="password-confirm" :type="PasswordConfirmType" class="c-input" :class="{ 'is-invalid': errors && errors.password_confirmation }" placeholder="英数字8文字以上で入力してください">
+                        <input v-model="formData.password_confirmation" id="password-confirm" :type="PasswordConfirmType" class="c-input u-pd__s u-mt__m u-mb__m" :class="{ 'is-invalid': errors && errors.password_confirmation }" placeholder="英数字8文字以上で入力してください">
                         <span @click="togglePasswordVisibility('password_confirm')"><i :class="PasswordConfirmIconClass"></i></span>
                     </div>
                     <!-- 自己紹介 -->
                     <label for="introduction" class="c-label">自己紹介</label>
                     <div class="p-textarea__form">
-                        <textarea v-model.trim="formData.introduction" maxlength="50" id="introduction" type="text" class="c-textarea" autocomplete="introduction" @keyup="countCharacters" :class="{ 'is-invalid': errors && errors.introduction }" placeholder="50文字以内で入力してください"></textarea>
+                        <textarea v-model.trim="formData.introduction" maxlength="50" id="introduction" type="text" class="c-textarea u-pd__s u-mt__m u-mb__m" autocomplete="introduction" @keyup="countCharacters" :class="{ 'is-invalid': errors && errors.introduction }" placeholder="50文字以内で入力してください"></textarea>
                         <span class="c-textarea__count">{{ formData.introduction.length }} / 50文字</span>
                     </div>
                     <!-- 顔写真 -->
                     <label for="profile-icon" class="c-label">顔写真</label>
-                    <div class="p-profile__icon p-profile__icon--container" @drop="handleDrop" :class="{ 'is-invalid': errors && errors.icon }">
+                    <div class="p-profile__icon p-profile__icon--container u-pd__s" @drop="handleDrop" :class="{ 'is-invalid': errors && errors.icon }">
                         <input type="file" id="profile-icon" @change="handleFileChange" class="c-input__hidden">
                         <img v-if="!iconPreview && formData.icon" :src="'/storage/icons/' + formData.icon" alt="アップロード顔写真" class="p-profile__icon">
                         <img v-else-if="iconPreview" :src="iconPreview" alt="アップロード顔写真" class="p-profile__icon">
@@ -47,7 +47,7 @@
                     </div>
 
                     <!-- 更新ボタン -->
-                    <button type="submit" class="c-button c-button__submit c-button__user u-mt__m">更新する</button>
+                    <button type="submit" class="c-button c-button__submit c-button__user u-pd__s u-mt__m">更新する</button>
 
                 </form>
             </section>
@@ -57,7 +57,7 @@
 </template>
 
 <script>
-import axios from 'axios';
+import axios from '../../axiosErrorHandler';
 
 export default {
     data() {

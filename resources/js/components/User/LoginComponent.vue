@@ -6,16 +6,16 @@
                 <form @submit.prevent="submitForm" class="c-form">
 
                     <!-- バリデーションエラーメッセージ -->
-                    <span v-if="errors && errors.email" class="c-error">{{ errors.email[0] }}</span>
-                    <span v-if="errors && errors.password" class="c-error">{{ errors.password[0] }}</span>
+                    <span v-if="errors && errors.email" class="c-error u-mt__s u-mb__s">{{ errors.email[0] }}</span>
+                    <span v-if="errors && errors.password" class="c-error u-mt__s u-mb__s">{{ errors.password[0] }}</span>
 
                     <!-- メールアドレス -->
                     <label for="email" class="c-label">メールアドレス</label>
-                    <input v-model="formData.email" id="email" type="email" class="c-input" :class="{ 'is-invalid': errors && errors.email }" autocomplete="email">
+                    <input v-model="formData.email" id="email" type="email" class="c-input u-pd__s u-mt__m u-mb__m" :class="{ 'is-invalid': errors && errors.email }" autocomplete="email">
                     <!-- パスワード -->
                     <label for="password" class="c-label">パスワード</label>
                     <div class="c-input__password">
-                        <input v-model="formData.password" id="password" :type="PasswordType" class="c-input" :class="{ 'is-invalid': errors && errors.password }" placeholder="英数字8文字以上で入力してください">
+                        <input v-model="formData.password" id="password" :type="PasswordType" class="c-input u-pd__s u-mt__m u-mb__m" :class="{ 'is-invalid': errors && errors.password }" placeholder="英数字8文字以上で入力してください">
                         <span @click="togglePasswordVisibility('password')"><i :class="PasswordIconClass"></i></span>
                     </div>
 
@@ -29,7 +29,7 @@
                     <a class="c-link" href="/user/password/email">パスワードをお忘れの場合はこちら</a>
 
                     <!-- ログインボタン -->
-                    <button type="submit" class="c-button c-button__submit c-button__user u-mt__m">ログインする</button>
+                    <button type="submit" class="c-button c-button__submit c-button__user u-pd__s u-mt__m">ログインする</button>
                 </form>
             </section>
         </div>
