@@ -1,6 +1,4 @@
-@import url(https://fonts.googleapis.com/css?family=Nunito);@charset "UTF-8";
-
-/* http://meyerweb.com/eric/tools/css/reset/
+@import url(https://fonts.googleapis.com/css?family=Nunito);/* http://meyerweb.com/eric/tools/css/reset/
    v2.0 | 20110126
    License: none (public domain)
 */
@@ -144,7 +142,7 @@ body {
   width: 100%;
   color: #434343;
   font-size: 16px;
-  font-family: Quicksand, 游ゴシック体, "Yu Gothic", YuGothic, "\30D2\30E9\30AE\30CE\89D2\30B4\30B7\30C3\30AF   Pro", "Hiragino Kaku Gothic Pro", メイリオ, Meiryo, Osaka, "\FF2D\FF33   \FF30\30B4\30B7\30C3\30AF", "MS PGothic", sans-serif;
+  font-family: "Yu Gothic", YuGothic, sans-serif;
   -webkit-text-size-adjust: 100%;
      -moz-text-size-adjust: 100%;
           text-size-adjust: 100%;
@@ -241,7 +239,7 @@ body {
   line-height: 50px;
   color: #434343;
   transition: 0.3s;
-  background-color: #fefefe;
+  background-color: #eee;
 }
 
 .l-header.float-active {
@@ -292,7 +290,7 @@ body {
 }
 
 .l-main__wrapper {
-  padding: 40px;
+  padding: 32px;
   border: 0.5px solid #434343;
   min-width: 75%;
 }
@@ -1020,6 +1018,7 @@ body {
   width: 100%;
   display: flex;
   flex-wrap: wrap;
+  justify-content: flex-start;
 }
 
 @media screen and (max-width: 414px) {

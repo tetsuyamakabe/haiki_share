@@ -5802,6 +5802,7 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     // URLを作成する
     createURL: function createURL(params) {
+      var _this = this;
       console.log('検索URLを作成します');
       // URLの組み立て
       var url = "/convenience/products/purchased";
@@ -5812,13 +5813,13 @@ __webpack_require__.r(__webpack_exports__);
       }
       console.log('検索URL:', url);
       // ページ遷移
-      // if (this.$route.fullPath !== url) { // 現在のURLと新しいURLが異なるか
-      this.$router.push(url);
-      this.getProduct();
-      // }
+      this.$router.push(url).then(function () {
+        _this.getProduct(); // ページ遷移が完了した後にgetProductを呼び出す
+      });
     },
     // ページが変更されたときの処理
     onPageChange: function onPageChange(page) {
+      console.log('onPageChangeメソッドのpageは、', page);
       if (this.currentPage !== page) {
         // 現在のページ番号と新しいページ番号が異なるか
         this.currentPage = page; // ページ番号を更新
@@ -5829,24 +5830,23 @@ __webpack_require__.r(__webpack_exports__);
     },
     // 商品情報をサーバーから取得
     getProduct: function getProduct() {
-      var _this = this;
+      var _this2 = this;
       console.log('購入された商品情報を取得します');
       // 現在のルートのクエリパラメータを取得
       var params = Object.assign({}, this.$route.query); // クエリパラメータのコピーを作成
-      params.page = this.currentPage; // ページ番号を設定
       console.log('paramsは、', params, 'this.currentPageは、', this.currentPage);
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/convenience/products/purchased', {
         params: params
       }).then(function (response) {
         console.log('curent_pageは、', response.data.products.current_page);
         console.log('getProductのAPIからのレスポンス:', response.data);
-        _this.products = response.data.products;
-        console.log('this.productsは、', _this.products);
-        _this.lastPage = response.data.products.last_page;
-        console.log('this.lastPageは、', _this.lastPage);
+        _this2.products = response.data.products;
+        console.log('this.productsは、', _this2.products);
+        _this2.lastPage = response.data.products.last_page;
+        console.log('this.lastPageは、', _this2.lastPage);
       })["catch"](function (error) {
         console.error('商品情報取得失敗:', error.response.data);
-        _this.errors = error.response.data;
+        _this2.errors = error.response.data;
       });
     },
     // 商品画像のパスを取得するメソッド
@@ -6131,6 +6131,7 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     // URLを作成する
     createURL: function createURL(params) {
+      var _this = this;
       console.log('検索URLを作成します');
       // URLの組み立て
       var url = "/convenience/products/sale";
@@ -6141,13 +6142,13 @@ __webpack_require__.r(__webpack_exports__);
       }
       console.log('検索URL:', url);
       // ページ遷移
-      // if (this.$route.fullPath !== url) { // 現在のURLと新しいURLが異なるか
-      this.$router.push(url);
-      this.getProduct();
-      // }
+      this.$router.push(url).then(function () {
+        _this.getProduct(); // ページ遷移が完了した後にgetProductを呼び出す
+      });
     },
     // ページが変更されたときの処理
     onPageChange: function onPageChange(page) {
+      console.log('onPageChangeメソッドのpageは、', page);
       if (this.currentPage !== page) {
         // 現在のページ番号と新しいページ番号が異なるか
         this.currentPage = page; // ページ番号を更新
@@ -6158,24 +6159,23 @@ __webpack_require__.r(__webpack_exports__);
     },
     // 商品情報をサーバーから取得
     getProduct: function getProduct() {
-      var _this = this;
+      var _this2 = this;
       console.log('出品した商品情報を取得します');
       // 現在のルートのクエリパラメータを取得
       var params = Object.assign({}, this.$route.query); // クエリパラメータのコピーを作成
-      params.page = this.currentPage; // ページ番号を設定
       console.log('paramsは、', params, 'this.currentPageは、', this.currentPage);
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/convenience/products', {
         params: params
       }).then(function (response) {
         console.log('curent_pageは、', response.data.products.current_page);
         console.log('getProductのAPIからのレスポンス:', response.data);
-        _this.products = response.data.products;
-        console.log('productsは、', _this.products);
-        _this.lastPage = response.data.products.last_page;
-        console.log('this.lastPageは、', _this.lastPage);
+        _this2.products = response.data.products;
+        console.log('productsは、', _this2.products);
+        _this2.lastPage = response.data.products.last_page;
+        console.log('this.lastPageは、', _this2.lastPage);
       })["catch"](function (error) {
         console.error('商品情報取得失敗:', error.response.data);
-        _this.errors = error.response.data;
+        _this2.errors = error.response.data;
       });
     },
     // 商品画像のパスを取得するメソッド
@@ -7053,6 +7053,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['current_page', 'last_page'],
@@ -7110,7 +7112,7 @@ __webpack_require__.r(__webpack_exports__);
       return this.calRange(start, end);
     },
     // 最後のページ番号の範囲
-    lastPageRange: function lastPageRange() {
+    endPageRange: function endPageRange() {
       if (!this.sizeCheck) return [];
       return this.calRange(this.last_page - 1, this.last_page);
     }
@@ -7413,7 +7415,6 @@ __webpack_require__.r(__webpack_exports__);
       console.log('すべての商品情報を取得します');
       // 現在のルートのクエリパラメータを取得
       var params = Object.assign({}, this.$route.query); // クエリパラメータのコピーを作成
-      params.page = this.currentPage; // ページ番号を設定
       console.log('paramsは、', params, 'this.currentPageは、', this.currentPage);
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/products', {
         params: params
@@ -8281,6 +8282,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _PaginationComponent_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../PaginationComponent.vue */ "./resources/js/components/PaginationComponent.vue");
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : String(i); }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 //
 //
 //
@@ -8353,26 +8358,10 @@ __webpack_require__.r(__webpack_exports__);
   created: function created() {
     this.getProduct(); // サーバから商品情報を取得
   },
-  methods: {
+  methods: _defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty({
     // URLを作成する
-    createURL: function createURL(params) {
-      console.log('検索URLを作成します');
-      // URLの組み立て
-      var url = "/user/products/liked";
-      if (params && params.page) {
-        url += "?page=".concat(params.page);
-      } else {
-        url += "?page=".concat(this.currentPage);
-      }
-      console.log('検索URL:', url);
-      // ページ遷移
-      // if (this.$route.fullPath !== url) { // 現在のURLと新しいURLが異なるか
-      this.$router.push(url);
-      this.getProduct();
-      // }
-    },
-    // ページが変更されたときの処理
     onPageChange: function onPageChange(page) {
+      console.log('onPageChangeメソッドのpageは、', page);
       if (this.currentPage !== page) {
         // 現在のページ番号と新しいページ番号が異なるか
         this.currentPage = page; // ページ番号を更新
@@ -8380,78 +8369,74 @@ __webpack_require__.r(__webpack_exports__);
         params.page = page; // 新しいページ番号にする
         this.createURL(params); // 新しいURLを生成して画面遷移
       }
-    },
-    // 商品情報をサーバーから取得
-    getProduct: function getProduct() {
-      var _this = this;
-      console.log('お気に入り登録商品情報を取得します');
-      // 現在のルートのクエリパラメータを取得
-      var params = Object.assign({}, this.$route.query); // クエリパラメータのコピーを作成
-      params.page = this.currentPage; // ページ番号を設定
-      console.log('paramsは、', params, 'this.currentPageは、', this.currentPage);
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/user/products/liked', {
-        params: params
-      }).then(function (response) {
-        console.log('curent_pageは、', response.data.products.current_page);
-        console.log('getProductのAPIからのレスポンス:', response.data);
-        _this.products = response.data.products;
-        console.log('productsは、', _this.products);
-        _this.lastPage = response.data.products.last_page;
-        console.log('this.lastPageは、', _this.lastPage);
-      })["catch"](function (error) {
-        console.error('商品情報取得失敗:', error.response.data);
-        _this.errors = error.response.data;
-      });
-    },
-    // 商品画像のパスを取得するメソッド
-    getProductPicturePath: function getProductPicturePath(product) {
-      // console.log('productは、', product);
-      if (product.product.pictures.length > 0) {
-        return '/storage/product_pictures/' + product.product.pictures[0].file;
-      } else {
-        return '/storage/product_pictures/no_image.png';
-      }
-    },
-    // 日付をフォーマットするメソッド
-    formatDate: function formatDate(dateString) {
-      var date = new Date(dateString);
-      var year = date.getFullYear();
-      var month = ('0' + (date.getMonth() + 1)).slice(-2); // 月は 0 から始まるため +1
-      var day = ('0' + date.getDate()).slice(-2);
-      return "".concat(year, "\u5E74").concat(month, "\u6708").concat(day, "\u65E5");
-    },
-    // 商品詳細画面のリンクを返すメソッド
-    getProductDetailLink: function getProductDetailLink(productId) {
-      return {
-        name: 'user.products.detail',
-        params: {
-          productId: productId
-        }
-      };
-    },
-    // 商品お気に入り登録
-    productLike: function productLike(product) {
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/user/like/' + product.product.id).then(function (response) {
-        console.log(product.product.id, 'の商品をお気に入り登録しました。');
-        product.product.liked = true;
-        console.log('this.likedは、', product.product.liked);
-        product.product.likes_count++;
-        console.log('product.product.likes_countは、', product.product.likes_count);
-      })["catch"](function (error) {
-        console.error('商品のお気に入り登録失敗:', error);
-      });
-    },
-    // 商品お気に入り解除
-    productUnlike: function productUnlike(product) {
-      var _this2 = this;
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/user/unlike/' + product.product.id).then(function (response) {
-        console.log(product.product.id, 'の商品をお気に入り解除しました。');
-        _this2.getProduct();
-      })["catch"](function (error) {
-        console.error('商品のお気に入り解除失敗:', error);
-      });
     }
-  }
+  }, "onPageChange", function onPageChange(page) {
+    console.log('onPageChangeメソッドのpageは、', page);
+    if (this.currentPage !== page) {
+      // 現在のページ番号と新しいページ番号が異なるか
+      this.currentPage = page; // ページ番号を更新
+      var params = Object.assign({}, this.$route.query);
+      params.page = page; // 新しいページ番号にする
+      this.createURL(params); // 新しいURLを生成して画面遷移
+    }
+  }), "getProduct", function getProduct() {
+    var _this = this;
+    console.log('お気に入り登録商品情報を取得します');
+    // 現在のルートのクエリパラメータを取得
+    var params = Object.assign({}, this.$route.query); // クエリパラメータのコピーを作成
+    console.log('paramsは、', params, 'this.currentPageは、', this.currentPage);
+    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/user/products/liked', {
+      params: params
+    }).then(function (response) {
+      console.log('curent_pageは、', response.data.products.current_page);
+      console.log('getProductのAPIからのレスポンス:', response.data);
+      _this.products = response.data.products;
+      console.log('productsは、', _this.products);
+      _this.lastPage = response.data.products.last_page;
+      console.log('this.lastPageは、', _this.lastPage);
+    })["catch"](function (error) {
+      console.error('商品情報取得失敗:', error.response.data);
+      _this.errors = error.response.data;
+    });
+  }), "getProductPicturePath", function getProductPicturePath(product) {
+    // console.log('productは、', product);
+    if (product.product.pictures.length > 0) {
+      return '/storage/product_pictures/' + product.product.pictures[0].file;
+    } else {
+      return '/storage/product_pictures/no_image.png';
+    }
+  }), "formatDate", function formatDate(dateString) {
+    var date = new Date(dateString);
+    var year = date.getFullYear();
+    var month = ('0' + (date.getMonth() + 1)).slice(-2); // 月は 0 から始まるため +1
+    var day = ('0' + date.getDate()).slice(-2);
+    return "".concat(year, "\u5E74").concat(month, "\u6708").concat(day, "\u65E5");
+  }), "getProductDetailLink", function getProductDetailLink(productId) {
+    return {
+      name: 'user.products.detail',
+      params: {
+        productId: productId
+      }
+    };
+  }), "productLike", function productLike(product) {
+    axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/user/like/' + product.product.id).then(function (response) {
+      console.log(product.product.id, 'の商品をお気に入り登録しました。');
+      product.product.liked = true;
+      console.log('this.likedは、', product.product.liked);
+      product.product.likes_count++;
+      console.log('product.product.likes_countは、', product.product.likes_count);
+    })["catch"](function (error) {
+      console.error('商品のお気に入り登録失敗:', error);
+    });
+  }), "productUnlike", function productUnlike(product) {
+    var _this2 = this;
+    axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/user/unlike/' + product.product.id).then(function (response) {
+      console.log(product.product.id, 'の商品をお気に入り解除しました。');
+      _this2.getProduct();
+    })["catch"](function (error) {
+      console.error('商品のお気に入り解除失敗:', error);
+    });
+  })
 });
 
 /***/ }),
@@ -8537,6 +8522,7 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     // URLを作成する
     createURL: function createURL(params) {
+      var _this = this;
       console.log('検索URLを作成します');
       // URLの組み立て
       var url = "/user/products/purchased";
@@ -8547,13 +8533,13 @@ __webpack_require__.r(__webpack_exports__);
       }
       console.log('検索URL:', url);
       // ページ遷移
-      // if (this.$route.fullPath !== url) { // 現在のURLと新しいURLが異なるか
-      this.$router.push(url);
-      this.getProduct();
-      // }
+      this.$router.push(url).then(function () {
+        _this.getProduct(); // ページ遷移が完了した後にgetProductを呼び出す
+      });
     },
     // ページが変更されたときの処理
     onPageChange: function onPageChange(page) {
+      console.log('onPageChangeメソッドのpageは、', page);
       if (this.currentPage !== page) {
         // 現在のページ番号と新しいページ番号が異なるか
         this.currentPage = page; // ページ番号を更新
@@ -8564,24 +8550,23 @@ __webpack_require__.r(__webpack_exports__);
     },
     // 商品情報をサーバーから取得
     getProduct: function getProduct() {
-      var _this = this;
+      var _this2 = this;
       console.log('購入済み商品情報を取得します');
       // 現在のルートのクエリパラメータを取得
       var params = Object.assign({}, this.$route.query); // クエリパラメータのコピーを作成
-      params.page = this.currentPage; // ページ番号を設定
       console.log('paramsは、', params, 'this.currentPageは、', this.currentPage);
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/user/products/purchased', {
         params: params
       }).then(function (response) {
         console.log('curent_pageは、', response.data.products.current_page);
         console.log('getProductのAPIからのレスポンス:', response.data);
-        _this.products = response.data.products;
-        console.log('productsは、', _this.products);
-        _this.lastPage = response.data.products.last_page;
-        console.log('this.lastPageは、', _this.lastPage);
+        _this2.products = response.data.products;
+        console.log('productsは、', _this2.products);
+        _this2.lastPage = response.data.products.last_page;
+        console.log('this.lastPageは、', _this2.lastPage);
       })["catch"](function (error) {
         console.error('商品情報取得失敗:', error.response.data);
-        _this.errors = error.response.data;
+        _this2.errors = error.response.data;
       });
     },
     // 商品画像のパスを取得するメソッド
@@ -48645,6 +48630,25 @@ var render = function () {
         _vm.end_dot
           ? _c("li", { staticClass: "inactive" }, [_vm._v("...")])
           : _vm._e(),
+        _vm._v(" "),
+        _vm._l(_vm.endPageRange, function (page) {
+          return _c(
+            "li",
+            {
+              key: page,
+              class: {
+                active: _vm.isCurrent(page),
+                inactive: !_vm.isCurrent(page),
+              },
+              on: {
+                click: function ($event) {
+                  _vm.changePage(page)
+                },
+              },
+            },
+            [_vm._v(_vm._s(page))]
+          )
+        }),
         _vm._v(" "),
         _c(
           "li",

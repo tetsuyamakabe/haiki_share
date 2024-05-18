@@ -25,8 +25,9 @@ class ProductController extends Controller
     {
         // 購入者と購入商品情報を取得
         $purchaserId = Auth::id();
-        \Log::info('$purchaserIdは、', [$purchaserId]);
+        // \Log::info('$purchaserIdは、', [$purchaserId]);
         $product = Product::findOrFail($productId);
+        // \Log::info('$productは、', [$product]);
 
         // 購入情報を保存
         $purchase = new Purchase();
@@ -35,13 +36,21 @@ class ProductController extends Controller
         $purchase->is_purchased = true;
         $purchase->save();
 
-        // 利用者（ログイン）ユーザーに商品購入完了通知メールを送信
+        // 利用者（ログイン）ユーザー情報の取得
         $user = Auth::user();
-        Notification::send($user, new PurchaseNotification($product));
+        // コンビニユーザー情報の取得
+        $convenience = Convenience::with('address')->findOrFail($product->convenience_store_id);
+        // コンビニに紐づく住所情報の取得
+        $address = $convenience->address;
 
+        // 賞味期限日付のフォーマット（年月日）修正
+        $expirationDate = Carbon::parse($product->expiration_date);
+        $formattedExpirationDate = $expirationDate->format('Y年m月d日');
+
+        // 利用者（ログイン）ユーザーに商品購入完了通知メールを送信
+        Notification::send($user, new PurchaseNotification($product, $convenience, $formattedExpirationDate));
         // コンビニユーザーに商品購入完了通知メールを送信
-        $convenience = Convenience::findOrFail($product->convenience_store_id);
-        Notification::send($convenience->user, new PurchaseNotification($product));
+        Notification::send($convenience->user, new PurchaseNotification($product, $convenience, $formattedExpirationDate));
 
         return response()->json(['message' => '商品を購入しました。']);
     }
@@ -51,22 +60,31 @@ class ProductController extends Controller
     {
         // 購入者と購入商品情報を取得
         $purchaserId = Auth::id();
-        \Log::info('$purchaserIdは、', [$purchaserId]);
+        // \Log::info('$purchaserIdは、', [$purchaserId]);
         $product = Product::findOrFail($productId);
-    
+        // \Log::info('$productは、', [$product]);
+
         // 購入情報を取得
         $purchase = Purchase::where('product_id', $product->id)->where('purchased_id', $purchaserId)->first();
     
         if ($purchase) {
             $purchase->delete();
 
-            // 利用者（ログイン）ユーザーに商品キャンセル完了通知メールを送信
+            // 利用者（ログイン）ユーザー情報の取得
             $user = Auth::user();
-            Notification::send($user, new CancelNotification($product));
+            // コンビニユーザー情報の取得
+            $convenience = Convenience::with('address')->findOrFail($product->convenience_store_id);
+            // コンビニに紐づく住所情報の取得
+            $address = $convenience->address;
 
+            // 賞味期限日付のフォーマット（年月日）修正
+            $expirationDate = Carbon::parse($product->expiration_date);
+            $formattedExpirationDate = $expirationDate->format('Y年m月d日');
+
+            // 利用者（ログイン）ユーザーに商品キャンセル完了通知メールを送信
+            Notification::send($user, new CancelNotification($product, $convenience, $formattedExpirationDate));
             // コンビニユーザーに商品キャンセル完了通知メールを送信
-            $convenience = Convenience::findOrFail($product->convenience_store_id);
-            Notification::send($convenience->user, new CancelNotification($product));
+            Notification::send($convenience->user, new CancelNotification($product, $convenience, $formattedExpirationDate));
 
             return response()->json(['message' => '商品の購入をキャンセルしました。']);
         } else {

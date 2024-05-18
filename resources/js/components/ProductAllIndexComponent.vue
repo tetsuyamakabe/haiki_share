@@ -142,7 +142,6 @@ export default {
             console.log('すべての商品情報を取得します');
             // 現在のルートのクエリパラメータを取得
             const params = Object.assign({}, this.$route.query); // クエリパラメータのコピーを作成
-            params.page = this.currentPage; // ページ番号を設定
             console.log('paramsは、', params, 'this.currentPageは、', this.currentPage);
             axios.get('/api/products', { params: params }).then(response => {
                 console.log('curent_pageは、', response.data.products.current_page);

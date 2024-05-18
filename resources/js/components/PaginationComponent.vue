@@ -12,6 +12,8 @@
             <li v-for="page in middlePageRange" :key="page" @click="changePage(page)" :class="{ 'active': isCurrent(page), 'inactive': !isCurrent(page) }">{{ page }}</li>
             <!-- ドットの表示 -->
             <li v-if="end_dot" class="inactive">...</li>
+            <!-- ページ番号の範囲 -->
+            <li v-for="page in endPageRange" :key="page" @click="changePage(page)" :class="{ 'active': isCurrent(page), 'inactive': !isCurrent(page) }">{{ page }}</li>
             <!-- 次に移動する>>ボタン -->
             <li :class="{ 'inactive': currentPage >= last_page, 'disabled': currentPage >= last_page }" @click="changePage(currentPage + 1)">»</li>
         </ul>
@@ -76,7 +78,7 @@ export default {
         },
 
         // 最後のページ番号の範囲
-        lastPageRange() {
+        endPageRange() {
             if (!this.sizeCheck) return [];
             return this.calRange(this.last_page - 1, this.last_page);
         },
