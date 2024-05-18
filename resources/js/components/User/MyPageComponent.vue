@@ -29,10 +29,8 @@
                                             </div>
                                             <div class="p-card__footer">
                                                 <div class="p-product__button">
-                                                    <router-link :to="getProductDetailLink(product.product.id)" class="c-button c-button__user c-button__detail">詳細を見る</router-link>
-                                                </div>
-                                                <div class="p-product__button">
-                                                    <button class="c-button c-button__user c-button__detail" @click="cancelPurchase(product.product.id)">購入をキャンセルする</button>
+                                                    <router-link :to="getProductDetailLink(product.product.id)" class="c-button c-button__user c-button__detail u-pd__s u-m__s">詳細を見る</router-link>
+                                                    <button class="c-button c-button__user c-button__cancel u-pd__s u-m__s" @click="cancelPurchase(product.product.id)">購入をキャンセルする</button>
                                                 </div>
                                             </div>
                                         </div>

@@ -7,14 +7,14 @@
                         <h1 class="c-title">{{ product.name }}</h1>
                         <div class="p-product">
                             <!-- いいねアイコン -->
-                            <div class="p-like p-like__content">
+                            <div class="p-like p-like__content u-pdr__s">
                                 <i v-if="!product.liked" class="c-icon c-icon__unlike far fa-heart" @click="productLike(product)"></i>
                                 <i v-else class="c-icon c-icon__like fas fa-heart" @click="productUnlike(product)"></i>
                                 <span>いいね{{ product.likes_count }}</span>
                             </div>
                             <!-- エックスのシェアボタン -->
                             <div class="p-like p-like__content">
-                                <button class="c-button c-button__share" @click="twitterShare"><i class="fa-brands fa-x-twitter c-icon__share">でシェアする</i></button>
+                                <button class="c-button c-button__share u-pd__s" @click="twitterShare"><i class="fa-brands fa-x-twitter c-icon__share">でシェアする</i></button>
                             </div>
 
                             <div class="p-product__picture">
@@ -30,7 +30,7 @@
                     </div>
 
                     <!-- コンビニ側の購入ボタンは自店舗・他店舗に限らず購入ボタンをクリックできないようにする -->
-                    <button class="c-button c-button__submit c-button__purchase" :disabled="true">コンビニユーザーは購入できません</button>
+                    <button class="c-button c-button__submit c-button__purchase u-pd__s u-m__s" :disabled="true">コンビニユーザーは購入できません</button>
 
                 </section>
             </div>

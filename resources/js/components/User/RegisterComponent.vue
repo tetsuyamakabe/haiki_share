@@ -6,33 +6,33 @@
                 <form @submit.prevent="submitForm" class="c-form">
 
                     <!-- バリデーションエラーメッセージ -->
-                    <span v-if="errors && errors.name" class="c-error">{{ errors.name[0] }}</span>
-                    <span v-if="errors && errors.email" class="c-error">{{ errors.email[0] }}</span>
-                    <span v-if="errors && errors.password" class="c-error">{{ errors.password[0] }}</span>
-                    <span v-if="errors && errors.password_confirmation" class="c-error">{{ errors.password_confirmation[0] }}</span>
-                    <span v-if="errors && !agreement" class="c-error">利用規約に同意する必要があります。</span>
+                    <span v-if="errors && errors.name" class="c-error u-mt__s u-mb__s">{{ errors.name[0] }}</span>
+                    <span v-if="errors && errors.email" class="c-error u-mt__s u-mb__s">{{ errors.email[0] }}</span>
+                    <span v-if="errors && errors.password" class="c-error u-mt__s u-mb__s">{{ errors.password[0] }}</span>
+                    <span v-if="errors && errors.password_confirmation" class="c-error u-mt__s u-mb__s">{{ errors.password_confirmation[0] }}</span>
+                    <span v-if="errors && !agreement" class="c-error u-mt__s u-mb__s">利用規約に同意する必要があります。</span>
 
                     <!-- お名前 -->
                     <label for="name" class="c-label">お名前</label>
-                    <input v-model="formData.name" id="name" type="name" class="c-input" :class="{ 'is-invalid': errors && errors.name }" autocomplete="name">
+                    <input v-model="formData.name" id="name" type="name" class="c-input u-pd__s u-mt__m u-mb__m" :class="{ 'is-invalid': errors && errors.name }" autocomplete="name">
                     <!-- メールアドレス -->
                     <label for="email" class="c-label">メールアドレス</label>
-                    <input v-model="formData.email" id="email" type="email" class="c-input" :class="{ 'is-invalid': errors && errors.email }" autocomplete="email">
+                    <input v-model="formData.email" id="email" type="email" class="c-input u-pd__s u-mt__m u-mb__m" :class="{ 'is-invalid': errors && errors.email }" autocomplete="email">
                     <!-- パスワード -->
                     <label for="password" class="c-label">パスワード</label>
                     <div class="c-input__password">
-                        <input v-model="formData.password" id="password" :type="PasswordType" class="c-input" :class="{ 'is-invalid': errors && errors.password }" placeholder="英数字8文字以上で入力してください">
+                        <input v-model="formData.password" id="password" :type="PasswordType" class="c-input u-pd__s u-mt__m u-mb__m" :class="{ 'is-invalid': errors && errors.password }" placeholder="英数字8文字以上で入力してください">
                         <span @click="togglePasswordVisibility('password')"><i :class="PasswordIconClass"></i></span>
                     </div>
                     <!-- パスワード（再入力） -->
                     <label for="password-confirm" class="c-label">パスワード（再入力）</label>
                     <div class="c-input__password">
-                        <input v-model="formData.password_confirmation" id="password-confirm" :type="PasswordConfirmType" class="c-input" :class="{ 'is-invalid': errors && errors.password_confirmation }" placeholder="英数字8文字以上で入力してください">
+                        <input v-model="formData.password_confirmation" id="password-confirm" :type="PasswordConfirmType" class="c-input u-pd__s u-mt__m u-mb__m" :class="{ 'is-invalid': errors && errors.password_confirmation }" placeholder="英数字8文字以上で入力してください">
                         <span @click="togglePasswordVisibility('password_confirm')"><i :class="PasswordConfirmIconClass"></i></span>
                     </div>
 
                     <!-- 利用規約 -->
-                    <div class="p-register__terms">
+                    <div class="p-register__terms u-pd__s u-m__s">
                         <terms-component></terms-component>
                     </div>
 
@@ -43,7 +43,7 @@
                     </div>
 
                     <!-- 登録ボタン -->
-                    <button type="submit" class="c-button c-button__submit c-button__user">ユーザー登録する</button>
+                    <button type="submit" class="c-button c-button__submit c-button__user u-pd__s">ユーザー登録する</button>
                 </form>
             </section>
         </div>

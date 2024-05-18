@@ -6,14 +6,14 @@
                 <form @submit.prevent="sendResetLink" class="c-form">
 
                     <!-- バリデーションエラーメッセージ -->
-                    <span v-if="errors && errors.email" class="c-error">{{ errors.email[0] }}</span>
+                    <span v-if="errors && errors.email" class="c-error u-mt__s u-mb__s">{{ errors.email[0] }}</span>
 
                     <!-- メールアドレス -->
                     <label for="email" class="c-label">メールアドレス</label>
-                    <input v-model="formData.email" id="email" type="email" class="c-input" :class="{ 'is-invalid': errors && errors.email }" autocomplete="email">
+                    <input v-model="formData.email" id="email" type="email" class="c-input u-pd__s u-mt__m u-mb__m" :class="{ 'is-invalid': errors && errors.email }" autocomplete="email">
 
                     <!-- メール送信ボタン -->
-                    <button type="submit" class="c-button c-button__submit c-button__user u-mt__m">パスワード変更メールを送信する</button>
+                    <button type="submit" class="c-button c-button__submit c-button__user u-pd__s u-mt__m">パスワード変更メールを送信する</button>
 
                 </form>
             </section>

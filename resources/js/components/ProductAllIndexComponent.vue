@@ -21,9 +21,9 @@
                                     </div>
                                     <div class="p-card__container">
                                         <img class="c-card__picture" :src="getProductPicturePath(product)" alt="商品画像">
-                                        <label v-show="product.is_purchased" class="c-label__purchase">購入済み</label>
+                                        <label v-show="product.is_purchased" class="c-label__purchase u-pd__m">購入済み</label>
                                         <!-- いいねアイコン -->
-                                        <div class="p-like p-like__content">
+                                        <div class="p-like p-like__content u-pdr__s">
                                             <i v-if="!product.liked" class="c-icon c-icon__unlike far fa-heart" @click="productLike(product)"></i>
                                             <i v-else class="c-icon c-icon__like fas fa-heart" @click="productUnlike(product)"></i>
                                             <span>いいね{{ product.likes_count }}</span>
@@ -32,7 +32,7 @@
                                         <p class="c-card__price">{{ formatDate(product.expiration_date) }}</p>
                                     </div>
                                     <div class="p-card__footer">
-                                        <router-link :to="getProductDetailLink(product.id)" class="c-button c-button__common c-button__detail">詳細を見る</router-link>
+                                        <router-link :to="getProductDetailLink(product.id)" class="c-button c-button__common c-button__detail u-pd__s u-m__s">詳細を見る</router-link>
                                     </div>
                                 </div>
                             </li>
@@ -108,10 +108,9 @@ export default {
             }
             console.log('検索URL:', url);
             // ページ遷移
-            // if (this.$route.fullPath !== url) { // 現在のURLと新しいURLが異なるか
-                this.$router.push(url);
-                this.getProduct();
-            // }
+            this.$router.push(url).then(() => {
+                this.getProduct(); // ページ遷移が完了した後にgetProductを呼び出す
+            });
         },
 
         // ページが変更されたときの処理
@@ -127,6 +126,7 @@ export default {
 
         // 検索結果を表示する
         searchResult(params) {
+            console.log('searchResultのparamsは、', params);
             // 前回の検索条件が同じであればページ遷移を行わずに検索結果を再取得する
             if (JSON.stringify(params) === JSON.stringify(this.lastParams)) {
                 this.getProduct(params); // 前回と同じ検索条件での再取得
@@ -142,7 +142,8 @@ export default {
             console.log('すべての商品情報を取得します');
             // 現在のルートのクエリパラメータを取得
             const params = Object.assign({}, this.$route.query); // クエリパラメータのコピーを作成
-            console.log('paramsは、', params);
+            params.page = this.currentPage; // ページ番号を設定
+            console.log('paramsは、', params, 'this.currentPageは、', this.currentPage);
             axios.get('/api/products', { params: params }).then(response => {
                 console.log('curent_pageは、', response.data.products.current_page);
                 console.log('getProductのAPIからのレスポンス:', response.data);

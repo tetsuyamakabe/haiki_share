@@ -1,11 +1,9 @@
 .c-label{
     display: block;
     font-weight: bold;
-    font-size: 16px;
-    color: #434343;
 
     @include mq(sm){
-        font-size: 12px;
+        font-size: $font-size_m;
     }
 
     &__purchase {
@@ -13,11 +11,15 @@
         top: 25%;
         left: 25%;
         opacity: 0.8;
-        padding: 16px;
-        background: #ff0000;
-        color: #fff;
         text-align: center;
         font-weight: bold;
         border-radius: 5px;
+        color: $font-color_sub;
+        background: $background-color_label;
+
+        @include mq(sm){
+            top: 20%;
+            left: 15%;
+        }
     }
 }

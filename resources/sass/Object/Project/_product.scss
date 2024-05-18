@@ -1,55 +1,50 @@
 .p-product {
+
     &__list {
         width: 100%;
         display: flex;
         flex-wrap: wrap;
 
-        @include mq(sm){
+        @include mq(sm) {
             width: 100%;
             flex-wrap: wrap;
         }
     }
 
     &__item {
-        padding: 8px;
-        @include mq(sm){
+        padding: $space_s;
+        @include mq(sm) {
             width: calc(100% / 2);
-            padding: 8px 0;
+            padding: $space_s 0;
         }
     }
 
     &__index {
-        background: #fefefe;
         padding: 24px 40px;
+        background: $background-color_sub;
+
         &--like,
         &--purchased,
         &--sale {
-            padding: 30px;
+            padding: $space_xl;
         }
-        @include mq(sm){
-            padding: 8px;
+
+        @include mq(sm) {
+            padding: $space_s;
         }
-    }
-
-    &__form{
-        background: #fff;
-        margin: 120px auto;
-        padding: 40px;
-        text-align: left;
-        border: 1px solid #000;
-    }
-
-    &__container{
-        width: 320px;
     }
 
     &__picture {
         &--container {
             position: relative;
             height: 100%;
-            border: 1px solid #000;
+            border: 1px solid $boader-color_default;
             margin: auto;
-            padding: 8px;
         }
+    }
+
+    &__button {
+        display: flex;
+        flex-direction: column;
     }
 }

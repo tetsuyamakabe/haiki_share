@@ -24,8 +24,8 @@
                                     <p class="c-card__price">{{ formatDate(product.expiration_date) }}</p>
                                 </div>
                                 <div class="p-card__footer">
-                                    <router-link :to="getProductDetailLink(product.id)" class="c-button c-button__convenience c-button__detail">詳細を見る</router-link>
-                                    <router-link v-if="!product.is_purchased" :to="getProductEditLink(product.id)" class="c-button c-button__convenience c-button__edit">編集する</router-link>
+                                    <router-link :to="getProductDetailLink(product.id)" class="c-button c-button__convenience c-button__detail u-pd__s u-m__s">詳細を見る</router-link>
+                                    <router-link v-if="!product.is_purchased" :to="getProductEditLink(product.id)" class="c-button c-button__convenience c-button__edit u-pd__s u-m__s">編集する</router-link>
                                 </div>
                             </div>
                         </li>
@@ -104,11 +104,15 @@ export default {
             console.log('出品した商品情報を取得します');
             // 現在のルートのクエリパラメータを取得
             const params = Object.assign({}, this.$route.query); // クエリパラメータのコピーを作成
+            params.page = this.currentPage; // ページ番号を設定
+            console.log('paramsは、', params, 'this.currentPageは、', this.currentPage);
             axios.get('/api/convenience/products', { params: params }).then(response => {
+                console.log('curent_pageは、', response.data.products.current_page);
+                console.log('getProductのAPIからのレスポンス:', response.data);
                 this.products = response.data.products;
-                console.log('商品一覧:', this.products);
-                console.log('APIからのレスポンス:', response.data);
+                console.log('productsは、', this.products);
                 this.lastPage = response.data.products.last_page;
+                console.log('this.lastPageは、', this.lastPage);
             }).catch(error => {
                 console.error('商品情報取得失敗:', error.response.data);
                 this.errors = error.response.data;

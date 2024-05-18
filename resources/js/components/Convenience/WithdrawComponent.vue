@@ -11,7 +11,7 @@
                         </p>
                     </div>
                     <!-- 退会ボタン -->
-                    <button @click="withdraw" class="c-button c-button__submit c-button__convenience u-mt__m">退会する</button>
+                    <button @click="withdraw" class="c-button c-button__submit c-button__convenience u-pd__s u-mt__m">退会する</button>
                 </form>
             </section>
         </div>

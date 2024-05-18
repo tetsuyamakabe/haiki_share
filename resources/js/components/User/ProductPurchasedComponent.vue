@@ -12,26 +12,20 @@
                             <p class="c-text u-pd__xl">購入した商品はありません。</p>
                         </li>
                         <!-- 購入済み商品一覧を表示 -->
-                        <li v-else v-for="product in products" :key="product.id" class="p-product__item">
+                        <li v-else v-for="product in products.data" :key="product.id" class="p-product__item">
                             <!-- 商品情報の表示 -->
                             <div class="c-card u-m__s">
                                 <div class="p-card__header u-pd__s">
-                                    <h3 class="c-card__name">{{ product.name }}</h3>
+                                    <h3 class="c-card__name">{{ product.product.name }}</h3>
                                 </div>
                                 <div class="p-card__container">
                                     <img class="c-card__picture" :src="getProductPicturePath(product)" alt="商品画像">
-                                    <label v-show="product.is_purchased" class="c-label__purchase">購入済み</label>
-                                    <!-- いいねアイコン -->
-                                    <div class="p-like p-like__content">
-                                        <i v-if="!product.liked" class="c-icon c-icon__unlike far fa-heart" @click="productLike(product)"></i>
-                                        <i v-else class="c-icon c-icon__like fas fa-heart" @click="productUnlike(product)"></i>
-                                        <span>いいね{{ product.likes_count }}</span>
-                                    </div>
-                                    <p class="c-card__price">{{ product.price }}円</p>
-                                    <p class="c-card__price">{{ formatDate(product.expiration_date) }}</p>
+                                    <label v-show="product.is_purchased" class="c-label__purchase u-pd__m">購入済み</label>
+                                    <p class="c-card__price">{{ product.product.price }}円</p>
+                                    <p class="c-card__price">{{ formatDate(product.product.expiration_date) }}</p>
                                 </div>
                                 <div class="p-card__footer">
-                                    <router-link :to="getProductDetailLink(product.id)" class="c-button c-button__user c-button__detail">詳細を見る</router-link>
+                                    <router-link :to="getProductDetailLink(product.product.id)" class="c-button c-button__user c-button__detail u-pd__s u-m__s">詳細を見る</router-link>
                                 </div>
                             </div>
                         </li>
@@ -110,11 +104,15 @@ export default {
             console.log('購入済み商品情報を取得します');
             // 現在のルートのクエリパラメータを取得
             const params = Object.assign({}, this.$route.query); // クエリパラメータのコピーを作成
+            params.page = this.currentPage; // ページ番号を設定
+            console.log('paramsは、', params, 'this.currentPageは、', this.currentPage);
             axios.get('/api/user/products/purchased', { params: params }).then(response => {
+                console.log('curent_pageは、', response.data.products.current_page);
+                console.log('getProductのAPIからのレスポンス:', response.data);
                 this.products = response.data.products;
-                console.log('商品一覧:', this.products);
-                console.log('APIからのレスポンス:', response.data);
+                console.log('productsは、', this.products);
                 this.lastPage = response.data.products.last_page;
+                console.log('this.lastPageは、', this.lastPage);
             }).catch(error => {
                 console.error('商品情報取得失敗:', error.response.data);
                 this.errors = error.response.data;

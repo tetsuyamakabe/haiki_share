@@ -1,21 +1,23 @@
 .c-icon {
-    font-size: 24px;
-    @include mq(sm){
-        font-size: 12px;
+    font-size: $font-size_l;
+
+    @include mq(sm) {
+        font-size: $font-size_m;
     }
+
     &:hover {
         cursor: pointer;
     }
 
     &__like {
-        color: #ff7fbf;
+        color: $font-color_like;
     }
 
     &__unlike {
-        color: #999;
+        color: $font-color_unlike;
     }
 
     &__share {
-        color: #fff;
+        color: $font-color_sub;
     }
 }

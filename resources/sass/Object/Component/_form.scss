@@ -1,12 +1,9 @@
 .c-form {
     padding: 40px 240px;
-    background: #fefefe;
+    background: $background-color_sub;
 
     @include mq(sm){
-        padding: 24px;
+        padding: $font-size_l
     }
 
-    &__search {
-        padding: 8px;
-    }
 }

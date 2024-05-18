@@ -5,6 +5,7 @@ import store from './store';
 // 共通コンポーネント
 import HomeComponent from "./components/HomeComponent"; // HOME画面
 import TermsComponent from './components/TermsComponent.vue'; // 利用規約ページ
+import PrivacyPolicyComponent from './components/PrivacyPolicyComponent.vue'; // プライバシーポリシーページ
 import ErrorComponent from './components/ErrorComponent.vue'; // エラーページ
 import NotFoundComponent from './components/NotFoundComponent.vue' // NotFoundページ
 
@@ -53,6 +54,12 @@ const router = new VueRouter({
             path: '/terms',
             name: 'terms',
             component: TermsComponent
+        },
+        // プライバシーポリシーページ
+        {
+            path: '/privacy',
+            name: 'privacy',
+            component:PrivacyPolicyComponent
         },
         // エラーページ
         {
@@ -207,10 +214,11 @@ const router = new VueRouter({
     ]
 });
 
-// セッションが必要ないパス（HOME画面、利用規約、ユーザー登録画面、ログイン画面、パスワードメール送信画面、パスワードリセット画面）
+// セッションが必要ないパス（HOME画面、利用規約、プライバシーポリシー、ユーザー登録画面、ログイン画面、パスワードメール送信画面、パスワードリセット画面）
 const publicPaths = [
     '/home',
     '/terms',
+    '/privacy',
     '/user/register',
     '/convenience/register',
     '/user/login',

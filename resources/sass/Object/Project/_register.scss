@@ -6,11 +6,9 @@
 
     &__terms {
         height: 160px;
-        border: 0.5px solid #434343;
-        margin: 8px;
-        padding: 8px;
         overflow-y: auto;
-        font-size: 12px;
         line-height: 1.2;
+        font-size: $font-size_m;
+        border: 0.5px solid $boader-color_default;
     }
 }

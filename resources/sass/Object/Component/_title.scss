@@ -1,22 +1,34 @@
 .c-title {
-    color: #434343;
-    font-size: 32px;
     font-weight: bold;
     text-align: center;
+    font-size: $font-size_xl;
+    color: $font-color_default;
 
     @include mq(sm){
-        font-size: 16px;
+        font-size: $font-size_default;
     }
 
-    &__sub {
-        font-size: 24px;
-        text-align: left;
-        @include mq(sm){
-            font-size: 16px;
+    &__header {
+        font-size: $font-size_l;
+
+        @include mq(sm) {
+            font-size: $font-size_default;
         }
     }
 
-    &__terms {
+    &__sub {
+        text-align: left;
+        font-size: $font-size_l;
+
+        @include mq(sm) {
+            font-size: $font-size_default;
+        }
+    }
+
+    &__terms,
+    &__policy {
+        text-align: left;
         font-weight: bold;
+        font-size: $font-size_default;
     }
 }
