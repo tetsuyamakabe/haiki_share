@@ -1,6 +1,6 @@
 <template>
     <div class="l-nav">
-        <div class="l-nav__menu--trigger" @click="open = !open" v-bind:class="{'is-active' : open }">
+        <div class="l-nav__menu--trigger" @click="toggleMenu" v-bind:class="{'is-active' : open }">
             <span></span>
             <span></span>
             <span></span>
@@ -8,17 +8,28 @@
 
         <nav class="l-nav__menu" v-bind:class="{'is-active' : open }">
             <ul class="l-nav__menu--list">
+                <!-- ログイン済みのナビゲーションメニュー -->
                 <img v-if="isLogin" :src="icon" alt="アイコン画像" class="l-nav__menu--icon u-mr__s">
                 <div v-if="isLogin" class="l-nav__menu--item">
                     <span class="l-nav__menu--name">{{ username }}</span>
-                    <RouterLink class="l-nav__menu--link" :to="userLink">マイページ</RouterLink>
+                    <RouterLink class="l-nav__menu--link" :to="userLink" @click.native="closeMenu">マイページ</RouterLink>
                     <a class="l-nav__menu--link" @click="logout">ログアウト</a>
                 </div>
+                <!-- HOME画面のナビゲーションメニュー -->
+                <div v-else-if="isHomePage" class="l-nav__menu--item">
+                    <a class="l-nav__menu--link" href="#about" @click="closeMenu">サービス概要</a>
+                    <a class="l-nav__menu--link" href="#merit" @click="closeMenu">メリット</a>
+                    <a class="l-nav__menu--link" href="#usage" @click="closeMenu">利用方法</a>
+                    <a class="l-nav__menu--link" href="#contact" @click="closeMenu">お問い合わせ</a>
+                    <RouterLink class="l-nav__menu--link" to="/user/register" @click.native="closeMenu">利用者ユーザー登録</RouterLink>
+                    <RouterLink class="l-nav__menu--link" to="/convenience/register" @click.native="closeMenu">コンビニユーザー登録</RouterLink>
+                </div>
+                <!-- ログインしていないHOME画面以外のナビゲーションメニュー -->
                 <div v-else class="l-nav__menu--item">
-                    <RouterLink class="l-nav__menu--link" to="/user/register">利用者ユーザー登録</RouterLink>
-                    <RouterLink class="l-nav__menu--link" to="/user/login">利用者ログイン</RouterLink>
-                    <RouterLink class="l-nav__menu--link" to="/convenience/register">コンビニユーザー登録</RouterLink>
-                    <RouterLink class="l-nav__menu--link" to="/convenience/login">コンビニログイン</RouterLink>
+                    <RouterLink class="l-nav__menu--link" to="/user/register" @click.native="closeMenu">利用者ユーザー登録</RouterLink>
+                    <RouterLink class="l-nav__menu--link" to="/convenience/register" @click.native="closeMenu">コンビニユーザー登録</RouterLink>
+                    <RouterLink class="l-nav__menu--link" to="/user/login" @click.native="closeMenu">利用者ログイン</RouterLink>
+                    <RouterLink class="l-nav__menu--link" to="/convenience/login" @click.native="closeMenu">コンビニログイン</RouterLink>
                 </div>
             </ul>
         </nav>
@@ -58,6 +69,11 @@ export default {
             }
             return "/home";
         },
+
+        // トップページかどうか
+        isHomePage() {
+            return this.$route.name === 'home';
+        }
     },
 
     methods: {
@@ -70,10 +86,21 @@ export default {
             axios.post(logoutEndpoint).then(response => {
                 console.log('ログアウト成功:', response.data.message);
                 this.$store.commit('auth/clearUser');
+                this.closeMenu(); // メニューを閉じる
                 this.$router.push({ name: loginRoute }); // ログアウト処理完了後、ログイン画面に遷移
             }).catch(error => {
                 console.error('ログアウト処理失敗:', error.response.data);
             });
+        },
+
+        // ハンバーガーメニューの開閉
+        toggleMenu() {
+            this.open = !this.open;
+        },
+
+        // ハンバーガーメニュー中のメニューをクリックしたら自動で閉じる
+        closeMenu() {
+            this.open = false;
         }
     }
 }

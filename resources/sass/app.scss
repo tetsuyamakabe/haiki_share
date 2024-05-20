@@ -31,16 +31,20 @@
 // -----------------------------------------------------------------
 // Component
 // -----------------------------------------------------------------
+@import 'Object/component/attachment';
 @import 'Object/component/button';
 @import 'Object/component/card';
 @import 'Object/component/checkbox';
+@import 'Object/component/container';
 @import 'Object/component/error';
 @import 'Object/component/form';
+@import 'Object/component/hero';
 @import 'Object/component/icon';
 @import 'Object/component/input';
 @import 'Object/component/label';
 @import 'Object/component/link';
 @import 'Object/component/pagination';
+@import 'Object/component/panel';
 @import 'Object/component/product';
 @import 'Object/component/selectbox';
 @import 'Object/component/text';
@@ -68,5 +72,6 @@
 // -----------------------------------------------------------------
 // Utility
 // -----------------------------------------------------------------
+@import 'Object/utility/color';
 @import 'Object/utility/m-x';
 @import 'Object/utility/pd-x';

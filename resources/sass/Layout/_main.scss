@@ -1,8 +1,15 @@
 .l-main {
-    width: 100%;
+    width: $site-width;
+    margin: auto;
+    padding: 120px 0;
+
+    @include mq(sm){
+        width: 100%;
+        padding: $space_l 0;
+    }
 
     &__wrapper {
-        padding: $space_xl;
+        padding: $space_l;
         border: 0.5px solid $boader-color_default;
         min-width: 75%;
 
@@ -15,32 +22,4 @@
             border: none;
         }
     }
-
-    &__user {
-        background-color: #efffff;
-        padding: 120px 180px;
-
-        @include mq(sm){
-            padding: $space_l;
-        }
-    }
-
-    &__convenience {
-        background-color: #ffefff;
-        padding: 120px 180px;
-
-        @include mq(sm){
-            padding: $space_l;
-        }
-    }
-
-    &__common {
-        background-color: #efffef;
-        padding: 120px 180px;
-
-        @include mq(sm){
-            padding: $space_l;
-        }
-    }
-
 }

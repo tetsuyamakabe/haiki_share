@@ -1,5 +1,5 @@
 <template>
-    <main class="l-main">
+    <main class="l-container">
         <article class="l-main__wrapper l-main__wrapper--terms">
             <h1 class="c-title c-title__header u-mb__xl">利用規約</h1>
 

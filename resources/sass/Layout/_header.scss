@@ -24,11 +24,6 @@
     &__inner {
         display: flex;
         justify-content: space-between;
-
-        @include mq(sm) {
-            margin-top: $space_s;
-        }
-
     }
 
     &__title {

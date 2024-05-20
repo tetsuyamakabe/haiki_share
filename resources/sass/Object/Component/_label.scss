@@ -1,8 +1,8 @@
-.c-label{
+.c-label {
     display: block;
     font-weight: bold;
 
-    @include mq(sm){
+    @include mq(sm) {
         font-size: $font-size_m;
     }
 
@@ -17,9 +17,9 @@
         color: $font-color_sub;
         background: $background-color_label;
 
-        @include mq(sm){
-            top: 20%;
-            left: 15%;
+        @include mq(sm) {
+            top: 35%;
+            left: 20%;
         }
     }
 }

@@ -2,7 +2,7 @@
     <main class="l-main">
         <div class="l-main__user">
             <h1 class="c-title u-mb__xl">商品詳細</h1>
-                <section class="l-main__wrapper">
+                <section class="l-main__wrapper u-m__s">
                     <div class="l-container">
                         <h1 class="c-title">{{ product.name }}</h1>
                         <div class="p-product">

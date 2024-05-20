@@ -1,0 +1,9 @@
+.c-attachment {
+    width: 50%;
+    margin-right: $space_s;
+
+    @include mq(sm) {
+        width: 100%;
+        margin-bottom: $space_m;
+    }
+}

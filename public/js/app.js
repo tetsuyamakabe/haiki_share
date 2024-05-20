@@ -6908,6 +6908,126 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({});
 
@@ -6922,6 +7042,17 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -6977,6 +7108,10 @@ __webpack_require__.r(__webpack_exports__);
         return "/convenience/mypage";
       }
       return "/home";
+    },
+    // トップページかどうか
+    isHomePage: function isHomePage() {
+      return this.$route.name === 'home';
     }
   },
   methods: {
@@ -6989,12 +7124,21 @@ __webpack_require__.r(__webpack_exports__);
       axios.post(logoutEndpoint).then(function (response) {
         console.log('ログアウト成功:', response.data.message);
         _this.$store.commit('auth/clearUser');
+        _this.closeMenu(); // メニューを閉じる
         _this.$router.push({
           name: loginRoute
         }); // ログアウト処理完了後、ログイン画面に遷移
       })["catch"](function (error) {
         console.error('ログアウト処理失敗:', error.response.data);
       });
+    },
+    // ハンバーガーメニューの開閉
+    toggleMenu: function toggleMenu() {
+      this.open = !this.open;
+    },
+    // ハンバーガーメニュー中のメニューをクリックしたら自動で閉じる
+    closeMenu: function closeMenu() {
+      this.open = false;
     }
   }
 });
@@ -45354,7 +45498,7 @@ var render = function () {
     _c("div", { staticClass: "l-main__convenience" }, [
       _c("h1", { staticClass: "c-title u-mb__xl" }, [_vm._v("商品詳細")]),
       _vm._v(" "),
-      _c("section", { staticClass: "l-main__wrapper" }, [
+      _c("section", { staticClass: "l-main__wrapper u-m__s" }, [
         _c("div", { staticClass: "l-container" }, [
           _c("h1", { staticClass: "c-title" }, [
             _vm._v(_vm._s(_vm.product.name)),
@@ -48243,7 +48387,7 @@ var render = function () {
         _c(
           "router-link",
           { staticClass: "c-link", attrs: { to: { name: "home" } } },
-          [_vm._v("\n                haiki share\n            ")]
+          [_vm._v("\n                ©︎haiki share\n            ")]
         ),
         _vm._v(" "),
         _c("span", { attrs: { id: "l-footer__text" } }, [
@@ -48304,22 +48448,26 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("header", { staticClass: "l-header u-pdr__xl u-pdl__xl" }, [
-    _c(
-      "div",
-      { staticClass: "l-header__inner" },
-      [
-        _c(
-          "router-link",
-          { staticClass: "l-header__title", attrs: { to: { name: "home" } } },
-          [_vm._v("\n            haiki share\n        ")]
-        ),
-        _vm._v(" "),
-        _c("nav-component"),
-      ],
-      1
-    ),
-  ])
+  return _c(
+    "header",
+    { staticClass: "l-header js-float-menu u-pdr__xl u-pdl__xl" },
+    [
+      _c(
+        "div",
+        { staticClass: "l-header__inner" },
+        [
+          _c(
+            "router-link",
+            { staticClass: "l-header__title", attrs: { to: { name: "home" } } },
+            [_vm._v("\n            haiki share\n        ")]
+          ),
+          _vm._v(" "),
+          _c("nav-component"),
+        ],
+        1
+      ),
+    ]
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -48343,21 +48491,240 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("main", { staticClass: "l-main" }, [
+  return _c("main", { staticClass: "l-container" }, [
     _vm._m(0),
     _vm._v(" "),
     _c(
-      "a",
-      {
-        staticClass: "c-link c-link__back u-mt__s u-mb__s",
-        on: {
-          click: function ($event) {
-            _vm.$router.back()
-          },
-        },
-      },
-      [_vm._v("前のページに戻る")]
+      "section",
+      { staticClass: "u-color__bg u-pd__xl u-pd__xl", attrs: { id: "about" } },
+      [
+        _c("h2", { staticClass: "c-title u-mb__xl" }, [_vm._v("サービス概要")]),
+        _vm._v(" "),
+        _c("div", { staticClass: "c-container" }, [
+          _c("div", { staticClass: "c-container__body" }, [
+            _c("img", {
+              staticClass: "c-attachment",
+              attrs: { src: "/images/attachment.jpeg", alt: "てまえどり画像" },
+            }),
+            _vm._v(" "),
+            _vm._m(1),
+          ]),
+        ]),
+      ]
     ),
+    _vm._v(" "),
+    _c("section", { attrs: { id: "merit" } }, [
+      _c("h2", { staticClass: "c-title u-mt__xl u-mb__xl" }, [
+        _vm._v("メリット"),
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "c-container" }, [
+        _c("div", { staticClass: "c-container__body" }, [
+          _c("div", { staticClass: "c-panel__group c-panel__group--flex" }, [
+            _c(
+              "div",
+              { staticClass: "c-panel c-panel__border c-panel__user" },
+              [
+                _vm._m(2),
+                _vm._v(" "),
+                _c("div", { staticClass: "c-panel__body" }, [
+                  _c("img", {
+                    staticClass: "c-panel__image c-panel__image--user",
+                    attrs: {
+                      src: "/images/merit_user.png",
+                      alt: "利用者メリット画像",
+                    },
+                  }),
+                ]),
+                _vm._v(" "),
+                _vm._m(3),
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "c-panel c-panel__border c-panel__convenience" },
+              [
+                _vm._m(4),
+                _vm._v(" "),
+                _c("div", { staticClass: "c-panel__body" }, [
+                  _c("img", {
+                    staticClass: "c-panel__image c-panel__image--convenience",
+                    attrs: {
+                      src: "/images/merit_convenience.png",
+                      alt: "コンビニメリット画像",
+                    },
+                  }),
+                ]),
+                _vm._v(" "),
+                _vm._m(5),
+              ]
+            ),
+          ]),
+        ]),
+      ]),
+    ]),
+    _vm._v(" "),
+    _c("section", { attrs: { id: "usage" } }, [
+      _c("h2", { staticClass: "c-title u-mt__xl u-mb__xl" }, [
+        _vm._v("利用方法"),
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "c-container" }, [
+        _c("div", { staticClass: "c-container__body" }, [
+          _c("div", { staticClass: "c-panel__group c-panel__group--flex" }, [
+            _c(
+              "div",
+              { staticClass: "c-panel c-panel__border c-panel__user" },
+              [
+                _vm._m(6),
+                _vm._v(" "),
+                _c("div", { staticClass: "c-panel__container" }, [
+                  _c("div", { staticClass: "c-panel__content" }, [
+                    _c("img", {
+                      staticClass: "c-panel__image c-panel__image--usage",
+                      attrs: {
+                        src: "/images/register_image.png",
+                        alt: "利用方法画像",
+                      },
+                    }),
+                    _vm._v(" "),
+                    _c("p", [_vm._v("１．ユーザー登録する")]),
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "c-panel__content" }, [
+                    _c("img", {
+                      staticClass: "c-panel__image c-panel__image--usage",
+                      attrs: {
+                        src: "/images/user_purchase.png",
+                        alt: "利用方法画像",
+                      },
+                    }),
+                    _vm._v(" "),
+                    _c("p", [_vm._v("２．商品一覧から気になる商品を探す")]),
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "c-panel__content" }, [
+                    _c("img", {
+                      staticClass: "c-panel__image c-panel__image--usage",
+                      attrs: {
+                        src: "/images/purchase.png",
+                        alt: "利用方法画像",
+                      },
+                    }),
+                    _vm._v(" "),
+                    _c("p", [
+                      _vm._v(
+                        "３．購入の意思が固まったら、商品詳細画面で購入ボタンを押す"
+                      ),
+                    ]),
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "c-panel__content" }, [
+                    _c("img", {
+                      staticClass: "c-panel__image c-panel__image--usage",
+                      attrs: {
+                        src: "/images/convenience.png",
+                        alt: "利用方法画像",
+                      },
+                    }),
+                    _vm._v(" "),
+                    _c("p", [
+                      _vm._v("４．利用者はコンビニに商品を購入しに行く"),
+                    ]),
+                  ]),
+                ]),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "c-panel__foot" },
+                  [
+                    _c(
+                      "RouterLink",
+                      {
+                        staticClass: "c-button c-button__register u-pd__s",
+                        attrs: { to: "/user/register" },
+                      },
+                      [_vm._v("利用者ユーザー登録")]
+                    ),
+                  ],
+                  1
+                ),
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "c-panel c-panel__border c-panel__convenience" },
+              [
+                _vm._m(7),
+                _vm._v(" "),
+                _c("div", { staticClass: "c-panel__container" }, [
+                  _c("div", { staticClass: "c-panel__content" }, [
+                    _c("img", {
+                      staticClass: "c-panel__image c-panel__image--usage",
+                      attrs: {
+                        src: "/images/register_image.png",
+                        alt: "利用方法画像",
+                      },
+                    }),
+                    _vm._v(" "),
+                    _c("p", [_vm._v("１．ユーザー登録する")]),
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "c-panel__content" }, [
+                    _c("img", {
+                      staticClass: "c-panel__image c-panel__image--usage",
+                      attrs: {
+                        src: "/images/product.png",
+                        alt: "利用方法画像",
+                      },
+                    }),
+                    _vm._v(" "),
+                    _c("p", [_vm._v("２．廃棄となった商品を登録する")]),
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "c-panel__content" }, [
+                    _c("img", {
+                      staticClass: "c-panel__image c-panel__image--usage",
+                      attrs: {
+                        src: "/images/convenience_man.png",
+                        alt: "利用方法画像",
+                      },
+                    }),
+                    _vm._v(" "),
+                    _c("p", [
+                      _vm._v(
+                        "３．「商品購入完了メール」というメール通知があれば、実際の商品を用意しておく"
+                      ),
+                    ]),
+                  ]),
+                ]),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "c-panel__foot" },
+                  [
+                    _c(
+                      "RouterLink",
+                      {
+                        staticClass:
+                          "c-button c-button__register c-button__register--convenience u-pd__s",
+                        attrs: { to: "/convenience/register" },
+                      },
+                      [_vm._v("コンビニユーザー登録")]
+                    ),
+                  ],
+                  1
+                ),
+              ]
+            ),
+          ]),
+        ]),
+      ]),
+    ]),
+    _vm._v(" "),
+    _vm._m(8),
   ])
 }
 var staticRenderFns = [
@@ -48365,9 +48732,146 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "l-main__common" }, [
-      _c("h1", { staticClass: "c-title u-mb__xl" }, [_vm._v("HOME画面")]),
+    return _c("section", { staticClass: "c-hero js-float-menu-target" }, [
+      _c("h2", { staticClass: "c-hero__title" }, [_vm._v("haiki share")]),
     ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("p", [
+      _vm._v(
+        "\n                        「haiki share」は、食品ロス問題を解決するために作られたWebサービスです。"
+      ),
+      _c("br"),
+      _vm._v(
+        "\n                        農林水産省によると、令和2年度の食品ロスの推計値は年間で522万トン発生しており、そのうち60万トンはコンビニを含む食品小売業から出ています。"
+      ),
+      _c("br"),
+      _vm._v(
+        "\n                        コンビニ大手チェーン店では、食品ロスと廃棄物への取り組みとして、「てまえどり」を呼びかけています。「てまえどり」とは、商品棚の手前に陳列された食品を積極的に選ぶ行動のことです。これにより、期限が過ぎて廃棄されることによる食品ロスを削減する効果が期待されます。"
+      ),
+      _c("br"),
+      _vm._v(
+        "\n                        しかし、消費者の理解がまだ十分でないために、食品ロスはまだ課題が残っています。"
+      ),
+      _c("br"),
+      _vm._v(
+        "\n                        そこで、食品ロス問題が少しでも解決できるように、より多くの方々に理解し、行動するきっかけになるために「haiki share」があります。"
+      ),
+      _c("br"),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "c-panel__head" }, [
+      _c("span", { staticClass: "u-color__user" }, [
+        _vm._v("利用者側（廃棄を買う側）"),
+      ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "c-panel__foot" }, [
+      _c("p", [_vm._v("食品を通常価格より安く手に入れることができます。")]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "c-panel__head" }, [
+      _c("span", { staticClass: "u-color__convenience" }, [
+        _vm._v("コンビニ側"),
+      ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "c-panel__foot" }, [
+      _c("p", [
+        _vm._v(
+          "賞味期限が近い食品を廃棄せず、売り上げを増やすことができます。"
+        ),
+      ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "c-panel__head" }, [
+      _c("span", { staticClass: "u-color__user" }, [
+        _vm._v("利用者側（廃棄を買う側）"),
+      ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "c-panel__head" }, [
+      _c("span", { staticClass: "u-color__convenience" }, [
+        _vm._v("コンビニ側"),
+      ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "section",
+      { staticClass: "u-pd__xl u-pd__xl", attrs: { id: "contact" } },
+      [
+        _c("h2", { staticClass: "c-title u-mt__xl u-mb__xl" }, [
+          _vm._v("お問い合わせ"),
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "c-container" }, [
+          _c("div", { staticClass: "c-container__body" }, [
+            _c("form", { staticClass: "c-form", attrs: { action: "" } }, [
+              _c("input", {
+                staticClass: "c-input u-pd__s u-mt__m u-mb__m",
+                attrs: { type: "text", placeholder: "お名前" },
+              }),
+              _vm._v(" "),
+              _c("input", {
+                staticClass: "c-input u-pd__s u-mt__m u-mb__m",
+                attrs: { type: "email", placeholder: "email" },
+              }),
+              _vm._v(" "),
+              _c("textarea", {
+                staticClass: "c-textarea u-pd__s u-mt__m u-mb__m",
+                attrs: {
+                  name: "",
+                  id: "",
+                  placeholder: "お問い合わせ内容",
+                  cols: "30",
+                  rows: "10",
+                },
+              }),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "c-button c-button__contact u-pd__s",
+                  attrs: { type: "submit" },
+                },
+                [_vm._v("送信")]
+              ),
+            ]),
+          ]),
+        ]),
+      ]
+    )
   },
 ]
 render._withStripped = true
@@ -48397,11 +48901,7 @@ var render = function () {
       {
         staticClass: "l-nav__menu--trigger",
         class: { "is-active": _vm.open },
-        on: {
-          click: function ($event) {
-            _vm.open = !_vm.open
-          },
-        },
+        on: { click: _vm.toggleMenu },
       },
       [_c("span"), _vm._v(" "), _c("span"), _vm._v(" "), _c("span")]
     ),
@@ -48432,6 +48932,11 @@ var render = function () {
                     {
                       staticClass: "l-nav__menu--link",
                       attrs: { to: _vm.userLink },
+                      nativeOn: {
+                        click: function ($event) {
+                          return _vm.closeMenu($event)
+                        },
+                      },
                     },
                     [_vm._v("マイページ")]
                   ),
@@ -48447,6 +48952,81 @@ var render = function () {
                 ],
                 1
               )
+            : _vm.isHomePage
+            ? _c(
+                "div",
+                { staticClass: "l-nav__menu--item" },
+                [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "l-nav__menu--link",
+                      attrs: { href: "#about" },
+                      on: { click: _vm.closeMenu },
+                    },
+                    [_vm._v("サービス概要")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "a",
+                    {
+                      staticClass: "l-nav__menu--link",
+                      attrs: { href: "#merit" },
+                      on: { click: _vm.closeMenu },
+                    },
+                    [_vm._v("メリット")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "a",
+                    {
+                      staticClass: "l-nav__menu--link",
+                      attrs: { href: "#usage" },
+                      on: { click: _vm.closeMenu },
+                    },
+                    [_vm._v("利用方法")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "a",
+                    {
+                      staticClass: "l-nav__menu--link",
+                      attrs: { href: "#contact" },
+                      on: { click: _vm.closeMenu },
+                    },
+                    [_vm._v("お問い合わせ")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "RouterLink",
+                    {
+                      staticClass: "l-nav__menu--link",
+                      attrs: { to: "/user/register" },
+                      nativeOn: {
+                        click: function ($event) {
+                          return _vm.closeMenu($event)
+                        },
+                      },
+                    },
+                    [_vm._v("利用者ユーザー登録")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "RouterLink",
+                    {
+                      staticClass: "l-nav__menu--link",
+                      attrs: { to: "/convenience/register" },
+                      nativeOn: {
+                        click: function ($event) {
+                          return _vm.closeMenu($event)
+                        },
+                      },
+                    },
+                    [_vm._v("コンビニユーザー登録")]
+                  ),
+                ],
+                1
+              )
             : _c(
                 "div",
                 { staticClass: "l-nav__menu--item" },
@@ -48456,6 +49036,11 @@ var render = function () {
                     {
                       staticClass: "l-nav__menu--link",
                       attrs: { to: "/user/register" },
+                      nativeOn: {
+                        click: function ($event) {
+                          return _vm.closeMenu($event)
+                        },
+                      },
                     },
                     [_vm._v("利用者ユーザー登録")]
                   ),
@@ -48464,16 +49049,12 @@ var render = function () {
                     "RouterLink",
                     {
                       staticClass: "l-nav__menu--link",
-                      attrs: { to: "/user/login" },
-                    },
-                    [_vm._v("利用者ログイン")]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "RouterLink",
-                    {
-                      staticClass: "l-nav__menu--link",
                       attrs: { to: "/convenience/register" },
+                      nativeOn: {
+                        click: function ($event) {
+                          return _vm.closeMenu($event)
+                        },
+                      },
                     },
                     [_vm._v("コンビニユーザー登録")]
                   ),
@@ -48482,7 +49063,26 @@ var render = function () {
                     "RouterLink",
                     {
                       staticClass: "l-nav__menu--link",
+                      attrs: { to: "/user/login" },
+                      nativeOn: {
+                        click: function ($event) {
+                          return _vm.closeMenu($event)
+                        },
+                      },
+                    },
+                    [_vm._v("利用者ログイン")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "RouterLink",
+                    {
+                      staticClass: "l-nav__menu--link",
                       attrs: { to: "/convenience/login" },
+                      nativeOn: {
+                        click: function ($event) {
+                          return _vm.closeMenu($event)
+                        },
+                      },
                     },
                     [_vm._v("コンビニログイン")]
                   ),
@@ -48699,7 +49299,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("main", { staticClass: "l-main" }, [
+    return _c("main", { staticClass: "l-container" }, [
       _c(
         "article",
         { staticClass: "l-main__wrapper l-main__wrapper--policy" },
@@ -49444,7 +50044,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("main", { staticClass: "l-main" }, [
+    return _c("main", { staticClass: "l-container" }, [
       _c("article", { staticClass: "l-main__wrapper l-main__wrapper--terms" }, [
         _c("h1", { staticClass: "c-title c-title__header u-mb__xl" }, [
           _vm._v("利用規約"),
@@ -50466,7 +51066,7 @@ var render = function () {
     _c("div", { staticClass: "l-main__user" }, [
       _c("h1", { staticClass: "c-title u-mb__xl" }, [_vm._v("商品詳細")]),
       _vm._v(" "),
-      _c("section", { staticClass: "l-main__wrapper" }, [
+      _c("section", { staticClass: "l-main__wrapper u-m__s" }, [
         _c("div", { staticClass: "l-container" }, [
           _c("h1", { staticClass: "c-title" }, [
             _vm._v(_vm._s(_vm.product.name)),
