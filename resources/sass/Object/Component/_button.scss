@@ -8,6 +8,31 @@
         font-size: $font-size_m;
     }
 
+    &__register {
+        display: block;
+        text-align: center;
+        font-weight: bold;;
+        color: $font-color_default;
+        border: 2px solid #ff0000;
+        &:hover {
+            color: $font-color_sub;
+            background: #ff0000;
+        }
+    }
+
+    &__contact {
+        width: 100%;
+        display: block;
+        text-align: center;
+        font-weight: bold;;
+        color: $font-color_default;
+        border: 2px solid #ff0000;
+        &:hover {
+            color: $font-color_sub;
+            background: #ff0000;
+        }
+    }
+
     &__submit {
         transition: 0.3s;
         width: 100%;

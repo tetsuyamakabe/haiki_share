@@ -3,9 +3,12 @@
     box-sizing: border-box;
     border: 1px solid $boader-color_default;
     background: $background-color_main;
+    font-size: $font-size_default;
 
-    &::placeholder {
-        font-size: $font-size_m;
+    @include mq(sm) {
+        &::placeholder {
+            font-size: $font-size_m;
+        }
     }
 
     &__count {

@@ -1,4 +1,6 @@
-@import url(https://fonts.googleapis.com/css?family=Nunito);/* http://meyerweb.com/eric/tools/css/reset/
+@import url(https://fonts.googleapis.com/css?family=Nunito);@charset "UTF-8";
+
+/* http://meyerweb.com/eric/tools/css/reset/
    v2.0 | 20110126
    License: none (public domain)
 */
@@ -142,7 +144,7 @@ body {
   width: 100%;
   color: #434343;
   font-size: 16px;
-  font-family: "Yu Gothic", YuGothic, sans-serif;
+  font-family: Quicksand, 游ゴシック体, "Yu Gothic", YuGothic, "\30D2\30E9\30AE\30CE\89D2\30B4\30B7\30C3\30AF   Pro", "Hiragino Kaku Gothic Pro", メイリオ, Meiryo, Osaka, "\FF2D\FF33   \FF30\30B4\30B7\30C3\30AF", "MS PGothic", sans-serif;
   -webkit-text-size-adjust: 100%;
      -moz-text-size-adjust: 100%;
           text-size-adjust: 100%;
@@ -165,7 +167,7 @@ body {
   position: fixed;
   right: 30px;
   bottom: 30px;
-  background: #f6f5f4;
+  background: #fefefe;
   border: solid 2px #434343;
   border-radius: 50%;
   display: flex;
@@ -263,12 +265,6 @@ body {
   justify-content: space-between;
 }
 
-@media screen and (max-width: 414px) {
-  .l-header__inner {
-    margin-top: 8px;
-  }
-}
-
 .l-header__title {
   font-family: "Arial", sans-serif;
   font-style: italic;
@@ -286,11 +282,20 @@ body {
 }
 
 .l-main {
-  width: 100%;
+  width: 980px;
+  margin: auto;
+  padding: 120px 0;
+}
+
+@media screen and (max-width: 414px) {
+  .l-main {
+    width: 100%;
+    padding: 24px 0;
+  }
 }
 
 .l-main__wrapper {
-  padding: 32px;
+  padding: 24px;
   border: 0.5px solid #434343;
   min-width: 75%;
 }
@@ -306,39 +311,6 @@ body {
   border: none;
 }
 
-.l-main__user {
-  background-color: #efffff;
-  padding: 120px 180px;
-}
-
-@media screen and (max-width: 414px) {
-  .l-main__user {
-    padding: 24px;
-  }
-}
-
-.l-main__convenience {
-  background-color: #ffefff;
-  padding: 120px 180px;
-}
-
-@media screen and (max-width: 414px) {
-  .l-main__convenience {
-    padding: 24px;
-  }
-}
-
-.l-main__common {
-  background-color: #efffef;
-  padding: 120px 180px;
-}
-
-@media screen and (max-width: 414px) {
-  .l-main__common {
-    padding: 24px;
-  }
-}
-
 .l-nav__menu {
   display: flex;
   align-items: center;
@@ -350,7 +322,7 @@ body {
     position: fixed;
     top: 0;
     right: -100%;
-    background: rgba(0, 0, 0, 0.7);
+    background: rgba(0, 0, 0, 0.5);
     width: 100%;
     height: 100vh;
     padding-top: 48px;
@@ -504,6 +476,18 @@ body {
   }
 }
 
+.c-attachment {
+  width: 50%;
+  margin-right: 8px;
+}
+
+@media screen and (max-width: 414px) {
+  .c-attachment {
+    width: 100%;
+    margin-bottom: 16px;
+  }
+}
+
 .c-button {
   border-radius: 3px;
   text-decoration: none;
@@ -515,6 +499,33 @@ body {
   .c-button {
     font-size: 12px;
   }
+}
+
+.c-button__register {
+  display: block;
+  text-align: center;
+  font-weight: bold;
+  color: #434343;
+  border: 2px solid #ff0000;
+}
+
+.c-button__register:hover {
+  color: #fefefe;
+  background: #ff0000;
+}
+
+.c-button__contact {
+  width: 100%;
+  display: block;
+  text-align: center;
+  font-weight: bold;
+  color: #434343;
+  border: 2px solid #ff0000;
+}
+
+.c-button__contact:hover {
+  color: #fefefe;
+  background: #ff0000;
 }
 
 .c-button__submit {
@@ -607,7 +618,7 @@ body {
 
 @media screen and (max-width: 414px) {
   .c-card__picture {
-    height: 100px;
+    max-height: 100%;
     min-width: 100%;
   }
 }
@@ -626,6 +637,30 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.c-container {
+  width: 980px;
+  margin: auto;
+}
+
+@media screen and (max-width: 414px) {
+  .c-container {
+    width: 100%;
+  }
+}
+
+.c-container__body {
+  line-height: 1.5;
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+}
+
+@media screen and (max-width: 414px) {
+  .c-container__body {
+    flex-direction: column;
+  }
 }
 
 .c-error {
@@ -648,6 +683,29 @@ body {
 @media screen and (max-width: 414px) {
   .c-form {
     padding: 24px;
+  }
+}
+
+.c-hero {
+  width: 100%;
+  height: 600px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.c-hero__title {
+  font-family: "Arial", sans-serif;
+  font-style: italic;
+  font-weight: bold;
+  font-size: 200px;
+  color: #434343;
+}
+
+@media screen and (max-width: 414px) {
+  .c-hero__title {
+    font-size: 100px;
+    padding: 48px;
   }
 }
 
@@ -679,6 +737,7 @@ body {
 
 .c-input {
   width: 100%;
+  height: 50px;
   box-sizing: border-box;
   background: #f6f5f4;
   border: 1px solid #434343;
@@ -755,8 +814,8 @@ body {
 
 @media screen and (max-width: 414px) {
   .c-label__purchase {
-    top: 20%;
-    left: 15%;
+    top: 35%;
+    left: 20%;
   }
 }
 
@@ -817,6 +876,84 @@ body {
 
 .disabled {
   cursor: not-allowed;
+}
+
+.c-panel {
+  position: relative;
+  box-sizing: border-box;
+}
+
+.c-panel__border {
+  border-radius: 5px;
+  border: 5px solid #f6f5f4;
+}
+
+.c-panel__head,
+.c-panel__foot {
+  padding: 16px;
+}
+
+.c-panel__head {
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.c-panel__body {
+  display: flex;
+  justify-content: center;
+}
+
+.c-panel__container {
+  height: 600px;
+}
+
+.c-panel__content {
+  font-weight: bold;
+  padding: 32px;
+  display: flex;
+  align-items: center;
+}
+
+.c-panel__image {
+  height: 250px;
+}
+
+.c-panel__image--convenience {
+  width: 70%;
+}
+
+.c-panel__image--user {
+  width: 50%;
+}
+
+.c-panel__image--usage {
+  width: 25%;
+  height: 25%;
+  margin-right: 32px;
+}
+
+.c-panel__group--flex {
+  display: flex;
+}
+
+@media screen and (max-width: 414px) {
+  .c-panel__group--flex {
+    display: block;
+  }
+}
+
+.c-panel__group .c-panel {
+  width: 50%;
+  margin: 16px;
+  box-sizing: border-box;
+}
+
+@media screen and (max-width: 414px) {
+  .c-panel__group .c-panel {
+    width: 90%;
+    margin: 24px;
+  }
 }
 
 .c-product__picture {
@@ -886,14 +1023,16 @@ body {
   box-sizing: border-box;
   border: 1px solid #434343;
   background: #f6f5f4;
+  font-size: 16px;
 }
 
-.c-textarea::-moz-placeholder {
-  font-size: 12px;
-}
-
-.c-textarea::placeholder {
-  font-size: 12px;
+@media screen and (max-width: 414px) {
+  .c-textarea::-moz-placeholder {
+    font-size: 12px;
+  }
+  .c-textarea::placeholder {
+    font-size: 12px;
+  }
 }
 
 .c-textarea__count {
@@ -955,6 +1094,7 @@ body {
 @media screen and (max-width: 414px) {
   .p-article__mypage {
     display: block;
+    padding: 16px;
   }
 }
 
@@ -1040,7 +1180,7 @@ body {
 }
 
 .p-product__index {
-  padding: 24px 40px;
+  padding: 24px 16px;
   background: #fefefe;
 }
 
@@ -1121,6 +1261,18 @@ body {
 .p-withdraw__button {
   display: flex;
   justify-content: center;
+}
+
+.u-color__user {
+  color: #ff1493;
+}
+
+.u-color__convenience {
+  color: #00bfff;
+}
+
+.u-color__bg {
+  background: #f6f5f4;
 }
 
 .u-m__s {

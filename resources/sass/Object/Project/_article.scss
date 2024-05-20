@@ -6,6 +6,7 @@
 
         @include mq(sm) {
             display: block;
+            padding: $space_m;
         }
     }
 

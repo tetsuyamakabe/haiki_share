@@ -4,7 +4,7 @@
         <div id="l-footer__inner" class="u-pd__xxl">
             <span id="l-footer__text">Copyright</span>
                 <router-link class="c-link" :to="{ name: 'home' }">
-                    haiki share
+                    ©︎haiki share
                 </router-link>
             <span id="l-footer__text">All Rights Reserved.</span>
             <div class="l-footer__link">
