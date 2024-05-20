@@ -1,49 +1,48 @@
 <template>
     <main class="l-main">
-        <div class="l-main__convenience">
-            <section class="l-main__wrapper">
-                <h1 class="c-title u-mb__xl">コンビニ商品出品画面</h1>
-                <form @submit.prevent="submitForm" class="c-form">
+        <section class="l-main__wrapper">
+            <h1 class="c-title u-mb__xl">コンビニ商品出品画面</h1>
+            <form @submit.prevent="submitForm" class="c-form">
 
-                    <!-- バリデーションエラーメッセージ -->
-                    <span v-if="errors && errors.name" class="c-error u-mt__s u-mb__s">{{ errors.name[0] }}</span>
-                    <span v-if="errors && errors.price" class="c-error u-mt__s u-mb__s">{{ errors.price[0] }}</span>
-                    <span v-if="errors && errors.category" class="c-error u-mt__s u-mb__s">{{ errors.category[0] }}</span>
-                    <span v-if="errors && errors.expiration_date" class="c-error u-mt__s u-mb__s">{{ errors.expiration_date[0] }}</span>
-                    <span v-if="errors && errors.product_picture" class="c-error u-mt__s u-mb__s">{{ errors.product_picture[0] }}</span>
+                <!-- バリデーションエラーメッセージ -->
+                <span v-if="errors && errors.name" class="c-error u-mt__s u-mb__s">{{ errors.name[0] }}</span>
+                <span v-if="errors && errors.price" class="c-error u-mt__s u-mb__s">{{ errors.price[0] }}</span>
+                <span v-if="errors && errors.category" class="c-error u-mt__s u-mb__s">{{ errors.category[0] }}</span>
+                <span v-if="errors && errors.expiration_date" class="c-error u-mt__s u-mb__s">{{ errors.expiration_date[0] }}</span>
+                <span v-if="errors && errors.product_picture" class="c-error u-mt__s u-mb__s">{{ errors.product_picture[0] }}</span>
 
-                    <!-- 商品名 -->
-                    <label for="name" class="c-label">商品名</label>
-                    <input v-model="formData.name" id="name" type="text" class="c-input u-pd__s u-mt__m u-mb__m" :class="{ 'is-invalid': errors && errors.name }" autocomplete="name">
-                    <!-- 価格 -->
-                    <label for="price" class="c-label">価格</label>
-                    <input v-model="formData.price" id="price" type="text" class="c-input u-pd__s u-mt__m u-mb__m" :class="{ 'is-invalid': errors && errors.price }" autocomplete="price">
-                    <!-- カテゴリ名 -->
-                    <label for="category" class="c-label">カテゴリ名</label>
-                    <select v-model="formData.category" id="category" class="c-input u-pd__s u-mt__m u-mb__m" :class="{ 'is-invalid': errors && errors.category }">
-                        <option value="">カテゴリを選択してください</option>
-                        <option v-for="category in categories" :value="category.id">{{ category.name }}</option>
-                    </select>
-                    <!-- 賞味期限 -->
-                    <label for="expiration_date" class="c-label">賞味期限</label>
-                    <div class="p-text__form">
-                        <input v-model="formData.expiration_date" id="expiration_date" type="text" class="c-input u-pd__s u-mt__m u-mb__m" :class="{ 'is-invalid': errors && errors.expiration_date }" placeholder="（例）2024年4月10日の場合　20240410　と入力">
-                        <span class="c-text c-text__attention">賞味期限は西暦・半角数字8桁で入力してください</span>
-                    </div>
-                    <!-- 商品画像 -->
-                    <label class="c-label">商品画像</label>
-                    <div class="p-product__picture p-product__picture--container u-pd__s" @drop="handleDrop" :class="{ 'is-invalid': errors && errors.product_picture }">
-                        <input type="file" id="product_picture" @change="handleFileChange" class="c-input__hidden">
-                        <img v-if="!picturePreview && formData.product_picture !== ''" :src="'/storage/product_pictures/' + formData.product_picture" alt="アップロード商品画像" class="c-product__picture">
-                        <img v-else-if="picturePreview" :src="picturePreview" alt="アップロード商品画像" class="c-product__picture">
-                        <img v-else src="/storage/product_pictures/no_image.png" alt="NO_IMAGE" class="c-product__picture">
-                    </div>
+                <!-- 商品名 -->
+                <label for="name" class="c-label">商品名</label>
+                <input v-model="formData.name" id="name" type="text" class="c-input u-pd__s u-mt__m u-mb__m" :class="{ 'is-invalid': errors && errors.name }" autocomplete="name">
+                <!-- 価格 -->
+                <label for="price" class="c-label">価格</label>
+                <input v-model="formData.price" id="price" type="text" class="c-input u-pd__s u-mt__m u-mb__m" :class="{ 'is-invalid': errors && errors.price }" autocomplete="price">
+                <!-- カテゴリ名 -->
+                <label for="category" class="c-label">カテゴリ名</label>
+                <select v-model="formData.category" id="category" class="c-input u-pd__s u-mt__m u-mb__m" :class="{ 'is-invalid': errors && errors.category }">
+                    <option value="">カテゴリを選択してください</option>
+                    <option v-for="category in categories" :value="category.id">{{ category.name }}</option>
+                </select>
+                <!-- 賞味期限 -->
+                <label for="expiration_date" class="c-label">賞味期限</label>
+                <div class="p-text__form">
+                    <input v-model="formData.expiration_date" id="expiration_date" type="text" class="c-input u-pd__s u-mt__m u-mb__m" :class="{ 'is-invalid': errors && errors.expiration_date }" placeholder="（例）2024年4月10日の場合　20240410　と入力">
+                    <span class="c-text c-text__attention">賞味期限は西暦・半角数字8桁で入力してください</span>
+                </div>
+                <!-- 商品画像 -->
+                <label class="c-label">商品画像</label>
+                <div class="p-product__picture p-product__picture--container u-pd__s" @drop="handleDrop" :class="{ 'is-invalid': errors && errors.product_picture }">
+                    <input type="file" id="product_picture" @change="handleFileChange" class="c-input__hidden">
+                    <img v-if="!picturePreview && formData.product_picture !== ''" :src="'/storage/product_pictures/' + formData.product_picture" alt="アップロード商品画像" class="c-product__picture">
+                    <img v-else-if="picturePreview" :src="picturePreview" alt="アップロード商品画像" class="c-product__picture">
+                    <img v-else src="/storage/product_pictures/no_image.png" alt="NO_IMAGE" class="c-product__picture">
+                </div>
 
-                    <!-- 商品更新ボタン -->
-                    <button type="submit" class="c-button c-button__submit c-button__convenience u-pd__s u-mt__m">出品する</button>
-                </form>
-            </section>
-        </div>
+                <!-- 商品更新ボタン -->
+                <button type="submit" class="c-button c-button__submit c-button__convenience u-pd__s u-mt__m">出品する</button>
+
+            </form>
+        </section>
         <a @click="$router.back()" class="c-link c-link__back u-mt__s u-mb__s">前のページに戻る</a>
     </main>
 </template>

@@ -1,41 +1,40 @@
 <template>
     <main class="l-main">
-        <div class="l-main__user">
-            <h1 class="c-title u-mb__xl">利用者購入した商品一覧</h1>
-            <div class="l-main__wrapper">
-                <div class="p-product__index p-product__index--purchased">
-                    <!-- 全体件数と1ページの表示件数を表示 -->
-                    <p class="c-text">{{ products.data ? products.data.length : 0 }}件表示 / 全{{ products.total ? products.total : 0 }}件中</p>
-                    <ul class="p-product__list">
-                        <!-- 購入済み商品がない場合 -->
-                        <li v-if="!products.data || products.data.length === 0" class="p-product__item">
-                            <p class="c-text u-pd__xl">購入した商品はありません。</p>
-                        </li>
-                        <!-- 購入済み商品一覧を表示 -->
-                        <li v-else v-for="product in products.data" :key="product.id" class="p-product__item">
-                            <!-- 商品情報の表示 -->
-                            <div class="c-card u-m__s">
-                                <div class="p-card__header u-pd__s">
-                                    <h3 class="c-card__name">{{ product.product.name }}</h3>
-                                </div>
-                                <div class="p-card__container">
-                                    <img class="c-card__picture" :src="getProductPicturePath(product)" alt="商品画像">
-                                    <label v-show="product.is_purchased" class="c-label__purchase u-pd__m">購入済み</label>
-                                    <p class="c-card__price">{{ product.product.price }}円</p>
-                                    <p class="c-card__price">{{ formatDate(product.product.expiration_date) }}</p>
-                                </div>
-                                <div class="p-card__footer">
-                                    <router-link :to="getProductDetailLink(product.product.id)" class="c-button c-button__user c-button__detail u-pd__s u-m__s">詳細を見る</router-link>
-                                </div>
+        <h1 class="c-title u-mb__xl">利用者購入した商品一覧</h1>
+        <div class="l-main__wrapper">
+
+            <div class="p-product__index p-product__index--purchased">
+                <!-- 全体件数と1ページの表示件数を表示 -->
+                <p class="c-text">{{ products.data ? products.data.length : 0 }}件表示 / 全{{ products.total ? products.total : 0 }}件中</p>
+                <ul class="p-product__list">
+                    <!-- 購入済み商品がない場合 -->
+                    <li v-if="!products.data || products.data.length === 0" class="p-product__item">
+                        <p class="c-text u-pd__xl">購入した商品はありません。</p>
+                    </li>
+                    <!-- 購入済み商品一覧を表示 -->
+                    <li v-else v-for="product in products.data" :key="product.id" class="p-product__item">
+                        <!-- 商品情報の表示 -->
+                        <div class="c-card u-m__s">
+                            <div class="p-card__header u-pd__s">
+                                <h3 class="c-card__name">{{ product.product.name }}</h3>
                             </div>
-                        </li>
-                    </ul>
-                </div>
+                            <div class="p-card__container">
+                                <img class="c-card__picture" :src="getProductPicturePath(product)" alt="商品画像">
+                                <label v-show="product.is_purchased" class="c-label__purchase u-pd__m">購入済み</label>
+                                <p class="c-card__price">{{ product.product.price }}円</p>
+                                <p class="c-card__price">{{ formatDate(product.product.expiration_date) }}</p>
+                            </div>
+                            <div class="p-card__footer">
+                                <router-link :to="getProductDetailLink(product.product.id)" class="c-button c-button__user c-button__detail u-pd__s u-m__s">詳細を見る</router-link>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
             </div>
+
         </div>
         <!-- ページネーション -->
         <pagination-component @onClick="onPageChange" :current_page="currentPage" :last_page="lastPage" />
-
         <a @click="$router.back()" class="c-link c-link__back u-mt__s u-mb__s">前のページに戻る</a>
     </main>
 </template>

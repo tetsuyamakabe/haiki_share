@@ -1,20 +1,20 @@
 <template>
     <main class="l-main">
-        <div class="l-main__user">
-            <section class="l-main__wrapper">
-                <h1 class="c-title u-mb__xl">コンビニ退会</h1>
-                <form class="c-form">
-                    <h3 class="c-title c-title__sub">退会手続きを行いますか？</h3>
-                    <div class="p-article">
-                        <p class="c-text__withdraw u-mt__m u-mb__m">
-                            退会手続き前に必ずご確認ください。退会しますとすべての登録情報が削除され、会員様向けのサービスをご利用いただけなくなります。
-                        </p>
-                    </div>
-                    <!-- 退会ボタン -->
-                    <button @click="withdraw" class="c-button c-button__submit c-button__user u-pd__s u-mt__m">退会する</button>
-                </form>
-            </section>
-        </div>
+        <section class="l-main__wrapper">
+            <h1 class="c-title u-mb__xl">コンビニ退会</h1>
+            <form class="c-form">
+
+                <h3 class="c-title c-title__sub">退会手続きを行いますか？</h3>
+                <div class="p-article">
+                    <p class="c-text__withdraw u-mt__m u-mb__m">
+                        退会手続き前に必ずご確認ください。退会しますとすべての登録情報が削除され、会員様向けのサービスをご利用いただけなくなります。
+                    </p>
+                </div>
+                <!-- 退会ボタン -->
+                <button @click="withdraw" class="c-button c-button__submit c-button__user u-pd__s u-mt__m">退会する</button>
+
+            </form>
+        </section>
         <a @click="$router.back()" class="c-link c-link__back u-mt__s u-mb__s">前のページに戻る</a>
     </main>
 </template>

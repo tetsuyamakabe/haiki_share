@@ -1,34 +1,32 @@
 <template>
     <main class="l-main">
-        <div class="l-main__user">
-            <section class="l-main__wrapper">
-                <h1 class="c-title u-mb__xl">利用者パスワード変更</h1>
-                <form @submit.prevent="resetPassword" class="c-form">
+        <section class="l-main__wrapper">
+            <h1 class="c-title u-mb__xl">利用者パスワード変更</h1>
+            <form @submit.prevent="resetPassword" class="c-form">
 
-                    <!-- バリデーションエラーメッセージ -->
-                    <span v-if="errors && errors.oldPassword" class="c-error u-mt__s u-mb__s">{{ errors.oldPassword[0] }}</span>
-                    <span v-if="errors && errors.newPassword" class="c-error u-mt__s u-mb__s">{{ errors.newPassword[0] }}</span>
-                    <span v-if="errors && errors.password_confirmation" class="c-error u-mt__s u-mb__s">{{ errors.password_confirmation[0] }}</span>
+                <!-- バリデーションエラーメッセージ -->
+                <span v-if="errors && errors.oldPassword" class="c-error u-mt__s u-mb__s">{{ errors.oldPassword[0] }}</span>
+                <span v-if="errors && errors.newPassword" class="c-error u-mt__s u-mb__s">{{ errors.newPassword[0] }}</span>
+                <span v-if="errors && errors.password_confirmation" class="c-error u-mt__s u-mb__s">{{ errors.password_confirmation[0] }}</span>
 
-                    <!-- 古いパスワード -->
-                    <label for="old_password" class="c-label">古いパスワード</label>
-                    <input v-model="formData.oldPassword" id="old_password" class="c-input u-pd__s u-mt__m u-mb__m" :class="{ 'is-invalid': errors && errors.oldPassword }" placeholder="英数字8文字以上で入力してください">
-                    <!-- 新しいパスワード -->
-                    <label for="new_password" class="c-label">新しいパスワード</label>
-                    <input v-model="formData.newPassword" id="new_password" class="c-input u-pd__s u-mt__m u-mb__m" :class="{ 'is-invalid': errors && errors.newPassword }" placeholder="英数字8文字以上で入力してください">
-                    <!-- 新しいパスワード（再入力） -->
-                    <label for="password-confirm" class="c-label">新しいパスワード（再入力）</label>
-                    <input v-model="formData.password_confirmation" id="password_confirm" class="c-input u-pd__s u-mt__m u-mb__m" :class="{ 'is-invalid': errors && errors.password_confirmation }" placeholder="英数字8文字以上で入力してください">
+                <!-- 古いパスワード -->
+                <label for="old_password" class="c-label">古いパスワード</label>
+                <input v-model="formData.oldPassword" id="old_password" class="c-input u-pd__s u-mt__m u-mb__m" :class="{ 'is-invalid': errors && errors.oldPassword }" placeholder="英数字8文字以上で入力してください">
+                <!-- 新しいパスワード -->
+                <label for="new_password" class="c-label">新しいパスワード</label>
+                <input v-model="formData.newPassword" id="new_password" class="c-input u-pd__s u-mt__m u-mb__m" :class="{ 'is-invalid': errors && errors.newPassword }" placeholder="英数字8文字以上で入力してください">
+                <!-- 新しいパスワード（再入力） -->
+                <label for="password-confirm" class="c-label">新しいパスワード（再入力）</label>
+                <input v-model="formData.password_confirmation" id="password_confirm" class="c-input u-pd__s u-mt__m u-mb__m" :class="{ 'is-invalid': errors && errors.password_confirmation }" placeholder="英数字8文字以上で入力してください">
 
-                    <input type="hidden" name="token" v-model="token">
-                    <input type="hidden" name="email" v-model="email">
+                <input type="hidden" name="token" v-model="token">
+                <input type="hidden" name="email" v-model="email">
 
-                    <!-- メール送信ボタン -->
-                    <button type="submit" class="c-button c-button__submit c-button__user u-pd__s u-mt__m">パスワードを変更する</button>
+                <!-- メール送信ボタン -->
+                <button type="submit" class="c-button c-button__submit c-button__user u-pd__s u-mt__m">パスワードを変更する</button>
 
-                </form>
-            </section>
-        </div>
+            </form>
+        </section>
         <a @click="$router.back()" class="c-link c-link__back u-mt__s u-mb__s">前のページに戻る</a>
     </main>
 </template>

@@ -1,51 +1,50 @@
 <template>
     <main class="l-main">
-        <div class="l-main__common">
-            <h1 class="c-title u-mb__xl">商品一覧</h1>
-            <div class="p-article__mypage">
-                <div class="l-main__wrapper">
-                    <div class="p-product__index">
-                        <!-- 全体件数と1ページの表示件数を表示 -->
-                        <p class="c-text">{{ products.data ? products.data.length : 0 }}件表示 / 全{{ products.total ? products.total : 0 }}件中</p>
-                        <ul class="p-product__list">
-                            <!-- 検索結果がない場合 -->
-                            <li v-if="!products.data || products.data.length === 0" class="p-product__item">
-                                <p class="c-text u-pd__xl">検索結果はありません。</p>
-                            </li>
-                            <!-- 商品一覧・検索結果を表示 -->
-                            <li v-else v-for="product in products.data" :key="product.id" class="p-product__item">
-                                <!-- 商品情報の表示 -->
-                                <div class="c-card u-m__s">
-                                    <div class="p-card__header u-pd__s">
-                                        <h3 class="c-card__name">{{ product.name }}</h3>
-                                    </div>
-                                    <div class="p-card__container">
-                                        <img class="c-card__picture" :src="getProductPicturePath(product)" alt="商品画像">
-                                        <label v-show="product.is_purchased" class="c-label__purchase u-pd__m">購入済み</label>
-                                        <!-- いいねアイコン -->
-                                        <div class="p-like p-like__content u-pdr__s">
-                                            <i v-if="!product.liked" class="c-icon c-icon__unlike far fa-heart" @click="productLike(product)"></i>
-                                            <i v-else class="c-icon c-icon__like fas fa-heart" @click="productUnlike(product)"></i>
-                                            <span>いいね{{ product.likes_count }}</span>
-                                        </div>
-                                        <p class="c-card__price">{{ product.price }}円</p>
-                                        <p class="c-card__price">{{ formatDate(product.expiration_date) }}</p>
-                                    </div>
-                                    <div class="p-card__footer">
-                                        <router-link :to="getProductDetailLink(product.id)" class="c-button c-button__common c-button__detail u-pd__s u-m__s">詳細を見る</router-link>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <!-- 絞り込み検索フォーム -->
-                <search-component @search="searchResult" />
-            </div>
-            <!-- ページネーション -->
-            <pagination-component @onClick="onPageChange" :current_page="currentPage" :last_page="lastPage" />
+        <h1 class="c-title u-mb__xl">商品一覧</h1>
+        <div class="p-article">
+            <div class="l-main__wrapper">
 
+                <div class="p-product__index">
+                    <!-- 全体件数と1ページの表示件数を表示 -->
+                    <p class="c-text">{{ products.data ? products.data.length : 0 }}件表示 / 全{{ products.total ? products.total : 0 }}件中</p>
+                    <ul class="p-product__list">
+                        <!-- 検索結果がない場合 -->
+                        <li v-if="!products.data || products.data.length === 0" class="p-product__item">
+                            <p class="c-text u-pd__xl">検索結果はありません。</p>
+                        </li>
+                        <!-- 商品一覧・検索結果を表示 -->
+                        <li v-else v-for="product in products.data" :key="product.id" class="p-product__item">
+                            <!-- 商品情報の表示 -->
+                            <div class="c-card u-m__s">
+                                <div class="p-card__header u-pd__s">
+                                    <h3 class="c-card__name">{{ product.name }}</h3>
+                                </div>
+                                <div class="p-card__container">
+                                    <img class="c-card__picture" :src="getProductPicturePath(product)" alt="商品画像">
+                                    <label v-show="product.is_purchased" class="c-label__purchase u-pd__m">購入済み</label>
+                                    <!-- いいねアイコン -->
+                                    <div class="p-like p-like__content u-pdr__s">
+                                        <i v-if="!product.liked" class="c-icon c-icon__unlike far fa-heart" @click="productLike(product)"></i>
+                                        <i v-else class="c-icon c-icon__like fas fa-heart" @click="productUnlike(product)"></i>
+                                        <span>いいね{{ product.likes_count }}</span>
+                                    </div>
+                                    <p class="c-card__price">{{ product.price }}円</p>
+                                    <p class="c-card__price">{{ formatDate(product.expiration_date) }}</p>
+                                </div>
+                                <div class="p-card__footer">
+                                    <router-link :to="getProductDetailLink(product.id)" class="c-button c-button__common c-button__detail u-pd__s u-m__s">詳細を見る</router-link>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+            <!-- 絞り込み検索フォーム -->
+            <search-component @search="searchResult" />
         </div>
+        <!-- ページネーション -->
+        <pagination-component @onClick="onPageChange" :current_page="currentPage" :last_page="lastPage" />
         <a @click="$router.back()" class="c-link c-link__back u-mt__s u-mb__s">前のページに戻る</a>
     </main>
 </template>

@@ -1,23 +1,21 @@
 <template>
     <main class="l-main">
-        <div class="l-main__user">
-            <section class="l-main__wrapper">
-                <h1 class="c-title u-mb__xl">利用者パスワード変更メール送信</h1>
-                <form @submit.prevent="sendResetLink" class="c-form">
+        <section class="l-main__wrapper">
+            <h1 class="c-title u-mb__xl">利用者パスワード変更メール送信</h1>
+            <form @submit.prevent="sendResetLink" class="c-form">
 
-                    <!-- バリデーションエラーメッセージ -->
-                    <span v-if="errors && errors.email" class="c-error u-mt__s u-mb__s">{{ errors.email[0] }}</span>
+                <!-- バリデーションエラーメッセージ -->
+                <span v-if="errors && errors.email" class="c-error u-mt__s u-mb__s">{{ errors.email[0] }}</span>
 
-                    <!-- メールアドレス -->
-                    <label for="email" class="c-label">メールアドレス</label>
-                    <input v-model="formData.email" id="email" type="email" class="c-input u-pd__s u-mt__m u-mb__m" :class="{ 'is-invalid': errors && errors.email }" autocomplete="email">
+                <!-- メールアドレス -->
+                <label for="email" class="c-label">メールアドレス</label>
+                <input v-model="formData.email" id="email" type="email" class="c-input u-pd__s u-mt__m u-mb__m" :class="{ 'is-invalid': errors && errors.email }" autocomplete="email">
 
-                    <!-- メール送信ボタン -->
-                    <button type="submit" class="c-button c-button__submit c-button__user u-pd__s u-mt__m">パスワード変更メールを送信する</button>
+                <!-- メール送信ボタン -->
+                <button type="submit" class="c-button c-button__submit c-button__user u-pd__s u-mt__m">パスワード変更メールを送信する</button>
 
-                </form>
-            </section>
-        </div>
+            </form>
+        </section>
         <a @click="$router.back()" class="c-link c-link__back u-mt__s u-mb__s">前のページに戻る</a>
     </main>
 </template>

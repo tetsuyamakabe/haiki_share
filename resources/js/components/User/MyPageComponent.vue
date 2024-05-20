@@ -1,91 +1,90 @@
 <template>
     <main class="l-main">
-        <div class="l-main__user">
-            <h1 class="c-title u-mb__xl">利用者マイページ</h1>
-            <div class="p-article__mypage">
-                <section class="l-main__wrapper">
-                    <div class="l-container">
+        <h1 class="c-title u-mb__xl">利用者マイページ</h1>
+        <div class="p-article">
+            <section class="l-main__wrapper">
+                <div class="l-container">
 
-                        <!-- 購入した商品を最大5件表示 -->
-                        <div class="p-mypage__purchased">
-                            <h2 class="c-title c-title__sub">購入した商品</h2><span class="c-text c-text__max">最大5件表示</span>
-                            <div v-if="purchasedProducts.length === 0">
-                                <ul class="p-product__list">
-                                    <p class="c-text u-pd__xl">購入した商品はありません。</p>
-                                </ul>
-                            </div>
-                            <div v-else>
-                                <ul class="p-product__list">
-                                    <li v-for="product in purchasedProducts" :key="product.id" class="p-product__item">
-                                        <!-- 商品情報の表示 -->
-                                        <div class="c-card u-m__s">
-                                            <div class="p-card__header u-pd__s">
-                                                <h3 class="c-card__name">{{ product.product.name }}</h3>
-                                            </div>
-                                            <div class="p-card__container">
-                                                <img class="c-card__picture" :src="getProductPicturePath(product)" alt="商品画像">
-                                                <p class="c-card__price">{{ product.product.price }}円</p>
-                                                <p class="c-card__date">{{ formatDate(product.product.expiration_date) }}</p>
-                                            </div>
-                                            <div class="p-card__footer">
-                                                <div class="p-product__button">
-                                                    <router-link :to="getProductDetailLink(product.product.id)" class="c-button c-button__user c-button__detail u-pd__s u-m__s">詳細を見る</router-link>
-                                                    <button class="c-button c-button__user c-button__cancel u-pd__s u-m__s" @click="cancelPurchase(product.product.id)">購入をキャンセルする</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="c-link__products u-mt__s">
-                                <router-link class="c-link" :to="{ name: 'user.products.purchased' }">全件表示</router-link>
-                            </div>
+                    <!-- 購入した商品を最大5件表示 -->
+                    <div class="p-mypage__purchased">
+                        <h2 class="c-title c-title__sub">購入した商品</h2><span class="c-text c-text__max">最大5件表示</span>
+                        <div v-if="purchasedProducts.length === 0">
+                            <ul class="p-product__list">
+                                <p class="c-text u-pd__xl">購入した商品はありません。</p>
+                            </ul>
                         </div>
-
-                        <!-- お気に入りした商品を最大5件表示 -->
-                        <div class="p-mypage__liked">
-                            <h2 class="c-title c-title__sub">お気に入り商品</h2><span class="c-text c-text__max">最大5件表示</span>
-                            <div v-if="likedProducts.length === 0">
-                                <ul class="p-product__list">
-                                    <p class="c-text u-pd__xl">お気に入り登録した商品はありません。</p>
-                                </ul>
-                            </div>
-                            <div v-else>
-                                <ul class="p-product__list">
-                                    <li v-for="product in likedProducts" :key="product.id" class="p-product__item">
-                                        <!-- 商品情報の表示 -->
-                                        <div class="c-card u-m__s">
-                                            <div class="p-card__header u-pd__s">
-                                                <h3 class="c-card__name">{{ product.product.name }}</h3>
-                                            </div>
-                                            <div class="p-card__container">
-                                                <img class="c-card__picture" :src="getProductPicturePath(product)" alt="商品画像">
-                                                <p class="c-card__price">{{ product.product.price }}円</p>
-                                                <p class="c-card__date">{{ formatDate(product.product.expiration_date) }}</p>
-                                            </div>
-                                            <div class="p-card__footer">
-                                                <router-link :to="getProductDetailLink(product.product.id)" class="c-button c-button__user c-button__detail">詳細を見る</router-link>
+                        <div v-else>
+                            <ul class="p-product__list">
+                                <li v-for="product in purchasedProducts" :key="product.id" class="p-product__item">
+                                    <!-- 商品情報の表示 -->
+                                    <div class="c-card u-m__s">
+                                        <div class="p-card__header u-pd__s">
+                                            <h3 class="c-card__name">{{ product.product.name }}</h3>
+                                        </div>
+                                        <div class="p-card__container">
+                                            <img class="c-card__picture" :src="getProductPicturePath(product)" alt="商品画像">
+                                            <p class="c-card__price">{{ product.product.price }}円</p>
+                                            <p class="c-card__date">{{ formatDate(product.product.expiration_date) }}</p>
+                                        </div>
+                                        <div class="p-card__footer">
+                                            <div class="p-product__button">
+                                                <router-link :to="getProductDetailLink(product.product.id)" class="c-button c-button__user c-button__detail u-pd__s u-m__s">詳細を見る</router-link>
+                                                <button class="c-button c-button__user c-button__cancel u-pd__s u-m__s" @click="cancelPurchase(product.product.id)">購入をキャンセルする</button>
                                             </div>
                                         </div>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="c-link__products u-mt__s">
-                                <router-link class="c-link" :to="{ name: 'user.products.liked' }">全件表示</router-link>
-                            </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="c-link__products u-mt__s">
+                            <router-link class="c-link" :to="{ name: 'user.products.purchased' }">全件表示</router-link>
                         </div>
                     </div>
 
-                </section>
-
-                <section class="l-sidebar">
-                    <div class="p-mypage__sidebar">
-                        <router-link class="c-link u-mt__xl u-mb__xl" :to="{ name: 'user.profile' }">プロフィール編集</router-link>
-                        <router-link class="c-link u-mt__xl u-mb__xl" :to="{ name: 'user.withdraw' }">退会</router-link>
-                        <router-link class="c-link u-mt__xl u-mb__xl" :to="{ name: 'products' }">商品一覧</router-link>
+                    <!-- お気に入りした商品を最大5件表示 -->
+                    <div class="p-mypage__liked">
+                        <h2 class="c-title c-title__sub">お気に入り商品</h2><span class="c-text c-text__max">最大5件表示</span>
+                        <div v-if="likedProducts.length === 0">
+                            <ul class="p-product__list">
+                                <p class="c-text u-pd__xl">お気に入り登録した商品はありません。</p>
+                            </ul>
+                        </div>
+                        <div v-else>
+                            <ul class="p-product__list">
+                                <li v-for="product in likedProducts" :key="product.id" class="p-product__item">
+                                    <!-- 商品情報の表示 -->
+                                    <div class="c-card u-m__s">
+                                        <div class="p-card__header u-pd__s">
+                                            <h3 class="c-card__name">{{ product.product.name }}</h3>
+                                        </div>
+                                        <div class="p-card__container">
+                                            <img class="c-card__picture" :src="getProductPicturePath(product)" alt="商品画像">
+                                            <p class="c-card__price">{{ product.product.price }}円</p>
+                                            <p class="c-card__date">{{ formatDate(product.product.expiration_date) }}</p>
+                                        </div>
+                                        <div class="p-card__footer">
+                                            <router-link :to="getProductDetailLink(product.product.id)" class="c-button c-button__user c-button__detail">詳細を見る</router-link>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="c-link__products u-mt__s">
+                            <router-link class="c-link" :to="{ name: 'user.products.liked' }">全件表示</router-link>
+                        </div>
                     </div>
-                </section>
-            </div>
+
+                </div>
+            </section>
+
+            <section class="l-sidebar">
+                <div class="p-mypage__sidebar">
+                    <router-link class="c-link u-mt__xl u-mb__xl" :to="{ name: 'user.profile' }">プロフィール編集</router-link>
+                    <router-link class="c-link u-mt__xl u-mb__xl" :to="{ name: 'user.withdraw' }">退会</router-link>
+                    <router-link class="c-link u-mt__xl u-mb__xl" :to="{ name: 'products' }">商品一覧</router-link>
+                </div>
+            </section>
+
         </div>
         <a @click="$router.back()" class="c-link c-link__back u-mt__s u-mb__s">前のページに戻る</a>
     </main>
