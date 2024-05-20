@@ -14,6 +14,7 @@
         min-width: 75%;
 
         @include mq(sm){
+            margin: $space_m;
             padding: $space_m;
         }
 

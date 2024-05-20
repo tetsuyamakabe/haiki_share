@@ -7,9 +7,18 @@
     }
 
     &__body {
-        line-height: 1.5;
+        line-height: 1.7;
         display: flex;
         align-items: center;
+        font-size: $font-size_default;
+
+        @include mq(sm) {
+            flex-direction: column;
+        }
+    }
+
+    &__contact {
+        line-height: 1.7;
         font-size: $font-size_default;
 
         @include mq(sm) {

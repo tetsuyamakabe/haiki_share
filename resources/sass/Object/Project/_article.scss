@@ -1,16 +1,10 @@
 .p-article {
+    display: flex;
     font-size: $font-size_m;
 
-    &__mypage {
-        display: flex;
-
-        @include mq(sm) {
-            display: block;
-            padding: $space_m;
-        }
-    }
-
     @include mq(sm) {
+        display: block;
+        padding: $space_m;
         font-size: $font-size_s;
     }
 }

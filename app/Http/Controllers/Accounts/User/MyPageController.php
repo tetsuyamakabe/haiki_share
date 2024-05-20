@@ -7,7 +7,10 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use App\Http\Requests\User\ContactRequest;
 use App\Http\Requests\User\ProfileRequest;
+use Illuminate\Support\Facades\Notification;
+use App\Notifications\User\ContactNotification;
 
 class MyPageController extends Controller
 {
@@ -89,5 +92,29 @@ class MyPageController extends Controller
         Auth::logout(); // 自動ログアウト
         $user->delete(); // 論理削除を実行
         return response()->json(['message' => 'ユーザーが退会しました', 'user' => $user]);
+    }
+
+    // お問い合わせ処理
+    public function contact(ContactRequest $request)
+    {
+        try {
+            $name = $request->input('name');
+            $email = $request->input('email');
+            $contact = $request->input('contact');
+
+            // メール送信
+            Notification::route('mail', $request->email)->notify(new ContactNotification($name, $email, $contact));
+
+            // お問い合わせ成功のレスポンスを返す
+            return response()->json(['message' => 'お問い合わせが送信されました。'], 200);
+
+        } catch (\Exception $e) {
+            // 例外情報をログに記録
+            \Log::error('お問い合わせ送信時のエラー: ' . $e->getMessage());
+        
+            // エラーレスポンスを返す
+            return response()->json(['message' => 'お問い合わせが送信されませんでした。'], 500);
+        }
+        
     }
 }

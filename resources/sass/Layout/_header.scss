@@ -6,14 +6,11 @@
     color: $font-color_default;
     transition: .3s;
     background-color: $background-color_sub2;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    opacity: 0.9;
 
-    &.float-active {
-        position: fixed;
-        z-index: 2;
-        transition: .3s;
-        background: $background-color_sub3;
-        opacity: 0.9;
-    }
 
     @include mq(sm) {
         height: 60px;

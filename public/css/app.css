@@ -242,13 +242,9 @@ body {
   color: #434343;
   transition: 0.3s;
   background-color: #eee;
-}
-
-.l-header.float-active {
-  position: fixed;
-  z-index: 2;
-  transition: 0.3s;
-  background: #434343;
+  position: sticky;
+  top: 0;
+  z-index: 1;
   opacity: 0.9;
 }
 
@@ -302,6 +298,7 @@ body {
 
 @media screen and (max-width: 414px) {
   .l-main__wrapper {
+    margin: 16px;
     padding: 16px;
   }
 }
@@ -322,7 +319,7 @@ body {
     position: fixed;
     top: 0;
     right: -100%;
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.65);
     width: 100%;
     height: 100vh;
     padding-top: 48px;
@@ -478,7 +475,7 @@ body {
 
 .c-attachment {
   width: 50%;
-  margin-right: 8px;
+  margin-right: 16px;
 }
 
 @media screen and (max-width: 414px) {
@@ -531,6 +528,7 @@ body {
 .c-button__submit {
   transition: 0.3s;
   width: 100%;
+  height: 50px;
   font-weight: bold;
 }
 
@@ -651,7 +649,7 @@ body {
 }
 
 .c-container__body {
-  line-height: 1.5;
+  line-height: 1.7;
   display: flex;
   align-items: center;
   font-size: 16px;
@@ -659,6 +657,17 @@ body {
 
 @media screen and (max-width: 414px) {
   .c-container__body {
+    flex-direction: column;
+  }
+}
+
+.c-container__contact {
+  line-height: 1.7;
+  font-size: 16px;
+}
+
+@media screen and (max-width: 414px) {
+  .c-container__contact {
     flex-direction: column;
   }
 }
@@ -671,6 +680,22 @@ body {
 
 @media screen and (max-width: 414px) {
   .c-error {
+    font-size: 12px;
+  }
+}
+
+.c-flash {
+  width: 100%;
+  text-align: center;
+  border-radius: 5px;
+  margin: 16px 0;
+  padding: 24px 0;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+@media screen and (max-width: 414px) {
+  .c-flash {
     font-size: 12px;
   }
 }
@@ -1035,6 +1060,10 @@ body {
   }
 }
 
+.c-textarea.is-invalid {
+  background-color: #ffcccc;
+}
+
 .c-textarea__count {
   position: absolute;
   right: 0px;
@@ -1084,22 +1113,14 @@ body {
 }
 
 .p-article {
-  font-size: 12px;
-}
-
-.p-article__mypage {
   display: flex;
-}
-
-@media screen and (max-width: 414px) {
-  .p-article__mypage {
-    display: block;
-    padding: 16px;
-  }
+  font-size: 12px;
 }
 
 @media screen and (max-width: 414px) {
   .p-article {
+    display: block;
+    padding: 16px;
     font-size: 8px;
   }
 }

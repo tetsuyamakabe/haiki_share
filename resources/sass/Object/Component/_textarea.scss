@@ -11,6 +11,10 @@
         }
     }
 
+    &.is-invalid {
+        background-color: $background-color_valid;
+    }
+
     &__count {
         position: absolute;
         right: 0px;

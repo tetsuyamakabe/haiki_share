@@ -1,39 +1,39 @@
 <template>
     <main class="l-main">
-        <div class="l-main__convenience">
-            <h1 class="c-title u-mb__xl">商品詳細</h1>
-                <section class="l-main__wrapper u-m__s">
-                    <div class="l-container">
-                        <h1 class="c-title">{{ product.name }}</h1>
-                        <div class="p-product">
-                            <!-- いいねアイコン -->
-                            <div class="p-like p-like__content u-pdr__s">
-                                <i v-if="!product.liked" class="c-icon c-icon__unlike far fa-heart" @click="productLike(product)"></i>
-                                <i v-else class="c-icon c-icon__like fas fa-heart" @click="productUnlike(product)"></i>
-                                <span>いいね{{ product.likes_count }}</span>
-                            </div>
-                            <!-- エックスのシェアボタン -->
-                            <div class="p-like p-like__content">
-                                <button class="c-button c-button__share u-pd__s" @click="twitterShare"><i class="fa-brands fa-x-twitter c-icon__share">でシェアする</i></button>
-                            </div>
+        <h1 class="c-title u-mb__xl">商品詳細</h1>
+        <section class="l-main__wrapper u-m__s">
+            <div class="l-container">
 
-                            <div class="p-product__picture">
-                                <!-- 商品画像 -->
-                                <img class="c-product__picture--detail" :src="getProductPicturePath(product)" alt="商品画像">
-                            </div>
-                        </div>
-                        <div class="p-product__detail">
-                            <p class="c-card__price u-mt__s u-mb__s">価格：{{ product.price }}円</p>
-                            <p class="c-card__category u-mt__s u-mb__s">カテゴリ：{{ getCategoryName(product.category_id) }}</p>
-                            <p class="c-card__date u-mt__s u-mb__s">賞味期限：{{ formatDate(product.expiration_date) }}</p>
-                        </div>
+                <h1 class="c-title">{{ product.name }}</h1>
+                <div class="p-product">
+                    <!-- いいねアイコン -->
+                    <div class="p-like p-like__content u-pdr__s">
+                        <i v-if="!product.liked" class="c-icon c-icon__unlike far fa-heart" @click="productLike(product)"></i>
+                        <i v-else class="c-icon c-icon__like fas fa-heart" @click="productUnlike(product)"></i>
+                        <span>いいね{{ product.likes_count }}</span>
+                    </div>
+                    <!-- エックスのシェアボタン -->
+                    <div class="p-like p-like__content">
+                        <button class="c-button c-button__share u-pd__s" @click="twitterShare"><i class="fa-brands fa-x-twitter c-icon__share">でシェアする</i></button>
                     </div>
 
-                    <!-- コンビニ側の購入ボタンは自店舗・他店舗に限らず購入ボタンをクリックできないようにする -->
-                    <button class="c-button c-button__submit c-button__purchase u-pd__s u-m__s" :disabled="true">コンビニユーザーは購入できません</button>
+                    <div class="p-product__picture">
+                        <!-- 商品画像 -->
+                        <img class="c-product__picture--detail" :src="getProductPicturePath(product)" alt="商品画像">
+                    </div>
+                </div>
+                <div class="p-product__detail">
+                    <p class="c-card__price u-mt__s u-mb__s">価格：{{ product.price }}円</p>
+                    <p class="c-card__category u-mt__s u-mb__s">カテゴリ：{{ getCategoryName(product.category_id) }}</p>
+                    <p class="c-card__date u-mt__s u-mb__s">賞味期限：{{ formatDate(product.expiration_date) }}</p>
+                </div>
 
-                </section>
             </div>
+
+            <!-- コンビニ側の購入ボタンは自店舗・他店舗に限らず購入ボタンをクリックできないようにする -->
+            <button class="c-button c-button__submit c-button__purchase u-pd__s u-m__s" :disabled="true">コンビニユーザーは購入できません</button>
+
+        </section>
         <a @click="$router.back()" class="c-link c-link__back u-mt__s u-mb__s">前のページに戻る</a>
     </main>
 </template>

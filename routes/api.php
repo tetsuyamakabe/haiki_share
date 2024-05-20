@@ -63,3 +63,6 @@ Route::middleware(['auth', 'authcheckrole'])->group(function () {
     Route::get('/convenience/products/purchased', 'Products\Convenience\ProductController@getPurchasedProducts'); // 購入された商品情報の取得
     Route::get('/convenience/mypage/products', 'Accounts\Convenience\MyPageController@getMyProducts'); // マイページに表示する出品・購入商品情報の取得
 });
+
+// その他
+Route::post('contact', 'Accounts\User\MyPageController@contact'); // お問い合わせ処理

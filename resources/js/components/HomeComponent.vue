@@ -1,6 +1,6 @@
 <template>
     <main class="l-container">
-            <section class="c-hero js-float-menu-target">
+            <section class="c-hero">
                 <h2 class="c-hero__title">haiki share</h2>
             </section>
 
@@ -115,12 +115,21 @@
             <section class="u-pd__xl u-pd__xl" id="contact">
                 <h2 class="c-title u-mt__xl u-mb__xl">お問い合わせ</h2>
                 <div class="c-container">
-                    <div class="c-container__body">
-                        <form action="" class="c-form">
-                            <input type="text" class="c-input u-pd__s u-mt__m u-mb__m" placeholder="お名前">
-                            <input type="email" class="c-input u-pd__s u-mt__m u-mb__m" placeholder="email">
-                            <textarea name="" id="" class="c-textarea u-pd__s u-mt__m u-mb__m" placeholder="お問い合わせ内容" cols="30" rows="10"></textarea>
-                            <button type="submit" class="c-button c-button__contact u-pd__s">送信</button>
+                    <div class="c-container__contact">
+                        <form @submit.prevent="submitForm" class="c-form">
+                            <!-- フラッシュメッセージ -->
+                            <div v-if="flashMessage" class="c-flash">{{ flashMessage }}</div>
+                            <!-- お名前 -->
+                            <input v-model="formData.name" id="name" type="name" class="c-input u-pd__s u-mt__m" :class="{ 'is-invalid': errors && errors.name }" autocomplete="name" placeholder="お名前">
+                            <span v-if="errors && errors.name" class="c-error u-mt__s u-mb__s">{{ errors.name[0] }}</span>
+                            <!-- メールアドレス -->
+                            <input v-model="formData.email" id="email" type="email" class="c-input u-pd__s u-mt__m" :class="{ 'is-invalid': errors && errors.email }" autocomplete="email" placeholder="メールアドレス">
+                            <span v-if="errors && errors.email" class="c-error u-mt__s u-mb__s">{{ errors.email[0] }}</span>
+                            <!--お問い合わせ内容 -->
+                            <textarea v-model="formData.contact" id="contact" type="text" class="c-textarea u-pd__s u-mt__m" cols="30" rows="10" placeholder="お問い合わせ内容" :class="{ 'is-invalid': errors && errors.contact }"></textarea>
+                            <span v-if="errors && errors.contact" class="c-error u-mt__s u-mb__s">{{ errors.contact[0] }}</span>
+                            <!-- 送信ボタン -->
+                            <button type="submit" class="c-button c-button__submit c-button__user u-pd__s u-mt__m">送信する</button>
                         </form>
                     </div>
                 </div>
@@ -129,5 +138,33 @@
 </template>
 
 <script>
-    export default {}
+import axios from 'axios';
+
+export default {
+    data() {
+        return {
+            formData: {
+                name: '',
+                email: '',
+                contact: '',
+            },
+            errors: null,
+            flashMessage: '',
+        };
+    },
+
+    methods: {
+        // 入力された値をサーバー側に送信するメソッド
+        submitForm() {
+            axios.post('/api/contact', this.formData).then(response => {
+                console.log('お問い合わせ内容を送信します。');
+                this.flashMessage = 'お問い合わせ受付完了メールを送信しました。';
+            }).catch(error => {
+                console.log('errorは、', error);
+                console.error('ユーザー登録失敗:', error.response.data);
+                this.errors = error.response.data.errors;
+            });
+        },
+    }
+}
 </script>
