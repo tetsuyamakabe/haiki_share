@@ -69,28 +69,28 @@ class RegisterController extends Controller
 
         // ユーザー情報を「users」テーブルに保存
         $user = User::create([
-            'name' => $validated['convenience_name'],
-            'email' => $validated['email'],
-            'password' => Hash::make($validated['password']),
-            'role' => $validated['role'],
+            'name' => $validated['convenience_name'], // コンビニ名
+            'email' => $validated['email'], // メールアドレス
+            'password' => Hash::make($validated['password']), // パスワード
+            'role' => $validated['role'], // role
         ]);
 
         // コンビニ情報を「convenience_stores」テーブルに保存
         if ($validated['role'] === 'convenience') {
             // 住所情報を保存し、そのIDを取得
             $address = Address::create([
-                'prefecture' => $validated['prefecture'],
-                'city' => $validated['city'],
-                'town' => $validated['town'],
-                'building' => $validated['building'],
+                'prefecture' => $validated['prefecture'], // 住所（都道府県）
+                'city' => $validated['city'], // 住所（市区町村）
+                'town' => $validated['town'], // 住所（地名・番地）
+                'building' => $validated['building'], // 住所（建物名・部屋番号）
             ]);
             $addressId = $address->id;
 
             // コンビニ情報を保存
             $convenience = Convenience::create([
-                'user_id' => $user->id,
-                'branch_name' => $validated['branch_name'],
-                'address_id' => $addressId,
+                'user_id' => $user->id, // ユーザーID
+                'branch_name' => $validated['branch_name'], // 支店名
+                'address_id' => $addressId, // 住所ID
             ]);
 
             // ConvenienceモデルとAddressモデルの関連付け

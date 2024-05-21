@@ -67,10 +67,10 @@ class RegisterController extends Controller
 
         // ユーザー情報を「users」テーブルに保存
         $user = User::create([
-            'name' => $validated['name'],
-            'email' => $validated['email'],
-            'password' => Hash::make($validated['password']),
-            'role' => $validated['role'],
+            'name' => $validated['name'], // 名前
+            'email' => $validated['email'], // メールアドレス
+            'password' => Hash::make($validated['password']), // パスワード
+            'role' => $validated['role'], // role
         ]);
 
         return response()->json($user, 201);

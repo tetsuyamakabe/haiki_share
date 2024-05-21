@@ -39,12 +39,13 @@ class ForgotPasswordController extends Controller
     {
         $this->validateEmail($request);
 
-        // ユーザーの存在を確認し、存在しない場合はエラーメッセージを返す
+        // DBからemailをキーにしてユーザーの存在を確認し、存在しない場合はエラーメッセージを返す
         $user = User::where('email', $request->email)->first();
         if (!$user || $user->role == 'convenience') {
             return response()->json(['errors' => ['email' => ['このメールアドレスは利用者側のメールアドレスではありません。']]], 422);
         }
 
+        // パスワード変更メール送信実行
         $response = $this->broker()->sendResetLink(
             $request->only('email')
         );

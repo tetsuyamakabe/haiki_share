@@ -12,33 +12,58 @@ class RegisterTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_利用者側ユーザー登録処理()
+    // 正常系テスト
+    public function test_利用者ユーザー登録処理()
     {
+        // テストデータの作成
         $data = [
-            'name' => 'テストユーザー',
-            'email' => 'user@example.com',
-            'password' => 'password',
-            'password_confirmation' => 'password',
-            'role' => 'user',
-            'agreement' => 'true'
+            'name' => 'テストユーザー', // 名前
+            'email' => 'user@example.com', // メールアドレス
+            'password' => 'password', // パスワード
+            'password_confirmation' => 'password', // パスワード（再入力）
+            'role' => 'user', // 利用者ユーザーかどうか
+            'agreement' => 'true' // 利用規約の同意
         ];
 
         // テスト用のリクエストを作成
         $response = $this->json('POST', '/api/user/register', $data);
 
-        // レスポンスが正常であることを確認
+        // レスポンスが正常であるか
         $response->assertStatus(201);
 
-        // データベースから新しいユーザーを取得
-        $user = User::where('email', $data['email'])->first();
+        // Userモデルからユーザー情報を取得
+        $user = User::first();
 
-        // ユーザーが存在することを確認
+        // ユーザーが存在するか
         $this->assertNotNull($user);
 
-        // ユーザーの各属性が正しいことを確認
+        // ユーザー情報が正しいか（名前、メールアドレス、パスワード、role）
         $this->assertEquals($data['name'], $user->name);
         $this->assertEquals($data['email'], $user->email);
         $this->assertTrue(Hash::check($data['password'], $user->password));
         $this->assertEquals($data['role'], $user->role);
+    }
+
+    // 異常系テスト
+    public function test_利用者側ユーザー登録バリデーションチェック()
+    {
+        // テストデータの作成
+        $data = [
+            'name' => '', // 必須項目なので空にする
+            'email' => 'aaaaa', // 不正な形式のメールアドレス
+            'password' => 'pass', // パスワードが短すぎる
+            'password_confirmation' => 'password', // パスワード確認が一致しない
+            'role' => 'convenience', // コンビニユーザーになっている
+            'agreement' => 'false' // 利用規約の同意が得られていない
+        ];
+
+        // 不正なリクエストを送信
+        $response = $this->json('POST', '/api/user/register', $data);
+
+        // バリデーションエラーが返されるか
+        $response->assertStatus(422);
+
+        // エラーメッセージが正しいか
+        $response->assertJsonValidationErrors(['name', 'email', 'password', 'role', 'agreement']);
     }
 }
