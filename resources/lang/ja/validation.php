@@ -162,6 +162,7 @@ return [
         'town' => '地名・番地',
         'password' => 'パスワード',
         'email' => 'メールアドレス',
+        'agreement' => '利用規約',
         'contact' => 'お問い合わせ内容'
     ],
 

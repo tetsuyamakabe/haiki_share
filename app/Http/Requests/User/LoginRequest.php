@@ -24,8 +24,10 @@ class LoginRequest extends FormRequest
     public function rules()
     {
         return [
+            // メールアドレスのバリデーションルール（必須、メール形式）
             'email' => 'required|email',
-            'password' => 'required|min:8',
+            // パスワードのバリデーションルール（必須、string型、最小文字数8文字以上）
+            'password' => 'required|string|min:8',
         ];
     }
 }
