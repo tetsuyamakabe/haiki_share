@@ -26,7 +26,7 @@ class ProductSaleRequest extends FormRequest
         return [
             'name' => 'required|string|max:255',
             'price' => 'required|numeric|min:0',
-            'category' => 'required',
+            'category_id' => 'required',
             'expiration_date' => 'required|date',
             'product_picture.*' => 'required|file|mimes:jpeg,png,jpg,gif|max:2048',
         ];

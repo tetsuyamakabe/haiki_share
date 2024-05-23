@@ -7,7 +7,7 @@
                 <!-- バリデーションエラーメッセージ -->
                 <span v-if="errors && errors.name" class="c-error u-mt__s u-mb__s">{{ errors.name[0] }}</span>
                 <span v-if="errors && errors.price" class="c-error u-mt__s u-mb__s">{{ errors.price[0] }}</span>
-                <span v-if="errors && errors.category" class="c-error u-mt__s u-mb__s">{{ errors.category[0] }}</span>
+                <span v-if="errors && errors.category_id" class="c-error u-mt__s u-mb__s">{{ errors.category_id[0] }}</span>
                 <span v-if="errors && errors.expiration_date" class="c-error u-mt__s u-mb__s">{{ errors.expiration_date[0] }}</span>
                 <span v-if="errors && errors.product_picture" class="c-error u-mt__s u-mb__s">{{ errors.product_picture[0] }}</span>
 
@@ -18,8 +18,8 @@
                 <label for="price" class="c-label">価格</label>
                 <input v-model="formData.price" id="price" type="number" class="c-input u-pd__s u-mt__m u-mb__m" :class="{ 'is-invalid': errors && errors.price }" autocomplete="price">
                 <!-- カテゴリ名 -->
-                <label for="category" class="c-label">カテゴリ名</label>
-                <select v-model="formData.category" id="category" class="c-input u-pd__s u-mt__m u-mb__m" :class="{ 'is-invalid': errors && errors.category }">
+                <label for="category_id" class="c-label">カテゴリ名</label>
+                <select v-model="formData.category_id" id="category_id" class="c-input u-pd__s u-mt__m u-mb__m" :class="{ 'is-invalid': errors && errors.category_id }">
                     <option value="">カテゴリを選択してください</option>
                     <option v-for="category in categories" :value="category.id">{{ category.name }}</option>
                 </select>
@@ -58,7 +58,7 @@ export default {
             formData: {
                 name: '',
                 price: '',
-                category: '',
+                category_id: '',
                 expiration_date: '',
                 product_picture: '',
             },
@@ -114,7 +114,7 @@ export default {
                 // 取得した商品情報をformDataに入れる
                 this.formData.name = this.product.name || '';
                 this.formData.price = this.product.price || '';
-                this.formData.category = this.product.category.id || '';
+                this.formData.category_id = this.product.category_id.id || '';
                 this.formData.expiration_date = this.product.expiration_date.replace(/-/g, '') || ''; // YY-MM-DD形式からハイフンだけを取り除く
                 this.formData.product_picture = this.product.pictures[0].file || '';
             }).catch(error => {
@@ -139,7 +139,7 @@ export default {
             formData.append('_method', 'PUT');
             formData.append('name', this.formData.name);
             formData.append('price', this.formData.price);
-            formData.append('category', this.formData.category);
+            formData.append('category_id', this.formData.category_id);
             formData.append('expiration_date', this.formattedExpirationDate);
             formData.append('product_picture', this.formData.product_picture);
 
