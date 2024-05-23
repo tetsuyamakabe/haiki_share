@@ -24,8 +24,11 @@ class ContactRequest extends FormRequest
     public function rules()
     {
         return [
+            // 名前のバリデーションルール（必須、string型、最大文字数255文字以下）
             'name' => 'required|string|max:255',
-            'email' => 'required|email',
+            // メールアドレスのバリデーションルール（必須、string型、メール形式、最大文字数255文字以下）
+            'email' => 'required|string|email|max:255',
+            // お問い合わせ内容のバリデーションルール（必須、string型、最大文字数255文字以下）
             'contact' => 'required|string|max:255',
         ];
     }

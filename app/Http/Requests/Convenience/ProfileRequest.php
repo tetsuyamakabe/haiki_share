@@ -23,26 +23,38 @@ class ProfileRequest extends FormRequest
      */
     public function rules()
     {
-        return [
+
+        $rules = [
+            // コンビニ名のバリデーションルール（必須、string型、最大文字数255文字以下）
             'convenience_name' => 'required|string|max:255',
+            // 支店名のバリデーションルール（必須、string型、最大文字数255文字以下）
             'branch_name' => 'required', 'string', 'max:255',
+            // 都道府県のバリデーションルール（必須、string型、最大文字数255文字以下）
             'prefecture' => 'required', 'string', 'max:255',
+            // 市区町村のバリデーションルール（必須、string型、最大文字数255文字以下）
             'city' => 'required', 'string', 'max:255',
+            // 番地・地名のバリデーションルール（必須、string型、最大文字数255文字以下）
             'town' => 'required', 'string', 'max:255',
+            // 建物名・部屋番号のバリデーションルール（NULL許容、string型、最大文字数255文字以下）
             'building' => 'nullable', 'string', 'max:255',
+            // パスワードのバリデーションルール（NULL許容、string型、最小文字数8文字以上、パスワード再入力と同じ値か）
             'password' => 'nullable|string|min:8|confirmed',
+            // 自己紹介文のバリデーションルール（NULL許容、string型、最大文字数50文字）
             'introduction' => 'nullable|string|max:50',
         ];
 
         // メールアドレスが更新された場合のみバリデーションルールを適用
         if ($this->has('email')) {
+            // メールアドレスのバリデーションルール（NULL許容、string型、メール形式、最大文字数255文字以下、ユニーク制約）
             $rules['email'] = 'nullable|string|email|max:255|unique:users,email,' . auth()->id();
         }
 
-        // アイコン画像がアップロードされた場合のみバリデーションルールを適用
+        // 顔写真がアップロードされた場合のみバリデーションルールを適用
         if ($this->hasFile('icon')) {
-            $rules['icon'] = 'nullable|file|mimes:jpeg,png,jpg,gif|max:2048';
+            // 顔写真のバリデーションルール（NULL許容、画像ファイル、拡張子、最大画像ファイルサイズ2MB以下）
+            $rules['icon'] = 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048';
         }
+
         return $rules;
     }
 }

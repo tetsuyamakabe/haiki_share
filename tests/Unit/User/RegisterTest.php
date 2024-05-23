@@ -25,7 +25,7 @@ class RegisterTest extends TestCase
             'agreement' => 'true' // 利用規約の同意
         ];
 
-        // テスト用のリクエストを作成
+        // テスト用のリクエストを送信
         $response = $this->json('POST', '/api/user/register', $data);
 
         // レスポンスが正常であるか

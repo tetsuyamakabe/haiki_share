@@ -31,7 +31,7 @@ return [
         'array'   => ':attributeは、:min個から:max個の間で指定してください。',
     ],
     'boolean'              => ':attributeは、trueかfalseを指定してください。',
-    'confirmed'            => ':attributeと、確認フィールドとが、一致していません。',
+    'confirmed'            => ':attributeと:attribute再入力の値が一致していません。',
     'current_password'     => 'パスワードが正しくありません。',
     'date'                 => ':attributeには有効な日付を指定してください。',
     'date_equals'          => ':attributeには、:dateと同じ日付けを指定してください。',
@@ -163,6 +163,12 @@ return [
         'password' => 'パスワード',
         'email' => 'メールアドレス',
         'agreement' => '利用規約',
+        'oldPassword' => '古いパスワード',
+        'newPassword' => '新しいパスワード',
+        'password_confirmation' => '新しいパスワード（再入力)',
+        'price' => '価格',
+        'category' => 'カテゴリ名',
+        'expiration_date' => '賞味期限',
         'contact' => 'お問い合わせ内容'
     ],
 

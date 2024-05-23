@@ -24,8 +24,11 @@ class ResetPasswordRequest extends FormRequest
     public function rules()
     {
         return [
+            // 古いパスワードのバリデーションルール（必須、string型、最小文字数8文字以上）
             'oldPassword' => ['required', 'string', 'min:8'],
+            // 新しいパスワードのバリデーションルール（必須、string型、最小文字数8文字以上）
             'newPassword' => ['required', 'string', 'min:8'],
+            // 新しいパスワード（再入力）のバリデーションルール（必須、string型、最小文字数8文字以上、newPasswordと同じか）
             'password_confirmation' => ['required', 'string', 'min:8', 'same:newPassword'],
         ];
     }

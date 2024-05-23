@@ -17,6 +17,46 @@ use App\Http\Requests\Convenience\ProductSaleRequest;
 
 class ProductController extends Controller
 {
+    // 商品出品処理（商品の投稿）
+    public function createProduct(ProductSaleRequest $request)
+    {
+        try {
+            // 未認証の場合
+            if (!auth()->check()) {
+                return response()->json(['message' => 'Unauthenticated.'], 401);
+            }
+
+            // 出品する商品情報の登録
+            $product = new Product();
+            $product->name = $request->name; // 商品名
+            $product->price = $request->price; // 価格
+            $product->category_id = $request->category; // 商品カテゴリ
+            $product->expiration_date = Carbon::parse($request->expiration_date);
+            $user = Auth::user(); // 認証済みユーザーの取得
+            $convenienceId = $user->convenience->id; // コンビニIDの取得
+            $product->convenience_store_id = $convenienceId; // 商品情報とコンビニIDの紐付け
+            $product->save();
+
+            // 商品画像の処理
+            if ($request->hasFile('product_picture')) {
+                $picture = $request->file('product_picture'); // 商品画像
+                $extension = $picture->getClientOriginalExtension(); // ファイルの拡張子を取得
+                $fileName = sha1($picture->getClientOriginalName()) . '.' . $extension; // SHA-1ハッシュでファイル名を決定
+                $picturePath = $picture->storeAs('public/product_pictures', $fileName); // ファイルを保存
+
+                // 商品画像をproduct_picturesテーブルに保存
+                $productPicture = new ProductPicture();
+                $productPicture->product_id = $product->id; // 商品IDとコンビニIDの紐付け
+                $productPicture->file = $fileName; // 商品画像ファイル名を保存
+                $productPicture->save();
+            }
+            return response()->json(['message' => '商品の出品に成功しました', 'product' => $product], 200);
+        } catch (\Exception $e) {
+            \Log::error('例外エラー: ' . $e->getMessage());
+            return response()->json(['message' => '商品を購入失敗しました'], 500);
+        }
+    }
+
     // 商品情報の取得処理
     public function getProduct(Request $request, $productId)
     {
@@ -145,45 +185,6 @@ class ProductController extends Controller
             })->paginate(10);
         // \Log::info('$productsは、', [$products]);
         return response()->json(['products' => $products]);
-    }
-
-    // 商品出品処理（商品の投稿）
-    public function createProduct(ProductSaleRequest $request)
-    {
-        \Log::info('createProductSaleメソッドが実行されます。');
-        \Log::info('リクエストは、:', $request->all());
-
-        try {
-            // 出品する商品情報の登録
-            $product = new Product();
-            $product->name = $request->name;
-            $product->price = $request->price;
-            $product->category_id = $request->category;
-            $product->expiration_date = Carbon::parse($request->expiration_date);
-            $user = Auth::user();
-            $convenienceId = $user->convenience->id;
-            $product->convenience_store_id = $convenienceId;
-            $product->save();
-
-            // 商品画像の処理
-            if ($request->hasFile('product_picture')) {
-                $picture = $request->file('product_picture');
-                $extension = $picture->getClientOriginalExtension();
-                $fileContent = file_get_contents($picture->getRealPath());
-                $fileName = sha1($fileContent) . '.' . $extension;
-                // $fileName = sha1($picture->getClientOriginalName()) . '.' . $extension;
-                $picturePath = $picture->storeAs('public/product_pictures', $fileName);
-
-                // 商品画像をproduct_picturesテーブルに保存
-                $productPicture = new ProductPicture();
-                $productPicture->product_id = $product->id;
-                $productPicture->file = $fileName;
-                $productPicture->save();
-            }
-            return response()->json(['message' => '商品の出品に成功しました', 'product' => $product]);
-        } catch (\Exception $e) {
-            return response()->json(['message' => '商品の出品に失敗しました'], 500);
-        }
     }
 
     // 商品編集・更新処理
