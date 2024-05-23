@@ -39,9 +39,16 @@ class ForgotPasswordController extends Controller
     {
         $this->validateEmail($request);
 
-        // DBからemailをキーにしてユーザーの存在を確認し、存在しない場合はエラーメッセージを返す
+        // DBからemailをキーにしてユーザーの存在を確認
         $user = User::where('email', $request->email)->first();
-        if (!$user || $user->role == 'convenience') {
+
+        // ユーザーが見つからない場合
+        if (!$user) {
+            return response()->json(['message' => 'ユーザーが見つかりません'], 404);
+        }
+
+        // roleがconvenienceの場合は422エラーを返す
+        if ($user->role == 'convenience') {
             return response()->json(['errors' => ['email' => ['このメールアドレスは利用者側のメールアドレスではありません。']]], 422);
         }
 

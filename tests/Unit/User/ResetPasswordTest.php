@@ -4,18 +4,17 @@ namespace Tests\Unit\User;
 
 use Tests\TestCase;
 use App\Models\User;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class LoginTest extends TestCase
+class ResetPasswordTest extends TestCase
 {
     use RefreshDatabase;
 
     // 正常系テスト
-    public function test_利用者側ログイン処理()
+    public function test_利用者側パスワード変更処理()
     {
-        // テストユーザーの作成
+        // テスト用のユーザーを作成
         $user = User::create([
             'name' => 'テストユーザー',
             'email' => 'user@example.com',
@@ -25,12 +24,14 @@ class LoginTest extends TestCase
 
         // テストデータの作成
         $data = [
-            'email' => 'user@example.com',
-            'password' => 'password',
+            'email' => 'user@example.com', // ユーザーのメールアドレス
+            'oldPassword' => 'password', // 現在のパスワード
+            'newPassword' => '12345678', // 新しいパスワード
+            'password_confirmation' => '12345678', // 新しいパスワードの確認
         ];
 
         // テスト用のリクエストを送信
-        $response = $this->json('POST', '/api/user/login', $data);
+        $response = $this->json('POST', '/api/user/password/reset', $data);
 
         // レスポンスが正常であるか
         $response->assertStatus(200);
@@ -40,50 +41,24 @@ class LoginTest extends TestCase
 
         // レスポンスデータに必要な情報が含まれているか
         $this->assertArrayHasKey('message', $responseData);
-        $this->assertArrayHasKey('user_id', $responseData);
 
         // レスポンスデータの内容が正しいか
-        $this->assertEquals('認証に成功しました', $responseData['message']);
-        $this->assertEquals($user->id, $responseData['user_id']);
-    }
-
-    public function test_利用者側ログアウト処理()
-    {
-        // テストユーザーを作成
-        $user = User::create([
-            'name' => 'テストユーザー',
-            'email' => 'user@example.com',
-            'password' => bcrypt('password'),
-            'role' => 'user',
-        ]);
-
-        // テストユーザーのログイン
-        Auth::login($user);
-
-        // ログアウトのリクエストを送信
-        $response = $this->post('/api/user/logout');
-
-        // レスポンスが正常かどうか
-        $response->assertStatus(200);
-
-        // レスポンスに正しい内容が含まれているか
-        $response->assertJson(['message' => 'ログアウトしました']);
-
-        // ユーザーがログアウトできているか
-        $this->assertFalse(Auth::check());
+        $this->assertEquals('パスワードが変更されました', $responseData['message']);
     }
 
     // 異常系テスト
-    public function test_利用者側ユーザーが見つからない場合のログイン処理()
+    public function test_利用者側ユーザーが見つからない場合のパスワード変更処理()
     {
         // テストデータの作成
         $data = [
             'email' => '12345@example.com', // 存在しないユーザーのメールアドレス
-            'password' => '123456789', // 存在しないユーザーのパスワード
+            'oldPassword' => 'aaaaaaaa', // 現在のパスワード
+            'newPassword' => 'abcdefgh', // 新しいパスワード
+            'password_confirmation' => 'abcdefgh', // 新しいパスワードの確認
         ];
 
         // 不正なリクエストを送信
-        $response = $this->json('POST', '/api/user/login', $data);
+        $response = $this->json('POST', '/api/user/password/reset', $data);
 
         // エラーレスポンスが返されるか
         $response->assertStatus(404);
@@ -92,7 +67,7 @@ class LoginTest extends TestCase
         $response->assertJson(['message' => 'ユーザーが見つかりません']);
     }
 
-    public function test_コンビニユーザーのログイン処理()
+    public function test_コンビニユーザーのパスワード変更処理()
     {
         // テスト用のユーザー（コンビニユーザー）を作成
         $user = User::create([
@@ -104,11 +79,14 @@ class LoginTest extends TestCase
 
         // テストデータの作成
         $data = [
-            'email' => 'convenience@example.com', // コンビニユーザーのメールアドレス
+            'email' => 'convenience@example.com', // 存在しないユーザーのメールアドレス
+            'oldPassword' => 'aaaaaaaa', // 現在のパスワード
+            'newPassword' => 'abcdefgh', // 新しいパスワード
+            'password_confirmation' => 'abcdefgh', // 新しいパスワードの確認
         ];
 
         // リクエストを送信
-        $response = $this->json('POST', '/api/user/password/email', $data);
+        $response = $this->json('POST', '/api/user/password/reset', $data);
 
         // エラーレスポンスが返されるか
         $response->assertStatus(422);
@@ -117,22 +95,22 @@ class LoginTest extends TestCase
         $response->assertJson(['errors' => ['email' => ['このメールアドレスは利用者側のメールアドレスではありません。']]]);
     }
 
-
-    public function test_利用者側ログインバリデーションチェック()
+    public function test_利用者側パスワード変更バリデーションチェック()
     {
         // テストデータの作成
         $data = [
-            'email' => 'aaaaa', // 不正な形式のメールアドレス
-            'password' => 'pass', // パスワードが短すぎる
+            'oldPassword' => 'aaaaa', // 古いパスワードが違う
+            'newPassword' => 'pass', // 新しいパスワードが短すぎる
+            'password_confirmation' => 'password', // パスワード確認が一致しない
         ];
 
         // 不正なリクエストを送信
-        $response = $this->json('POST', '/api/user/login', $data);
+        $response = $this->json('POST', '/api/user/password/reset', $data);
 
         // バリデーションエラーが返されるか
         $response->assertStatus(422);
 
         // エラーメッセージが正しいか
-        $response->assertJsonValidationErrors(['email', 'password']);
+        $response->assertJsonValidationErrors(['oldPassword', 'newPassword']);
     }
 }

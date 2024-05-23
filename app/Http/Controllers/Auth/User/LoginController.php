@@ -54,6 +54,11 @@ class LoginController extends Controller
             return response()->json(['message' => 'ユーザーが見つかりません'], 404);
         }
 
+        // roleがconvenienceの場合は422エラーを返す
+        if ($user->role == 'convenience') {
+            return response()->json(['errors' => ['email' => ['このメールアドレスは利用者側のメールアドレスではありません。']]], 422);
+        }
+
         // ユーザーIDを取得
         $userId = $user->id;
         \Log::debug('ユーザーIDは、' . $userId);

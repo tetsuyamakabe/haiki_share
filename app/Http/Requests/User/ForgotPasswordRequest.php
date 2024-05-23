@@ -24,6 +24,7 @@ class ForgotPasswordRequest extends FormRequest
     public function rules()
     {
         return [
+            // メールアドレスのバリデーションルール（必須、メール形式）
             'email' => 'required|email',
         ];
     }

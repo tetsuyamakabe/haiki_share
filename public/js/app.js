@@ -9236,6 +9236,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -9247,7 +9256,18 @@ __webpack_require__.r(__webpack_exports__);
       },
       token: '',
       email: '',
-      errors: null
+      errors: null,
+      OldPasswordType: 'password',
+      // 古いパスワードの初期設定
+      NewPasswordType: 'password',
+      // 新しいパスワードの初期設定
+      PasswordConfirmType: 'password',
+      // パスワード（再入力）の初期設定
+      OldPasswordIconClass: 'far fa-eye-slash',
+      // 古いパスワードの初期アイコン
+      NewPasswordIconClass: 'far fa-eye-slash',
+      // 新しいパスワードの初期アイコン
+      PasswordConfirmIconClass: 'far fa-eye-slash' // 新しいパスワード（再入力）の初期アイコン
     };
   },
   mounted: function mounted() {
@@ -9280,6 +9300,19 @@ __webpack_require__.r(__webpack_exports__);
         console.error('パスワード変更失敗:', error.response.data);
         _this.errors = error.response.data.errors;
       });
+    },
+    // パスワードの表示・非表示を切り替えるメソッド
+    togglePasswordVisibility: function togglePasswordVisibility(type) {
+      if (type === 'old_password') {
+        this.OldPasswordType = this.OldPasswordType === 'password' ? 'text' : 'password';
+        this.OldPasswordIconClass = this.OldPasswordIconClass === 'far fa-eye-slash' ? 'far fa-eye' : 'far fa-eye-slash';
+      } else if (type === 'new_password') {
+        this.NewPasswordType = this.NewPasswordType === 'password' ? 'text' : 'password';
+        this.NewPasswordIconClass = this.NewPasswordIconClass === 'far fa-eye-slash' ? 'far fa-eye' : 'far fa-eye-slash';
+      } else {
+        this.PasswordConfirmType = this.PasswordConfirmType === 'password' ? 'text' : 'password';
+        this.PasswordConfirmIconClass = this.PasswordConfirmIconClass === 'far fa-eye-slash' ? 'far fa-eye' : 'far fa-eye-slash';
+      }
     }
   }
 });
@@ -52788,31 +52821,121 @@ var render = function () {
             [_vm._v("古いパスワード")]
           ),
           _vm._v(" "),
-          _c("input", {
-            directives: [
+          _c("div", { staticClass: "c-input__password" }, [
+            _vm.OldPasswordType === "checkbox"
+              ? _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.formData.oldPassword,
+                      expression: "formData.oldPassword",
+                    },
+                  ],
+                  staticClass: "c-input u-pd__s u-mt__m u-mb__m",
+                  class: { "is-invalid": _vm.errors && _vm.errors.oldPassword },
+                  attrs: {
+                    id: "old_password",
+                    placeholder: "英数字8文字以上で入力してください",
+                    type: "checkbox",
+                  },
+                  domProps: {
+                    checked: Array.isArray(_vm.formData.oldPassword)
+                      ? _vm._i(_vm.formData.oldPassword, null) > -1
+                      : _vm.formData.oldPassword,
+                  },
+                  on: {
+                    change: function ($event) {
+                      var $$a = _vm.formData.oldPassword,
+                        $$el = $event.target,
+                        $$c = $$el.checked ? true : false
+                      if (Array.isArray($$a)) {
+                        var $$v = null,
+                          $$i = _vm._i($$a, $$v)
+                        if ($$el.checked) {
+                          $$i < 0 &&
+                            _vm.$set(
+                              _vm.formData,
+                              "oldPassword",
+                              $$a.concat([$$v])
+                            )
+                        } else {
+                          $$i > -1 &&
+                            _vm.$set(
+                              _vm.formData,
+                              "oldPassword",
+                              $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                            )
+                        }
+                      } else {
+                        _vm.$set(_vm.formData, "oldPassword", $$c)
+                      }
+                    },
+                  },
+                })
+              : _vm.OldPasswordType === "radio"
+              ? _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.formData.oldPassword,
+                      expression: "formData.oldPassword",
+                    },
+                  ],
+                  staticClass: "c-input u-pd__s u-mt__m u-mb__m",
+                  class: { "is-invalid": _vm.errors && _vm.errors.oldPassword },
+                  attrs: {
+                    id: "old_password",
+                    placeholder: "英数字8文字以上で入力してください",
+                    type: "radio",
+                  },
+                  domProps: { checked: _vm._q(_vm.formData.oldPassword, null) },
+                  on: {
+                    change: function ($event) {
+                      _vm.$set(_vm.formData, "oldPassword", null)
+                    },
+                  },
+                })
+              : _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.formData.oldPassword,
+                      expression: "formData.oldPassword",
+                    },
+                  ],
+                  staticClass: "c-input u-pd__s u-mt__m u-mb__m",
+                  class: { "is-invalid": _vm.errors && _vm.errors.oldPassword },
+                  attrs: {
+                    id: "old_password",
+                    placeholder: "英数字8文字以上で入力してください",
+                    type: _vm.OldPasswordType,
+                  },
+                  domProps: { value: _vm.formData.oldPassword },
+                  on: {
+                    input: function ($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.formData, "oldPassword", $event.target.value)
+                    },
+                  },
+                }),
+            _vm._v(" "),
+            _c(
+              "span",
               {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.formData.oldPassword,
-                expression: "formData.oldPassword",
+                on: {
+                  click: function ($event) {
+                    _vm.togglePasswordVisibility("old_password")
+                  },
+                },
               },
-            ],
-            staticClass: "c-input u-pd__s u-mt__m u-mb__m",
-            class: { "is-invalid": _vm.errors && _vm.errors.oldPassword },
-            attrs: {
-              id: "old_password",
-              placeholder: "英数字8文字以上で入力してください",
-            },
-            domProps: { value: _vm.formData.oldPassword },
-            on: {
-              input: function ($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.$set(_vm.formData, "oldPassword", $event.target.value)
-              },
-            },
-          }),
+              [_c("i", { class: _vm.OldPasswordIconClass })]
+            ),
+          ]),
           _vm._v(" "),
           _c(
             "label",
@@ -52820,31 +52943,121 @@ var render = function () {
             [_vm._v("新しいパスワード")]
           ),
           _vm._v(" "),
-          _c("input", {
-            directives: [
+          _c("div", { staticClass: "c-input__password" }, [
+            _vm.NewPasswordType === "checkbox"
+              ? _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.formData.newPassword,
+                      expression: "formData.newPassword",
+                    },
+                  ],
+                  staticClass: "c-input u-pd__s u-mt__m u-mb__m",
+                  class: { "is-invalid": _vm.errors && _vm.errors.newPassword },
+                  attrs: {
+                    id: "new_password",
+                    placeholder: "英数字8文字以上で入力してください",
+                    type: "checkbox",
+                  },
+                  domProps: {
+                    checked: Array.isArray(_vm.formData.newPassword)
+                      ? _vm._i(_vm.formData.newPassword, null) > -1
+                      : _vm.formData.newPassword,
+                  },
+                  on: {
+                    change: function ($event) {
+                      var $$a = _vm.formData.newPassword,
+                        $$el = $event.target,
+                        $$c = $$el.checked ? true : false
+                      if (Array.isArray($$a)) {
+                        var $$v = null,
+                          $$i = _vm._i($$a, $$v)
+                        if ($$el.checked) {
+                          $$i < 0 &&
+                            _vm.$set(
+                              _vm.formData,
+                              "newPassword",
+                              $$a.concat([$$v])
+                            )
+                        } else {
+                          $$i > -1 &&
+                            _vm.$set(
+                              _vm.formData,
+                              "newPassword",
+                              $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                            )
+                        }
+                      } else {
+                        _vm.$set(_vm.formData, "newPassword", $$c)
+                      }
+                    },
+                  },
+                })
+              : _vm.NewPasswordType === "radio"
+              ? _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.formData.newPassword,
+                      expression: "formData.newPassword",
+                    },
+                  ],
+                  staticClass: "c-input u-pd__s u-mt__m u-mb__m",
+                  class: { "is-invalid": _vm.errors && _vm.errors.newPassword },
+                  attrs: {
+                    id: "new_password",
+                    placeholder: "英数字8文字以上で入力してください",
+                    type: "radio",
+                  },
+                  domProps: { checked: _vm._q(_vm.formData.newPassword, null) },
+                  on: {
+                    change: function ($event) {
+                      _vm.$set(_vm.formData, "newPassword", null)
+                    },
+                  },
+                })
+              : _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.formData.newPassword,
+                      expression: "formData.newPassword",
+                    },
+                  ],
+                  staticClass: "c-input u-pd__s u-mt__m u-mb__m",
+                  class: { "is-invalid": _vm.errors && _vm.errors.newPassword },
+                  attrs: {
+                    id: "new_password",
+                    placeholder: "英数字8文字以上で入力してください",
+                    type: _vm.NewPasswordType,
+                  },
+                  domProps: { value: _vm.formData.newPassword },
+                  on: {
+                    input: function ($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.formData, "newPassword", $event.target.value)
+                    },
+                  },
+                }),
+            _vm._v(" "),
+            _c(
+              "span",
               {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.formData.newPassword,
-                expression: "formData.newPassword",
+                on: {
+                  click: function ($event) {
+                    _vm.togglePasswordVisibility("new_password")
+                  },
+                },
               },
-            ],
-            staticClass: "c-input u-pd__s u-mt__m u-mb__m",
-            class: { "is-invalid": _vm.errors && _vm.errors.newPassword },
-            attrs: {
-              id: "new_password",
-              placeholder: "英数字8文字以上で入力してください",
-            },
-            domProps: { value: _vm.formData.newPassword },
-            on: {
-              input: function ($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.$set(_vm.formData, "newPassword", $event.target.value)
-              },
-            },
-          }),
+              [_c("i", { class: _vm.NewPasswordIconClass })]
+            ),
+          ]),
           _vm._v(" "),
           _c(
             "label",
@@ -52852,37 +53065,136 @@ var render = function () {
             [_vm._v("新しいパスワード（再入力）")]
           ),
           _vm._v(" "),
-          _c("input", {
-            directives: [
+          _c("div", { staticClass: "c-input__password" }, [
+            _vm.PasswordConfirmType === "checkbox"
+              ? _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.formData.password_confirmation,
+                      expression: "formData.password_confirmation",
+                    },
+                  ],
+                  staticClass: "c-input u-pd__s u-mt__m u-mb__m",
+                  class: {
+                    "is-invalid":
+                      _vm.errors && _vm.errors.password_confirmation,
+                  },
+                  attrs: {
+                    id: "password-confirm",
+                    placeholder: "英数字8文字以上で入力してください",
+                    type: "checkbox",
+                  },
+                  domProps: {
+                    checked: Array.isArray(_vm.formData.password_confirmation)
+                      ? _vm._i(_vm.formData.password_confirmation, null) > -1
+                      : _vm.formData.password_confirmation,
+                  },
+                  on: {
+                    change: function ($event) {
+                      var $$a = _vm.formData.password_confirmation,
+                        $$el = $event.target,
+                        $$c = $$el.checked ? true : false
+                      if (Array.isArray($$a)) {
+                        var $$v = null,
+                          $$i = _vm._i($$a, $$v)
+                        if ($$el.checked) {
+                          $$i < 0 &&
+                            _vm.$set(
+                              _vm.formData,
+                              "password_confirmation",
+                              $$a.concat([$$v])
+                            )
+                        } else {
+                          $$i > -1 &&
+                            _vm.$set(
+                              _vm.formData,
+                              "password_confirmation",
+                              $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                            )
+                        }
+                      } else {
+                        _vm.$set(_vm.formData, "password_confirmation", $$c)
+                      }
+                    },
+                  },
+                })
+              : _vm.PasswordConfirmType === "radio"
+              ? _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.formData.password_confirmation,
+                      expression: "formData.password_confirmation",
+                    },
+                  ],
+                  staticClass: "c-input u-pd__s u-mt__m u-mb__m",
+                  class: {
+                    "is-invalid":
+                      _vm.errors && _vm.errors.password_confirmation,
+                  },
+                  attrs: {
+                    id: "password-confirm",
+                    placeholder: "英数字8文字以上で入力してください",
+                    type: "radio",
+                  },
+                  domProps: {
+                    checked: _vm._q(_vm.formData.password_confirmation, null),
+                  },
+                  on: {
+                    change: function ($event) {
+                      _vm.$set(_vm.formData, "password_confirmation", null)
+                    },
+                  },
+                })
+              : _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.formData.password_confirmation,
+                      expression: "formData.password_confirmation",
+                    },
+                  ],
+                  staticClass: "c-input u-pd__s u-mt__m u-mb__m",
+                  class: {
+                    "is-invalid":
+                      _vm.errors && _vm.errors.password_confirmation,
+                  },
+                  attrs: {
+                    id: "password-confirm",
+                    placeholder: "英数字8文字以上で入力してください",
+                    type: _vm.PasswordConfirmType,
+                  },
+                  domProps: { value: _vm.formData.password_confirmation },
+                  on: {
+                    input: function ($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(
+                        _vm.formData,
+                        "password_confirmation",
+                        $event.target.value
+                      )
+                    },
+                  },
+                }),
+            _vm._v(" "),
+            _c(
+              "span",
               {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.formData.password_confirmation,
-                expression: "formData.password_confirmation",
+                on: {
+                  click: function ($event) {
+                    _vm.togglePasswordVisibility("password_confirm")
+                  },
+                },
               },
-            ],
-            staticClass: "c-input u-pd__s u-mt__m u-mb__m",
-            class: {
-              "is-invalid": _vm.errors && _vm.errors.password_confirmation,
-            },
-            attrs: {
-              id: "password_confirm",
-              placeholder: "英数字8文字以上で入力してください",
-            },
-            domProps: { value: _vm.formData.password_confirmation },
-            on: {
-              input: function ($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.$set(
-                  _vm.formData,
-                  "password_confirmation",
-                  $event.target.value
-                )
-              },
-            },
-          }),
+              [_c("i", { class: _vm.PasswordConfirmIconClass })]
+            ),
+          ]),
           _vm._v(" "),
           _c("input", {
             directives: [

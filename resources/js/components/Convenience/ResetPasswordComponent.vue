@@ -11,13 +11,22 @@
 
                 <!-- 古いパスワード -->
                 <label for="old_password" class="c-label">古いパスワード</label>
-                <input v-model="formData.oldPassword" id="old_password" class="c-input u-pd__s u-mt__m u-mb__m" :class="{ 'is-invalid': errors && errors.oldPassword }" placeholder="英数字8文字以上で入力してください">
+                <div class="c-input__password">
+                    <input v-model="formData.oldPassword" id="old_password" :type="OldPasswordType" class="c-input u-pd__s u-mt__m u-mb__m" :class="{ 'is-invalid': errors && errors.oldPassword }" placeholder="英数字8文字以上で入力してください">
+                    <span @click="togglePasswordVisibility('old_password')"><i :class="OldPasswordIconClass"></i></span>
+                </div>
                 <!-- 新しいパスワード -->
                 <label for="new_password" class="c-label">新しいパスワード</label>
-                <input v-model="formData.newPassword" id="new_password" class="c-input u-pd__s u-mt__m u-mb__m" :class="{ 'is-invalid': errors && errors.newPassword }" placeholder="英数字8文字以上で入力してください">
+                <div class="c-input__password">
+                    <input v-model="formData.newPassword" id="new_password" :type="NewPasswordType" class="c-input u-pd__s u-mt__m u-mb__m" :class="{ 'is-invalid': errors && errors.newPassword }" placeholder="英数字8文字以上で入力してください">
+                    <span @click="togglePasswordVisibility('new_password')"><i :class="NewPasswordIconClass"></i></span>
+                </div>
                 <!-- 新しいパスワード（再入力） -->
                 <label for="password-confirm" class="c-label">新しいパスワード（再入力）</label>
-                <input v-model="formData.password_confirmation" id="password_confirm" class="c-input u-pd__s u-mt__m u-mb__m" :class="{ 'is-invalid': errors && errors.password_confirmation }" placeholder="英数字8文字以上で入力してください">
+                <div class="c-input__password">
+                    <input v-model="formData.password_confirmation" id="password-confirm" :type="PasswordConfirmType" class="c-input u-pd__s u-mt__m u-mb__m" :class="{ 'is-invalid': errors && errors.password_confirmation }" placeholder="英数字8文字以上で入力してください">
+                    <span @click="togglePasswordVisibility('password_confirm')"><i :class="PasswordConfirmIconClass"></i></span>
+                </div>
 
                 <input type="hidden" name="token" v-model="token">
                 <input type="hidden" name="email" v-model="email">
@@ -42,7 +51,13 @@ export default {
             },
             token: '',
             email: '',
-            errors: null
+            errors: null,
+            OldPasswordType: 'password', // 古いパスワードの初期設定
+            NewPasswordType: 'password', // 新しいパスワードの初期設定
+            PasswordConfirmType: 'password', // パスワード（再入力）の初期設定
+            OldPasswordIconClass: 'far fa-eye-slash', // 古いパスワードの初期アイコン
+            NewPasswordIconClass: 'far fa-eye-slash', // 新しいパスワードの初期アイコン
+            PasswordConfirmIconClass: 'far fa-eye-slash', // 新しいパスワード（再入力）の初期アイコン
         }
     },
 
@@ -75,6 +90,20 @@ export default {
                 console.error('パスワード変更失敗:', error.response.data);
                 this.errors = error.response.data.errors;
             });
+        },
+
+        // パスワードの表示・非表示を切り替えるメソッド
+        togglePasswordVisibility(type) {
+            if (type === 'old_password') {
+                this.OldPasswordType = this.OldPasswordType === 'password' ? 'text' : 'password';
+                this.OldPasswordIconClass = this.OldPasswordIconClass === 'far fa-eye-slash' ? 'far fa-eye' : 'far fa-eye-slash';
+            } else if (type === 'new_password') {
+                this.NewPasswordType = this.NewPasswordType === 'password' ? 'text' : 'password';
+                this.NewPasswordIconClass = this.NewPasswordIconClass === 'far fa-eye-slash' ? 'far fa-eye' : 'far fa-eye-slash';
+            } else {
+                this.PasswordConfirmType = this.PasswordConfirmType === 'password' ? 'text' : 'password';
+                this.PasswordConfirmIconClass = this.PasswordConfirmIconClass === 'far fa-eye-slash' ? 'far fa-eye' : 'far fa-eye-slash';
+            }
         }
     }
 };

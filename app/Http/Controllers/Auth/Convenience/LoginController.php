@@ -44,7 +44,7 @@ class LoginController extends Controller
     // ログイン処理
     public function login(LoginRequest $request)
     {
-        // DBからemailをキーにして取得
+        // DBからemailをキーにしてユーザー情報を取得
         $email = $request->input('email');
         $user = User::where('email', $email)->first();
         \Log::debug('$userは、', [$user]);
@@ -54,6 +54,12 @@ class LoginController extends Controller
             return response()->json(['message' => 'ユーザーが見つかりません'], 404);
         }
 
+        // roleがuserの場合は422エラーを返す
+        if ($user->role == 'user') {
+            return response()->json(['errors' => ['email' => ['このメールアドレスはコンビニ側のメールアドレスではありません。']]], 422);
+        }
+
+        // ユーザーIDを取得
         $userId = $user->id;
         \Log::debug('ユーザーIDは、' . $userId);
 
