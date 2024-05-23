@@ -13,14 +13,11 @@ $factory->define(Product::class, function (Faker $faker) {
     $category_id = factory(Category::class)->create()->id;
     // コンビニIDを生成
     $convenience_store_id = factory(Convenience::class)->create()->id;
-    // 購入者IDを生成
-    $purchased_id = factory(User::class)->create()->id;
     return [
         'name' => $faker->word,
         'price' => $faker->numberBetween(0, 1000),
         'expiration_date' => $faker->dateTimeBetween($startDate = 'now', $endDate = '+2 week')->format('Y-m-d'),
         'category_id' => $category_id,
         'convenience_store_id' => $convenience_store_id,
-        'purchased_id' => $purchased_id,
     ];
 });

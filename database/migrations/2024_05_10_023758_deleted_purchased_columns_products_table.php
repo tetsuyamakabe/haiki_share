@@ -15,10 +15,11 @@ class DeletedPurchasedColumnsProductsTable extends Migration
     {
         // 商品テーブルのマイグレーション
         Schema::table('products', function (Blueprint $table) {
-            // // 外部キー制約の削除
-            // $table->dropForeign('products_purchased_id_foreign');
+            // 外部キー制約の削除
+            $table->dropForeign('products_purchased_id_foreign');
             // 購入者IDカラムを削除
             $table->dropColumn('purchased_id');
+            // 購入状態カラムを削除
             $table->dropColumn('is_purchased');
         });
     }
@@ -33,25 +34,12 @@ class DeletedPurchasedColumnsProductsTable extends Migration
     {
         // 商品テーブルのロールバック
         Schema::table('products', function (Blueprint $table) {
-            if (!Schema::hasColumn('products', 'purchased_id')) {
-                // 購入者IDカラムの追加
-                $table->unsignedBigInteger('purchased_id');
-            }
-        });
-
-        // 外部キー制約の再追加
-        Schema::table('products', function (Blueprint $table) {
-            if (!Schema::hasColumn('products', 'purchased_id')) {
-                $table->foreign('purchased_id')->references('id')->on('purchased')->onDelete('cascade');
-            }
-        });
-
-        // is_purchasedカラムの再追加
-        Schema::table('products', function (Blueprint $table) {
-            if (!Schema::hasColumn('products', 'is_purchased')) {
-                $table->boolean('is_purchased')->default(false);
-            }
+            // 外部キー制約のロールバック
+            $table->foreign('purchased_id')->references('id')->on('purchased')->onDelete('cascade');
+            // 購入者IDカラムをロールバック
+            $table->unsignedBigInteger('purchased_id');
+            // 購入状態カラムをロールバック
+            $table->boolean('is_purchased')->default(false);
         });
     }
-
 }
