@@ -44,6 +44,7 @@ class LoginController extends Controller
     // ログイン処理
     public function login(LoginRequest $request)
     {
+        \Log::debug('Request data:', $request->all());
         // DBからemailをキーにしてユーザー情報を取得
         $email = $request->input('email');
         $user = User::where('email', $email)->first();
@@ -69,7 +70,11 @@ class LoginController extends Controller
 
         if (($role === 'convenience')) {
             \Log::debug('ログインします');
-            if ($this->attemptLogin($request)) {
+
+            // 次回ログインを省略するチェックボックスにチェックが入っているか？
+            $remember = $request->input('remember', false);
+            \Log::info('rememberは、', [$remember]);
+            if (Auth::attempt(['email' => $email, 'password' => $request->input('password')], $remember)) {
                 \Log::debug('attemptLoginメソッド');
                 // ログイン成功時にユーザーIDを含んだURLにリダイレクト
                 return response()->json(['message' => '認証に成功しました', 'user_id' => $userId]);

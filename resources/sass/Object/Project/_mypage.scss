@@ -13,7 +13,7 @@
     &__liked,
     &__purchased {
         background: $background-color_sub;
-        padding: $space_xl;
+        padding: $space_m;
 
         @include mq(sm) {
             padding: $space_s;

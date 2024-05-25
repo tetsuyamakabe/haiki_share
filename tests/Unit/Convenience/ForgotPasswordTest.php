@@ -18,35 +18,25 @@ class ForgotPasswordTest extends TestCase
     {
         // fakeメソッドの準備
         Notification::fake();
-    
-        // テスト用のユーザーを作成
-        $user = User::create([
-            'name' => 'ローソン',
+        // テスト用のコンビニユーザーを作成
+        $user = factory(User::class)->create([
             'email' => 'convenience@example.com',
-            'password' => bcrypt('password'),
-            'role' => 'convenience',
+            'role' => 'convenience'
         ]);
-
         // テストデータの作成
         $data = [
             'email' => 'convenience@example.com',
         ];
-
         // テスト用のリクエストを送信
         $response = $this->json('POST', '/api/convenience/password/email', $data);
-
         // レスポンスが正常であるか
         $response->assertStatus(200);
-
         // メールが送信されたか
         Notification::assertSentTo($user, PasswordResetNotification::class);
-
         // レスポンスデータを取得
         $responseData = $response->json();
-    
         // レスポンスデータに必要な情報が含まれているか
         $this->assertArrayHasKey('message', $responseData);
-    
         // レスポンスデータの内容が正しいか
         $this->assertEquals('パスワードリセットリンクを送信しました。', $responseData['message']);
     }
@@ -58,38 +48,31 @@ class ForgotPasswordTest extends TestCase
         $data = [
             'email' => '12345@example.com', // 存在しないユーザーのメールアドレス
         ];
-
         // 不正なリクエストを送信
         $response = $this->json('POST', '/api/convenience/password/email', $data);
-
         // エラーレスポンスが返されるか
         $response->assertStatus(404);
-
         // エラーメッセージが正しいか
         $response->assertJson(['message' => 'ユーザーが見つかりません']);
     }
 
     public function test_利用者ユーザーのパスワードリセットメールの送信処理()
     {
-        // テスト用のユーザー（利用者ユーザー）を作成
+        // テスト用の利用者ユーザーを作成
         $user = User::create([
             'name' => '利用者ユーザー',
             'email' => 'user@example.com',
             'password' => bcrypt('password'),
             'role' => 'user',
         ]);
-
         // テストデータの作成
         $data = [
             'email' => 'user@example.com', // 利用者ユーザーのメールアドレス
         ];
-
         // リクエストを送信
         $response = $this->json('POST', '/api/convenience/password/email', $data);
-
         // エラーレスポンスが返されるか
         $response->assertStatus(422);
-
         // エラーメッセージが正しいか
         $response->assertJson(['errors' => ['email' => ['このメールアドレスはコンビニ側のメールアドレスではありません。']]]);
     }
@@ -100,13 +83,10 @@ class ForgotPasswordTest extends TestCase
         $data = [
             'email' => 'aaaaa', // 不正な形式のメールアドレス
         ];
-
         // 不正なリクエストを送信
         $response = $this->json('POST', '/api/convenience/password/email', $data);
-
         // バリデーションエラーが返されるか
         $response->assertStatus(422);
-
         // エラーメッセージが正しいか
         $response->assertJsonValidationErrors(['email']);
     }

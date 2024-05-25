@@ -9,7 +9,6 @@ use App\Models\Product;
 use App\Models\Purchase;
 use App\Models\ProductPicture;
 use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -24,15 +23,8 @@ class MyPageTest extends TestCase
     // 正常系テスト
     public function test_利用者側プロフィール情報の取得処理()
     {
-        // テスト用のユーザーを作成
-        $user = User::create([
-            'name' => 'テストユーザー',
-            'email' => 'user@example.com',
-            'password' => bcrypt('password'),
-            'role' => 'user',
-            'icon' => 'default.png',
-            'introduction' => ''
-        ]);
+        // テスト用の利用者ユーザーを作成
+        $user = factory(User::class)->create(['role' => 'user']);
         // テスト用のリクエストを送信
         $response = $this->actingAs($user)->json('GET', '/api/user/mypage/profile');
         // レスポンスが正常であるか
@@ -50,15 +42,8 @@ class MyPageTest extends TestCase
 
     public function test_利用者側プロフィール編集処理()
     {
-        // テスト用のユーザーを作成
-        $user = User::create([
-            'name' => 'テストユーザー',
-            'email' => 'user@example.com',
-            'password' => bcrypt('password'),
-            'role' => 'user',
-            'icon' => 'default.png',
-            'introduction' => ''
-        ]);
+        // テスト用の利用者ユーザーを作成
+        $user = factory(User::class)->create(['role' => 'user']);
         // 画像fakeメソッドの準備
         Storage::fake('icon');
         // テストデータの作成
@@ -94,15 +79,8 @@ class MyPageTest extends TestCase
 
     public function test_利用者側退会処理()
     {
-        // テスト用のユーザーを作成
-        $user = User::create([
-            'name' => 'テストユーザー',
-            'email' => 'user@example.com',
-            'password' => bcrypt('password'),
-            'role' => 'user',
-            'icon' => 'default.png',
-            'introduction' => ''
-        ]);
+        // テスト用の利用者ユーザーを作成
+        $user = factory(User::class)->create(['role' => 'user']);
         // テスト用のリクエストを送信
         $response = $this->actingAs($user)->json('DELETE', '/api/user/mypage/withdraw');
         // レスポンスが正常であるか
@@ -123,15 +101,8 @@ class MyPageTest extends TestCase
 
     public function test_利用者側マイページ商品取得()
     {
-        // テスト用のユーザーを作成
-        $user = User::create([
-            'name' => 'テストユーザー',
-            'email' => 'user@example.com',
-            'password' => bcrypt('password'),
-            'role' => 'user',
-            'icon' => 'default.png',
-            'introduction' => ''
-        ]);
+        // テスト用の利用者ユーザーを作成
+        $user = factory(User::class)->create(['role' => 'user']);
         // 商品情報と関連付けの商品画像を作成
         $products = factory(Product::class, 5)->create();
         $products->each(function ($product) {
@@ -179,8 +150,8 @@ class MyPageTest extends TestCase
     {
         // fakeメソッドの準備
         Notification::fake();
-        // テスト用のユーザーを作成
-        $user = factory(User::class)->create();
+        // テスト用の利用者ユーザーを作成
+        $user = factory(User::class)->create(['role' => 'user']);
         // テストデータの作成
         $data = [
             'name' => 'テストユーザー',
@@ -232,15 +203,8 @@ class MyPageTest extends TestCase
 
     public function test_利用者側プロフィール編集バリデーションチェック()
     {
-        // テスト用のユーザーを作成
-        $user = User::create([
-            'name' => 'テストユーザー',
-            'email' => 'user@example.com',
-            'password' => bcrypt('password'),
-            'role' => 'user',
-            'icon' => 'default.png',
-            'introduction' => ''
-        ]);
+        // テスト用の利用者ユーザーを作成
+        $user = factory(User::class)->create(['role' => 'user']);
         // テストデータの作成
         $data = [
             'name' => '', // 必須項目なので空にする
@@ -289,8 +253,8 @@ class MyPageTest extends TestCase
 
     public function test_お問い合わせバリデーションチェック()
     {
-        // テスト用のユーザーを作成
-        $user = factory(User::class)->create();
+        // テスト用の利用者ユーザーを作成
+        $user = factory(User::class)->create(['role' => 'user']);
         // テストデータの作成
         $data = [
             'name' => '', // 必須項目なので空にする

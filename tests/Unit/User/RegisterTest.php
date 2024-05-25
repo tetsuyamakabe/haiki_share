@@ -24,19 +24,14 @@ class RegisterTest extends TestCase
             'role' => 'user', // 利用者ユーザーかどうか
             'agreement' => 'true' // 利用規約の同意
         ];
-
         // テスト用のリクエストを送信
         $response = $this->json('POST', '/api/user/register', $data);
-
         // レスポンスが正常であるか
         $response->assertStatus(201);
-
         // Userモデルからユーザー情報を取得
         $user = User::first();
-
         // ユーザーが存在するか
         $this->assertNotNull($user);
-
         // ユーザー情報が正しいか（名前、メールアドレス、パスワード、role）
         $this->assertEquals($data['name'], $user->name);
         $this->assertEquals($data['email'], $user->email);
@@ -56,13 +51,10 @@ class RegisterTest extends TestCase
             'role' => 'convenience', // コンビニユーザーになっている
             'agreement' => 'false' // 利用規約の同意が得られていない
         ];
-
         // 不正なリクエストを送信
         $response = $this->json('POST', '/api/user/register', $data);
-
         // バリデーションエラーが返されるか
         $response->assertStatus(422);
-
         // エラーメッセージが正しいか
         $response->assertJsonValidationErrors(['name', 'email', 'password', 'role', 'agreement']);
     }

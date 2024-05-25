@@ -15,15 +15,19 @@
 
                         <!-- 価格 -->
                         <label class="c-label">最低価格</label>
-                        <input class="c-input c-input__search u-mt__s u-mb__s" type="number" name="minprice" v-model="minPrice"><span class="c-text u-ml__s">円</span>
+                        <input class="c-input c-input__search u-mt__s u-mb__s u-pd__s" type="number" name="minprice" v-model="minPrice"><span class="c-text u-ml__s">円</span>
                         <label class="c-label">最高価格</label>
-                        <input class="c-input c-input__search u-mt__s u-mb__s" type="number" name="maxprice" v-model="maxPrice"><span class="c-text u-ml__s">円</span>
+                        <input class="c-input c-input__search u-mt__s u-mb__s u-pd__s" type="number" name="maxprice" v-model="maxPrice"><span class="c-text u-ml__s">円</span>
 
                         <!-- 賞味期限切れかどうか -->
                         <label class="c-label">賞味期限切れかどうか</label>
                         <div class="c-input__radio u-mt__s u-mb__s">
-                            <input type="radio" value="true" v-model="isExpired"><label class="c-text u-ml__s">賞味期限切れ</label>
-                            <input type="radio" value="false" v-model="isExpired"><label class="c-text u-ml__s">賞味期限内</label>
+                            <div class="p-search__expired">
+                                <input type="radio" value="true" v-model="isExpired"><label class="c-text u-ml__s">賞味期限切れ</label>
+                            </div>
+                            <div class="p-search__expired">
+                                <input type="radio" value="false" v-model="isExpired"><label class="c-text u-ml__s">賞味期限内</label>
+                            </div>
                         </div>
 
                         <!-- 検索ボタン -->

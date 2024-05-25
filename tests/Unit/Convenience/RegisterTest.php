@@ -31,32 +31,25 @@ class RegisterTest extends TestCase
             'branch_name' => '新宿一丁目店', // 支店名
             'agreement' => 'true' // 利用規約の同意
         ];
-
         // テスト用のリクエストを送信
         $response = $this->json('POST', '/api/convenience/register', $data);
-
         // レスポンスが正常であるか
         $response->assertStatus(201);
-
         // レスポンスデータを取得
         $responseData = $response->json();
-
         // レスポンスの中にそれぞれのユーザー情報が含まれているか
         $this->assertArrayHasKey('user', $responseData);
         $this->assertArrayHasKey('convenience', $responseData);
         $this->assertArrayHasKey('address', $responseData);
-
         // ユーザー情報が正しいか（ユーザーID、コンビニ名、メールアドレス、パスワード、role）
         $user = User::find($responseData['user']['id']);
         $this->assertEquals($data['convenience_name'], $user->name);
         $this->assertEquals($data['email'], $user->email);
         $this->assertTrue(Hash::check($data['password'], $user->password));
         $this->assertEquals($data['role'], $user->role);
-
         // コンビニ情報が正しいか（コンビニID、支店名）
         $convenience = Convenience::find($responseData['convenience']['id']);
         $this->assertEquals($data['branch_name'], $convenience->branch_name);
-
         // 住所情報が正しいか（住所ID、都道府県、市区町村、地名・番地、建物名・部屋番号）
         $address = Address::find($responseData['address']['id']);
         $this->assertEquals($data['prefecture'], $address->prefecture);
@@ -81,13 +74,10 @@ class RegisterTest extends TestCase
             'branch_name' => '', // 必須項目なので空にする
             'agreement' => 'false' // 利用規約の同意が得られていない
         ];
-
         // 不正なリクエストを送信
         $response = $this->json('POST', '/api/convenience/register', $data);
-
         // バリデーションエラーが返されるか
         $response->assertStatus(422);
-
         // エラーメッセージが正しいか
         $response->assertJsonValidationErrors(['convenience_name', 'email', 'password', 'role', 'prefecture', 'city', 'town', 'branch_name', 'agreement']);
     }

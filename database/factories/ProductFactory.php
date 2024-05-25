@@ -15,7 +15,7 @@ $factory->define(Product::class, function (Faker $faker) {
     $convenience_store_id = factory(Convenience::class)->create()->id;
     return [
         'name' => $faker->word,
-        'price' => $faker->numberBetween(0, 1000),
+        'price' => $faker->numberBetween(0, 500),
         'expiration_date' => $faker->dateTimeBetween($startDate = 'now', $endDate = '+2 week')->format('Y-m-d'),
         'category_id' => $category_id,
         'convenience_store_id' => $convenience_store_id,

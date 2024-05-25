@@ -116,6 +116,14 @@
             line-height: 60px;
         }
 
+        &--name {
+            @include mq(sm) {
+                color: $font-color_sub;
+                font-size: $font-size_l;
+                font-weight: bold;
+            }
+        }
+
         &--icon {
             display: inline-block;
             width: 30px;
