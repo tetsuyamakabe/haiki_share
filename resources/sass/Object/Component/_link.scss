@@ -3,6 +3,7 @@
     text-align: center;
     text-decoration: none;
     color: $font-color_default;
+    font-size: $font-size_default;
 
     @include mq(sm){
         font-size: $font-size_m;

@@ -18,10 +18,10 @@
                     <span @click="togglePasswordVisibility('password')"><i :class="PasswordIconClass"></i></span>
                 </div>
 
-                <!-- パスワード保持 -->
+                <!-- 次回のログインを省略する -->
                 <div class="c-checkbox c-checkbox__container u-mt__m u-mb__m">
                     <input class="c-checkbox u-mr__s" type="checkbox" v-model="remember" id="remember">
-                    <span class="c-text" for="remember">パスワードを保持する</span>
+                    <span class="c-text" for="remember">次回のログインを省略する</span>
                 </div>
 
                 <!-- パスワードリマインダー -->
@@ -46,7 +46,7 @@ export default {
                 email: '',
                 password: '',
             },
-            remember: false, // パスワード保持にチェックしたか
+            remember: false, // 次回ログインの省略にチェックしたか
             errors: null,
             PasswordType: 'password', // パスワードの初期設定
             PasswordConfirmType: 'password', // パスワード（再入力）の初期設定
@@ -59,7 +59,7 @@ export default {
         // 入力された値をサーバー側に送信するメソッド
         async submitForm() {
             try {
-                const response = await axios.post('/api/user/login', this.formData);
+                const response = await axios.post('/api/user/login', {...this.formData, remember: this.remember});
                 console.log('ログインします。');
                 console.log('APIからのレスポンス:', response.data);
                 await this.$store.dispatch('auth/currentUser'); // ログイン状態を保持

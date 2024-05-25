@@ -21,29 +21,17 @@ class MyPageTest extends TestCase
     // 正常系テスト
     public function test_コンビニ側プロフィール情報の取得処理()
     {
-        // テスト用のユーザーを作成
-        $user = User::create([
-            'name' => 'ローソン',
-            'email' => 'convenience@example.com',
-            'password' => bcrypt('password'),
-            'role' => 'convenience',
-            'icon' => 'default.png',
-            'introduction' => ''
-        ]);
-
+        // テスト用のコンビニユーザーを作成
+        $user = factory(User::class)->create(['role' => 'convenience']);
         // テスト用コンビニ情報と関連付ける住所情報を作成
         $convenience = factory(Convenience::class)->create(['user_id' => $user->id]);
         $address = $convenience->address;
-
         // テスト用のリクエストを送信
         $response = $this->actingAs($user)->json('GET', '/api/convenience/mypage/profile');
-
         // レスポンスが正常であるか
         $response->assertStatus(200);
-
         // レスポンスデータを取得
         $responseData = $response->json();
-
         // 正しいユーザー情報が含まれているか
         $this->assertArrayHasKey('user', $responseData);
         $this->assertEquals($user->id, $responseData['user']['id']);
@@ -66,23 +54,13 @@ class MyPageTest extends TestCase
 
     public function test_コンビニ側プロフィール編集処理()
     {
-        // テスト用のユーザーを作成
-        $user = User::create([
-            'name' => 'ローソン',
-            'email' => 'convenience@example.com',
-            'password' => bcrypt('password'),
-            'role' => 'convenience',
-            'icon' => 'default.png',
-            'introduction' => ''
-        ]);
-
+        // テスト用のコンビニユーザーを作成
+        $user = factory(User::class)->create(['role' => 'convenience']);
         // テスト用コンビニ情報と関連付ける住所情報を作成
         $convenience = factory(Convenience::class)->create(['user_id' => $user->id]);
         $address = $convenience->address;
-
         // 画像fakeメソッドの準備
         Storage::fake('icon');
-
         // テストデータの作成
         $data = [
             'convenience_name' => 'セブンイレブン', // コンビニ名
@@ -96,29 +74,23 @@ class MyPageTest extends TestCase
             'building' => '1-2-26', // 住所（建物名・部屋番号）
             'branch_name' => '新宿一丁目店', // 支店名
         ];
-
         // テスト画像ファイル
         $file = [
             'icon' => UploadedFile::fake()->image('icon.jpg', 100, 100)->size(2000), // 2MB以内の顔写真
         ];
-
         // テスト用のリクエストを作成（リクエストヘッダーを含める）
         $response = $this->actingAs($user)
             ->withHeaders([
                 'Content-Type' => 'multipart/form-data',
             ])->json('PUT', '/api/convenience/mypage/profile', $data, $file);
-
         // レスポンスが正常であるか
         $response->assertStatus(200);
-
         // レスポンスデータを取得
         $responseData = $response->json();
-
         // レスポンスデータにコンビニ情報を追加
         $responseData['convenience'] = [
             'branch_name' => $convenience->branch_name,
         ];
-
         // レスポンスデータに住所情報を追加
         $responseData['address'] = [
             'prefecture' => $address->prefecture,
@@ -126,69 +98,47 @@ class MyPageTest extends TestCase
             'town' => $address->town,
             'building' => $address->building,
         ];
-
         // ユーザー情報が更新されているか
         $this->assertEquals($user->name, $responseData['user']['name']);
         $this->assertEquals($user->email, $responseData['user']['email']);
         $this->assertEquals($user->introduction, $responseData['user']['introduction']);
-
         // コンビニ情報が更新されているか
         $this->assertEquals($convenience->branch_name, $responseData['convenience']['branch_name']);
-
         // 住所情報が更新されているか
         $this->assertEquals($address->prefecture, $responseData['address']['prefecture']);
         $this->assertEquals($address->city, $responseData['address']['city']);
         $this->assertEquals($address->town, $responseData['address']['town']);
         $this->assertEquals($address->building, $responseData['address']['building']);
-
         // パスワードが更新されているか
         $this->assertTrue(Hash::check('newpassword', $user->fresh()->password));
-
         // 顔写真がアップロードされているか
         Storage::disk('public')->assertExists('icons/' . $responseData['user']['icon']);
     }
 
     public function test_コンビニ側退会処理()
     {
-        // テスト用のユーザーを作成
-        $user = User::create([
-            'name' => 'ローソン',
-            'email' => 'convenience@example.com',
-            'password' => bcrypt('password'),
-            'role' => 'convenience',
-            'icon' => 'default.png',
-            'introduction' => ''
-        ]);
-
+        // テスト用のコンビニユーザーを作成
+        $user = factory(User::class)->create(['role' => 'convenience']);
         // ユーザーに関連づけられたコンビニ情報と住所情報を作成
         $convenience = factory(Convenience::class)->create(['user_id' => $user->id]);
         $address = $convenience->address;
-
         // テスト用のリクエストを送信
         $response = $this->actingAs($user)->json('DELETE', '/api/convenience/mypage/withdraw');
-
         // レスポンスが正常であるか
         $response->assertStatus(200);
-
         // レスポンスデータを取得
         $responseData = $response->json();
-
         // ログアウトしているか
         $this->assertGuest();
-
         // ユーザーが論理削除されているか
         $this->assertSoftDeleted('users', ['id' => $user->id]);
-
         // コンビニ情報が論理削除されているか
         $this->assertSoftDeleted('convenience_stores', ['id' => $convenience->id]);
-
         // 住所情報が論理削除されているか
         $this->assertSoftDeleted('addresses', ['id' => $address->id]);
-
         // レスポンスデータに必要な情報が含まれているか
         $this->assertArrayHasKey('message', $responseData);
         $this->assertArrayHasKey('user', $responseData);
-        
         // レスポンスデータの内容が正しいか
         $this->assertEquals('ユーザーが退会しました', $responseData['message']);
         $this->assertEquals($user->toArray(), $responseData['user']);
@@ -196,26 +146,16 @@ class MyPageTest extends TestCase
 
     public function test_コンビニ側マイページ商品取得()
     {
-        // テスト用のユーザーを作成
-        $user = User::create([
-            'name' => 'ローソン',
-            'email' => 'convenience@example.com',
-            'password' => bcrypt('password'),
-            'role' => 'convenience',
-            'icon' => 'default.png',
-            'introduction' => ''
-        ]);
-
+        // テスト用のコンビニユーザーを作成
+        $user = factory(User::class)->create(['role' => 'convenience']);
         // 関連付けられたコンビニ情報を作成
         $convenience = factory(Convenience::class)->create(['user_id' => $user->id]);
-
         // 商品情報と関連付けの商品画像を作成
         $products = factory(Product::class, 5)->create();
         $products->each(function ($product) {
-            $product->update(['name' => 'Test Product']);
+            $product->update(['name' => 'ロースとんかつ弁当']);
             factory(ProductPicture::class, 5)->create(['product_id' => $product->id]);
         });
-
         // 出品した商品を作成
         $saleProducts = factory(Product::class, 5)->create(['convenience_store_id' => $convenience->id]);
         // // 購入された商品を作成
@@ -226,16 +166,12 @@ class MyPageTest extends TestCase
             // 商品モデルと購入状態モデルを関連付ける
             $product->purchases()->save($purchase);
         });
-
         // テスト用のリクエストを送信
         $response = $this->actingAs($user)->json('GET', '/api/convenience/mypage/products');
-
         // レスポンスが正常であるか
         $response->assertStatus(200);
-
         // レスポンスデータを取得
         $responseData = $response->json();
-
         // 出品した商品が正しく5件含まれているか
         $this->assertArrayHasKey('sale_products', $responseData);
         $this->assertCount(5, $responseData['sale_products']);
@@ -267,13 +203,10 @@ class MyPageTest extends TestCase
     {
         // 未認証で不正なリクエストを送信
         $response = $this->json('GET', '/api/convenience/mypage/profile');
-
         // エラーレスポンスが返されるか
         $response->assertStatus(401);
-
         // レスポンスデータを取得
         $responseData = $response->json();
-
         // エラーメッセージが含まれているか
         $this->assertArrayHasKey('message', $responseData);
         $this->assertEquals('Unauthenticated.', $responseData['message']);
@@ -285,13 +218,10 @@ class MyPageTest extends TestCase
         $response = $this->withHeaders([
                 'Content-Type' => 'multipart/form-data',
             ])->json('PUT', '/api/convenience/mypage/profile');
-
         // エラーレスポンスが返されるか
         $response->assertStatus(401);
-
         // レスポンスデータを取得
         $responseData = $response->json();
-
         // エラーメッセージが含まれているか
         $this->assertArrayHasKey('message', $responseData);
         $this->assertEquals('Unauthenticated.', $responseData['message']);
@@ -299,20 +229,11 @@ class MyPageTest extends TestCase
 
     public function test_コンビニ側プロフィール編集バリデーションチェック()
     {
-        // テスト用のユーザーを作成
-        $user = User::create([
-            'name' => 'ローソン',
-            'email' => 'convenience@example.com',
-            'password' => bcrypt('password'),
-            'role' => 'convenience',
-            'icon' => 'default.png',
-            'introduction' => ''
-        ]);
-
+        // テスト用のコンビニユーザーを作成
+        $user = factory(User::class)->create(['role' => 'convenience']);
         // テスト用コンビニ情報と関連付ける住所情報を作成
         $convenience = factory(Convenience::class)->create(['user_id' => $user->id]);
         $address = $convenience->address;
-
         // テストデータの作成
         $data = [
             'convenience_name' => '', // 必須項目なので空にする
@@ -326,16 +247,13 @@ class MyPageTest extends TestCase
             'town' => '',// 必須項目なので空にする
             'branch_name' => '', // 必須項目なので空にする
         ];
-
         // リクエストを送信
         $response = $this->actingAs($user)
             ->withHeaders([
                 'Content-Type' => 'multipart/form-data',
             ])->json('PUT', '/api/convenience/mypage/profile', $data);
-
         // エラーレスポンスが返されるか
         $response->assertStatus(422);
-
         // エラーメッセージが正しいか
         $response->assertJsonValidationErrors(['convenience_name', 'email', 'password', 'introduction', 'icon', 'prefecture', 'city', 'town', 'branch_name']);
     }
@@ -344,13 +262,10 @@ class MyPageTest extends TestCase
     {
         // 不正なリクエストを送信
         $response = $this->json('DELETE', '/api/convenience/mypage/withdraw');
-
         // エラーレスポンスが返されるか
         $response->assertStatus(401);
-
         // レスポンスデータを取得
         $responseData = $response->json();
-
         // エラーメッセージが含まれているか
         $this->assertArrayHasKey('message', $responseData);
         $this->assertEquals('Unauthenticated.', $responseData['message']);
@@ -360,13 +275,10 @@ class MyPageTest extends TestCase
     {
         // 未認証で不正なリクエストを送信
         $response = $this->json('GET', '/api/convenience/mypage/products');
-
         // エラーレスポンスが返されるか
         $response->assertStatus(401);
-
         // レスポンスデータを取得
         $responseData = $response->json();
-
         // エラーメッセージが含まれているか
         $this->assertArrayHasKey('message', $responseData);
         $this->assertEquals('Unauthenticated.', $responseData['message']);

@@ -23,8 +23,8 @@ class ProductTest extends TestCase
     {
         // fakeメソッドの準備
         Notification::fake();
-        // テスト用のユーザーを作成
-        $user = factory(User::class)->create();
+        // テスト用の利用者ユーザーを作成
+        $user = factory(User::class)->create(['role' => 'user']);
         // テスト用の商品を作成
         $product = factory(Product::class)->create();
         // テスト用のリクエストを送信
@@ -49,8 +49,8 @@ class ProductTest extends TestCase
     {
         // fakeメソッドの準備
         Notification::fake();
-        // テスト用のユーザーを作成
-        $user = factory(User::class)->create();
+        // テスト用の利用者ユーザーを作成
+        $user = factory(User::class)->create(['role' => 'user']);
         // テスト用の商品を作成
         $product = factory(Product::class)->create();
         // テスト用の購入商品を作成
@@ -64,18 +64,18 @@ class ProductTest extends TestCase
         $response->assertStatus(200);
         // 購入モデルから購入商品を取得
         $cancelPurchase = Purchase::where('product_id', $product->id)->where('purchased_id', $user->id)->first();
-        // 商品の購入がキャンセルされたことを確認する
+        // 商品の購入がキャンセルされたか
         $this->assertNull($cancelPurchase);
-        // 商品のキャンセル通知が利用者に送信されたことを確認する
+        // 商品のキャンセル通知が利用者に送信されたか
         Notification::assertSentTo($user, CancelNotification::class);
-        // 商品のキャンセル通知がコンビニユーザーに送信されたことを確認する
+        // 商品のキャンセル通知がコンビニユーザーに送信されたか
         Notification::assertSentTo($product->convenience->user, CancelNotification::class);
     }
 
     public function test_商品お気に入り登録処理()
     {
-        // テスト用のユーザーを作成
-        $user = factory(User::class)->create();
+        // テスト用の利用者ユーザーを作成
+        $user = factory(User::class)->create(['role' => 'user']);
         // テスト用の商品を作成
         $product = factory(Product::class)->create();
         // テスト用のリクエストを送信
@@ -92,8 +92,8 @@ class ProductTest extends TestCase
 
     public function test_商品お気に入り解除処理()
     {
-        // テスト用のユーザーを作成
-        $user = factory(User::class)->create();
+        // テスト用の利用者ユーザーを作成
+        $user = factory(User::class)->create(['role' => 'user']);
         // テスト用の商品を作成
         $product = factory(Product::class)->create();
         // お気に入り登録した商品を作成
@@ -112,21 +112,21 @@ class ProductTest extends TestCase
 
     public function test_購入した商品情報の取得処理()
     {
-        // テスト用のユーザーを作成
-        $user = factory(User::class)->create();
+        // テスト用の利用者ユーザーを作成
+        $user = factory(User::class)->create(['role' => 'user']);
         // テスト用の購入済み商品を作成
         $purchasedProducts = factory(Purchase::class, 5)->create(['purchased_id' => $user->id]);
         // リクエストを送信
         $response = $this->actingAs($user)->json('GET', '/api/user/products/purchased');
-        // レスポンスが正常であることを検証
+        // レスポンスが正常であるか
         $response->assertStatus(200);
-        // レスポンスデータが正しいことを検証
+        // レスポンスデータを取得
         $responseData = $response->json();
         $this->assertArrayHasKey('products', $responseData);
-        // ページネーションが含まれていることを検証
+        // ページネーションが含まれているか
         $this->assertArrayHasKey('current_page', $responseData['products']);
         $this->assertArrayHasKey('last_page', $responseData['products']);
-        // レスポンスの商品数が正しいことを検証
+        // レスポンスの商品数が正しいか
         $this->assertCount(5, $responseData['products']['data']);
         // レスポンスの商品の中身は正しいか
         foreach ($responseData['products']['data'] as $product) {
@@ -142,8 +142,8 @@ class ProductTest extends TestCase
 
     public function test_お気に入り登録した商品情報の取得()
     {
-        // テスト用のユーザーを作成
-        $user = factory(User::class)->create();
+        // テスト用の利用者ユーザーを作成
+        $user = factory(User::class)->create(['role' => 'user']);
         // テスト用のお気に入り商品を作成
         $likedProducts = factory(Product::class, 5)->create();
         foreach ($likedProducts as $product) {
@@ -153,13 +153,13 @@ class ProductTest extends TestCase
         $response = $this->actingAs($user)->json('GET', '/api/user/products/liked');
         // レスポンスが正常であるか
         $response->assertStatus(200);
-        // レスポンスデータが正しいことを検証
+        // レスポンスデータを取得
         $responseData = $response->json();
         $this->assertArrayHasKey('products', $responseData);
-        // ページネーションが含まれていることを検証
+        // ページネーションが含まれているか
         $this->assertArrayHasKey('current_page', $responseData['products']);
         $this->assertArrayHasKey('last_page', $responseData['products']);
-        // レスポンスの商品数が正しいことを検証
+        // レスポンスの商品数が正しいか
         $this->assertCount(5, $responseData['products']['data']);
         // レスポンスの商品の中身は正しいか
         foreach ($responseData['products']['data'] as $product) {
@@ -185,12 +185,12 @@ class ProductTest extends TestCase
         $response = $this->get('/api/prefecture');
         // レスポンスが正常であるか
         $response->assertStatus(200);
-        // レスポンスデータが正しいことを検証
+        // レスポンスデータを取得
         $responseData = $response->json();
         $this->assertArrayHasKey('prefectures', $responseData);
-        // prefectures キーの値が配列であることを確認する
+        // prefectures キーの値が配列であるか
         $this->assertIsArray($responseData['prefectures']);
-        // 重複を削除しているため、ユニークな値のみが含まれることを確認する
+        // 重複を削除しているため、ユニークな値のみが含まれるか
         $this->assertCount(3, $responseData['prefectures']);
     }
 
@@ -212,8 +212,8 @@ class ProductTest extends TestCase
 
     public function test_商品が見つからない商品購入処理()
     {
-        // テスト用のユーザーを作成
-        $user = factory(User::class)->create();
+        // テスト用の利用者ユーザーを作成
+        $user = factory(User::class)->create(['role' => 'user']);
         // 不正な商品IDを使用してリクエストを送信
         $response = $this->actingAs($user)->json('POST', '/api/user/products/purchase/product_id');
         // エラーレスポンスが返されるか
@@ -242,15 +242,15 @@ class ProductTest extends TestCase
 
     public function test_商品が見つからない商品キャンセル処理()
     {
-        // テスト用のユーザーを作成
-        $user = factory(User::class)->create();
+        // テスト用の利用者ユーザーを作成
+        $user = factory(User::class)->create(['role' => 'user']);
         // 存在しない商品IDを使用してリクエストを送信
         $response = $this->actingAs($user)->json('DELETE', '/api/user/products/purchase/cancel/product_id');
-        // エラーレスポンスが返されるかを確認
+        // エラーレスポンスが返されるか
         $response->assertStatus(404);
         // レスポンスデータを取得
         $responseData = $response->json();
-        // エラーメッセージが含まれているかを確認
+        // エラーメッセージが含まれているか
         $this->assertArrayHasKey('error', $responseData);
         $this->assertEquals('商品が見つかりません。', $responseData['error']);
     }
@@ -272,8 +272,8 @@ class ProductTest extends TestCase
 
     public function test_すでにお気に入り登録されている商品のお気に入り登録処理()
     {
-        // テスト用のユーザーを作成
-        $user = factory(User::class)->create();
+        // テスト用の利用者ユーザーを作成
+        $user = factory(User::class)->create(['role' => 'user']);
         // テスト用の商品を作成
         $product = factory(Product::class)->create();
         // お気に入り登録した商品を作成
@@ -306,8 +306,8 @@ class ProductTest extends TestCase
 
     public function test_すでにお気に入り登録されている商品のお気に入り解除処理()
     {
-        // テスト用のユーザーを作成
-        $user = factory(User::class)->create();
+        // テスト用の利用者ユーザーを作成
+        $user = factory(User::class)->create(['role' => 'user']);
         // テスト用の商品を作成
         $product = factory(Product::class)->create();
         // 認証済みの状態でリクエストを送信

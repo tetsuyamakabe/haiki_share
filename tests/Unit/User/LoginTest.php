@@ -15,33 +15,26 @@ class LoginTest extends TestCase
     // 正常系テスト
     public function test_利用者側ログイン処理()
     {
-        // テストユーザーの作成
-        $user = User::create([
-            'name' => 'テストユーザー',
+        // テスト用の利用者ユーザーを作成
+        $user = factory(User::class)->create([
             'email' => 'user@example.com',
             'password' => bcrypt('password'),
-            'role' => 'user',
+            'role' => 'user'
         ]);
-
         // テストデータの作成
         $data = [
             'email' => 'user@example.com',
             'password' => 'password',
         ];
-
         // テスト用のリクエストを送信
         $response = $this->json('POST', '/api/user/login', $data);
-
         // レスポンスが正常であるか
         $response->assertStatus(200);
-
         // レスポンスデータを取得
         $responseData = $response->json();
-
         // レスポンスデータに必要な情報が含まれているか
         $this->assertArrayHasKey('message', $responseData);
         $this->assertArrayHasKey('user_id', $responseData);
-
         // レスポンスデータの内容が正しいか
         $this->assertEquals('認証に成功しました', $responseData['message']);
         $this->assertEquals($user->id, $responseData['user_id']);
@@ -49,26 +42,16 @@ class LoginTest extends TestCase
 
     public function test_利用者側ログアウト処理()
     {
-        // テストユーザーを作成
-        $user = User::create([
-            'name' => 'テストユーザー',
-            'email' => 'user@example.com',
-            'password' => bcrypt('password'),
-            'role' => 'user',
-        ]);
-
+        // テスト用の利用者ユーザーを作成
+        $user = factory(User::class)->create(['role' => 'user']);
         // テストユーザーのログイン
         Auth::login($user);
-
         // ログアウトのリクエストを送信
         $response = $this->post('/api/user/logout');
-
         // レスポンスが正常かどうか
         $response->assertStatus(200);
-
         // レスポンスに正しい内容が含まれているか
         $response->assertJson(['message' => 'ログアウトしました']);
-
         // ユーザーがログアウトできているか
         $this->assertFalse(Auth::check());
     }
@@ -81,38 +64,30 @@ class LoginTest extends TestCase
             'email' => '12345@example.com', // 存在しないユーザーのメールアドレス
             'password' => '123456789', // 存在しないユーザーのパスワード
         ];
-
         // 不正なリクエストを送信
         $response = $this->json('POST', '/api/user/login', $data);
-
         // エラーレスポンスが返されるか
         $response->assertStatus(404);
-
         // エラーメッセージが正しいか
         $response->assertJson(['message' => 'ユーザーが見つかりません']);
     }
 
     public function test_コンビニユーザーのログイン処理()
     {
-        // テスト用のユーザー（コンビニユーザー）を作成
-        $user = User::create([
-            'name' => 'コンビニユーザー',
+        // テスト用のコンビニユーザーを作成
+        $user = factory(User::class)->create([
             'email' => 'convenience@example.com',
-            'password' => bcrypt('password'),
-            'role' => 'convenience',
+            'password' => bcrypt('password'), // ハッシュ化
+            'role' => 'convenience'
         ]);
-
         // テストデータの作成
         $data = [
             'email' => 'convenience@example.com', // コンビニユーザーのメールアドレス
         ];
-
         // リクエストを送信
         $response = $this->json('POST', '/api/user/password/email', $data);
-
         // エラーレスポンスが返されるか
         $response->assertStatus(422);
-
         // エラーメッセージが正しいか
         $response->assertJson(['errors' => ['email' => ['このメールアドレスは利用者側のメールアドレスではありません。']]]);
     }
@@ -125,13 +100,10 @@ class LoginTest extends TestCase
             'email' => 'aaaaa', // 不正な形式のメールアドレス
             'password' => 'pass', // パスワードが短すぎる
         ];
-
         // 不正なリクエストを送信
         $response = $this->json('POST', '/api/user/login', $data);
-
         // バリデーションエラーが返されるか
         $response->assertStatus(422);
-
         // エラーメッセージが正しいか
         $response->assertJsonValidationErrors(['email', 'password']);
     }
