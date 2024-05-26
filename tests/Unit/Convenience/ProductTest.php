@@ -25,12 +25,12 @@ class ProductTest extends TestCase
     {
         // テスト用のコンビニユーザーを作成
         $user = factory(User::class)->create(['role' => 'convenience']);
-        // テスト用のコンビニ情報の作成
+        // テスト用のコンビニ情報の作成とユーザー情報との関連付け
         $convenience = factory(Convenience::class)->create(['user_id' => $user->id]);
         // 商品カテゴリの作成
         $category = factory(Category::class)->create();
         // 画像fakeメソッドの準備
-        Storage::fake('product_picture');
+        Storage::fake('file');
         // テストデータの作成
         $data = [
             'name' => '手巻おにぎり　ツナマヨネーズ',
@@ -39,49 +39,46 @@ class ProductTest extends TestCase
             'category' => $category->id,
             'convenience_id' => $convenience->id,
         ];
-        // // テスト画像ファイル
+        // テスト画像ファイル
         $file = [
             'product_picture' => UploadedFile::fake()->image('product.jpg', 100, 100)->size(2000), // 2MB以内の商品画像
         ];
         // テスト用のリクエストを作成
         $response = $this->actingAs($user)->withHeaders([
                 'Content-Type' => 'multipart/form-data',
-            ])->json('PUT', '/api/convenience/products/sale', $data, ['product_picture' => $file]);
-        // dd($response->getContent());
+            ])->json('PUT', '/api/convenience/products/sale', array_merge($data, $file));
         // レスポンスが正常であるか
         $response->assertStatus(200);
         // レスポンスデータを取得
         $responseData = $response->json();
-        // dd($responseData);
-        // 作成された商品を取得
-        $product = Product::find($responseData['product']['id']);
-        // 商品情報が出品されているか
-        $this->assertEquals($data['name'], $product->name);
-        $this->assertEquals($data['price'], $product->price);
-        $this->assertEquals($data['category'], $product->category_id);
-        $this->assertEquals($data['expiration_date'], $product->expiration_date);
+        // レスポンスデータの内容が正しいか
+        $this->assertEquals('商品の出品に成功しました', $responseData['message']);
+        $this->assertEquals($data['name'], $responseData['product']['name']);
+        $this->assertEquals($data['price'], $responseData['product']['price']);
+        $this->assertEquals($data['category'], $responseData['product']['category_id']);
+        // expiration_date の形式を合わせて比較（タイムゾーンを UTC に統一）
+        $this->assertEquals(
+            Carbon::parse($data['expiration_date'])->setTimezone('UTC')->toDateString(),
+            Carbon::parse($responseData['product']['expiration_date'])->setTimezone('UTC')->toDateString()
+        );
         // 商品画像がアップロードされているか
-        Storage::disk('public')->assertExists('product_pictures/' . $product->productPicture);
+        Storage::disk('public')->assertExists('product_pictures/' . $responseData['product']['pictures'][0]['file']);
     }
 
     public function test_商品編集処理()
     {
         // テスト用のコンビニユーザーを作成
         $user = factory(User::class)->create(['role' => 'convenience']);
-        // テスト用のコンビニ情報の作成
+        // テスト用のコンビニ情報の作成とユーザー情報との関連付け
         $convenience = factory(Convenience::class)->create(['user_id' => $user->id]);
         // テスト用のカテゴリ情報の作成
         $category = factory(Category::class)->create();
         // テスト用の商品を作成
-        $product = Product::create([
-            'name' => '手巻おにぎり　ツナマヨネーズ',
-            'price' => '130',
-            'expiration_date' => '2024-05-20',
-            'category_id' => $category->id,
-            'convenience_store_id' => $user->convenience->id,
-        ]);
+        $product = factory(Product::class)->create();
+        // テスト用の商品画像を作成と商品情報との関連付け
+        $product_picture = factory(ProductPicture::class)->create(['product_id' => $product->id]);
         // 画像fakeメソッドの準備
-        Storage::fake('product_picture');
+        Storage::fake('file');
         // テスト用のリクエストデータを作成
         $data = [
             'name' => '味付海苔　炭火焼熟成紅しゃけ',
@@ -96,14 +93,12 @@ class ProductTest extends TestCase
         // テスト用のリクエストを作成
         $response = $this->actingAs($user)->withHeaders([
                 'Content-Type' => 'multipart/form-data',
-            ])->json('PUT', '/api/convenience/products/edit/' . $product->id, $data, ['product_picture' => $file]);
-        // dd($response->getContent());
+            ])->put('/api/convenience/products/edit/' . $product->id, array_merge($data, $file));  
         // レスポンスが正常であるか
         $response->assertStatus(200);
         // レスポンスデータを取得
         $responseData = $response->json();
-        // dd($responseData);
-        // レスポンスデータが期待通りのものであることを検証
+        // レスポンスデータの内容が正しいか
         $this->assertEquals('商品の編集に成功しました', $responseData['message']);
         $this->assertEquals($data['name'], $responseData['product']['name']);
         $this->assertEquals($data['price'], $responseData['product']['price']);
@@ -114,7 +109,7 @@ class ProductTest extends TestCase
             Carbon::parse($responseData['product']['expiration_date'])->setTimezone('UTC')->toDateString()
         );
         // 商品画像がアップロードされているか
-        Storage::disk('public')->assertExists('product_pictures/' . $product->productPicture);
+        Storage::disk('public')->assertExists('product_pictures/' . $responseData['product']['pictures'][0]['file']);
     }
 
     public function test_商品削除処理()
@@ -333,6 +328,23 @@ class ProductTest extends TestCase
         // エラーメッセージが含まれているか
         $this->assertArrayHasKey('message', $responseData);
         $this->assertEquals('Unauthenticated.', $responseData['message']);
+    }
+
+    public function test_商品が見つからない商品編集処理()
+    {
+        // テスト用のコンビニユーザーを作成
+        $user = factory(User::class)->create(['role' => 'convenience']);
+        // 不正な商品IDを使用してリクエストを送信
+        $response = $this->actingAs($user)->withHeaders([
+                'Content-Type' => 'multipart/form-data',
+            ])->json('PUT', '/api/convenience/products/edit/product_id');
+        // エラーレスポンスが返されるか
+        $response->assertStatus(404);
+        // レスポンスデータを取得
+        $responseData = $response->json();
+        // エラーメッセージが含まれているか
+        $this->assertArrayHasKey('error', $responseData);
+        $this->assertEquals('商品が見つかりません', $responseData['error']);
     }
 
     public function test_未認証ユーザーの商品削除処理()

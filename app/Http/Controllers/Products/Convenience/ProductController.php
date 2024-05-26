@@ -25,13 +25,55 @@ class ProductController extends Controller
             if (!auth()->check()) {
                 return response()->json(['message' => 'Unauthenticated.'], 401);
             }
-
             // 出品する商品情報の登録
             $product = new Product();
             $product->name = $request->name; // 商品名
             $product->price = $request->price; // 価格
             $product->category_id = $request->category; // 商品カテゴリ
-            $product->expiration_date = Carbon::parse($request->expiration_date);
+            $product->expiration_date = Carbon::parse($request->expiration_date); // 賞味期限
+            $user = Auth::user(); // 認証済みユーザーの取得
+            $convenienceId = $user->convenience->id; // コンビニIDの取得
+            $product->convenience_store_id = $convenienceId; // 商品情報とコンビニIDの紐付け
+            $product->save();
+            // 商品画像の処理
+            if ($request->hasFile('product_picture')) {
+                $picture = $request->file('product_picture'); // 商品画像
+                $extension = $picture->getClientOriginalExtension(); // ファイルの拡張子を取得
+                $fileName = sha1($picture->getClientOriginalName()) . '.' . $extension; // SHA-1ハッシュでファイル名を決定
+                $picturePath = $picture->storeAs('public/product_pictures', $fileName); // ファイルを保存
+                // 商品画像をproduct_picturesテーブルに保存
+                $productPicture = new ProductPicture();
+                $productPicture->product_id = $product->id; // 商品IDとコンビニIDの紐付け
+                $productPicture->file = $fileName; // 商品画像ファイル名を保存
+                $productPicture->save();
+            }
+            $product->load('pictures'); // pictureリレーションをロード
+            return response()->json(['message' => '商品の出品に成功しました', 'product' => $product], 200);
+        } catch (\Exception $e) {
+            \Log::error('例外エラー: ' . $e->getMessage());
+            return response()->json(['message' => '商品の出品に失敗しました'], 500);
+        }
+    }
+
+    // 商品編集・更新処理
+    public function editProduct(ProductEditRequest $request, $productId)
+    {
+        // try {
+            // 未認証の場合
+            if (!auth()->check()) {
+                return response()->json(['message' => 'Unauthenticated.'], 401);
+            }
+            // 出品する商品情報の更新
+            $product = Product::find($productId);
+            \Log::info('編集する商品は、', $product->toArray());
+            if(!$product) { // 商品が見つからない場合
+                \Log::info('商品は見つかりません。');
+                return response()->json(['message' => '商品が見つかりません'], 404);
+            }
+            $product->name = $request->input('name'); // 商品名
+            $product->price = $request->input('price'); // 価格
+            $product->category_id = $request->input('category'); // 商品カテゴリ
+            $product->expiration_date = Carbon::parse($request->input('expiration_date')); // 賞味期限
             $user = Auth::user(); // 認証済みユーザーの取得
             $convenienceId = $user->convenience->id; // コンビニIDの取得
             $product->convenience_store_id = $convenienceId; // 商品情報とコンビニIDの紐付け
@@ -39,63 +81,20 @@ class ProductController extends Controller
 
             // 商品画像の処理
             if ($request->hasFile('product_picture')) {
-                \Log::debug('product_pictureが処理されます');
                 $picture = $request->file('product_picture'); // 商品画像
                 $extension = $picture->getClientOriginalExtension(); // ファイルの拡張子を取得
                 $fileName = sha1($picture->getClientOriginalName()) . '.' . $extension; // SHA-1ハッシュでファイル名を決定
                 $picturePath = $picture->storeAs('public/product_pictures', $fileName); // ファイルを保存
-
                 // 商品画像をproduct_picturesテーブルに保存
-                $productPicture = new ProductPicture();
-                $productPicture->product_id = $product->id; // 商品IDとコンビニIDの紐付け
-                $productPicture->file = $fileName; // 商品画像ファイル名を保存
-                $productPicture->save();
-            }
-            // pictureリレーションをロード
-            $product->load('pictures');
-            return response()->json(['message' => '商品の出品に成功しました', 'product' => $product], 200);
-        } catch (\Exception $e) {
-            \Log::error('例外エラー: ' . $e->getMessage());
-            return response()->json(['message' => '商品を購入失敗しました'], 500);
-        }
-    }
-
-    // 商品編集・更新処理
-    public function editProduct(ProductEditRequest $request, $productId)
-    {
-        try {
-            if (!auth()->check()) {
-                return response()->json(['message' => 'Unauthenticated.'], 401);
-            }
-
-            // 出品する商品の更新
-            $product = Product::findOrFail($productId);
-            $product->name = $request->input('name');
-            $product->price = $request->input('price');
-            $product->category_id = $request->input('category');
-            $product->expiration_date = Carbon::parse($request->input('expiration_date'));
-            $user = Auth::user();
-            $convenienceId = $user->convenience->id;
-            $product->convenience_store_id = $convenienceId;
-            $product->save();
-
-            // 商品画像の処理
-            if ($request->hasFile('product_picture')) {
-                $picture = $request->file('product_picture');
-                $extension = $picture->getClientOriginalExtension();
-                $fileName = sha1($picture->getClientOriginalName()) . '.' . $extension;
-                $picturePath = $picture->storeAs('public/product_pictures', $fileName);
-
-                $ProductPicture = ProductPicture::where('product_id', $product->id)->first();
-                $ProductPicture->file = $fileName;
+                $ProductPicture = ProductPicture::where('product_id', $product->id)->first(); // 商品IDに紐づいた商品画像の取得
+                $ProductPicture->file = $fileName; // 商品画像ファイル名を更新
                 $ProductPicture->save();
             }
-            // pictureリレーションをロード
-            $product->load('pictures');
+            $product->load('pictures'); // pictureリレーションをロード
             return response()->json(['message' => '商品の編集に成功しました', 'product' => $product]);
-        } catch (\Exception $e) {
-            return response()->json(['message' => '商品の編集に失敗しました'], 500);
-        }
+        // } catch (\Exception $e) {
+        //     return response()->json(['message' => '商品の編集に失敗しました'], 500);
+        // }
     }
 
     // 商品削除処理
