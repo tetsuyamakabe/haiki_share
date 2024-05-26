@@ -23,7 +23,6 @@ class ProfileRequest extends FormRequest
      */
     public function rules()
     {
-
         $rules = [
             // コンビニ名のバリデーションルール（必須、string型、最大文字数255文字以下）
             'convenience_name' => 'required|string|max:255',
