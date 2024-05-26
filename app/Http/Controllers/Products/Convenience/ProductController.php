@@ -35,18 +35,16 @@ class ProductController extends Controller
             $convenienceId = $user->convenience->id; // コンビニIDの取得
             $product->convenience_store_id = $convenienceId; // 商品情報とコンビニIDの紐付け
             $product->save();
-            // 商品画像の処理
-            if ($request->hasFile('product_picture')) {
-                $picture = $request->file('product_picture'); // 商品画像
-                $extension = $picture->getClientOriginalExtension(); // ファイルの拡張子を取得
-                $fileName = sha1($picture->getClientOriginalName()) . '.' . $extension; // SHA-1ハッシュでファイル名を決定
-                $picturePath = $picture->storeAs('public/product_pictures', $fileName); // ファイルを保存
-                // 商品画像をproduct_picturesテーブルに保存
-                $productPicture = new ProductPicture();
-                $productPicture->product_id = $product->id; // 商品IDとコンビニIDの紐付け
-                $productPicture->file = $fileName; // 商品画像ファイル名を保存
-                $productPicture->save();
-            }
+            // 商品画像ファイルのアップロード処理
+            $picture = $request->file('product_picture'); // 商品画像
+            $extension = $picture->getClientOriginalExtension(); // ファイルの拡張子を取得
+            $fileName = sha1($picture->getClientOriginalName()) . '.' . $extension; // SHA-1ハッシュでファイル名を決定
+            $picturePath = $picture->storeAs('public/product_pictures', $fileName); // ファイルを保存
+            // 商品画像の保存
+            $productPicture = new ProductPicture();
+            $productPicture->product_id = $product->id; // 商品IDとコンビニIDの紐付け
+            $productPicture->file = $fileName; // 商品画像ファイル名を保存
+            $productPicture->save();
             $product->load('pictures'); // pictureリレーションをロード
             return response()->json(['message' => '商品の出品に成功しました', 'product' => $product], 200);
         } catch (\Exception $e) {
@@ -65,7 +63,6 @@ class ProductController extends Controller
             }
             // 出品する商品情報の更新
             $product = Product::find($productId);
-            \Log::info('編集する商品は、', $product->toArray());
             if(!$product) { // 商品が見つからない場合
                 \Log::info('商品は見つかりません。');
                 return response()->json(['message' => '商品が見つかりません'], 404);

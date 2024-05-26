@@ -93,7 +93,7 @@ class ProductTest extends TestCase
         // テスト用のリクエストを作成
         $response = $this->actingAs($user)->withHeaders([
                 'Content-Type' => 'multipart/form-data',
-            ])->put('/api/convenience/products/edit/' . $product->id, array_merge($data, $file));  
+            ])->put('/api/convenience/products/edit/' . $product->id, array_merge($data, $file));
         // レスポンスが正常であるか
         $response->assertStatus(200);
         // レスポンスデータを取得
@@ -313,6 +313,30 @@ class ProductTest extends TestCase
         $this->assertEquals('Unauthenticated.', $responseData['message']);
     }
 
+    public function test_商品出品バリデーションチェック()
+    {
+        // テスト用の利用者ユーザーを作成
+        $user = factory(User::class)->create(['role' => 'user']);
+        // テストデータの作成
+        $data = [
+            'name' => '', // 必須項目なので空にする
+            'price' => '-1', // 0以下の値
+            'category' => '', // 必須項目なので空にする
+            'expiration_date' => 'aaa', // date型ではない
+            'product_picture' => [UploadedFile::fake()->image('product_picture.pdf')->size(3000)], // 拡張子がpdfで画像サイズが3MB
+        ];
+        // リクエストを送信
+        $response = $this->actingAs($user)
+            ->withHeaders([
+                'Content-Type' => 'multipart/form-data',
+                ])->json('PUT', '/api/convenience/products/sale', $data);
+
+        // エラーレスポンスが返されるか
+        $response->assertStatus(422);
+        // エラーメッセージが正しいか
+        $response->assertJsonValidationErrors(['name', 'price', 'category', 'expiration_date', 'product_picture.0']);
+    }
+
     public function test_未認証ユーザーの商品編集処理()
     {
         // テスト用の商品を作成
@@ -334,17 +358,51 @@ class ProductTest extends TestCase
     {
         // テスト用のコンビニユーザーを作成
         $user = factory(User::class)->create(['role' => 'convenience']);
+        // テスト用のカテゴリ情報の作成
+        $category = factory(Category::class)->create();
+        // テストデータを作成
+        $data = [
+            'name' => '欧風カレーパン',
+            'price' => '150',
+            'expiration_date' => '2024-05-25',
+            'category' => $category->id,
+        ];
         // 不正な商品IDを使用してリクエストを送信
         $response = $this->actingAs($user)->withHeaders([
                 'Content-Type' => 'multipart/form-data',
-            ])->json('PUT', '/api/convenience/products/edit/product_id');
+            ])->json('PUT', '/api/convenience/products/edit/product_id', $data);
         // エラーレスポンスが返されるか
         $response->assertStatus(404);
         // レスポンスデータを取得
         $responseData = $response->json();
         // エラーメッセージが含まれているか
-        $this->assertArrayHasKey('error', $responseData);
-        $this->assertEquals('商品が見つかりません', $responseData['error']);
+        $this->assertArrayHasKey('message', $responseData);
+        $this->assertEquals('商品が見つかりません', $responseData['message']);
+    }
+
+    public function test_商品編集バリデーションチェック()
+    {
+        // テスト用の利用者ユーザーを作成
+        $user = factory(User::class)->create(['role' => 'user']);
+        // テスト用の商品を作成
+        $product = factory(Product::class)->create();
+        // テストデータの作成
+        $data = [
+            'name' => '', // 必須項目なので空にする
+            'price' => '-1', // 0以下の値
+            'category' => '', // 必須項目なので空にする
+            'expiration_date' => 'aaa', // date型ではない
+            'product_picture' => [UploadedFile::fake()->image('product_picture.pdf')->size(3000)], // 拡張子がpdfで画像サイズが3MB
+        ];
+        // リクエストを送信
+        $response = $this->actingAs($user)
+            ->withHeaders([
+                'Content-Type' => 'multipart/form-data',
+            ])->json('PUT', '/api/convenience/products/edit/' . $product->id, $data);
+        // エラーレスポンスが返されるか
+        $response->assertStatus(422);
+        // エラーメッセージが正しいか
+        $response->assertJsonValidationErrors(['name', 'price', 'category', 'expiration_date', 'product_picture.0']);
     }
 
     public function test_未認証ユーザーの商品削除処理()
