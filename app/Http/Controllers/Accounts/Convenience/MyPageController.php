@@ -46,7 +46,6 @@ class MyPageController extends Controller
                 $user->password = Hash::make($password);
             }
             $user->introduction = $request->input('introduction'); // 自己紹介文
-
             // ファイルがアップロードされているか確認
             if ($request->hasFile('icon')) {
                 $iconImage = $request->file('icon'); // 顔写真
@@ -56,7 +55,6 @@ class MyPageController extends Controller
                 $user->icon = $fileName; // ファイルパスを保存
             }
             $user->save();
-
             // コンビニ情報を取得
             $convenience = $user->convenience()->first();
             // コンビニ情報を更新
@@ -105,7 +103,7 @@ class MyPageController extends Controller
     // マイページに表示する出品・購入商品情報の取得
     public function getMyProducts(Request $request)
     {
-        // try {
+        try {
             // 認証済みユーザー情報の取得
             $user = Auth::user();
             // 未認証の場合
@@ -129,9 +127,9 @@ class MyPageController extends Controller
                 ->limit(5)->get();
             // \Log::info('$purchasedProductsは、', [$purchasedProducts]);
             return response()->json(['sale_products' => $saleProducts, 'purchased_products' => $purchasedProducts], 200);
-        // } catch (\Exception $e) {
-        //     \Log::error('例外エラー: ' . $e->getMessage());
-        //     return response()->json(['message' => '商品取得に失敗しました'], 500);
-        // }
+        } catch (\Exception $e) {
+            \Log::error('例外エラー: ' . $e->getMessage());
+            return response()->json(['message' => '商品取得に失敗しました'], 500);
+        }
     }
 }

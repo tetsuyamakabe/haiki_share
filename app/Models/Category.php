@@ -8,9 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Category extends Model
 {
-    protected $fillable = [
-        'name',
-    ];
+    protected $fillable = ['name'];
 
     // 商品モデルとの関連付け（一対多の関係）
     public function products()
@@ -19,6 +17,7 @@ class Category extends Model
     }
 }
 
+// categoriesテーブルのテーブル構成
 // mysql> desc categories;
 // +------------+---------------------+------+-----+---------+----------------+
 // | Field      | Type                | Null | Key | Default | Extra          |

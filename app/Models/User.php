@@ -13,7 +13,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
-    use Notifiable, SoftDeletes;
+    use Notifiable, SoftDeletes; // 通知・論理削除トレイト
 
     /**
      * The attributes that are mass assignable.
@@ -45,9 +45,9 @@ class User extends Authenticatable
     // PasswordResetNotificationクラスを利用するためにオーバーライド
     public function sendPasswordResetNotification($token)
     {
-        if ($this->role === 'user') {
+        if ($this->role === 'user') { // 利用者ユーザーの場合
             $this->notify(new \App\Notifications\User\PasswordResetNotification($token));
-        } elseif ($this->role === 'convenience') {
+        } elseif ($this->role === 'convenience') { // コンビニユーザーの場合
             $this->notify(new \App\Notifications\Convenience\PasswordResetNotification($token));
         }
     }
@@ -77,6 +77,7 @@ class User extends Authenticatable
     }
 }
 
+// usersテーブルのテーブル構成
 // mysql> desc users;
 // +-------------------+---------------------+------+-----+-------------+----------------+
 // | Field             | Type                | Null | Key | Default     | Extra          |

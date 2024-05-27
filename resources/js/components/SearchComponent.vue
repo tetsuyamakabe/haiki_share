@@ -46,7 +46,7 @@ import axios from 'axios';
 export default {
     data() {
         return {
-            prefectures: [],
+            prefectures: [], // 都道府県の選択肢
             selectedPrefecture: '', // 都道府県
             minPrice: 0, // 最小価格
             maxPrice: 0, // 最大価格
@@ -55,40 +55,42 @@ export default {
     },
 
     created() {
-        this.getPrefectures();
+        this.getPrefectures(); // インスタンス初期化時に都道府県情報を読み込む
     },
 
     methods: {
         // 出品しているコンビニがある都道府県の取得
-        getPrefectures() {
-            console.log('都道府県情報を取得します');
-            axios.get('/api/prefecture').then(response => {
+        async getPrefectures() {
+            try {
+                console.log('都道府県情報を取得します');
+                // 出品しているコンビニがある都道府県の取得APIのGET送信
+                const response = await axios.get('/api/prefecture');
                 console.log('APIからのレスポンス:', response.data);
                 this.prefectures = response.data.prefectures;
-            }).catch(error => {
+            } catch (error) {
                 console.error('都道府県情報取得失敗:', error.response.data);
                 this.errors = error.response.data;
-            });
+            }
         },
 
         // 検索フォームの値をサーバー側に送信するメソッド
         submitForm() {
             console.log('検索条件を送信します');
-            let params = {};
-
-            if (this.selectedPrefecture) {
-                params.prefecture = this.selectedPrefecture;
+            let params = {}; // paramsオブジェクト
+            if (this.selectedPrefecture) { // 検索条件に都道府県がある場合
+                params.prefecture = this.selectedPrefecture; // paramsオブジェクトにselectedPrefectureを入れる
             }
-            if (this.minPrice) {
-                params.minprice = this.minPrice;
+            if (this.minPrice) { // 検索条件に最小価格がある場合
+                params.minprice = this.minPrice; // paramsオブジェクトにminPriceを入れる
             }
-            if (this.maxPrice) {
-                params.maxprice = this.maxPrice;
+            if (this.maxPrice) { // 検索条件に最大価格がある場合
+                params.maxprice = this.maxPrice; // paramsオブジェクトにmaxPriceを入れる
             }
-            if (this.isExpired !== null) {
-                params.expiration_date = this.isExpired;
+            if (this.isExpired !== null) { // 検索条件に賞味期限がある場合
+                params.expiration_date = this.isExpired; // paramsオブジェクトにisExpiredを入れる
             }
             console.log('検索パラメータ:', params);
+            // 親コンポーネントに通知
             this.$emit('search', params); // パラメータをつけたオブジェクトをemitする
         },
     }

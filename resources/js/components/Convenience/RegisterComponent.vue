@@ -4,54 +4,59 @@
             <h1 class="c-title u-mb__xl">コンビニユーザー登録</h1>
             <form @submit.prevent="submitForm" class="c-form">
 
-                <!-- バリデーションエラーメッセージ -->
-                <span v-if="errors && errors.convenience_name" class="c-error u-mt__s u-mb__s">{{ errors.convenience_name[0] }}</span>
-                <span v-if="errors && errors.branch_name" class="c-error u-mt__s u-mb__s">{{ errors.branch_name[0] }}</span>
-                <span v-if="errors && errors.address" class="c-error u-mt__s u-mb__s">{{ errors.address[0] }}</span>
-                <span v-if="errors && errors.prefecture" class="c-error u-mt__s u-mb__s">{{ errors.prefecture[0] }}</span>
-                <span v-if="errors && errors.city" class="c-error u-mt__s u-mb__s">{{ errors.city[0] }}</span>
-                <span v-if="errors && errors.town" class="c-error u-mt__s u-mb__s">{{ errors.town[0] }}</span>
-                <span v-if="errors && errors.building" class="c-error u-mt__s u-mb__s">{{ errors.building[0] }}</span>
-                <span v-if="errors && errors.email" class="c-error u-mt__s u-mb__s">{{ errors.email[0] }}</span>
-                <span v-if="errors && errors.password" class="c-error u-mt__s u-mb__s">{{ errors.password[0] }}</span>
-                <span v-if="errors && errors.password_confirmation" class="c-error u-mt__s u-mb__s">{{ errors.password_confirmation[0] }}</span>
-                <span v-if="errors && !agreement" class="c-error u-mt__s u-mb__s">利用規約に同意する必要があります。</span>
-
                 <!-- コンビニ名 -->
-                <label for="convenience_name" class="c-label">コンビニ名</label>
+                <label for="convenience_name" class="c-label">コンビニ名<span class="c-required">必須</span></label>
+                <span v-if="errors && errors.convenience_name" class="c-error u-mt__s">{{ errors.convenience_name[0] }}</span>
                 <input v-model="formData.convenience_name" id="convenience_name" type="text" class="c-input u-pd__s u-mt__m u-mb__m" :class="{ 'is-invalid': errors && errors.convenience_name }" autocomplete="name">
+
                 <!-- 支店名 -->
-                <label for="branch_name" class="c-label">支店名</label>
+                <label for="branch_name" class="c-label">支店名<span class="c-required">必須</span></label>
+                <span v-if="errors && errors.branch_name" class="c-error u-mt__s">{{ errors.branch_name[0] }}</span>
                 <input v-model="formData.branch_name" id="branch_name" type="text" class="c-input u-pd__s u-mt__m u-mb__m" :class="{ 'is-invalid': errors && errors.branch_name }" autocomplete="branch_name">
+
                 <!-- 郵便番号 -->
                 <label for="address" class="c-label">郵便番号</label>
                 <input v-model="formData.postalcode" id="address" type="text" class="c-input u-pd__s u-mt__m u-mb__m" :class="{ 'is-invalid': errors && errors.address }" autocomplete="address" placeholder="郵便番号で住所を簡単入力できます">
                 <div class="p-register__zip">
                     <button type="button" class="c-button c-button__convenience" @click="searchAddress">郵便番号検索</button>
                 </div>
+
                 <!-- 都道府県 -->
-                <label for="prefecture" class="c-label">都道府県</label>
+                <label for="prefecture" class="c-label">都道府県<span class="c-required">必須</span></label>
+                <span v-if="errors && errors.prefecture" class="c-error u-mt__s">{{ errors.prefecture[0] }}</span>
                 <input v-model="formData.prefecture" id="prefecture" type="text" class="c-input u-pd__s u-mt__m u-mb__m" :class="{ 'is-invalid': errors && errors.prefecture }" autocomplete="prefecture">
+
                 <!-- 市区町村 -->
-                <label for="city" class="c-label">市区町村</label>
+                <label for="city" class="c-label">市区町村<span class="c-required">必須</span></label>
+                <span v-if="errors && errors.city" class="c-error u-mt__s">{{ errors.city[0] }}</span>
                 <input v-model="formData.city" id="city" type="text" class="c-input u-pd__s u-mt__m u-mb__m" :class="{ 'is-invalid': errors && errors.city }" autocomplete="city">
+
                 <!-- 地名・番地 -->
-                <label for="town" class="c-label">地名・番地</label>
+                <label for="town" class="c-label">地名・番地<span class="c-required">必須</span></label>
+                <span v-if="errors && errors.town" class="c-error u-mt__s">{{ errors.town[0] }}</span>
                 <input v-model="formData.town" id="town" type="text" class="c-input u-pd__s u-mt__m u-mb__m" :class="{ 'is-invalid': errors && errors.town }" autocomplete="town">
+
                 <!-- 建物名・部屋番号 -->
                 <label for="building" class="c-label">建物名・部屋番号</label>
+                <span v-if="errors && errors.building" class="c-error u-mt__s">{{ errors.building[0] }}</span>
                 <input v-model="formData.building" id="building" type="text" class="c-input u-pd__s u-mt__m u-mb__m" :class="{ 'is-invalid': errors && errors.building }" autocomplete="building">
+
                 <!-- メールアドレス -->
-                <label for="email" class="c-label">メールアドレス</label>
+                <label for="email" class="c-label">メールアドレス<span class="c-required">必須</span></label>
+                <span v-if="errors && errors.email" class="c-error u-mt__s">{{ errors.email[0] }}</span>
                 <input v-model="formData.email" id="email" type="email" class="c-input u-pd__s u-mt__m u-mb__m" :class="{ 'is-invalid': errors && errors.email }" autocomplete="email">
+
                 <!-- パスワード -->
-                <label for="password" class="c-label">パスワード</label>
+                <label for="password" class="c-label">パスワード<span class="c-required">必須</span></label>
+                <span v-if="errors && errors.password" class="c-error u-mt__s">{{ errors.password[0] }}</span>
                 <div class="c-input__password">
                     <input v-model="formData.password" id="password" :type="PasswordType" class="c-input u-pd__s u-mt__m u-mb__m" :class="{ 'is-invalid': errors && errors.password }" placeholder="英数字8文字以上で入力してください">
                     <span @click="togglePasswordVisibility('password')"><i :class="PasswordIconClass"></i></span>
                 </div>
+
                 <!-- パスワード（再入力） -->
-                <label for="password-confirm" class="c-label">パスワード（再入力）</label>
+                <label for="password-confirm" class="c-label">パスワード（再入力）<span class="c-required">必須</span></label>
+                <span v-if="errors && errors.password_confirmation" class="c-error u-mt__s">{{ errors.password_confirmation[0] }}</span>
                 <div class="c-input__password">
                     <input v-model="formData.password_confirmation" id="password-confirm" :type="PasswordConfirmType" class="c-input u-pd__s u-mt__m u-mb__m" :class="{ 'is-invalid': errors && errors.password_confirmation }" placeholder="英数字8文字以上で入力してください">
                     <span @click="togglePasswordVisibility('password_confirm')"><i :class="PasswordConfirmIconClass"></i></span>
@@ -61,7 +66,7 @@
                 <div class="p-register__terms u-pd__s u-m__s">
                     <terms-component></terms-component>
                 </div>
-
+                <span v-if="errors && !agreement" class="c-error u-mt__s">利用規約に同意する必要があります。</span>
                 <!-- 利用規約チェックボックス -->
                 <div class="c-checkbox c-checkbox__container u-mt__m u-mb__m">
                     <input class="c-checkbox u-mr__s" type="checkbox" v-model="agreement" id="agreement">
@@ -90,19 +95,19 @@ export default {
     data() {
         return {
             formData: {
-                convenience_name: '',
-                branch_name: '',
-                prefecture: '',
-                city: '',
-                town: '',
-                building: '',
-                email: '',
-                password: '',
-                password_confirmation: '',
-                role: 'convenience'
+                convenience_name: '', // コンビニ名
+                branch_name: '', // 支店名
+                prefecture: '', // 都道府県
+                city: '', // 市区町村
+                town: '', // 地名・番名
+                building: '', // 建物名・部屋番号
+                email: '', // メールアドレス
+                password: '', // パスワード
+                password_confirmation: '', // パスワード（再入力）
+                role: 'convenience' // コンビニユーザー
             },
             agreement: false, // 利用規約に同意したかどうか
-            errors: null,
+            errors: null, // エラーメッセージ
             PasswordType: 'password', // パスワードの初期設定
             PasswordConfirmType: 'password', // パスワード（再入力）の初期設定
             PasswordIconClass: 'far fa-eye-slash', // 初期アイコン
@@ -112,43 +117,41 @@ export default {
 
     methods: {
         // 郵便番号検索APIを使って、郵便番号から住所を自動入力するメソッド
-        searchAddress() {
-            const postalcode = this.formData.postalcode;
-            const zipCode = postalcode;
-            axios.get(`https://api.zipaddress.net/?zipcode=${zipCode}`, { adapter: jsonpAdapter }).then(rs => {
-                const response = rs.data;
-                // 都道府県、市区町村、地名・番地をセット
-                this.formData.prefecture = response.pref;
-                this.formData.city = response.city;
-                this.formData.town = response.town;
-                this.formData.building = response.building;
-                console.log('townは、', this.formData.town);
-            }).catch(error => {
+        async searchAddress() {
+            try {
+                const zipCode = this.formData.postalcode; // 郵便番号フォームの入力値
+                const response = await axios.get(`https://api.zipaddress.net/?zipcode=${zipCode}`, { adapter: jsonpAdapter }); // 郵便番号検索APIに郵便番号フォームの入力値を使ってGETリクエスト送信
+                // APIから返されたレスポンスデータを各入力フォームにセット
+                const responseData = response.data;
+                this.formData.prefecture = responseData.pref; // 都道府県
+                this.formData.city = responseData.city; // 市区町村
+                this.formData.town = responseData.town; // 地名・番名
+                this.formData.building = responseData.building; // 建物名・部屋番号
+            } catch (error) {
                 console.error('住所検索エラー:', error);
-            });
+            }
         },
 
         // 入力された値をサーバー側に送信するメソッド
-        submitForm() {
-            this.formData.agreement = this.agreement;
-            axios.post('/api/convenience/register', this.formData).then(response => {
-                console.log('ユーザー登録します。');
-                this.$router.push({ name: 'convenience.login' }); // ユーザー登録後、ログインページに遷移
-            }).catch(error => {
-                console.log('errorは、', error);
+        async submitForm() {
+            try {
+                this.formData.agreement = this.agreement; // 利用規約の同意をformDataに追加
+                await axios.post('/api/convenience/register', this.formData); // ユーザー登録APIをPOST送信
+                this.$router.push({ name: 'user.login' }); // ユーザー登録後、ログインページに遷移
+            } catch (error) {
                 console.error('ユーザー登録失敗:', error.response.data);
                 this.errors = error.response.data.errors;
-            });
+            }
         },
 
         // パスワードの表示・非表示を切り替えるメソッド
         togglePasswordVisibility(type) {
-            if (type === 'password') {
-                this.PasswordType = this.PasswordType === 'password' ? 'text' : 'password';
-                this.PasswordIconClass = this.PasswordIconClass === 'far fa-eye-slash' ? 'far fa-eye' : 'far fa-eye-slash';
-            } else if (type === 'password_confirm') {
-                this.PasswordConfirmType = this.PasswordConfirmType === 'password' ? 'text' : 'password';
-                this.PasswordConfirmIconClass = this.PasswordConfirmIconClass === 'far fa-eye-slash' ? 'far fa-eye' : 'far fa-eye-slash';
+            if (type === 'password') { // パスワードの入力フォーム
+                this.PasswordType = this.PasswordType === 'password' ? 'text' : 'password'; // PasswordTypeによってパスワードの表示・非表示を切り替え
+                this.PasswordIconClass = this.PasswordIconClass === 'far fa-eye-slash' ? 'far fa-eye' : 'far fa-eye-slash'; // PasswordIconClassによってパスワードのアイコンを切り替え
+            } else if (type === 'password_confirm') { // パスワード（再入力）の入力フォーム
+                this.PasswordConfirmType = this.PasswordConfirmType === 'password' ? 'text' : 'password'; // PasswordTypeによってパスワードの表示・非表示を切り替え
+                this.PasswordConfirmIconClass = this.PasswordConfirmIconClass === 'far fa-eye-slash' ? 'far fa-eye' : 'far fa-eye-slash'; // PasswordIconClassによってパスワードのアイコンを切り替え
             }
         }
     }

@@ -37,26 +37,20 @@ class ForgotPasswordController extends Controller
     // パスワード変更メール送信処理
     public function sendResetLinkEmail(ForgotPasswordRequest $request)
     {
-        $this->validateEmail($request);
-
         // DBからemailをキーにしてユーザーの存在を確認
         $user = User::where('email', $request->email)->first();
-
         // ユーザーが見つからない場合
         if (!$user) {
             return response()->json(['message' => 'ユーザーが見つかりません'], 404);
         }
-
         // roleがuserの場合は422エラーを返す
         if ($user->role == 'user') {
             return response()->json(['errors' => ['email' => ['このメールアドレスはコンビニ側のメールアドレスではありません。']]], 422);
         }
-
         // パスワード変更メール送信実行
         $response = $this->broker()->sendResetLink(
             $request->only('email')
         );
-
         if ($response == Password::RESET_LINK_SENT) {
             // パスワードリセットリンクが送信された場合
             return response()->json(['message' => 'パスワードリセットリンクを送信しました。'], 200);

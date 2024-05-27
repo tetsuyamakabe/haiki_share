@@ -9,13 +9,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Convenience extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes; // 論理削除トレイト
 
     protected $table = 'convenience_stores';
 
-    protected $fillable = [
-        'user_id', 'branch_name', 'address_id'
-    ];
+    protected $fillable = ['user_id', 'branch_name', 'address_id'];
 
     // ユーザーモデルとの関連付け（一対一の関係）
     public function user()
@@ -36,6 +34,7 @@ class Convenience extends Model
     }
 }
 
+// convenience_storesテーブルのテーブル構成
 // mysql> desc convenience_stores;
 // +-------------+---------------------+------+-----+---------+----------------+
 // | Field       | Type                | Null | Key | Default | Extra          |

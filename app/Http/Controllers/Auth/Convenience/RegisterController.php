@@ -66,7 +66,6 @@ class RegisterController extends Controller
     {
         // バリデーション済みデータの取得
         $validated = $request->validated();
-
         // ユーザー情報を「users」テーブルに保存
         $user = User::create([
             'name' => $validated['convenience_name'], // コンビニ名
@@ -74,7 +73,6 @@ class RegisterController extends Controller
             'password' => Hash::make($validated['password']), // パスワード
             'role' => $validated['role'], // role
         ]);
-
         // コンビニ情報を「convenience_stores」テーブルに保存
         if ($validated['role'] === 'convenience') {
             // 住所情報を保存し、そのIDを取得
@@ -85,18 +83,15 @@ class RegisterController extends Controller
                 'building' => $validated['building'], // 住所（建物名・部屋番号）
             ]);
             $addressId = $address->id;
-
             // コンビニ情報を保存
             $convenience = Convenience::create([
                 'user_id' => $user->id, // ユーザーID
                 'branch_name' => $validated['branch_name'], // 支店名
                 'address_id' => $addressId, // 住所ID
             ]);
-
             // ConvenienceモデルとAddressモデルの関連付け
             $convenience->address()->associate($address);
             $convenience->save();
-
             return response()->json(['user' => $user, 'convenience' => $convenience, 'address' => $address], 201);
         }
     }

@@ -9,12 +9,12 @@
     }
 
     &__wrapper {
-        padding: $space_l $space_m;
+        padding: $space_3l $space_m;
         border: 0.5px solid $boader-color_default;
         min-width: 75%;
 
         @include mq(sm){
-            padding: $space_s;
+            padding: $space_xl $space_s;
             margin: $space_s;
         }
 

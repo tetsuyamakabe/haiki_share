@@ -47,24 +47,19 @@ class ResetPasswordController extends Controller
         // ユーザーを特定するための情報を取得
         $email = $request->email; // ユーザーのメールアドレス
         $password = $request->newPassword; // 新しいパスワード
-
         // DBからemailをキーにしてユーザー情報を取得
         $user = User::where('email', $email)->first();
-
         // ユーザーが見つからない場合
         if (!$user) {
             return response()->json(['message' => 'ユーザーが見つかりません'], 404);
         }
-
         // roleがconvenienceの場合は422エラーを返す
         if ($user->role == 'convenience') {
             return response()->json(['errors' => ['email' => ['このメールアドレスは利用者側のメールアドレスではありません。']]], 422);
         }
-
         // パスワードを更新
         $user->password = Hash::make($password);
         $user->save();
-
         return response()->json(['message' => 'パスワードが変更されました']);
     }
 }

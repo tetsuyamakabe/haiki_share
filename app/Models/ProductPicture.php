@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class ProductPicture extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes; // 論理削除トレイト
 
     protected $fillable = ['product_id', 'file'];
 
@@ -18,6 +18,7 @@ class ProductPicture extends Model
     }
 }
 
+// product_picturesテーブルのテーブル構成
 // mysql> desc product_pictures;
 // +------------+---------------------+------+-----+---------+----------------+
 // | Field      | Type                | Null | Key | Default | Extra          |

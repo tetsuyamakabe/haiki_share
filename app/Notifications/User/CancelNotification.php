@@ -9,21 +9,22 @@ use Illuminate\Notifications\Messages\MailMessage;
 
 class CancelNotification extends Notification
 {
-    use Queueable;
-    protected $product;
-    protected $convenience;
-    protected $formattedExpirationDate;
+    use Queueable; // キュートレイト
+    protected $product; // 商品情報
+    protected $convenience; // コンビニ情報
+    protected $formattedExpirationDate; // （フォーマット済みの）賞味期限日付
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
+    // 商品情報、コンビニ情報、（フォーマット済みの）賞味期限日付の値をクラスのプロパティに設定
     public function __construct($product, $convenience, $formattedExpirationDate)
     {
-        $this->product = $product;
-        $this->convenience = $convenience;
-        $this->formattedExpirationDate = $formattedExpirationDate;
+        $this->product = $product; // 商品情報
+        $this->convenience = $convenience; // コンビニ情報
+        $this->formattedExpirationDate = $formattedExpirationDate; // （フォーマット済みの）賞味期限日付
     }
 
     /**
@@ -43,17 +44,18 @@ class CancelNotification extends Notification
      * @param  mixed  $notifiable
      * @return \Illuminate\Notifications\Messages\MailMessage
      */
+    // 商品キャンセル完了メールのカスタム
     public function toMail($notifiable)
     {
-        $mail = (new MailMessage)
-            ->subject('【' . config('app.name') . '】商品キャンセル完了メール');
-
+        // MailMessageのインスタンスを作成、件名を設定
+        $mail = (new MailMessage)->subject('【' . config('app.name') . '】商品キャンセル完了メール');
+        // 利用者ユーザーとコンビニユーザーでそれぞれのメールテンプレートのビューに商品情報とコンビニ情報と（フォーマット済みの）賞味期限日付を渡す
         if ($notifiable->role === 'user') {
             $mail->view('products.user.cancel', ['product' => $this->product, 'convenience' => $this->convenience, 'formattedExpirationDate' => $this->formattedExpirationDate]);
         } elseif ($notifiable->role === 'convenience') {
             $mail->view('products.convenience.cancel', ['product' => $this->product, 'convenience' => $this->convenience, 'formattedExpirationDate' => $this->formattedExpirationDate]);
         }
-
+        // $mailを返す
         return $mail;
     }
 

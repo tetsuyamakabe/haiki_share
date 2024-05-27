@@ -23,6 +23,7 @@ class Like extends Model
 
 }
 
+// likesテーブルのテーブル構成
 // mysql> desc likes;
 // +------------+---------------------+------+-----+---------+----------------+
 // | Field      | Type                | Null | Key | Default | Extra          |

@@ -1,30 +1,30 @@
 const state = {
-    user: null,
+    user: null, // ユーザー情報の初期状態
 }
   
 const getters = {
-    check: state => !! state.user,
-    username: state => state.user ? state.user.name : '',
-    icon: state => state.user ? `/storage/icons/${state.user.icon}` : '',
-    role: state => state.user ? state.user.role : '',
-    id: state => state.user ? state.user.id : '',
+    check: state => !! state.user, // 認証チェック
+    username: state => state.user ? state.user.name : '', // ユーザー名
+    icon: state => state.user ? `/storage/icons/${state.user.icon}` : '', // 顔写真
+    role: state => state.user ? state.user.role : '', // role
+    id: state => state.user ? state.user.id : '', // ユーザーID
 }
 
 const mutations = {
     setUser (state, user) {
-        state.user = user
+        state.user = user // ユーザー情報をuserに入れる
     },
 
     clearUser(state) {
-        state.user = null;
+        state.user = null; // ユーザー情報をnullにする
     }
 };
 
 const actions = {
     async currentUser (context) {
-        const response = await axios.get('/api/user');
-        const user = response.data || null;
-        context.commit('setUser', user);
+        const response = await axios.get('/api/user'); // API経由で現在ユーザー情報を取得
+        const user = response.data || null; // APIからのレスポンスデータをuserに入れる
+        context.commit('setUser', user); // 取得したユーザー情報をsetUserミューテーションでストアにコミット
     }
 }
 

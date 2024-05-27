@@ -28,6 +28,7 @@ class LoginRequest extends FormRequest
             'email' => 'required|email',
             // パスワードのバリデーションルール（必須、string型、最小文字数8文字以上）
             'password' => 'required|string|min:8',
+            // 次回ログイン省略のバリデーションルール（boolean型）
             'remember' => 'boolean',
         ];
     }

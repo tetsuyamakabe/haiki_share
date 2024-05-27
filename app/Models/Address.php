@@ -8,11 +8,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Address extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes; // 論理削除トレイト
 
-    protected $fillable = [
-        'prefecture', 'city', 'town', 'building'
-    ];
+    protected $fillable = ['prefecture', 'city', 'town', 'building'];
 
     // コンビニモデルとの関連付け（一対一の関係）
     public function convenience()
@@ -21,6 +19,8 @@ class Address extends Model
     }
 
 }
+
+// addressesテーブルのテーブル構成
 // mysql> desc addresses;
 // +------------+---------------------+------+-----+---------+----------------+
 // | Field      | Type                | Null | Key | Default | Extra          |
