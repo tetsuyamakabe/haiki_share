@@ -11,10 +11,8 @@
 |
 */
 
-// VueRouterのための{any}
-Route::get('/{any}', function() { 
-    return view('app');
-})->where('any', '.*');
+// フロントエンドのVueRouterのリクエスト処理
+Route::get('/{any}', 'AppController@index')->where('any', '.*');
 
 // 利用者側
 Route::get('/user/password/reset/{token}', 'Auth\User\ResetPasswordController@show')->name('user.password.reset'); // パスワード変更メール
