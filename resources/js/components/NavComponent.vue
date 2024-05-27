@@ -15,8 +15,8 @@
                     <RouterLink class="l-nav__menu--link" :to="userLink" @click.native="closeMenu">マイページ</RouterLink>
                     <a class="l-nav__menu--link" @click="logout">ログアウト</a>
                 </div>
-                <!-- HOME画面のナビゲーションメニュー -->
-                <div v-else-if="isHomePage" class="l-nav__menu--item">
+                <!-- TOP画面のナビゲーションメニュー -->
+                <div v-else-if="isTopPage" class="l-nav__menu--item">
                     <a class="l-nav__menu--link" href="#about" @click="closeMenu">サービス概要</a>
                     <a class="l-nav__menu--link" href="#merit" @click="closeMenu">メリット</a>
                     <a class="l-nav__menu--link" href="#usage" @click="closeMenu">利用方法</a>
@@ -24,7 +24,7 @@
                     <RouterLink class="l-nav__menu--link" to="/user/register" @click.native="closeMenu">利用者ユーザー登録</RouterLink>
                     <RouterLink class="l-nav__menu--link" to="/convenience/register" @click.native="closeMenu">コンビニユーザー登録</RouterLink>
                 </div>
-                <!-- ログインしていないHOME画面以外のナビゲーションメニュー -->
+                <!-- ログインしていないTOP画面以外のナビゲーションメニュー -->
                 <div v-else class="l-nav__menu--item">
                     <RouterLink class="l-nav__menu--link" to="/user/register" @click.native="closeMenu">利用者ユーザー登録</RouterLink>
                     <RouterLink class="l-nav__menu--link" to="/convenience/register" @click.native="closeMenu">コンビニユーザー登録</RouterLink>
@@ -67,12 +67,12 @@ export default {
             } else if (this.$store.getters['auth/role'] === 'convenience') {
                 return "/convenience/mypage";
             }
-            return "/home";
+            return "/top";
         },
 
         // トップページかどうか
-        isHomePage() {
-            return this.$route.name === 'home';
+        isTopPage() {
+            return this.$route.name === 'top';
         }
     },
 

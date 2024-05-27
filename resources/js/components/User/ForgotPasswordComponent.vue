@@ -4,11 +4,9 @@
             <h1 class="c-title u-mb__xl">利用者パスワード変更メール送信</h1>
             <form @submit.prevent="sendResetLink" class="c-form">
 
-                <!-- バリデーションエラーメッセージ -->
-                <span v-if="errors && errors.email" class="c-error u-mt__s u-mb__s">{{ errors.email[0] }}</span>
-
                 <!-- メールアドレス -->
-                <label for="email" class="c-label">メールアドレス</label>
+                <label for="email" class="c-label">メールアドレス<span class="c-required">必須</span></label>
+                <span v-if="errors && errors.email" class="c-error u-mt__s u-mb__s">{{ errors.email[0] }}</span>
                 <input v-model="formData.email" id="email" type="email" class="c-input u-pd__s u-mt__m u-mb__m" :class="{ 'is-invalid': errors && errors.email }" autocomplete="email">
 
                 <!-- メール送信ボタン -->
@@ -25,23 +23,25 @@ export default {
     data() {
         return {
             formData: {
-                email: '',
+                email: '', // メールアドレス
             },
-            errors: null
+            errors: null // エラーメッセージ
         };
     },
 
     methods: {
         // パスワードリセットメール送信処理
-        sendResetLink() {
-            axios.post('/api/user/password/email', { email: this.formData.email }).then(response => {
+        async sendResetLink() {
+            try {
+                // 利用者パスワード変更メール送信APIをPOST送信
+                await axios.post('/api/user/password/email', this.formData); // formDataを含めたリクエスト
                 console.log('パスワード変更メールを送信します。');
                 this.message = response.data.message;
                 console.log('this.messageは、', this.message);
-            }).catch(error => {
+            } catch (error) {
                 console.log('メール送信失敗：', error.response.data);
                 this.errors = error.response.data.errors;
-            });
+            }
         }
     }
 };

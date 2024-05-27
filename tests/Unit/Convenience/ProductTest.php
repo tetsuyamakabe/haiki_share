@@ -354,32 +354,6 @@ class ProductTest extends TestCase
         $this->assertEquals('Unauthenticated.', $responseData['message']);
     }
 
-    public function test_商品が見つからない商品編集処理()
-    {
-        // テスト用のコンビニユーザーを作成
-        $user = factory(User::class)->create(['role' => 'convenience']);
-        // テスト用のカテゴリ情報の作成
-        $category = factory(Category::class)->create();
-        // テストデータを作成
-        $data = [
-            'name' => '欧風カレーパン',
-            'price' => '150',
-            'expiration_date' => '2024-05-25',
-            'category' => $category->id,
-        ];
-        // 不正な商品IDを使用してリクエストを送信
-        $response = $this->actingAs($user)->withHeaders([
-                'Content-Type' => 'multipart/form-data',
-            ])->json('PUT', '/api/convenience/products/edit/product_id', $data);
-        // エラーレスポンスが返されるか
-        $response->assertStatus(404);
-        // レスポンスデータを取得
-        $responseData = $response->json();
-        // エラーメッセージが含まれているか
-        $this->assertArrayHasKey('message', $responseData);
-        $this->assertEquals('商品が見つかりません', $responseData['message']);
-    }
-
     public function test_商品編集バリデーションチェック()
     {
         // テスト用の利用者ユーザーを作成

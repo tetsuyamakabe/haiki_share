@@ -56,17 +56,13 @@ class ProductController extends Controller
     // 商品編集・更新処理
     public function editProduct(ProductEditRequest $request, $productId)
     {
-        // try {
+        try {
             // 未認証の場合
             if (!auth()->check()) {
                 return response()->json(['message' => 'Unauthenticated.'], 401);
             }
             // 出品する商品情報の更新
-            $product = Product::find($productId);
-            if(!$product) { // 商品が見つからない場合
-                \Log::info('商品は見つかりません。');
-                return response()->json(['message' => '商品が見つかりません'], 404);
-            }
+            $product = Product::findOrFail($productId);
             $product->name = $request->input('name'); // 商品名
             $product->price = $request->input('price'); // 価格
             $product->category_id = $request->input('category'); // 商品カテゴリ
@@ -75,7 +71,6 @@ class ProductController extends Controller
             $convenienceId = $user->convenience->id; // コンビニIDの取得
             $product->convenience_store_id = $convenienceId; // 商品情報とコンビニIDの紐付け
             $product->save();
-
             // 商品画像の処理
             if ($request->hasFile('product_picture')) {
                 $picture = $request->file('product_picture'); // 商品画像
@@ -89,9 +84,9 @@ class ProductController extends Controller
             }
             $product->load('pictures'); // pictureリレーションをロード
             return response()->json(['message' => '商品の編集に成功しました', 'product' => $product]);
-        // } catch (\Exception $e) {
-        //     return response()->json(['message' => '商品の編集に失敗しました'], 500);
-        // }
+        } catch (\Exception $e) {
+            return response()->json(['message' => '商品の編集に失敗しました'], 500);
+        }
     }
 
     // 商品削除処理

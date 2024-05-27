@@ -64,7 +64,6 @@ class RegisterController extends Controller
     {
         // バリデーション済みデータの取得
         $validated = $request->validated();
-
         // ユーザー情報を「users」テーブルに保存
         $user = User::create([
             'name' => $validated['name'], // 名前
@@ -72,7 +71,6 @@ class RegisterController extends Controller
             'password' => Hash::make($validated['password']), // パスワード
             'role' => $validated['role'], // role
         ]);
-
         return response()->json($user, 201);
     }
 }

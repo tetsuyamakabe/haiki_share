@@ -21,6 +21,7 @@ class Purchase extends Model
     }
 }
 
+// purchasesテーブルのテーブル構成
 // mysql> desc purchases;
 // +--------------+---------------------+------+-----+---------+----------------+
 // | Field        | Type                | Null | Key | Default | Extra          |

@@ -1,7 +1,7 @@
 <template>
     <header class="l-header u-pdr__xl u-pdl__xl">
         <div class="l-header__inner">
-            <router-link class="l-header__title" :to="{ name: 'home' }">
+            <router-link class="l-header__title" :to="{ name: 'top' }">
                 haiki share
             </router-link>
             <nav-component />

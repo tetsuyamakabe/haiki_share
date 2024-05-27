@@ -12,13 +12,13 @@ axios.interceptors.response.use(
         // 失敗時の処理
         switch (error.response?.status) {
             case 401:
-                router.push('/home');
+                router.push('/top'); // 401エラーの場合はTOPページに遷移
                 break;
             case 404:
-                router.push('/404');
+                router.push('/404'); // 404エラーの場合は404ページに遷移
                 break;
             case 500:
-                router.push('/500');
+                router.push('/500'); // 500エラーの場合は500ページに遷移
                 break;
             default:
                 // 未定義のエラーコードの場合はPromise.reject()を返す

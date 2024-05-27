@@ -12,11 +12,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Product extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes; // 論理削除トレイト
 
-    protected $fillable = [
-        'name', 'price', 'expiration_date', 'category_id', 'convenience_store_id'
-    ];
+    protected $fillable = ['name', 'price', 'expiration_date', 'category_id', 'convenience_store_id'];
 
     // カテゴリーモデルとの関連付け（一対一の関係）
     public function category()
@@ -49,6 +47,7 @@ class Product extends Model
     }
 }
 
+// productsテーブルのテーブル構成
 // mysql> desc products;
 // +----------------------+---------------------+------+-----+---------+----------------+
 // | Field                | Type                | Null | Key | Default | Extra          |

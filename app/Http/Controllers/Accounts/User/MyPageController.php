@@ -45,7 +45,6 @@ class MyPageController extends Controller
                 $user->password = Hash::make($password);
             }
             $user->introduction = $request->input('introduction'); // 自己紹介文
-
             // ファイルがアップロードされているか確認
             if ($request->hasFile('icon')) {
                 $iconImage = $request->file('icon'); // 顔写真

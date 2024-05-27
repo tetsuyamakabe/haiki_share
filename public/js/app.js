@@ -5054,6 +5054,10 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == _typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw new Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(_typeof(e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw new Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, "catch": function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw new Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 //
 //
 //
@@ -5093,25 +5097,44 @@ __webpack_require__.r(__webpack_exports__);
     return {
       formData: {
         name: '',
+        // お名前
         email: '',
-        contact: ''
+        // メールアドレス
+        contact: '' // お問い合わせ内容
       },
       errors: null,
-      flashMessage: ''
+      // エラーメッセージ
+      flashMessage: '' // フラッシュメッセージ
     };
   },
   methods: {
     // 入力された値をサーバー側に送信するメソッド
     submitForm: function submitForm() {
       var _this = this;
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/contact', this.formData).then(function (response) {
-        console.log('お問い合わせ内容を送信します。');
-        _this.flashMessage = 'お問い合わせ受付完了メールを送信しました。';
-      })["catch"](function (error) {
-        console.log('errorは、', error);
-        console.error('ユーザー登録失敗:', error.response.data);
-        _this.errors = error.response.data.errors;
-      });
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
+        return _regeneratorRuntime().wrap(function _callee$(_context) {
+          while (1) switch (_context.prev = _context.next) {
+            case 0:
+              _context.prev = 0;
+              _context.next = 3;
+              return axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/contact', _this.formData);
+            case 3:
+              console.log('お問い合わせ内容を送信します。');
+              _this.flashMessage = 'お問い合わせ受付完了メールを送信しました。';
+              _context.next = 12;
+              break;
+            case 7:
+              _context.prev = 7;
+              _context.t0 = _context["catch"](0);
+              console.log('errorは、', _context.t0);
+              console.error('お問い合わせ送信失敗:', _context.t0.response.data);
+              _this.errors = _context.t0.response.data.errors;
+            case 12:
+            case "end":
+              return _context.stop();
+          }
+        }, _callee, null, [[0, 7]]);
+      }))();
     }
   }
 });
@@ -5127,8 +5150,10 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-//
-//
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == _typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw new Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(_typeof(e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw new Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, "catch": function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw new Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 //
 //
 //
@@ -5154,25 +5179,40 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       formData: {
-        email: ''
+        email: '' // メールアドレス
       },
-      errors: null
+      errors: null // エラーメッセージ
     };
   },
   methods: {
     // パスワードリセットメール送信処理
     sendResetLink: function sendResetLink() {
       var _this = this;
-      axios.post('/api/convenience/password/email', {
-        email: this.formData.email
-      }).then(function (response) {
-        console.log('パスワード変更メールを送信します。');
-        _this.message = response.data.message;
-        console.log('this.messageは、', _this.message);
-      })["catch"](function (error) {
-        console.log('メール送信失敗：', error.response.data);
-        _this.errors = error.response.data.errors;
-      });
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
+        return _regeneratorRuntime().wrap(function _callee$(_context) {
+          while (1) switch (_context.prev = _context.next) {
+            case 0:
+              _context.prev = 0;
+              _context.next = 3;
+              return axios.post('/api/convenience/password/email', _this.formData);
+            case 3:
+              // formDataを含めたリクエスト
+              console.log('パスワード変更メールを送信します。');
+              _this.message = response.data.message;
+              console.log('this.messageは、', _this.message);
+              _context.next = 12;
+              break;
+            case 8:
+              _context.prev = 8;
+              _context.t0 = _context["catch"](0);
+              console.log('メール送信失敗：', _context.t0.response.data);
+              _this.errors = _context.t0.response.data.errors;
+            case 12:
+            case "end":
+              return _context.stop();
+          }
+        }, _callee, null, [[0, 8]]);
+      }))();
     }
   }
 });
@@ -5235,8 +5275,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -5244,11 +5282,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     return {
       formData: {
         email: '',
-        password: ''
+        // メールアドレス
+        password: '' // パスワード
       },
       remember: false,
       // 次回ログインの省略にチェックしたか
       errors: null,
+      // エラーメッセージ
       PasswordType: 'password',
       // パスワードの初期設定
       PasswordConfirmType: 'password',
@@ -5263,7 +5303,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     submitForm: function submitForm() {
       var _this = this;
       return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
-        var response;
         return _regeneratorRuntime().wrap(function _callee$(_context) {
           while (1) switch (_context.prev = _context.next) {
             case 0:
@@ -5273,38 +5312,37 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 remember: _this.remember
               }));
             case 3:
-              response = _context.sent;
-              console.log('ログインします。');
-              console.log('APIからのレスポンス:', response.data);
-              _context.next = 8;
+              _context.next = 5;
               return _this.$store.dispatch('auth/currentUser');
-            case 8:
+            case 5:
               // ログイン状態を保持
               _this.$router.push({
                 name: 'convenience.mypage'
               }); // ログイン後、マイページに遷移
-              _context.next = 15;
+              _context.next = 12;
               break;
-            case 11:
-              _context.prev = 11;
+            case 8:
+              _context.prev = 8;
               _context.t0 = _context["catch"](0);
               console.error('ログイン失敗:', _context.t0.response.data);
               _this.errors = _context.t0.response.data.errors;
-            case 15:
+            case 12:
             case "end":
               return _context.stop();
           }
-        }, _callee, null, [[0, 11]]);
+        }, _callee, null, [[0, 8]]);
       }))();
     },
     // パスワードの表示・非表示を切り替えるメソッド
     togglePasswordVisibility: function togglePasswordVisibility(type) {
       if (type === 'password') {
-        this.PasswordType = this.PasswordType === 'password' ? 'text' : 'password';
-        this.PasswordIconClass = this.PasswordIconClass === 'far fa-eye-slash' ? 'far fa-eye' : 'far fa-eye-slash';
+        // パスワードの入力フォーム
+        this.PasswordType = this.PasswordType === 'password' ? 'text' : 'password'; // PasswordTypeによってパスワードの表示・非表示を切り替え
+        this.PasswordIconClass = this.PasswordIconClass === 'far fa-eye-slash' ? 'far fa-eye' : 'far fa-eye-slash'; // PasswordIconClassによってパスワードのアイコンを切り替え
       } else if (type === 'password_confirm') {
-        this.PasswordConfirmType = this.PasswordConfirmType === 'password' ? 'text' : 'password';
-        this.PasswordConfirmIconClass = this.PasswordConfirmIconClass === 'far fa-eye-slash' ? 'far fa-eye' : 'far fa-eye-slash';
+        // パスワード（再入力）の入力フォーム
+        this.PasswordConfirmType = this.PasswordConfirmType === 'password' ? 'text' : 'password'; // PasswordTypeによってパスワードの表示・非表示を切り替え
+        this.PasswordConfirmIconClass = this.PasswordConfirmIconClass === 'far fa-eye-slash' ? 'far fa-eye' : 'far fa-eye-slash'; // PasswordIconClassによってパスワードのアイコンを切り替え
       }
     }
   }
@@ -5321,6 +5359,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == _typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw new Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(_typeof(e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw new Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, "catch": function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw new Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+//
+//
+//
+//
+//
 //
 //
 //
@@ -5413,40 +5460,57 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       saleProducts: [],
-      purchaseProducts: []
+      // 出品した商品情報
+      purchaseProducts: [] // 購入された商品情報
     };
   },
   created: function created() {
-    this.getMyPageProducts();
+    this.getMyPageProducts(); // インスタンス初期化時に商品情報を読み込む
   },
   methods: {
     // マイページに表示する出品・購入商品情報の取得
     getMyPageProducts: function getMyPageProducts() {
       var _this = this;
-      axios.get('/api/convenience/mypage/products').then(function (response) {
-        _this.saleProducts = response.data.sale_products;
-        _this.purchaseProducts = response.data.purchased_products;
-      })["catch"](function (error) {
-        console.error('商品情報取得失敗:', error.response.data);
-        _this.errors = error.response.data;
-      });
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
+        return _regeneratorRuntime().wrap(function _callee$(_context) {
+          while (1) switch (_context.prev = _context.next) {
+            case 0:
+              _context.prev = 0;
+              _context.next = 3;
+              return axios.get('/api/convenience/mypage/products');
+            case 3:
+              // レスポンスデータをそれぞれのプロパティにセット
+              _this.saleProducts = response.data.sale_products;
+              _this.purchaseProducts = response.data.purchased_products;
+              _context.next = 11;
+              break;
+            case 7:
+              _context.prev = 7;
+              _context.t0 = _context["catch"](0);
+              console.error('商品情報取得失敗:', _context.t0.response.data);
+              _this.errors = _context.t0.response.data;
+            case 11:
+            case "end":
+              return _context.stop();
+          }
+        }, _callee, null, [[0, 7]]);
+      }))();
     },
     // 商品画像のパスを取得するメソッド
     getProductPicturePath: function getProductPicturePath(product) {
-      // console.log('productは、', product);
       if (product.pictures.length > 0) {
-        return '/storage/product_pictures/' + product.pictures[0].file;
+        return '/storage/product_pictures/' + product.pictures[0].file; // 商品画像がある場合は、その画像パスを返す
       } else {
-        return '/storage/product_pictures/no_image.png';
+        return '/storage/product_pictures/no_image.png'; // 商品画像がない場合は、デフォルトの商品画像のパスを返す
       }
     },
-    // 日付をフォーマットするメソッド
+    // 賞味期限日付をフォーマットするメソッド
     formatDate: function formatDate(dateString) {
-      var date = new Date(dateString);
-      var year = date.getFullYear();
-      var month = ('0' + (date.getMonth() + 1)).slice(-2); // 月は 0 から始まるため +1
-      var day = ('0' + date.getDate()).slice(-2);
-      return "".concat(year, "\u5E74").concat(month, "\u6708").concat(day, "\u65E5");
+      var date = new Date(dateString); // Dateオブジェクトに変換する
+      var year = date.getFullYear(); // 年数を取得
+      var month = ('0' + (date.getMonth() + 1)).slice(-2); // 月数を取得、1桁の場合は2桁の数値に変換
+      var day = ('0' + date.getDate()).slice(-2); // 日数を取得、1桁の場合は2桁の数値に変換
+      return "".concat(year, "\u5E74").concat(month, "\u6708").concat(day, "\u65E5"); // 年月日のフォーマットされた賞味期限日付を返す
     }
   }
 });
@@ -5464,6 +5528,10 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == _typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw new Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(_typeof(e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw new Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, "catch": function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw new Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 //
 //
 //
@@ -5510,81 +5578,135 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       product: [],
+      // 商品情報
       categories: [],
-      errors: null
+      // カテゴリ
+      errors: null // エラーメッセージ
     };
   },
   created: function created() {
     this.productId = this.$route.params.productId; // ルートからproductIdを取得
-    this.getProduct(); // 商品情報を取得
+    this.getProduct(); // インスタンス初期化時に商品情報を読み込む
   },
   methods: {
     // 商品情報をサーバーから取得
     getProduct: function getProduct() {
       var _this = this;
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/products/' + this.productId).then(function (response) {
-        _this.product = response.data.product;
-        _this.category = response.data.product.category;
-        console.log('APIからのレスポンス:', response.data);
-        console.log('this.productは、', _this.product);
-        console.log('this.categoryは、', _this.category);
-      })["catch"](function (error) {
-        console.error('商品情報取得失敗:', error.response.data);
-        _this.errors = error.response.data;
-      });
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
+        var response;
+        return _regeneratorRuntime().wrap(function _callee$(_context) {
+          while (1) switch (_context.prev = _context.next) {
+            case 0:
+              _context.prev = 0;
+              _context.next = 3;
+              return axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/api/products/".concat(_this.productId));
+            case 3:
+              response = _context.sent;
+              // レスポンスデータをそれぞれのプロパティにセット
+              _this.product = response.data.product;
+              _this.category = response.data.product.category;
+              console.log('APIからのレスポンス:', response.data);
+              console.log('this.productは、', _this.product);
+              console.log('this.categoryは、', _this.category);
+              _context.next = 15;
+              break;
+            case 11:
+              _context.prev = 11;
+              _context.t0 = _context["catch"](0);
+              console.error('商品情報取得失敗:', _context.t0.response.data);
+              _this.errors = _context.t0.response.data;
+            case 15:
+            case "end":
+              return _context.stop();
+          }
+        }, _callee, null, [[0, 11]]);
+      }))();
     },
     // カテゴリIDからカテゴリ名を取得するメソッド
     getCategoryName: function getCategoryName(categoryId) {
       if (this.category && this.category.id === categoryId) {
-        return this.category.name;
+        // カテゴリ情報がある場合はcategoryIdと一致するidがあるか
+        return this.category.name; // カテゴリ名を返す
       }
-      return '';
+      return ''; // ない場合は空文字を返す
     },
     // 商品画像のパスを取得するメソッド
     getProductPicturePath: function getProductPicturePath(product) {
-      console.log('productは、', product);
-      if (product.pictures && product.pictures.length > 0) {
-        return '/storage/product_pictures/' + product.pictures[0].file;
+      if (product.pictures.length > 0) {
+        return '/storage/product_pictures/' + product.pictures[0].file; // 商品画像がある場合は、その画像パスを返す
       } else {
-        return '/storage/product_pictures/no_image.png';
+        return '/storage/product_pictures/no_image.png'; // 商品画像がない場合は、デフォルトの商品画像のパスを返す
       }
     },
-    // 日付をフォーマットするメソッド
+    // 賞味期限日付をフォーマットするメソッド
     formatDate: function formatDate(dateString) {
-      var date = new Date(dateString);
-      var year = date.getFullYear();
-      var month = ('0' + (date.getMonth() + 1)).slice(-2); // 月は 0 から始まるため +1
-      var day = ('0' + date.getDate()).slice(-2);
-      return "".concat(year, "\u5E74").concat(month, "\u6708").concat(day, "\u65E5");
+      var date = new Date(dateString); // Dateオブジェクトに変換する
+      var year = date.getFullYear(); // 年数を取得
+      var month = ('0' + (date.getMonth() + 1)).slice(-2); // 月数を取得、1桁の場合は2桁の数値に変換
+      var day = ('0' + date.getDate()).slice(-2); // 日数を取得、1桁の場合は2桁の数値に変換
+      return "".concat(year, "\u5E74").concat(month, "\u6708").concat(day, "\u65E5"); // 年月日のフォーマットされた賞味期限日付を返す
     },
-    // Twitterのシェアボタン
-    twitterShare: function twitterShare() {
+    // エックスのシェアボタン
+    Xshare: function Xshare() {
+      // エックスの投稿に遷移して商品を不特定多数の人がシェアできるようにする
       var shareURL = 'https://twitter.com/intent/tweet?text=' + "haiki share 商品をシェアする" + "%20%23haikishare" + '&url=' + "https://haikishare.com/user/products/detail/" + this.productId;
       location.href = shareURL;
     },
     // 商品お気に入り登録
     productLike: function productLike(product) {
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/user/like/' + product.id).then(function (response) {
-        console.log(product.id, 'の商品をお気に入り登録しました。');
-        product.liked = true;
-        console.log('this.likedは、', product.liked);
-        product.likes_count++;
-        console.log('product.likes_countは、', product.likes_count);
-      })["catch"](function (error) {
-        console.error('商品のお気に入り登録失敗:', error);
-      });
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
+        return _regeneratorRuntime().wrap(function _callee2$(_context2) {
+          while (1) switch (_context2.prev = _context2.next) {
+            case 0:
+              _context2.prev = 0;
+              _context2.next = 3;
+              return axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/user/like/' + product.id);
+            case 3:
+              console.log(product.id, 'の商品をお気に入り登録しました。');
+              product.liked = true; // いいねアイコンをtrueに切り替え
+              console.log('this.likedは、', product.liked);
+              product.likes_count++; // いいね数のインクリメント
+              console.log('product.likes_countは、', product.likes_count);
+              _context2.next = 13;
+              break;
+            case 10:
+              _context2.prev = 10;
+              _context2.t0 = _context2["catch"](0);
+              console.error('商品のお気に入り登録失敗:', _context2.t0);
+            case 13:
+            case "end":
+              return _context2.stop();
+          }
+        }, _callee2, null, [[0, 10]]);
+      }))();
     },
     // 商品お気に入り解除
     productUnlike: function productUnlike(product) {
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/user/unlike/' + product.id).then(function (response) {
-        console.log(product.id, 'の商品をお気に入り解除しました。');
-        product.liked = false;
-        console.log('product.likedは、', product.liked);
-        product.likes_count--;
-        console.log('product.likes_count', product.likes_count);
-      })["catch"](function (error) {
-        console.error('商品のお気に入り解除失敗:', error);
-      });
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3() {
+        return _regeneratorRuntime().wrap(function _callee3$(_context3) {
+          while (1) switch (_context3.prev = _context3.next) {
+            case 0:
+              _context3.prev = 0;
+              _context3.next = 3;
+              return axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/user/unlike/' + product.id);
+            case 3:
+              console.log(product.id, 'の商品をお気に入り解除しました。');
+              product.liked = false; // いいねアイコンをfalseに切り替え
+              console.log('product.likedは、', product.liked);
+              product.likes_count--; // いいね数のデクリメント
+              console.log('product.likes_count', product.likes_count);
+              _context3.next = 13;
+              break;
+            case 10:
+              _context3.prev = 10;
+              _context3.t0 = _context3["catch"](0);
+              console.error('商品のお気に入り解除失敗:', _context3.t0);
+            case 13:
+            case "end":
+              return _context3.stop();
+          }
+        }, _callee3, null, [[0, 10]]);
+      }))();
     }
   }
 });
@@ -5602,6 +5724,12 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == _typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw new Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(_typeof(e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw new Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, "catch": function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw new Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+//
+//
 //
 //
 //
@@ -5660,138 +5788,214 @@ __webpack_require__.r(__webpack_exports__);
     return {
       formData: {
         name: '',
+        // 商品名
         price: '',
-        category_id: '',
+        // 価格
+        category: '',
+        // カテゴリ名
         expiration_date: '',
-        product_picture: ''
+        // 賞味期限
+        product_picture: '' // 商品画像
       },
       categories: [],
+      // 商品カテゴリ
       picturePreview: '',
-      errors: null
+      // 商品画像のプレビュー
+      errors: null // エラーメッセージ
     };
   },
   computed: {
     // 賞味期限日付の入力値をYYYY-MM-DD形式に直すメソッド
     formattedExpirationDate: function formattedExpirationDate() {
-      var inputDate = this.formData.expiration_date;
-
-      // YYYYMMDD形式に直す
+      var inputDate = this.formData.expiration_date; // 賞味期限フォームの入力値
+      // 賞味期限日付の形式をYYYY-MM-DD形式に直す
       if (inputDate && inputDate.length === 8) {
         var year = inputDate.substring(0, 4); // YYYYの部分を取り出す
         var month = inputDate.substring(4, 6); // MMの部分を取り出す
         var day = inputDate.substring(6, 8); // DDの部分を取り出す
-        // YYYYMMDD形式に変換して返す
-        return "".concat(year).concat(month).concat(day);
+        return "".concat(year, "-").concat(month, "-").concat(day); // YYYY-MM-DD形式に変換して返す
       } else {
-        // 入力が不正な場合は空文字を返す
-        return '';
+        return ''; // 入力が不正な場合は空文字を返す
       }
     }
   },
   created: function created() {
     this.productId = this.$route.params.productId; // ルートからproductIdを取得
-    this.getProduct(); // 商品情報を取得
-    this.getCategories(); // 商品カテゴリー情報を取得
+    this.getProduct(); // インスタンス初期化時に商品情報を読み込む
+    this.getCategories(); // インスタンス初期化時に商品カテゴリ情報を読み込む
   },
   methods: {
-    // 商品カテゴリー情報をサーバーから取得
+    // 商品カテゴリ情報をサーバーから取得
     getCategories: function getCategories() {
       var _this = this;
-      console.log('商品カテゴリーを取得します');
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/categories').then(function (response) {
-        _this.categories = response.data.categories;
-      })["catch"](function (error) {
-        console.error('商品カテゴリー情報取得失敗:', error.response.data);
-        _this.errors = error.response.data;
-      });
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
+        var response;
+        return _regeneratorRuntime().wrap(function _callee$(_context) {
+          while (1) switch (_context.prev = _context.next) {
+            case 0:
+              _context.prev = 0;
+              _context.next = 3;
+              return axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/categories');
+            case 3:
+              response = _context.sent;
+              _this.categories = response.data.categories; // レスポンスデータのカテゴリ情報をcategoriesプロパティにセット
+              _context.next = 11;
+              break;
+            case 7:
+              _context.prev = 7;
+              _context.t0 = _context["catch"](0);
+              console.error('カテゴリー情報取得失敗:', _context.t0.response.data);
+              _this.errors = _context.t0.response.data;
+            case 11:
+            case "end":
+              return _context.stop();
+          }
+        }, _callee, null, [[0, 7]]);
+      }))();
     },
     // 商品情報をサーバーから取得
     getProduct: function getProduct() {
       var _this2 = this;
-      console.log('商品情報を取得します');
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/products/' + this.productId).then(function (response) {
-        _this2.product = response.data.product;
-        console.log('APIからのレスポンス:', response.data);
-        // 取得した商品情報をformDataに入れる
-        _this2.formData.name = _this2.product.name || '';
-        _this2.formData.price = _this2.product.price || '';
-        _this2.formData.category_id = _this2.product.category_id.id || '';
-        _this2.formData.expiration_date = _this2.product.expiration_date.replace(/-/g, '') || ''; // YY-MM-DD形式からハイフンだけを取り除く
-        _this2.formData.product_picture = _this2.product.pictures[0].file || '';
-      })["catch"](function (error) {
-        console.error('商品情報取得失敗:', error.response.data);
-        _this2.errors = error.response.data;
-      });
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
+        var response;
+        return _regeneratorRuntime().wrap(function _callee2$(_context2) {
+          while (1) switch (_context2.prev = _context2.next) {
+            case 0:
+              _context2.prev = 0;
+              console.log('商品情報を取得します');
+              // 商品情報取得APIをGET送信
+              _context2.next = 4;
+              return axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/api/products/".concat(_this2.productId));
+            case 4:
+              response = _context2.sent;
+              _this2.product = response.data.product; // レスポンスデータの商品情報をproductプロパティにセット
+              console.log('APIからのレスポンス:', response.data);
+              // 取得した商品情報をformDataに入れる
+              _this2.formData.name = _this2.product.name || ''; // 商品名
+              _this2.formData.price = _this2.product.price || ''; // 価格
+              _this2.formData.category = _this2.product.category.id || ''; // カテゴリ名
+              _this2.formData.expiration_date = _this2.product.expiration_date.replace(/-/g, '') || ''; // 賞味期限、YY-MM-DD形式からハイフンだけを取り除く
+              _this2.formData.product_picture = _this2.product.pictures[0].file || ''; // 商品画像
+              _context2.next = 18;
+              break;
+            case 14:
+              _context2.prev = 14;
+              _context2.t0 = _context2["catch"](0);
+              console.error('商品情報取得失敗:', _context2.t0.response.data);
+              _this2.errors = _context2.t0.response.data;
+            case 18:
+            case "end":
+              return _context2.stop();
+          }
+        }, _callee2, null, [[0, 14]]);
+      }))();
     },
     // 入力された値をサーバー側に送信するメソッド
     submitForm: function submitForm() {
       var _this3 = this;
-      var productId = this.productId;
-
-      // リクエストヘッダー定義
-      var config = {
-        headers: {
-          'content-type': 'multipart/form-data'
-        }
-      };
-
-      // フォームデータを作成
-      var formData = new FormData();
-      formData.append('_method', 'PUT');
-      formData.append('name', this.formData.name);
-      formData.append('price', this.formData.price);
-      formData.append('category_id', this.formData.category_id);
-      formData.append('expiration_date', this.formattedExpirationDate);
-      formData.append('product_picture', this.formData.product_picture);
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/convenience/products/edit/' + productId, formData, config).then(function (response) {
-        _this3.message = response.data.message;
-        console.log('this.messageは、', _this3.message);
-        console.log('商品情報を更新します。');
-        _this3.$router.push({
-          name: 'convenience.products.sale'
-        }); // 商品更新処理後、出品した商品一覧画面に遷移
-      })["catch"](function (error) {
-        console.error('商品編集失敗:', error.response.data);
-        _this3.errors = error.response.data.errors;
-      });
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3() {
+        var productId, config, _formData, response;
+        return _regeneratorRuntime().wrap(function _callee3$(_context3) {
+          while (1) switch (_context3.prev = _context3.next) {
+            case 0:
+              _context3.prev = 0;
+              productId = _this3.productId; // 商品ID
+              // リクエストヘッダー定義
+              config = {
+                headers: {
+                  'content-type': 'multipart/form-data' // ファイルのアップロードを含むリクエストボディのデータ形式
+                }
+              }; // フォームデータを作成
+              _formData = new FormData(); // FormDataオブジェクトの作成
+              _formData.append('_method', 'PUT'); // リクエストメソッドをPUTにする
+              _formData.append('name', _this3.formData.name); // 商品名
+              _formData.append('price', _this3.formData.price); // 価格
+              _formData.append('category', _this3.formData.category); // 商品カテゴリ
+              _formData.append('expiration_date', _this3.formattedExpirationDate); // 賞味期限
+              _formData.append('product_picture', _this3.formData.product_picture); // 商品画像
+              // 商品編集APIをPOST送信
+              _context3.next = 12;
+              return axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("/api/convenience/products/edit/".concat(productId), _formData, config);
+            case 12:
+              response = _context3.sent;
+              // 商品IDとリクエストヘッダとフォームデータを含むリクエスト
+              _this3.message = response.data.message;
+              console.log('this.messageは、', _this3.message);
+              console.log('商品情報を更新します。');
+              _this3.$router.push({
+                name: 'convenience.products.sale'
+              }); // 商品更新処理後、出品した商品一覧画面に遷移
+              _context3.next = 23;
+              break;
+            case 19:
+              _context3.prev = 19;
+              _context3.t0 = _context3["catch"](0);
+              console.error('商品編集失敗:', _context3.t0.response.data);
+              _this3.errors = _context3.t0.response.data.errors;
+            case 23:
+            case "end":
+              return _context3.stop();
+          }
+        }, _callee3, null, [[0, 19]]);
+      }))();
     },
     // 商品削除処理をサーバー側に送信するメソッド
     deleteProduct: function deleteProduct() {
       var _this4 = this;
-      var productId = this.productId;
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a["delete"]('/api/convenience/products/' + productId).then(function (response) {
-        console.log('商品情報を削除します。');
-        _this4.$router.push({
-          name: 'convenience.products.sale'
-        }); // 商品削除処理後、出品した商品一覧画面に遷移
-      })["catch"](function (error) {
-        console.error('商品削除失敗:', error.response.data);
-        _this4.errors = error.response.data.errors;
-      });
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee4() {
+        var productId;
+        return _regeneratorRuntime().wrap(function _callee4$(_context4) {
+          while (1) switch (_context4.prev = _context4.next) {
+            case 0:
+              _context4.prev = 0;
+              productId = _this4.productId; // 商品ID
+              // 商品削除APIをDELETE送信
+              _context4.next = 4;
+              return axios__WEBPACK_IMPORTED_MODULE_0___default.a["delete"]("/api/convenience/products/".concat(productId));
+            case 4:
+              console.log('商品情報を削除します。');
+              _this4.$router.push({
+                name: 'convenience.products.sale'
+              }); // 商品削除処理後、出品した商品一覧画面に遷移
+              _context4.next = 12;
+              break;
+            case 8:
+              _context4.prev = 8;
+              _context4.t0 = _context4["catch"](0);
+              console.error('商品削除失敗:', _context4.t0.response.data);
+              _this4.errors = _context4.t0.response.data.errors;
+            case 12:
+            case "end":
+              return _context4.stop();
+          }
+        }, _callee4, null, [[0, 8]]);
+      }))();
     },
     // ドラッグ＆ドロップエリアに画像がドロップされたときの処理
     handleDrop: function handleDrop(event) {
-      event.preventDefault();
-      event.dataTransfer.files[0];
+      event.preventDefault(); // デフォルトの動作をキャンセル
+      event.dataTransfer.files[0]; // 最初のファイルを取得
     },
     // ファイルが選択されたときの処理
     handleFileChange: function handleFileChange(event) {
-      var file = event.target.files[0];
-      console.log('選択されたファイル:', file);
-      // プレビューを表示する
-      this.previewImage(file);
-      // formData.product_pictureにファイルオブジェクトを設定
-      this.formData.product_picture = file;
+      var file = event.target.files[0]; // 最初のファイルを取得
+      if (file) {
+        this.previewImage(file); // プレビューを表示する
+        this.formData.product_picture = file;
+        / / / formData.product_pictureにファイルオブジェクトを設定;
+      } else {
+        this.formData.product_picture = null; // ファイルがない場合はnull
+      }
     },
     // 画像のプレビューを表示するメソッド
     previewImage: function previewImage(file) {
       var _this5 = this;
-      var reader = new FileReader();
+      var reader = new FileReader(); // FileReaderオブジェクトの作成
       reader.onload = function (e) {
-        // プレビュー画像のURLを生成し、formDataに設定
-        _this5.picturePreview = e.target.result;
+        // 画像の読み込み
+        _this5.picturePreview = e.target.result; // プレビュー画像のURLを生成し、formDataに設定
       };
-      reader.readAsDataURL(file);
+      reader.readAsDataURL(file); // ファイルをデータURLとして読み込み
     }
   }
 });
@@ -5810,6 +6014,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _PaginationComponent_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../PaginationComponent.vue */ "./resources/js/components/PaginationComponent.vue");
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == _typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw new Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(_typeof(e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw new Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, "catch": function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw new Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 //
 //
 //
@@ -5857,23 +6065,19 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
-    PaginationComponent: _PaginationComponent_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
+    PaginationComponent: _PaginationComponent_vue__WEBPACK_IMPORTED_MODULE_1__["default"] // ページネーションコンポーネント
   },
   data: function data() {
     return {
       products: [],
+      // 商品情報
       currentPage: 1,
-      lastPage: 1
+      // 現在ページ
+      lastPage: 1 // 最後のページ
     };
   },
-  computed: {
-    // ログインユーザーかどうか
-    isLogin: function isLogin() {
-      return this.$store.getters['auth/check'];
-    }
-  },
   created: function created() {
-    this.getProduct(); // サーバから商品情報を取得
+    this.getProduct(); // インスタンス初期化時に商品情報を読み込む
   },
   methods: {
     // URLを作成する
@@ -5883,14 +6087,15 @@ __webpack_require__.r(__webpack_exports__);
       // URLの組み立て
       var url = "/convenience/products/purchased";
       if (params && params.page) {
-        url += "?page=".concat(params.page);
+        // パラメータとパラメータのpageがある場合
+        url += "?page=".concat(params.page); // urlにparams.pageを追加
       } else {
-        url += "?page=".concat(this.currentPage);
+        url += "?page=".concat(this.currentPage); // urlにthis.currentPageを追加
       }
       console.log('検索URL:', url);
       // ページ遷移
       this.$router.push(url).then(function () {
-        _this.getProduct(); // ページ遷移が完了した後にgetProductを呼び出す
+        _this.getProduct(); // ページ遷移が完了した後にgetProduct()メソッドを呼び出す
       });
     },
     // ページが変更されたときの処理
@@ -5899,7 +6104,7 @@ __webpack_require__.r(__webpack_exports__);
       if (this.currentPage !== page) {
         // 現在のページ番号と新しいページ番号が異なるか
         this.currentPage = page; // ページ番号を更新
-        var params = Object.assign({}, this.$route.query);
+        var params = Object.assign({}, this.$route.query); // 新しいクエリパラメータをparamsオブジェクトにコピー
         params.page = page; // 新しいページ番号にする
         this.createURL(params); // 新しいURLを生成して画面遷移
       }
@@ -5907,40 +6112,58 @@ __webpack_require__.r(__webpack_exports__);
     // 商品情報をサーバーから取得
     getProduct: function getProduct() {
       var _this2 = this;
-      console.log('購入された商品情報を取得します');
-      // 現在のルートのクエリパラメータを取得
-      var params = Object.assign({}, this.$route.query); // クエリパラメータのコピーを作成
-      console.log('paramsは、', params, 'this.currentPageは、', this.currentPage);
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/convenience/products/purchased', {
-        params: params
-      }).then(function (response) {
-        console.log('curent_pageは、', response.data.products.current_page);
-        console.log('getProductのAPIからのレスポンス:', response.data);
-        _this2.products = response.data.products;
-        console.log('this.productsは、', _this2.products);
-        _this2.lastPage = response.data.products.last_page;
-        console.log('this.lastPageは、', _this2.lastPage);
-      })["catch"](function (error) {
-        console.error('商品情報取得失敗:', error.response.data);
-        _this2.errors = error.response.data;
-      });
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
+        var params, response;
+        return _regeneratorRuntime().wrap(function _callee$(_context) {
+          while (1) switch (_context.prev = _context.next) {
+            case 0:
+              _context.prev = 0;
+              console.log('購入された商品情報を取得します');
+              // 現在のルートのクエリパラメータを取得
+              params = Object.assign({}, _this2.$route.query); // クエリパラメータのコピーを作成
+              console.log('paramsは、', params, 'this.currentPageは、', _this2.currentPage);
+              // 購入された商品情報取得APIをGET送信
+              _context.next = 6;
+              return axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/convenience/products/purchased', {
+                params: params
+              });
+            case 6:
+              response = _context.sent;
+              // パラメータを含むリクエスト
+              console.log('curent_pageは、', response.data.products.current_page);
+              console.log('getProductのAPIからのレスポンス:', response.data);
+              // レスポンスデータをそれぞれのプロパティにセット
+              _this2.products = response.data.products;
+              _this2.lastPage = response.data.products.last_page;
+              _context.next = 17;
+              break;
+            case 13:
+              _context.prev = 13;
+              _context.t0 = _context["catch"](0);
+              console.error('商品情報取得失敗:', _context.t0.response.data);
+              _this2.errors = _context.t0.response.data;
+            case 17:
+            case "end":
+              return _context.stop();
+          }
+        }, _callee, null, [[0, 13]]);
+      }))();
     },
     // 商品画像のパスを取得するメソッド
     getProductPicturePath: function getProductPicturePath(product) {
-      // console.log('productは、', product);
       if (product.pictures.length > 0) {
-        return '/storage/product_pictures/' + product.pictures[0].file;
+        return '/storage/product_pictures/' + product.pictures[0].file; // 商品画像がある場合は、その画像パスを返す
       } else {
-        return '/storage/product_pictures/no_image.png';
+        return '/storage/product_pictures/no_image.png'; // 商品画像がない場合は、デフォルトの商品画像のパスを返す
       }
     },
-    // 日付をフォーマットするメソッド
+    // 賞味期限日付をフォーマットするメソッド
     formatDate: function formatDate(dateString) {
-      var date = new Date(dateString);
-      var year = date.getFullYear();
-      var month = ('0' + (date.getMonth() + 1)).slice(-2); // 月は 0 から始まるため +1
-      var day = ('0' + date.getDate()).slice(-2);
-      return "".concat(year, "\u5E74").concat(month, "\u6708").concat(day, "\u65E5");
+      var date = new Date(dateString); // Dateオブジェクトに変換する
+      var year = date.getFullYear(); // 年数を取得
+      var month = ('0' + (date.getMonth() + 1)).slice(-2); // 月数を取得、1桁の場合は2桁の数値に変換
+      var day = ('0' + date.getDate()).slice(-2); // 日数を取得、1桁の場合は2桁の数値に変換
+      return "".concat(year, "\u5E74").concat(month, "\u6708").concat(day, "\u65E5"); // 年月日のフォーマットされた賞味期限日付を返す
     },
     // 商品詳細画面のリンクを返すメソッド
     getProductDetailLink: function getProductDetailLink(productId) {
@@ -5949,7 +6172,7 @@ __webpack_require__.r(__webpack_exports__);
         params: {
           productId: productId
         }
-      };
+      }; // 商品詳細画面のリンクを返す
     }
   }
 });
@@ -5967,6 +6190,12 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == _typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw new Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(_typeof(e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw new Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, "catch": function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw new Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+//
+//
 //
 //
 //
@@ -6023,101 +6252,139 @@ __webpack_require__.r(__webpack_exports__);
     return {
       formData: {
         name: '',
+        // 商品名
         price: '',
+        // 価格
         category: '',
+        // カテゴリ名
         expiration_date: '',
-        product_picture: ''
+        // 賞味期限
+        product_picture: '' // 商品画像
       },
       categories: [],
+      // 商品カテゴリ
       picturePreview: '',
-      errors: null
+      // 商品画像のプレビュー
+      errors: null // エラーメッセージ
     };
   },
   computed: {
     // 賞味期限日付の入力値をYYYY-MM-DD形式に直すメソッド
     formattedExpirationDate: function formattedExpirationDate() {
-      var inputDate = this.formData.expiration_date;
-      // YYYYMMDD形式に直す
+      var inputDate = this.formData.expiration_date; // 賞味期限フォームの入力値
+      // 賞味期限日付の形式をYYYY-MM-DD形式に直す
       if (inputDate && inputDate.length === 8) {
         var year = inputDate.substring(0, 4); // YYYYの部分を取り出す
         var month = inputDate.substring(4, 6); // MMの部分を取り出す
         var day = inputDate.substring(6, 8); // DDの部分を取り出す
-        // YYYY-MM-DD形式に変換して返す
-        return "".concat(year, "-").concat(month, "-").concat(day);
+        return "".concat(year, "-").concat(month, "-").concat(day); // YYYY-MM-DD形式に変換して返す
       } else {
-        // 入力が不正な場合は空文字を返す
-        return '';
+        return ''; // 入力が不正な場合は空文字を返す
       }
     }
   },
   created: function created() {
-    this.getCategories(); // 商品カテゴリー情報を取得
+    this.getCategories(); // インスタンス初期化時に商品カテゴリ情報を読み込む
   },
   methods: {
-    // 画像入力フィールドを追加するメソッド
-    addImageInput: function addImageInput() {
-      this.imageInputs.push(this.imageInputs.length);
-    },
-    // 商品カテゴリー情報をサーバーから取得
+    // 商品カテゴリ情報をサーバーから取得
     getCategories: function getCategories() {
       var _this = this;
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/categories').then(function (response) {
-        _this.categories = response.data.categories;
-      })["catch"](function (error) {
-        console.error('カテゴリー情報取得失敗:', error.response.data);
-        _this.errors = error.response.data;
-      });
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
+        var response;
+        return _regeneratorRuntime().wrap(function _callee$(_context) {
+          while (1) switch (_context.prev = _context.next) {
+            case 0:
+              _context.prev = 0;
+              _context.next = 3;
+              return axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/categories');
+            case 3:
+              response = _context.sent;
+              _this.categories = response.data.categories; // レスポンスデータのカテゴリ情報をcategoriesプロパティにセット
+              _context.next = 11;
+              break;
+            case 7:
+              _context.prev = 7;
+              _context.t0 = _context["catch"](0);
+              console.error('カテゴリー情報取得失敗:', _context.t0.response.data);
+              _this.errors = _context.t0.response.data;
+            case 11:
+            case "end":
+              return _context.stop();
+          }
+        }, _callee, null, [[0, 7]]);
+      }))();
     },
     // 入力された値をサーバー側に送信するメソッド
     submitForm: function submitForm() {
       var _this2 = this;
-      // リクエストヘッダー定義
-      var config = {
-        headers: {
-          'content-type': 'multipart/form-data'
-        }
-      };
-      // フォームデータを作成
-      var formData = new FormData();
-      formData.append('_method', 'PUT');
-      formData.append('name', this.formData.name);
-      formData.append('price', this.formData.price);
-      formData.append('category', this.formData.category);
-      formData.append('expiration_date', this.formattedExpirationDate);
-      formData.append('product_picture', this.formData.product_picture);
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/convenience/products/sale', formData, config).then(function (response) {
-        console.log('商品を投稿します。');
-        _this2.$router.push({
-          name: 'convenience.mypage'
-        });
-      })["catch"](function (error) {
-        console.error('商品出品失敗:', error.response.data);
-        _this2.errors = error.response.data.errors;
-      });
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
+        var config, _formData;
+        return _regeneratorRuntime().wrap(function _callee2$(_context2) {
+          while (1) switch (_context2.prev = _context2.next) {
+            case 0:
+              _context2.prev = 0;
+              // リクエストヘッダー定義
+              config = {
+                headers: {
+                  'content-type': 'multipart/form-data' // ファイルのアップロードを含むリクエストボディのデータ形式
+                }
+              }; // フォームデータを作成
+              _formData = new FormData(); // FormDataオブジェクトの作成
+              _formData.append('_method', 'PUT'); // リクエストメソッドをPUTにする
+              _formData.append('name', _this2.formData.name); // 商品名
+              _formData.append('price', _this2.formData.price); // 価格
+              _formData.append('category', _this2.formData.category); // カテゴリ名
+              _formData.append('expiration_date', _this2.formattedExpirationDate); // 賞味期限
+              _formData.append('product_picture', _this2.formData.product_picture); // 商品画像
+              // 商品出品APIをPOST送信
+              _context2.next = 11;
+              return axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/convenience/products/sale', config, _formData);
+            case 11:
+              // リクエストヘッダとフォームデータを含むリクエスト
+              console.log('商品を投稿します。');
+              _this2.$router.push({
+                name: 'convenience.mypage'
+              }); // 商品出品後、マイページに遷移
+              _context2.next = 19;
+              break;
+            case 15:
+              _context2.prev = 15;
+              _context2.t0 = _context2["catch"](0);
+              console.error('商品出品失敗:', _context2.t0.response.data);
+              _this2.errors = _context2.t0.response.data.errors;
+            case 19:
+            case "end":
+              return _context2.stop();
+          }
+        }, _callee2, null, [[0, 15]]);
+      }))();
     },
     // ドラッグ＆ドロップエリアに画像がドロップされたときの処理
     handleDrop: function handleDrop(event) {
-      event.preventDefault();
-      event.dataTransfer.files[0];
+      event.preventDefault(); // デフォルトの動作をキャンセル
+      event.dataTransfer.files[0]; // 最初のファイルを取得
     },
     // ファイルが選択されたときの処理
     handleFileChange: function handleFileChange(event) {
-      var file = event.target.files[0];
-      console.log('選択されたファイル:', file);
-      // プレビューを表示する
-      this.previewImage(file);
-      // formData.product_pictureにファイルオブジェクトを設定
-      this.formData.product_picture = file;
+      var file = event.target.files[0]; // 最初のファイルを取得
+      if (file) {
+        this.previewImage(file); // プレビューを表示する
+        this.formData.product_picture = file;
+        / / / formData.product_pictureにファイルオブジェクトを設定;
+      } else {
+        this.formData.product_picture = null; // ファイルがない場合はnull
+      }
     },
     // 画像のプレビューを表示するメソッド
     previewImage: function previewImage(file) {
       var _this3 = this;
-      var reader = new FileReader();
+      var reader = new FileReader(); // FileReaderオブジェクトの作成
       reader.onload = function (e) {
-        // プレビュー画像のURLを生成し、formDataに設定
-        _this3.picturePreview = e.target.result;
+        // 画像の読み込み
+        _this3.picturePreview = e.target.result; // プレビュー画像のURLを生成し、formDataに設定
       };
-      reader.readAsDataURL(file);
+      reader.readAsDataURL(file); // ファイルをデータURLとして読み込み
     }
   }
 });
@@ -6136,6 +6403,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _PaginationComponent_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../PaginationComponent.vue */ "./resources/js/components/PaginationComponent.vue");
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == _typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw new Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(_typeof(e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw new Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, "catch": function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw new Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 //
 //
 //
@@ -6183,24 +6454,19 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
-    PaginationComponent: _PaginationComponent_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
+    PaginationComponent: _PaginationComponent_vue__WEBPACK_IMPORTED_MODULE_1__["default"] // ページネーションコンポーネント
   },
   data: function data() {
     return {
       products: [],
+      // 商品情報
       currentPage: 1,
-      // currentPageを定義
-      lastPage: 1 // lastPageを定義
+      // 現在ページ
+      lastPage: 1 // 最後のページ
     };
   },
-  computed: {
-    // ログインユーザーかどうか
-    isLogin: function isLogin() {
-      return this.$store.getters['auth/check'];
-    }
-  },
   created: function created() {
-    this.getProduct(); // サーバから商品情報を取得
+    this.getProduct(); // インスタンス初期化時に商品情報を読み込む
   },
   methods: {
     // URLを作成する
@@ -6210,14 +6476,15 @@ __webpack_require__.r(__webpack_exports__);
       // URLの組み立て
       var url = "/convenience/products/sale";
       if (params && params.page) {
-        url += "?page=".concat(params.page);
+        // パラメータとパラメータのpageがある場合
+        url += "?page=".concat(params.page); // urlにparams.pageを追加
       } else {
-        url += "?page=".concat(this.currentPage);
+        url += "?page=".concat(this.currentPage); // urlにthis.currentPageを追加
       }
       console.log('検索URL:', url);
       // ページ遷移
       this.$router.push(url).then(function () {
-        _this.getProduct(); // ページ遷移が完了した後にgetProductを呼び出す
+        _this.getProduct(); // ページ遷移が完了した後にgetProduct()メソッドを呼び出す
       });
     },
     // ページが変更されたときの処理
@@ -6226,7 +6493,7 @@ __webpack_require__.r(__webpack_exports__);
       if (this.currentPage !== page) {
         // 現在のページ番号と新しいページ番号が異なるか
         this.currentPage = page; // ページ番号を更新
-        var params = Object.assign({}, this.$route.query);
+        var params = Object.assign({}, this.$route.query); // 新しいクエリパラメータをparamsオブジェクトにコピー
         params.page = page; // 新しいページ番号にする
         this.createURL(params); // 新しいURLを生成して画面遷移
       }
@@ -6234,40 +6501,58 @@ __webpack_require__.r(__webpack_exports__);
     // 商品情報をサーバーから取得
     getProduct: function getProduct() {
       var _this2 = this;
-      console.log('出品した商品情報を取得します');
-      // 現在のルートのクエリパラメータを取得
-      var params = Object.assign({}, this.$route.query); // クエリパラメータのコピーを作成
-      console.log('paramsは、', params, 'this.currentPageは、', this.currentPage);
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/convenience/products', {
-        params: params
-      }).then(function (response) {
-        console.log('curent_pageは、', response.data.products.current_page);
-        console.log('getProductのAPIからのレスポンス:', response.data);
-        _this2.products = response.data.products;
-        console.log('productsは、', _this2.products);
-        _this2.lastPage = response.data.products.last_page;
-        console.log('this.lastPageは、', _this2.lastPage);
-      })["catch"](function (error) {
-        console.error('商品情報取得失敗:', error.response.data);
-        _this2.errors = error.response.data;
-      });
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
+        var params, response;
+        return _regeneratorRuntime().wrap(function _callee$(_context) {
+          while (1) switch (_context.prev = _context.next) {
+            case 0:
+              _context.prev = 0;
+              console.log('出品した商品情報を取得します');
+              // 現在のルートのクエリパラメータを取得
+              params = Object.assign({}, _this2.$route.query); // クエリパラメータのコピーを作成
+              console.log('paramsは、', params, 'this.currentPageは、', _this2.currentPage);
+              // 購入された商品情報取得APIをGET送信
+              _context.next = 6;
+              return axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/convenience/products', {
+                params: params
+              });
+            case 6:
+              response = _context.sent;
+              // パラメータを含むリクエスト
+              console.log('curent_pageは、', response.data.products.current_page);
+              console.log('getProductのAPIからのレスポンス:', response.data);
+              // レスポンスデータをそれぞれのプロパティにセット
+              _this2.products = response.data.products;
+              _this2.lastPage = response.data.products.last_page;
+              _context.next = 17;
+              break;
+            case 13:
+              _context.prev = 13;
+              _context.t0 = _context["catch"](0);
+              console.error('商品情報取得失敗:', _context.t0.response.data);
+              _this2.errors = _context.t0.response.data;
+            case 17:
+            case "end":
+              return _context.stop();
+          }
+        }, _callee, null, [[0, 13]]);
+      }))();
     },
     // 商品画像のパスを取得するメソッド
     getProductPicturePath: function getProductPicturePath(product) {
-      // console.log('productは、', product);
       if (product.pictures.length > 0) {
-        return '/storage/product_pictures/' + product.pictures[0].file;
+        return '/storage/product_pictures/' + product.pictures[0].file; // 商品画像がある場合は、その画像パスを返す
       } else {
-        return '/storage/product_pictures/no_image.png';
+        return '/storage/product_pictures/no_image.png'; // 商品画像がない場合は、デフォルトの商品画像のパスを返す
       }
     },
-    // 日付をフォーマットするメソッド
+    // 賞味期限日付をフォーマットするメソッド
     formatDate: function formatDate(dateString) {
-      var date = new Date(dateString);
-      var year = date.getFullYear();
-      var month = ('0' + (date.getMonth() + 1)).slice(-2); // 月は 0 から始まるため +1
-      var day = ('0' + date.getDate()).slice(-2);
-      return "".concat(year, "\u5E74").concat(month, "\u6708").concat(day, "\u65E5");
+      var date = new Date(dateString); // Dateオブジェクトに変換する
+      var year = date.getFullYear(); // 年数を取得
+      var month = ('0' + (date.getMonth() + 1)).slice(-2); // 月数を取得、1桁の場合は2桁の数値に変換
+      var day = ('0' + date.getDate()).slice(-2); // 日数を取得、1桁の場合は2桁の数値に変換
+      return "".concat(year, "\u5E74").concat(month, "\u6708").concat(day, "\u65E5"); // 年月日のフォーマットされた賞味期限日付を返す
     },
     // 商品詳細画面のリンクを返すメソッド
     getProductDetailLink: function getProductDetailLink(productId) {
@@ -6276,7 +6561,7 @@ __webpack_require__.r(__webpack_exports__);
         params: {
           productId: productId
         }
-      };
+      }; // 商品詳細画面のリンクを返す
     },
     // 商品編集画面のリンクを返すメソッド
     getProductEditLink: function getProductEditLink(productId) {
@@ -6285,7 +6570,7 @@ __webpack_require__.r(__webpack_exports__);
         params: {
           productId: productId
         }
-      };
+      }; // 商品編集画面のリンクを返す
     }
   }
 });
@@ -6303,6 +6588,18 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == _typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw new Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(_typeof(e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw new Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, "catch": function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw new Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -6394,21 +6691,33 @@ var jsonpAdapter = __webpack_require__(/*! axios-jsonp */ "./node_modules/axios-
     return {
       formData: {
         convenience_name: '',
+        // コンビニ名
         branch_name: '',
+        // 支店名
         prefecture: '',
+        // 都道府県
         city: '',
+        // 市区町村
         town: '',
+        // 地名・番名
         building: '',
+        // 建物名・部屋番号
         email: '',
+        // メールアドレス
         password: '',
+        // パスワード
         password_confirmation: '',
+        // パスワード（再入力）
         introduction: '',
-        icon: ''
+        // 自己紹介文
+        icon: '' // 顔写真
       },
       textareaCount: 0,
       // 自己紹介文の文字数カウント初期値
       iconPreview: '',
+      // アイコン画像のプレビュー
       errors: null,
+      // エラーメッセージ
       PasswordType: 'password',
       // パスワードの初期設定
       PasswordConfirmType: 'password',
@@ -6419,133 +6728,199 @@ var jsonpAdapter = __webpack_require__(/*! axios-jsonp */ "./node_modules/axios-
     };
   },
   created: function created() {
-    this.getProfile(); // プロフィール情報を取得
+    this.getProfile(); // インスタンス初期化時にプロフィール情報を読み込む
   },
   methods: {
     // 編集前のプロフィール情報をサーバーから取得
     getProfile: function getProfile() {
       var _this = this;
-      console.log('プロフィールを取得します');
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/convenience/mypage/profile').then(function (response) {
-        _this.user = response.data.user;
-        _this.convenience = response.data.convenience;
-        _this.address = response.data.address;
-        console.log('APIからのレスポンス:', response.data);
-        // 取得したプロフィール情報をformDataに入れる
-        _this.formData.convenience_name = _this.user.name || '';
-        _this.formData.branch_name = _this.convenience.branch_name || '', _this.formData.prefecture = _this.address.prefecture || '', _this.formData.city = _this.address.city || '', _this.formData.town = _this.address.town || '', _this.formData.building = _this.address.building || '', _this.formData.email = _this.user.email || '';
-        _this.formData.password = ''; // 編集前のパスワードは非表示（入力フォームを空）にする
-        _this.formData.password_confirmation = ''; // 編集前のパスワード（再入力）は非表示（入力フォームを空）にする
-        _this.formData.introduction = _this.user.introduction || '';
-        _this.formData.icon = _this.user.icon || '';
-      })["catch"](function (error) {
-        console.error('プロフィール取得失敗:', error.response.data);
-        _this.errors = error.response.data;
-      });
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
+        var response;
+        return _regeneratorRuntime().wrap(function _callee$(_context) {
+          while (1) switch (_context.prev = _context.next) {
+            case 0:
+              _context.prev = 0;
+              console.log('プロフィールを取得します');
+              // コンビニ側プロフィール情報の取得APIをGET送信
+              _context.next = 4;
+              return axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/convenience/mypage/profile');
+            case 4:
+              response = _context.sent;
+              // レスポンスデータをそれぞれのプロパティにセット
+              _this.user = response.data.user; // ユーザー情報
+              _this.convenience = response.data.convenience; // コンビニ情報
+              _this.address = response.data.address; // 住所情報
+              console.log('APIからのレスポンス:', response.data);
+              // 取得したプロフィール情報をformDataに入れる
+              _this.formData.convenience_name = _this.user.name || ''; // コンビニ名
+              _this.formData.branch_name = _this.convenience.branch_name || '',
+              // 支店名
+              _this.formData.prefecture = _this.address.prefecture || '',
+              // 都道府県
+              _this.formData.city = _this.address.city || '',
+              // 市区町村
+              _this.formData.town = _this.address.town || '',
+              // 地名・番名
+              _this.formData.building = _this.address.building || '',
+              // 建物名・部屋番号
+              _this.formData.email = _this.user.email || ''; // メールアドレス
+              _this.formData.password = ''; // 編集前のパスワードは非表示（入力フォームを空）にする
+              _this.formData.password_confirmation = ''; // 編集前のパスワード（再入力）は非表示（入力フォームを空）にする
+              _this.formData.introduction = _this.user.introduction || ''; // 自己紹介文
+              _this.formData.icon = _this.user.icon || ''; // 顔写真
+              _context.next = 21;
+              break;
+            case 17:
+              _context.prev = 17;
+              _context.t0 = _context["catch"](0);
+              console.error('プロフィール取得失敗:', _context.t0.response.data);
+              _this.errors = _context.t0.response.data;
+            case 21:
+            case "end":
+              return _context.stop();
+          }
+        }, _callee, null, [[0, 17]]);
+      }))();
     },
     // 郵便番号検索APIを使って、郵便番号から住所を自動入力するメソッド
     searchAddress: function searchAddress() {
       var _this2 = this;
-      var postalcode = this.formData.postalcode;
-      var zipCode = postalcode;
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("https://api.zipaddress.net/?zipcode=".concat(zipCode), {
-        adapter: jsonpAdapter
-      }).then(function (rs) {
-        var response = rs.data;
-        // 都道府県、市区町村、地名・番地をセット
-        _this2.formData.prefecture = response.pref;
-        _this2.formData.city = response.city;
-        _this2.formData.town = response.town;
-        _this2.formData.building = response.building;
-        console.log('townは、', _this2.formData.town);
-      })["catch"](function (error) {
-        console.error('住所検索エラー:', error);
-      });
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
+        var zipCode, response, responseData;
+        return _regeneratorRuntime().wrap(function _callee2$(_context2) {
+          while (1) switch (_context2.prev = _context2.next) {
+            case 0:
+              _context2.prev = 0;
+              zipCode = _this2.formData.postalcode; // 郵便番号フォームの入力値
+              _context2.next = 4;
+              return axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("https://api.zipaddress.net/?zipcode=".concat(zipCode), {
+                adapter: jsonpAdapter
+              });
+            case 4:
+              response = _context2.sent;
+              // 郵便番号検索APIに郵便番号フォームの入力値を使ってGETリクエスト送信
+              // APIから返されたレスポンスデータを各入力フォームにセット
+              responseData = response.data;
+              _this2.formData.prefecture = responseData.pref; // 都道府県
+              _this2.formData.city = responseData.city; // 市区町村
+              _this2.formData.town = responseData.town; // 地名・番名
+              _this2.formData.building = responseData.building; // 建物名・部屋番号
+              _context2.next = 15;
+              break;
+            case 12:
+              _context2.prev = 12;
+              _context2.t0 = _context2["catch"](0);
+              console.error('住所検索エラー:', _context2.t0);
+            case 15:
+            case "end":
+              return _context2.stop();
+          }
+        }, _callee2, null, [[0, 12]]);
+      }))();
     },
     // 入力された値をサーバー側に送信するメソッド
     submitForm: function submitForm() {
       var _this3 = this;
-      // リクエストヘッダー定義
-      var config = {
-        headers: {
-          'content-type': 'multipart/form-data'
-        }
-      };
-
-      // フォームデータを作成
-      var formData = new FormData();
-      formData.append('_method', 'PUT');
-      formData.append('convenience_name', this.formData.convenience_name);
-      formData.append('branch_name', this.formData.branch_name);
-      formData.append('prefecture', this.formData.prefecture);
-      formData.append('city', this.formData.city);
-      formData.append('town', this.formData.town);
-      formData.append('building', this.formData.building);
-      formData.append('email', this.formData.email);
-      formData.append('password', this.formData.password);
-      formData.append('password_confirmation', this.formData.password_confirmation);
-      formData.append('introduction', this.formData.introduction);
-
-      // icon フィールドが空でない場合のみ、フォームデータに追加
-      if (this.formData.icon !== '') {
-        formData.append('icon', this.formData.icon);
-      }
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/convenience/mypage/profile', formData, config).then(function (response) {
-        _this3.message = response.data.message;
-        console.log('this.messageは、', _this3.message);
-        console.log('プロフィールを更新します。');
-        _this3.$router.push({
-          name: 'convenience.mypage'
-        });
-      })["catch"](function (error) {
-        console.error('プロフィール編集失敗:', error.response.data);
-        _this3.errors = error.response.data.errors;
-      });
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3() {
+        var config, formData, response;
+        return _regeneratorRuntime().wrap(function _callee3$(_context3) {
+          while (1) switch (_context3.prev = _context3.next) {
+            case 0:
+              _context3.prev = 0;
+              // リクエストヘッダー定義
+              config = {
+                headers: {
+                  'content-type': 'multipart/form-data' // ファイルのアップロードを含むリクエストボディのデータ形式
+                }
+              }; // フォームデータを作成
+              formData = new FormData(); // FormDataオブジェクトの作成
+              formData.append('_method', 'PUT'); // リクエストメソッドをPUTにする
+              formData.append('convenience_name', _this3.formData.convenience_name); // コンビニ名
+              formData.append('branch_name', _this3.formData.branch_name); // 支店名
+              formData.append('prefecture', _this3.formData.prefecture); // 都道府県
+              formData.append('city', _this3.formData.city); // 市区町村
+              formData.append('town', _this3.formData.town); // 地名・番名
+              formData.append('building', _this3.formData.building); // 建物名・部屋番号
+              formData.append('email', _this3.formData.email); // メールアドレス
+              formData.append('password', _this3.formData.password); // パスワード
+              formData.append('password_confirmation', _this3.formData.password_confirmation); // パスワード（再入力）
+              formData.append('introduction', _this3.formData.introduction); // 自己紹介文
+              // icon フィールドが空でない場合のみ、フォームデータに追加
+              if (_this3.formData.icon !== '') {
+                formData.append('icon', _this3.formData.icon); // 顔写真
+              }
+              // コンビニ側プロフィール情報更新APIをPOST送信
+              _context3.next = 17;
+              return axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/convenience/mypage/profile', config, formData);
+            case 17:
+              response = _context3.sent;
+              // リクエストヘッダとフォームデータを含むリクエスト
+              _this3.message = response.data.message;
+              console.log('this.messageは、', _this3.message);
+              console.log('プロフィールを更新します。');
+              _this3.$router.push({
+                name: 'convenience.mypage'
+              }); // プロフィール更新完了後、マイページに遷移する
+              _context3.next = 29;
+              break;
+            case 24:
+              _context3.prev = 24;
+              _context3.t0 = _context3["catch"](0);
+              console.log('errorは、', _context3.t0);
+              console.error('プロフィール編集失敗:', _context3.t0.response.data);
+              _this3.errors = _context3.t0.response.data.errors;
+            case 29:
+            case "end":
+              return _context3.stop();
+          }
+        }, _callee3, null, [[0, 24]]);
+      }))();
     },
     // パスワードの表示・非表示を切り替えるメソッド
     togglePasswordVisibility: function togglePasswordVisibility(type) {
       if (type === 'password') {
-        this.PasswordType = this.PasswordType === 'password' ? 'text' : 'password';
-        this.PasswordIconClass = this.PasswordIconClass === 'far fa-eye-slash' ? 'far fa-eye' : 'far fa-eye-slash';
+        // パスワードの入力フォーム
+        this.PasswordType = this.PasswordType === 'password' ? 'text' : 'password'; // PasswordTypeによってパスワードの表示・非表示を切り替え
+        this.PasswordIconClass = this.PasswordIconClass === 'far fa-eye-slash' ? 'far fa-eye' : 'far fa-eye-slash'; // PasswordIconClassによってパスワードのアイコンを切り替え
       } else if (type === 'password_confirm') {
-        this.PasswordConfirmType = this.PasswordConfirmType === 'password' ? 'text' : 'password';
-        this.PasswordConfirmIconClass = this.PasswordConfirmIconClass === 'far fa-eye-slash' ? 'far fa-eye' : 'far fa-eye-slash';
+        // パスワード（再入力）の入力フォーム
+        this.PasswordConfirmType = this.PasswordConfirmType === 'password' ? 'text' : 'password'; // PasswordTypeによってパスワードの表示・非表示を切り替え
+        this.PasswordConfirmIconClass = this.PasswordConfirmIconClass === 'far fa-eye-slash' ? 'far fa-eye' : 'far fa-eye-slash'; // PasswordIconClassによってパスワードのアイコンを切り替え
       }
     },
     // 自己紹介文の文字数をカウントするメソッド
     countCharacters: function countCharacters() {
-      this.countCharactersLength = this.formData.introduction.length;
+      this.countCharactersLength = this.formData.introduction.length; // 文字数のカウント
       if (this.countCharactersLength > 50) {
-        this.formData.introduction = this.formData.introduction.slice(0, 50);
-        this.countCharactersLength = 50;
+        // 文字数が50文字を超えているか
+        this.formData.introduction = this.formData.introduction.slice(0, 50); // 文字列を50文字まで切り抜く
+        this.countCharactersLength = 50; // 50文字以上の文字数を制限する
       }
     },
     // ドラッグ＆ドロップエリアに画像がドロップされたときの処理
     handleDrop: function handleDrop(event) {
-      event.preventDefault();
-      event.dataTransfer.files[0];
+      event.preventDefault(); // デフォルトの動作をキャンセル
+      event.dataTransfer.files[0]; // 最初のファイルを取得
     },
     // ファイルが選択されたときの処理
     handleFileChange: function handleFileChange(event) {
-      var file = event.target.files[0];
+      var file = event.target.files[0]; // 最初のファイルを取得
       if (file) {
-        // プレビューを表示する
-        this.previewImage(file);
-        // formData.iconにファイルオブジェクトを設定
-        this.formData.icon = file;
+        this.previewImage(file); // プレビューを表示する
+        this.formData.icon = file; // formData.iconにファイルオブジェクトを設定
       } else {
-        this.formData.icon = null;
+        this.formData.icon = null; // ファイルがない場合はnull
       }
     },
     // 画像のプレビューを表示するメソッド
     previewImage: function previewImage(file) {
       var _this4 = this;
-      var reader = new FileReader();
+      var reader = new FileReader(); // FileReaderオブジェクトの作成
       reader.onload = function (e) {
-        // プレビュー画像のURLを生成し、formDataに設定
-        _this4.iconPreview = e.target.result;
+        // 画像の読み込み
+        _this4.iconPreview = e.target.result; // プレビュー画像のURLを生成し、formDataに設定
       };
-      reader.readAsDataURL(file);
+      reader.readAsDataURL(file); // ファイルをデータURLとして読み込み
     }
   }
 });
@@ -6564,6 +6939,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _TermsComponent_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../TermsComponent.vue */ "./resources/js/components/TermsComponent.vue");
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == _typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw new Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(_typeof(e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw new Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, "catch": function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw new Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+//
+//
+//
+//
+//
 //
 //
 //
@@ -6656,19 +7040,29 @@ var jsonpAdapter = __webpack_require__(/*! axios-jsonp */ "./node_modules/axios-
     return {
       formData: {
         convenience_name: '',
+        // コンビニ名
         branch_name: '',
+        // 支店名
         prefecture: '',
+        // 都道府県
         city: '',
+        // 市区町村
         town: '',
+        // 地名・番名
         building: '',
+        // 建物名・部屋番号
         email: '',
+        // メールアドレス
         password: '',
+        // パスワード
         password_confirmation: '',
-        role: 'convenience'
+        // パスワード（再入力）
+        role: 'convenience' // コンビニユーザー
       },
       agreement: false,
       // 利用規約に同意したかどうか
       errors: null,
+      // エラーメッセージ
       PasswordType: 'password',
       // パスワードの初期設定
       PasswordConfirmType: 'password',
@@ -6682,45 +7076,79 @@ var jsonpAdapter = __webpack_require__(/*! axios-jsonp */ "./node_modules/axios-
     // 郵便番号検索APIを使って、郵便番号から住所を自動入力するメソッド
     searchAddress: function searchAddress() {
       var _this = this;
-      var postalcode = this.formData.postalcode;
-      var zipCode = postalcode;
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("https://api.zipaddress.net/?zipcode=".concat(zipCode), {
-        adapter: jsonpAdapter
-      }).then(function (rs) {
-        var response = rs.data;
-        // 都道府県、市区町村、地名・番地をセット
-        _this.formData.prefecture = response.pref;
-        _this.formData.city = response.city;
-        _this.formData.town = response.town;
-        _this.formData.building = response.building;
-        console.log('townは、', _this.formData.town);
-      })["catch"](function (error) {
-        console.error('住所検索エラー:', error);
-      });
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
+        var zipCode, response, responseData;
+        return _regeneratorRuntime().wrap(function _callee$(_context) {
+          while (1) switch (_context.prev = _context.next) {
+            case 0:
+              _context.prev = 0;
+              zipCode = _this.formData.postalcode; // 郵便番号フォームの入力値
+              _context.next = 4;
+              return axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("https://api.zipaddress.net/?zipcode=".concat(zipCode), {
+                adapter: jsonpAdapter
+              });
+            case 4:
+              response = _context.sent;
+              // 郵便番号検索APIに郵便番号フォームの入力値を使ってGETリクエスト送信
+              // APIから返されたレスポンスデータを各入力フォームにセット
+              responseData = response.data;
+              _this.formData.prefecture = responseData.pref; // 都道府県
+              _this.formData.city = responseData.city; // 市区町村
+              _this.formData.town = responseData.town; // 地名・番名
+              _this.formData.building = responseData.building; // 建物名・部屋番号
+              _context.next = 15;
+              break;
+            case 12:
+              _context.prev = 12;
+              _context.t0 = _context["catch"](0);
+              console.error('住所検索エラー:', _context.t0);
+            case 15:
+            case "end":
+              return _context.stop();
+          }
+        }, _callee, null, [[0, 12]]);
+      }))();
     },
     // 入力された値をサーバー側に送信するメソッド
     submitForm: function submitForm() {
       var _this2 = this;
-      this.formData.agreement = this.agreement;
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/convenience/register', this.formData).then(function (response) {
-        console.log('ユーザー登録します。');
-        _this2.$router.push({
-          name: 'convenience.login'
-        }); // ユーザー登録後、ログインページに遷移
-      })["catch"](function (error) {
-        console.log('errorは、', error);
-        console.error('ユーザー登録失敗:', error.response.data);
-        _this2.errors = error.response.data.errors;
-      });
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
+        return _regeneratorRuntime().wrap(function _callee2$(_context2) {
+          while (1) switch (_context2.prev = _context2.next) {
+            case 0:
+              _context2.prev = 0;
+              _this2.formData.agreement = _this2.agreement; // 利用規約の同意をformDataに追加
+              _context2.next = 4;
+              return axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/convenience/register', _this2.formData);
+            case 4:
+              // ユーザー登録APIをPOST送信
+              _this2.$router.push({
+                name: 'user.login'
+              }); // ユーザー登録後、ログインページに遷移
+              _context2.next = 11;
+              break;
+            case 7:
+              _context2.prev = 7;
+              _context2.t0 = _context2["catch"](0);
+              console.error('ユーザー登録失敗:', _context2.t0.response.data);
+              _this2.errors = _context2.t0.response.data.errors;
+            case 11:
+            case "end":
+              return _context2.stop();
+          }
+        }, _callee2, null, [[0, 7]]);
+      }))();
     },
     // パスワードの表示・非表示を切り替えるメソッド
     togglePasswordVisibility: function togglePasswordVisibility(type) {
       if (type === 'password') {
-        this.PasswordType = this.PasswordType === 'password' ? 'text' : 'password';
-        this.PasswordIconClass = this.PasswordIconClass === 'far fa-eye-slash' ? 'far fa-eye' : 'far fa-eye-slash';
+        // パスワードの入力フォーム
+        this.PasswordType = this.PasswordType === 'password' ? 'text' : 'password'; // PasswordTypeによってパスワードの表示・非表示を切り替え
+        this.PasswordIconClass = this.PasswordIconClass === 'far fa-eye-slash' ? 'far fa-eye' : 'far fa-eye-slash'; // PasswordIconClassによってパスワードのアイコンを切り替え
       } else if (type === 'password_confirm') {
-        this.PasswordConfirmType = this.PasswordConfirmType === 'password' ? 'text' : 'password';
-        this.PasswordConfirmIconClass = this.PasswordConfirmIconClass === 'far fa-eye-slash' ? 'far fa-eye' : 'far fa-eye-slash';
+        // パスワード（再入力）の入力フォーム
+        this.PasswordConfirmType = this.PasswordConfirmType === 'password' ? 'text' : 'password'; // PasswordTypeによってパスワードの表示・非表示を切り替え
+        this.PasswordConfirmIconClass = this.PasswordConfirmIconClass === 'far fa-eye-slash' ? 'far fa-eye' : 'far fa-eye-slash'; // PasswordIconClassによってパスワードのアイコンを切り替え
       }
     }
   }
@@ -6737,6 +7165,11 @@ var jsonpAdapter = __webpack_require__(/*! axios-jsonp */ "./node_modules/axios-
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == _typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw new Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(_typeof(e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw new Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, "catch": function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw new Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+//
 //
 //
 //
@@ -6785,12 +7218,17 @@ __webpack_require__.r(__webpack_exports__);
     return {
       formData: {
         oldPassword: '',
+        // 古いパスワード
         newPassword: '',
-        password_confirmation: ''
+        // 新しいパスワード
+        password_confirmation: '' // パスワード（再入力）
       },
       token: '',
+      // トークン
       email: '',
+      // メールアドレス
       errors: null,
+      // エラーメッセージ
       OldPasswordType: 'password',
       // 古いパスワードの初期設定
       NewPasswordType: 'password',
@@ -6805,7 +7243,7 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   mounted: function mounted() {
-    // URLからトークンを取得
+    // URLからトークンとメールアドレスを取得
     this.token = this.$route.params.token;
     this.email = this.$route.query.email;
     console.log('emailは、', this.email);
@@ -6815,37 +7253,62 @@ __webpack_require__.r(__webpack_exports__);
     // パスワードリセット処理
     resetPassword: function resetPassword() {
       var _this = this;
-      // トークンを含めたデータを作成
-      var data = {
-        email: this.email,
-        token: this.token,
-        oldPassword: this.formData.oldPassword,
-        newPassword: this.formData.newPassword,
-        password_confirmation: this.formData.password_confirmation
-      };
-      axios.post('/api/convenience/password/reset', data).then(function (response) {
-        _this.message = response.data.message;
-        console.log('this.messageは、', _this.message);
-        console.log('パスワードを変更します。');
-        _this.$router.push({
-          name: 'convenience.login'
-        }); // パスワード変更後、ログイン画面に遷移
-      })["catch"](function (error) {
-        console.error('パスワード変更失敗:', error.response.data);
-        _this.errors = error.response.data.errors;
-      });
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
+        var requestData;
+        return _regeneratorRuntime().wrap(function _callee$(_context) {
+          while (1) switch (_context.prev = _context.next) {
+            case 0:
+              _context.prev = 0;
+              // トークン・メールアドレスを含めたデータを作成
+              requestData = {
+                token: _this.token,
+                // トークン
+                email: _this.email,
+                // メールアドレス
+                oldPassword: _this.formData.oldPassword,
+                // 古いパスワード
+                newPassword: _this.formData.newPassword,
+                // 新しいパスワード
+                password_confirmation: _this.formData.password_confirmation // パスワード（再入力）
+              }; // コンビニパスワード変更APIをPOST送信
+              _context.next = 4;
+              return axios.post('/api/convenience/password/reset', requestData);
+            case 4:
+              // トークンとメールアドレスを含めたデータを含むリクエスト
+              _this.message = response.data.message;
+              console.log('this.messageは、', _this.message);
+              console.log('パスワードを変更します。');
+              _this.$router.push({
+                name: 'convenience.login'
+              }); // パスワード変更後、ログイン画面に遷移
+              _context.next = 14;
+              break;
+            case 10:
+              _context.prev = 10;
+              _context.t0 = _context["catch"](0);
+              console.error('パスワード変更失敗:', _context.t0.response.data);
+              _this.errors = _context.t0.response.data.errors;
+            case 14:
+            case "end":
+              return _context.stop();
+          }
+        }, _callee, null, [[0, 10]]);
+      }))();
     },
     // パスワードの表示・非表示を切り替えるメソッド
     togglePasswordVisibility: function togglePasswordVisibility(type) {
       if (type === 'old_password') {
-        this.OldPasswordType = this.OldPasswordType === 'password' ? 'text' : 'password';
-        this.OldPasswordIconClass = this.OldPasswordIconClass === 'far fa-eye-slash' ? 'far fa-eye' : 'far fa-eye-slash';
+        // 古いパスワードの入力フォーム
+        this.OldPasswordType = this.OldPasswordType === 'password' ? 'text' : 'password'; // PasswordTypeによってパスワードの表示・非表示を切り替え
+        this.OldPasswordIconClass = this.OldPasswordIconClass === 'far fa-eye-slash' ? 'far fa-eye' : 'far fa-eye-slash'; // PasswordIconClassによってパスワードのアイコンを切り替え
       } else if (type === 'new_password') {
-        this.NewPasswordType = this.NewPasswordType === 'password' ? 'text' : 'password';
-        this.NewPasswordIconClass = this.NewPasswordIconClass === 'far fa-eye-slash' ? 'far fa-eye' : 'far fa-eye-slash';
+        // 新しいパスワードの入力フォーム
+        this.NewPasswordType = this.NewPasswordType === 'password' ? 'text' : 'password'; // PasswordTypeによってパスワードの表示・非表示を切り替え
+        this.NewPasswordIconClass = this.NewPasswordIconClass === 'far fa-eye-slash' ? 'far fa-eye' : 'far fa-eye-slash'; // PasswordIconClassによってパスワードのアイコンを切り替え
       } else {
-        this.PasswordConfirmType = this.PasswordConfirmType === 'password' ? 'text' : 'password';
-        this.PasswordConfirmIconClass = this.PasswordConfirmIconClass === 'far fa-eye-slash' ? 'far fa-eye' : 'far fa-eye-slash';
+        // パスワード（再入力）の入力フォーム
+        this.PasswordConfirmType = this.PasswordConfirmType === 'password' ? 'text' : 'password'; // PasswordTypeによってパスワードの表示・非表示を切り替え
+        this.PasswordConfirmIconClass = this.PasswordConfirmIconClass === 'far fa-eye-slash' ? 'far fa-eye' : 'far fa-eye-slash'; // PasswordIconClassによってパスワードのアイコンを切り替え
       }
     }
   }
@@ -6862,6 +7325,10 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == _typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw new Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(_typeof(e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw new Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, "catch": function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw new Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 //
 //
 //
@@ -6889,17 +7356,33 @@ __webpack_require__.r(__webpack_exports__);
     // 退会処理をサーバー側に送信するメソッド
     withdraw: function withdraw() {
       var _this = this;
-      axios["delete"]('/api/convenience/mypage/withdraw').then(function (response) {
-        _this.message = response.data.message;
-        console.log('this.messageは、', _this.message);
-        console.log('退会します');
-        _this.$router.push({
-          name: 'home'
-        }); // 退会処理完了後、HOME画面に遷移
-      })["catch"](function (error) {
-        console.error('退会処理失敗:', error.response.data);
-        _this.errors = error.response.data.errors;
-      });
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
+        return _regeneratorRuntime().wrap(function _callee$(_context) {
+          while (1) switch (_context.prev = _context.next) {
+            case 0:
+              _context.prev = 0;
+              _context.next = 3;
+              return axios["delete"]('/api/convenience/mypage/withdraw');
+            case 3:
+              _this.message = response.data.message;
+              console.log('this.messageは、', _this.message);
+              console.log('退会します');
+              _this.$router.push({
+                name: 'top'
+              }); // 退会処理完了後、TOP画面に遷移
+              _context.next = 13;
+              break;
+            case 9:
+              _context.prev = 9;
+              _context.t0 = _context["catch"](0);
+              console.error('退会処理失敗:', _context.t0.response.data);
+              _this.errors = _context.t0.response.data.errors;
+            case 13:
+            case "end":
+              return _context.stop();
+          }
+        }, _callee, null, [[0, 9]]);
+      }))();
     }
   }
 });
@@ -6990,188 +7473,6 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/HomeComponent.vue?vue&type=script&lang=js":
-/*!***********************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/HomeComponent.vue?vue&type=script&lang=js ***!
-  \***********************************************************************************************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-  data: function data() {
-    return {
-      formData: {
-        name: '',
-        email: '',
-        contact: ''
-      },
-      errors: null,
-      flashMessage: ''
-    };
-  },
-  methods: {
-    // 入力された値をサーバー側に送信するメソッド
-    submitForm: function submitForm() {
-      var _this = this;
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/contact', this.formData).then(function (response) {
-        console.log('お問い合わせ内容を送信します。');
-        _this.flashMessage = 'お問い合わせ受付完了メールを送信しました。';
-      })["catch"](function (error) {
-        console.log('errorは、', error);
-        console.error('ユーザー登録失敗:', error.response.data);
-        _this.errors = error.response.data.errors;
-      });
-    }
-  }
-});
-
-/***/ }),
-
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/NavComponent.vue?vue&type=script&lang=js":
 /*!**********************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/NavComponent.vue?vue&type=script&lang=js ***!
@@ -7246,11 +7547,11 @@ __webpack_require__.r(__webpack_exports__);
       } else if (this.$store.getters['auth/role'] === 'convenience') {
         return "/convenience/mypage";
       }
-      return "/home";
+      return "/top";
     },
     // トップページかどうか
-    isHomePage: function isHomePage() {
-      return this.$route.name === 'home';
+    isTopPage: function isTopPage() {
+      return this.$route.name === 'top';
     }
   },
   methods: {
@@ -7339,15 +7640,20 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['current_page', 'last_page'],
+  // 親コンポーネントからcurrent_pageとlast_pageを受け取る
   data: function data() {
     return {
       currentPage: this.current_page,
       // currentPageをpropsから受け取る
       range: 5,
       // 表示されるページの範囲
+      start: "",
+      // 開始ページ番号
+      end: "",
+      // 終了ページ番号
       front_dot: false,
-      // 前のページにドットを表示させるか
-      end_dot: false // 後ろのページにドットを表示させるか
+      // 先頭のページにドットを表示させるか
+      end_dot: false // 末尾のページにドットを表示させるか
     };
   },
   computed: {
@@ -7356,66 +7662,70 @@ __webpack_require__.r(__webpack_exports__);
       console.log('sizecheckメソッド');
       console.log('this.rangeは、', this.range);
       if (this.last_page <= this.range + 4) {
-        return false;
+        // 表示するページ数が少ない（最後のページ番号が表示されるページの範囲より4以下）の場合
+        return false; // falseを返す
       }
-      return true;
+      return true; // そうでなければtrueを返す
     },
     // 最初のページ番号の範囲
     frontPageRange: function frontPageRange() {
       if (!this.sizeCheck) {
-        this.front_dot = false;
-        this.end_dot = false;
-        return this.calRange(1, this.last_page);
+        // 表示するページ数が少ない場合
+        this.front_dot = false; // 先頭のドットは表示しない
+        this.end_dot = false; // 末尾のドットは表示しない
+        return this.calRange(1, this.last_page); // 1ページ目から最後のページ数を表示
       }
-      return this.calRange(1, 2);
+      return this.calRange(1, 2); // 最初のページは2ページ目まで制限
     },
     // 中間のページ番号の範囲
     middlePageRange: function middlePageRange() {
-      if (!this.sizeCheck) return [];
-      var start = "";
-      var end = "";
+      if (!this.sizeCheck) return []; // 表示するページ数が少ない場合は空の配列を返す
       if (this.currentPage <= this.range) {
-        start = 3;
-        end = this.range + 2;
-        this.front_dot = false;
-        this.end_dot = true;
+        // 現在ページが表示されるページの範囲より少ない場合
+        start = 3; // 開始ページ番号を3ページ目から表示
+        end = this.range + 2; // 終了ページ番号の2ページ分を表示
+        this.front_dot = false; // 先頭のドットは表示しない
+        this.end_dot = true; // 末尾のドットは表示する
       } else if (this.currentPage > this.last_page - this.range) {
-        start = this.last_page - this.range - 1;
-        end = this.last_page - 2;
-        this.front_dot = true;
-        this.end_dot = false;
+        // 現在ページが最後のページからページ範囲を引いた数より大きい場合
+        start = this.last_page - this.range - 1; // 開始ページ番号を最後のページ数からページ範囲を引いた値に1を引いた数にする
+        end = this.last_page - 2; // 終了ページ番号を最後のページ数から2を引いた数にする
+        this.front_dot = true; // 先頭のドットは表示する
+        this.end_dot = false; // 末尾のドットは表示しない
       } else {
-        start = this.currentPage - Math.floor(this.range / 2);
-        end = this.currentPage + Math.floor(this.range / 2);
-        this.front_dot = true;
-        this.end_dot = true;
+        start = this.currentPage - Math.floor(this.range / 2); // 開始ページ番号を現在ページからページ範囲の半分を引いた数にする
+        end = this.currentPage + Math.floor(this.range / 2); // 終了ページ番号を現在ページからページ範囲の半分を引いた数にする
+        this.front_dot = true; // 先頭のドットは表示する
+        this.end_dot = true; // 末尾のドットは表示する
       }
-      return this.calRange(start, end);
+      return this.calRange(start, end); // 計算された開始ページと終了ページをcalRangeメソッドに渡す
     },
     // 最後のページ番号の範囲
     endPageRange: function endPageRange() {
-      if (!this.sizeCheck) return [];
-      return this.calRange(this.last_page - 1, this.last_page);
+      if (!this.sizeCheck) return []; // 表示するページ数が少ない場合は空の配列を返す
+      return this.calRange(this.last_page - 1, this.last_page); // 最後のページ番号の範囲を計算
     }
   },
   watch: {
+    // current_pageプロパティの監視
     current_page: function current_page(newValue) {
-      this.currentPage = newValue;
+      this.currentPage = newValue; // current_pageプロパティの値が変更されると、newValueとしてthis.currentPageに渡される
       console.log('watchのthis.currentPageは、', this.currentPage);
     }
   },
   methods: {
     // 配列作成メソッド
     calRange: function calRange(start, end) {
-      var range = [];
+      var range = []; // ページ範囲
       for (var i = start; i <= end; i++) {
-        range.push(i);
+        // 開始ページ番号から終了ページ番号を配列に追加を繰り返す
+        range.push(i); // 配列に追加
       }
-      return range;
+      return range; // 配列を返す
     },
     // ページが現在のページかどうかを確認するメソッド
     isCurrent: function isCurrent(page) {
-      return page === this.currentPage;
+      return page === this.currentPage; // ページ番号が現在ページと同じ場合trueを返す
     },
     // ページが変更されたときの処理
     changePage: function changePage(page) {
@@ -7423,8 +7733,9 @@ __webpack_require__.r(__webpack_exports__);
       console.log('pageは、', page);
       console.log('this.currentPageは、', this.currentPage);
       if (page > 0 && page <= this.last_page) {
+        // ページ番号が0以上、最後のページ番号以下の場合
         console.log('this.currentPageは、', this.currentPage);
-        this.currentPage = page;
+        this.currentPage = page; // this.currentPageを更新
         console.log('pageは、', page);
         this.$emit("onClick", this.currentPage); // 親コンポーネントに正しいページ番号を伝達
       }
@@ -7561,6 +7872,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _SearchComponent_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./SearchComponent.vue */ "./resources/js/components/SearchComponent.vue");
 /* harmony import */ var _PaginationComponent_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./PaginationComponent.vue */ "./resources/js/components/PaginationComponent.vue");
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == _typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw new Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(_typeof(e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw new Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, "catch": function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw new Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 //
 //
 //
@@ -7620,24 +7935,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
     SearchComponent: _SearchComponent_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
-    PaginationComponent: _PaginationComponent_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
+    // 絞り込み検索コンポーネント
+    PaginationComponent: _PaginationComponent_vue__WEBPACK_IMPORTED_MODULE_2__["default"] // ページネーションコンポーネント
   },
   data: function data() {
     return {
       products: [],
+      // 商品情報
       currentPage: 1,
+      // 現在ページ
       lastPage: 1,
-      lastParams: []
+      // 最後のページ
+      lastParams: [] // 最後の検索条件
     };
   },
-  computed: {
-    // ログインユーザーかどうか
-    isLogin: function isLogin() {
-      return this.$store.getters['auth/check'];
-    }
-  },
   created: function created() {
-    this.getProduct(); // サーバから商品情報を取得
+    this.getProduct(); // インスタンス初期化時に商品情報を読み込む
   },
   methods: {
     // URLを作成する
@@ -7647,26 +7960,31 @@ __webpack_require__.r(__webpack_exports__);
       // URLの組み立て
       var url = "/products";
       if (params && params.page) {
-        url += "?page=".concat(params.page);
+        // パラメータとパラメータのpageがある場合
+        url += "?page=".concat(params.page); // urlにparams.pageを追加
       } else {
-        url += "?page=".concat(this.currentPage);
+        url += "?page=".concat(this.currentPage); // urlにthis.currentPageを追加
       }
       if (params && params.prefecture) {
-        url += "&prefecture=".concat(params.prefecture);
+        // パラメータとパラメータのprefectureがある場合
+        url += "&prefecture=".concat(params.prefecture); // urlにparams.prefectureを追加
       }
       if (params && params.minprice) {
-        url += "&minprice=".concat(params.minprice);
+        // パラメータとパラメータのminpriceがある場合
+        url += "&minprice=".concat(params.minprice); // urlにparams.minpriceを追加
       }
       if (params && params.maxprice) {
-        url += "&maxprice=".concat(params.maxprice);
+        // パラメータとパラメータのmaxpriceがある場合
+        url += "&maxprice=".concat(params.maxprice); // urlにparams.maxpriceを追加
       }
       if (params && params.expiration_date) {
-        url += "&expiration_date=".concat(params.expiration_date);
+        // パラメータとパラメータのexpiration_dateがある場合
+        url += "&expiration_date=".concat(params.expiration_date); // urlにparams.expiration_dateを追加
       }
       console.log('検索URL:', url);
       // ページ遷移
       this.$router.push(url).then(function () {
-        _this.getProduct(); // ページ遷移が完了した後にgetProductを呼び出す
+        _this.getProduct(); // ページ遷移が完了した後にgetProduct()メソッドを呼び出す
       });
     },
     // ページが変更されたときの処理
@@ -7675,7 +7993,7 @@ __webpack_require__.r(__webpack_exports__);
       if (this.currentPage !== page) {
         // 現在のページ番号と新しいページ番号が異なるか
         this.currentPage = page; // ページ番号を更新
-        var params = Object.assign({}, this.$route.query);
+        var params = Object.assign({}, this.$route.query); // 新しいクエリパラメータをparamsオブジェクトにコピー
         params.page = page; // 新しいページ番号にする
         this.createURL(params); // 新しいURLを生成して画面遷移
       }
@@ -7683,8 +8001,8 @@ __webpack_require__.r(__webpack_exports__);
     // 検索結果を表示する
     searchResult: function searchResult(params) {
       console.log('searchResultのparamsは、', params);
-      // 前回の検索条件が同じであればページ遷移を行わずに検索結果を再取得する
       if (JSON.stringify(params) === JSON.stringify(this.lastParams)) {
+        // 前回の検索条件が同じであればページ遷移を行わずに検索結果を再取得する
         this.getProduct(params); // 前回と同じ検索条件での再取得
       } else {
         this.currentPage = 1; // ページ番号をリセット
@@ -7695,40 +8013,58 @@ __webpack_require__.r(__webpack_exports__);
     // 商品情報をサーバーから取得
     getProduct: function getProduct() {
       var _this2 = this;
-      console.log('すべての商品情報を取得します');
-      // 現在のルートのクエリパラメータを取得
-      var params = Object.assign({}, this.$route.query); // クエリパラメータのコピーを作成
-      console.log('paramsは、', params, 'this.currentPageは、', this.currentPage);
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/products', {
-        params: params
-      }).then(function (response) {
-        console.log('curent_pageは、', response.data.products.current_page);
-        console.log('getProductのAPIからのレスポンス:', response.data);
-        _this2.products = response.data.products;
-        console.log('productsは、', _this2.products);
-        _this2.lastPage = response.data.products.last_page;
-        console.log('this.lastPageは、', _this2.lastPage);
-      })["catch"](function (error) {
-        console.error('商品情報取得失敗:', error.response.data);
-        _this2.errors = error.response.data;
-      });
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
+        var params, response;
+        return _regeneratorRuntime().wrap(function _callee$(_context) {
+          while (1) switch (_context.prev = _context.next) {
+            case 0:
+              _context.prev = 0;
+              console.log('すべての商品情報を取得します');
+              // 現在のルートのクエリパラメータを取得
+              params = Object.assign({}, _this2.$route.query); // クエリパラメータのコピーを作成
+              console.log('paramsは、', params, 'this.currentPageは、', _this2.currentPage);
+              // 商品情報取得APIをGET送信
+              _context.next = 6;
+              return axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/products', {
+                params: params
+              });
+            case 6:
+              response = _context.sent;
+              // パラメータを含むリクエスト
+              console.log('curent_pageは、', response.data.products.current_page);
+              console.log('getProductのAPIからのレスポンス:', response.data);
+              // レスポンスデータをそれぞれのプロパティにセット
+              _this2.products = response.data.products;
+              _this2.lastPage = response.data.products.last_page;
+              _context.next = 17;
+              break;
+            case 13:
+              _context.prev = 13;
+              _context.t0 = _context["catch"](0);
+              console.error('商品情報取得失敗:', _context.t0.response.data);
+              _this2.errors = _context.t0.response.data;
+            case 17:
+            case "end":
+              return _context.stop();
+          }
+        }, _callee, null, [[0, 13]]);
+      }))();
     },
     // 商品画像のパスを取得するメソッド
     getProductPicturePath: function getProductPicturePath(product) {
-      // console.log('productは、', product);
       if (product.pictures.length > 0) {
-        return '/storage/product_pictures/' + product.pictures[0].file;
+        return '/storage/product_pictures/' + product.pictures[0].file; // 商品画像がある場合は、その画像パスを返す
       } else {
-        return '/storage/product_pictures/no_image.png';
+        return '/storage/product_pictures/no_image.png'; // 商品画像がない場合は、デフォルトの商品画像のパスを返す
       }
     },
-    // 日付をフォーマットするメソッド
+    // 賞味期限日付をフォーマットするメソッド
     formatDate: function formatDate(dateString) {
-      var date = new Date(dateString);
-      var year = date.getFullYear();
-      var month = ('0' + (date.getMonth() + 1)).slice(-2); // 月は 0 から始まるため +1
-      var day = ('0' + date.getDate()).slice(-2);
-      return "".concat(year, "\u5E74").concat(month, "\u6708").concat(day, "\u65E5");
+      var date = new Date(dateString); // Dateオブジェクトに変換する
+      var year = date.getFullYear(); // 年数を取得
+      var month = ('0' + (date.getMonth() + 1)).slice(-2); // 月数を取得、1桁の場合は2桁の数値に変換
+      var day = ('0' + date.getDate()).slice(-2); // 日数を取得、1桁の場合は2桁の数値に変換
+      return "".concat(year, "\u5E74").concat(month, "\u6708").concat(day, "\u65E5"); // 年月日のフォーマットされた賞味期限日付を返す
     },
     // 商品詳細画面のリンクを返すメソッド
     getProductDetailLink: function getProductDetailLink(productId) {
@@ -7748,31 +8084,63 @@ __webpack_require__.r(__webpack_exports__);
           }
         };
       }
-      return "/home";
+      return "/top"; // ログインしていない場合はTOP画面に遷移
     },
     // 商品お気に入り登録
     productLike: function productLike(product) {
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/user/like/' + product.id).then(function (response) {
-        console.log(product.id, 'の商品をお気に入り登録しました。');
-        product.liked = true;
-        console.log('this.likedは、', product.liked);
-        product.likes_count++;
-        console.log('product.likes_countは、', product.likes_count);
-      })["catch"](function (error) {
-        console.error('商品のお気に入り登録失敗:', error);
-      });
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
+        return _regeneratorRuntime().wrap(function _callee2$(_context2) {
+          while (1) switch (_context2.prev = _context2.next) {
+            case 0:
+              _context2.prev = 0;
+              _context2.next = 3;
+              return axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/user/like/' + product.id);
+            case 3:
+              console.log(product.id, 'の商品をお気に入り登録しました。');
+              product.liked = true; // いいねアイコンをtrueに切り替え
+              console.log('this.likedは、', product.liked);
+              product.likes_count++; // いいね数のインクリメント
+              console.log('product.likes_countは、', product.likes_count);
+              _context2.next = 13;
+              break;
+            case 10:
+              _context2.prev = 10;
+              _context2.t0 = _context2["catch"](0);
+              console.error('商品のお気に入り登録失敗:', _context2.t0);
+            case 13:
+            case "end":
+              return _context2.stop();
+          }
+        }, _callee2, null, [[0, 10]]);
+      }))();
     },
     // 商品お気に入り解除
     productUnlike: function productUnlike(product) {
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/user/unlike/' + product.id).then(function (response) {
-        console.log(product.id, 'の商品をお気に入り解除しました。');
-        product.liked = false;
-        console.log('product.likedは、', product.liked);
-        product.likes_count--;
-        console.log('product.likes_count', product.likes_count);
-      })["catch"](function (error) {
-        console.error('商品のお気に入り解除失敗:', error);
-      });
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3() {
+        return _regeneratorRuntime().wrap(function _callee3$(_context3) {
+          while (1) switch (_context3.prev = _context3.next) {
+            case 0:
+              _context3.prev = 0;
+              _context3.next = 3;
+              return axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/user/unlike/' + product.id);
+            case 3:
+              console.log(product.id, 'の商品をお気に入り解除しました。');
+              product.liked = false; // いいねアイコンをfalseに切り替え
+              console.log('product.likedは、', product.liked);
+              product.likes_count--; // いいね数のデクリメント
+              console.log('product.likes_count', product.likes_count);
+              _context3.next = 13;
+              break;
+            case 10:
+              _context3.prev = 10;
+              _context3.t0 = _context3["catch"](0);
+              console.error('商品のお気に入り解除失敗:', _context3.t0);
+            case 13:
+            case "end":
+              return _context3.stop();
+          }
+        }, _callee3, null, [[0, 10]]);
+      }))();
     }
   }
 });
@@ -7790,6 +8158,10 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == _typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw new Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(_typeof(e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw new Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, "catch": function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw new Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 //
 //
 //
@@ -7838,6 +8210,7 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       prefectures: [],
+      // 都道府県の選択肢
       selectedPrefecture: '',
       // 都道府県
       minPrice: 0,
@@ -7848,38 +8221,62 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   created: function created() {
-    this.getPrefectures();
+    this.getPrefectures(); // インスタンス初期化時に都道府県情報を読み込む
   },
   methods: {
     // 出品しているコンビニがある都道府県の取得
     getPrefectures: function getPrefectures() {
       var _this = this;
-      console.log('都道府県情報を取得します');
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/prefecture').then(function (response) {
-        console.log('APIからのレスポンス:', response.data);
-        _this.prefectures = response.data.prefectures;
-      })["catch"](function (error) {
-        console.error('都道府県情報取得失敗:', error.response.data);
-        _this.errors = error.response.data;
-      });
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
+        var response;
+        return _regeneratorRuntime().wrap(function _callee$(_context) {
+          while (1) switch (_context.prev = _context.next) {
+            case 0:
+              _context.prev = 0;
+              console.log('都道府県情報を取得します');
+              // 出品しているコンビニがある都道府県の取得APIのGET送信
+              _context.next = 4;
+              return axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/prefecture');
+            case 4:
+              response = _context.sent;
+              console.log('APIからのレスポンス:', response.data);
+              _this.prefectures = response.data.prefectures;
+              _context.next = 13;
+              break;
+            case 9:
+              _context.prev = 9;
+              _context.t0 = _context["catch"](0);
+              console.error('都道府県情報取得失敗:', _context.t0.response.data);
+              _this.errors = _context.t0.response.data;
+            case 13:
+            case "end":
+              return _context.stop();
+          }
+        }, _callee, null, [[0, 9]]);
+      }))();
     },
     // 検索フォームの値をサーバー側に送信するメソッド
     submitForm: function submitForm() {
       console.log('検索条件を送信します');
-      var params = {};
+      var params = {}; // paramsオブジェクト
       if (this.selectedPrefecture) {
-        params.prefecture = this.selectedPrefecture;
+        // 検索条件に都道府県がある場合
+        params.prefecture = this.selectedPrefecture; // paramsオブジェクトにselectedPrefectureを入れる
       }
       if (this.minPrice) {
-        params.minprice = this.minPrice;
+        // 検索条件に最小価格がある場合
+        params.minprice = this.minPrice; // paramsオブジェクトにminPriceを入れる
       }
       if (this.maxPrice) {
-        params.maxprice = this.maxPrice;
+        // 検索条件に最大価格がある場合
+        params.maxprice = this.maxPrice; // paramsオブジェクトにmaxPriceを入れる
       }
       if (this.isExpired !== null) {
-        params.expiration_date = this.isExpired;
+        // 検索条件に賞味期限がある場合
+        params.expiration_date = this.isExpired; // paramsオブジェクトにisExpiredを入れる
       }
       console.log('検索パラメータ:', params);
+      // 親コンポーネントに通知
       this.$emit('search', params); // パラメータをつけたオブジェクトをemitする
     }
   }
@@ -8007,6 +8404,188 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/TopComponent.vue?vue&type=script&lang=js":
+/*!**********************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/TopComponent.vue?vue&type=script&lang=js ***!
+  \**********************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      formData: {
+        name: '',
+        email: '',
+        contact: ''
+      },
+      errors: null,
+      flashMessage: ''
+    };
+  },
+  methods: {
+    // 入力された値をサーバー側に送信するメソッド
+    submitForm: function submitForm() {
+      var _this = this;
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/contact', this.formData).then(function (response) {
+        console.log('お問い合わせ内容を送信します。');
+        _this.flashMessage = 'お問い合わせ受付完了メールを送信しました。';
+      })["catch"](function (error) {
+        console.log('errorは、', error);
+        console.error('ユーザー登録失敗:', error.response.data);
+        _this.errors = error.response.data.errors;
+      });
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/User/ForgotPasswordComponent.vue?vue&type=script&lang=js":
 /*!**************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/User/ForgotPasswordComponent.vue?vue&type=script&lang=js ***!
@@ -8016,8 +8595,10 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-//
-//
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == _typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw new Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(_typeof(e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw new Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, "catch": function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw new Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 //
 //
 //
@@ -8043,25 +8624,40 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       formData: {
-        email: ''
+        email: '' // メールアドレス
       },
-      errors: null
+      errors: null // エラーメッセージ
     };
   },
   methods: {
     // パスワードリセットメール送信処理
     sendResetLink: function sendResetLink() {
       var _this = this;
-      axios.post('/api/user/password/email', {
-        email: this.formData.email
-      }).then(function (response) {
-        console.log('パスワード変更メールを送信します。');
-        _this.message = response.data.message;
-        console.log('this.messageは、', _this.message);
-      })["catch"](function (error) {
-        console.log('メール送信失敗：', error.response.data);
-        _this.errors = error.response.data.errors;
-      });
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
+        return _regeneratorRuntime().wrap(function _callee$(_context) {
+          while (1) switch (_context.prev = _context.next) {
+            case 0:
+              _context.prev = 0;
+              _context.next = 3;
+              return axios.post('/api/user/password/email', _this.formData);
+            case 3:
+              // formDataを含めたリクエスト
+              console.log('パスワード変更メールを送信します。');
+              _this.message = response.data.message;
+              console.log('this.messageは、', _this.message);
+              _context.next = 12;
+              break;
+            case 8:
+              _context.prev = 8;
+              _context.t0 = _context["catch"](0);
+              console.log('メール送信失敗：', _context.t0.response.data);
+              _this.errors = _context.t0.response.data.errors;
+            case 12:
+            case "end":
+              return _context.stop();
+          }
+        }, _callee, null, [[0, 8]]);
+      }))();
     }
   }
 });
@@ -8123,8 +8719,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -8132,11 +8726,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     return {
       formData: {
         email: '',
-        password: ''
+        // メールアドレス
+        password: '' // パスワード
       },
       remember: false,
       // 次回ログインの省略にチェックしたか
       errors: null,
+      // エラーメッセージ
       PasswordType: 'password',
       // パスワードの初期設定
       PasswordConfirmType: 'password',
@@ -8151,7 +8747,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     submitForm: function submitForm() {
       var _this = this;
       return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
-        var response;
         return _regeneratorRuntime().wrap(function _callee$(_context) {
           while (1) switch (_context.prev = _context.next) {
             case 0:
@@ -8161,39 +8756,38 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 remember: _this.remember
               }));
             case 3:
-              response = _context.sent;
-              console.log('ログインします。');
-              console.log('APIからのレスポンス:', response.data);
-              _context.next = 8;
+              _context.next = 5;
               return _this.$store.dispatch('auth/currentUser');
-            case 8:
+            case 5:
               // ログイン状態を保持
               _this.$router.push({
                 name: 'user.mypage'
               }); // ログイン後、マイページに遷移
-              _context.next = 16;
+              _context.next = 13;
               break;
-            case 11:
-              _context.prev = 11;
+            case 8:
+              _context.prev = 8;
               _context.t0 = _context["catch"](0);
               console.log('errorは、', _context.t0);
               console.error('ログイン失敗:', _context.t0.response.data);
               _this.errors = _context.t0.response.data.errors;
-            case 16:
+            case 13:
             case "end":
               return _context.stop();
           }
-        }, _callee, null, [[0, 11]]);
+        }, _callee, null, [[0, 8]]);
       }))();
     },
     // パスワードの表示・非表示を切り替えるメソッド
     togglePasswordVisibility: function togglePasswordVisibility(type) {
       if (type === 'password') {
-        this.PasswordType = this.PasswordType === 'password' ? 'text' : 'password';
-        this.PasswordIconClass = this.PasswordIconClass === 'far fa-eye-slash' ? 'far fa-eye' : 'far fa-eye-slash';
+        // パスワードの入力フォーム
+        this.PasswordType = this.PasswordType === 'password' ? 'text' : 'password'; // PasswordTypeによってパスワードの表示・非表示を切り替え
+        this.PasswordIconClass = this.PasswordIconClass === 'far fa-eye-slash' ? 'far fa-eye' : 'far fa-eye-slash'; // PasswordIconClassによってパスワードのアイコンを切り替え
       } else if (type === 'password_confirm') {
-        this.PasswordConfirmType = this.PasswordConfirmType === 'password' ? 'text' : 'password';
-        this.PasswordConfirmIconClass = this.PasswordConfirmIconClass === 'far fa-eye-slash' ? 'far fa-eye' : 'far fa-eye-slash';
+        // パスワード（再入力）の入力フォーム
+        this.PasswordConfirmType = this.PasswordConfirmType === 'password' ? 'text' : 'password'; // PasswordTypeによってパスワードの表示・非表示を切り替え
+        this.PasswordConfirmIconClass = this.PasswordConfirmIconClass === 'far fa-eye-slash' ? 'far fa-eye' : 'far fa-eye-slash'; // PasswordIconClassによってパスワードのアイコンを切り替え
       }
     }
   }
@@ -8210,6 +8804,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == _typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw new Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(_typeof(e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw new Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, "catch": function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw new Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+//
+//
 //
 //
 //
@@ -8307,58 +8907,57 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       purchasedProducts: [],
-      likedProducts: []
+      // 購入された商品情報
+      likedProducts: [] // お気に入り登録した商品情報
     };
   },
-  computed: {
-    // ログインユーザーかどうか
-    isLogin: function isLogin() {
-      return this.$store.getters['auth/check'];
-    },
-    // ログインユーザーのIDを取得
-    loginId: function loginId() {
-      if (this.isLogin) {
-        return this.$store.getters['auth/id'];
-      } else {
-        return null;
-      }
-    }
-  },
   created: function created() {
-    this.getMyPageProducts(); // サーバから商品情報を取得
+    this.getMyPageProducts(); // インスタンス初期化時に商品情報を読み込む
   },
   methods: {
     // マイページに表示する購入・お気に入り商品情報の取得
     getMyPageProducts: function getMyPageProducts() {
       var _this = this;
-      console.log('購入した商品情報を取得します');
-      axios.get('/api/user/mypage/products').then(function (response) {
-        console.log('APIからのレスポンス:', response.data);
-        _this.purchasedProducts = response.data.purchased_products;
-        console.log('購入した商品情報:', _this.purchasedProducts);
-        _this.likedProducts = response.data.liked_products;
-        console.log('お気に入り商品情報:', _this.likedProducts);
-      })["catch"](function (error) {
-        console.error('商品情報取得失敗:', error.response.data);
-        _this.errors = error.response.data;
-      });
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
+        return _regeneratorRuntime().wrap(function _callee$(_context) {
+          while (1) switch (_context.prev = _context.next) {
+            case 0:
+              _context.prev = 0;
+              _context.next = 3;
+              return axios.get('/api/user/mypage/products');
+            case 3:
+              // レスポンスデータをそれぞれのプロパティにセット
+              _this.purchasedProducts = response.data.purchased_products;
+              _this.likedProducts = response.data.liked_products;
+              _context.next = 11;
+              break;
+            case 7:
+              _context.prev = 7;
+              _context.t0 = _context["catch"](0);
+              console.error('商品情報取得失敗:', _context.t0.response.data);
+              _this.errors = _context.t0.response.data;
+            case 11:
+            case "end":
+              return _context.stop();
+          }
+        }, _callee, null, [[0, 7]]);
+      }))();
     },
     // 商品画像のパスを取得するメソッド
     getProductPicturePath: function getProductPicturePath(product) {
-      // console.log('productは、', product);
-      if (product.product.pictures.length > 0) {
-        return '/storage/product_pictures/' + product.product.pictures[0].file;
+      if (product.pictures.length > 0) {
+        return '/storage/product_pictures/' + product.pictures[0].file; // 商品画像がある場合は、その画像パスを返す
       } else {
-        return '/storage/product_pictures/no_image.png';
+        return '/storage/product_pictures/no_image.png'; // 商品画像がない場合は、デフォルトの商品画像のパスを返す
       }
     },
-    // 日付をフォーマットするメソッド
+    // 賞味期限日付をフォーマットするメソッド
     formatDate: function formatDate(dateString) {
-      var date = new Date(dateString);
-      var year = date.getFullYear();
-      var month = ('0' + (date.getMonth() + 1)).slice(-2); // 月は 0 から始まるため +1
-      var day = ('0' + date.getDate()).slice(-2);
-      return "".concat(year, "\u5E74").concat(month, "\u6708").concat(day, "\u65E5");
+      var date = new Date(dateString); // Dateオブジェクトに変換する
+      var year = date.getFullYear(); // 年数を取得
+      var month = ('0' + (date.getMonth() + 1)).slice(-2); // 月数を取得、1桁の場合は2桁の数値に変換
+      var day = ('0' + date.getDate()).slice(-2); // 日数を取得、1桁の場合は2桁の数値に変換
+      return "".concat(year, "\u5E74").concat(month, "\u6708").concat(day, "\u65E5"); // 年月日のフォーマットされた賞味期限日付を返す
     },
     // 商品詳細画面のリンクを返すメソッド
     getProductDetailLink: function getProductDetailLink(productId) {
@@ -8367,19 +8966,34 @@ __webpack_require__.r(__webpack_exports__);
         params: {
           productId: productId
         }
-      };
+      }; // 商品詳細画面のリンクを返す
     },
     // 商品購入キャンセルするメソッド
     cancelPurchase: function cancelPurchase(productId) {
       var _this2 = this;
-      // 購入キャンセルを押した際にバックエンドに通知リクエストを送信する
-      axios["delete"]("/api/user/products/purchase/cancel/".concat(productId)).then(function (response) {
-        console.log('APIからのレスポンス:', response.data);
-        _this2.getMyPageProducts(); // 購入した商品のリストを再取得する
-      })["catch"](function (error) {
-        console.error('商品購入キャンセル処理失敗:', error.response.data);
-        _this2.errors = error.response.data.errors;
-      });
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
+        return _regeneratorRuntime().wrap(function _callee2$(_context2) {
+          while (1) switch (_context2.prev = _context2.next) {
+            case 0:
+              _context2.prev = 0;
+              _context2.next = 3;
+              return axios["delete"]("/api/user/products/purchase/cancel/".concat(productId));
+            case 3:
+              console.log('APIからのレスポンス:', response.data);
+              _this2.getMyPageProducts(); // 購入した商品のリストを再取得する
+              _context2.next = 11;
+              break;
+            case 7:
+              _context2.prev = 7;
+              _context2.t0 = _context2["catch"](0);
+              console.error('商品購入キャンセル処理失敗:', _context2.t0.response.data);
+              _this2.errors = _context2.t0.response.data.errors;
+            case 11:
+            case "end":
+              return _context2.stop();
+          }
+        }, _callee2, null, [[0, 7]]);
+      }))();
     }
   }
 });
@@ -8397,6 +9011,10 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == _typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw new Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(_typeof(e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw new Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, "catch": function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw new Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 //
 //
 //
@@ -8445,8 +9063,10 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       product: {},
+      // 商品情報
       categories: [],
-      errors: null
+      // カテゴリ
+      errors: null // エラーメッセージ
     };
   },
   computed: {
@@ -8465,100 +9085,191 @@ __webpack_require__.r(__webpack_exports__);
   },
   created: function created() {
     this.productId = this.$route.params.productId; // ルートからproductIdを取得
-    this.getProduct(); // 商品情報を取得
+    this.getProduct(); // インスタンス初期化時に商品情報を読み込む
   },
   methods: {
     // 商品情報をサーバーから取得
     getProduct: function getProduct() {
       var _this = this;
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/products/' + this.productId).then(function (response) {
-        _this.product = response.data.product;
-        _this.category = response.data.product.category;
-        console.log('APIからのレスポンス:', response.data);
-        console.log('this.productは、', _this.product);
-        console.log('this.categoryは、', _this.category);
-      })["catch"](function (error) {
-        console.error('商品情報取得失敗:', error.response.data);
-        _this.errors = error.response.data;
-      });
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
+        var response;
+        return _regeneratorRuntime().wrap(function _callee$(_context) {
+          while (1) switch (_context.prev = _context.next) {
+            case 0:
+              _context.prev = 0;
+              _context.next = 3;
+              return axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/api/products/".concat(_this.productId));
+            case 3:
+              response = _context.sent;
+              // レスポンスデータをそれぞれのプロパティにセット
+              _this.product = response.data.product;
+              _this.category = response.data.product.category;
+              console.log('APIからのレスポンス:', response.data);
+              console.log('this.productは、', _this.product);
+              console.log('this.categoryは、', _this.category);
+              _context.next = 15;
+              break;
+            case 11:
+              _context.prev = 11;
+              _context.t0 = _context["catch"](0);
+              console.error('商品情報取得失敗:', _context.t0.response.data);
+              _this.errors = _context.t0.response.data;
+            case 15:
+            case "end":
+              return _context.stop();
+          }
+        }, _callee, null, [[0, 11]]);
+      }))();
     },
     // カテゴリIDからカテゴリ名を取得するメソッド
     getCategoryName: function getCategoryName(categoryId) {
       if (this.category && this.category.id === categoryId) {
-        return this.category.name;
+        // カテゴリ情報がある場合はcategoryIdと一致するidがあるか
+        return this.category.name; // カテゴリ名を返す
       }
-      return '';
+      return ''; // ない場合は空文字を返す
     },
     // 商品画像のパスを取得するメソッド
     getProductPicturePath: function getProductPicturePath(product) {
-      console.log('productは、', product);
-      if (product.pictures && product.pictures.length > 0) {
-        return '/storage/product_pictures/' + product.pictures[0].file;
+      if (product.pictures.length > 0) {
+        return '/storage/product_pictures/' + product.pictures[0].file; // 商品画像がある場合は、その画像パスを返す
       } else {
-        return '/storage/product_pictures/no_image.png';
+        return '/storage/product_pictures/no_image.png'; // 商品画像がない場合は、デフォルトの商品画像のパスを返す
       }
     },
-    // 日付をフォーマットするメソッド
+    // 賞味期限日付をフォーマットするメソッド
     formatDate: function formatDate(dateString) {
-      var date = new Date(dateString);
-      var year = date.getFullYear();
-      var month = ('0' + (date.getMonth() + 1)).slice(-2); // 月は 0 から始まるため +1
-      var day = ('0' + date.getDate()).slice(-2);
-      return "".concat(year, "\u5E74").concat(month, "\u6708").concat(day, "\u65E5");
+      var date = new Date(dateString); // Dateオブジェクトに変換する
+      var year = date.getFullYear(); // 年数を取得
+      var month = ('0' + (date.getMonth() + 1)).slice(-2); // 月数を取得、1桁の場合は2桁の数値に変換
+      var day = ('0' + date.getDate()).slice(-2); // 日数を取得、1桁の場合は2桁の数値に変換
+      return "".concat(year, "\u5E74").concat(month, "\u6708").concat(day, "\u65E5"); // 年月日のフォーマットされた賞味期限日付を返す
+    },
+    // エックスのシェアボタン
+    Xshare: function Xshare() {
+      // エックスの投稿に遷移して商品を不特定多数の人がシェアできるようにする
+      var shareURL = 'https://twitter.com/intent/tweet?text=' + "haiki share 商品をシェアする" + "%20%23haikishare" + '&url=' + "https://haikishare.com/user/products/detail/" + this.productId;
+      location.href = shareURL;
     },
     // 商品購入するメソッド
     purchaseProduct: function purchaseProduct() {
       var _this2 = this;
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/user/products/purchase/' + this.productId).then(function (response) {
-        console.log('APIからのレスポンス:', response.data);
-        _this2.getProduct(); // 購入状態を更新（「購入する」から「購入をキャンセル」へ変更）
-      })["catch"](function (error) {
-        console.log('errorは、', error);
-        console.error('商品購入処理失敗:', error.response.data);
-        _this2.errors = error.response.data.errors;
-      });
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
+        var response;
+        return _regeneratorRuntime().wrap(function _callee2$(_context2) {
+          while (1) switch (_context2.prev = _context2.next) {
+            case 0:
+              _context2.prev = 0;
+              _context2.next = 3;
+              return axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/user/products/purchase/' + _this2.productId);
+            case 3:
+              response = _context2.sent;
+              console.log('APIからのレスポンス:', response.data);
+              _context2.next = 7;
+              return _this2.getProduct();
+            case 7:
+              _context2.next = 14;
+              break;
+            case 9:
+              _context2.prev = 9;
+              _context2.t0 = _context2["catch"](0);
+              console.log('errorは、', _context2.t0);
+              console.error('商品購入処理失敗:', _context2.t0.response.data);
+              _this2.errors = _context2.t0.response.data.errors;
+            case 14:
+            case "end":
+              return _context2.stop();
+          }
+        }, _callee2, null, [[0, 9]]);
+      }))();
     },
     // 商品購入キャンセルするメソッド
     cancelPurchase: function cancelPurchase() {
       var _this3 = this;
-      // 購入キャンセルを押した際にバックエンドに通知リクエストを送信する
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a["delete"]('/api/user/products/purchase/cancel/' + this.productId).then(function (response) {
-        console.log('APIからのレスポンス:', response.data);
-        _this3.getProduct(); // 購入状態を更新（「購入キャンセル」から「購入する」へ変更）
-      })["catch"](function (error) {
-        console.log('errorは、', error);
-        console.error('商品購入キャンセル処理失敗:', error.response.data);
-        _this3.errors = error.response.data.errors;
-      });
-    },
-    // Twitterのシェアボタン
-    twitterShare: function twitterShare() {
-      var shareURL = 'https://twitter.com/intent/tweet?text=' + "haiki share 商品をシェアする" + "%20%23haikishare" + '&url=' + "https://haikishare.com/user/products/detail/" + this.productId;
-      location.href = shareURL;
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3() {
+        var response;
+        return _regeneratorRuntime().wrap(function _callee3$(_context3) {
+          while (1) switch (_context3.prev = _context3.next) {
+            case 0:
+              _context3.prev = 0;
+              _context3.next = 3;
+              return axios__WEBPACK_IMPORTED_MODULE_0___default.a["delete"]('/api/user/products/purchase/cancel/' + _this3.productId);
+            case 3:
+              response = _context3.sent;
+              console.log('APIからのレスポンス:', response.data);
+              _context3.next = 7;
+              return _this3.getProduct();
+            case 7:
+              _context3.next = 14;
+              break;
+            case 9:
+              _context3.prev = 9;
+              _context3.t0 = _context3["catch"](0);
+              console.log('errorは、', _context3.t0);
+              console.error('商品購入キャンセル処理失敗:', _context3.t0.response.data);
+              _this3.errors = _context3.t0.response.data.errors;
+            case 14:
+            case "end":
+              return _context3.stop();
+          }
+        }, _callee3, null, [[0, 9]]);
+      }))();
     },
     // 商品お気に入り登録
     productLike: function productLike(product) {
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/user/like/' + product.id).then(function (response) {
-        console.log(product.id, 'の商品をお気に入り登録しました。');
-        product.liked = true;
-        console.log('this.likedは、', product.liked);
-        product.likes_count++;
-        console.log('product.likes_countは、', product.likes_count);
-      })["catch"](function (error) {
-        console.error('商品のお気に入り登録失敗:', error);
-      });
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee4() {
+        return _regeneratorRuntime().wrap(function _callee4$(_context4) {
+          while (1) switch (_context4.prev = _context4.next) {
+            case 0:
+              _context4.prev = 0;
+              _context4.next = 3;
+              return axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/user/like/' + product.id);
+            case 3:
+              console.log(product.id, 'の商品をお気に入り登録しました。');
+              product.liked = true; // いいねアイコンをtrueに切り替え
+              console.log('this.likedは、', product.liked);
+              product.likes_count++; // いいね数のインクリメント
+              console.log('product.likes_countは、', product.likes_count);
+              _context4.next = 13;
+              break;
+            case 10:
+              _context4.prev = 10;
+              _context4.t0 = _context4["catch"](0);
+              console.error('商品のお気に入り登録失敗:', _context4.t0);
+            case 13:
+            case "end":
+              return _context4.stop();
+          }
+        }, _callee4, null, [[0, 10]]);
+      }))();
     },
     // 商品お気に入り解除
     productUnlike: function productUnlike(product) {
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/user/unlike/' + product.id).then(function (response) {
-        console.log(product.id, 'の商品をお気に入り解除しました。');
-        product.liked = false;
-        console.log('product.likedは、', product.liked);
-        product.likes_count--;
-        console.log('product.likes_count', product.likes_count);
-      })["catch"](function (error) {
-        console.error('商品のお気に入り解除失敗:', error);
-      });
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee5() {
+        return _regeneratorRuntime().wrap(function _callee5$(_context5) {
+          while (1) switch (_context5.prev = _context5.next) {
+            case 0:
+              _context5.prev = 0;
+              _context5.next = 3;
+              return axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/user/unlike/' + product.id);
+            case 3:
+              console.log(product.id, 'の商品をお気に入り解除しました。');
+              product.liked = false; // いいねアイコンをfalseに切り替え
+              console.log('product.likedは、', product.liked);
+              product.likes_count--; // いいね数のデクリメント
+              console.log('product.likes_count', product.likes_count);
+              _context5.next = 13;
+              break;
+            case 10:
+              _context5.prev = 10;
+              _context5.t0 = _context5["catch"](0);
+              console.error('商品のお気に入り解除失敗:', _context5.t0);
+            case 13:
+            case "end":
+              return _context5.stop();
+          }
+        }, _callee5, null, [[0, 10]]);
+      }))();
     }
   }
 });
@@ -8578,9 +9289,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _PaginationComponent_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../PaginationComponent.vue */ "./resources/js/components/PaginationComponent.vue");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
-function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : String(i); }
-function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == _typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw new Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(_typeof(e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw new Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, "catch": function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw new Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 //
 //
 //
@@ -8634,103 +9345,172 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
-    PaginationComponent: _PaginationComponent_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
+    PaginationComponent: _PaginationComponent_vue__WEBPACK_IMPORTED_MODULE_1__["default"] // ページネーションコンポーネント
   },
   data: function data() {
     return {
       products: [],
+      // 商品
       currentPage: 1,
-      lastPage: 1
+      // 現在ページ
+      lastPage: 1 // 最後のページ
     };
   },
-  computed: {
-    // ログインユーザーかどうか
-    isLogin: function isLogin() {
-      return this.$store.getters['auth/check'];
-    }
-  },
   created: function created() {
-    this.getProduct(); // サーバから商品情報を取得
+    this.getProduct(); // インスタンス初期化時に商品情報を読み込む
   },
-  methods: _defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty({
+  methods: {
     // URLを作成する
+    createURL: function createURL(params) {
+      var _this = this;
+      console.log('検索URLを作成します');
+      // URLの組み立て
+      var url = "/user/products/liked";
+      if (params && params.page) {
+        // パラメータとパラメータのpageがある場合
+        url += "?page=".concat(params.page); // urlにparams.pageを追加
+      } else {
+        url += "?page=".concat(this.currentPage); // urlにthis.currentPageを追加
+      }
+      console.log('検索URL:', url);
+      // ページ遷移
+      this.$router.push(url).then(function () {
+        _this.getProduct(); // ページ遷移が完了した後にgetProduct()メソッドを呼び出す
+      });
+    },
+    // ページが変更されたときの処理
     onPageChange: function onPageChange(page) {
       console.log('onPageChangeメソッドのpageは、', page);
       if (this.currentPage !== page) {
         // 現在のページ番号と新しいページ番号が異なるか
         this.currentPage = page; // ページ番号を更新
-        var params = Object.assign({}, this.$route.query);
+        var params = Object.assign({}, this.$route.query); // 新しいクエリパラメータをparamsオブジェクトにコピー
         params.page = page; // 新しいページ番号にする
         this.createURL(params); // 新しいURLを生成して画面遷移
       }
-    }
-  }, "onPageChange", function onPageChange(page) {
-    console.log('onPageChangeメソッドのpageは、', page);
-    if (this.currentPage !== page) {
-      // 現在のページ番号と新しいページ番号が異なるか
-      this.currentPage = page; // ページ番号を更新
-      var params = Object.assign({}, this.$route.query);
-      params.page = page; // 新しいページ番号にする
-      this.createURL(params); // 新しいURLを生成して画面遷移
-    }
-  }), "getProduct", function getProduct() {
-    var _this = this;
-    console.log('お気に入り登録商品情報を取得します');
-    // 現在のルートのクエリパラメータを取得
-    var params = Object.assign({}, this.$route.query); // クエリパラメータのコピーを作成
-    console.log('paramsは、', params, 'this.currentPageは、', this.currentPage);
-    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/user/products/liked', {
-      params: params
-    }).then(function (response) {
-      console.log('curent_pageは、', response.data.products.current_page);
-      console.log('getProductのAPIからのレスポンス:', response.data);
-      _this.products = response.data.products;
-      console.log('productsは、', _this.products);
-      _this.lastPage = response.data.products.last_page;
-      console.log('this.lastPageは、', _this.lastPage);
-    })["catch"](function (error) {
-      console.error('商品情報取得失敗:', error.response.data);
-      _this.errors = error.response.data;
-    });
-  }), "getProductPicturePath", function getProductPicturePath(product) {
-    // console.log('productは、', product);
-    if (product.product.pictures.length > 0) {
-      return '/storage/product_pictures/' + product.product.pictures[0].file;
-    } else {
-      return '/storage/product_pictures/no_image.png';
-    }
-  }), "formatDate", function formatDate(dateString) {
-    var date = new Date(dateString);
-    var year = date.getFullYear();
-    var month = ('0' + (date.getMonth() + 1)).slice(-2); // 月は 0 から始まるため +1
-    var day = ('0' + date.getDate()).slice(-2);
-    return "".concat(year, "\u5E74").concat(month, "\u6708").concat(day, "\u65E5");
-  }), "getProductDetailLink", function getProductDetailLink(productId) {
-    return {
-      name: 'user.products.detail',
-      params: {
-        productId: productId
+    },
+    // 商品情報をサーバーから取得
+    getProduct: function getProduct() {
+      var _this2 = this;
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
+        var params, response;
+        return _regeneratorRuntime().wrap(function _callee$(_context) {
+          while (1) switch (_context.prev = _context.next) {
+            case 0:
+              _context.prev = 0;
+              console.log('お気に入り登録商品情報を取得します');
+              // 現在のルートのクエリパラメータを取得
+              params = Object.assign({}, _this2.$route.query); // クエリパラメータのコピーを作成
+              console.log('paramsは、', params, 'this.currentPageは、', _this2.currentPage);
+              // お気に入り登録商品情報取得APIをGET送信
+              _context.next = 6;
+              return axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/user/products/liked', {
+                params: params
+              });
+            case 6:
+              response = _context.sent;
+              // パラメータを含むリクエスト
+              console.log('curent_pageは、', response.data.products.current_page);
+              console.log('getProductのAPIからのレスポンス:', response.data);
+              // レスポンスデータをそれぞれのプロパティにセット
+              _this2.products = response.data.products;
+              _this2.lastPage = response.data.products.last_page;
+              _context.next = 17;
+              break;
+            case 13:
+              _context.prev = 13;
+              _context.t0 = _context["catch"](0);
+              console.error('商品情報取得失敗:', _context.t0.response.data);
+              _this2.errors = _context.t0.response.data;
+            case 17:
+            case "end":
+              return _context.stop();
+          }
+        }, _callee, null, [[0, 13]]);
+      }))();
+    },
+    // 商品画像のパスを取得するメソッド
+    getProductPicturePath: function getProductPicturePath(product) {
+      if (product.product.pictures.length > 0) {
+        return '/storage/product_pictures/' + product.product.pictures[0].file; // 商品画像がある場合は、その画像パスを返す
+      } else {
+        return '/storage/product_pictures/no_image.png'; // 商品画像がない場合は、デフォルトの商品画像のパスを返す
       }
-    };
-  }), "productLike", function productLike(product) {
-    axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/user/like/' + product.product.id).then(function (response) {
-      console.log(product.product.id, 'の商品をお気に入り登録しました。');
-      product.product.liked = true;
-      console.log('this.likedは、', product.product.liked);
-      product.product.likes_count++;
-      console.log('product.product.likes_countは、', product.product.likes_count);
-    })["catch"](function (error) {
-      console.error('商品のお気に入り登録失敗:', error);
-    });
-  }), "productUnlike", function productUnlike(product) {
-    var _this2 = this;
-    axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/user/unlike/' + product.product.id).then(function (response) {
-      console.log(product.product.id, 'の商品をお気に入り解除しました。');
-      _this2.getProduct();
-    })["catch"](function (error) {
-      console.error('商品のお気に入り解除失敗:', error);
-    });
-  })
+    },
+    // 賞味期限日付をフォーマットするメソッド
+    formatDate: function formatDate(dateString) {
+      var date = new Date(dateString); // Dateオブジェクトに変換する
+      var year = date.getFullYear(); // 年数を取得
+      var month = ('0' + (date.getMonth() + 1)).slice(-2); // 月数を取得、1桁の場合は2桁の数値に変換
+      var day = ('0' + date.getDate()).slice(-2); // 日数を取得、1桁の場合は2桁の数値に変換
+      return "".concat(year, "\u5E74").concat(month, "\u6708").concat(day, "\u65E5"); // 年月日のフォーマットされた賞味期限日付を返す
+    },
+    // 商品詳細画面のリンクを返すメソッド
+    getProductDetailLink: function getProductDetailLink(productId) {
+      return {
+        name: 'user.products.detail',
+        params: {
+          productId: productId
+        }
+      }; // 商品詳細画面のリンクを返す
+    },
+    // 商品お気に入り登録
+    productLike: function productLike(product) {
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
+        return _regeneratorRuntime().wrap(function _callee2$(_context2) {
+          while (1) switch (_context2.prev = _context2.next) {
+            case 0:
+              _context2.prev = 0;
+              _context2.next = 3;
+              return axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/user/like/' + product.id);
+            case 3:
+              console.log(product.id, 'の商品をお気に入り登録しました。');
+              product.liked = true; // いいねアイコンをtrueに切り替え
+              console.log('this.likedは、', product.liked);
+              product.likes_count++; // いいね数のインクリメント
+              console.log('product.likes_countは、', product.likes_count);
+              _context2.next = 13;
+              break;
+            case 10:
+              _context2.prev = 10;
+              _context2.t0 = _context2["catch"](0);
+              console.error('商品のお気に入り登録失敗:', _context2.t0);
+            case 13:
+            case "end":
+              return _context2.stop();
+          }
+        }, _callee2, null, [[0, 10]]);
+      }))();
+    },
+    // 商品お気に入り解除
+    productUnlike: function productUnlike(product) {
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3() {
+        return _regeneratorRuntime().wrap(function _callee3$(_context3) {
+          while (1) switch (_context3.prev = _context3.next) {
+            case 0:
+              _context3.prev = 0;
+              _context3.next = 3;
+              return axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/user/unlike/' + product.id);
+            case 3:
+              console.log(product.id, 'の商品をお気に入り解除しました。');
+              product.liked = false; // いいねアイコンをfalseに切り替え
+              console.log('product.likedは、', product.liked);
+              product.likes_count--; // いいね数のデクリメント
+              console.log('product.likes_count', product.likes_count);
+              _context3.next = 13;
+              break;
+            case 10:
+              _context3.prev = 10;
+              _context3.t0 = _context3["catch"](0);
+              console.error('商品のお気に入り解除失敗:', _context3.t0);
+            case 13:
+            case "end":
+              return _context3.stop();
+          }
+        }, _callee3, null, [[0, 10]]);
+      }))();
+    }
+  }
 });
 
 /***/ }),
@@ -8747,6 +9527,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _PaginationComponent_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../PaginationComponent.vue */ "./resources/js/components/PaginationComponent.vue");
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == _typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw new Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(_typeof(e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw new Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, "catch": function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw new Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 //
 //
 //
@@ -8794,23 +9578,19 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
-    PaginationComponent: _PaginationComponent_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
+    PaginationComponent: _PaginationComponent_vue__WEBPACK_IMPORTED_MODULE_1__["default"] // ページネーションコンポーネント
   },
   data: function data() {
     return {
       products: [],
+      // 商品情報
       currentPage: 1,
-      lastPage: 1
+      // 現在ページ
+      lastPage: 1 // 最後のページ
     };
   },
-  computed: {
-    // ログインユーザーかどうか
-    isLogin: function isLogin() {
-      return this.$store.getters['auth/check'];
-    }
-  },
   created: function created() {
-    this.getProduct(); // サーバから商品情報を取得
+    this.getProduct(); // インスタンス初期化時に商品情報を読み込む
   },
   methods: {
     // URLを作成する
@@ -8820,14 +9600,15 @@ __webpack_require__.r(__webpack_exports__);
       // URLの組み立て
       var url = "/user/products/purchased";
       if (params && params.page) {
-        url += "?page=".concat(params.page);
+        // パラメータとパラメータのpageがある場合
+        url += "?page=".concat(params.page); // urlにparams.pageを追加
       } else {
-        url += "?page=".concat(this.currentPage);
+        url += "?page=".concat(this.currentPage); // urlにthis.currentPageを追加
       }
       console.log('検索URL:', url);
       // ページ遷移
       this.$router.push(url).then(function () {
-        _this.getProduct(); // ページ遷移が完了した後にgetProductを呼び出す
+        _this.getProduct(); // ページ遷移が完了した後にgetProduct()メソッドを呼び出す
       });
     },
     // ページが変更されたときの処理
@@ -8836,7 +9617,7 @@ __webpack_require__.r(__webpack_exports__);
       if (this.currentPage !== page) {
         // 現在のページ番号と新しいページ番号が異なるか
         this.currentPage = page; // ページ番号を更新
-        var params = Object.assign({}, this.$route.query);
+        var params = Object.assign({}, this.$route.query); // 新しいクエリパラメータをparamsオブジェクトにコピー
         params.page = page; // 新しいページ番号にする
         this.createURL(params); // 新しいURLを生成して画面遷移
       }
@@ -8844,40 +9625,58 @@ __webpack_require__.r(__webpack_exports__);
     // 商品情報をサーバーから取得
     getProduct: function getProduct() {
       var _this2 = this;
-      console.log('購入済み商品情報を取得します');
-      // 現在のルートのクエリパラメータを取得
-      var params = Object.assign({}, this.$route.query); // クエリパラメータのコピーを作成
-      console.log('paramsは、', params, 'this.currentPageは、', this.currentPage);
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/user/products/purchased', {
-        params: params
-      }).then(function (response) {
-        console.log('curent_pageは、', response.data.products.current_page);
-        console.log('getProductのAPIからのレスポンス:', response.data);
-        _this2.products = response.data.products;
-        console.log('productsは、', _this2.products);
-        _this2.lastPage = response.data.products.last_page;
-        console.log('this.lastPageは、', _this2.lastPage);
-      })["catch"](function (error) {
-        console.error('商品情報取得失敗:', error.response.data);
-        _this2.errors = error.response.data;
-      });
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
+        var params, response;
+        return _regeneratorRuntime().wrap(function _callee$(_context) {
+          while (1) switch (_context.prev = _context.next) {
+            case 0:
+              _context.prev = 0;
+              cconsole.log('購入済み商品情報を取得します');
+              // 現在のルートのクエリパラメータを取得
+              params = Object.assign({}, _this2.$route.query); // クエリパラメータのコピーを作成
+              console.log('paramsは、', params, 'this.currentPageは、', _this2.currentPage);
+              // 購入済み商品情報取得APIをGET送信
+              _context.next = 6;
+              return axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/user/products/purchased', {
+                params: params
+              });
+            case 6:
+              response = _context.sent;
+              // パラメータを含むリクエスト
+              console.log('curent_pageは、', response.data.products.current_page);
+              console.log('getProductのAPIからのレスポンス:', response.data);
+              // レスポンスデータをそれぞれのプロパティにセット
+              _this2.products = response.data.products;
+              _this2.lastPage = response.data.products.last_page;
+              _context.next = 17;
+              break;
+            case 13:
+              _context.prev = 13;
+              _context.t0 = _context["catch"](0);
+              console.error('商品情報取得失敗:', _context.t0.response.data);
+              _this2.errors = _context.t0.response.data;
+            case 17:
+            case "end":
+              return _context.stop();
+          }
+        }, _callee, null, [[0, 13]]);
+      }))();
     },
     // 商品画像のパスを取得するメソッド
     getProductPicturePath: function getProductPicturePath(product) {
-      // console.log('productは、', product);
       if (product.product.pictures.length > 0) {
-        return '/storage/product_pictures/' + product.product.pictures[0].file;
+        return '/storage/product_pictures/' + product.product.pictures[0].file; // 商品画像がある場合は、その画像パスを返す
       } else {
-        return '/storage/product_pictures/no_image.png';
+        return '/storage/product_pictures/no_image.png'; // 商品画像がない場合は、デフォルトの商品画像のパスを返す
       }
     },
-    // 日付をフォーマットするメソッド
+    // 賞味期限日付をフォーマットするメソッド
     formatDate: function formatDate(dateString) {
-      var date = new Date(dateString);
-      var year = date.getFullYear();
-      var month = ('0' + (date.getMonth() + 1)).slice(-2); // 月は 0 から始まるため +1
-      var day = ('0' + date.getDate()).slice(-2);
-      return "".concat(year, "\u5E74").concat(month, "\u6708").concat(day, "\u65E5");
+      var date = new Date(dateString); // Dateオブジェクトに変換する
+      var year = date.getFullYear(); // 年数を取得
+      var month = ('0' + (date.getMonth() + 1)).slice(-2); // 月数を取得、1桁の場合は2桁の数値に変換
+      var day = ('0' + date.getDate()).slice(-2); // 日数を取得、1桁の場合は2桁の数値に変換
+      return "".concat(year, "\u5E74").concat(month, "\u6708").concat(day, "\u65E5"); // 年月日のフォーマットされた賞味期限日付を返す
     },
     // 商品詳細画面のリンクを返すメソッド
     getProductDetailLink: function getProductDetailLink(productId) {
@@ -8886,31 +9685,63 @@ __webpack_require__.r(__webpack_exports__);
         params: {
           productId: productId
         }
-      };
+      }; // 商品詳細画面のリンクを返す
     },
     // 商品お気に入り登録
     productLike: function productLike(product) {
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/user/like/' + product.id).then(function (response) {
-        console.log(product.id, 'の商品をお気に入り登録しました。');
-        product.liked = true;
-        console.log('this.likedは、', product.liked);
-        product.likes_count++;
-        console.log('product.likes_countは、', product.likes_count);
-      })["catch"](function (error) {
-        console.error('商品のお気に入り登録失敗:', error);
-      });
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
+        return _regeneratorRuntime().wrap(function _callee2$(_context2) {
+          while (1) switch (_context2.prev = _context2.next) {
+            case 0:
+              _context2.prev = 0;
+              _context2.next = 3;
+              return axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/user/like/' + product.id);
+            case 3:
+              console.log(product.id, 'の商品をお気に入り登録しました。');
+              product.liked = true; // いいねアイコンをtrueに切り替え
+              console.log('this.likedは、', product.liked);
+              product.likes_count++; // いいね数のインクリメント
+              console.log('product.likes_countは、', product.likes_count);
+              _context2.next = 13;
+              break;
+            case 10:
+              _context2.prev = 10;
+              _context2.t0 = _context2["catch"](0);
+              console.error('商品のお気に入り登録失敗:', _context2.t0);
+            case 13:
+            case "end":
+              return _context2.stop();
+          }
+        }, _callee2, null, [[0, 10]]);
+      }))();
     },
     // 商品お気に入り解除
     productUnlike: function productUnlike(product) {
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/user/unlike/' + product.id).then(function (response) {
-        console.log(product.id, 'の商品をお気に入り解除しました。');
-        product.liked = false;
-        console.log('product.likedは、', product.liked);
-        product.likes_count--;
-        console.log('product.likes_count', product.likes_count);
-      })["catch"](function (error) {
-        console.error('商品のお気に入り解除失敗:', error);
-      });
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3() {
+        return _regeneratorRuntime().wrap(function _callee3$(_context3) {
+          while (1) switch (_context3.prev = _context3.next) {
+            case 0:
+              _context3.prev = 0;
+              _context3.next = 3;
+              return axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/user/unlike/' + product.id);
+            case 3:
+              console.log(product.id, 'の商品をお気に入り解除しました。');
+              product.liked = false; // いいねアイコンをfalseに切り替え
+              console.log('product.likedは、', product.liked);
+              product.likes_count--; // いいね数のデクリメント
+              console.log('product.likes_count', product.likes_count);
+              _context3.next = 13;
+              break;
+            case 10:
+              _context3.prev = 10;
+              _context3.t0 = _context3["catch"](0);
+              console.error('商品のお気に入り解除失敗:', _context3.t0);
+            case 13:
+            case "end":
+              return _context3.stop();
+          }
+        }, _callee3, null, [[0, 10]]);
+      }))();
     }
   }
 });
@@ -8927,6 +9758,13 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _axiosErrorHandler__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../axiosErrorHandler */ "./resources/js/axiosErrorHandler.js");
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == _typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw new Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(_typeof(e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw new Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, "catch": function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw new Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+//
+//
+//
 //
 //
 //
@@ -8990,16 +9828,23 @@ __webpack_require__.r(__webpack_exports__);
     return {
       formData: {
         name: '',
+        // お名前
         email: '',
+        // メールアドレス
         password: '',
+        // パスワード
         password_confirmation: '',
+        // パスワード（再入力）
         introduction: '',
-        icon: ''
+        // 自己紹介文
+        icon: '' // 顔写真
       },
       textareaCount: 0,
       // 自己紹介文の文字数カウント初期値
       iconPreview: '',
+      // アイコン画像のプレビュー
       errors: null,
+      // エラーメッセージ
       PasswordType: 'password',
       // パスワードの初期設定
       PasswordConfirmType: 'password',
@@ -9009,112 +9854,146 @@ __webpack_require__.r(__webpack_exports__);
       PasswordConfirmIconClass: 'far fa-eye-slash' // 初期アイコン
     };
   },
-  computed: {
-    // ログインユーザーかどうか
-    isLogin: function isLogin() {
-      return this.$store.getters['auth/check'];
-    }
-  },
   created: function created() {
-    this.getProfile(); // プロフィール情報を取得
+    this.getProfile(); // インスタンス初期化時にプロフィール情報を読み込む
   },
   methods: {
     // 編集前のプロフィール情報をサーバーから取得
     getProfile: function getProfile() {
       var _this = this;
-      console.log('プロフィールを取得します');
-      _axiosErrorHandler__WEBPACK_IMPORTED_MODULE_0__["default"].get('/api/user/mypage/profile').then(function (response) {
-        _this.user = response.data.user;
-        console.log('APIからのレスポンス:', response.data);
-        // 取得したプロフィール情報をformDataに入れる
-        _this.formData.name = _this.user.name || '';
-        _this.formData.email = _this.user.email || '';
-        _this.formData.password = ''; // 編集前のパスワードは非表示（入力フォームを空）にする
-        _this.formData.password_confirmation = ''; // 編集前のパスワード（再入力）は非表示（入力フォームを空）にする
-        _this.formData.introduction = _this.user.introduction || '';
-        _this.formData.icon = _this.user.icon || '';
-      });
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
+        var response;
+        return _regeneratorRuntime().wrap(function _callee$(_context) {
+          while (1) switch (_context.prev = _context.next) {
+            case 0:
+              _context.prev = 0;
+              console.log('プロフィールを取得します');
+              // 利用者側プロフィール情報の取得APIをGET送信
+              _context.next = 4;
+              return _axiosErrorHandler__WEBPACK_IMPORTED_MODULE_0__["default"].get('/api/user/mypage/profile');
+            case 4:
+              response = _context.sent;
+              _this.user = response.data.user; // レスポンスデータのユーザー情報をuserプロパティにセット
+              console.log('APIからのレスポンス:', response.data);
+              // 取得したプロフィール情報をformDataに入れる
+              _this.formData.name = _this.user.name || ''; // お名前
+              _this.formData.email = _this.user.email || ''; // メールアドレス
+              _this.formData.password = ''; // 編集前のパスワードは非表示（入力フォームを空）にする
+              _this.formData.password_confirmation = ''; // 編集前のパスワード（再入力）は非表示（入力フォームを空）にする
+              _this.formData.introduction = _this.user.introduction || ''; // 自己紹介文
+              _this.formData.icon = _this.user.icon || ''; // 顔写真
+              _context.next = 19;
+              break;
+            case 15:
+              _context.prev = 15;
+              _context.t0 = _context["catch"](0);
+              console.error('プロフィール取得失敗:', _context.t0.response.data);
+              _this.errors = _context.t0.response.data;
+            case 19:
+            case "end":
+              return _context.stop();
+          }
+        }, _callee, null, [[0, 15]]);
+      }))();
     },
     // 入力された値をサーバー側に送信するメソッド
     submitForm: function submitForm() {
       var _this2 = this;
-      // リクエストヘッダー定義
-      var config = {
-        headers: {
-          'content-type': 'multipart/form-data'
-        }
-      };
-
-      // フォームデータを作成
-      var formData = new FormData();
-      formData.append('_method', 'PUT');
-      formData.append('name', this.formData.name);
-      formData.append('email', this.formData.email);
-      formData.append('password', this.formData.password);
-      formData.append('password_confirmation', this.formData.password_confirmation);
-      formData.append('introduction', this.formData.introduction);
-
-      // icon フィールドが空でない場合のみ、フォームデータに追加
-      if (this.formData.icon !== '') {
-        formData.append('icon', this.formData.icon);
-      }
-      _axiosErrorHandler__WEBPACK_IMPORTED_MODULE_0__["default"].post('/api/user/mypage/profile', formData, config).then(function (response) {
-        _this2.message = response.data.message;
-        console.log('this.messageは、', _this2.message);
-        console.log('プロフィールを更新します。');
-        _this2.$router.push({
-          name: 'user.mypage'
-        });
-      })["catch"](function (error) {
-        console.log('errorは、', error);
-        console.error('プロフィール編集失敗:', error.response.data);
-        _this2.errors = error.response.data.errors;
-      });
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
+        var config, formData, response;
+        return _regeneratorRuntime().wrap(function _callee2$(_context2) {
+          while (1) switch (_context2.prev = _context2.next) {
+            case 0:
+              _context2.prev = 0;
+              // リクエストヘッダー定義
+              config = {
+                headers: {
+                  'content-type': 'multipart/form-data' // ファイルのアップロードを含むリクエストボディのデータ形式
+                }
+              }; // フォームデータを作成
+              formData = new FormData(); // FormDataオブジェクトの作成
+              formData.append('_method', 'PUT'); // リクエストメソッドをPUTにする
+              formData.append('name', _this2.formData.name); // お名前
+              formData.append('email', _this2.formData.email); // メールアドレス
+              formData.append('password', _this2.formData.password); // パスワード
+              formData.append('password_confirmation', _this2.formData.password_confirmation); // パスワード再入力
+              formData.append('introduction', _this2.formData.introduction); // 自己紹介文
+              // icon フィールドが空でない場合のみ、フォームデータに追加
+              if (_this2.formData.icon !== '') {
+                formData.append('icon', _this2.formData.icon); // 顔写真
+              }
+              // 利用者側プロフィール情報更新APIをPOST送信
+              _context2.next = 12;
+              return _axiosErrorHandler__WEBPACK_IMPORTED_MODULE_0__["default"].post('/api/user/mypage/profile', config, formData);
+            case 12:
+              response = _context2.sent;
+              // リクエストヘッダとフォームデータを含むリクエスト
+              _this2.message = response.data.message;
+              console.log('this.messageは、', _this2.message);
+              console.log('プロフィールを更新します。');
+              _this2.$router.push({
+                name: 'user.mypage'
+              }); // プロフィール更新完了後、マイページに遷移する
+              _context2.next = 24;
+              break;
+            case 19:
+              _context2.prev = 19;
+              _context2.t0 = _context2["catch"](0);
+              console.log('errorは、', _context2.t0);
+              console.error('プロフィール編集失敗:', _context2.t0.response.data);
+              _this2.errors = _context2.t0.response.data.errors;
+            case 24:
+            case "end":
+              return _context2.stop();
+          }
+        }, _callee2, null, [[0, 19]]);
+      }))();
     },
     // パスワードの表示・非表示を切り替えるメソッド
     togglePasswordVisibility: function togglePasswordVisibility(type) {
       if (type === 'password') {
-        this.PasswordType = this.PasswordType === 'password' ? 'text' : 'password';
-        this.PasswordIconClass = this.PasswordIconClass === 'far fa-eye-slash' ? 'far fa-eye' : 'far fa-eye-slash';
+        // パスワードの入力フォーム
+        this.PasswordType = this.PasswordType === 'password' ? 'text' : 'password'; // PasswordTypeによってパスワードの表示・非表示を切り替え
+        this.PasswordIconClass = this.PasswordIconClass === 'far fa-eye-slash' ? 'far fa-eye' : 'far fa-eye-slash'; // PasswordIconClassによってパスワードのアイコンを切り替え
       } else if (type === 'password_confirm') {
-        this.PasswordConfirmType = this.PasswordConfirmType === 'password' ? 'text' : 'password';
-        this.PasswordConfirmIconClass = this.PasswordConfirmIconClass === 'far fa-eye-slash' ? 'far fa-eye' : 'far fa-eye-slash';
+        // パスワード（再入力）の入力フォーム
+        this.PasswordConfirmType = this.PasswordConfirmType === 'password' ? 'text' : 'password'; // PasswordTypeによってパスワードの表示・非表示を切り替え
+        this.PasswordConfirmIconClass = this.PasswordConfirmIconClass === 'far fa-eye-slash' ? 'far fa-eye' : 'far fa-eye-slash'; // PasswordIconClassによってパスワードのアイコンを切り替え
       }
     },
     // 自己紹介文の文字数をカウントするメソッド
     countCharacters: function countCharacters() {
-      this.countCharactersLength = this.formData.introduction.length;
+      this.countCharactersLength = this.formData.introduction.length; // 文字数のカウント
       if (this.countCharactersLength > 50) {
-        this.formData.introduction = this.formData.introduction.slice(0, 50);
-        this.countCharactersLength = 50;
+        // 文字数が50文字を超えているか
+        this.formData.introduction = this.formData.introduction.slice(0, 50); // 文字列を50文字まで切り抜く
+        this.countCharactersLength = 50; // 50文字以上の文字数を制限する
       }
     },
     // ドラッグ＆ドロップエリアに画像がドロップされたときの処理
     handleDrop: function handleDrop(event) {
-      event.preventDefault();
-      event.dataTransfer.files[0];
+      event.preventDefault(); // デフォルトの動作をキャンセル
+      event.dataTransfer.files[0]; // 最初のファイルを取得
     },
     // ファイルが選択されたときの処理
     handleFileChange: function handleFileChange(event) {
-      var file = event.target.files[0];
+      var file = event.target.files[0]; // 最初のファイルを取得
       if (file) {
-        // プレビューを表示する
-        this.previewImage(file);
-        // formData.iconにファイルオブジェクトを設定
-        this.formData.icon = file;
+        this.previewImage(file); // プレビューを表示する
+        this.formData.icon = file; // formData.iconにファイルオブジェクトを設定
       } else {
-        this.formData.icon = null;
+        this.formData.icon = null; // ファイルがない場合はnull
       }
     },
     // 画像のプレビューを表示するメソッド
     previewImage: function previewImage(file) {
       var _this3 = this;
-      var reader = new FileReader();
+      var reader = new FileReader(); // FileReaderオブジェクトの作成
       reader.onload = function (e) {
-        // プレビュー画像のURLを生成し、formDataに設定
-        _this3.iconPreview = e.target.result;
+        // 画像の読み込み
+        _this3.iconPreview = e.target.result; // プレビュー画像のURLを生成し、formDataに設定
       };
-      reader.readAsDataURL(file);
+      reader.readAsDataURL(file); // ファイルをデータURLとして読み込み
     }
   }
 });
@@ -9133,6 +10012,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _TermsComponent_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../TermsComponent.vue */ "./resources/js/components/TermsComponent.vue");
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == _typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw new Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(_typeof(e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw new Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, "catch": function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw new Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 //
 //
 //
@@ -9197,14 +10080,19 @@ __webpack_require__.r(__webpack_exports__);
     return {
       formData: {
         name: '',
+        // お名前
         email: '',
+        // メールアドレス
         password: '',
+        // パスワード
         password_confirmation: '',
-        role: 'user'
+        // パスワード再入力
+        role: 'user' // 利用者ユーザー
       },
       agreement: false,
       // 利用規約に同意したかどうか
       errors: null,
+      // エラーメッセージ
       PasswordType: 'password',
       // パスワードの初期設定
       PasswordConfirmType: 'password',
@@ -9218,26 +10106,43 @@ __webpack_require__.r(__webpack_exports__);
     // 入力された値をサーバー側に送信するメソッド
     submitForm: function submitForm() {
       var _this = this;
-      this.formData.agreement = this.agreement;
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/user/register', this.formData).then(function (response) {
-        console.log('ユーザー登録します。');
-        _this.$router.push({
-          name: 'user.login'
-        }); // ユーザー登録後、ログインページに遷移
-      })["catch"](function (error) {
-        console.log('errorは、', error);
-        console.error('ユーザー登録失敗:', error.response.data);
-        _this.errors = error.response.data.errors;
-      });
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
+        return _regeneratorRuntime().wrap(function _callee$(_context) {
+          while (1) switch (_context.prev = _context.next) {
+            case 0:
+              _context.prev = 0;
+              _this.formData.agreement = _this.agreement; // 利用規約の同意をformDataに追加
+              _context.next = 4;
+              return axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/user/register', _this.formData);
+            case 4:
+              // ユーザー登録APIをPOST送信
+              _this.$router.push({
+                name: 'user.login'
+              }); // ユーザー登録後、ログインページに遷移
+              _context.next = 11;
+              break;
+            case 7:
+              _context.prev = 7;
+              _context.t0 = _context["catch"](0);
+              console.error('ユーザー登録失敗:', _context.t0.response.data);
+              _this.errors = _context.t0.response.data.errors;
+            case 11:
+            case "end":
+              return _context.stop();
+          }
+        }, _callee, null, [[0, 7]]);
+      }))();
     },
     // パスワードの表示・非表示を切り替えるメソッド
     togglePasswordVisibility: function togglePasswordVisibility(type) {
       if (type === 'password') {
-        this.PasswordType = this.PasswordType === 'password' ? 'text' : 'password';
-        this.PasswordIconClass = this.PasswordIconClass === 'far fa-eye-slash' ? 'far fa-eye' : 'far fa-eye-slash';
+        // パスワードの入力フォーム
+        this.PasswordType = this.PasswordType === 'password' ? 'text' : 'password'; // PasswordTypeによってパスワードの表示・非表示を切り替え
+        this.PasswordIconClass = this.PasswordIconClass === 'far fa-eye-slash' ? 'far fa-eye' : 'far fa-eye-slash'; // PasswordIconClassによってパスワードのアイコンを切り替え
       } else if (type === 'password_confirm') {
-        this.PasswordConfirmType = this.PasswordConfirmType === 'password' ? 'text' : 'password';
-        this.PasswordConfirmIconClass = this.PasswordConfirmIconClass === 'far fa-eye-slash' ? 'far fa-eye' : 'far fa-eye-slash';
+        // パスワード（再入力）の入力フォーム
+        this.PasswordConfirmType = this.PasswordConfirmType === 'password' ? 'text' : 'password'; // PasswordTypeによってパスワードの表示・非表示を切り替え
+        this.PasswordConfirmIconClass = this.PasswordConfirmIconClass === 'far fa-eye-slash' ? 'far fa-eye' : 'far fa-eye-slash'; // PasswordIconClassによってパスワードのアイコンを切り替え
       }
     }
   }
@@ -9254,6 +10159,11 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == _typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw new Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(_typeof(e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw new Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, "catch": function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw new Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+//
 //
 //
 //
@@ -9302,12 +10212,17 @@ __webpack_require__.r(__webpack_exports__);
     return {
       formData: {
         oldPassword: '',
+        // 古いパスワード
         newPassword: '',
-        password_confirmation: ''
+        // 新しいパスワード
+        password_confirmation: '' // パスワード（再入力）
       },
       token: '',
+      // トークン
       email: '',
+      // メールアドレス
       errors: null,
+      // エラーメッセージ
       OldPasswordType: 'password',
       // 古いパスワードの初期設定
       NewPasswordType: 'password',
@@ -9322,7 +10237,7 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   mounted: function mounted() {
-    // URLからトークンを取得
+    // URLからトークンとメールアドレスを取得
     this.token = this.$route.params.token;
     this.email = this.$route.query.email;
     console.log('emailは、', this.email);
@@ -9332,37 +10247,62 @@ __webpack_require__.r(__webpack_exports__);
     // パスワードリセット処理
     resetPassword: function resetPassword() {
       var _this = this;
-      // トークンを含めたデータを作成
-      var data = {
-        email: this.email,
-        token: this.token,
-        oldPassword: this.formData.oldPassword,
-        newPassword: this.formData.newPassword,
-        password_confirmation: this.formData.password_confirmation
-      };
-      axios.post('/api/user/password/reset', data).then(function (response) {
-        _this.message = response.data.message;
-        console.log('this.messageは、', _this.message);
-        console.log('パスワードを変更します。');
-        _this.$router.push({
-          name: 'user.login'
-        }); // パスワード変更後、ログイン画面に遷移
-      })["catch"](function (error) {
-        console.error('パスワード変更失敗:', error.response.data);
-        _this.errors = error.response.data.errors;
-      });
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
+        var requestData;
+        return _regeneratorRuntime().wrap(function _callee$(_context) {
+          while (1) switch (_context.prev = _context.next) {
+            case 0:
+              _context.prev = 0;
+              // トークン・メールアドレスを含めたデータを作成
+              requestData = {
+                token: _this.token,
+                // トークン
+                email: _this.email,
+                // メールアドレス
+                oldPassword: _this.formData.oldPassword,
+                // 古いパスワード
+                newPassword: _this.formData.newPassword,
+                // 新しいパスワード
+                password_confirmation: _this.formData.password_confirmation // パスワード（再入力）
+              }; // 利用者パスワード変更APIをPOST送信
+              _context.next = 4;
+              return axios.post('/api/user/password/reset', requestData);
+            case 4:
+              // トークンとメールアドレスを含めたデータを含むリクエスト
+              _this.message = response.data.message;
+              console.log('this.messageは、', _this.message);
+              console.log('パスワードを変更します。');
+              _this.$router.push({
+                name: 'user.login'
+              }); // パスワード変更後、ログイン画面に遷移
+              _context.next = 14;
+              break;
+            case 10:
+              _context.prev = 10;
+              _context.t0 = _context["catch"](0);
+              console.error('パスワード変更失敗:', _context.t0.response.data);
+              _this.errors = _context.t0.response.data.errors;
+            case 14:
+            case "end":
+              return _context.stop();
+          }
+        }, _callee, null, [[0, 10]]);
+      }))();
     },
     // パスワードの表示・非表示を切り替えるメソッド
     togglePasswordVisibility: function togglePasswordVisibility(type) {
       if (type === 'old_password') {
-        this.OldPasswordType = this.OldPasswordType === 'password' ? 'text' : 'password';
-        this.OldPasswordIconClass = this.OldPasswordIconClass === 'far fa-eye-slash' ? 'far fa-eye' : 'far fa-eye-slash';
+        // 古いパスワードの入力フォーム
+        this.OldPasswordType = this.OldPasswordType === 'password' ? 'text' : 'password'; // PasswordTypeによってパスワードの表示・非表示を切り替え
+        this.OldPasswordIconClass = this.OldPasswordIconClass === 'far fa-eye-slash' ? 'far fa-eye' : 'far fa-eye-slash'; // PasswordIconClassによってパスワードのアイコンを切り替え
       } else if (type === 'new_password') {
-        this.NewPasswordType = this.NewPasswordType === 'password' ? 'text' : 'password';
-        this.NewPasswordIconClass = this.NewPasswordIconClass === 'far fa-eye-slash' ? 'far fa-eye' : 'far fa-eye-slash';
+        // 新しいパスワードの入力フォーム
+        this.NewPasswordType = this.NewPasswordType === 'password' ? 'text' : 'password'; // PasswordTypeによってパスワードの表示・非表示を切り替え
+        this.NewPasswordIconClass = this.NewPasswordIconClass === 'far fa-eye-slash' ? 'far fa-eye' : 'far fa-eye-slash'; // PasswordIconClassによってパスワードのアイコンを切り替え
       } else {
-        this.PasswordConfirmType = this.PasswordConfirmType === 'password' ? 'text' : 'password';
-        this.PasswordConfirmIconClass = this.PasswordConfirmIconClass === 'far fa-eye-slash' ? 'far fa-eye' : 'far fa-eye-slash';
+        // パスワード（再入力）の入力フォーム
+        this.PasswordConfirmType = this.PasswordConfirmType === 'password' ? 'text' : 'password'; // PasswordTypeによってパスワードの表示・非表示を切り替え
+        this.PasswordConfirmIconClass = this.PasswordConfirmIconClass === 'far fa-eye-slash' ? 'far fa-eye' : 'far fa-eye-slash'; // PasswordIconClassによってパスワードのアイコンを切り替え
       }
     }
   }
@@ -9379,6 +10319,10 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == _typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw new Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(_typeof(e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw new Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, "catch": function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw new Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 //
 //
 //
@@ -9406,17 +10350,33 @@ __webpack_require__.r(__webpack_exports__);
     // 退会処理をサーバー側に送信するメソッド
     withdraw: function withdraw() {
       var _this = this;
-      axios["delete"]('/api/user/mypage/withdraw').then(function (response) {
-        _this.message = response.data.message;
-        console.log('this.messageは、', _this.message);
-        console.log('退会します');
-        _this.$router.push({
-          name: 'home'
-        }); // 退会処理完了後、HOME画面に遷移
-      })["catch"](function (error) {
-        console.error('退会処理失敗:', error.response.data);
-        _this.errors = error.response.data.errors;
-      });
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
+        return _regeneratorRuntime().wrap(function _callee$(_context) {
+          while (1) switch (_context.prev = _context.next) {
+            case 0:
+              _context.prev = 0;
+              _context.next = 3;
+              return axios["delete"]('/api/user/mypage/withdraw');
+            case 3:
+              _this.message = response.data.message;
+              console.log('this.messageは、', _this.message);
+              console.log('退会します');
+              _this.$router.push({
+                name: 'top'
+              }); // 退会処理完了後、TOP画面に遷移
+              _context.next = 13;
+              break;
+            case 9:
+              _context.prev = 9;
+              _context.t0 = _context["catch"](0);
+              console.error('退会処理失敗:', _context.t0.response.data);
+              _this.errors = _context.t0.response.data.errors;
+            case 13:
+            case "end":
+              return _context.stop();
+          }
+        }, _callee, null, [[0, 9]]);
+      }))();
     }
   }
 });
@@ -45008,27 +45968,15 @@ var render = function () {
               ])
             : _vm._e(),
           _vm._v(" "),
-          _vm.errors && _vm.errors.name
-            ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
-                _vm._v(_vm._s(_vm.errors.name[0])),
-              ])
-            : _vm._e(),
-          _vm._v(" "),
-          _vm.errors && _vm.errors.email
-            ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
-                _vm._v(_vm._s(_vm.errors.email[0])),
-              ])
-            : _vm._e(),
-          _vm._v(" "),
-          _vm.errors && _vm.errors.contact
-            ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
-                _vm._v(_vm._s(_vm.errors.contact[0])),
-              ])
-            : _vm._e(),
-          _vm._v(" "),
           _c("label", { staticClass: "c-label", attrs: { for: "name" } }, [
             _vm._v("お名前"),
           ]),
+          _vm._v(" "),
+          _vm.errors && _vm.errors.name
+            ? _c("span", { staticClass: "c-error u-mt__s" }, [
+                _vm._v(_vm._s(_vm.errors.name[0])),
+              ])
+            : _vm._e(),
           _vm._v(" "),
           _c("input", {
             directives: [
@@ -45057,6 +46005,12 @@ var render = function () {
             _vm._v("メールアドレス"),
           ]),
           _vm._v(" "),
+          _vm.errors && _vm.errors.email
+            ? _c("span", { staticClass: "c-error u-mt__s" }, [
+                _vm._v(_vm._s(_vm.errors.email[0])),
+              ])
+            : _vm._e(),
+          _vm._v(" "),
           _c("input", {
             directives: [
               {
@@ -45083,6 +46037,12 @@ var render = function () {
           _c("label", { staticClass: "c-label", attrs: { for: "contact" } }, [
             _vm._v("お問い合わせ内容"),
           ]),
+          _vm._v(" "),
+          _vm.errors && _vm.errors.contact
+            ? _c("span", { staticClass: "c-error u-mt__s" }, [
+                _vm._v(_vm._s(_vm.errors.contact[0])),
+              ])
+            : _vm._e(),
           _vm._v(" "),
           _c("textarea", {
             directives: [
@@ -45174,15 +46134,13 @@ var render = function () {
           },
         },
         [
+          _vm._m(0),
+          _vm._v(" "),
           _vm.errors && _vm.errors.email
-            ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
+            ? _c("span", { staticClass: "c-error u-mt__s" }, [
                 _vm._v(_vm._s(_vm.errors.email[0])),
               ])
             : _vm._e(),
-          _vm._v(" "),
-          _c("label", { staticClass: "c-label", attrs: { for: "email" } }, [
-            _vm._v("メールアドレス"),
-          ]),
           _vm._v(" "),
           _c("input", {
             directives: [
@@ -45234,7 +46192,17 @@ var render = function () {
     ),
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { staticClass: "c-label", attrs: { for: "email" } }, [
+      _vm._v("メールアドレス"),
+      _c("span", { staticClass: "c-required" }, [_vm._v("必須")]),
+    ])
+  },
+]
 render._withStripped = true
 
 
@@ -45274,21 +46242,13 @@ var render = function () {
           },
         },
         [
+          _vm._m(0),
+          _vm._v(" "),
           _vm.errors && _vm.errors.email
-            ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
+            ? _c("span", { staticClass: "c-error u-mt__s" }, [
                 _vm._v(_vm._s(_vm.errors.email[0])),
               ])
             : _vm._e(),
-          _vm._v(" "),
-          _vm.errors && _vm.errors.password
-            ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
-                _vm._v(_vm._s(_vm.errors.password[0])),
-              ])
-            : _vm._e(),
-          _vm._v(" "),
-          _c("label", { staticClass: "c-label", attrs: { for: "email" } }, [
-            _vm._v("メールアドレス"),
-          ]),
           _vm._v(" "),
           _c("input", {
             directives: [
@@ -45313,9 +46273,13 @@ var render = function () {
             },
           }),
           _vm._v(" "),
-          _c("label", { staticClass: "c-label", attrs: { for: "password" } }, [
-            _vm._v("パスワード"),
-          ]),
+          _vm._m(1),
+          _vm._v(" "),
+          _vm.errors && _vm.errors.password
+            ? _c("span", { staticClass: "c-error u-mt__s" }, [
+                _vm._v(_vm._s(_vm.errors.password[0])),
+              ])
+            : _vm._e(),
           _vm._v(" "),
           _c("div", { staticClass: "c-input__password" }, [
             _vm.PasswordType === "checkbox"
@@ -45520,7 +46484,26 @@ var render = function () {
     ),
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { staticClass: "c-label", attrs: { for: "email" } }, [
+      _vm._v("メールアドレス"),
+      _c("span", { staticClass: "c-required" }, [_vm._v("必須")]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { staticClass: "c-label", attrs: { for: "password" } }, [
+      _vm._v("パスワード"),
+      _c("span", { staticClass: "c-required" }, [_vm._v("必須")]),
+    ])
+  },
+]
 render._withStripped = true
 
 
@@ -45841,7 +46824,7 @@ var render = function () {
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "p-product" }, [
-          _c("div", { staticClass: "p-like p-like__content u-pdr__s" }, [
+          _c("div", { staticClass: "p-icon u-pdr__s" }, [
             !_vm.product.liked
               ? _c("i", {
                   staticClass: "c-icon c-icon__unlike far fa-heart",
@@ -45863,12 +46846,12 @@ var render = function () {
             _c("span", [_vm._v("いいね" + _vm._s(_vm.product.likes_count))]),
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "p-like p-like__content" }, [
+          _c("div", { staticClass: "p-icon" }, [
             _c(
               "button",
               {
                 staticClass: "c-button c-button__share u-pd__s",
-                on: { click: _vm.twitterShare },
+                on: { click: _vm.Xshare },
               },
               [
                 _c(
@@ -45976,39 +46959,15 @@ var render = function () {
           },
         },
         [
+          _c("label", { staticClass: "c-label", attrs: { for: "name" } }, [
+            _vm._v("商品名"),
+          ]),
+          _vm._v(" "),
           _vm.errors && _vm.errors.name
             ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
                 _vm._v(_vm._s(_vm.errors.name[0])),
               ])
             : _vm._e(),
-          _vm._v(" "),
-          _vm.errors && _vm.errors.price
-            ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
-                _vm._v(_vm._s(_vm.errors.price[0])),
-              ])
-            : _vm._e(),
-          _vm._v(" "),
-          _vm.errors && _vm.errors.category_id
-            ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
-                _vm._v(_vm._s(_vm.errors.category_id[0])),
-              ])
-            : _vm._e(),
-          _vm._v(" "),
-          _vm.errors && _vm.errors.expiration_date
-            ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
-                _vm._v(_vm._s(_vm.errors.expiration_date[0])),
-              ])
-            : _vm._e(),
-          _vm._v(" "),
-          _vm.errors && _vm.errors.product_picture
-            ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
-                _vm._v(_vm._s(_vm.errors.product_picture[0])),
-              ])
-            : _vm._e(),
-          _vm._v(" "),
-          _c("label", { staticClass: "c-label", attrs: { for: "name" } }, [
-            _vm._v("商品名"),
-          ]),
           _vm._v(" "),
           _c("input", {
             directives: [
@@ -46037,6 +46996,12 @@ var render = function () {
             _vm._v("価格"),
           ]),
           _vm._v(" "),
+          _vm.errors && _vm.errors.price
+            ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
+                _vm._v(_vm._s(_vm.errors.price[0])),
+              ])
+            : _vm._e(),
+          _vm._v(" "),
           _c("input", {
             directives: [
               {
@@ -46060,11 +47025,15 @@ var render = function () {
             },
           }),
           _vm._v(" "),
-          _c(
-            "label",
-            { staticClass: "c-label", attrs: { for: "category_id" } },
-            [_vm._v("カテゴリ名")]
-          ),
+          _c("label", { staticClass: "c-label", attrs: { for: "category" } }, [
+            _vm._v("カテゴリ名"),
+          ]),
+          _vm._v(" "),
+          _vm.errors && _vm.errors.category
+            ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
+                _vm._v(_vm._s(_vm.errors.category[0])),
+              ])
+            : _vm._e(),
           _vm._v(" "),
           _c(
             "select",
@@ -46073,13 +47042,13 @@ var render = function () {
                 {
                   name: "model",
                   rawName: "v-model",
-                  value: _vm.formData.category_id,
-                  expression: "formData.category_id",
+                  value: _vm.formData.category,
+                  expression: "formData.category",
                 },
               ],
               staticClass: "c-input u-pd__s u-mt__m u-mb__m",
-              class: { "is-invalid": _vm.errors && _vm.errors.category_id },
-              attrs: { id: "category_id" },
+              class: { "is-invalid": _vm.errors && _vm.errors.category },
+              attrs: { id: "category" },
               on: {
                 change: function ($event) {
                   var $$selectedVal = Array.prototype.filter
@@ -46092,7 +47061,7 @@ var render = function () {
                     })
                   _vm.$set(
                     _vm.formData,
-                    "category_id",
+                    "category",
                     $event.target.multiple ? $$selectedVal : $$selectedVal[0]
                   )
                 },
@@ -46117,6 +47086,12 @@ var render = function () {
             { staticClass: "c-label", attrs: { for: "expiration_date" } },
             [_vm._v("賞味期限")]
           ),
+          _vm._v(" "),
+          _vm.errors && _vm.errors.expiration_date
+            ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
+                _vm._v(_vm._s(_vm.errors.expiration_date[0])),
+              ])
+            : _vm._e(),
           _vm._v(" "),
           _c("div", { staticClass: "p-text__form" }, [
             _c("input", {
@@ -46156,6 +47131,12 @@ var render = function () {
             { staticClass: "c-label", attrs: { for: "product_picture" } },
             [_vm._v("商品画像")]
           ),
+          _vm._v(" "),
+          _vm.errors && _vm.errors.product_picture
+            ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
+                _vm._v(_vm._s(_vm.errors.product_picture[0])),
+              ])
+            : _vm._e(),
           _vm._v(" "),
           _c(
             "div",
@@ -46435,39 +47416,15 @@ var render = function () {
           },
         },
         [
-          _vm.errors && _vm.errors.name
-            ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
-                _vm._v(_vm._s(_vm.errors.name[0])),
-              ])
-            : _vm._e(),
-          _vm._v(" "),
-          _vm.errors && _vm.errors.price
-            ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
-                _vm._v(_vm._s(_vm.errors.price[0])),
-              ])
-            : _vm._e(),
-          _vm._v(" "),
-          _vm.errors && _vm.errors.category
-            ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
-                _vm._v(_vm._s(_vm.errors.category[0])),
-              ])
-            : _vm._e(),
-          _vm._v(" "),
-          _vm.errors && _vm.errors.expiration_date
-            ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
-                _vm._v(_vm._s(_vm.errors.expiration_date[0])),
-              ])
-            : _vm._e(),
-          _vm._v(" "),
-          _vm.errors && _vm.errors.product_picture
-            ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
-                _vm._v(_vm._s(_vm.errors.product_picture[0])),
-              ])
-            : _vm._e(),
-          _vm._v(" "),
           _c("label", { staticClass: "c-label", attrs: { for: "name" } }, [
             _vm._v("商品名"),
           ]),
+          _vm._v(" "),
+          _vm.errors && _vm.errors.name
+            ? _c("span", { staticClass: "c-error u-mt__s" }, [
+                _vm._v(_vm._s(_vm.errors.name[0])),
+              ])
+            : _vm._e(),
           _vm._v(" "),
           _c("input", {
             directives: [
@@ -46496,6 +47453,12 @@ var render = function () {
             _vm._v("価格"),
           ]),
           _vm._v(" "),
+          _vm.errors && _vm.errors.price
+            ? _c("span", { staticClass: "c-error u-mt__s" }, [
+                _vm._v(_vm._s(_vm.errors.price[0])),
+              ])
+            : _vm._e(),
+          _vm._v(" "),
           _c("input", {
             directives: [
               {
@@ -46522,6 +47485,12 @@ var render = function () {
           _c("label", { staticClass: "c-label", attrs: { for: "category" } }, [
             _vm._v("カテゴリ名"),
           ]),
+          _vm._v(" "),
+          _vm.errors && _vm.errors.category
+            ? _c("span", { staticClass: "c-error u-mt__s" }, [
+                _vm._v(_vm._s(_vm.errors.category[0])),
+              ])
+            : _vm._e(),
           _vm._v(" "),
           _c(
             "select",
@@ -46575,6 +47544,12 @@ var render = function () {
             [_vm._v("賞味期限")]
           ),
           _vm._v(" "),
+          _vm.errors && _vm.errors.expiration_date
+            ? _c("span", { staticClass: "c-error u-mt__s" }, [
+                _vm._v(_vm._s(_vm.errors.expiration_date[0])),
+              ])
+            : _vm._e(),
+          _vm._v(" "),
           _c("div", { staticClass: "p-text__form" }, [
             _c("input", {
               directives: [
@@ -46609,6 +47584,12 @@ var render = function () {
           ]),
           _vm._v(" "),
           _c("label", { staticClass: "c-label" }, [_vm._v("商品画像")]),
+          _vm._v(" "),
+          _vm.errors && _vm.errors.product_picture
+            ? _c("span", { staticClass: "c-error u-mt__s" }, [
+                _vm._v(_vm._s(_vm.errors.product_picture[0])),
+              ])
+            : _vm._e(),
           _vm._v(" "),
           _c(
             "div",
@@ -46866,83 +47847,17 @@ var render = function () {
           },
         },
         [
-          _vm.errors && _vm.errors.convenience_name
-            ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
-                _vm._v(_vm._s(_vm.errors.convenience_name[0])),
-              ])
-            : _vm._e(),
-          _vm._v(" "),
-          _vm.errors && _vm.errors.branch_name
-            ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
-                _vm._v(_vm._s(_vm.errors.branch_name[0])),
-              ])
-            : _vm._e(),
-          _vm._v(" "),
-          _vm.errors && _vm.errors.address
-            ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
-                _vm._v(_vm._s(_vm.errors.address[0])),
-              ])
-            : _vm._e(),
-          _vm._v(" "),
-          _vm.errors && _vm.errors.prefecture
-            ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
-                _vm._v(_vm._s(_vm.errors.prefecture[0])),
-              ])
-            : _vm._e(),
-          _vm._v(" "),
-          _vm.errors && _vm.errors.city
-            ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
-                _vm._v(_vm._s(_vm.errors.city[0])),
-              ])
-            : _vm._e(),
-          _vm._v(" "),
-          _vm.errors && _vm.errors.town
-            ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
-                _vm._v(_vm._s(_vm.errors.town[0])),
-              ])
-            : _vm._e(),
-          _vm._v(" "),
-          _vm.errors && _vm.errors.building
-            ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
-                _vm._v(_vm._s(_vm.errors.building[0])),
-              ])
-            : _vm._e(),
-          _vm._v(" "),
-          _vm.errors && _vm.errors.email
-            ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
-                _vm._v(_vm._s(_vm.errors.email[0])),
-              ])
-            : _vm._e(),
-          _vm._v(" "),
-          _vm.errors && _vm.errors.password
-            ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
-                _vm._v(_vm._s(_vm.errors.password[0])),
-              ])
-            : _vm._e(),
-          _vm._v(" "),
-          _vm.errors && _vm.errors.password_confirmation
-            ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
-                _vm._v(_vm._s(_vm.errors.password_confirmation[0])),
-              ])
-            : _vm._e(),
-          _vm._v(" "),
-          _vm.errors && _vm.errors.introduction
-            ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
-                _vm._v(_vm._s(_vm.errors.introduction[0])),
-              ])
-            : _vm._e(),
-          _vm._v(" "),
-          _vm.errors && _vm.errors.icon
-            ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
-                _vm._v(_vm._s(_vm.errors.icon[0])),
-              ])
-            : _vm._e(),
-          _vm._v(" "),
           _c(
             "label",
             { staticClass: "c-label", attrs: { for: "convenience_name" } },
             [_vm._v("コンビニ名")]
           ),
+          _vm._v(" "),
+          _vm.errors && _vm.errors.convenience_name
+            ? _c("span", { staticClass: "c-error u-mt__s" }, [
+                _vm._v(_vm._s(_vm.errors.convenience_name[0])),
+              ])
+            : _vm._e(),
           _vm._v(" "),
           _c("input", {
             directives: [
@@ -46976,6 +47891,12 @@ var render = function () {
             { staticClass: "c-label", attrs: { for: "branch_name" } },
             [_vm._v("支店名")]
           ),
+          _vm._v(" "),
+          _vm.errors && _vm.errors.branch_name
+            ? _c("span", { staticClass: "c-error u-mt__s" }, [
+                _vm._v(_vm._s(_vm.errors.branch_name[0])),
+              ])
+            : _vm._e(),
           _vm._v(" "),
           _c("input", {
             directives: [
@@ -47054,6 +47975,12 @@ var render = function () {
             [_vm._v("都道府県")]
           ),
           _vm._v(" "),
+          _vm.errors && _vm.errors.prefecture
+            ? _c("span", { staticClass: "c-error u-mt__s" }, [
+                _vm._v(_vm._s(_vm.errors.prefecture[0])),
+              ])
+            : _vm._e(),
+          _vm._v(" "),
           _c("input", {
             directives: [
               {
@@ -47085,6 +48012,12 @@ var render = function () {
             _vm._v("市区町村"),
           ]),
           _vm._v(" "),
+          _vm.errors && _vm.errors.city
+            ? _c("span", { staticClass: "c-error u-mt__s" }, [
+                _vm._v(_vm._s(_vm.errors.city[0])),
+              ])
+            : _vm._e(),
+          _vm._v(" "),
           _c("input", {
             directives: [
               {
@@ -47111,6 +48044,12 @@ var render = function () {
           _c("label", { staticClass: "c-label", attrs: { for: "town" } }, [
             _vm._v("地名・番地"),
           ]),
+          _vm._v(" "),
+          _vm.errors && _vm.errors.town
+            ? _c("span", { staticClass: "c-error u-mt__s" }, [
+                _vm._v(_vm._s(_vm.errors.town[0])),
+              ])
+            : _vm._e(),
           _vm._v(" "),
           _c("input", {
             directives: [
@@ -47139,6 +48078,12 @@ var render = function () {
             _vm._v("建物名・部屋番号"),
           ]),
           _vm._v(" "),
+          _vm.errors && _vm.errors.building
+            ? _c("span", { staticClass: "c-error u-mt__s" }, [
+                _vm._v(_vm._s(_vm.errors.building[0])),
+              ])
+            : _vm._e(),
+          _vm._v(" "),
           _c("input", {
             directives: [
               {
@@ -47166,6 +48111,12 @@ var render = function () {
             _vm._v("メールアドレス"),
           ]),
           _vm._v(" "),
+          _vm.errors && _vm.errors.email
+            ? _c("span", { staticClass: "c-error u-mt__s" }, [
+                _vm._v(_vm._s(_vm.errors.email[0])),
+              ])
+            : _vm._e(),
+          _vm._v(" "),
           _c("input", {
             directives: [
               {
@@ -47192,6 +48143,12 @@ var render = function () {
           _c("label", { staticClass: "c-label", attrs: { for: "password" } }, [
             _vm._v("パスワード"),
           ]),
+          _vm._v(" "),
+          _vm.errors && _vm.errors.password
+            ? _c("span", { staticClass: "c-error u-mt__s" }, [
+                _vm._v(_vm._s(_vm.errors.password[0])),
+              ])
+            : _vm._e(),
           _vm._v(" "),
           _c("div", { staticClass: "c-input__password" }, [
             _vm.PasswordType === "checkbox"
@@ -47314,6 +48271,12 @@ var render = function () {
             { staticClass: "c-label", attrs: { for: "password-confirm" } },
             [_vm._v("パスワード（再入力）")]
           ),
+          _vm._v(" "),
+          _vm.errors && _vm.errors.password_confirmation
+            ? _c("span", { staticClass: "c-error u-mt__s" }, [
+                _vm._v(_vm._s(_vm.errors.password_confirmation[0])),
+              ])
+            : _vm._e(),
           _vm._v(" "),
           _c("div", { staticClass: "c-input__password" }, [
             _vm.PasswordConfirmType === "checkbox"
@@ -47452,6 +48415,12 @@ var render = function () {
             [_vm._v("自己紹介")]
           ),
           _vm._v(" "),
+          _vm.errors && _vm.errors.introduction
+            ? _c("span", { staticClass: "c-error u-mt__s" }, [
+                _vm._v(_vm._s(_vm.errors.introduction[0])),
+              ])
+            : _vm._e(),
+          _vm._v(" "),
           _c("div", { staticClass: "p-textarea__form" }, [
             _c("textarea", {
               directives: [
@@ -47501,6 +48470,12 @@ var render = function () {
             { staticClass: "c-label", attrs: { for: "profile-icon" } },
             [_vm._v("顔写真")]
           ),
+          _vm._v(" "),
+          _vm.errors && _vm.errors.icon
+            ? _c("span", { staticClass: "c-error u-mt__s" }, [
+                _vm._v(_vm._s(_vm.errors.icon[0])),
+              ])
+            : _vm._e(),
           _vm._v(" "),
           _c(
             "div",
@@ -47603,77 +48578,13 @@ var render = function () {
           },
         },
         [
+          _vm._m(0),
+          _vm._v(" "),
           _vm.errors && _vm.errors.convenience_name
-            ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
+            ? _c("span", { staticClass: "c-error u-mt__s" }, [
                 _vm._v(_vm._s(_vm.errors.convenience_name[0])),
               ])
             : _vm._e(),
-          _vm._v(" "),
-          _vm.errors && _vm.errors.branch_name
-            ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
-                _vm._v(_vm._s(_vm.errors.branch_name[0])),
-              ])
-            : _vm._e(),
-          _vm._v(" "),
-          _vm.errors && _vm.errors.address
-            ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
-                _vm._v(_vm._s(_vm.errors.address[0])),
-              ])
-            : _vm._e(),
-          _vm._v(" "),
-          _vm.errors && _vm.errors.prefecture
-            ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
-                _vm._v(_vm._s(_vm.errors.prefecture[0])),
-              ])
-            : _vm._e(),
-          _vm._v(" "),
-          _vm.errors && _vm.errors.city
-            ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
-                _vm._v(_vm._s(_vm.errors.city[0])),
-              ])
-            : _vm._e(),
-          _vm._v(" "),
-          _vm.errors && _vm.errors.town
-            ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
-                _vm._v(_vm._s(_vm.errors.town[0])),
-              ])
-            : _vm._e(),
-          _vm._v(" "),
-          _vm.errors && _vm.errors.building
-            ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
-                _vm._v(_vm._s(_vm.errors.building[0])),
-              ])
-            : _vm._e(),
-          _vm._v(" "),
-          _vm.errors && _vm.errors.email
-            ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
-                _vm._v(_vm._s(_vm.errors.email[0])),
-              ])
-            : _vm._e(),
-          _vm._v(" "),
-          _vm.errors && _vm.errors.password
-            ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
-                _vm._v(_vm._s(_vm.errors.password[0])),
-              ])
-            : _vm._e(),
-          _vm._v(" "),
-          _vm.errors && _vm.errors.password_confirmation
-            ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
-                _vm._v(_vm._s(_vm.errors.password_confirmation[0])),
-              ])
-            : _vm._e(),
-          _vm._v(" "),
-          _vm.errors && !_vm.agreement
-            ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
-                _vm._v("利用規約に同意する必要があります。"),
-              ])
-            : _vm._e(),
-          _vm._v(" "),
-          _c(
-            "label",
-            { staticClass: "c-label", attrs: { for: "convenience_name" } },
-            [_vm._v("コンビニ名")]
-          ),
           _vm._v(" "),
           _c("input", {
             directives: [
@@ -47702,11 +48613,13 @@ var render = function () {
             },
           }),
           _vm._v(" "),
-          _c(
-            "label",
-            { staticClass: "c-label", attrs: { for: "branch_name" } },
-            [_vm._v("支店名")]
-          ),
+          _vm._m(1),
+          _vm._v(" "),
+          _vm.errors && _vm.errors.branch_name
+            ? _c("span", { staticClass: "c-error u-mt__s" }, [
+                _vm._v(_vm._s(_vm.errors.branch_name[0])),
+              ])
+            : _vm._e(),
           _vm._v(" "),
           _c("input", {
             directives: [
@@ -47779,11 +48692,13 @@ var render = function () {
             ),
           ]),
           _vm._v(" "),
-          _c(
-            "label",
-            { staticClass: "c-label", attrs: { for: "prefecture" } },
-            [_vm._v("都道府県")]
-          ),
+          _vm._m(2),
+          _vm._v(" "),
+          _vm.errors && _vm.errors.prefecture
+            ? _c("span", { staticClass: "c-error u-mt__s" }, [
+                _vm._v(_vm._s(_vm.errors.prefecture[0])),
+              ])
+            : _vm._e(),
           _vm._v(" "),
           _c("input", {
             directives: [
@@ -47812,9 +48727,13 @@ var render = function () {
             },
           }),
           _vm._v(" "),
-          _c("label", { staticClass: "c-label", attrs: { for: "city" } }, [
-            _vm._v("市区町村"),
-          ]),
+          _vm._m(3),
+          _vm._v(" "),
+          _vm.errors && _vm.errors.city
+            ? _c("span", { staticClass: "c-error u-mt__s" }, [
+                _vm._v(_vm._s(_vm.errors.city[0])),
+              ])
+            : _vm._e(),
           _vm._v(" "),
           _c("input", {
             directives: [
@@ -47839,9 +48758,13 @@ var render = function () {
             },
           }),
           _vm._v(" "),
-          _c("label", { staticClass: "c-label", attrs: { for: "town" } }, [
-            _vm._v("地名・番地"),
-          ]),
+          _vm._m(4),
+          _vm._v(" "),
+          _vm.errors && _vm.errors.town
+            ? _c("span", { staticClass: "c-error u-mt__s" }, [
+                _vm._v(_vm._s(_vm.errors.town[0])),
+              ])
+            : _vm._e(),
           _vm._v(" "),
           _c("input", {
             directives: [
@@ -47870,6 +48793,12 @@ var render = function () {
             _vm._v("建物名・部屋番号"),
           ]),
           _vm._v(" "),
+          _vm.errors && _vm.errors.building
+            ? _c("span", { staticClass: "c-error u-mt__s" }, [
+                _vm._v(_vm._s(_vm.errors.building[0])),
+              ])
+            : _vm._e(),
+          _vm._v(" "),
           _c("input", {
             directives: [
               {
@@ -47893,9 +48822,13 @@ var render = function () {
             },
           }),
           _vm._v(" "),
-          _c("label", { staticClass: "c-label", attrs: { for: "email" } }, [
-            _vm._v("メールアドレス"),
-          ]),
+          _vm._m(5),
+          _vm._v(" "),
+          _vm.errors && _vm.errors.email
+            ? _c("span", { staticClass: "c-error u-mt__s" }, [
+                _vm._v(_vm._s(_vm.errors.email[0])),
+              ])
+            : _vm._e(),
           _vm._v(" "),
           _c("input", {
             directives: [
@@ -47920,9 +48853,13 @@ var render = function () {
             },
           }),
           _vm._v(" "),
-          _c("label", { staticClass: "c-label", attrs: { for: "password" } }, [
-            _vm._v("パスワード"),
-          ]),
+          _vm._m(6),
+          _vm._v(" "),
+          _vm.errors && _vm.errors.password
+            ? _c("span", { staticClass: "c-error u-mt__s" }, [
+                _vm._v(_vm._s(_vm.errors.password[0])),
+              ])
+            : _vm._e(),
           _vm._v(" "),
           _c("div", { staticClass: "c-input__password" }, [
             _vm.PasswordType === "checkbox"
@@ -48040,11 +48977,13 @@ var render = function () {
             ),
           ]),
           _vm._v(" "),
-          _c(
-            "label",
-            { staticClass: "c-label", attrs: { for: "password-confirm" } },
-            [_vm._v("パスワード（再入力）")]
-          ),
+          _vm._m(7),
+          _vm._v(" "),
+          _vm.errors && _vm.errors.password_confirmation
+            ? _c("span", { staticClass: "c-error u-mt__s" }, [
+                _vm._v(_vm._s(_vm.errors.password_confirmation[0])),
+              ])
+            : _vm._e(),
           _vm._v(" "),
           _c("div", { staticClass: "c-input__password" }, [
             _vm.PasswordConfirmType === "checkbox"
@@ -48184,6 +49123,12 @@ var render = function () {
             1
           ),
           _vm._v(" "),
+          _vm.errors && !_vm.agreement
+            ? _c("span", { staticClass: "c-error u-mt__s" }, [
+                _vm._v("利用規約に同意する必要があります。"),
+              ])
+            : _vm._e(),
+          _vm._v(" "),
           _c(
             "div",
             { staticClass: "c-checkbox c-checkbox__container u-mt__m u-mb__m" },
@@ -48262,7 +49207,96 @@ var render = function () {
     ),
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      { staticClass: "c-label", attrs: { for: "convenience_name" } },
+      [
+        _vm._v("コンビニ名"),
+        _c("span", { staticClass: "c-required" }, [_vm._v("必須")]),
+      ]
+    )
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      { staticClass: "c-label", attrs: { for: "branch_name" } },
+      [
+        _vm._v("支店名"),
+        _c("span", { staticClass: "c-required" }, [_vm._v("必須")]),
+      ]
+    )
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      { staticClass: "c-label", attrs: { for: "prefecture" } },
+      [
+        _vm._v("都道府県"),
+        _c("span", { staticClass: "c-required" }, [_vm._v("必須")]),
+      ]
+    )
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { staticClass: "c-label", attrs: { for: "city" } }, [
+      _vm._v("市区町村"),
+      _c("span", { staticClass: "c-required" }, [_vm._v("必須")]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { staticClass: "c-label", attrs: { for: "town" } }, [
+      _vm._v("地名・番地"),
+      _c("span", { staticClass: "c-required" }, [_vm._v("必須")]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { staticClass: "c-label", attrs: { for: "email" } }, [
+      _vm._v("メールアドレス"),
+      _c("span", { staticClass: "c-required" }, [_vm._v("必須")]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { staticClass: "c-label", attrs: { for: "password" } }, [
+      _vm._v("パスワード"),
+      _c("span", { staticClass: "c-required" }, [_vm._v("必須")]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      { staticClass: "c-label", attrs: { for: "password-confirm" } },
+      [
+        _vm._v("パスワード（再入力）"),
+        _c("span", { staticClass: "c-required" }, [_vm._v("必須")]),
+      ]
+    )
+  },
+]
 render._withStripped = true
 
 
@@ -48302,29 +49336,13 @@ var render = function () {
           },
         },
         [
+          _vm._m(0),
+          _vm._v(" "),
           _vm.errors && _vm.errors.oldPassword
-            ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
+            ? _c("span", { staticClass: "c-error u-mt__s" }, [
                 _vm._v(_vm._s(_vm.errors.oldPassword[0])),
               ])
             : _vm._e(),
-          _vm._v(" "),
-          _vm.errors && _vm.errors.newPassword
-            ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
-                _vm._v(_vm._s(_vm.errors.newPassword[0])),
-              ])
-            : _vm._e(),
-          _vm._v(" "),
-          _vm.errors && _vm.errors.password_confirmation
-            ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
-                _vm._v(_vm._s(_vm.errors.password_confirmation[0])),
-              ])
-            : _vm._e(),
-          _vm._v(" "),
-          _c(
-            "label",
-            { staticClass: "c-label", attrs: { for: "old_password" } },
-            [_vm._v("古いパスワード")]
-          ),
           _vm._v(" "),
           _c("div", { staticClass: "c-input__password" }, [
             _vm.OldPasswordType === "checkbox"
@@ -48442,11 +49460,13 @@ var render = function () {
             ),
           ]),
           _vm._v(" "),
-          _c(
-            "label",
-            { staticClass: "c-label", attrs: { for: "new_password" } },
-            [_vm._v("新しいパスワード")]
-          ),
+          _vm._m(1),
+          _vm._v(" "),
+          _vm.errors && _vm.errors.newPassword
+            ? _c("span", { staticClass: "c-error u-mt__s" }, [
+                _vm._v(_vm._s(_vm.errors.newPassword[0])),
+              ])
+            : _vm._e(),
           _vm._v(" "),
           _c("div", { staticClass: "c-input__password" }, [
             _vm.NewPasswordType === "checkbox"
@@ -48564,11 +49584,13 @@ var render = function () {
             ),
           ]),
           _vm._v(" "),
-          _c(
-            "label",
-            { staticClass: "c-label", attrs: { for: "password-confirm" } },
-            [_vm._v("新しいパスワード（再入力）")]
-          ),
+          _vm._m(2),
+          _vm._v(" "),
+          _vm.errors && _vm.errors.password_confirmation
+            ? _c("span", { staticClass: "c-error u-mt__s" }, [
+                _vm._v(_vm._s(_vm.errors.password_confirmation[0])),
+              ])
+            : _vm._e(),
           _vm._v(" "),
           _c("div", { staticClass: "c-input__password" }, [
             _vm.PasswordConfirmType === "checkbox"
@@ -48770,7 +49792,47 @@ var render = function () {
     ),
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      { staticClass: "c-label", attrs: { for: "old_password" } },
+      [
+        _vm._v("古いパスワード"),
+        _c("span", { staticClass: "c-required" }, [_vm._v("必須")]),
+      ]
+    )
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      { staticClass: "c-label", attrs: { for: "new_password" } },
+      [
+        _vm._v("新しいパスワード"),
+        _c("span", { staticClass: "c-required" }, [_vm._v("必須")]),
+      ]
+    )
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      { staticClass: "c-label", attrs: { for: "password-confirm" } },
+      [
+        _vm._v("新しいパスワード（再入力）"),
+        _c("span", { staticClass: "c-required" }, [_vm._v("必須")]),
+      ]
+    )
+  },
+]
 render._withStripped = true
 
 
@@ -48914,7 +49976,7 @@ var render = function () {
         _vm._v(" "),
         _c(
           "router-link",
-          { staticClass: "c-link", attrs: { to: { name: "home" } } },
+          { staticClass: "c-link", attrs: { to: { name: "top" } } },
           [_vm._v("\n                ©︎haiki share\n            ")]
         ),
         _vm._v(" "),
@@ -48989,7 +50051,7 @@ var render = function () {
       [
         _c(
           "router-link",
-          { staticClass: "l-header__title", attrs: { to: { name: "home" } } },
+          { staticClass: "l-header__title", attrs: { to: { name: "top" } } },
           [_vm._v("\n            haiki share\n        ")]
         ),
         _vm._v(" "),
@@ -49000,505 +50062,6 @@ var render = function () {
   ])
 }
 var staticRenderFns = []
-render._withStripped = true
-
-
-
-/***/ }),
-
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/HomeComponent.vue?vue&type=template&id=782dcf83":
-/*!***************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/HomeComponent.vue?vue&type=template&id=782dcf83 ***!
-  \***************************************************************************************************************************************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
-var render = function () {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("main", { staticClass: "l-container" }, [
-    _vm._m(0),
-    _vm._v(" "),
-    _c(
-      "section",
-      { staticClass: "u-color__bg u-pd__xl u-pd__xl", attrs: { id: "about" } },
-      [
-        _c("h2", { staticClass: "c-title u-mb__xl" }, [_vm._v("サービス概要")]),
-        _vm._v(" "),
-        _c("div", { staticClass: "c-container" }, [
-          _c("div", { staticClass: "c-container__body" }, [
-            _c("img", {
-              staticClass: "c-attachment",
-              attrs: { src: "/images/attachment.jpeg", alt: "てまえどり画像" },
-            }),
-            _vm._v(" "),
-            _vm._m(1),
-          ]),
-        ]),
-      ]
-    ),
-    _vm._v(" "),
-    _c("section", { attrs: { id: "merit" } }, [
-      _c("h2", { staticClass: "c-title u-mt__xl u-mb__xl" }, [
-        _vm._v("メリット"),
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "c-container" }, [
-        _c("div", { staticClass: "c-container__body" }, [
-          _c("div", { staticClass: "c-panel__group c-panel__group--flex" }, [
-            _c(
-              "div",
-              { staticClass: "c-panel c-panel__border c-panel__user" },
-              [
-                _vm._m(2),
-                _vm._v(" "),
-                _c("div", { staticClass: "c-panel__body" }, [
-                  _c("img", {
-                    staticClass: "c-panel__image c-panel__image--user",
-                    attrs: {
-                      src: "/images/merit_user.png",
-                      alt: "利用者メリット画像",
-                    },
-                  }),
-                ]),
-                _vm._v(" "),
-                _vm._m(3),
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "c-panel c-panel__border c-panel__convenience" },
-              [
-                _vm._m(4),
-                _vm._v(" "),
-                _c("div", { staticClass: "c-panel__body" }, [
-                  _c("img", {
-                    staticClass: "c-panel__image c-panel__image--convenience",
-                    attrs: {
-                      src: "/images/merit_convenience.png",
-                      alt: "コンビニメリット画像",
-                    },
-                  }),
-                ]),
-                _vm._v(" "),
-                _vm._m(5),
-              ]
-            ),
-          ]),
-        ]),
-      ]),
-    ]),
-    _vm._v(" "),
-    _c("section", { attrs: { id: "usage" } }, [
-      _c("h2", { staticClass: "c-title u-mt__xl u-mb__xl" }, [
-        _vm._v("利用方法"),
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "c-container" }, [
-        _c("div", { staticClass: "c-container__body" }, [
-          _c("div", { staticClass: "c-panel__group c-panel__group--flex" }, [
-            _c(
-              "div",
-              { staticClass: "c-panel c-panel__border c-panel__user" },
-              [
-                _vm._m(6),
-                _vm._v(" "),
-                _c("div", { staticClass: "c-panel__container" }, [
-                  _c("div", { staticClass: "c-panel__content" }, [
-                    _c("img", {
-                      staticClass: "c-panel__image c-panel__image--usage",
-                      attrs: {
-                        src: "/images/register_image.png",
-                        alt: "利用方法画像",
-                      },
-                    }),
-                    _vm._v(" "),
-                    _c("p", [_vm._v("１．ユーザー登録する")]),
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "c-panel__content" }, [
-                    _c("img", {
-                      staticClass: "c-panel__image c-panel__image--usage",
-                      attrs: {
-                        src: "/images/user_purchase.png",
-                        alt: "利用方法画像",
-                      },
-                    }),
-                    _vm._v(" "),
-                    _c("p", [_vm._v("２．商品一覧から気になる商品を探す")]),
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "c-panel__content" }, [
-                    _c("img", {
-                      staticClass: "c-panel__image c-panel__image--usage",
-                      attrs: {
-                        src: "/images/purchase.png",
-                        alt: "利用方法画像",
-                      },
-                    }),
-                    _vm._v(" "),
-                    _c("p", [
-                      _vm._v(
-                        "３．購入の意思が固まったら、商品詳細画面で購入ボタンを押す"
-                      ),
-                    ]),
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "c-panel__content" }, [
-                    _c("img", {
-                      staticClass: "c-panel__image c-panel__image--usage",
-                      attrs: {
-                        src: "/images/convenience.png",
-                        alt: "利用方法画像",
-                      },
-                    }),
-                    _vm._v(" "),
-                    _c("p", [
-                      _vm._v("４．利用者はコンビニに商品を購入しに行く"),
-                    ]),
-                  ]),
-                ]),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  { staticClass: "c-panel__foot" },
-                  [
-                    _c(
-                      "RouterLink",
-                      {
-                        staticClass: "c-button c-button__register u-pd__s",
-                        attrs: { to: "/user/register" },
-                      },
-                      [_vm._v("利用者ユーザー登録")]
-                    ),
-                  ],
-                  1
-                ),
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "c-panel c-panel__border c-panel__convenience" },
-              [
-                _vm._m(7),
-                _vm._v(" "),
-                _c("div", { staticClass: "c-panel__container" }, [
-                  _c("div", { staticClass: "c-panel__content" }, [
-                    _c("img", {
-                      staticClass: "c-panel__image c-panel__image--usage",
-                      attrs: {
-                        src: "/images/register_image.png",
-                        alt: "利用方法画像",
-                      },
-                    }),
-                    _vm._v(" "),
-                    _c("p", [_vm._v("１．ユーザー登録する")]),
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "c-panel__content" }, [
-                    _c("img", {
-                      staticClass: "c-panel__image c-panel__image--usage",
-                      attrs: {
-                        src: "/images/product.png",
-                        alt: "利用方法画像",
-                      },
-                    }),
-                    _vm._v(" "),
-                    _c("p", [_vm._v("２．廃棄となった商品を登録する")]),
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "c-panel__content" }, [
-                    _c("img", {
-                      staticClass: "c-panel__image c-panel__image--usage",
-                      attrs: {
-                        src: "/images/convenience_man.png",
-                        alt: "利用方法画像",
-                      },
-                    }),
-                    _vm._v(" "),
-                    _c("p", [
-                      _vm._v(
-                        "３．「商品購入完了メール」というメール通知があれば、実際の商品を用意しておく"
-                      ),
-                    ]),
-                  ]),
-                ]),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  { staticClass: "c-panel__foot" },
-                  [
-                    _c(
-                      "RouterLink",
-                      {
-                        staticClass:
-                          "c-button c-button__register c-button__register--convenience u-pd__s",
-                        attrs: { to: "/convenience/register" },
-                      },
-                      [_vm._v("コンビニユーザー登録")]
-                    ),
-                  ],
-                  1
-                ),
-              ]
-            ),
-          ]),
-        ]),
-      ]),
-    ]),
-    _vm._v(" "),
-    _c(
-      "section",
-      { staticClass: "u-pd__xl u-pd__xl", attrs: { id: "contact" } },
-      [
-        _c("h2", { staticClass: "c-title u-mt__xl u-mb__xl" }, [
-          _vm._v("お問い合わせ"),
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "c-container" }, [
-          _c("div", { staticClass: "c-container__contact" }, [
-            _c(
-              "form",
-              {
-                staticClass: "c-form",
-                on: {
-                  submit: function ($event) {
-                    $event.preventDefault()
-                    return _vm.submitForm($event)
-                  },
-                },
-              },
-              [
-                _vm.flashMessage
-                  ? _c("div", { staticClass: "c-flash" }, [
-                      _vm._v(_vm._s(_vm.flashMessage)),
-                    ])
-                  : _vm._e(),
-                _vm._v(" "),
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.formData.name,
-                      expression: "formData.name",
-                    },
-                  ],
-                  staticClass: "c-input u-pd__s u-mt__m",
-                  class: { "is-invalid": _vm.errors && _vm.errors.name },
-                  attrs: {
-                    id: "name",
-                    type: "name",
-                    autocomplete: "name",
-                    placeholder: "お名前",
-                  },
-                  domProps: { value: _vm.formData.name },
-                  on: {
-                    input: function ($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.$set(_vm.formData, "name", $event.target.value)
-                    },
-                  },
-                }),
-                _vm._v(" "),
-                _vm.errors && _vm.errors.name
-                  ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
-                      _vm._v(_vm._s(_vm.errors.name[0])),
-                    ])
-                  : _vm._e(),
-                _vm._v(" "),
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.formData.email,
-                      expression: "formData.email",
-                    },
-                  ],
-                  staticClass: "c-input u-pd__s u-mt__m",
-                  class: { "is-invalid": _vm.errors && _vm.errors.email },
-                  attrs: {
-                    id: "email",
-                    type: "email",
-                    autocomplete: "email",
-                    placeholder: "メールアドレス",
-                  },
-                  domProps: { value: _vm.formData.email },
-                  on: {
-                    input: function ($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.$set(_vm.formData, "email", $event.target.value)
-                    },
-                  },
-                }),
-                _vm._v(" "),
-                _vm.errors && _vm.errors.email
-                  ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
-                      _vm._v(_vm._s(_vm.errors.email[0])),
-                    ])
-                  : _vm._e(),
-                _vm._v(" "),
-                _c("textarea", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.formData.contact,
-                      expression: "formData.contact",
-                    },
-                  ],
-                  staticClass: "c-textarea u-pd__s u-mt__m",
-                  class: { "is-invalid": _vm.errors && _vm.errors.contact },
-                  attrs: {
-                    id: "contact",
-                    type: "text",
-                    cols: "30",
-                    rows: "10",
-                    placeholder: "お問い合わせ内容",
-                  },
-                  domProps: { value: _vm.formData.contact },
-                  on: {
-                    input: function ($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.$set(_vm.formData, "contact", $event.target.value)
-                    },
-                  },
-                }),
-                _vm._v(" "),
-                _vm.errors && _vm.errors.contact
-                  ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
-                      _vm._v(_vm._s(_vm.errors.contact[0])),
-                    ])
-                  : _vm._e(),
-                _vm._v(" "),
-                _c(
-                  "button",
-                  {
-                    staticClass:
-                      "c-button c-button__submit c-button__user u-pd__s u-mt__m",
-                    attrs: { type: "submit" },
-                  },
-                  [_vm._v("送信する")]
-                ),
-              ]
-            ),
-          ]),
-        ]),
-      ]
-    ),
-  ])
-}
-var staticRenderFns = [
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("section", { staticClass: "c-hero" }, [
-      _c("h2", { staticClass: "c-hero__title" }, [_vm._v("haiki share")]),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("p", [
-      _vm._v(
-        "\n                        「haiki share」は、食品ロス問題を解決するために作られたWebサービスです。"
-      ),
-      _c("br"),
-      _vm._v(
-        "\n                        農林水産省によると、令和2年度の食品ロスの推計値は年間で522万トン発生しており、そのうち60万トンはコンビニを含む食品小売業から出ています。"
-      ),
-      _c("br"),
-      _vm._v(
-        "\n                        コンビニ大手チェーン店では、食品ロスと廃棄物への取り組みとして、「てまえどり」を呼びかけています。「てまえどり」とは、商品棚の手前に陳列された食品を積極的に選ぶ行動のことです。これにより、期限が過ぎて廃棄されることによる食品ロスを削減する効果が期待されます。"
-      ),
-      _c("br"),
-      _vm._v(
-        "\n                        しかし、消費者の理解がまだ十分でないために、食品ロスはまだ課題が残っています。"
-      ),
-      _c("br"),
-      _vm._v(
-        "\n                        そこで、食品ロス問題が少しでも解決できるように、より多くの方々に理解し、行動するきっかけになるために「haiki share」があります。"
-      ),
-      _c("br"),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "c-panel__head" }, [
-      _c("span", { staticClass: "u-color__user" }, [
-        _vm._v("利用者側（廃棄を買う側）"),
-      ]),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "c-panel__foot" }, [
-      _c("p", [_vm._v("食品を通常価格より安く手に入れることができます。")]),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "c-panel__head" }, [
-      _c("span", { staticClass: "u-color__convenience" }, [
-        _vm._v("コンビニ側"),
-      ]),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "c-panel__foot" }, [
-      _c("p", [
-        _vm._v(
-          "賞味期限が近い食品を廃棄せず、売り上げを増やすことができます。"
-        ),
-      ]),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "c-panel__head" }, [
-      _c("span", { staticClass: "u-color__user" }, [
-        _vm._v("利用者側（廃棄を買う側）"),
-      ]),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "c-panel__head" }, [
-      _c("span", { staticClass: "u-color__convenience" }, [
-        _vm._v("コンビニ側"),
-      ]),
-    ])
-  },
-]
 render._withStripped = true
 
 
@@ -49577,7 +50140,7 @@ var render = function () {
                 ],
                 1
               )
-            : _vm.isHomePage
+            : _vm.isTopPage
             ? _c(
                 "div",
                 { staticClass: "l-nav__menu--item" },
@@ -50319,40 +50882,33 @@ var render = function () {
                                   [_vm._v("購入済み")]
                                 ),
                                 _vm._v(" "),
-                                _c(
-                                  "div",
-                                  {
-                                    staticClass:
-                                      "p-like p-like__content u-pdr__s",
-                                  },
-                                  [
-                                    !product.liked
-                                      ? _c("i", {
-                                          staticClass:
-                                            "c-icon c-icon__unlike far fa-heart",
-                                          on: {
-                                            click: function ($event) {
-                                              _vm.productLike(product)
-                                            },
+                                _c("div", { staticClass: "p-icon u-pdr__s" }, [
+                                  !product.liked
+                                    ? _c("i", {
+                                        staticClass:
+                                          "c-icon c-icon__unlike far fa-heart",
+                                        on: {
+                                          click: function ($event) {
+                                            _vm.productLike(product)
                                           },
-                                        })
-                                      : _c("i", {
-                                          staticClass:
-                                            "c-icon c-icon__like fas fa-heart",
-                                          on: {
-                                            click: function ($event) {
-                                              _vm.productUnlike(product)
-                                            },
+                                        },
+                                      })
+                                    : _c("i", {
+                                        staticClass:
+                                          "c-icon c-icon__like fas fa-heart",
+                                        on: {
+                                          click: function ($event) {
+                                            _vm.productUnlike(product)
                                           },
-                                        }),
-                                    _vm._v(" "),
-                                    _c("span", [
-                                      _vm._v(
-                                        "いいね" + _vm._s(product.likes_count)
-                                      ),
-                                    ]),
-                                  ]
-                                ),
+                                        },
+                                      }),
+                                  _vm._v(" "),
+                                  _c("span", [
+                                    _vm._v(
+                                      "いいね" + _vm._s(product.likes_count)
+                                    ),
+                                  ]),
+                                ]),
                                 _vm._v(" "),
                                 _c("p", { staticClass: "c-card__price" }, [
                                   _vm._v(_vm._s(product.price) + "円"),
@@ -50951,6 +51507,505 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/TopComponent.vue?vue&type=template&id=053669da":
+/*!**************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/TopComponent.vue?vue&type=template&id=053669da ***!
+  \**************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function () {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("main", { staticClass: "l-container" }, [
+    _vm._m(0),
+    _vm._v(" "),
+    _c(
+      "section",
+      { staticClass: "u-color__bg u-pd__xl u-pd__xl", attrs: { id: "about" } },
+      [
+        _c("h2", { staticClass: "c-title u-mb__xl" }, [_vm._v("サービス概要")]),
+        _vm._v(" "),
+        _c("div", { staticClass: "c-container" }, [
+          _c("div", { staticClass: "c-container__body" }, [
+            _c("img", {
+              staticClass: "c-attachment",
+              attrs: { src: "/images/attachment.jpeg", alt: "てまえどり画像" },
+            }),
+            _vm._v(" "),
+            _vm._m(1),
+          ]),
+        ]),
+      ]
+    ),
+    _vm._v(" "),
+    _c("section", { attrs: { id: "merit" } }, [
+      _c("h2", { staticClass: "c-title u-mt__xl u-mb__xl" }, [
+        _vm._v("メリット"),
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "c-container" }, [
+        _c("div", { staticClass: "c-container__body" }, [
+          _c("div", { staticClass: "c-panel__group c-panel__group--flex" }, [
+            _c(
+              "div",
+              { staticClass: "c-panel c-panel__border c-panel__user" },
+              [
+                _vm._m(2),
+                _vm._v(" "),
+                _c("div", { staticClass: "c-panel__body" }, [
+                  _c("img", {
+                    staticClass: "c-panel__image c-panel__image--user",
+                    attrs: {
+                      src: "/images/merit_user.png",
+                      alt: "利用者メリット画像",
+                    },
+                  }),
+                ]),
+                _vm._v(" "),
+                _vm._m(3),
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "c-panel c-panel__border c-panel__convenience" },
+              [
+                _vm._m(4),
+                _vm._v(" "),
+                _c("div", { staticClass: "c-panel__body" }, [
+                  _c("img", {
+                    staticClass: "c-panel__image c-panel__image--convenience",
+                    attrs: {
+                      src: "/images/merit_convenience.png",
+                      alt: "コンビニメリット画像",
+                    },
+                  }),
+                ]),
+                _vm._v(" "),
+                _vm._m(5),
+              ]
+            ),
+          ]),
+        ]),
+      ]),
+    ]),
+    _vm._v(" "),
+    _c("section", { attrs: { id: "usage" } }, [
+      _c("h2", { staticClass: "c-title u-mt__xl u-mb__xl" }, [
+        _vm._v("利用方法"),
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "c-container" }, [
+        _c("div", { staticClass: "c-container__body" }, [
+          _c("div", { staticClass: "c-panel__group c-panel__group--flex" }, [
+            _c(
+              "div",
+              { staticClass: "c-panel c-panel__border c-panel__user" },
+              [
+                _vm._m(6),
+                _vm._v(" "),
+                _c("div", { staticClass: "c-panel__container" }, [
+                  _c("div", { staticClass: "c-panel__content" }, [
+                    _c("img", {
+                      staticClass: "c-panel__image c-panel__image--usage",
+                      attrs: {
+                        src: "/images/register_image.png",
+                        alt: "利用方法画像",
+                      },
+                    }),
+                    _vm._v(" "),
+                    _c("p", [_vm._v("１．ユーザー登録する")]),
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "c-panel__content" }, [
+                    _c("img", {
+                      staticClass: "c-panel__image c-panel__image--usage",
+                      attrs: {
+                        src: "/images/user_purchase.png",
+                        alt: "利用方法画像",
+                      },
+                    }),
+                    _vm._v(" "),
+                    _c("p", [_vm._v("２．商品一覧から気になる商品を探す")]),
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "c-panel__content" }, [
+                    _c("img", {
+                      staticClass: "c-panel__image c-panel__image--usage",
+                      attrs: {
+                        src: "/images/purchase.png",
+                        alt: "利用方法画像",
+                      },
+                    }),
+                    _vm._v(" "),
+                    _c("p", [
+                      _vm._v(
+                        "３．購入の意思が固まったら、商品詳細画面で購入ボタンを押す"
+                      ),
+                    ]),
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "c-panel__content" }, [
+                    _c("img", {
+                      staticClass: "c-panel__image c-panel__image--usage",
+                      attrs: {
+                        src: "/images/convenience.png",
+                        alt: "利用方法画像",
+                      },
+                    }),
+                    _vm._v(" "),
+                    _c("p", [
+                      _vm._v("４．利用者はコンビニに商品を購入しに行く"),
+                    ]),
+                  ]),
+                ]),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "c-panel__foot" },
+                  [
+                    _c(
+                      "RouterLink",
+                      {
+                        staticClass: "c-button c-button__register u-pd__s",
+                        attrs: { to: "/user/register" },
+                      },
+                      [_vm._v("利用者ユーザー登録")]
+                    ),
+                  ],
+                  1
+                ),
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "c-panel c-panel__border c-panel__convenience" },
+              [
+                _vm._m(7),
+                _vm._v(" "),
+                _c("div", { staticClass: "c-panel__container" }, [
+                  _c("div", { staticClass: "c-panel__content" }, [
+                    _c("img", {
+                      staticClass: "c-panel__image c-panel__image--usage",
+                      attrs: {
+                        src: "/images/register_image.png",
+                        alt: "利用方法画像",
+                      },
+                    }),
+                    _vm._v(" "),
+                    _c("p", [_vm._v("１．ユーザー登録する")]),
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "c-panel__content" }, [
+                    _c("img", {
+                      staticClass: "c-panel__image c-panel__image--usage",
+                      attrs: {
+                        src: "/images/product.png",
+                        alt: "利用方法画像",
+                      },
+                    }),
+                    _vm._v(" "),
+                    _c("p", [_vm._v("２．廃棄となった商品を登録する")]),
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "c-panel__content" }, [
+                    _c("img", {
+                      staticClass: "c-panel__image c-panel__image--usage",
+                      attrs: {
+                        src: "/images/convenience_man.png",
+                        alt: "利用方法画像",
+                      },
+                    }),
+                    _vm._v(" "),
+                    _c("p", [
+                      _vm._v(
+                        "３．「商品購入完了メール」というメール通知があれば、実際の商品を用意しておく"
+                      ),
+                    ]),
+                  ]),
+                ]),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "c-panel__foot" },
+                  [
+                    _c(
+                      "RouterLink",
+                      {
+                        staticClass:
+                          "c-button c-button__register c-button__register--convenience u-pd__s",
+                        attrs: { to: "/convenience/register" },
+                      },
+                      [_vm._v("コンビニユーザー登録")]
+                    ),
+                  ],
+                  1
+                ),
+              ]
+            ),
+          ]),
+        ]),
+      ]),
+    ]),
+    _vm._v(" "),
+    _c(
+      "section",
+      { staticClass: "u-pd__xl u-pd__xl", attrs: { id: "contact" } },
+      [
+        _c("h2", { staticClass: "c-title u-mt__xl u-mb__xl" }, [
+          _vm._v("お問い合わせ"),
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "c-container" }, [
+          _c("div", { staticClass: "c-container__contact" }, [
+            _c(
+              "form",
+              {
+                staticClass: "c-form",
+                on: {
+                  submit: function ($event) {
+                    $event.preventDefault()
+                    return _vm.submitForm($event)
+                  },
+                },
+              },
+              [
+                _vm.flashMessage
+                  ? _c("div", { staticClass: "c-flash" }, [
+                      _vm._v(_vm._s(_vm.flashMessage)),
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.formData.name,
+                      expression: "formData.name",
+                    },
+                  ],
+                  staticClass: "c-input u-pd__s u-mt__m",
+                  class: { "is-invalid": _vm.errors && _vm.errors.name },
+                  attrs: {
+                    id: "name",
+                    type: "name",
+                    autocomplete: "name",
+                    placeholder: "お名前",
+                  },
+                  domProps: { value: _vm.formData.name },
+                  on: {
+                    input: function ($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.formData, "name", $event.target.value)
+                    },
+                  },
+                }),
+                _vm._v(" "),
+                _vm.errors && _vm.errors.name
+                  ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
+                      _vm._v(_vm._s(_vm.errors.name[0])),
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.formData.email,
+                      expression: "formData.email",
+                    },
+                  ],
+                  staticClass: "c-input u-pd__s u-mt__m",
+                  class: { "is-invalid": _vm.errors && _vm.errors.email },
+                  attrs: {
+                    id: "email",
+                    type: "email",
+                    autocomplete: "email",
+                    placeholder: "メールアドレス",
+                  },
+                  domProps: { value: _vm.formData.email },
+                  on: {
+                    input: function ($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.formData, "email", $event.target.value)
+                    },
+                  },
+                }),
+                _vm._v(" "),
+                _vm.errors && _vm.errors.email
+                  ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
+                      _vm._v(_vm._s(_vm.errors.email[0])),
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _c("textarea", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.formData.contact,
+                      expression: "formData.contact",
+                    },
+                  ],
+                  staticClass: "c-textarea u-pd__s u-mt__m",
+                  class: { "is-invalid": _vm.errors && _vm.errors.contact },
+                  attrs: {
+                    id: "contact",
+                    type: "text",
+                    cols: "30",
+                    rows: "10",
+                    placeholder: "お問い合わせ内容",
+                  },
+                  domProps: { value: _vm.formData.contact },
+                  on: {
+                    input: function ($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.formData, "contact", $event.target.value)
+                    },
+                  },
+                }),
+                _vm._v(" "),
+                _vm.errors && _vm.errors.contact
+                  ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
+                      _vm._v(_vm._s(_vm.errors.contact[0])),
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass:
+                      "c-button c-button__submit c-button__user u-pd__s u-mt__m",
+                    attrs: { type: "submit" },
+                  },
+                  [_vm._v("送信する")]
+                ),
+              ]
+            ),
+          ]),
+        ]),
+      ]
+    ),
+  ])
+}
+var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("section", { staticClass: "c-hero" }, [
+      _c("h2", { staticClass: "c-hero__title" }, [_vm._v("haiki share")]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("p", [
+      _vm._v(
+        "\n                        「haiki share」は、食品ロス問題を解決するために作られたWebサービスです。"
+      ),
+      _c("br"),
+      _vm._v(
+        "\n                        農林水産省によると、令和2年度の食品ロスの推計値は年間で522万トン発生しており、そのうち60万トンはコンビニを含む食品小売業から出ています。"
+      ),
+      _c("br"),
+      _vm._v(
+        "\n                        コンビニ大手チェーン店では、食品ロスと廃棄物への取り組みとして、「てまえどり」を呼びかけています。「てまえどり」とは、商品棚の手前に陳列された食品を積極的に選ぶ行動のことです。これにより、期限が過ぎて廃棄されることによる食品ロスを削減する効果が期待されます。"
+      ),
+      _c("br"),
+      _vm._v(
+        "\n                        しかし、消費者の理解がまだ十分でないために、食品ロスはまだ課題が残っています。"
+      ),
+      _c("br"),
+      _vm._v(
+        "\n                        そこで、食品ロス問題が少しでも解決できるように、より多くの方々に理解し、行動するきっかけになるために「haiki share」があります。"
+      ),
+      _c("br"),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "c-panel__head" }, [
+      _c("span", { staticClass: "u-color__user" }, [
+        _vm._v("利用者側（廃棄を買う側）"),
+      ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "c-panel__foot" }, [
+      _c("p", [_vm._v("食品を通常価格より安く手に入れることができます。")]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "c-panel__head" }, [
+      _c("span", { staticClass: "u-color__convenience" }, [
+        _vm._v("コンビニ側"),
+      ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "c-panel__foot" }, [
+      _c("p", [
+        _vm._v(
+          "賞味期限が近い食品を廃棄せず、売り上げを増やすことができます。"
+        ),
+      ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "c-panel__head" }, [
+      _c("span", { staticClass: "u-color__user" }, [
+        _vm._v("利用者側（廃棄を買う側）"),
+      ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "c-panel__head" }, [
+      _c("span", { staticClass: "u-color__convenience" }, [
+        _vm._v("コンビニ側"),
+      ]),
+    ])
+  },
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/User/ForgotPasswordComponent.vue?vue&type=template&id=4ea63dc6":
 /*!******************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/User/ForgotPasswordComponent.vue?vue&type=template&id=4ea63dc6 ***!
@@ -50984,15 +52039,13 @@ var render = function () {
           },
         },
         [
+          _vm._m(0),
+          _vm._v(" "),
           _vm.errors && _vm.errors.email
             ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
                 _vm._v(_vm._s(_vm.errors.email[0])),
               ])
             : _vm._e(),
-          _vm._v(" "),
-          _c("label", { staticClass: "c-label", attrs: { for: "email" } }, [
-            _vm._v("メールアドレス"),
-          ]),
           _vm._v(" "),
           _c("input", {
             directives: [
@@ -51044,7 +52097,17 @@ var render = function () {
     ),
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { staticClass: "c-label", attrs: { for: "email" } }, [
+      _vm._v("メールアドレス"),
+      _c("span", { staticClass: "c-required" }, [_vm._v("必須")]),
+    ])
+  },
+]
 render._withStripped = true
 
 
@@ -51082,21 +52145,13 @@ var render = function () {
           },
         },
         [
+          _vm._m(0),
+          _vm._v(" "),
           _vm.errors && _vm.errors.email
-            ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
+            ? _c("span", { staticClass: "c-error u-mt__s" }, [
                 _vm._v(_vm._s(_vm.errors.email[0])),
               ])
             : _vm._e(),
-          _vm._v(" "),
-          _vm.errors && _vm.errors.password
-            ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
-                _vm._v(_vm._s(_vm.errors.password[0])),
-              ])
-            : _vm._e(),
-          _vm._v(" "),
-          _c("label", { staticClass: "c-label", attrs: { for: "email" } }, [
-            _vm._v("メールアドレス"),
-          ]),
           _vm._v(" "),
           _c("input", {
             directives: [
@@ -51121,9 +52176,13 @@ var render = function () {
             },
           }),
           _vm._v(" "),
-          _c("label", { staticClass: "c-label", attrs: { for: "password" } }, [
-            _vm._v("パスワード"),
-          ]),
+          _vm._m(1),
+          _vm._v(" "),
+          _vm.errors && _vm.errors.password
+            ? _c("span", { staticClass: "c-error u-mt__s" }, [
+                _vm._v(_vm._s(_vm.errors.password[0])),
+              ])
+            : _vm._e(),
           _vm._v(" "),
           _c("div", { staticClass: "c-input__password" }, [
             _vm.PasswordType === "checkbox"
@@ -51325,7 +52384,26 @@ var render = function () {
     ),
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { staticClass: "c-label", attrs: { for: "email" } }, [
+      _vm._v("メールアドレス"),
+      _c("span", { staticClass: "c-required" }, [_vm._v("必須")]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { staticClass: "c-label", attrs: { for: "password" } }, [
+      _vm._v("パスワード"),
+      _c("span", { staticClass: "c-required" }, [_vm._v("必須")]),
+    ])
+  },
+]
 render._withStripped = true
 
 
@@ -51671,7 +52749,7 @@ var render = function () {
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "p-product" }, [
-          _c("div", { staticClass: "p-like p-like__content u-pdr__s" }, [
+          _c("div", { staticClass: "p-icon u-pdr__s" }, [
             !_vm.product.liked
               ? _c("i", {
                   staticClass: "c-icon c-icon__unlike far fa-heart",
@@ -51693,12 +52771,12 @@ var render = function () {
             _c("span", [_vm._v("いいね" + _vm._s(_vm.product.likes_count))]),
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "p-like p-like__content" }, [
+          _c("div", { staticClass: "p-icon" }, [
             _c(
               "button",
               {
                 staticClass: "c-button c-button__share u-pd__s",
-                on: { click: _vm.twitterShare },
+                on: { click: _vm.Xshare },
               },
               [
                 _c(
@@ -51869,40 +52947,33 @@ var render = function () {
                               [_vm._v("購入済み")]
                             ),
                             _vm._v(" "),
-                            _c(
-                              "div",
-                              {
-                                staticClass: "p-like p-like__content u-pdr__s",
-                              },
-                              [
-                                !product.product.liked
-                                  ? _c("i", {
-                                      staticClass:
-                                        "c-icon c-icon__unlike far fa-heart",
-                                      on: {
-                                        click: function ($event) {
-                                          _vm.productLike(product)
-                                        },
+                            _c("div", { staticClass: "p-icon u-pdr__s" }, [
+                              !product.product.liked
+                                ? _c("i", {
+                                    staticClass:
+                                      "c-icon c-icon__unlike far fa-heart",
+                                    on: {
+                                      click: function ($event) {
+                                        _vm.productLike(product)
                                       },
-                                    })
-                                  : _c("i", {
-                                      staticClass:
-                                        "c-icon c-icon__like fas fa-heart",
-                                      on: {
-                                        click: function ($event) {
-                                          _vm.productUnlike(product)
-                                        },
+                                    },
+                                  })
+                                : _c("i", {
+                                    staticClass:
+                                      "c-icon c-icon__like fas fa-heart",
+                                    on: {
+                                      click: function ($event) {
+                                        _vm.productUnlike(product)
                                       },
-                                    }),
-                                _vm._v(" "),
-                                _c("span", [
-                                  _vm._v(
-                                    "いいね" +
-                                      _vm._s(product.product.likes_count)
-                                  ),
-                                ]),
-                              ]
-                            ),
+                                    },
+                                  }),
+                              _vm._v(" "),
+                              _c("span", [
+                                _vm._v(
+                                  "いいね" + _vm._s(product.product.likes_count)
+                                ),
+                              ]),
+                            ]),
                             _vm._v(" "),
                             _c("p", { staticClass: "c-card__price" }, [
                               _vm._v(_vm._s(product.product.price) + "円"),
@@ -52172,45 +53243,15 @@ var render = function () {
           },
         },
         [
-          _vm.errors && _vm.errors.name
-            ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
-                _vm._v(_vm._s(_vm.errors.name[0])),
-              ])
-            : _vm._e(),
-          _vm._v(" "),
-          _vm.errors && _vm.errors.email
-            ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
-                _vm._v(_vm._s(_vm.errors.email[0])),
-              ])
-            : _vm._e(),
-          _vm._v(" "),
-          _vm.errors && _vm.errors.password
-            ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
-                _vm._v(_vm._s(_vm.errors.password[0])),
-              ])
-            : _vm._e(),
-          _vm._v(" "),
-          _vm.errors && _vm.errors.password_confirmation
-            ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
-                _vm._v(_vm._s(_vm.errors.password_confirmation[0])),
-              ])
-            : _vm._e(),
-          _vm._v(" "),
-          _vm.errors && _vm.errors.introduction
-            ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
-                _vm._v(_vm._s(_vm.errors.introduction[0])),
-              ])
-            : _vm._e(),
-          _vm._v(" "),
-          _vm.errors && _vm.errors.icon
-            ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
-                _vm._v(_vm._s(_vm.errors.icon[0])),
-              ])
-            : _vm._e(),
-          _vm._v(" "),
           _c("label", { staticClass: "c-label", attrs: { for: "name" } }, [
             _vm._v("お名前"),
           ]),
+          _vm._v(" "),
+          _vm.errors && _vm.errors.name
+            ? _c("span", { staticClass: "c-error u-mt__s" }, [
+                _vm._v(_vm._s(_vm.errors.name[0])),
+              ])
+            : _vm._e(),
           _vm._v(" "),
           _c("input", {
             directives: [
@@ -52239,6 +53280,12 @@ var render = function () {
             _vm._v("メールアドレス"),
           ]),
           _vm._v(" "),
+          _vm.errors && _vm.errors.email
+            ? _c("span", { staticClass: "c-error u-mt__s" }, [
+                _vm._v(_vm._s(_vm.errors.email[0])),
+              ])
+            : _vm._e(),
+          _vm._v(" "),
           _c("input", {
             directives: [
               {
@@ -52265,6 +53312,12 @@ var render = function () {
           _c("label", { staticClass: "c-label", attrs: { for: "password" } }, [
             _vm._v("パスワード"),
           ]),
+          _vm._v(" "),
+          _vm.errors && _vm.errors.password
+            ? _c("span", { staticClass: "c-error u-mt__s" }, [
+                _vm._v(_vm._s(_vm.errors.password[0])),
+              ])
+            : _vm._e(),
           _vm._v(" "),
           _c("div", { staticClass: "c-input__password" }, [
             _vm.PasswordType === "checkbox"
@@ -52387,6 +53440,12 @@ var render = function () {
             { staticClass: "c-label", attrs: { for: "password-confirm" } },
             [_vm._v("パスワード（再入力）")]
           ),
+          _vm._v(" "),
+          _vm.errors && _vm.errors.password_confirmation
+            ? _c("span", { staticClass: "c-error u-mt__s" }, [
+                _vm._v(_vm._s(_vm.errors.password_confirmation[0])),
+              ])
+            : _vm._e(),
           _vm._v(" "),
           _c("div", { staticClass: "c-input__password" }, [
             _vm.PasswordConfirmType === "checkbox"
@@ -52525,6 +53584,12 @@ var render = function () {
             [_vm._v("自己紹介")]
           ),
           _vm._v(" "),
+          _vm.errors && _vm.errors.introduction
+            ? _c("span", { staticClass: "c-error u-mt__s" }, [
+                _vm._v(_vm._s(_vm.errors.introduction[0])),
+              ])
+            : _vm._e(),
+          _vm._v(" "),
           _c("div", { staticClass: "p-textarea__form" }, [
             _c("textarea", {
               directives: [
@@ -52566,6 +53631,12 @@ var render = function () {
             { staticClass: "c-label", attrs: { for: "profile-icon" } },
             [_vm._v("顔写真")]
           ),
+          _vm._v(" "),
+          _vm.errors && _vm.errors.icon
+            ? _c("span", { staticClass: "c-error u-mt__s" }, [
+                _vm._v(_vm._s(_vm.errors.icon[0])),
+              ])
+            : _vm._e(),
           _vm._v(" "),
           _c(
             "div",
@@ -52668,39 +53739,13 @@ var render = function () {
           },
         },
         [
+          _vm._m(0),
+          _vm._v(" "),
           _vm.errors && _vm.errors.name
-            ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
+            ? _c("span", { staticClass: "c-error u-mt__s" }, [
                 _vm._v(_vm._s(_vm.errors.name[0])),
               ])
             : _vm._e(),
-          _vm._v(" "),
-          _vm.errors && _vm.errors.email
-            ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
-                _vm._v(_vm._s(_vm.errors.email[0])),
-              ])
-            : _vm._e(),
-          _vm._v(" "),
-          _vm.errors && _vm.errors.password
-            ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
-                _vm._v(_vm._s(_vm.errors.password[0])),
-              ])
-            : _vm._e(),
-          _vm._v(" "),
-          _vm.errors && _vm.errors.password_confirmation
-            ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
-                _vm._v(_vm._s(_vm.errors.password_confirmation[0])),
-              ])
-            : _vm._e(),
-          _vm._v(" "),
-          _vm.errors && !_vm.agreement
-            ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
-                _vm._v("利用規約に同意する必要があります。"),
-              ])
-            : _vm._e(),
-          _vm._v(" "),
-          _c("label", { staticClass: "c-label", attrs: { for: "name" } }, [
-            _vm._v("お名前"),
-          ]),
           _vm._v(" "),
           _c("input", {
             directives: [
@@ -52711,7 +53756,7 @@ var render = function () {
                 expression: "formData.name",
               },
             ],
-            staticClass: "c-input u-pd__s u-mt__m u-mb__m",
+            staticClass: "c-input u-pd__s u-mt__s u-mb__s",
             class: { "is-invalid": _vm.errors && _vm.errors.name },
             attrs: { id: "name", type: "name", autocomplete: "name" },
             domProps: { value: _vm.formData.name },
@@ -52725,9 +53770,13 @@ var render = function () {
             },
           }),
           _vm._v(" "),
-          _c("label", { staticClass: "c-label", attrs: { for: "email" } }, [
-            _vm._v("メールアドレス"),
-          ]),
+          _vm._m(1),
+          _vm._v(" "),
+          _vm.errors && _vm.errors.email
+            ? _c("span", { staticClass: "c-error u-mt__s" }, [
+                _vm._v(_vm._s(_vm.errors.email[0])),
+              ])
+            : _vm._e(),
           _vm._v(" "),
           _c("input", {
             directives: [
@@ -52738,7 +53787,7 @@ var render = function () {
                 expression: "formData.email",
               },
             ],
-            staticClass: "c-input u-pd__s u-mt__m u-mb__m",
+            staticClass: "c-input u-pd__s u-mt__s u-mb__s",
             class: { "is-invalid": _vm.errors && _vm.errors.email },
             attrs: { id: "email", type: "email", autocomplete: "email" },
             domProps: { value: _vm.formData.email },
@@ -52752,9 +53801,13 @@ var render = function () {
             },
           }),
           _vm._v(" "),
-          _c("label", { staticClass: "c-label", attrs: { for: "password" } }, [
-            _vm._v("パスワード"),
-          ]),
+          _vm._m(2),
+          _vm._v(" "),
+          _vm.errors && _vm.errors.password
+            ? _c("span", { staticClass: "c-error u-mt__s" }, [
+                _vm._v(_vm._s(_vm.errors.password[0])),
+              ])
+            : _vm._e(),
           _vm._v(" "),
           _c("div", { staticClass: "c-input__password" }, [
             _vm.PasswordType === "checkbox"
@@ -52767,7 +53820,7 @@ var render = function () {
                       expression: "formData.password",
                     },
                   ],
-                  staticClass: "c-input u-pd__s u-mt__m u-mb__m",
+                  staticClass: "c-input u-pd__s u-mt__s u-mb__s",
                   class: { "is-invalid": _vm.errors && _vm.errors.password },
                   attrs: {
                     id: "password",
@@ -52818,7 +53871,7 @@ var render = function () {
                       expression: "formData.password",
                     },
                   ],
-                  staticClass: "c-input u-pd__s u-mt__m u-mb__m",
+                  staticClass: "c-input u-pd__s u-mt__s u-mb__s",
                   class: { "is-invalid": _vm.errors && _vm.errors.password },
                   attrs: {
                     id: "password",
@@ -52841,7 +53894,7 @@ var render = function () {
                       expression: "formData.password",
                     },
                   ],
-                  staticClass: "c-input u-pd__s u-mt__m u-mb__m",
+                  staticClass: "c-input u-pd__s u-mt__s u-mb__s",
                   class: { "is-invalid": _vm.errors && _vm.errors.password },
                   attrs: {
                     id: "password",
@@ -52872,11 +53925,13 @@ var render = function () {
             ),
           ]),
           _vm._v(" "),
-          _c(
-            "label",
-            { staticClass: "c-label", attrs: { for: "password-confirm" } },
-            [_vm._v("パスワード（再入力）")]
-          ),
+          _vm._m(3),
+          _vm._v(" "),
+          _vm.errors && _vm.errors.password_confirmation
+            ? _c("span", { staticClass: "c-error u-mt__s" }, [
+                _vm._v(_vm._s(_vm.errors.password_confirmation[0])),
+              ])
+            : _vm._e(),
           _vm._v(" "),
           _c("div", { staticClass: "c-input__password" }, [
             _vm.PasswordConfirmType === "checkbox"
@@ -52889,7 +53944,7 @@ var render = function () {
                       expression: "formData.password_confirmation",
                     },
                   ],
-                  staticClass: "c-input u-pd__s u-mt__m u-mb__m",
+                  staticClass: "c-input u-pd__s u-mt__s u-mb__s",
                   class: {
                     "is-invalid":
                       _vm.errors && _vm.errors.password_confirmation,
@@ -52943,7 +53998,7 @@ var render = function () {
                       expression: "formData.password_confirmation",
                     },
                   ],
-                  staticClass: "c-input u-pd__s u-mt__m u-mb__m",
+                  staticClass: "c-input u-pd__s u-mt__s u-mb__s",
                   class: {
                     "is-invalid":
                       _vm.errors && _vm.errors.password_confirmation,
@@ -52971,7 +54026,7 @@ var render = function () {
                       expression: "formData.password_confirmation",
                     },
                   ],
-                  staticClass: "c-input u-pd__s u-mt__m u-mb__m",
+                  staticClass: "c-input u-pd__s u-mt__s u-mb__s",
                   class: {
                     "is-invalid":
                       _vm.errors && _vm.errors.password_confirmation,
@@ -53011,10 +54066,16 @@ var render = function () {
           _vm._v(" "),
           _c(
             "div",
-            { staticClass: "p-register__terms u-pd__s u-m__s" },
+            { staticClass: "p-register__terms u-pd__s u-mt__m" },
             [_c("terms-component")],
             1
           ),
+          _vm._v(" "),
+          _vm.errors && !_vm.agreement
+            ? _c("span", { staticClass: "c-error u-mt__s" }, [
+                _vm._v("利用規約に同意する必要があります。"),
+              ])
+            : _vm._e(),
           _vm._v(" "),
           _c(
             "div",
@@ -53093,7 +54154,48 @@ var render = function () {
     ),
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { staticClass: "c-label", attrs: { for: "name" } }, [
+      _vm._v("お名前"),
+      _c("span", { staticClass: "c-required" }, [_vm._v("必須")]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { staticClass: "c-label", attrs: { for: "email" } }, [
+      _vm._v("メールアドレス"),
+      _c("span", { staticClass: "c-required" }, [_vm._v("必須")]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { staticClass: "c-label", attrs: { for: "password" } }, [
+      _vm._v("パスワード"),
+      _c("span", { staticClass: "c-required" }, [_vm._v("必須")]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      { staticClass: "c-label", attrs: { for: "password-confirm" } },
+      [
+        _vm._v("パスワード（再入力）"),
+        _c("span", { staticClass: "c-required" }, [_vm._v("必須")]),
+      ]
+    )
+  },
+]
 render._withStripped = true
 
 
@@ -53133,29 +54235,13 @@ var render = function () {
           },
         },
         [
+          _vm._m(0),
+          _vm._v(" "),
           _vm.errors && _vm.errors.oldPassword
-            ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
+            ? _c("span", { staticClass: "c-error u-mt__s" }, [
                 _vm._v(_vm._s(_vm.errors.oldPassword[0])),
               ])
             : _vm._e(),
-          _vm._v(" "),
-          _vm.errors && _vm.errors.newPassword
-            ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
-                _vm._v(_vm._s(_vm.errors.newPassword[0])),
-              ])
-            : _vm._e(),
-          _vm._v(" "),
-          _vm.errors && _vm.errors.password_confirmation
-            ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
-                _vm._v(_vm._s(_vm.errors.password_confirmation[0])),
-              ])
-            : _vm._e(),
-          _vm._v(" "),
-          _c(
-            "label",
-            { staticClass: "c-label", attrs: { for: "old_password" } },
-            [_vm._v("古いパスワード")]
-          ),
           _vm._v(" "),
           _c("div", { staticClass: "c-input__password" }, [
             _vm.OldPasswordType === "checkbox"
@@ -53273,11 +54359,13 @@ var render = function () {
             ),
           ]),
           _vm._v(" "),
-          _c(
-            "label",
-            { staticClass: "c-label", attrs: { for: "new_password" } },
-            [_vm._v("新しいパスワード")]
-          ),
+          _vm._m(1),
+          _vm._v(" "),
+          _vm.errors && _vm.errors.newPassword
+            ? _c("span", { staticClass: "c-error u-mt__s" }, [
+                _vm._v(_vm._s(_vm.errors.newPassword[0])),
+              ])
+            : _vm._e(),
           _vm._v(" "),
           _c("div", { staticClass: "c-input__password" }, [
             _vm.NewPasswordType === "checkbox"
@@ -53395,11 +54483,13 @@ var render = function () {
             ),
           ]),
           _vm._v(" "),
-          _c(
-            "label",
-            { staticClass: "c-label", attrs: { for: "password-confirm" } },
-            [_vm._v("新しいパスワード（再入力）")]
-          ),
+          _vm._m(2),
+          _vm._v(" "),
+          _vm.errors && _vm.errors.password_confirmation
+            ? _c("span", { staticClass: "c-error u-mt__s" }, [
+                _vm._v(_vm._s(_vm.errors.password_confirmation[0])),
+              ])
+            : _vm._e(),
           _vm._v(" "),
           _c("div", { staticClass: "c-input__password" }, [
             _vm.PasswordConfirmType === "checkbox"
@@ -53601,7 +54691,47 @@ var render = function () {
     ),
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      { staticClass: "c-label", attrs: { for: "old_password" } },
+      [
+        _vm._v("古いパスワード"),
+        _c("span", { staticClass: "c-required" }, [_vm._v("必須")]),
+      ]
+    )
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      { staticClass: "c-label", attrs: { for: "new_password" } },
+      [
+        _vm._v("新しいパスワード"),
+        _c("span", { staticClass: "c-required" }, [_vm._v("必須")]),
+      ]
+    )
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      { staticClass: "c-label", attrs: { for: "password-confirm" } },
+      [
+        _vm._v("新しいパスワード（再入力）"),
+        _c("span", { staticClass: "c-required" }, [_vm._v("必須")]),
+      ]
+    )
+  },
+]
 render._withStripped = true
 
 
@@ -69404,13 +70534,13 @@ axios__WEBPACK_IMPORTED_MODULE_0___default.a.interceptors.response.use(function 
   // 失敗時の処理
   switch ((_error$response = error.response) === null || _error$response === void 0 ? void 0 : _error$response.status) {
     case 401:
-      _router__WEBPACK_IMPORTED_MODULE_1__["default"].push('/home');
+      _router__WEBPACK_IMPORTED_MODULE_1__["default"].push('/top'); // 401エラーの場合はTOPページに遷移
       break;
     case 404:
-      _router__WEBPACK_IMPORTED_MODULE_1__["default"].push('/404');
+      _router__WEBPACK_IMPORTED_MODULE_1__["default"].push('/404'); // 404エラーの場合は404ページに遷移
       break;
     case 500:
-      _router__WEBPACK_IMPORTED_MODULE_1__["default"].push('/500');
+      _router__WEBPACK_IMPORTED_MODULE_1__["default"].push('/500'); // 500エラーの場合は500ページに遷移
       break;
     default:
       // 未定義のエラーコードの場合はPromise.reject()を返す
@@ -70585,75 +71715,6 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/HomeComponent.vue":
-/*!***************************************************!*\
-  !*** ./resources/js/components/HomeComponent.vue ***!
-  \***************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _HomeComponent_vue_vue_type_template_id_782dcf83__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./HomeComponent.vue?vue&type=template&id=782dcf83 */ "./resources/js/components/HomeComponent.vue?vue&type=template&id=782dcf83");
-/* harmony import */ var _HomeComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./HomeComponent.vue?vue&type=script&lang=js */ "./resources/js/components/HomeComponent.vue?vue&type=script&lang=js");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-
-
-
-
-
-/* normalize component */
-
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _HomeComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"],
-  _HomeComponent_vue_vue_type_template_id_782dcf83__WEBPACK_IMPORTED_MODULE_0__["render"],
-  _HomeComponent_vue_vue_type_template_id_782dcf83__WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
-  false,
-  null,
-  null,
-  null
-  
-)
-
-/* hot reload */
-if (false) { var api; }
-component.options.__file = "resources/js/components/HomeComponent.vue"
-/* harmony default export */ __webpack_exports__["default"] = (component.exports);
-
-/***/ }),
-
-/***/ "./resources/js/components/HomeComponent.vue?vue&type=script&lang=js":
-/*!***************************************************************************!*\
-  !*** ./resources/js/components/HomeComponent.vue?vue&type=script&lang=js ***!
-  \***************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_HomeComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./HomeComponent.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/HomeComponent.vue?vue&type=script&lang=js");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_HomeComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__["default"]); 
-
-/***/ }),
-
-/***/ "./resources/js/components/HomeComponent.vue?vue&type=template&id=782dcf83":
-/*!*********************************************************************************!*\
-  !*** ./resources/js/components/HomeComponent.vue?vue&type=template&id=782dcf83 ***!
-  \*********************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_HomeComponent_vue_vue_type_template_id_782dcf83__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./HomeComponent.vue?vue&type=template&id=782dcf83 */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/HomeComponent.vue?vue&type=template&id=782dcf83");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_HomeComponent_vue_vue_type_template_id_782dcf83__WEBPACK_IMPORTED_MODULE_0__["render"]; });
-
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_HomeComponent_vue_vue_type_template_id_782dcf83__WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
-
-
-
-/***/ }),
-
 /***/ "./resources/js/components/NavComponent.vue":
 /*!**************************************************!*\
   !*** ./resources/js/components/NavComponent.vue ***!
@@ -71132,6 +72193,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_TermsComponent_vue_vue_type_template_id_65d0c93e__WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_TermsComponent_vue_vue_type_template_id_65d0c93e__WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/TopComponent.vue":
+/*!**************************************************!*\
+  !*** ./resources/js/components/TopComponent.vue ***!
+  \**************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _TopComponent_vue_vue_type_template_id_053669da__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./TopComponent.vue?vue&type=template&id=053669da */ "./resources/js/components/TopComponent.vue?vue&type=template&id=053669da");
+/* harmony import */ var _TopComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./TopComponent.vue?vue&type=script&lang=js */ "./resources/js/components/TopComponent.vue?vue&type=script&lang=js");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _TopComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"],
+  _TopComponent_vue_vue_type_template_id_053669da__WEBPACK_IMPORTED_MODULE_0__["render"],
+  _TopComponent_vue_vue_type_template_id_053669da__WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/TopComponent.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/TopComponent.vue?vue&type=script&lang=js":
+/*!**************************************************************************!*\
+  !*** ./resources/js/components/TopComponent.vue?vue&type=script&lang=js ***!
+  \**************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_TopComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./TopComponent.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/TopComponent.vue?vue&type=script&lang=js");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_TopComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/TopComponent.vue?vue&type=template&id=053669da":
+/*!********************************************************************************!*\
+  !*** ./resources/js/components/TopComponent.vue?vue&type=template&id=053669da ***!
+  \********************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_TopComponent_vue_vue_type_template_id_053669da__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./TopComponent.vue?vue&type=template&id=053669da */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/TopComponent.vue?vue&type=template&id=053669da");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_TopComponent_vue_vue_type_template_id_053669da__WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_TopComponent_vue_vue_type_template_id_053669da__WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
@@ -71840,7 +72970,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
 /* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./store */ "./resources/js/store/index.js");
-/* harmony import */ var _components_HomeComponent__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/HomeComponent */ "./resources/js/components/HomeComponent.vue");
+/* harmony import */ var _components_TopComponent__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/TopComponent */ "./resources/js/components/TopComponent.vue");
 /* harmony import */ var _components_TermsComponent_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/TermsComponent.vue */ "./resources/js/components/TermsComponent.vue");
 /* harmony import */ var _components_PrivacyPolicyComponent_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/PrivacyPolicyComponent.vue */ "./resources/js/components/PrivacyPolicyComponent.vue");
 /* harmony import */ var _components_ContactComponent_vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/ContactComponent.vue */ "./resources/js/components/ContactComponent.vue");
@@ -71878,7 +73008,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 
 // 共通コンポーネント
- // HOME画面
+ // TOP画面
  // 利用規約ページ
  // プライバシーポリシーページ
  // お問い合わせページ
@@ -71918,11 +73048,11 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODU
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
   mode: 'history',
   routes: [
-  // HOME画面
+  // TOP画面
   {
-    path: '/home',
-    name: 'home',
-    component: _components_HomeComponent__WEBPACK_IMPORTED_MODULE_3__["default"]
+    path: '/top',
+    name: 'top',
+    component: _components_TopComponent__WEBPACK_IMPORTED_MODULE_3__["default"]
   },
   // 利用規約ページ
   {
@@ -72091,11 +73221,18 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
     path: '/user/products/purchased',
     name: 'user.products.purchased',
     component: _components_User_ProductPurchasedComponent_vue__WEBPACK_IMPORTED_MODULE_18__["default"]
-  }]
+  }],
+  // ページ遷移時に必ずページの最上部から表示させる
+  scrollBehavior: function scrollBehavior(to, from, savedPosition) {
+    return {
+      x: 0,
+      y: 0
+    };
+  }
 });
 
-// セッションが必要ないパス（HOME画面、利用規約、プライバシーポリシー、お問い合わせフォーム、ユーザー登録画面、ログイン画面、パスワードメール送信画面、パスワードリセット画面）
-var publicPaths = ['/home', '/terms', '/privacy', '/contact', '/user/register', '/convenience/register', '/user/login', '/convenience/login', '/user/password/email', '/convenience/password/email', '/user/password/reset/:token', '/convenience/password/reset/:token'];
+// セッションが必要ないパス（TOP画面、利用規約、プライバシーポリシー、お問い合わせフォーム、ユーザー登録画面、ログイン画面、パスワードメール送信画面、パスワードリセット画面）
+var publicPaths = ['/top', '/terms', '/privacy', '/contact', '/user/register', '/convenience/register', '/user/login', '/convenience/login', '/user/password/email', '/convenience/password/email', '/user/password/reset/:token', '/convenience/password/reset/:token'];
 
 // セッションタイムアウトした場合のナビゲーションガード
 router.beforeEach( /*#__PURE__*/function () {
@@ -72107,14 +73244,14 @@ router.beforeEach( /*#__PURE__*/function () {
           isLogin = _store__WEBPACK_IMPORTED_MODULE_2__["default"].getters['auth/check'];
           console.log('現在のパス:', to.path);
 
-          // セッションタイムアウトして、現在パスが公開パスではない場合はHOME画面にリダイレクト
+          // セッションタイムアウトして、現在パスが公開パスではない場合はTOP画面にリダイレクト
           if (!(!isLogin && !publicPaths.includes(to.path) && !to.path.includes('/password/reset'))) {
             _context.next = 7;
             break;
           }
           // パスワードリセット画面のパスは除外
           console.log('セッションタイムアウトのため、リダイレクトします');
-          next('/home');
+          next('/top');
           _context.next = 10;
           break;
         case 7:
@@ -72151,31 +73288,35 @@ function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyri
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 var state = {
-  user: null
+  user: null // ユーザー情報の初期状態
 };
 var getters = {
   check: function check(state) {
     return !!state.user;
   },
+  // 認証チェック
   username: function username(state) {
     return state.user ? state.user.name : '';
   },
+  // ユーザー名
   icon: function icon(state) {
     return state.user ? "/storage/icons/".concat(state.user.icon) : '';
   },
+  // 顔写真
   role: function role(state) {
     return state.user ? state.user.role : '';
   },
+  // role
   id: function id(state) {
     return state.user ? state.user.id : '';
-  }
+  } // ユーザーID
 };
 var mutations = {
   setUser: function setUser(state, user) {
-    state.user = user;
+    state.user = user; // ユーザー情報をuserに入れる
   },
   clearUser: function clearUser(state) {
-    state.user = null;
+    state.user = null; // ユーザー情報をnullにする
   }
 };
 var actions = {
@@ -72189,8 +73330,9 @@ var actions = {
             return axios.get('/api/user');
           case 2:
             response = _context.sent;
-            user = response.data || null;
-            context.commit('setUser', user);
+            // API経由で現在ユーザー情報を取得
+            user = response.data || null; // APIからのレスポンスデータをuserに入れる
+            context.commit('setUser', user); // 取得したユーザー情報をsetUserミューテーションでストアにコミット
           case 5:
           case "end":
             return _context.stop();

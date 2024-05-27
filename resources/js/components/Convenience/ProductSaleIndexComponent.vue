@@ -16,12 +16,12 @@
                         <!-- 商品情報の表示 -->
                         <div class="c-card u-m__s">
                             <div class="p-card__header u-pd__s">
-                                <h3 class="c-card__name">{{ product.name }}</h3>
+                                <h3 class="c-card__name">{{ product.name }}</h3> <!-- 商品名 -->
                             </div>
                             <div class="p-card__container">
-                                <img class="c-card__picture" :src="getProductPicturePath(product)" alt="商品画像">
-                                <p class="c-card__price">{{ product.price }}円</p>
-                                <p class="c-card__price">{{ formatDate(product.expiration_date) }}</p>
+                                <img class="c-card__picture" :src="getProductPicturePath(product)" alt="商品画像"> <!-- 商品画像 -->
+                                <p class="c-card__price">{{ product.price }}円</p> <!-- 価格 -->
+                                <p class="c-card__price">{{ formatDate(product.expiration_date) }}</p> <!-- 賞味期限 -->
                             </div>
                             <div class="p-card__footer">
                                 <router-link :to="getProductDetailLink(product.id)" class="c-button c-button__convenience c-button__detail u-pd__s u-m__s">詳細を見る</router-link>
@@ -45,26 +45,19 @@ import PaginationComponent from '../PaginationComponent.vue'; // ページネー
 
 export default {
     components: {
-        PaginationComponent,
+        PaginationComponent, // ページネーションコンポーネント
     },
 
     data() {
         return {
-            products: [],
-            currentPage: 1, // currentPageを定義
-            lastPage: 1, // lastPageを定義
+            products: [], // 商品情報
+            currentPage: 1, // 現在ページ
+            lastPage: 1, // 最後のページ
         };
     },
 
-    computed: {
-        // ログインユーザーかどうか
-        isLogin() {
-            return this.$store.getters['auth/check'];
-        },
-    },
-
     created() {
-        this.getProduct(); // サーバから商品情報を取得
+        this.getProduct(); // インスタンス初期化時に商品情報を読み込む
     },
 
     methods: {
@@ -73,17 +66,15 @@ export default {
             console.log('検索URLを作成します');
             // URLの組み立て
             let url = `/convenience/products/sale`;
-
-            if (params && params.page) {
-                url += `?page=${params.page}`;
+            if (params && params.page) { // パラメータとパラメータのpageがある場合
+                url += `?page=${params.page}`; // urlにparams.pageを追加
             } else {
-                url += `?page=${this.currentPage}`;
+                url += `?page=${this.currentPage}`; // urlにthis.currentPageを追加
             }
-
             console.log('検索URL:', url);
             // ページ遷移
             this.$router.push(url).then(() => {
-                this.getProduct(); // ページ遷移が完了した後にgetProductを呼び出す
+                this.getProduct(); // ページ遷移が完了した後にgetProduct()メソッドを呼び出す
             });
         },
 
@@ -92,58 +83,58 @@ export default {
             console.log('onPageChangeメソッドのpageは、', page);
             if (this.currentPage !== page) { // 現在のページ番号と新しいページ番号が異なるか
                 this.currentPage = page; // ページ番号を更新
-                const params = Object.assign({}, this.$route.query);
+                const params = Object.assign({}, this.$route.query); // 新しいクエリパラメータをparamsオブジェクトにコピー
                 params.page = page; // 新しいページ番号にする
                 this.createURL(params); // 新しいURLを生成して画面遷移
             }
         },
 
         // 商品情報をサーバーから取得
-        getProduct() {
-            console.log('出品した商品情報を取得します');
-            // 現在のルートのクエリパラメータを取得
-            const params = Object.assign({}, this.$route.query); // クエリパラメータのコピーを作成
-            console.log('paramsは、', params, 'this.currentPageは、', this.currentPage);
-            axios.get('/api/convenience/products', { params: params }).then(response => {
+        async getProduct() {
+            try {
+                console.log('出品した商品情報を取得します');
+                // 現在のルートのクエリパラメータを取得
+                const params = Object.assign({}, this.$route.query); // クエリパラメータのコピーを作成
+                console.log('paramsは、', params, 'this.currentPageは、', this.currentPage);
+                // 購入された商品情報取得APIをGET送信
+                const response = await axios.get('/api/convenience/products', { params: params }); // パラメータを含むリクエスト
                 console.log('curent_pageは、', response.data.products.current_page);
                 console.log('getProductのAPIからのレスポンス:', response.data);
+                // レスポンスデータをそれぞれのプロパティにセット
                 this.products = response.data.products;
-                console.log('productsは、', this.products);
                 this.lastPage = response.data.products.last_page;
-                console.log('this.lastPageは、', this.lastPage);
-            }).catch(error => {
+            } catch (error) {
                 console.error('商品情報取得失敗:', error.response.data);
                 this.errors = error.response.data;
-            });
+            }
         },
 
         // 商品画像のパスを取得するメソッド
         getProductPicturePath(product) {
-            // console.log('productは、', product);
             if (product.pictures.length > 0) {
-                return '/storage/product_pictures/' + product.pictures[0].file;
+                return '/storage/product_pictures/' + product.pictures[0].file; // 商品画像がある場合は、その画像パスを返す
             } else {
-                return '/storage/product_pictures/no_image.png';
+                return '/storage/product_pictures/no_image.png'; // 商品画像がない場合は、デフォルトの商品画像のパスを返す
             }
         },
 
-        // 日付をフォーマットするメソッド
+        // 賞味期限日付をフォーマットするメソッド
         formatDate(dateString) {
-            const date = new Date(dateString);
-            const year = date.getFullYear();
-            const month = ('0' + (date.getMonth() + 1)).slice(-2); // 月は 0 から始まるため +1
-            const day = ('0' + date.getDate()).slice(-2);
-            return `${year}年${month}月${day}日`;
+            const date = new Date(dateString); // Dateオブジェクトに変換する
+            const year = date.getFullYear(); // 年数を取得
+            const month = ('0' + (date.getMonth() + 1)).slice(-2); // 月数を取得、1桁の場合は2桁の数値に変換
+            const day = ('0' + date.getDate()).slice(-2); // 日数を取得、1桁の場合は2桁の数値に変換
+            return `${year}年${month}月${day}日`; // 年月日のフォーマットされた賞味期限日付を返す
         },
 
         // 商品詳細画面のリンクを返すメソッド
         getProductDetailLink(productId) {
-            return { name: 'convenience.products.detail', params: { productId: productId } };
+            return { name: 'convenience.products.detail', params: { productId: productId } }; // 商品詳細画面のリンクを返す
         },
 
         // 商品編集画面のリンクを返すメソッド
         getProductEditLink(productId) {
-            return { name: 'convenience.products.edit', params: { productId: productId } };
+            return { name: 'convenience.products.edit', params: { productId: productId } }; // 商品編集画面のリンクを返す
         },
     },
 }

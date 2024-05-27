@@ -3,7 +3,7 @@ import VueRouter from 'vue-router';
 import store from './store';
 
 // 共通コンポーネント
-import HomeComponent from "./components/HomeComponent"; // HOME画面
+import TopComponent from "./components/TopComponent"; // TOP画面
 import TermsComponent from './components/TermsComponent.vue'; // 利用規約ページ
 import PrivacyPolicyComponent from './components/PrivacyPolicyComponent.vue'; // プライバシーポリシーページ
 import ContactComponent from './components/ContactComponent.vue'; // お問い合わせページ
@@ -44,11 +44,11 @@ Vue.use(VueRouter);
 const router = new VueRouter({
     mode: 'history',
     routes: [
-        // HOME画面
+        // TOP画面
         {
-            path: '/home',
-            name: 'home',
-            component: HomeComponent
+            path: '/top',
+            name: 'top',
+            component: TopComponent
         },
         // 利用規約ページ
         {
@@ -218,12 +218,16 @@ const router = new VueRouter({
             name: 'user.products.purchased',
             component: UserPurchasedProductComponent,
         }
-    ]
+    ],
+    // ページ遷移時に必ずページの最上部から表示させる
+    scrollBehavior (to, from, savedPosition) {
+        return { x: 0, y: 0 }
+    }
 });
 
-// セッションが必要ないパス（HOME画面、利用規約、プライバシーポリシー、お問い合わせフォーム、ユーザー登録画面、ログイン画面、パスワードメール送信画面、パスワードリセット画面）
+// セッションが必要ないパス（TOP画面、利用規約、プライバシーポリシー、お問い合わせフォーム、ユーザー登録画面、ログイン画面、パスワードメール送信画面、パスワードリセット画面）
 const publicPaths = [
-    '/home',
+    '/top',
     '/terms',
     '/privacy',
     '/contact',
@@ -242,10 +246,10 @@ router.beforeEach(async (to, from, next) => {
     const isLogin = store.getters['auth/check'];
     console.log('現在のパス:', to.path);
 
-    // セッションタイムアウトして、現在パスが公開パスではない場合はHOME画面にリダイレクト
+    // セッションタイムアウトして、現在パスが公開パスではない場合はTOP画面にリダイレクト
     if (!isLogin && !publicPaths.includes(to.path) && !to.path.includes('/password/reset')) { // パスワードリセット画面のパスは除外
         console.log('セッションタイムアウトのため、リダイレクトします');
-        next('/home');
+        next('/top');
     } else {
         await store.dispatch('auth/currentUser'); // ログイン状態を保持
         next();

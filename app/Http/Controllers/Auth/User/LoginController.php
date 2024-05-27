@@ -49,28 +49,22 @@ class LoginController extends Controller
         $email = $request->input('email');
         $user = User::where('email', $email)->first();
         \Log::debug('$userは、', [$user]);
-
         // ユーザーが見つからない場合
         if (!$user) {
             return response()->json(['message' => 'ユーザーが見つかりません'], 404);
         }
-
         // roleがconvenienceの場合は422エラーを返す
         if ($user->role == 'convenience') {
             return response()->json(['errors' => ['email' => ['このメールアドレスは利用者側のメールアドレスではありません。']]], 422);
         }
-
         // ユーザーIDを取得
         $userId = $user->id;
         \Log::debug('ユーザーIDは、' . $userId);
-
         // ユーザーのroleを取得
         $role = $user->role;
         \Log::debug('ユーザーのroleは、' . $role);
-
         if (($role === 'user')) {
             \Log::debug('ログインします');
-
             // 次回ログインを省略するチェックボックスにチェックが入っているか？
             $remember = $request->input('remember', false);
             \Log::info('rememberは、', [$remember]);

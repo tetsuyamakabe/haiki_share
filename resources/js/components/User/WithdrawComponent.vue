@@ -23,16 +23,18 @@
 export default {
     methods: {
         // 退会処理をサーバー側に送信するメソッド
-        withdraw() {
-            axios.delete('/api/user/mypage/withdraw').then(response => {
+        async withdraw() {
+            try {
+                // 利用者退会APIをDELETE送信
+                await axios.delete('/api/user/mypage/withdraw');
                 this.message = response.data.message;
                 console.log('this.messageは、', this.message);
                 console.log('退会します');
-                this.$router.push({ name: 'home' }); // 退会処理完了後、HOME画面に遷移
-            }).catch(error => {
+                this.$router.push({ name: 'top' }); // 退会処理完了後、TOP画面に遷移
+            } catch (error) {
                 console.error('退会処理失敗:', error.response.data);
                 this.errors = error.response.data.errors;
-            });
+            }
         }
     }
 }
