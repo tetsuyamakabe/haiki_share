@@ -30,6 +30,7 @@ class MyPageController extends Controller
     // プロフィール編集・更新処理
     public function editProfile(ProfileRequest $request)
     {
+        \Log::info($request->all());
         try {
             // 認証済みユーザー情報の取得
             $user = Auth::user();

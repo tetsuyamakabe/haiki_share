@@ -79,15 +79,16 @@ export default {
 
     methods: {
         // 入力された値をサーバー側に送信するメソッド
-        async submitForm() {
-            try {
-                this.formData.agreement = this.agreement; // 利用規約の同意をformDataに追加
-                await axios.post('/api/user/register', this.formData); // ユーザー登録APIをPOST送信
+        submitForm() {
+            this.formData.agreement = this.agreement; // 利用規約の同意をformDataに追加
+            // ユーザー登録APIをPOST送信
+            axios.post('/api/user/register', this.formData).then(response => { // フォームデータを含むリクエスト
                 this.$router.push({ name: 'user.login' }); // ユーザー登録後、ログインページに遷移
-            } catch (error) {
+            }).catch(error => {
+                console.log('errorは、', error);
                 console.error('ユーザー登録失敗:', error.response.data);
                 this.errors = error.response.data.errors;
-            }
+            });
         },
 
         // パスワードの表示・非表示を切り替えるメソッド

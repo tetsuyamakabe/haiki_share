@@ -72,26 +72,25 @@ export default {
 
     methods: {
         // パスワードリセット処理
-        async resetPassword() {
-            try {
-                // トークン・メールアドレスを含めたデータを作成
-                const requestData = {
-                    token: this.token, // トークン
-                    email: this.email, // メールアドレス
-                    oldPassword: this.formData.oldPassword, // 古いパスワード
-                    newPassword: this.formData.newPassword, // 新しいパスワード
-                    password_confirmation: this.formData.password_confirmation, // パスワード（再入力）
-                };
-                // コンビニパスワード変更APIをPOST送信
-                await axios.post('/api/convenience/password/reset', requestData); // トークンとメールアドレスを含めたデータを含むリクエスト
+        resetPassword() {
+            // トークン・メールアドレスを含めたデータを作成
+            const requestData = {
+                token: this.token, // トークン
+                email: this.email, // メールアドレス
+                oldPassword: this.formData.oldPassword, // 古いパスワード
+                newPassword: this.formData.newPassword, // 新しいパスワード
+                password_confirmation: this.formData.password_confirmation, // パスワード（再入力）
+            };
+            // コンビニパスワード変更APIをPOST送信
+            axios.post('/api/convenience/password/reset', requestData).then(response => { // トークンとメールアドレスを含めたデータを含むリクエスト
                 this.message = response.data.message;
                 console.log('this.messageは、', this.message);
                 console.log('パスワードを変更します。');
                 this.$router.push({ name: 'convenience.login' }); // パスワード変更後、ログイン画面に遷移
-            } catch (error) {
+            }).catch(error => {
                 console.error('パスワード変更失敗:', error.response.data);
                 this.errors = error.response.data.errors;
-            }
+            });
         },
 
         // パスワードの表示・非表示を切り替えるメソッド

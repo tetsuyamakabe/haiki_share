@@ -75,20 +75,16 @@ export default {
 
     methods: {
         // 商品情報をサーバーから取得
-        async getProduct() {
-            try {
-                // 商品情報取得APIをGET送信
-                const response = await axios.get(`/api/products/${this.productId}`);
+        getProduct() {
+            // 商品情報取得APIをGET送信
+            axios.get('/api/products/'+ this.productId).then(response => { // 商品IDを含むリクエスト
                 // レスポンスデータをそれぞれのプロパティにセット
-                this.product = response.data.product;
-                this.category = response.data.product.category;
-                console.log('APIからのレスポンス:', response.data);
-                console.log('this.productは、', this.product);
-                console.log('this.categoryは、', this.category);
-            } catch (error) {
+                this.product = response.data.product; // 商品情報
+                this.category = response.data.product.category; // カテゴリ情報
+            }).catch(error => {
                 console.error('商品情報取得失敗:', error.response.data);
                 this.errors = error.response.data;
-            }
+            });
         },
 
         // カテゴリIDからカテゴリ名を取得するメソッド
@@ -125,61 +121,49 @@ export default {
         },
 
         // 商品購入するメソッド
-        async purchaseProduct() {
-            try {
-                // 商品購入APIをPOST送信
-                const response = await axios.post('/api/user/products/purchase/' + this.productId);
-                console.log('APIからのレスポンス:', response.data);
-                await this.getProduct(); // 購入状態を更新（「購入する」から「購入をキャンセル」へ変更）
-            } catch (error) {
+        purchaseProduct() {
+            // 商品購入APIをPOST送信
+            axios.post('/api/user/products/purchase/' + this.productId).then(response => {
+                this.getProduct(); // 購入状態を更新（「購入する」から「購入をキャンセル」へ変更）
+            }).catch(error => {
                 console.log('errorは、', error);
                 console.error('商品購入処理失敗:', error.response.data);
                 this.errors = error.response.data.errors;
-            }
+            });
         },
 
         // 商品購入キャンセルするメソッド
-        async cancelPurchase() {
-            try {
-                // 商品キャンセルAPIをPOST送信
-                const response = await axios.delete('/api/user/products/purchase/cancel/' + this.productId);
-                console.log('APIからのレスポンス:', response.data);
-                await this.getProduct(); // 購入状態を更新（「購入キャンセル」から「購入する」へ変更）
-            } catch (error) {
+        cancelPurchase() {
+            // 商品キャンセルAPIをPOST送信
+            axios.delete('/api/user/products/purchase/cancel/' + this.productId).then(response => {
+                this.getProduct();　// 購入状態を更新（「購入キャンセル」から「購入する」へ変更）
+            }).catch(error => {
                 console.log('errorは、', error);
                 console.error('商品購入キャンセル処理失敗:', error.response.data);
                 this.errors = error.response.data.errors;
-            }
+            });
         },
 
         // 商品お気に入り登録
-        async productLike(product) {
-            try {
-                // お気に入り登録APIをPOST送信
-                await axios.post('/api/user/like/' + product.id);
-                console.log(product.id, 'の商品をお気に入り登録しました。');
+        productLike(product) {
+            // お気に入り登録APIをPOST送信
+            axios.post('/api/user/like/' + product.id).then(response => {
                 product.liked = true; // いいねアイコンをtrueに切り替え
-                console.log('this.likedは、', product.liked);
                 product.likes_count++; // いいね数のインクリメント
-                console.log('product.likes_countは、', product.likes_count);
-            } catch (error) {
+            }).catch(error => {
                 console.error('商品のお気に入り登録失敗:', error);
-            }
+            });
         },
 
         // 商品お気に入り解除
-        async productUnlike(product) {
-            try {
-                // お気に入り解除APIをPOST送信
-                await axios.post('/api/user/unlike/' + product.id);
-                console.log(product.id, 'の商品をお気に入り解除しました。');
+        productUnlike(product) {
+            // お気に入り解除APIをPOST送信
+            axios.post('/api/user/unlike/' + product.id).then(response => {
                 product.liked = false; // いいねアイコンをfalseに切り替え
-                console.log('product.likedは、', product.liked);
                 product.likes_count--; // いいね数のデクリメント
-                console.log('product.likes_count', product.likes_count);
-            } catch (error) {
+            }).catch(error => {
                 console.error('商品のお気に入り解除失敗:', error);
-            }
+            });
         },
     }
 }

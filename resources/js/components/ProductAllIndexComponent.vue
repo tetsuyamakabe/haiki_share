@@ -127,23 +127,18 @@ export default {
         },
 
         // 商品情報をサーバーから取得
-        async getProduct() {
-            try {
-                console.log('すべての商品情報を取得します');
-                // 現在のルートのクエリパラメータを取得
-                const params = Object.assign({}, this.$route.query); // クエリパラメータのコピーを作成
-                console.log('paramsは、', params, 'this.currentPageは、', this.currentPage);
-                // 商品情報取得APIをGET送信
-                const response = await axios.get('/api/products', { params: params }); // パラメータを含むリクエスト
-                console.log('curent_pageは、', response.data.products.current_page);
-                console.log('getProductのAPIからのレスポンス:', response.data);
+        getProduct() {
+            // 現在のルートのクエリパラメータを取得
+            const params = Object.assign({}, this.$route.query); // クエリパラメータのコピーを作成
+            console.log('paramsは、', params, 'this.currentPageは、', this.currentPage);
+            axios.get('/api/products', { params: params }).then(response => { // パラメータを含むリクエスト
                 // レスポンスデータをそれぞれのプロパティにセット
-                this.products = response.data.products;
-                this.lastPage = response.data.products.last_page;
-            } catch (error) {
+                this.products = response.data.products; // 商品情報
+                this.lastPage = response.data.products.last_page; // ページ数
+            }).catch(error => {
                 console.error('商品情報取得失敗:', error.response.data);
                 this.errors = error.response.data;
-            }
+            });
         },
 
         // 商品画像のパスを取得するメソッド
@@ -176,33 +171,25 @@ export default {
         },
 
         // 商品お気に入り登録
-        async productLike(product) {
-            try {
-                // お気に入り登録APIをPOST送信
-                await axios.post('/api/user/like/' + product.id);
-                console.log(product.id, 'の商品をお気に入り登録しました。');
+        productLike(product) {
+            // お気に入り登録APIをPOST送信
+            axios.post('/api/user/like/' + product.id).then(response => {
                 product.liked = true; // いいねアイコンをtrueに切り替え
-                console.log('this.likedは、', product.liked);
                 product.likes_count++; // いいね数のインクリメント
-                console.log('product.likes_countは、', product.likes_count);
-            } catch (error) {
+            }).catch(error => {
                 console.error('商品のお気に入り登録失敗:', error);
-            }
+            });
         },
 
         // 商品お気に入り解除
-        async productUnlike(product) {
-            try {
-                // お気に入り解除APIをPOST送信
-                await axios.post('/api/user/unlike/' + product.id);
-                console.log(product.id, 'の商品をお気に入り解除しました。');
+        productUnlike(product) {
+            // お気に入り解除APIをPOST送信
+            axios.post('/api/user/unlike/' + product.id).then(response => {
                 product.liked = false; // いいねアイコンをfalseに切り替え
-                console.log('product.likedは、', product.liked);
                 product.likes_count--; // いいね数のデクリメント
-                console.log('product.likes_count', product.likes_count);
-            } catch (error) {
+            }).catch(error => {
                 console.error('商品のお気に入り解除失敗:', error);
-            }
+            });
         },
     },
 }

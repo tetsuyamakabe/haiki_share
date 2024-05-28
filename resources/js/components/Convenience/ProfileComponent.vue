@@ -120,22 +120,20 @@ export default {
     },
 
     created() {
-        this.getProfile(); // インスタンス初期化時にプロフィール情報を読み込む
+        this.getProfile(); // インスタンス初期化時に編集前のプロフィール情報を読み込む
     },
 
     methods: {
         // 編集前のプロフィール情報をサーバーから取得
-        async getProfile() {
-            try {
-                console.log('プロフィールを取得します');
-                // コンビニ側プロフィール情報の取得APIをGET送信
-                const response = await axios.get('/api/convenience/mypage/profile');
+        getProfile() {
+            // コンビニ側プロフィール情報の取得APIをGET送信
+            axios.get('/api/convenience/mypage/profile').then(response => {
                 // レスポンスデータをそれぞれのプロパティにセット
                 this.user = response.data.user; // ユーザー情報
                 this.convenience = response.data.convenience; // コンビニ情報
                 this.address = response.data.address; // 住所情報
                 console.log('APIからのレスポンス:', response.data);
-                // 取得したプロフィール情報をformDataに入れる
+                // 取得した各プロフィール情報をformDataに入れる
                 this.formData.convenience_name = this.user.name || ''; // コンビニ名
                 this.formData.branch_name = this.convenience.branch_name || '', // 支店名
                 this.formData.prefecture = this.address.prefecture || '', // 都道府県
@@ -147,65 +145,60 @@ export default {
                 this.formData.password_confirmation = ''; // 編集前のパスワード（再入力）は非表示（入力フォームを空）にする
                 this.formData.introduction = this.user.introduction || ''; // 自己紹介文
                 this.formData.icon = this.user.icon || ''; // 顔写真
-            } catch (error) {
+            }).catch(error => {
                 console.error('プロフィール取得失敗:', error.response.data);
                 this.errors = error.response.data;
-            }
+            });
         },
 
         // 郵便番号検索APIを使って、郵便番号から住所を自動入力するメソッド
-        async searchAddress() {
-            try {
-                const zipCode = this.formData.postalcode; // 郵便番号フォームの入力値
-                const response = await axios.get(`https://api.zipaddress.net/?zipcode=${zipCode}`, { adapter: jsonpAdapter }); // 郵便番号検索APIに郵便番号フォームの入力値を使ってGETリクエスト送信
+        searchAddress() {
+            const zipCode = this.formData.postalcode; // 郵便番号フォームの入力値
+            // 郵便番号検索APIに郵便番号フォームの入力値を使ってGETリクエスト送信
+            axios.get(`https://api.zipaddress.net/?zipcode=${zipCode}`, { adapter: jsonpAdapter }).then(rs => {
                 // APIから返されたレスポンスデータを各入力フォームにセット
                 const responseData = response.data;
                 this.formData.prefecture = responseData.pref; // 都道府県
                 this.formData.city = responseData.city; // 市区町村
                 this.formData.town = responseData.town; // 地名・番名
                 this.formData.building = responseData.building; // 建物名・部屋番号
-            } catch (error) {
+            }).catch(error => {
                 console.error('住所検索エラー:', error);
-            }
+            });
         },
 
         // 入力された値をサーバー側に送信するメソッド
-        async submitForm() {
-            try {
-                // リクエストヘッダー定義
-                const config = {
-                    headers: {
-                        'content-type': 'multipart/form-data' // ファイルのアップロードを含むリクエストボディのデータ形式
-                    }
-                };
-                // フォームデータを作成
-                const formData = new FormData(); // FormDataオブジェクトの作成
-                formData.append('_method', 'PUT'); // リクエストメソッドをPUTにする
-                formData.append('convenience_name', this.formData.convenience_name); // コンビニ名
-                formData.append('branch_name', this.formData.branch_name); // 支店名
-                formData.append('prefecture', this.formData.prefecture); // 都道府県
-                formData.append('city', this.formData.city); // 市区町村
-                formData.append('town', this.formData.town); // 地名・番名
-                formData.append('building', this.formData.building); // 建物名・部屋番号
-                formData.append('email', this.formData.email); // メールアドレス
-                formData.append('password', this.formData.password); // パスワード
-                formData.append('password_confirmation', this.formData.password_confirmation); // パスワード（再入力）
-                formData.append('introduction', this.formData.introduction); // 自己紹介文
-                // icon フィールドが空でない場合のみ、フォームデータに追加
-                if (this.formData.icon !== '') {
-                    formData.append('icon', this.formData.icon); // 顔写真
+        submitForm() {
+            // リクエストヘッダー定義
+            const config = {
+                headers: {
+                    'content-type': 'multipart/form-data', // ファイルのアップロードを含むリクエストボディのデータ形式
                 }
-                // コンビニ側プロフィール情報更新APIをPOST送信
-                const response = await axios.post('/api/convenience/mypage/profile', config, formData); // リクエストヘッダとフォームデータを含むリクエスト
-                this.message = response.data.message;
-                console.log('this.messageは、', this.message);
-                console.log('プロフィールを更新します。');
+            };
+            // フォームデータを作成
+            const formData = new FormData(); // FormDataオブジェクトの作成
+            formData.append('_method', 'PUT'); // リクエストメソッドをPUTにする
+            formData.append('convenience_name', this.formData.convenience_name); // コンビニ名
+            formData.append('branch_name', this.formData.branch_name); // 支店名
+            formData.append('prefecture', this.formData.prefecture); // 都道府県
+            formData.append('city', this.formData.city); // 市区町村
+            formData.append('town', this.formData.town); // 地名・番名
+            formData.append('building', this.formData.building); // 建物名・部屋番号
+            formData.append('email', this.formData.email); // メールアドレス
+            formData.append('password', this.formData.password); // パスワード
+            formData.append('password_confirmation', this.formData.password_confirmation); // パスワード（再入力）
+            formData.append('introduction', this.formData.introduction); // 自己紹介文
+            // 顔写真がアップロードされている場合はフォームデータに追加
+            if (this.formData.icon !== '') {
+                formData.append('icon', this.formData.icon); // 顔写真
+            }
+            // コンビニ側プロフィール情報更新APIをPOST送信
+            axios.post('/api/convenience/mypage/profile', config, formData).then(response => { // リクエストヘッダとフォームデータを含むリクエスト
                 this.$router.push({ name: 'convenience.mypage' }); // プロフィール更新完了後、マイページに遷移する
-            } catch (error) {
-                console.log('errorは、', error);
+            }).catch(error => {
                 console.error('プロフィール編集失敗:', error.response.data);
                 this.errors = error.response.data.errors;
-            }
+            });
         },
 
         // パスワードの表示・非表示を切り替えるメソッド

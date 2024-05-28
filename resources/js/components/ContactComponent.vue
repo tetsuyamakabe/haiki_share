@@ -48,18 +48,17 @@ export default {
 
     methods: {
         // 入力された値をサーバー側に送信するメソッド
-        async submitForm() {
-            try {
-                // お問い合わせ送信APIをPOST送信
-                await axios.post('/api/contact', this.formData);
+        submitForm() {
+            // お問い合わせ送信APIをPOST送信
+            axios.post('/api/contact', this.formData).then(response => {
                 console.log('お問い合わせ内容を送信します。');
                 this.flashMessage = 'お問い合わせ受付完了メールを送信しました。';
-            } catch (error) {
+            }).catch(error => {
                 console.log('errorは、', error);
-                console.error('お問い合わせ送信失敗:', error.response.data);
+                console.error('ユーザー登録失敗:', error.response.data);
                 this.errors = error.response.data.errors;
-            }
-        }
+            });
+        },
     }
 }
 </script>
