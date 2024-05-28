@@ -99,7 +99,7 @@ export default {
             if (type === 'old_password') { // 古いパスワードの入力フォーム
                 this.OldPasswordType = this.OldPasswordType === 'password' ? 'text' : 'password'; // PasswordTypeによってパスワードの表示・非表示を切り替え
                 this.OldPasswordIconClass = this.OldPasswordIconClass === 'far fa-eye-slash' ? 'far fa-eye' : 'far fa-eye-slash'; // PasswordIconClassによってパスワードのアイコンを切り替え
-            } else if (type === 'new_password') { // 新しいパスワードの入力フォーム
+    	    } else if (type === 'new_password') { // 新しいパスワードの入力フォーム
                 this.NewPasswordType = this.NewPasswordType === 'password' ? 'text' : 'password'; // PasswordTypeによってパスワードの表示・非表示を切り替え
                 this.NewPasswordIconClass = this.NewPasswordIconClass === 'far fa-eye-slash' ? 'far fa-eye' : 'far fa-eye-slash'; // PasswordIconClassによってパスワードのアイコンを切り替え
             } else { // パスワード（再入力）の入力フォーム

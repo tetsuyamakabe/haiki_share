@@ -31,7 +31,7 @@ class MyPageController extends Controller
     public function editProfile(ProfileRequest $request)
     {
         \Log::info($request->all());
-        try {
+        // try {
             // 認証済みユーザー情報の取得
             $user = Auth::user();
             // 未認証の場合
@@ -58,10 +58,10 @@ class MyPageController extends Controller
             }
             $user->save();
             return response()->json(['message' => 'プロフィール編集に成功しました', 'user' => $user], 200);
-        } catch (\Exception $e) {
-            \Log::error('例外エラー: ' . $e->getMessage());
-            return response()->json(['message' => 'プロフィール編集に失敗しました'], 500);
-        }
+        // } catch (\Exception $e) {
+        //     \Log::error('例外エラー: ' . $e->getMessage());
+        //     return response()->json(['message' => 'プロフィール編集に失敗しました'], 500);
+        // }
     }
 
     // 退会処理の実行
