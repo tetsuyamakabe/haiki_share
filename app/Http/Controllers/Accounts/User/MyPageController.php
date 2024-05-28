@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\User\ContactRequest;
 use App\Http\Requests\User\ProfileRequest;
 use Illuminate\Support\Facades\Notification;
@@ -50,7 +51,8 @@ class MyPageController extends Controller
                 $iconImage = $request->file('icon'); // 顔写真
                 $extension = $iconImage->getClientOriginalExtension(); // ファイルの拡張子を取得
                 $fileName = sha1($iconImage->getClientOriginalName()) . '.' . $extension; // SHA-1ハッシュでファイル名を決定
-                $iconImagePath = $iconImage->storeAs('public/icons', $fileName); // ファイルを保存
+                $path = Storage::disk('s3')->putFileAs('icons', $iconImage, $fileName, 'public'); // S3にファイルを保存
+                $user->icon = Storage::disk('s3')->url($path); // ファイルパスを保存
                 $user->icon = $fileName; // ファイルパスを保存
             }
             $user->save();
