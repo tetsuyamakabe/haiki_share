@@ -105,17 +105,16 @@ export default {
 
     methods: {
         // マイページに表示する出品・購入商品情報の取得
-        async getMyPageProducts() {
-            try {
-                // コンビニマイページに表示する出品・購入商品情報の取得APIをGET送信
-                await axios.get('/api/convenience/mypage/products');
+        getMyPageProducts() {
+            // コンビニマイページに表示する出品・購入商品情報の取得APIをGET送信
+            axios.get('/api/convenience/mypage/products').then(response => {
                 // レスポンスデータをそれぞれのプロパティにセット
-                this.saleProducts = response.data.sale_products;
-                this.purchaseProducts = response.data.purchased_products;
-            } catch (error) {
+                this.saleProducts = response.data.sale_products; // 出品した商品情報
+                this.purchaseProducts = response.data.purchased_products; // 購入された商品情報
+            }).catch(error => {
                 console.error('商品情報取得失敗:', error.response.data);
                 this.errors = error.response.data;
-            }
+            });
         },
 
         // 商品画像のパスを取得するメソッド

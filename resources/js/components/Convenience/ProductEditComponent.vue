@@ -94,79 +94,72 @@ export default {
 
     methods: {
         // 商品カテゴリ情報をサーバーから取得
-        async getCategories() {
-            try {
-                // 商品カテゴリ情報の取得APIをGET送信
-                const response = await axios.get('/api/categories');
+        getCategories() {
+            // 商品カテゴリ情報の取得APIをGET送信
+            axios.get('/api/categories').then(response => {
                 this.categories = response.data.categories; // レスポンスデータのカテゴリ情報をcategoriesプロパティにセット
-            } catch (error) {
-                console.error('カテゴリー情報取得失敗:', error.response.data);
+            }).catch(error => {
+                console.error('商品カテゴリー情報取得失敗:', error.response.data);
                 this.errors = error.response.data;
-            }
+            });
         },
 
         // 商品情報をサーバーから取得
-        async getProduct() {
-            try {
-                console.log('商品情報を取得します');
-                // 商品情報取得APIをGET送信
-                const response = await axios.get(`/api/products/${this.productId}`);
+        getProduct() {
+            // 商品情報取得APIをGET送信
+            axios.get('/api/products/'+ this.productId).then(response => { // 商品IDを含むリクエスト
                 this.product = response.data.product; // レスポンスデータの商品情報をproductプロパティにセット
-                console.log('APIからのレスポンス:', response.data);
-                // 取得した商品情報をformDataに入れる
+                // 取得した各商品情報をformDataに入れる
                 this.formData.name = this.product.name || ''; // 商品名
                 this.formData.price = this.product.price || ''; // 価格
                 this.formData.category = this.product.category.id || ''; // カテゴリ名
                 this.formData.expiration_date = this.product.expiration_date.replace(/-/g, '') || ''; // 賞味期限、YY-MM-DD形式からハイフンだけを取り除く
                 this.formData.product_picture = this.product.pictures[0].file || ''; // 商品画像
-            } catch (error) {
+            }).catch(error => {
                 console.error('商品情報取得失敗:', error.response.data);
                 this.errors = error.response.data;
-            }
+            });
         },
 
         // 入力された値をサーバー側に送信するメソッド
-        async submitForm() {
-            try {
-                const productId = this.productId; // 商品ID
-                // リクエストヘッダー定義
-                const config = {
-                    headers: {
-                        'content-type': 'multipart/form-data' // ファイルのアップロードを含むリクエストボディのデータ形式
-                    }
-                };
-                // フォームデータを作成
-                const formData = new FormData();  // FormDataオブジェクトの作成
-                formData.append('_method', 'PUT'); // リクエストメソッドをPUTにする
-                formData.append('name', this.formData.name); // 商品名
-                formData.append('price', this.formData.price); // 価格
-                formData.append('category', this.formData.category); // 商品カテゴリ
-                formData.append('expiration_date', this.formattedExpirationDate); // 賞味期限
-                formData.append('product_picture', this.formData.product_picture); // 商品画像
-                // 商品編集APIをPOST送信
-                const response = await axios.post(`/api/convenience/products/edit/${productId}`, formData, config); // 商品IDとリクエストヘッダとフォームデータを含むリクエスト
+        submitForm() {
+            const productId = this.productId; // 商品ID
+            // リクエストヘッダー定義
+            const config = {
+                headers: {
+                    'content-type': 'multipart/form-data' // ファイルのアップロードを含むリクエストボディのデータ形式
+                }
+            };
+            // フォームデータを作成
+            const formData = new FormData();  // FormDataオブジェクトの作成
+            formData.append('_method', 'PUT'); // リクエストメソッドをPUTにする
+            formData.append('name', this.formData.name); // 商品名
+            formData.append('price', this.formData.price); // 価格
+            formData.append('category', this.formData.category); // 商品カテゴリ
+            formData.append('expiration_date', this.formattedExpirationDate); // 賞味期限
+            formData.append('product_picture', this.formData.product_picture); // 商品画像
+            // 商品編集APIをPOST送信
+            axios.post('/api/convenience/products/edit/' + productId, formData, config).then(response => { // 商品IDとリクエストヘッダとフォームデータを含むリクエスト
                 this.message = response.data.message;
                 console.log('this.messageは、', this.message);
                 console.log('商品情報を更新します。');
                 this.$router.push({ name: 'convenience.products.sale' }); // 商品更新処理後、出品した商品一覧画面に遷移
-            } catch (error) {
+            }).catch(error => {
                 console.error('商品編集失敗:', error.response.data);
                 this.errors = error.response.data.errors;
-            }
+            });
         },
 
         // 商品削除処理をサーバー側に送信するメソッド
-        async deleteProduct() {
-            try {
-                const productId = this.productId; // 商品ID
-                // 商品削除APIをDELETE送信
-                await axios.delete(`/api/convenience/products/${productId}`);
-                console.log('商品情報を削除します。');
+        deleteProduct() {
+            const productId = this.productId; // 商品ID
+            // 商品削除APIをDELETE送信
+            axios.delete('/api/convenience/products/' + productId).then(response => {
                 this.$router.push({ name: 'convenience.products.sale' }); // 商品削除処理後、出品した商品一覧画面に遷移
-            } catch (error) {
+            }).catch(error => {
                 console.error('商品削除失敗:', error.response.data);
                 this.errors = error.response.data.errors;
-            }
+            });
         },
 
         // ドラッグ＆ドロップエリアに画像がドロップされたときの処理

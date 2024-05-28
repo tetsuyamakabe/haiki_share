@@ -31,17 +31,16 @@ export default {
 
     methods: {
         // パスワードリセットメール送信処理
-        async sendResetLink() {
-            try {
-                // コンビニパスワード変更メール送信APIをPOST送信
-                await axios.post('/api/convenience/password/email', this.formData); // formDataを含めたリクエスト
+        sendResetLink() {
+            // コンビニパスワード変更メール送信APIをPOST送信
+            axios.post('/api/convenience/password/email', this.formData).then(response => { // formDataを含めたリクエスト
                 console.log('パスワード変更メールを送信します。');
                 this.message = response.data.message;
                 console.log('this.messageは、', this.message);
-            } catch (error) {
+            }).catch(error => {
                 console.log('メール送信失敗：', error.response.data);
                 this.errors = error.response.data.errors;
-            }
+            });
         }
     }
 };

@@ -57,7 +57,7 @@ export default {
     },
 
     created() {
-        this.getProduct(); // インスタンス初期化時に商品情報を読み込む
+        this.getPurchasedProduct(); // インスタンス初期化時に購入された商品情報を読み込む
     },
 
     methods: {
@@ -74,7 +74,7 @@ export default {
             console.log('検索URL:', url);
             // ページ遷移
             this.$router.push(url).then(() => {
-                this.getProduct(); // ページ遷移が完了した後にgetProduct()メソッドを呼び出す
+                this.getPurchasedProduct(); // ページ遷移が完了した後にgetPurchasedProduct()メソッドを呼び出す
             });
         },
 
@@ -89,24 +89,20 @@ export default {
             }
         },
 
-        // 商品情報をサーバーから取得
-        async getProduct() {
-            try {
-                console.log('購入された商品情報を取得します');
-                // 現在のルートのクエリパラメータを取得
-                const params = Object.assign({}, this.$route.query); // クエリパラメータのコピーを作成
-                console.log('paramsは、', params, 'this.currentPageは、', this.currentPage);
-                // 購入された商品情報取得APIをGET送信
-                const response = await axios.get('/api/convenience/products/purchased', { params: params }); // パラメータを含むリクエスト
-                console.log('curent_pageは、', response.data.products.current_page);
-                console.log('getProductのAPIからのレスポンス:', response.data);
+        // 購入された商品情報をサーバーから取得
+        getPurchasedProduct() {
+            // 現在のルートのクエリパラメータを取得
+            const params = Object.assign({}, this.$route.query); // クエリパラメータのコピーを作成
+            console.log('paramsは、', params, 'this.currentPageは、', this.currentPage);
+            // 購入された商品情報取得APIをGET送信
+            axios.get('/api/convenience/products/purchased', { params: params }).then(response => { // パラメータを含むリクエスト
                 // レスポンスデータをそれぞれのプロパティにセット
-                this.products = response.data.products;
-                this.lastPage = response.data.products.last_page;
-            } catch (error) {
+                this.products = response.data.products; // 購入された商品情報
+                this.lastPage = response.data.products.last_page; // ページ数
+            }).catch(error => {
                 console.error('商品情報取得失敗:', error.response.data);
                 this.errors = error.response.data;
-            }
+            });
         },
 
         // 商品画像のパスを取得するメソッド

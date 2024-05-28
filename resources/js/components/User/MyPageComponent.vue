@@ -107,17 +107,16 @@ export default {
 
     methods: {
         // マイページに表示する購入・お気に入り商品情報の取得
-        async getMyPageProducts() {
-            try {
+        getMyPageProducts() {
+            // 利用者マイページに表示する出品・購入商品情報の取得APIをGET送信
+            axios.get('/api/user/mypage/products').then(response => {
                 // コンビニマイページに表示する出品・購入商品情報の取得APIをGET送信
-                await axios.get('/api/user/mypage/products');
-                // レスポンスデータをそれぞれのプロパティにセット
-                this.purchasedProducts = response.data.purchased_products;
-                this.likedProducts = response.data.liked_products;
-            } catch (error) {
+                this.purchasedProducts = response.data.purchased_products; // 購入した商品情報
+                this.likedProducts = response.data.liked_products; // お気に入り登録商品情報
+            }).catch(error => {
                 console.error('商品情報取得失敗:', error.response.data);
                 this.errors = error.response.data;
-            }
+            });
         },
 
         // 商品画像のパスを取得するメソッド
@@ -144,16 +143,15 @@ export default {
         },
 
         // 商品購入キャンセルするメソッド
-        async cancelPurchase(productId) {
-            try {
-                // 購入キャンセルAPIをDELETE送信
-                await axios.delete(`/api/user/products/purchase/cancel/${productId}`);
+        cancelPurchase(productId) {
+            // 購入キャンセルAPIをDELETE送信
+            axios.delete(`/api/user/products/purchase/cancel/${productId}`).then(response => { // 商品IDを含むリクエスト
                 console.log('APIからのレスポンス:', response.data);
-                this.getMyPageProducts(); // 購入した商品のリストを再取得する
-            } catch (error) {
+                this.getMyPageProducts();　// 購入した商品のリストを再取得する
+            }).catch(error => {
                 console.error('商品購入キャンセル処理失敗:', error.response.data);
                 this.errors = error.response.data.errors;
-            }
+            });
         },
     },
 }

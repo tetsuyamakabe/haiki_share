@@ -117,31 +117,32 @@ export default {
 
     methods: {
         // 郵便番号検索APIを使って、郵便番号から住所を自動入力するメソッド
-        async searchAddress() {
-            try {
-                const zipCode = this.formData.postalcode; // 郵便番号フォームの入力値
-                const response = await axios.get(`https://api.zipaddress.net/?zipcode=${zipCode}`, { adapter: jsonpAdapter }); // 郵便番号検索APIに郵便番号フォームの入力値を使ってGETリクエスト送信
+        searchAddress() {
+            const zipCode = this.formData.postalcode; // 郵便番号フォームの入力値
+            // 郵便番号検索APIに郵便番号フォームの入力値を使ってGETリクエスト送信
+            axios.get(`https://api.zipaddress.net/?zipcode=${zipCode}`, { adapter: jsonpAdapter }).then(rs => {
                 // APIから返されたレスポンスデータを各入力フォームにセット
                 const responseData = response.data;
                 this.formData.prefecture = responseData.pref; // 都道府県
                 this.formData.city = responseData.city; // 市区町村
                 this.formData.town = responseData.town; // 地名・番名
                 this.formData.building = responseData.building; // 建物名・部屋番号
-            } catch (error) {
+            }).catch(error => {
                 console.error('住所検索エラー:', error);
-            }
+            });
         },
 
         // 入力された値をサーバー側に送信するメソッド
-        async submitForm() {
-            try {
-                this.formData.agreement = this.agreement; // 利用規約の同意をformDataに追加
-                await axios.post('/api/convenience/register', this.formData); // ユーザー登録APIをPOST送信
-                this.$router.push({ name: 'user.login' }); // ユーザー登録後、ログインページに遷移
-            } catch (error) {
+        submitForm() {
+            this.formData.agreement = this.agreement;  // 利用規約の同意をformDataに追加
+            // ユーザー登録APIをPOST送信
+            axios.post('/api/convenience/register', this.formData).then(response => { // フォームデータを含むリクエスト
+                this.$router.push({ name: 'convenience.login' }); // ユーザー登録後、ログインページに遷移
+            }).catch(error => {
+                console.log('errorは、', error);
                 console.error('ユーザー登録失敗:', error.response.data);
                 this.errors = error.response.data.errors;
-            }
+            });
         },
 
         // パスワードの表示・非表示を切り替えるメソッド

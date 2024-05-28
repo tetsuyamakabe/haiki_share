@@ -23,18 +23,17 @@
 export default {
     methods: {
         // 退会処理をサーバー側に送信するメソッド
-        async withdraw() {
-            try {
-                // コンビニ退会APIをDELETE送信
-                await axios.delete('/api/convenience/mypage/withdraw');
+        withdraw() {
+            // コンビニ退会APIをDELETE送信
+            axios.delete('/api/convenience/mypage/withdraw').then(response => {
                 this.message = response.data.message;
                 console.log('this.messageは、', this.message);
                 console.log('退会します');
                 this.$router.push({ name: 'top' }); // 退会処理完了後、TOP画面に遷移
-            } catch (error) {
+            }).catch(error => {
                 console.error('退会処理失敗:', error.response.data);
                 this.errors = error.response.data.errors;
-            }
+            });
         }
     }
 }

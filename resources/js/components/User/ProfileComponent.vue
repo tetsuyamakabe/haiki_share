@@ -82,63 +82,56 @@ export default {
     },
 
     created() {
-        this.getProfile(); // インスタンス初期化時にプロフィール情報を読み込む
+        this.getProfile(); // インスタンス初期化時に編集前のプロフィール情報を読み込む
     },
 
     methods: {
         // 編集前のプロフィール情報をサーバーから取得
-        async getProfile() {
-            try {
-                console.log('プロフィールを取得します');
-                // 利用者側プロフィール情報の取得APIをGET送信
-                const response = await axios.get('/api/user/mypage/profile');
+        getProfile() {
+            // 利用者側プロフィール情報の取得APIをGET送信
+            axios.get('/api/user/mypage/profile').then(response => {
                 this.user = response.data.user; // レスポンスデータのユーザー情報をuserプロパティにセット
-                console.log('APIからのレスポンス:', response.data);
-                // 取得したプロフィール情報をformDataに入れる
+                // 取得した各プロフィール情報をformDataに入れる
                 this.formData.name = this.user.name || ''; // お名前
                 this.formData.email = this.user.email || ''; // メールアドレス
                 this.formData.password = ''; // 編集前のパスワードは非表示（入力フォームを空）にする
                 this.formData.password_confirmation = ''; // 編集前のパスワード（再入力）は非表示（入力フォームを空）にする
                 this.formData.introduction = this.user.introduction || ''; // 自己紹介文
                 this.formData.icon = this.user.icon || ''; // 顔写真
-            } catch (error) {
+            }).catch (error => {
                 console.error('プロフィール取得失敗:', error.response.data);
                 this.errors = error.response.data;
-            }
+            });
         },
 
         // 入力された値をサーバー側に送信するメソッド
-        async submitForm() {
-            try {
-                // リクエストヘッダー定義
-                const config = {
-                    headers: {
-                        'content-type': 'multipart/form-data' // ファイルのアップロードを含むリクエストボディのデータ形式
-                    }
-                };
-                // フォームデータを作成
-                const formData = new FormData(); // FormDataオブジェクトの作成
-                formData.append('_method', 'PUT'); // リクエストメソッドをPUTにする
-                formData.append('name', this.formData.name); // お名前
-                formData.append('email', this.formData.email); // メールアドレス
-                formData.append('password', this.formData.password); // パスワード
-                formData.append('password_confirmation', this.formData.password_confirmation); // パスワード再入力
-                formData.append('introduction', this.formData.introduction); // 自己紹介文
-                // icon フィールドが空でない場合のみ、フォームデータに追加
-                if (this.formData.icon !== '') {
-                    formData.append('icon', this.formData.icon); // 顔写真
+        submitForm() {
+            // リクエストヘッダー定義
+            const config = {
+                headers: {
+                    'content-type': 'multipart/form-data' // ファイルのアップロードを含むリクエストボディのデータ形式
                 }
-                // 利用者側プロフィール情報更新APIをPOST送信
-                const response = await axios.post('/api/user/mypage/profile', config, formData); // リクエストヘッダとフォームデータを含むリクエスト
-                this.message = response.data.message;
-                console.log('this.messageは、', this.message);
-                console.log('プロフィールを更新します。');
+            };
+            // フォームデータを作成
+            const formData = new FormData(); // FormDataオブジェクトの作成
+            formData.append('_method', 'PUT'); // リクエストメソッドをPUTにする
+            formData.append('name', this.formData.name); // お名前
+            formData.append('email', this.formData.email); // メールアドレス
+            formData.append('password', this.formData.password); // パスワード
+            formData.append('password_confirmation', this.formData. password_confirmation); // パスワード（再入力）
+            formData.append('introduction', this.formData.introduction); // 自己紹介文
+            // 顔写真がアップロードされている場合はフォームデータに追加
+            if (this.formData.icon !== '') {
+                formData.append('icon', this.formData.icon); // 顔写真
+            }
+            // 利用者側プロフィール情報更新APIをPOST送信
+            axios.post('/api/user/mypage/profile', config, formData).then(response => { // リクエストヘッダとフォームデータを含むリクエスト
                 this.$router.push({ name: 'user.mypage' }); // プロフィール更新完了後、マイページに遷移する
-            } catch (error) {
+            }).catch(error => {
                 console.log('errorは、', error);
                 console.error('プロフィール編集失敗:', error.response.data);
                 this.errors = error.response.data.errors;
-            }
+            });
         },
 
         // パスワードの表示・非表示を切り替えるメソッド
