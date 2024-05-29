@@ -77,7 +77,7 @@ export default {
                 this.$router.push({ name: 'user.login' }); // パスワード変更後、ログイン画面に遷移
             }).catch(error => {
                 console.log('errorは、', error);
-                console.error('パスワード変更失敗:', error.response.data);
+		console.error('パスワード変更失敗:', error.response.data);
                 this.errors = error.response.data.errors;
             });
         },
