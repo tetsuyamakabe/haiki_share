@@ -19,7 +19,7 @@
                                 <h3 class="c-card__name">{{ product.product.name }}</h3> <!-- 商品名 -->
                             </div>
                             <div class="p-card__container">
-                                <img class="c-card__picture" :src="getProductPicturePath(product)" alt="商品画像"> <!-- 商品画像 -->
+                                <img class="c-card__picture u-mb__s" :src="getProductPicturePath(product)" alt="商品画像"> <!-- 商品画像 -->
                                 <label v-show="product.is_purchased" class="c-label__purchase u-pd__m">購入済み</label><!-- 購入済みラベル -->
                                 <p class="c-card__price">{{ product.product.price }}円</p> <!-- 価格 -->
                                 <p class="c-card__price">{{ formatDate(product.product.expiration_date) }}</p> <!-- 賞味期限 -->
@@ -54,6 +54,13 @@ export default {
             currentPage: 1, // 現在ページ
             lastPage: 1, // 最後のページ
         };
+    },
+
+    computed: {
+        // ログインユーザーかどうか
+        isLogin() {
+            return this.$store.getters['auth/check'];
+        },
     },
 
     created() {

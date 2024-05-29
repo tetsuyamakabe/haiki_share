@@ -23,7 +23,6 @@ class ResetPasswordTest extends TestCase
         // テストデータの作成
         $data = [
             'email' => 'user@example.com', // ユーザーのメールアドレス
-            'oldPassword' => 'password', // 現在のパスワード
             'newPassword' => '12345678', // 新しいパスワード
             'password_confirmation' => '12345678', // 新しいパスワードの確認
         ];
@@ -45,7 +44,6 @@ class ResetPasswordTest extends TestCase
         // テストデータの作成
         $data = [
             'email' => '12345@example.com', // 存在しないユーザーのメールアドレス
-            'oldPassword' => 'aaaaaaaa', // 現在のパスワード
             'newPassword' => 'abcdefgh', // 新しいパスワード
             'password_confirmation' => 'abcdefgh', // 新しいパスワードの確認
         ];
@@ -69,7 +67,6 @@ class ResetPasswordTest extends TestCase
         // テストデータの作成
         $data = [
             'email' => 'convenience@example.com', // 存在しないユーザーのメールアドレス
-            'oldPassword' => 'aaaaaaaa', // 現在のパスワード
             'newPassword' => 'abcdefgh', // 新しいパスワード
             'password_confirmation' => 'abcdefgh', // 新しいパスワードの確認
         ];
@@ -85,7 +82,6 @@ class ResetPasswordTest extends TestCase
     {
         // テストデータの作成
         $data = [
-            'oldPassword' => 'aaaaa', // 古いパスワードが違う
             'newPassword' => 'pass', // 新しいパスワードが短すぎる
             'password_confirmation' => 'password', // パスワード確認が一致しない
         ];
@@ -94,6 +90,6 @@ class ResetPasswordTest extends TestCase
         // バリデーションエラーが返されるか
         $response->assertStatus(422);
         // エラーメッセージが正しいか
-        $response->assertJsonValidationErrors(['oldPassword', 'newPassword']);
+        $response->assertJsonValidationErrors(['newPassword']);
     }
 }

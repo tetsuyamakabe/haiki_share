@@ -51,9 +51,9 @@ export default {
         submitForm() {
             // お問い合わせ送信APIをPOST送信
             axios.post('/api/contact', this.formData).then(response => {
-                console.log('お問い合わせ内容を送信します。');
-                this.flashMessage = 'お問い合わせ受付完了メールを送信しました。';
+                this.flashMessage = response.data.message;
             }).catch(error => {
+                this.flashMessage = response.data.message;
                 console.log('errorは、', error);
                 console.error('ユーザー登録失敗:', error.response.data);
                 this.errors = error.response.data.errors;

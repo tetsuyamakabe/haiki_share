@@ -13,6 +13,8 @@
         display: block;
         width: 100%;
         min-width: 200px;
+        min-height: 180px;
+        max-height: 180px;
 
         @include mq(sm) {
             max-height: 100%;

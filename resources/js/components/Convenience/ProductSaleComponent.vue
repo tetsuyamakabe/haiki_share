@@ -5,17 +5,17 @@
             <form @submit.prevent="submitForm" class="c-form">
 
                 <!-- 商品名 -->
-                <label for="name" class="c-label">商品名</label>
+                <label for="name" class="c-label">商品名<span class="c-required">必須</span></label>
                 <span v-if="errors && errors.name" class="c-error u-mt__s">{{ errors.name[0] }}</span>
                 <input v-model="formData.name" id="name" type="text" class="c-input u-pd__s u-mt__m u-mb__m" :class="{ 'is-invalid': errors && errors.name }" autocomplete="name">
 
                 <!-- 価格 -->
-                <label for="price" class="c-label">価格</label>
+                <label for="price" class="c-label">価格<span class="c-required">必須</span></label>
                 <span v-if="errors && errors.price" class="c-error u-mt__s">{{ errors.price[0] }}</span>
                 <input v-model="formData.price" id="price" type="text" class="c-input u-pd__s u-mt__m u-mb__m" :class="{ 'is-invalid': errors && errors.price }" autocomplete="price">
 
                 <!-- カテゴリ名 -->
-                <label for="category" class="c-label">カテゴリ名</label>
+                <label for="category" class="c-label">カテゴリ名<span class="c-required">必須</span></label>
                 <span v-if="errors && errors.category" class="c-error u-mt__s">{{ errors.category[0] }}</span>
                 <select v-model="formData.category" id="category" class="c-input u-pd__s u-mt__m u-mb__m" :class="{ 'is-invalid': errors && errors.category }">
                     <option value="">カテゴリを選択してください</option>
@@ -23,7 +23,7 @@
                 </select>
 
                 <!-- 賞味期限 -->
-                <label for="expiration_date" class="c-label">賞味期限</label>
+                <label for="expiration_date" class="c-label">賞味期限<span class="c-required">必須</span></label>
                 <span v-if="errors && errors.expiration_date" class="c-error u-mt__s">{{ errors.expiration_date[0] }}</span>
                 <div class="p-text__form">
                     <input v-model="formData.expiration_date" id="expiration_date" type="text" class="c-input u-pd__s u-mt__m u-mb__m" :class="{ 'is-invalid': errors && errors.expiration_date }" placeholder="（例）2024年4月10日の場合　20240410　と入力">
@@ -31,9 +31,9 @@
                 </div>
 
                 <!-- 商品画像 -->
-                <label class="c-label">商品画像</label>
+                <label class="c-label">商品画像<span class="c-required">必須</span></label>
                 <span v-if="errors && errors.product_picture" class="c-error u-mt__s">{{ errors.product_picture[0] }}</span>
-                <div class="p-product__picture p-product__picture--container u-pd__s" @drop="handleDrop" :class="{ 'is-invalid': errors && errors.product_picture }">
+                <div class="p-product__picture p-product__picture--container u-pd__s u-pd__s u-mt__m u-mb__m" @drop="handleDrop" :class="{ 'is-invalid': errors && errors.product_picture }">
                     <input type="file" id="product_picture" @change="handleFileChange" class="c-input__hidden">
                     <img v-if="!picturePreview && formData.product_picture !== ''" :src="'/storage/product_pictures/' + formData.product_picture" alt="アップロード商品画像" class="c-product__picture">
                     <img v-else-if="picturePreview" :src="picturePreview" alt="アップロード商品画像" class="c-product__picture">
@@ -41,7 +41,7 @@
                 </div>
 
                 <!-- 商品更新ボタン -->
-                <button type="submit" class="c-button c-button__submit c-button__convenience u-pd__s u-mt__m">出品する</button>
+                <button type="submit" class="c-button c-button__submit c-button__convenience u-pd__s u-mt__m">商品を出品する</button>
 
             </form>
         </section>
@@ -69,6 +69,11 @@ export default {
     },
 
     computed: {
+        // ログインユーザーかどうか
+        isLogin() {
+            return this.$store.getters['auth/check'];
+        },
+
         // 賞味期限日付の入力値をYYYY-MM-DD形式に直すメソッド
         formattedExpirationDate() {
             const inputDate = this.formData.expiration_date; // 賞味期限フォームの入力値

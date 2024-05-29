@@ -1,6 +1,7 @@
 .c-label {
     display: block;
     font-weight: bold;
+    font-size: $font-size_default;
 
     @include mq(sm) {
         font-size: $font-size_m;

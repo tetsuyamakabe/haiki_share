@@ -20,7 +20,7 @@
                                     <h3 class="c-card__name">{{ product.name }}</h3> <!-- 商品名 -->
                                 </div>
                                 <div class="p-card__container">
-                                    <img class="c-card__picture" :src="getProductPicturePath(product)" alt="商品画像"> <!-- 商品画像 -->
+                                    <img class="c-card__picture u-mb__s" :src="getProductPicturePath(product)" alt="商品画像"> <!-- 商品画像 -->
                                     <label v-show="product.is_purchased" class="c-label__purchase u-pd__m">購入済み</label> <!-- 購入済みラベル -->
                                     <div class="p-icon u-pdr__s">
                                         <!-- いいねアイコン -->

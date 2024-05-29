@@ -18,11 +18,14 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::middleware(['cors'])->group(function () {
+
     // 商品
     Route::get('products', 'Products\Convenience\ProductController@getAllProducts'); // すべての商品情報の取得
     Route::get('/products/{productId}', 'Products\Convenience\ProductController@getProduct'); // 商品情報の取得
     Route::get('categories', 'Products\Convenience\ProductController@getCategories'); // 商品カテゴリー情報の取得
     Route::get('prefecture', 'Products\User\ProductController@getPrefecture'); // 出品しているコンビニがある都道府県の取得
+
+    Route::get('/user', fn() => Auth::user())->name('user'); // ユーザー情報の取得
 
     // 利用者側
     Route::post('/user/register', 'Auth\User\RegisterController@create'); // ユーザー登録処理
@@ -63,7 +66,4 @@ Route::middleware(['cors'])->group(function () {
         Route::get('/convenience/products/purchased', 'Products\Convenience\ProductController@getPurchasedProducts'); // 購入された商品情報の取得
     });
 
-    // その他
-    Route::get('/user', 'Auth\User\LoginController@getUser'); // ユーザー情報の取得
-    Route::post('contact', 'Accounts\User\MyPageController@contact'); // お問い合わせ処理
 });

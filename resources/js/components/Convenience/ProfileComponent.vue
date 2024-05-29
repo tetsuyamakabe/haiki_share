@@ -5,12 +5,12 @@
             <form @submit.prevent="submitForm" class="c-form">
 
                 <!-- コンビニ名 -->
-                <label for="convenience_name" class="c-label">コンビニ名</label>
+                <label for="convenience_name" class="c-label">コンビニ名<span class="c-required">必須</span></label>
                 <span v-if="errors && errors.convenience_name" class="c-error u-mt__s">{{ errors.convenience_name[0] }}</span>
                 <input v-model="formData.convenience_name" id="convenience_name" type="text" class="c-input u-pd__s u-mt__m u-mb__m" :class="{ 'is-invalid': errors && errors.convenience_name }" autocomplete="name">
 
                 <!-- 支店名 -->
-                <label for="branch_name" class="c-label">支店名</label>
+                <label for="branch_name" class="c-label">支店名<span class="c-required">必須</span></label>
                 <span v-if="errors && errors.branch_name" class="c-error u-mt__s">{{ errors.branch_name[0] }}</span>
                 <input v-model="formData.branch_name" id="branch_name" type="text" class="c-input u-pd__s u-mt__m u-mb__m" :class="{ 'is-invalid': errors && errors.branch_name }" autocomplete="branch_name">
 
@@ -22,17 +22,17 @@
                 </div>
 
                 <!-- 都道府県 -->
-                <label for="prefecture" class="c-label">都道府県</label>
+                <label for="prefecture" class="c-label">都道府県<span class="c-required">必須</span></label>
                 <span v-if="errors && errors.prefecture" class="c-error u-mt__s">{{ errors.prefecture[0] }}</span>
                 <input v-model="formData.prefecture" id="prefecture" type="text" class="c-input u-pd__s u-mt__m u-mb__m" :class="{ 'is-invalid': errors && errors.prefecture }" autocomplete="prefecture">
 
                 <!-- 市区町村 -->
-                <label for="city" class="c-label">市区町村</label>
+                <label for="city" class="c-label">市区町村<span class="c-required">必須</span></label>
                 <span v-if="errors && errors.city" class="c-error u-mt__s">{{ errors.city[0] }}</span>
                 <input v-model="formData.city" id="city" type="text" class="c-input u-pd__s u-mt__m u-mb__m" :class="{ 'is-invalid': errors && errors.city }" autocomplete="city">
 
                 <!-- 地名・番地 -->
-                <label for="town" class="c-label">地名・番地</label>
+                <label for="town" class="c-label">地名・番地<span class="c-required">必須</span></label>
                 <span v-if="errors && errors.town" class="c-error u-mt__s">{{ errors.town[0] }}</span>
                 <input v-model="formData.town" id="town" type="text" class="c-input u-pd__s u-mt__m u-mb__m" :class="{ 'is-invalid': errors && errors.town }" autocomplete="town">
 
@@ -42,12 +42,12 @@
                 <input v-model="formData.building" id="building" type="text" class="c-input u-pd__s u-mt__m u-mb__m" :class="{ 'is-invalid': errors && errors.building }" autocomplete="building">
 
                 <!-- メールアドレス -->
-                <label for="email" class="c-label">メールアドレス</label>
+                <label for="email" class="c-label">メールアドレス<span class="c-required">必須</span></label>
                 <span v-if="errors && errors.email" class="c-error u-mt__s">{{ errors.email[0] }}</span>
                 <input v-model="formData.email" id="email" type="email" class="c-input u-pd__s u-mt__m u-mb__m" :class="{ 'is-invalid': errors && errors.email }" autocomplete="email">
 
                 <!-- パスワード -->
-                <label for="password" class="c-label">パスワード</label>
+                <label for="password" class="c-label">パスワード<span class="c-required">必須</span></label>
                 <span v-if="errors && errors.password" class="c-error u-mt__s">{{ errors.password[0] }}</span>
                 <div class="c-input__password">
                     <input v-model="formData.password" id="password" :type="PasswordType" class="c-input u-pd__s u-mt__m u-mb__m" :class="{ 'is-invalid': errors && errors.password }" placeholder="英数字8文字以上で入力してください">
@@ -55,7 +55,7 @@
                 </div>
 
                 <!-- パスワード（再入力） -->
-                <label for="password-confirm" class="c-label">パスワード（再入力）</label>
+                <label for="password-confirm" class="c-label">パスワード（再入力）<span class="c-required">必須</span></label>
                 <span v-if="errors && errors.password_confirmation" class="c-error u-mt__s">{{ errors.password_confirmation[0] }}</span>
                 <div class="c-input__password">
                     <input v-model="formData.password_confirmation" id="password-confirm" :type="PasswordConfirmType" class="c-input u-pd__s u-mt__m u-mb__m" :class="{ 'is-invalid': errors && errors.password_confirmation }" placeholder="英数字8文字以上で入力してください">
@@ -81,7 +81,7 @@
                 </div>
 
                 <!-- 更新ボタン -->
-                <button type="submit" class="c-button c-button__submit c-button__convenience u-pd__s u-mt__m">更新する</button>
+                <button type="submit" class="c-button c-button__submit c-button__convenience u-pd__s u-mt__m">プロフィールを更新する</button>
 
             </form>
         </section>
@@ -101,7 +101,7 @@ export default {
                 branch_name: '', // 支店名
                 prefecture: '', // 都道府県
                 city: '', // 市区町村
-                town: '', // 地名・番名
+                town: '', // 地名・番地
                 building: '', // 建物名・部屋番号
                 email: '', // メールアドレス
                 password: '', // パスワード
@@ -117,6 +117,13 @@ export default {
             PasswordIconClass: 'far fa-eye-slash', // 初期アイコン
             PasswordConfirmIconClass: 'far fa-eye-slash', // 初期アイコン
         };
+    },
+
+    computed: {
+        // ログインユーザーかどうか
+        isLogin() {
+            return this.$store.getters['auth/check'];
+        },
     },
 
     created() {
@@ -138,7 +145,7 @@ export default {
                 this.formData.branch_name = this.convenience.branch_name || '', // 支店名
                 this.formData.prefecture = this.address.prefecture || '', // 都道府県
                 this.formData.city = this.address.city || '', // 市区町村
-                this.formData.town = this.address.town || '', // 地名・番名
+                this.formData.town = this.address.town || '', // 地名・番地
                 this.formData.building = this.address.building || '', // 建物名・部屋番号
                 this.formData.email = this.user.email || ''; // メールアドレス
                 this.formData.password = ''; // 編集前のパスワードは非表示（入力フォームを空）にする
@@ -153,15 +160,16 @@ export default {
 
         // 郵便番号検索APIを使って、郵便番号から住所を自動入力するメソッド
         searchAddress() {
-            const zipCode = this.formData.postalcode; // 郵便番号フォームの入力値
+            const postalcode = this.formData.postalcode; // 郵便番号フォームの入力値
+            const zipCode = postalcode;
             // 郵便番号検索APIに郵便番号フォームの入力値を使ってGETリクエスト送信
             axios.get(`https://api.zipaddress.net/?zipcode=${zipCode}`, { adapter: jsonpAdapter }).then(rs => {
                 // APIから返されたレスポンスデータを各入力フォームにセット
-                const responseData = response.data;
-                this.formData.prefecture = responseData.pref; // 都道府県
-                this.formData.city = responseData.city; // 市区町村
-                this.formData.town = responseData.town; // 地名・番名
-                this.formData.building = responseData.building; // 建物名・部屋番号
+                const response = rs.data;
+                this.formData.prefecture = response.pref; // 都道府県
+                this.formData.city = response.city; // 市区町村
+                this.formData.town = response.town; // 地名・番地
+                this.formData.building = response.building; // 建物名・部屋番号
             }).catch(error => {
                 console.error('住所検索エラー:', error);
             });
@@ -182,7 +190,7 @@ export default {
             formData.append('branch_name', this.formData.branch_name); // 支店名
             formData.append('prefecture', this.formData.prefecture); // 都道府県
             formData.append('city', this.formData.city); // 市区町村
-            formData.append('town', this.formData.town); // 地名・番名
+            formData.append('town', this.formData.town); // 地名・番地
             formData.append('building', this.formData.building); // 建物名・部屋番号
             formData.append('email', this.formData.email); // メールアドレス
             formData.append('password', this.formData.password); // パスワード
@@ -193,7 +201,7 @@ export default {
                 formData.append('icon', this.formData.icon); // 顔写真
             }
             // コンビニ側プロフィール情報更新APIをPOST送信
-            axios.post('/api/convenience/mypage/profile', config, formData).then(response => { // リクエストヘッダとフォームデータを含むリクエスト
+            axios.post('/api/convenience/mypage/profile', formData, config).then(response => { // リクエストヘッダとフォームデータを含むリクエスト
                 this.$router.push({ name: 'convenience.mypage' }); // プロフィール更新完了後、マイページに遷移する
             }).catch(error => {
                 console.error('プロフィール編集失敗:', error.response.data);

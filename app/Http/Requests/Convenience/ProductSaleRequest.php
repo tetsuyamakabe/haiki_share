@@ -26,7 +26,7 @@ class ProductSaleRequest extends FormRequest
         return [
             // 名前のバリデーションルール（必須、string型、最大文字数255文字以下）
             'name' => 'required|string|max:255',
-            // 価格のバリデーションルール（必須、数値、最小文字数0文字以下）
+            // 価格のバリデーションルール（必須、数値、最小値0以上）
             'price' => 'required|numeric|min:0',
             // カテゴリのバリデーションルール（必須）
             'category' => 'required',

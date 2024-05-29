@@ -67,21 +67,26 @@ class MyPageController extends Controller
     // 退会処理の実行
     public function withdraw(Request $request)
     {
-        // 認証済みユーザー情報の取得
-        $user = Auth::user();
-        // 未認証の場合
-        if (!$user) {
-            return response()->json(['message' => 'Unauthenticated.'], 401);
+        try {
+            // 認証済みユーザー情報の取得
+            $user = Auth::user();
+            // 未認証の場合
+            if (!$user) {
+                return response()->json(['message' => 'Unauthenticated.'], 401);
+            }
+            Auth::logout(); // 自動ログアウト
+            $user->delete(); // 論理削除を実行
+            return response()->json(['message' => '退会処理が完了しました。', 'user' => $user], 200);
+        } catch (\Exception $e) {
+            \Log::error('例外エラー: ' . $e->getMessage());
+            return response()->json(['message' => '退会処理が完了できませんでした。'], 500);
         }
-        Auth::logout(); // 自動ログアウト
-        $user->delete(); // 論理削除を実行
-        return response()->json(['message' => 'ユーザーが退会しました', 'user' => $user], 200);
     }
 
     // マイページに表示する購入・お気に入り商品情報の取得
     public function getMyProducts(Request $request)
     {
-        try {
+        // try {
             // 認証済みユーザー情報の取得
             $user = Auth::user();
             // 未認証の場合
@@ -100,10 +105,10 @@ class MyPageController extends Controller
                 ->limit(5)->get();
             // \Log::info('$likedProducts', [$likedProducts]);
             return response()->json(['purchased_products' => $purchasedProducts, 'liked_products' => $likedProducts]);
-        } catch (\Exception $e) {
-            \Log::error('例外エラー: ' . $e->getMessage());
-            return response()->json(['message' => '商品取得に失敗しました'], 500);
-        }
+        // } catch (\Exception $e) {
+        //     \Log::error('例外エラー: ' . $e->getMessage());
+        //     return response()->json(['message' => '商品取得に失敗しました'], 500);
+        // }
     }
 
     // お問い合わせ処理
@@ -115,10 +120,10 @@ class MyPageController extends Controller
             $contact = $request->input('contact');
             // メール送信
             Notification::route('mail', $request->email)->notify(new ContactNotification($name, $email, $contact));
-            return response()->json(['message' => 'お問い合わせが送信されました'], 200);
+            return response()->json(['message' => 'お問い合わせ受付完了メールを送信しました。'], 200);
         } catch (\Exception $e) {
             \Log::error('例外エラー: ' . $e->getMessage());
-            return response()->json(['message' => 'お問い合わせが送信されませんでした'], 500);
+            return response()->json(['message' => 'お問い合わせ受付完了メールを送信できませんでした。'], 500);
         }
     }
 }

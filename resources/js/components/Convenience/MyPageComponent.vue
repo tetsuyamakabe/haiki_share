@@ -20,10 +20,10 @@
                                 <li v-for="product in saleProducts" :key="product.id" class="p-product__item">
                                     <div class="c-card u-m__s">
                                         <div class="p-card__header u-pd__s">
-                                            <h3 class="c-card__name u-pd__s">{{ product.name }}</h3> <!-- 商品名 -->
+                                            <h3 class="c-card__name">{{ product.name }}</h3> <!-- 商品名 -->
                                         </div>
                                         <div class="p-card__container">
-                                            <img class="c-card__picture" :src="getProductPicturePath(product)" alt="商品画像"> <!-- 商品画像 -->
+                                            <img class="c-card__picture u-mb__s" :src="getProductPicturePath(product)" alt="商品画像"> <!-- 商品画像 -->
                                         </div>
                                         <div class="p-card__footer">
                                             <p class="c-card__price">{{ product.price }}円</p> <!-- 価格 -->
@@ -53,10 +53,10 @@
                                 <li v-for="product in purchaseProducts" :key="product.id" class="p-product__item">
                                     <div class="c-card u-m__s">
                                         <div class="p-card__header u-pd__s">
-                                            <h3 class="c-card__name u-pd__s">{{ product.name }}</h3> <!-- 商品名 -->
+                                            <h3 class="c-card__name">{{ product.name }}</h3> <!-- 商品名 -->
                                         </div>
                                         <div class="p-card__container">
-                                            <img class="c-card__picture" :src="getProductPicturePath(product)" alt="商品画像"> <!-- 商品画像 -->
+                                            <img class="c-card__picture u-mb__s" :src="getProductPicturePath(product)" alt="商品画像"> <!-- 商品画像 -->
                                         </div>
                                         <div class="p-card__footer">
                                             <p class="c-card__price">{{ product.price }}円</p> <!-- 価格 -->
@@ -99,8 +99,15 @@ export default {
         };
     },
 
+    computed: {
+        // ログインユーザーかどうか
+        isLogin() {
+            return this.$store.getters['auth/check'];
+        },
+    },
+
     created() {
-        this.getMyPageProducts(); // インスタンス初期化時に商品情報を読み込む
+        this.getMyPageProducts(); // インスタンス初期化時にマイページに表示する出品・購入商品情報を読み込む
     },
 
     methods: {
