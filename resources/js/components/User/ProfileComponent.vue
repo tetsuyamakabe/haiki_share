@@ -5,17 +5,17 @@
             <form @submit.prevent="submitForm" class="c-form">
 
                 <!-- お名前 -->
-                <label for="name" class="c-label">お名前</label>
+                <label for="name" class="c-label">お名前<span class="c-required">必須</span></label>
                 <span v-if="errors && errors.name" class="c-error u-mt__s">{{ errors.name[0] }}</span>
                 <input v-model="formData.name" id="name" type="name" class="c-input u-pd__s u-mt__m u-mb__m" :class="{ 'is-invalid': errors && errors.name }" autocomplete="name">
 
                 <!-- メールアドレス -->
-                <label for="email" class="c-label">メールアドレス</label>
+                <label for="email" class="c-label">メールアドレス<span class="c-required">必須</span></label>
                 <span v-if="errors && errors.email" class="c-error u-mt__s">{{ errors.email[0] }}</span>
-                <input v-model="formData.email" id="email" type="email" class="c-input u-pd__s u-mt__m u-mb__m" :class="{ 'is-invalid': errors && errors.email }" autocomplete="email">
+                <input v-model="formData.email" id="email" type="text" class="c-input u-pd__s u-mt__m u-mb__m" :class="{ 'is-invalid': errors && errors.email }" autocomplete="email">
 
                 <!-- パスワード -->
-                <label for="password" class="c-label">パスワード</label>
+                <label for="password" class="c-label">パスワード<span class="c-required">必須</span></label>
                 <span v-if="errors && errors.password" class="c-error u-mt__s">{{ errors.password[0] }}</span>
                 <div class="c-input__password">
                     <input v-model="formData.password" id="password" :type="PasswordType" class="c-input u-pd__s u-mt__m u-mb__m" :class="{ 'is-invalid': errors && errors.password }" placeholder="英数字8文字以上で入力してください">
@@ -23,7 +23,7 @@
                 </div>
 
                 <!-- パスワード（再入力） -->
-                <label for="password-confirm" class="c-label">パスワード（再入力）</label>
+                <label for="password-confirm" class="c-label">パスワード（再入力）<span class="c-required">必須</span></label>
                 <span v-if="errors && errors.password_confirmation" class="c-error u-mt__s">{{ errors.password_confirmation[0] }}</span>
                 <div class="c-input__password">
                     <input v-model="formData.password_confirmation" id="password-confirm" :type="PasswordConfirmType" class="c-input u-pd__s u-mt__m u-mb__m" :class="{ 'is-invalid': errors && errors.password_confirmation }" placeholder="英数字8文字以上で入力してください">
@@ -49,7 +49,7 @@
                 </div>
 
                 <!-- 更新ボタン -->
-                <button type="submit" class="c-button c-button__submit c-button__user u-pd__s u-mt__m">更新する</button>
+                <button type="submit" class="c-button c-button__submit c-button__user u-pd__s u-mt__m">プロフィールを更新する</button>
 
             </form>
         </section>
@@ -79,6 +79,13 @@ export default {
             PasswordIconClass: 'far fa-eye-slash', // 初期アイコン
             PasswordConfirmIconClass: 'far fa-eye-slash', // 初期アイコン
         };
+    },
+
+    computed: {
+        // ログインユーザーかどうか
+        isLogin() {
+            return this.$store.getters['auth/check'];
+        },
     },
 
     created() {
@@ -125,7 +132,7 @@ export default {
                 formData.append('icon', this.formData.icon); // 顔写真
             }
             // 利用者側プロフィール情報更新APIをPOST送信
-            axios.post('/api/user/mypage/profile', config, formData).then(response => { // リクエストヘッダとフォームデータを含むリクエスト
+            axios.post('/api/user/mypage/profile', formData, config).then(response => { // リクエストヘッダとフォームデータを含むリクエスト
                 this.$router.push({ name: 'user.mypage' }); // プロフィール更新完了後、マイページに遷移する
             }).catch(error => {
                 console.log('errorは、', error);

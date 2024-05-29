@@ -21,16 +21,27 @@
 
 <script>
 export default {
+    data() {
+        return {
+            flashMessage: '', // フラッシュメッセージ
+        }
+    },
+
+    computed: {
+        // ログインユーザーかどうか
+        isLogin() {
+            return this.$store.getters['auth/check'];
+        },
+    },
+
     methods: {
         // 退会処理をサーバー側に送信するメソッド
         withdraw() {
             // 利用者退会APIをDELETE送信
             axios.delete('/api/user/mypage/withdraw').then(response => {
-                this.message = response.data.message;
-                console.log('this.messageは、', this.message);
-                console.log('退会します');
                 this.$router.push({ name: 'top' }); // 退会処理完了後、TOP画面に遷移
             }).catch(error => {
+                console.log('errorは、', error);
                 console.error('退会処理失敗:', error.response.data);
                 this.errors = error.response.data.errors;
             });

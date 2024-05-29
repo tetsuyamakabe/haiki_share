@@ -1,7 +1,7 @@
 <template>
     <main class="l-main">
         <h1 class="c-title u-mb__xl">商品詳細</h1>
-        <section class="l-main__wrapper u-m__s">
+        <section class="l-main__wrapper u-pd__l">
             <div class="l-container">
 
                 <h1 class="c-title">{{ product.name }}</h1> <!-- 商品名 -->
@@ -31,7 +31,7 @@
             </div>
 
             <!-- コンビニ側の購入ボタンは自店舗・他店舗に限らず購入ボタンをクリックできないようにする -->
-            <button class="c-button c-button__submit c-button__purchase u-pd__s u-m__s" :disabled="true">コンビニユーザーは購入できません</button>
+            <button class="c-button c-button__submit c-button__purchase" :disabled="true">コンビニユーザーは購入できません</button>
 
         </section>
         <a @click="$router.back()" class="c-link c-link__back u-mt__s u-mb__s">前のページに戻る</a>
@@ -48,6 +48,13 @@ export default {
             categories: [], // カテゴリ
             errors: null // エラーメッセージ
         };
+    },
+
+    computed: {
+        // ログインユーザーかどうか
+        isLogin() {
+            return this.$store.getters['auth/check'];
+        },
     },
 
     created() {

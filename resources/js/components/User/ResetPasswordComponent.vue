@@ -4,14 +4,6 @@
             <h1 class="c-title u-mb__xl">利用者パスワード変更</h1>
             <form @submit.prevent="resetPassword" class="c-form">
 
-                <!-- 古いパスワード -->
-                <label for="old_password" class="c-label">古いパスワード<span class="c-required">必須</span></label>
-                <span v-if="errors && errors.oldPassword" class="c-error u-mt__s">{{ errors.oldPassword[0] }}</span>
-                <div class="c-input__password">
-                    <input v-model="formData.oldPassword" id="old_password" :type="OldPasswordType" class="c-input u-pd__s u-mt__m u-mb__m" :class="{ 'is-invalid': errors && errors.oldPassword }" placeholder="英数字8文字以上で入力してください">
-                    <span @click="togglePasswordVisibility('old_password')"><i :class="OldPasswordIconClass"></i></span>
-                </div>
-
                 <!-- 新しいパスワード -->
                 <label for="new_password" class="c-label">新しいパスワード<span class="c-required">必須</span></label>
                 <span v-if="errors && errors.newPassword" class="c-error u-mt__s">{{ errors.newPassword[0] }}</span>
@@ -46,17 +38,14 @@ export default {
     data() {
         return {
             formData: {
-                oldPassword: '', // 古いパスワード
                 newPassword: '', // 新しいパスワード
                 password_confirmation: '', // パスワード（再入力）
             },
             token: '', // トークン
             email: '', // メールアドレス
             errors: null, // エラーメッセージ
-            OldPasswordType: 'password', // 古いパスワードの初期設定
             NewPasswordType: 'password', // 新しいパスワードの初期設定
             PasswordConfirmType: 'password', // パスワード（再入力）の初期設定
-            OldPasswordIconClass: 'far fa-eye-slash', // 古いパスワードの初期アイコン
             NewPasswordIconClass: 'far fa-eye-slash', // 新しいパスワードの初期アイコン
             PasswordConfirmIconClass: 'far fa-eye-slash', // 新しいパスワード（再入力）の初期アイコン
         }
@@ -77,7 +66,6 @@ export default {
             const requestData = {
                 token: this.token, // トークン
                 email: this.email, // メールアドレス
-                oldPassword: this.formData.oldPassword, // 古いパスワード
                 newPassword: this.formData.newPassword, // 新しいパスワード
                 password_confirmation: this.formData.password_confirmation, // パスワード（再入力）
             };
@@ -96,13 +84,10 @@ export default {
 
         // パスワードの表示・非表示を切り替えるメソッド
         togglePasswordVisibility(type) {
-            if (type === 'old_password') { // 古いパスワードの入力フォーム
-                this.OldPasswordType = this.OldPasswordType === 'password' ? 'text' : 'password'; // PasswordTypeによってパスワードの表示・非表示を切り替え
-                this.OldPasswordIconClass = this.OldPasswordIconClass === 'far fa-eye-slash' ? 'far fa-eye' : 'far fa-eye-slash'; // PasswordIconClassによってパスワードのアイコンを切り替え
-            } else if (type === 'new_password') { // 新しいパスワードの入力フォーム
+            if (type === 'new_password') { // 新しいパスワードの入力フォーム
                 this.NewPasswordType = this.NewPasswordType === 'password' ? 'text' : 'password'; // PasswordTypeによってパスワードの表示・非表示を切り替え
                 this.NewPasswordIconClass = this.NewPasswordIconClass === 'far fa-eye-slash' ? 'far fa-eye' : 'far fa-eye-slash'; // PasswordIconClassによってパスワードのアイコンを切り替え
-            } else { // パスワード（再入力）の入力フォーム
+            } else if (type === 'password_confirm') { // 新しいパスワード（再入力）の入力フォーム
                 this.PasswordConfirmType = this.PasswordConfirmType === 'password' ? 'text' : 'password'; // PasswordTypeによってパスワードの表示・非表示を切り替え
                 this.PasswordConfirmIconClass = this.PasswordConfirmIconClass === 'far fa-eye-slash' ? 'far fa-eye' : 'far fa-eye-slash'; // PasswordIconClassによってパスワードのアイコンを切り替え
             }

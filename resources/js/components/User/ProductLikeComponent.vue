@@ -19,7 +19,7 @@
                                 <h3 class="c-card__name">{{ product.product.name }}</h3> <!-- 商品名 -->
                             </div>
                             <div class="p-card__container">
-                                <img class="c-card__picture" :src="getProductPicturePath(product)" alt="商品画像"> <!-- 商品画像 -->
+                                <img class="c-card__picture u-mb__s" :src="getProductPicturePath(product)" alt="商品画像"> <!-- 商品画像 -->
                                 <label v-show="product.is_purchased" class="c-label__purchase u-pd__m">購入済み</label> <!-- 購入済みラベル -->
                                 <!-- いいねアイコン -->
                                 <div class="p-icon u-pdr__s">
@@ -60,6 +60,13 @@ export default {
             currentPage: 1, // 現在ページ
             lastPage: 1, // 最後のページ
         };
+    },
+
+    computed: {
+        // ログインユーザーかどうか
+        isLogin() {
+            return this.$store.getters['auth/check'];
+        },
     },
 
     created() {
@@ -135,33 +142,25 @@ export default {
         },
 
         // 商品お気に入り登録
-        async productLike(product) {
-            try {
-                // お気に入り登録APIをPOST送信
-                await axios.post('/api/user/like/' + product.id);
-                console.log(product.id, 'の商品をお気に入り登録しました。');
+        productLike(product) {
+            // お気に入り登録APIをPOST送信
+            axios.post('/api/user/like/' + product.id).then(response => {
                 product.liked = true; // いいねアイコンをtrueに切り替え
-                console.log('this.likedは、', product.liked);
                 product.likes_count++; // いいね数のインクリメント
-                console.log('product.likes_countは、', product.likes_count);
-            } catch (error) {
+            }).catch(error => {
                 console.error('商品のお気に入り登録失敗:', error);
-            }
+            });
         },
 
         // 商品お気に入り解除
-        async productUnlike(product) {
-            try {
-                // お気に入り解除APIをPOST送信
-                await axios.post('/api/user/unlike/' + product.id);
-                console.log(product.id, 'の商品をお気に入り解除しました。');
+        productUnlike(product) {
+            // お気に入り解除APIをPOST送信
+            axios.post('/api/user/unlike/' + product.id).then(response => {
                 product.liked = false; // いいねアイコンをfalseに切り替え
-                console.log('product.likedは、', product.liked);
                 product.likes_count--; // いいね数のデクリメント
-                console.log('product.likes_count', product.likes_count);
-            } catch (error) {
+            }).catch(error => {
                 console.error('商品のお気に入り解除失敗:', error);
-            }
+            });
         },
     },
 }

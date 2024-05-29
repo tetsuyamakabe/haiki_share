@@ -15,7 +15,7 @@ class ChangeColumnAddressesTable extends Migration
     {
         // 住所テーブルのマイグレーション
         Schema::table('addresses', function (Blueprint $table) {
-            // 番地カラムを地名・番名カラムにカラム名変更
+            // 番地カラムを地名・番地カラムにカラム名変更
             $table->renameColumn('address', 'town');
         });
     }
@@ -29,7 +29,7 @@ class ChangeColumnAddressesTable extends Migration
     {
         // 住所テーブルのロールバック
         Schema::table('addresses', function (Blueprint $table) {
-            // 地名・番名カラムを番地カラムにカラム名を変更
+            // 地名・番地カラムを番地カラムにカラム名を変更
             $table->renameColumn('town', 'address');
         });
     }

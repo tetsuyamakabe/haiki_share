@@ -41,12 +41,6 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
-    // ユーザー情報の取得
-    public function getUser()
-    {
-        return Auth::user();
-    }
-
     // ログイン処理
     public function login(LoginRequest $request)
     {
@@ -90,6 +84,6 @@ class LoginController extends Controller
     public function logout(Request $request)
     {
         Auth::logout(); // ログアウト
-        return response()->json(['message' => 'ログアウトしました']);
+        return response()->json(['message' => 'ログアウトしました。']);
     }
 }

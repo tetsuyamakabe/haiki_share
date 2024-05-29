@@ -2,6 +2,7 @@
     border-radius: 3px;
     text-decoration: none;
     font-size: $font-size_default;
+    color: $font-color_default;
     background: $background-color_sub;
 
     @include mq(sm) {

@@ -125,8 +125,8 @@ class ProductController extends Controller
             if (!$convenience) { // コンビニ情報がない場合
                 return response()->json(['error' => 'コンビニが見つかりません'], 404);
             }
-            // 商品情報と関連付けられた商品画像の中からコンビニIDと一致する商品を20件取得
-            $products = Product::with('pictures')->where('convenience_store_id', $convenience->id)->paginate(20);
+            // 商品情報と関連付けられた商品画像の中からコンビニIDと一致する商品を最新の投稿（降順）の順番で20件取得
+            $products = Product::with('pictures')->where('convenience_store_id', $convenience->id)->orderBy('created_at', 'desc')->paginate(20);
             // 購入情報を取得し、各商品に購入状態is_purchasedプロパティを含める
             foreach ($products as $product) {
                 $purchase = Purchase::where('product_id', $product->id)->first(); // 各商品に対して商品IDから購入情報を検索

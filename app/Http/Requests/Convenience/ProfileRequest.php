@@ -32,7 +32,7 @@ class ProfileRequest extends FormRequest
             'prefecture' => 'required', 'string', 'max:255',
             // 市区町村のバリデーションルール（必須、string型、最大文字数255文字以下）
             'city' => 'required', 'string', 'max:255',
-            // 番地・地名のバリデーションルール（必須、string型、最大文字数255文字以下）
+            // 地名・番地のバリデーションルール（必須、string型、最大文字数255文字以下）
             'town' => 'required', 'string', 'max:255',
             // 建物名・部屋番号のバリデーションルール（NULL許容、string型、最大文字数255文字以下）
             'building' => 'nullable', 'string', 'max:255',

@@ -45,7 +45,7 @@ class ForgotPasswordController extends Controller
         }
         // roleがconvenienceの場合は422エラーを返す
         if ($user->role == 'convenience') {
-            return response()->json(['errors' => ['email' => ['このメールアドレスは利用者側のメールアドレスではありません。']]], 422);
+            return response()->json(['message' => ['email' => ['このメールアドレスは利用者側のメールアドレスではありません。']]], 422);
         }
         // パスワード変更メール送信実行
         $response = $this->broker()->sendResetLink(
@@ -56,7 +56,7 @@ class ForgotPasswordController extends Controller
             return response()->json(['message' => 'パスワードリセットリンクを送信しました。'], 200);
         } else {
             // パスワードリセットリンクの送信に失敗した場合
-            return response()->json(['errors' => ['email' => ['パスワードリセットリンクの送信に失敗しました。']]], 422);
+            return response()->json(['message' => ['email' => ['パスワードリセットリンクの送信に失敗しました。']]], 422);
         }
     }
 }

@@ -12,7 +12,7 @@
                 <!-- メールアドレス -->
                 <label for="email" class="c-label">メールアドレス<span class="c-required">必須</span></label>
                 <span v-if="errors && errors.email" class="c-error u-mt__s">{{ errors.email[0] }}</span>
-                <input v-model="formData.email" id="email" type="email" class="c-input u-pd__s u-mt__s u-mb__s" :class="{ 'is-invalid': errors && errors.email }" autocomplete="email">
+                <input v-model="formData.email" id="email" type="text" class="c-input u-pd__s u-mt__s u-mb__s" :class="{ 'is-invalid': errors && errors.email }" autocomplete="email">
 
                 <!-- パスワード -->
                 <label for="password" class="c-label">パスワード<span class="c-required">必須</span></label>

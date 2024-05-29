@@ -44,7 +44,7 @@
                 <!-- メールアドレス -->
                 <label for="email" class="c-label">メールアドレス<span class="c-required">必須</span></label>
                 <span v-if="errors && errors.email" class="c-error u-mt__s">{{ errors.email[0] }}</span>
-                <input v-model="formData.email" id="email" type="email" class="c-input u-pd__s u-mt__m u-mb__m" :class="{ 'is-invalid': errors && errors.email }" autocomplete="email">
+                <input v-model="formData.email" id="email" type="text" class="c-input u-pd__s u-mt__m u-mb__m" :class="{ 'is-invalid': errors && errors.email }" autocomplete="email">
 
                 <!-- パスワード -->
                 <label for="password" class="c-label">パスワード<span class="c-required">必須</span></label>
@@ -99,7 +99,7 @@ export default {
                 branch_name: '', // 支店名
                 prefecture: '', // 都道府県
                 city: '', // 市区町村
-                town: '', // 地名・番名
+                town: '', // 地名・番地
                 building: '', // 建物名・部屋番号
                 email: '', // メールアドレス
                 password: '', // パスワード
@@ -118,15 +118,16 @@ export default {
     methods: {
         // 郵便番号検索APIを使って、郵便番号から住所を自動入力するメソッド
         searchAddress() {
-            const zipCode = this.formData.postalcode; // 郵便番号フォームの入力値
+            const postalcode = this.formData.postalcode; // 郵便番号フォームの入力値
+            const zipCode = postalcode;
             // 郵便番号検索APIに郵便番号フォームの入力値を使ってGETリクエスト送信
             axios.get(`https://api.zipaddress.net/?zipcode=${zipCode}`, { adapter: jsonpAdapter }).then(rs => {
                 // APIから返されたレスポンスデータを各入力フォームにセット
-                const responseData = response.data;
-                this.formData.prefecture = responseData.pref; // 都道府県
-                this.formData.city = responseData.city; // 市区町村
-                this.formData.town = responseData.town; // 地名・番名
-                this.formData.building = responseData.building; // 建物名・部屋番号
+                const response = rs.data;
+                this.formData.prefecture = response.pref; // 都道府県
+                this.formData.city = response.city; // 市区町村
+                this.formData.town = response.town; // 地名・番地
+                this.formData.building = response.building; // 建物名・部屋番号
             }).catch(error => {
                 console.error('住所検索エラー:', error);
             });

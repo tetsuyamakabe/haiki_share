@@ -7,7 +7,7 @@
                 <!-- メールアドレス -->
                 <label for="email" class="c-label">メールアドレス<span class="c-required">必須</span></label>
                 <span v-if="errors && errors.email" class="c-error u-mt__s u-mb__s">{{ errors.email[0] }}</span>
-                <input v-model="formData.email" id="email" type="email" class="c-input u-pd__s u-mt__m u-mb__m" :class="{ 'is-invalid': errors && errors.email }" autocomplete="email">
+                <input v-model="formData.email" id="email" type="text" class="c-input u-pd__s u-mt__m u-mb__m" :class="{ 'is-invalid': errors && errors.email }" autocomplete="email">
 
                 <!-- メール送信ボタン -->
                 <button type="submit" class="c-button c-button__submit c-button__user u-pd__s u-mt__m">パスワード変更メールを送信する</button>
@@ -38,6 +38,7 @@ export default {
                 this.message = response.data.message;
                 console.log('this.messageは、', this.message);
             }).catch(error => {
+                console.log('errorは、', error);
                 console.log('メール送信失敗：', error.response.data);
                 this.errors = error.response.data.errors;
             });

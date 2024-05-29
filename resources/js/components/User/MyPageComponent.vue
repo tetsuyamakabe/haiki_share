@@ -23,7 +23,7 @@
                                             <h3 class="c-card__name">{{ product.product.name }}</h3> <!-- 商品名 -->
                                         </div>
                                         <div class="p-card__container">
-                                            <img class="c-card__picture" :src="getProductPicturePath(product)" alt="商品画像"> <!-- 商品画像 -->
+                                            <img class="c-card__picture u-mb__s" :src="getProductPicturePath(product)" alt="商品画像"> <!-- 商品画像 -->
                                             <p class="c-card__price">{{ product.product.price }}円</p> <!-- 価格 -->
                                             <p class="c-card__date">{{ formatDate(product.product.expiration_date) }}</p> <!-- 賞味期限日付 -->
                                         </div>
@@ -59,7 +59,7 @@
                                             <h3 class="c-card__name">{{ product.product.name }}</h3> <!-- 商品名 -->
                                         </div>
                                         <div class="p-card__container">
-                                            <img class="c-card__picture" :src="getProductPicturePath(product)" alt="商品画像"> <!-- 商品画像 -->
+                                            <img class="c-card__picture u-mb__s" :src="getProductPicturePath(product)" alt="商品画像"> <!-- 商品画像 -->
                                             <p class="c-card__price">{{ product.product.price }}円</p> <!-- 価格 -->
                                             <p class="c-card__date">{{ formatDate(product.product.expiration_date) }}</p> <!-- 賞味期限日付 -->
                                         </div>
@@ -101,8 +101,24 @@ export default {
         };
     },
 
+    computed: {
+        // ログインユーザーかどうか
+        isLogin() {
+            return this.$store.getters['auth/check'];
+        },
+
+        // ログインユーザーのIDを取得
+        loginId() {
+            if (this.isLogin) {
+                return this.$store.getters['auth/id'];
+            } else {
+                return null;
+            }
+        },
+    },
+
     created() {
-        this.getMyPageProducts(); // インスタンス初期化時に商品情報を読み込む
+        this.getMyPageProducts(); // インスタンス初期化時にマイページに表示する購入・お気に入り商品情報を読み込む
     },
 
     methods: {

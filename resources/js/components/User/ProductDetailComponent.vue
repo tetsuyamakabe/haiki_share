@@ -1,7 +1,7 @@
 <template>
     <main class="l-main">
         <h1 class="c-title u-mb__xl">商品詳細</h1>
-        <section class="l-main__wrapper u-m__s">
+        <section class="l-main__wrapper u-pd__l">
             <div class="l-container">
 
                 <h1 class="c-title">{{ product.name }}</h1> <!-- 商品名 -->
