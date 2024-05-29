@@ -25,7 +25,7 @@ Route::middleware(['cors'])->group(function () {
     Route::get('categories', 'Products\Convenience\ProductController@getCategories'); // 商品カテゴリー情報の取得
     Route::get('prefecture', 'Products\User\ProductController@getPrefecture'); // 出品しているコンビニがある都道府県の取得
 
-    Route::get('/user', fn() => Auth::user())->name('user'); // ユーザー情報の取得
+    Route::get('/user', 'Auth\User\LoginController@getUser'); // ユーザー情報の取得
 
     // 利用者側
     Route::post('/user/register', 'Auth\User\RegisterController@create'); // ユーザー登録処理
