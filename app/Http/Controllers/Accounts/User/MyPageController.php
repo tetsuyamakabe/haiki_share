@@ -53,8 +53,7 @@ class MyPageController extends Controller
                 $extension = $iconImage->getClientOriginalExtension(); // ファイルの拡張子を取得
                 $fileName = sha1($iconImage->getClientOriginalName()) . '.' . $extension; // SHA-1ハッシュでファイル名を決定
                 $path = Storage::disk('s3')->putFileAs('icons', $iconImage, $fileName, 'public'); // S3にファイルを保存
-                $user->icon = Storage::disk('s3')->url($path); // ファイルパスを保存
-                $user->icon = $fileName; // ファイルパスを保存
+                $user->icon = 'https://haikishare.com/' . $path; // ファイルURLを保存
             }
             $user->save();
             return response()->json(['message' => 'プロフィール編集に成功しました', 'user' => $user], 200);

@@ -5444,9 +5444,9 @@ __webpack_require__.r(__webpack_exports__);
     // 商品画像のパスを取得するメソッド
     getProductPicturePath: function getProductPicturePath(product) {
       if (product.pictures.length > 0) {
-        return '/storage/product_pictures/' + product.pictures[0].file; // 商品画像がある場合は、その画像パスを返す
+        return 'https://haikishare.com/product_pictures/' + product.pictures[0].file; // 商品画像がある場合は、その画像パスを返す
       } else {
-        return '/storage/product_pictures/no_image.png'; // 商品画像がない場合は、デフォルトの商品画像のパスを返す
+        return 'https://haikishare.com/product_pictures/no_image.png'; // 商品画像がない場合は、デフォルトの商品画像のパスを返す
       }
     },
     // 賞味期限日付をフォーマットするメソッド
@@ -5560,9 +5560,9 @@ __webpack_require__.r(__webpack_exports__);
     // 商品画像のパスを取得するメソッド
     getProductPicturePath: function getProductPicturePath(product) {
       if (product.pictures.length > 0) {
-        return '/storage/product_pictures/' + product.pictures[0].file; // 商品画像がある場合は、その画像パスを返す
+        return 'https://haikishare.com/product_pictures/' + product.pictures[0].file; // 商品画像がある場合は、その画像パスを返す
       } else {
-        return '/storage/product_pictures/no_image.png'; // 商品画像がない場合は、デフォルトの商品画像のパスを返す
+        return 'https://haikishare.com/product_pictures/no_image.png'; // 商品画像がない場合は、デフォルトの商品画像のパスを返す
       }
     },
     // 賞味期限日付をフォーマットするメソッド
@@ -5953,9 +5953,9 @@ __webpack_require__.r(__webpack_exports__);
     // 商品画像のパスを取得するメソッド
     getProductPicturePath: function getProductPicturePath(product) {
       if (product.pictures.length > 0) {
-        return '/storage/product_pictures/' + product.pictures[0].file; // 商品画像がある場合は、その画像パスを返す
+        return 'https://haikishare.com/product_pictures/' + product.pictures[0].file; // 商品画像がある場合は、その画像パスを返す
       } else {
-        return '/storage/product_pictures/no_image.png'; // 商品画像がない場合は、デフォルトの商品画像のパスを返す
+        return 'https://haikishare.com/product_pictures/no_image.png'; // 商品画像がない場合は、デフォルトの商品画像のパスを返す
       }
     },
     // 賞味期限日付をフォーマットするメソッド
@@ -6288,9 +6288,9 @@ __webpack_require__.r(__webpack_exports__);
     // 商品画像のパスを取得するメソッド
     getProductPicturePath: function getProductPicturePath(product) {
       if (product.pictures.length > 0) {
-        return '/storage/product_pictures/' + product.pictures[0].file; // 商品画像がある場合は、その画像パスを返す
+        return 'https://haikishare.com/product_pictures/' + product.pictures[0].file; // 商品画像がある場合は、その画像パスを返す
       } else {
-        return '/storage/product_pictures/no_image.png'; // 商品画像がない場合は、デフォルトの商品画像のパスを返す
+        return 'https://haikishare.com/product_pictures/no_image.png'; // 商品画像がない場合は、デフォルトの商品画像のパスを返す
       }
     },
     // 賞味期限日付をフォーマットするメソッド
@@ -7629,9 +7629,9 @@ __webpack_require__.r(__webpack_exports__);
     // 商品画像のパスを取得するメソッド
     getProductPicturePath: function getProductPicturePath(product) {
       if (product.pictures.length > 0) {
-        return '/storage/product_pictures/' + product.pictures[0].file; // 商品画像がある場合は、その画像パスを返す
+        return 'https://haikishare.com/product_pictures/' + product.pictures[0].file; // 商品画像がある場合は、その画像パスを返す
       } else {
-        return '/storage/product_pictures/no_image.png'; // 商品画像がない場合は、デフォルトの商品画像のパスを返す
+        return 'https://haikishare.com/product_pictures/no_image.png'; // 商品画像がない場合は、デフォルトの商品画像のパスを返す
       }
     },
     // 賞味期限日付をフォーマットするメソッド
@@ -8463,9 +8463,9 @@ __webpack_require__.r(__webpack_exports__);
     // 商品画像のパスを取得するメソッド
     getProductPicturePath: function getProductPicturePath(product) {
       if (product.pictures.length > 0) {
-        return '/storage/product_pictures/' + product.pictures[0].file; // 商品画像がある場合は、その画像パスを返す
+        return 'https://haikishare.com/product_pictures/' + product.pictures[0].file; // 商品画像がある場合は、その画像パスを返す
       } else {
-        return '/storage/product_pictures/no_image.png'; // 商品画像がない場合は、デフォルトの商品画像のパスを返す
+        return 'https://haikishare.com/product_pictures/no_image.png'; // 商品画像がない場合は、デフォルトの商品画像のパスを返す
       }
     },
     // 賞味期限日付をフォーマットするメソッド
@@ -8612,9 +8612,9 @@ __webpack_require__.r(__webpack_exports__);
     // 商品画像のパスを取得するメソッド
     getProductPicturePath: function getProductPicturePath(product) {
       if (product.pictures.length > 0) {
-        return '/storage/product_pictures/' + product.pictures[0].file; // 商品画像がある場合は、その画像パスを返す
+        return 'https://haikishare.com/product_pictures/' + product.pictures[0].file; // 商品画像がある場合は、その画像パスを返す
       } else {
-        return '/storage/product_pictures/no_image.png'; // 商品画像がない場合は、デフォルトの商品画像のパスを返す
+        return 'https://haikishare.com/product_pictures/no_image.png'; // 商品画像がない場合は、デフォルトの商品画像のパスを返す
       }
     },
     // 賞味期限日付をフォーマットするメソッド
@@ -8817,9 +8817,9 @@ __webpack_require__.r(__webpack_exports__);
     // 商品画像のパスを取得するメソッド
     getProductPicturePath: function getProductPicturePath(product) {
       if (product.product.pictures.length > 0) {
-        return '/storage/product_pictures/' + product.product.pictures[0].file; // 商品画像がある場合は、その画像パスを返す
+        return 'https://haikishare.com/product_pictures/' + product.product.pictures[0].file; // 商品画像がある場合は、その画像パスを返す
       } else {
-        return '/storage/product_pictures/no_image.png'; // 商品画像がない場合は、デフォルトの商品画像のパスを返す
+        return 'https://haikishare.com/product_pictures/no_image.png'; // 商品画像がない場合は、デフォルトの商品画像のパスを返す
       }
     },
     // 賞味期限日付をフォーマットするメソッド
@@ -8994,9 +8994,9 @@ __webpack_require__.r(__webpack_exports__);
     // 商品画像のパスを取得するメソッド
     getProductPicturePath: function getProductPicturePath(product) {
       if (product.product.pictures.length > 0) {
-        return '/storage/product_pictures/' + product.product.pictures[0].file; // 商品画像がある場合は、その画像パスを返す
+        return 'https://haikishare.com/product_pictures/' + product.product.pictures[0].file; // 商品画像がある場合は、その画像パスを返す
       } else {
-        return '/storage/product_pictures/no_image.png'; // 商品画像がない場合は、デフォルトの商品画像のパスを返す
+        return 'https://haikishare.com/product_pictures/no_image.png'; // 商品画像がない場合は、デフォルトの商品画像のパスを返す
       }
     },
     // 賞味期限日付をフォーマットするメソッド
@@ -46343,7 +46343,7 @@ var render = function () {
                     staticClass: "c-product__picture",
                     attrs: {
                       src:
-                        "/storage/product_pictures/" +
+                        "https://haikishare.com/product_pictures/" +
                         _vm.formData.product_picture,
                       alt: "アップロード商品画像",
                     },
@@ -46359,7 +46359,7 @@ var render = function () {
                 : _c("img", {
                     staticClass: "c-product__picture",
                     attrs: {
-                      src: "/storage/product_pictures/no_image.png",
+                      src: "https://haikishare.com/product_pictures/no_image.png",
                       alt: "NO_IMAGE",
                     },
                   }),
@@ -46840,7 +46840,7 @@ var render = function () {
                     staticClass: "c-product__picture",
                     attrs: {
                       src:
-                        "/storage/product_pictures/" +
+                        "https://haikishare.com/product_pictures/" +
                         _vm.formData.product_picture,
                       alt: "アップロード商品画像",
                     },
@@ -46856,7 +46856,7 @@ var render = function () {
                 : _c("img", {
                     staticClass: "c-product__picture",
                     attrs: {
-                      src: "/storage/product_pictures/no_image.png",
+                      src: "https://haikishare.com/product_pictures/no_image.png",
                       alt: "NO_IMAGE",
                     },
                   }),
@@ -47750,7 +47750,7 @@ var render = function () {
                 ? _c("img", {
                     staticClass: "p-profile__icon",
                     attrs: {
-                      src: "/storage/icons/" + _vm.formData.icon,
+                      src: "https://haikishare.com/icon/" + _vm.formData.icon,
                       alt: "アップロード顔写真",
                     },
                   })
@@ -47761,7 +47761,10 @@ var render = function () {
                   })
                 : _c("img", {
                     staticClass: "p-profile__icon",
-                    attrs: { src: "/default.png", alt: "デフォルト顔写真" },
+                    attrs: {
+                      src: "https://haikishare.com/icon/default.png",
+                      alt: "デフォルト顔写真",
+                    },
                   }),
             ]
           ),
@@ -52853,7 +52856,7 @@ var render = function () {
                 ? _c("img", {
                     staticClass: "p-profile__icon",
                     attrs: {
-                      src: "/storage/icons/" + _vm.formData.icon,
+                      src: "https://haikishare.com/icon/" + _vm.formData.icon,
                       alt: "アップロード顔写真",
                     },
                   })
@@ -52864,7 +52867,10 @@ var render = function () {
                   })
                 : _c("img", {
                     staticClass: "p-profile__icon",
-                    attrs: { src: "/default.png", alt: "デフォルト顔写真" },
+                    attrs: {
+                      src: "https://haikishare.com/icon/default.png",
+                      alt: "デフォルト顔写真",
+                    },
                   }),
             ]
           ),
@@ -72433,9 +72439,8 @@ var actions = {
             response = _context.sent;
             // API経由で現在ユーザー情報を取得
             user = response.data || null; // APIからのレスポンスデータをuserに入れる
-            console.log('currentUserのuserは、', user);
             context.commit('setUser', user); // 取得したユーザー情報をsetUserミューテーションでストアにコミット
-          case 6:
+          case 5:
           case "end":
             return _context.stop();
         }

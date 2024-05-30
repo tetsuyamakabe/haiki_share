@@ -75,9 +75,9 @@
                 <span v-if="errors && errors.icon" class="c-error u-mt__s">{{ errors.icon[0] }}</span>
                 <div class="p-profile__icon p-profile__icon--container u-pd__s" @drop="handleDrop" :class="{ 'is-invalid': errors && errors.icon }">
                     <input type="file" id="profile-icon" @change="handleFileChange" class="c-input__hidden">
-                    <img v-if="!iconPreview && formData.icon" :src="'/storage/icons/' + formData.icon" alt="アップロード顔写真" class="p-profile__icon">
+                    <img v-if="!iconPreview && formData.icon" :src="'https://haikishare.com/icon/' + formData.icon" alt="アップロード顔写真" class="p-profile__icon">
                     <img v-else-if="iconPreview" :src="iconPreview" alt="アップロード顔写真" class="p-profile__icon">
-                    <img v-else src="/default.png" alt="デフォルト顔写真" class="p-profile__icon">
+                    <img v-else :src="'https://haikishare.com/icon/default.png'" alt="デフォルト顔写真" class="p-profile__icon">
                 </div>
 
                 <!-- 更新ボタン -->

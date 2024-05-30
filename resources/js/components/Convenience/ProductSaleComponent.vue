@@ -35,9 +35,9 @@
                 <span v-if="errors && errors.product_picture" class="c-error u-mt__s">{{ errors.product_picture[0] }}</span>
                 <div class="p-product__picture p-product__picture--container u-pd__s u-pd__s u-mt__m u-mb__m" @drop="handleDrop" :class="{ 'is-invalid': errors && errors.product_picture }">
                     <input type="file" id="product_picture" @change="handleFileChange" class="c-input__hidden">
-                    <img v-if="!picturePreview && formData.product_picture !== ''" :src="'/storage/product_pictures/' + formData.product_picture" alt="アップロード商品画像" class="c-product__picture">
+                    <img v-if="!picturePreview && formData.product_picture !== ''" :src="'https://haikishare.com/product_pictures/' + formData.product_picture" alt="アップロード商品画像" class="c-product__picture">
                     <img v-else-if="picturePreview" :src="picturePreview" alt="アップロード商品画像" class="c-product__picture">
-                    <img v-else src="/storage/product_pictures/no_image.png" alt="NO_IMAGE" class="c-product__picture">
+                    <img v-else src="https://haikishare.com/product_pictures/no_image.png" alt="NO_IMAGE" class="c-product__picture">
                 </div>
 
                 <!-- 商品更新ボタン -->
