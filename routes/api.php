@@ -26,8 +26,8 @@ Route::middleware(['cors'])->group(function () {
     Route::get('prefecture', 'Products\User\ProductController@getPrefecture'); // 出品しているコンビニがある都道府県の取得
     Route::post('contact', 'Accounts\User\MyPageController@contact'); // お問い合わせ処理
 
-    // Route::get('/user', 'Auth\User\LoginController@getUser'); // ユーザー情報の取得
-    Route::get('/user', fn() => Auth::user())->name('user');
+    Route::get('/user', 'Auth\User\LoginController@getUser'); // ユーザー情報の取得
+    // Route::get('/user', fn() => Auth::user())->name('user');
 
     // 利用者側
     Route::post('/user/register', 'Auth\User\RegisterController@create'); // ユーザー登録処理
