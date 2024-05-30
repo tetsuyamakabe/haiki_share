@@ -121,9 +121,9 @@ export default {
         // 商品画像のパスを取得するメソッド
         getProductPicturePath(product) {
             if (product.product.pictures.length > 0) {
-                return '/storage/product_pictures/' + product.product.pictures[0].file; // 商品画像がある場合は、その画像パスを返す
+                return 'https://haikishare.com/product_pictures/' + product.product.pictures[0].file; // 商品画像がある場合は、その画像パスを返す
             } else {
-                return '/storage/product_pictures/no_image.png'; // 商品画像がない場合は、デフォルトの商品画像のパスを返す
+                return 'https://haikishare.com/product_pictures/no_image.png'; // 商品画像がない場合は、デフォルトの商品画像のパスを返す
             }
         },
 
