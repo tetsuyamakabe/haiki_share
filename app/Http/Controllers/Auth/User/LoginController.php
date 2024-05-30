@@ -42,10 +42,12 @@ class LoginController extends Controller
     }
 
     // ユーザー情報の取得
-    public function getUser()
-    {
-        return response()->json(Auth::user());
-    }
+    // public function getUser(Request $request)
+    // {
+    //     \Log::info('getUserメソッドです。');
+    //     $user = $request->user();
+    //     return Auth::user();
+    // }
 
     // ログイン処理
     public function login(LoginRequest $request)

@@ -5084,8 +5084,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -5098,9 +5096,7 @@ __webpack_require__.r(__webpack_exports__);
         // メールアドレス
         contact: '' // お問い合わせ内容
       },
-      errors: null,
-      // エラーメッセージ
-      flashMessage: '' // フラッシュメッセージ
+      errors: null // エラーメッセージ
     };
   },
   methods: {
@@ -5109,11 +5105,10 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
       // お問い合わせ送信APIをPOST送信
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/contact', this.formData).then(function (response) {
-        _this.flashMessage = response.data.message;
+        console.log('お問い合わせ内容を送信します。');
       })["catch"](function (error) {
-        _this.flashMessage = response.data.message;
-        console.log('errorは、', error);
-        console.error('ユーザー登録失敗:', error.response.data);
+        _this.flashMessage = error.response.data.message;
+        console.error('お問い合わせ送信失敗:', error.response.data);
         _this.errors = error.response.data.errors;
       });
     }
@@ -45155,15 +45150,7 @@ var render = function () {
           },
         },
         [
-          _vm.flashMessage
-            ? _c("div", { staticClass: "c-flash" }, [
-                _vm._v(_vm._s(_vm.flashMessage)),
-              ])
-            : _vm._e(),
-          _vm._v(" "),
-          _c("label", { staticClass: "c-label", attrs: { for: "name" } }, [
-            _vm._v("お名前"),
-          ]),
+          _vm._m(0),
           _vm._v(" "),
           _vm.errors && _vm.errors.name
             ? _c("span", { staticClass: "c-error u-mt__s" }, [
@@ -45194,9 +45181,7 @@ var render = function () {
             },
           }),
           _vm._v(" "),
-          _c("label", { staticClass: "c-label", attrs: { for: "email" } }, [
-            _vm._v("メールアドレス"),
-          ]),
+          _vm._m(1),
           _vm._v(" "),
           _vm.errors && _vm.errors.email
             ? _c("span", { staticClass: "c-error u-mt__s" }, [
@@ -45215,7 +45200,7 @@ var render = function () {
             ],
             staticClass: "c-input u-pd__s u-mt__m u-mb__m",
             class: { "is-invalid": _vm.errors && _vm.errors.email },
-            attrs: { id: "email", type: "email", autocomplete: "email" },
+            attrs: { id: "email", type: "text", autocomplete: "email" },
             domProps: { value: _vm.formData.email },
             on: {
               input: function ($event) {
@@ -45227,9 +45212,7 @@ var render = function () {
             },
           }),
           _vm._v(" "),
-          _c("label", { staticClass: "c-label", attrs: { for: "contact" } }, [
-            _vm._v("お問い合わせ内容"),
-          ]),
+          _vm._m(2),
           _vm._v(" "),
           _vm.errors && _vm.errors.contact
             ? _c("span", { staticClass: "c-error u-mt__s" }, [
@@ -45267,7 +45250,7 @@ var render = function () {
                 "c-button c-button__submit c-button__user u-pd__s u-mt__m",
               attrs: { type: "submit" },
             },
-            [_vm._v("送信する")]
+            [_vm._v("お問い合わせ内容を送信する")]
           ),
         ]
       ),
@@ -45287,7 +45270,35 @@ var render = function () {
     ),
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { staticClass: "c-label", attrs: { for: "name" } }, [
+      _vm._v("お名前"),
+      _c("span", { staticClass: "c-required" }, [_vm._v("必須")]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { staticClass: "c-label", attrs: { for: "email" } }, [
+      _vm._v("メールアドレス"),
+      _c("span", { staticClass: "c-required" }, [_vm._v("必須")]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { staticClass: "c-label", attrs: { for: "contact" } }, [
+      _vm._v("お問い合わせ内容"),
+      _c("span", { staticClass: "c-required" }, [_vm._v("必須")]),
+    ])
+  },
+]
 render._withStripped = true
 
 
@@ -72390,7 +72401,7 @@ var getters = {
   },
   // ユーザー名
   icon: function icon(state) {
-    return state.user ? "/storage/icons/".concat(state.user.icon) : '';
+    return state.user ? "https://haikishare.com/icon/".concat(state.user.icon) : 'https://haikishare.com/icon/default.png';
   },
   // 顔写真
   role: function role(state) {
@@ -72422,8 +72433,9 @@ var actions = {
             response = _context.sent;
             // API経由で現在ユーザー情報を取得
             user = response.data || null; // APIからのレスポンスデータをuserに入れる
+            console.log('currentUserのuserは、', user);
             context.commit('setUser', user); // 取得したユーザー情報をsetUserミューテーションでストアにコミット
-          case 5:
+          case 6:
           case "end":
             return _context.stop();
         }

@@ -5,7 +5,7 @@ const state = {
 const getters = {
     check: state => !! state.user, // 認証チェック
     username: state => state.user ? state.user.name : '', // ユーザー名
-    icon: state => state.user ? `https://d3qbx7p4myebk9.cloudfront.net/icon/${state.user.icon}` : 'https://d3qbx7p4myebk9.cloudfront.net/icon/default.png', // 顔写真
+    icon: state => state.user ? `https://haikishare.com/icon/${state.user.icon}` : 'https://haikishare.com/icon/default.png', // 顔写真
     role: state => state.user ? state.user.role : '', // role
     id: state => state.user ? state.user.id : '', // ユーザーID
 }
