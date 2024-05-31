@@ -11,7 +11,7 @@
     &__wrapper {
         padding: $space_l 0;
         border: 0.5px solid $boader-color_default;
-        min-width: 80%;
+        min-width: 75%;
 
         @include mq(sm){
             margin: $space_s;

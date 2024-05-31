@@ -8420,6 +8420,20 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -8441,6 +8455,14 @@ __webpack_require__.r(__webpack_exports__);
       } else {
         return null;
       }
+    },
+    // アイコンを表示する
+    icon: function icon() {
+      return this.$store.getters['auth/icon'];
+    },
+    // ユーザーの名前を表示する
+    username: function username() {
+      return this.$store.getters['auth/username'];
     }
   },
   created: function created() {
@@ -8452,9 +8474,11 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
       // 利用者マイページに表示する出品・購入商品情報の取得APIをGET送信
       axios.get('/api/user/mypage/products').then(function (response) {
+        console.log('APIのレスポンスは、', response.data);
         // コンビニマイページに表示する出品・購入商品情報の取得APIをGET送信
         _this.purchasedProducts = response.data.purchased_products; // 購入した商品情報
         _this.likedProducts = response.data.liked_products; // お気に入り登録商品情報
+        console.log('likedProductsは、', _this.likedProducts);
       })["catch"](function (error) {
         console.error('商品情報取得失敗:', error.response.data);
         _this.errors = error.response.data;
@@ -8462,10 +8486,14 @@ __webpack_require__.r(__webpack_exports__);
     },
     // 商品画像のパスを取得するメソッド
     getProductPicturePath: function getProductPicturePath(product) {
+      console.log('productは、', product);
+      console.log('product.picturesは、', product.pictures);
       if (product.pictures.length > 0) {
-        return 'https://haikishare.com/product_pictures/' + product.pictures[0].file; // 商品画像がある場合は、その画像パスを返す
+        return '/storage/product_pictures/' + product.pictures[0].file;
+        // return 'https://haikishare.com/product_pictures/' + product.pictures[0].file; // 商品画像がある場合は、その画像パスを返す
       } else {
-        return 'https://haikishare.com/product_pictures/no_image.png'; // 商品画像がない場合は、デフォルトの商品画像のパスを返す
+        return '/storage/product_pictures/no_image.png';
+        // return 'https://haikishare.com/product_pictures/no_image.png'; // 商品画像がない場合は、デフォルトの商品画像のパスを返す
       }
     },
     // 賞味期限日付をフォーマットするメソッド
@@ -8611,6 +8639,8 @@ __webpack_require__.r(__webpack_exports__);
     },
     // 商品画像のパスを取得するメソッド
     getProductPicturePath: function getProductPicturePath(product) {
+      console.log('productは、', product);
+      console.log('product.picturesは、', product.pictures);
       if (product.pictures.length > 0) {
         return 'https://haikishare.com/product_pictures/' + product.pictures[0].file; // 商品画像がある場合は、その画像パスを返す
       } else {
@@ -51698,7 +51728,7 @@ var render = function () {
                             _c("div", { staticClass: "p-card__footer" }, [
                               _c(
                                 "div",
-                                { staticClass: "p-product__button" },
+                                { staticClass: "c-button__container" },
                                 [
                                   _c(
                                     "router-link",
@@ -51860,13 +51890,52 @@ var render = function () {
           "div",
           { staticClass: "p-mypage__sidebar" },
           [
+            _c("div", { staticClass: "p-mypage__user-info u-pd__s" }, [
+              _c(
+                "h2",
+                { staticClass: "c-title c-title__sub u-mt__m u-mb__m" },
+                [_vm._v("プロフィール情報")]
+              ),
+              _vm._v(" "),
+              _c("div", { staticClass: "p-mypage__profile u-pd__s" }, [
+                _c("div", { staticClass: "p-mypage__icon--container" }, [
+                  _c("img", {
+                    staticClass: "p-mypage__icon",
+                    attrs: { src: _vm.icon, alt: "アイコン画像" },
+                  }),
+                ]),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "p-mypage__username u-mt__s u-mb__s" },
+                  [_c("p", [_vm._v(_vm._s(_vm.username))])]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "c-button__container" },
+                  [
+                    _c(
+                      "router-link",
+                      {
+                        staticClass: "c-button c-button__user u-pd__s u-m__s",
+                        attrs: { to: { name: "user.profile" } },
+                      },
+                      [_vm._v("プロフィール編集")]
+                    ),
+                  ],
+                  1
+                ),
+              ]),
+            ]),
+            _vm._v(" "),
             _c(
               "router-link",
               {
                 staticClass: "c-link u-mt__xl u-mb__xl",
-                attrs: { to: { name: "user.profile" } },
+                attrs: { to: { name: "products" } },
               },
-              [_vm._v("プロフィール編集")]
+              [_vm._v("商品一覧")]
             ),
             _vm._v(" "),
             _c(
@@ -51876,15 +51945,6 @@ var render = function () {
                 attrs: { to: { name: "user.withdraw" } },
               },
               [_vm._v("退会")]
-            ),
-            _vm._v(" "),
-            _c(
-              "router-link",
-              {
-                staticClass: "c-link u-mt__xl u-mb__xl",
-                attrs: { to: { name: "products" } },
-              },
-              [_vm._v("商品一覧")]
             ),
           ],
           1

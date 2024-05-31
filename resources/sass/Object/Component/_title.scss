@@ -17,7 +17,6 @@
     }
 
     &__sub {
-        text-align: left;
         font-size: $font-size_l;
 
         @include mq(sm) {

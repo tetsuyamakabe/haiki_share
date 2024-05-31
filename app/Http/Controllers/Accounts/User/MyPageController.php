@@ -102,7 +102,7 @@ class MyPageController extends Controller
             $likedProducts = $user->likes()->with('product.pictures')
                 ->orderBy('created_at', 'desc') // 最新の登録履歴（降順）
                 ->limit(5)->get();
-            // \Log::info('$likedProducts', [$likedProducts]);
+            \Log::info('$likedProducts', [$likedProducts]);
             return response()->json(['purchased_products' => $purchasedProducts, 'liked_products' => $likedProducts]);
         // } catch (\Exception $e) {
         //     \Log::error('例外エラー: ' . $e->getMessage());
