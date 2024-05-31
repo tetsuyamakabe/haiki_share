@@ -2,6 +2,7 @@
 
     &__list {
         width: 100%;
+        min-height: 200px;
         display: flex;
         flex-wrap: wrap;
         justify-content: flex-start;
@@ -37,10 +38,5 @@
             border: 1px solid $boader-color_default;
             margin: auto;
         }
-    }
-
-    &__button {
-        display: flex;
-        flex-direction: column;
     }
 }

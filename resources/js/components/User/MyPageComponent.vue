@@ -28,7 +28,7 @@
                                             <p class="c-card__date">{{ formatDate(product.product.expiration_date) }}</p> <!-- 賞味期限日付 -->
                                         </div>
                                         <div class="p-card__footer">
-                                            <div class="p-product__button">
+                                            <div class="c-button__container">
                                                 <router-link :to="getProductDetailLink(product.product.id)" class="c-button c-button__user c-button__detail u-pd__s u-m__s">詳細を見る</router-link>
                                                 <button class="c-button c-button__user c-button__cancel u-pd__s u-m__s" @click="cancelPurchase(product.product.id)">購入をキャンセルする</button>
                                             </div>
@@ -81,9 +81,23 @@
             <!-- サイドバー -->
             <section class="l-sidebar">
                 <div class="p-mypage__sidebar">
-                    <router-link class="c-link u-mt__xl u-mb__xl" :to="{ name: 'user.profile' }">プロフィール編集</router-link>
-                    <router-link class="c-link u-mt__xl u-mb__xl" :to="{ name: 'user.withdraw' }">退会</router-link>
+                    <!-- ユーザー情報の表示 -->
+                    <div class="p-mypage__user-info u-pd__s">
+                        <h2 class="c-title c-title__sub u-mt__m u-mb__m">プロフィール情報</h2>
+                        <div class="p-mypage__profile u-pd__s">
+                            <div class="p-mypage__icon--container">
+                                <img :src="icon" alt="アイコン画像" class="p-mypage__icon">
+                            </div>
+                            <div class="p-mypage__username u-mt__s u-mb__s">
+                                <p>{{ username }}</p>
+                            </div>
+                            <div class="c-button__container">
+                                <router-link class="c-button c-button__user u-pd__s u-m__s" :to="{ name: 'user.profile' }">プロフィール編集</router-link>
+                            </div>
+                        </div>
+                    </div>
                     <router-link class="c-link u-mt__xl u-mb__xl" :to="{ name: 'products' }">商品一覧</router-link>
+                    <router-link class="c-link u-mt__xl u-mb__xl" :to="{ name: 'user.withdraw' }">退会</router-link>
                 </div>
             </section>
 
@@ -115,6 +129,16 @@ export default {
                 return null;
             }
         },
+
+        // アイコンを表示する
+        icon() {
+            return this.$store.getters['auth/icon'];
+        },
+
+        // ユーザーの名前を表示する
+        username() {
+            return this.$store.getters['auth/username'];
+        },
     },
 
     created() {
@@ -126,9 +150,11 @@ export default {
         getMyPageProducts() {
             // 利用者マイページに表示する出品・購入商品情報の取得APIをGET送信
             axios.get('/api/user/mypage/products').then(response => {
+                console.log('APIのレスポンスは、', response.data);
                 // コンビニマイページに表示する出品・購入商品情報の取得APIをGET送信
                 this.purchasedProducts = response.data.purchased_products; // 購入した商品情報
                 this.likedProducts = response.data.liked_products; // お気に入り登録商品情報
+                console.log('likedProductsは、', this.likedProducts);
             }).catch(error => {
                 console.error('商品情報取得失敗:', error.response.data);
                 this.errors = error.response.data;
@@ -137,10 +163,14 @@ export default {
 
         // 商品画像のパスを取得するメソッド
         getProductPicturePath(product) {
+            console.log('productは、', product);
+            console.log('product.picturesは、', product.pictures);
             if (product.pictures.length > 0) {
-                return 'https://haikishare.com/product_pictures/' + product.pictures[0].file; // 商品画像がある場合は、その画像パスを返す
+                return '/storage/product_pictures/' + product.pictures[0].file;
+                // return 'https://haikishare.com/product_pictures/' + product.pictures[0].file; // 商品画像がある場合は、その画像パスを返す
             } else {
-                return 'https://haikishare.com/product_pictures/no_image.png'; // 商品画像がない場合は、デフォルトの商品画像のパスを返す
+                return '/storage/product_pictures/no_image.png';
+                // return 'https://haikishare.com/product_pictures/no_image.png'; // 商品画像がない場合は、デフォルトの商品画像のパスを返す
             }
         },
 
