@@ -1,6 +1,6 @@
 .c-card {
     height: 100%;
-    border: 1px solid $boader-color_default;
+    border: 1px solid $boader-color_line;
     max-width: 200px;
     font-size: $font-size_default;
 
@@ -26,9 +26,7 @@
         font-weight: bold;
     }
 
-    &__price,
-    &__category,
-    &__date {
+    &__text {
         text-align: center;
     }
 }

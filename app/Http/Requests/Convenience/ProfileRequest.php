@@ -36,8 +36,8 @@ class ProfileRequest extends FormRequest
             'town' => 'required', 'string', 'max:255',
             // 建物名・部屋番号のバリデーションルール（NULL許容、string型、最大文字数255文字以下）
             'building' => 'nullable', 'string', 'max:255',
-            // パスワードのバリデーションルール（NULL許容、string型、最小文字数8文字以上、パスワード再入力と同じ値か）
-            'password' => 'nullable|string|min:8|confirmed',
+            // パスワードのバリデーションルール（NULL許容、string型、最小文字数8文字以上、パスワード再入力と同じ値か、半角数字・英字大文字・小文字・記号を許可）
+            'password' => 'nullable|string|min:8|confirmed|regex:/^[a-zA-Z0-9!@#$%^&*]+$/',
             // 自己紹介文のバリデーションルール（NULL許容、string型、最大文字数50文字）
             'introduction' => 'nullable|string|max:50',
         ];

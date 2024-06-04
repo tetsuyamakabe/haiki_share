@@ -1,7 +1,7 @@
 <template>
     <main class="l-main">
         <section class="l-main__wrapper">
-            <h1 class="c-title u-mb__xl">コンビニパスワード変更メール送信</h1>
+            <h1 class="c-title u-mt__xl u-mb__xl">コンビニパスワード変更メール送信</h1>
             <form @submit.prevent="sendResetLink" class="c-form">
 
                 <!-- メールアドレス -->
@@ -10,7 +10,7 @@
                 <input v-model="formData.email" id="email" type="text" class="c-input u-pd__s u-mt__m u-mb__m" :class="{ 'is-invalid': errors && errors.email }" autocomplete="email">
 
                 <!-- メール送信ボタン -->
-                <button type="submit" class="c-button c-button__submit c-button__convenience u-pd__s u-mt__m">パスワード変更メールを送信する</button>
+                <button type="submit" class="c-button c-button__submit c-button__main u-pd__s u-mt__m">パスワード変更メールを送信する</button>
 
             </form>
         </section>

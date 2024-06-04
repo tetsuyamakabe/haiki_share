@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\Convenience\ProfileRequest;
 
 class MyPageController extends Controller
@@ -30,6 +31,7 @@ class MyPageController extends Controller
     // プロフィール編集・更新処理
     public function editProfile(ProfileRequest $request)
     {
+        \Log::info($request->all());
         try {
             // 認証済みユーザー情報の取得
             $user = Auth::user();
@@ -49,10 +51,14 @@ class MyPageController extends Controller
             // ファイルがアップロードされているか確認
             if ($request->hasFile('icon')) {
                 $iconImage = $request->file('icon'); // 顔写真
-                $extension = $iconImage->getClientOriginalExtension(); // ファイルの拡張子を取得
-                $fileName = sha1($iconImage->getClientOriginalName()) . '.' . $extension; // SHA-1ハッシュでファイル名を決定
-                $iconImagePath = $iconImage->storeAs('public/icons', $fileName); // ファイルを保存
-                $user->icon = $fileName; // ファイルパスを保存
+                // $extension = $iconImage->getClientOriginalExtension(); // ファイルの拡張子を取得
+                // $fileName = sha1($iconImage->getClientOriginalName()) . '.' . $extension; // SHA-1ハッシュでファイル名を決定
+                $dir = 'icon'; // アップロード先S3フォルダ名
+                $s3Upload = Storage::disk('s3')->putFile('/'.$dir, $iconImage); // S3にファイルを保存
+                $s3Url = Storage::disk('s3')->url($s3Upload); // アップロードファイルURLを取得
+                $s3UploadFileName = explode("/", $s3Url)[5]; // $s3UrlからS3でのファイル保存名取得
+                $s3Path = $dir.'/'.$s3UploadFileName; // アップロード先パスを取得
+                $user->icon = 'https://haikishare.com/' . $s3Path; // ファイルURLを保存
             }
             $user->save();
             // コンビニ情報を取得
@@ -103,33 +109,33 @@ class MyPageController extends Controller
     // マイページに表示する出品・購入商品情報の取得
     public function getMyProducts(Request $request)
     {
-        // try {
-            // 認証済みユーザー情報の取得
-            $user = Auth::user();
-            // 未認証の場合
-            if (!$user) {
-                return response()->json(['message' => 'Unauthenticated.'], 401);
-            }
-            // 関連づけられたコンビニ情報を取得
-            $convenience = $user->convenience;
-            // マイページに出品した商品を最大5件表示
-            $saleProducts =  Product::with('pictures')->where('convenience_store_id', $convenience->id)
-                ->orderBy('created_at', 'desc') // 最新の投稿（降順）
-                ->limit(5)->get();
-            // \Log::info('$saleProductsは、', [$saleProducts]);
+        // 認証済みユーザー情報の取得
+        $user = Auth::user();
+        // 未認証の場合
+        if (!$user) {
+            return response()->json(['message' => 'Unauthenticated.'], 401);
+        }
+        // 関連づけられたコンビニ情報を取得
+        $convenience = $user->convenience;
 
-            // マイページに購入された商品を最大5件表示
-            $purchasedProducts = Product::with('pictures')
-                ->where('convenience_store_id', $convenience->id)
-                ->whereHas('purchases', function ($query) {
-                    $query->where('is_purchased', true);
-                })->orderBy('created_at', 'desc') // 最新の購入履歴（降順）
-                ->limit(5)->get();
-            // \Log::info('$purchasedProductsは、', [$purchasedProducts]);
-            return response()->json(['sale_products' => $saleProducts, 'purchased_products' => $purchasedProducts], 200);
-        // } catch (\Exception $e) {
-        //     \Log::error('例外エラー: ' . $e->getMessage());
-        //     return response()->json(['message' => '商品取得に失敗しました'], 500);
-        // }
+        // 出品した商品を最大5件表示（論理削除された商品も含む）
+        $saleProducts = Product::with('pictures')
+            ->where('convenience_store_id', $convenience->id)
+            ->whereNull('deleted_at') // 論理削除された商品を除外する
+            ->orderBy('created_at', 'desc') // 最新の投稿（降順）
+            ->limit(5)->get();
+        
+        // 購入された商品を最大5件表示（論理削除された商品も含む）
+        $purchasedProducts = Product::with('pictures')
+            ->where('convenience_store_id', $convenience->id)
+            ->whereHas('purchases', function ($query) {
+                $query->where('is_purchased', true);
+            })
+            ->whereNull('deleted_at') // 論理削除された商品を除外する
+            ->orderBy('created_at', 'desc') // 最新の購入履歴（降順）
+            ->limit(5)->get();
+
+        return response()->json(['sale_products' => $saleProducts, 'purchased_products' => $purchasedProducts], 200);
     }
+
 }

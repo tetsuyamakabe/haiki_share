@@ -28,8 +28,8 @@ class RegisterRequest extends FormRequest
             'convenience_name' => ['required', 'string', 'max:255'],
             // メールアドレスのバリデーションルール（必須、string型、メール形式、最大文字数255文字以下、ユニーク制約）
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            // パスワードのバリデーションルール（必須、string型、最小文字数8文字以上、パスワード再入力と同じ値か）
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            // パスワードのバリデーションルール（必須、string型、最小文字数8文字以上、パスワード再入力と同じ値か、半角数字・英字大文字・小文字・記号を許可）
+            'password' => ['required', 'string', 'min:8', 'confirmed', 'regex:/^[a-zA-Z0-9!@#$%^&*]+$/'],
             // 支店名のバリデーションルール（必須、string型、最大文字数255文字以下）
             'branch_name' => ['required', 'string', 'max:255'],
             // 住所（都道府県）のバリデーションルール（必須、string型、最大文字数255文字以下）

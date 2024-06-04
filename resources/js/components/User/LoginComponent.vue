@@ -1,18 +1,19 @@
 <template>
     <main class="l-main">
         <section class="l-main__wrapper">
-            <h1 class="c-title u-mb__xl">利用者ログイン</h1>
+            <h1 class="c-title u-mt__xl u-mb__xl">利用者ログイン</h1>
             <form @submit.prevent="submitForm" class="c-form">
 
                 <!-- メールアドレス -->
                 <label for="email" class="c-label">メールアドレス<span class="c-required">必須</span></label>
                 <span v-if="errors && errors.email" class="c-error u-mt__s">{{ errors.email[0] }}</span>
-                <input v-model="formData.email" id="email" type="email" class="c-input u-pd__s u-mt__m u-mb__m" :class="{ 'is-invalid': errors && errors.email }" autocomplete="email">
+                <input v-model="formData.email" id="email" type="text" class="c-input u-pd__s u-mt__m u-mb__m" :class="{ 'is-invalid': errors && errors.email }" autocomplete="email">
                 <!-- パスワード -->
                 <label for="password" class="c-label">パスワード<span class="c-required">必須</span></label>
+                <span class="c-text c-text__note">※パスワードは、半角数字・英字大文字・小文字、記号（!@#$%^&*）を使って8文字以上で入力してください</span>
                 <span v-if="errors && errors.password" class="c-error u-mt__s">{{ errors.password[0] }}</span>
                 <div class="c-input__password">
-                    <input v-model="formData.password" id="password" :type="PasswordType" class="c-input u-pd__s u-mt__m u-mb__m" :class="{ 'is-invalid': errors && errors.password }" placeholder="英数字8文字以上で入力してください">
+                    <input v-model="formData.password" id="password" :type="PasswordType" class="c-input u-pd__s u-mt__m u-mb__m" :class="{ 'is-invalid': errors && errors.password }" placeholder="8文字以上で入力してください">
                     <span @click="togglePasswordVisibility('password')"><i :class="PasswordIconClass"></i></span>
                 </div>
 
@@ -26,7 +27,7 @@
                 <a class="c-link" href="/user/password/email">パスワードをお忘れの場合はこちら</a>
 
                 <!-- ログインボタン -->
-                <button type="submit" class="c-button c-button__submit c-button__user u-pd__s u-mt__m">ログインする</button>
+                <button type="submit" class="c-button c-button__submit c-button__main u-pd__s u-mt__m">ログインする</button>
 
             </form>
         </section>
@@ -60,7 +61,7 @@ export default {
                 // 利用者ログインAPIをPOST送信
                 await axios.post('/api/user/login', {...this.formData, remember: this.remember}); // 入力値と次回ログイン省略のrememberを含むリクエスト
                 await this.$store.dispatch('auth/currentUser'); // ログイン状態を保持
-                this.$router.push({ name: 'user.mypage' }); // ログイン後、マイページに遷移
+                this.$router.push({ name: 'products' }); // ログイン後、商品一覧画面に遷移
             } catch (error) {
                 console.log('errorは、', error);
                 console.error('ログイン失敗:', error.response.data);

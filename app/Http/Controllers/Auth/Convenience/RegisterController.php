@@ -80,8 +80,11 @@ class RegisterController extends Controller
                 'prefecture' => $validated['prefecture'], // 住所（都道府県）
                 'city' => $validated['city'], // 住所（市区町村）
                 'town' => $validated['town'], // 住所（地名・番地）
-                'building' => $validated['building'], // 住所（建物名・部屋番号）
             ]);
+            if (isset($validated['building'])) { // 住所（建物名・部屋番号）
+                $address->building = $validated['building'];
+                $address->save();
+            }
             $addressId = $address->id;
             // コンビニ情報を保存
             $convenience = Convenience::create([

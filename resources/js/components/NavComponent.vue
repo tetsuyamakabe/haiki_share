@@ -21,8 +21,6 @@
                     <a class="l-nav__menu--link" href="#merit" @click="closeMenu">メリット</a>
                     <a class="l-nav__menu--link" href="#usage" @click="closeMenu">利用方法</a>
                     <a class="l-nav__menu--link" href="#contact" @click="closeMenu">お問い合わせ</a>
-                    <RouterLink class="l-nav__menu--link" to="/user/register" @click.native="closeMenu">利用者ユーザー登録</RouterLink>
-                    <RouterLink class="l-nav__menu--link" to="/convenience/register" @click.native="closeMenu">コンビニユーザー登録</RouterLink>
                 </div>
                 <!-- ログインしていないTOP画面以外のナビゲーションメニュー -->
                 <div v-else class="l-nav__menu--item">

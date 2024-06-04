@@ -9,17 +9,12 @@
     }
 
     &__wrapper {
-        padding: $space_l 0;
-        border: 0.5px solid $boader-color_default;
         min-width: 75%;
+        border: 0.5px solid $boader-color_line;
 
         @include mq(sm){
             margin: $space_s;
         }
 
-        &--terms,
-        &--policy {
-            border: none;
-        }
     }
 }

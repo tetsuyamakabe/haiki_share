@@ -38,6 +38,7 @@ import ProductEditComponent from './components/Convenience/ProductEditComponent.
 import ProductSaleIndexComponent from './components/Convenience/ProductSaleIndexComponent.vue'; // 出品した商品一覧画面
 import ProductPurchaseIndexComponent from './components/Convenience/ProductPurchaseIndexComponent.vue'; // 購入された商品一覧画面
 import ProductAllIndexComponent from './components/ProductAllIndexComponent.vue'; // 商品一覧画面
+import ProductDetailComponent from './components/ProductDetailComponent.vue'; // 商品詳細画面
 
 Vue.use(VueRouter);
 
@@ -206,6 +207,12 @@ const router = new VueRouter({
             name: 'convenience.products.detail',
             component: ConvenienceProductDetailComponent,
         },
+        // 商品詳細画面
+        {
+            path: '/products/detail/:productId',
+            name: 'products.detail',
+            component: ProductDetailComponent,
+        },
         // 利用者側お気に入り登録した商品一覧画面
         {
             path: '/user/products/liked',
@@ -225,7 +232,7 @@ const router = new VueRouter({
     }
 });
 
-// セッションが必要ないパス（TOP画面、利用規約、プライバシーポリシー、お問い合わせフォーム、ユーザー登録画面、ログイン画面、パスワードメール送信画面、パスワードリセット画面）
+// セッションが必要ないパス（TOP画面、利用規約、プライバシーポリシー、お問い合わせフォーム、ユーザー登録画面、ログイン画面、パスワードメール送信画面、パスワードリセット画面、商品一覧画面、商品詳細画面）
 const publicPaths = [
     '/top',
     '/terms',
@@ -239,6 +246,8 @@ const publicPaths = [
     '/convenience/password/email',
     '/user/password/reset/:token',
     '/convenience/password/reset/:token',
+    '/products',
+    '/products/detail/:productId'
 ];
 
 // セッションタイムアウトした場合のナビゲーションガード
@@ -247,7 +256,7 @@ router.beforeEach(async (to, from, next) => {
     console.log('現在のパス:', to.path);
 
     // セッションタイムアウトして、現在パスが公開パスではない場合はTOP画面にリダイレクト
-    if (!isLogin && !publicPaths.includes(to.path) && !to.path.includes('/password/reset')) { // パスワードリセット画面のパスは除外
+    if (!isLogin && !publicPaths.some(path => to.path.startsWith(path)) && !to.path.includes('/password/reset')) { // パスワードリセット画面のパスは除外
         console.log('セッションタイムアウトのため、リダイレクトします');
         next('/top');
     } else {

@@ -24,10 +24,13 @@
                                         </div>
                                         <div class="p-card__container">
                                             <img class="c-card__picture u-mb__s" :src="getProductPicturePath(product)" alt="商品画像"> <!-- 商品画像 -->
+                                            <p class="c-card__text">{{ product.price }}円</p> <!-- 価格 -->
+                                            <p class="c-card__text">{{ formatDate(product.expiration_date) }}</p> <!-- 賞味期限日付 -->
                                         </div>
                                         <div class="p-card__footer">
-                                            <p class="c-card__price">{{ product.price }}円</p> <!-- 価格 -->
-                                            <p class="c-card__date">{{ formatDate(product.expiration_date) }}</p> <!-- 賞味期限日付 -->
+                                            <div class="c-button__container">
+                                                <router-link :to="getProductDetailLink(product.id)" class="c-button c-button__default u-pd__s u-m__s">詳細を見る</router-link>
+                                            </div>
                                         </div>
                                     </div>
                                 </li>
@@ -57,10 +60,13 @@
                                         </div>
                                         <div class="p-card__container">
                                             <img class="c-card__picture u-mb__s" :src="getProductPicturePath(product)" alt="商品画像"> <!-- 商品画像 -->
+                                            <p class="c-card__text">{{ product.price }}円</p> <!-- 価格 -->
+                                            <p class="c-card__text">{{ formatDate(product.expiration_date) }}</p> <!-- 賞味期限日付 -->
                                         </div>
                                         <div class="p-card__footer">
-                                            <p class="c-card__price">{{ product.price }}円</p> <!-- 価格 -->
-                                            <p class="c-card__date">{{ formatDate(product.expiration_date) }}</p> <!-- 賞味期限日付 -->
+                                            <div class="c-button__container">
+                                                <router-link :to="getProductDetailLink(product.id)" class="c-button c-button__default u-pd__s u-m__s">詳細を見る</router-link>
+                                            </div>
                                         </div>
                                     </div>
                                 </li>
@@ -73,29 +79,32 @@
 
                 </div>
             </section>
-
             <!-- サイドバー -->
-            <section class="l-sidebar">
-                <div class="p-mypage__sidebar">
-                    <router-link class="c-link u-mt__xl u-mb__xl" :to="{ name: 'convenience.profile' }">プロフィール編集</router-link>
-                    <router-link class="c-link u-mt__xl u-mb__xl" :to="{ name: 'convenience.withdraw' }">退会</router-link>
-                    <router-link class="c-link u-mt__xl u-mb__xl" :to="{ name: 'convenience.products.create' }">商品出品</router-link>
-                    <router-link class="c-link u-mt__xl u-mb__xl" :to="{ name: 'convenience.products.sale' }">出品した商品一覧</router-link>
-                    <router-link class="c-link u-mt__xl u-mb__xl" :to="{ name: 'convenience.products.purchase' }">購入された商品一覧</router-link>
-                    <router-link class="c-link u-mt__xl u-mb__xl" :to="{ name: 'products' }">商品一覧</router-link>
-                </div>
-            </section>
+            <sidebar-component :convenience_name="convenience_name" :branch_name="branch_name" :prefecture="prefecture" :city="city" :town="town" :building="building" :introduction="introduction"></sidebar-component>
         </div>
         <a @click="$router.back()" class="c-link c-link__back u-mt__s u-mb__s">前のページに戻る</a>
     </main>
 </template>
 
 <script>
+import SidebarComponent from './SidebarComponent.vue';
+
 export default {
+    components: {
+        SidebarComponent // サイドバーコンポーネントを読み込み
+    },
+
     data() {
         return {
             saleProducts: [], // 出品した商品情報
-            purchaseProducts: [] // 購入された商品情報
+            purchaseProducts: [], // 購入された商品情報
+            convenience_name: '', // コンビニ名
+            branch_name: '', // 支店名
+            prefecture: '', // 都道府県
+            city: '', // 市区町村
+            town: '', // 地名・番地
+            building: '', // 建物名・部屋番号
+            introduction: '' // 自己紹介文
         };
     },
 
@@ -108,6 +117,7 @@ export default {
 
     created() {
         this.getMyPageProducts(); // インスタンス初期化時にマイページに表示する出品・購入商品情報を読み込む
+        this.getSidebarProfile(); // インスタンス初期化時にサイドバーに表示するプロフィール情報を読み込む
     },
 
     methods: {
@@ -126,8 +136,10 @@ export default {
 
         // 商品画像のパスを取得するメソッド
         getProductPicturePath(product) {
+            console.log('productは、', product);
+            console.log('product.picturesは、', product.pictures);
             if (product.pictures.length > 0) {
-                return 'https://haikishare.com/product_pictures/' + product.pictures[0].file; // 商品画像がある場合は、その画像パスを返す
+                return product.pictures[0].file; // 商品画像がある場合は、その画像パスを返す
             } else {
                 return 'https://haikishare.com/product_pictures/no_image.png'; // 商品画像がない場合は、デフォルトの商品画像のパスを返す
             }
@@ -141,6 +153,34 @@ export default {
             const day = ('0' + date.getDate()).slice(-2); // 日数を取得、1桁の場合は2桁の数値に変換
             return `${year}年${month}月${day}日`; // 年月日のフォーマットされた賞味期限日付を返す
         },
+
+        // 商品詳細画面のリンクを返すメソッド
+        getProductDetailLink(productId) {
+            return { name: 'convenience.products.detail', params: { productId: productId } }; // 商品詳細画面のリンクを返す
+        },
+
+        // サイドバーに表示するプロフィール情報の取得
+        getSidebarProfile() {
+            // コンビニ側プロフィール情報の取得APIをGET送信
+            axios.get('/api/convenience/mypage/profile').then(response => {
+                // レスポンスデータをそれぞれのプロパティにセット
+                this.user = response.data.user; // ユーザー情報
+                this.convenience = response.data.convenience; // コンビニ情報
+                this.address = response.data.address; // 住所情報
+                // 取得した各プロフィール情報をそれぞれのプロパティにセット
+                this.convenience_name = this.user.name; // コンビニ名
+                this.branch_name = this.convenience.branch_name; // 支店名
+                this.prefecture = this.address.prefecture; // 住所
+                this.city = this.address.city; // 市区町村
+                this.town = this.address.town; // 地名・番地
+                this.building = this.address.building; // 建物名・部屋番号
+                this.introduction = this.user.introduction; // 自己紹介文
+            })
+            .catch(error => {
+                console.error('プロフィール取得失敗:', error.response.data);
+                this.errors = error.response.data;
+            });
+        }
     }
 };
 </script>

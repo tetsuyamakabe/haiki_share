@@ -1,9 +1,5 @@
 .c-icon {
-    font-size: $font-size_default;
-
-    @include mq(sm) {
-        font-size: $font-size_m;
-    }
+    font-size: $font-size_l;
 
     &:hover {
         cursor: pointer;
@@ -17,7 +13,14 @@
         color: $font-color_unlike;
     }
 
+    &__nolike {
+        color: $font-color_unlike;
+        pointer-events: none;
+    }
+
     &__share {
-        color: $font-color_sub;
+        border: 1px solid;
+        border-radius: 50px;
+        color: $font-color_default;
     }
 }

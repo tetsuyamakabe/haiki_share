@@ -1,7 +1,7 @@
 <template>
     <main class="l-main">
         <section class="l-main__wrapper">
-            <h1 class="c-title u-mb__xl">利用者ユーザー登録</h1>
+            <h1 class="c-title u-mt__xl u-mb__xl">利用者ユーザー登録</h1>
             <form @submit.prevent="submitForm" class="c-form">
 
                 <!-- お名前 -->
@@ -16,9 +16,10 @@
 
                 <!-- パスワード -->
                 <label for="password" class="c-label">パスワード<span class="c-required">必須</span></label>
+                <span class="c-text c-text__note">※パスワードとパスワード（再入力）は、半角数字・英字大文字・小文字、記号（!@#$%^&*）を使って8文字以上で入力してください</span>
                 <span v-if="errors && errors.password" class="c-error u-mt__s">{{ errors.password[0] }}</span>
                 <div class="c-input__password">
-                    <input v-model="formData.password" id="password" :type="PasswordType" class="c-input u-pd__s u-mt__s u-mb__s" :class="{ 'is-invalid': errors && errors.password }" placeholder="英数字8文字以上で入力してください">
+                    <input v-model="formData.password" id="password" :type="PasswordType" class="c-input u-pd__s u-mt__s u-mb__s" :class="{ 'is-invalid': errors && errors.password }" placeholder="8文字以上で入力してください">
                     <span @click="togglePasswordVisibility('password')"><i :class="PasswordIconClass"></i></span>
                 </div>
 
@@ -26,7 +27,7 @@
                 <label for="password-confirm" class="c-label">パスワード（再入力）<span class="c-required">必須</span></label>
                 <span v-if="errors && errors.password_confirmation" class="c-error u-mt__s">{{ errors.password_confirmation[0] }}</span>
                 <div class="c-input__password">
-                    <input v-model="formData.password_confirmation" id="password-confirm" :type="PasswordConfirmType" class="c-input u-pd__s u-mt__s u-mb__s" :class="{ 'is-invalid': errors && errors.password_confirmation }" placeholder="英数字8文字以上で入力してください">
+                    <input v-model="formData.password_confirmation" id="password-confirm" :type="PasswordConfirmType" class="c-input u-pd__s u-mt__s u-mb__s" :class="{ 'is-invalid': errors && errors.password_confirmation }" placeholder="8文字以上で入力してください">
                     <span @click="togglePasswordVisibility('password_confirm')"><i :class="PasswordConfirmIconClass"></i></span>
                 </div>
 
@@ -42,7 +43,7 @@
                 </div>
 
                 <!-- 登録ボタン -->
-                <button type="submit" class="c-button c-button__submit c-button__user u-pd__s">ユーザー登録する</button>
+                <button type="submit" class="c-button c-button__submit c-button__main u-pd__s">ユーザー登録する</button>
             </form>
         </section>
 
@@ -56,7 +57,7 @@ import TermsComponent from '../TermsComponent.vue'; // 利用規約
 
 export default {
     components: {
-        'terms-component': TermsComponent // 利用規約コンポーネントを読み込み
+        TermsComponent // 利用規約コンポーネントを読み込み
     },
 
     data() {

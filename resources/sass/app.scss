@@ -37,7 +37,6 @@
 @import 'Object/component/checkbox';
 @import 'Object/component/container';
 @import 'Object/component/error';
-@import 'Object/component/flash';
 @import 'Object/component/form';
 @import 'Object/component/hero';
 @import 'Object/component/icon';
@@ -52,17 +51,17 @@
 @import 'Object/component/text';
 @import 'Object/component/textarea';
 @import 'Object/component/title';
-
+@import 'Object/component/tooltip';
 
 // -----------------------------------------------------------------
 // Project
 // -----------------------------------------------------------------
 @import 'Object/project/article';
 @import 'Object/project/card';
+@import 'Object/project/expiration';
 @import 'Object/project/icon';
 @import 'Object/project/mypage';
 @import 'Object/project/pagination';
-@import 'Object/project/policy';
 @import 'Object/project/product';
 @import 'Object/project/profile';
 @import 'Object/project/register';

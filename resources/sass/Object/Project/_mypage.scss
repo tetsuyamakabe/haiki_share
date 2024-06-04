@@ -11,6 +11,18 @@
 
     &__profile {
         background: $background-color_sub;
+        &--header {
+            text-align: center;
+            font-weight: bold;
+            font-size: $font-size_default;
+        }
+        &--container {
+            opacity: .7;
+        }
+        &--content {
+            display: flex;
+            justify-content: center;
+        }
     }
 
     &__icon--container {
@@ -25,11 +37,6 @@
         border-radius: 50%;
     }
 
-    &__username {
-        text-align: center;
-        font-weight: bold;
-        font-size: $font-size_default;
-    }
 
     &__sale,
     &__liked,

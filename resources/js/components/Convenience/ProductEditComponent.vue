@@ -1,71 +1,102 @@
 <template>
     <main class="l-main">
-        <section class="l-main__wrapper">
-            <h1 class="c-title u-mb__xl">コンビニ商品編集画面</h1>
-            <form @submit.prevent="submitForm" class="c-form">
+        <div class="p-article">
+            <section class="l-main__wrapper">
+                <h1 class="c-title u-mt__xl u-mb__xl">コンビニ商品編集画面</h1>
+                <form @submit.prevent="submitForm" class="c-form c-form__column">
 
-                <!-- 商品名 -->
-                <label for="name" class="c-label">商品名<span class="c-required">必須</span></label>
-                <span v-if="errors && errors.name" class="c-error u-mt__s u-mb__s">{{ errors.name[0] }}</span>
-                <input v-model="formData.name" id="name" type="text" class="c-input u-pd__s u-mt__m u-mb__m" :class="{ 'is-invalid': errors && errors.name }" autocomplete="name">
+                    <!-- 商品名 -->
+                    <label for="name" class="c-label">商品名<span class="c-required">必須</span></label>
+                    <span v-if="errors && errors.name" class="c-error u-mt__s u-mb__s">{{ errors.name[0] }}</span>
+                    <input v-model="formData.name" id="name" type="text" class="c-input u-pd__s u-mt__m u-mb__m" :class="{ 'is-invalid': errors && errors.name }" autocomplete="name">
 
-                <!-- 価格 -->
-                <label for="price" class="c-label">価格<span class="c-required">必須</span></label>
-                <span v-if="errors && errors.price" class="c-error u-mt__s u-mb__s">{{ errors.price[0] }}</span>
-                <input v-model="formData.price" id="price" type="number" class="c-input u-pd__s u-mt__m u-mb__m" :class="{ 'is-invalid': errors && errors.price }" autocomplete="price">
+                    <!-- 価格 -->
+                    <label for="price" class="c-label">価格<span class="c-required">必須</span></label>
+                    <span v-if="errors && errors.price" class="c-error u-mt__s">{{ errors.price[0] }}</span>
+                    <div>
+                        <input v-model="formData.price" id="price" type="number" class="c-input c-input__price u-pd__s u-mt__m u-mb__m" maxlength="4" :class="{ 'is-invalid': errors && errors.price }" autocomplete="price">
+                        <span class="c-text">円（税込）</span>
+                    </div>
 
-                <!-- カテゴリ名 -->
-                <label for="category" class="c-label">カテゴリ名<span class="c-required">必須</span></label>
-                <span v-if="errors && errors.category" class="c-error u-mt__s u-mb__s">{{ errors.category[0] }}</span>
-                <select v-model="formData.category" id="category" class="c-input u-pd__s u-mt__m u-mb__m" :class="{ 'is-invalid': errors && errors.category }">
-                    <option value="">カテゴリを選択してください</option>
-                    <option v-for="category in categories" :value="category.id">{{ category.name }}</option>
-                </select>
+                    <!-- カテゴリ名 -->
+                    <label for="category" class="c-label">カテゴリ名<span class="c-required">必須</span></label>
+                    <span v-if="errors && errors.category" class="c-error u-mt__s u-mb__s">{{ errors.category[0] }}</span>
+                    <select v-model="formData.category" id="category" class="c-input u-pd__s u-mt__m u-mb__m" :class="{ 'is-invalid': errors && errors.category }">
+                        <option value="">カテゴリを選択してください</option>
+                        <option v-for="category in categories" :value="category.id">{{ category.name }}</option>
+                    </select>
 
-                <!-- 賞味期限 -->
-                <label for="expiration_date" class="c-label">賞味期限<span class="c-required">必須</span></label>
-                <span v-if="errors && errors.expiration_date" class="c-error u-mt__s u-mb__s">{{ errors.expiration_date[0] }}</span>
-                <div class="p-text__form">
-                    <input v-model="formData.expiration_date" id="expiration_date" type="text" class="c-input u-pd__s u-mt__m u-mb__m" :class="{ 'is-invalid': errors && errors.expiration_date }" placeholder="（例）2024年4月10日の場合　20240410　と入力">
-                    <span class="c-text c-text__attention">賞味期限は西暦・半角数字8桁で入力してください</span>
-                </div>
+                    <!-- 賞味期限 -->
+                    <label for="expiration_date" class="c-label">賞味期限<span class="c-required">必須</span></label>
+                    <span v-if="errors && errors.expiration_date" class="c-error u-mt__s u-mb__s">{{ errors.expiration_date[0] }}</span>
+                    <div class="p-expiration u-mt__m u-mb__m">
+                        <div class="c-input__date">
+                            <input v-model="formData.expiration_year" id="expiration_year" type="text" class="c-input u-pd__s" placeholder="YYYY" maxlength="4" :class="{ 'is-invalid': errors && errors.expiration_date }">
+                            <label for="expiration_year" class="c-label u-mr__s u-ml__s">年</label>
+                        </div>
+                        <div class="c-input__date">
+                            <input v-model="formData.expiration_month" id="expiration_month" type="text" class="c-input u-pd__s" placeholder="MM" maxlength="2" :class="{ 'is-invalid': errors && errors.expiration_date }">
+                            <label for="expiration_month" class="c-label u-mr__s u-ml__s">月</label>
+                        </div>
+                        <div class="c-input__date">
+                            <input v-model="formData.expiration_day" id="expiration_day" type="text" class="c-input u-pd__s" placeholder="DD" maxlength="2" :class="{ 'is-invalid': errors && errors.expiration_date }">
+                            <label for="expiration_day" class="c-label u-mr__s u-ml__s">日</label>
+                        </div>
+                    </div>
 
-                <!-- 商品画像 -->
-                <label for="product_picture" class="c-label">商品画像<span class="c-required">必須</span></label>
-                <span v-if="errors && errors.product_picture" class="c-error u-mt__s u-mb__s">{{ errors.product_picture[0] }}</span>
-                <div class="p-product__picture p-product__picture--container u-pd__s u-mt__m u-mb__m" @drop="handleDrop" :class="{ 'is-invalid': errors && errors.product_picture }">
-                    <input type="file" id="product_picture" @change="handleFileChange" class="c-input__hidden">
-                    <img v-if="!picturePreview && formData.product_picture !== ''" :src="'https://haikishare.com/product_pictures/' + formData.product_picture" alt="アップロード商品画像" class="c-product__picture">
-                    <img v-else-if="picturePreview" :src="picturePreview" alt="アップロード商品画像" class="c-product__picture">
-                    <img v-else src="https://haikishare.com/product_pictures/no_image.png" alt="NO_IMAGE" class="c-product__picture">
-                </div>
+                    <!-- 商品画像 -->
+                    <label for="product_picture" class="c-label">商品画像<span class="c-required">必須</span></label>
+                    <span v-if="errors && errors.product_picture" class="c-error u-mt__s u-mb__s">{{ errors.product_picture[0] }}</span>
+                    <div class="p-product__picture p-product__picture--container u-pd__s u-mt__m u-mb__m" @drop="handleDrop" :class="{ 'is-invalid': errors && errors.product_picture }">
+                        <input type="file" id="product_picture" @change="handleFileChange" class="c-input__hidden">
+                        <img v-if="!picturePreview && formData.product_picture !== ''" :src="formData.product_picture" alt="アップロード商品画像" class="c-product__picture">
+                        <img v-else-if="picturePreview" :src="picturePreview" alt="アップロード商品画像" class="c-product__picture">
+                        <img v-else src="https://haikishare.com/product_pictures/no_image.png" alt="NO_IMAGE" class="c-product__picture">
+                    </div>
 
-                <!-- 商品更新ボタン -->
-                <button type="submit" class="c-button c-button__submit c-button__convenience u-pd__s u-mt__m">商品を更新する</button>
-                <!-- 商品削除ボタン -->
-                <button class="c-button c-button__submit c-button__convenience u-pd__s u-mt__m" @click="deleteProduct">商品を削除する</button>
+                    <!-- 商品更新ボタン -->
+                    <button type="submit" class="c-button c-button__submit c-button__main u-pd__s u-mt__m">商品を更新する</button>
+                    <!-- 商品削除ボタン -->
+                    <button class="c-button c-button__submit c-button__primary u-pd__s u-mt__m" @click.prevent="deleteProduct">商品を削除する</button>
 
-            </form>
-        </section>
+                </form>
+            </section>
+            <!-- サイドバー -->
+            <sidebar-component :convenience_name="convenience_name" :branch_name="branch_name" :prefecture="prefecture" :city="city" :town="town" :building="building" :introduction="introduction"></sidebar-component>
+        </div>
         <a @click="$router.back()" class="c-link c-link__back u-mt__s u-mb__s">前のページに戻る</a>
     </main>
 </template>
 
 <script>
 import axios from 'axios';
+import SidebarComponent from './SidebarComponent.vue';
 
 export default {
+    components: {
+        SidebarComponent // サイドバーコンポーネントを読み込み
+    },
+
     data() {
         return {
             formData: {
                 name: '', // 商品名
                 price: '', // 価格
                 category: '', // カテゴリ名
-                expiration_date: '', // 賞味期限
+                expiration_year: '', // 賞味期限の年
+                expiration_month: '', // 賞味期限の月
+                expiration_day: '', // 賞味期限の日
                 product_picture: '', // 商品画像
             },
             categories: [], // 商品カテゴリ
             picturePreview: '', // 商品画像のプレビュー
+            convenience_name: '', // コンビニ名
+            branch_name: '', // 支店名
+            prefecture: '', // 都道府県
+            city: '', // 市区町村
+            town: '', // 地名・番地
+            building: '', // 建物名・部屋番号
+            introduction: '', // 自己紹介文
             errors: null, // エラーメッセージ
         };
     },
@@ -78,15 +109,17 @@ export default {
 
         // 賞味期限日付の入力値をYYYY-MM-DD形式に直すメソッド
         formattedExpirationDate() {
-            const inputDate = this.formData.expiration_date; // 賞味期限フォームの入力値
-            // 賞味期限日付の形式をYYYY-MM-DD形式に直す
-            if (inputDate && inputDate.length === 8) {
-                const year = inputDate.substring(0, 4); // YYYYの部分を取り出す
-                const month = inputDate.substring(4, 6); // MMの部分を取り出す
-                const day = inputDate.substring(6, 8); // DDの部分を取り出す
-                return `${year}-${month}-${day}`; // YYYY-MM-DD形式に変換して返す
+            const year = this.formData.expiration_year; // 年の部分を取得
+            const month = this.formData.expiration_month; // 月の部分を取得
+            const day = this.formData.expiration_day; // 日の部分を取得
+            // 年、月、日がすべて入力されている場合のみ処理を行う
+            if (year && month && day) {
+                // 新しいDateオブジェクトを作成し、入力された年月日をセット
+                const date = new Date(year, month - 1, day); // 月は0から始まるため、1を引く
+                // toLocaleString()メソッドを使用して日付をロケールに応じた文字列に変換し、返す
+                return date.toLocaleString('ja-JP', { year: 'numeric', month: '2-digit', day: '2-digit' });
             } else {
-                return ''; // 入力が不正な場合は空文字を返す
+                return ''; // 年、月、日のいずれかが入力されていない場合は空文字を返す
             }
         }
     },
@@ -95,6 +128,7 @@ export default {
         this.productId = this.$route.params.productId; // ルートからproductIdを取得
         this.getCategories(); // インスタンス初期化時に商品カテゴリ情報を読み込む
         this.getProduct(); // インスタンス初期化時に商品情報を読み込む
+        this.getSidebarProfile(); // インスタンス初期化時にサイドバーに表示するプロフィール情報を読み込む
     },
 
     methods: {
@@ -118,7 +152,16 @@ export default {
                 this.formData.name = this.product.name || ''; // 商品名
                 this.formData.price = this.product.price || ''; // 価格
                 this.formData.category = this.product.category.id || ''; // カテゴリ名
-                this.formData.expiration_date = this.product.expiration_date.replace(/-/g, '') || ''; // 賞味期限、YY-MM-DD形式からハイフンだけを取り除く
+                // 賞味期限を年、月、日に分割して設定
+                if (this.product.expiration_date) {
+                    this.formData.expiration_year = this.product.expiration_date.substring(0, 4) || ''; // 年
+                    this.formData.expiration_month = this.product.expiration_date.substring(5, 7) || ''; // 月
+                    this.formData.expiration_day = this.product.expiration_date.substring(8, 10) || ''; // 日
+                } else {
+                    this.formData.expiration_year = ''; // 賞味期限がない場合は空文字列に設定
+                    this.formData.expiration_month = '';
+                    this.formData.expiration_day = '';
+                }
                 this.formData.product_picture = this.product.pictures[0].file || ''; // 商品画像
             }).catch(error => {
                 console.error('商品情報取得失敗:', error.response.data);
@@ -178,7 +221,7 @@ export default {
             const file = event.target.files[0]; // 最初のファイルを取得
             if (file) {
                 this.previewImage(file); // プレビューを表示する
-                this.formData.product_picture = file; / // formData.product_pictureにファイルオブジェクトを設定
+                this.formData.product_picture = file; // formData.product_pictureにファイルオブジェクトを設定
             } else {
                 this.formData.product_picture = null; // ファイルがない場合はnull
             }
@@ -191,6 +234,29 @@ export default {
                 this.picturePreview = e.target.result; // プレビュー画像のURLを生成し、formDataに設定
             };
             reader.readAsDataURL(file); // ファイルをデータURLとして読み込み
+        },
+
+        // サイドバーに表示するプロフィール情報の取得
+        getSidebarProfile() {
+            // コンビニ側プロフィール情報の取得APIをGET送信
+            axios.get('/api/convenience/mypage/profile').then(response => {
+                // レスポンスデータをそれぞれのプロパティにセット
+                this.user = response.data.user; // ユーザー情報
+                this.convenience = response.data.convenience; // コンビニ情報
+                this.address = response.data.address; // 住所情報
+                // 取得した各プロフィール情報をそれぞれのプロパティにセット
+                this.convenience_name = this.user.name; // コンビニ名
+                this.branch_name = this.convenience.branch_name; // 支店名
+                this.prefecture = this.address.prefecture; // 住所
+                this.city = this.address.city; // 市区町村
+                this.town = this.address.town; // 地名・番地
+                this.building = this.address.building; // 建物名・部屋番号
+                this.introduction = this.user.introduction; // 自己紹介文
+            })
+            .catch(error => {
+                console.error('プロフィール取得失敗:', error.response.data);
+                this.errors = error.response.data;
+            });
         }
     }
 }

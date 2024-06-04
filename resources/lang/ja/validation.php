@@ -98,7 +98,7 @@ return [
     'numeric'              => ':attributeには、数字を指定してください。',
     'password'             => '正しいパスワードを指定してください。',
     'present'              => ':attributeが存在していません。',
-    'regex'                => ':attributeに正しい形式を指定してください。',
+    'regex'                => ':attributeは正しい形式を入力してください。',
     'required'             => ':attributeは必ず入力してください。',
     'required_if'          => ':otherが:valueの場合、:attributeも指定してください。',
     'required_unless'      => ':otherが:valuesでない場合、:attributeを指定してください。',
@@ -169,7 +169,9 @@ return [
         'price' => '価格',
         'category' => 'カテゴリ名',
         'expiration_date' => '賞味期限',
-        'contact' => 'お問い合わせ内容'
+        'contact' => 'お問い合わせ内容',
+        'icon' => '顔写真', 
+        'product_picture' => '商品画像'
     ],
 
 ];

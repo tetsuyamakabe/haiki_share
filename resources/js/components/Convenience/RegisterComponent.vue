@@ -1,7 +1,7 @@
 <template>
     <main class="l-main">
         <section class="l-main__wrapper">
-            <h1 class="c-title u-mb__xl">コンビニユーザー登録</h1>
+            <h1 class="c-title u-mt__xl u-mb__xl">コンビニユーザー登録</h1>
             <form @submit.prevent="submitForm" class="c-form">
 
                 <!-- コンビニ名 -->
@@ -15,10 +15,12 @@
                 <input v-model="formData.branch_name" id="branch_name" type="text" class="c-input u-pd__s u-mt__m u-mb__m" :class="{ 'is-invalid': errors && errors.branch_name }" autocomplete="branch_name">
 
                 <!-- 郵便番号 -->
-                <label for="address" class="c-label">郵便番号</label>
-                <input v-model="formData.postalcode" id="address" type="text" class="c-input u-pd__s u-mt__m u-mb__m" :class="{ 'is-invalid': errors && errors.address }" autocomplete="address" placeholder="郵便番号で住所を簡単入力できます">
+                <label for="zip" class="c-label">郵便番号</label>
+                <span class="c-text c-text__note">※数字のみを入力し、ハイフンを含む場合は3桁と4桁の間に挿入してください。ハイフンを含まない場合は数字を7桁入力してください。</span>
+                <span v-if="errors && errors.zip" class="c-error u-mt__s">{{ errors.zip[0] }}</span>
+                <input v-model="formData.postalcode" id="zip" type="text" class="c-input u-pd__s u-mt__m u-mb__m" :class="{ 'is-invalid': errors && errors.zip }" autocomplete="zip" placeholder="郵便番号で住所を簡単入力できます">
                 <div class="p-register__zip">
-                    <button type="button" class="c-button c-button__convenience" @click="searchAddress">郵便番号検索</button>
+                    <button type="button" class="c-button c-button__primary u-pd__s" @click="searchAddress">郵便番号検索</button>
                 </div>
 
                 <!-- 都道府県 -->
@@ -48,9 +50,10 @@
 
                 <!-- パスワード -->
                 <label for="password" class="c-label">パスワード<span class="c-required">必須</span></label>
+                <span class="c-text c-text__note">※パスワードとパスワード（再入力）は、半角数字・英字大文字・小文字、記号（!@#$%^&*）を使って8文字以上で入力してください</span>
                 <span v-if="errors && errors.password" class="c-error u-mt__s">{{ errors.password[0] }}</span>
                 <div class="c-input__password">
-                    <input v-model="formData.password" id="password" :type="PasswordType" class="c-input u-pd__s u-mt__m u-mb__m" :class="{ 'is-invalid': errors && errors.password }" placeholder="英数字8文字以上で入力してください">
+                    <input v-model="formData.password" id="password" :type="PasswordType" class="c-input u-pd__s u-mt__m u-mb__m" :class="{ 'is-invalid': errors && errors.password }" placeholder="8文字以上で入力してください">
                     <span @click="togglePasswordVisibility('password')"><i :class="PasswordIconClass"></i></span>
                 </div>
 
@@ -58,12 +61,12 @@
                 <label for="password-confirm" class="c-label">パスワード（再入力）<span class="c-required">必須</span></label>
                 <span v-if="errors && errors.password_confirmation" class="c-error u-mt__s">{{ errors.password_confirmation[0] }}</span>
                 <div class="c-input__password">
-                    <input v-model="formData.password_confirmation" id="password-confirm" :type="PasswordConfirmType" class="c-input u-pd__s u-mt__m u-mb__m" :class="{ 'is-invalid': errors && errors.password_confirmation }" placeholder="英数字8文字以上で入力してください">
+                    <input v-model="formData.password_confirmation" id="password-confirm" :type="PasswordConfirmType" class="c-input u-pd__s u-mt__m u-mb__m" :class="{ 'is-invalid': errors && errors.password_confirmation }" placeholder="8文字以上で入力してください">
                     <span @click="togglePasswordVisibility('password_confirm')"><i :class="PasswordConfirmIconClass"></i></span>
                 </div>
 
                 <!-- 利用規約 -->
-                <div class="p-register__terms u-pd__s u-m__s">
+                <div class="p-register__terms u-pd__s u-mt__m">
                     <terms-component></terms-component>
                 </div>
                 <span v-if="errors && !agreement" class="c-error u-mt__s">利用規約に同意する必要があります。</span>
@@ -74,8 +77,7 @@
                 </div>
 
                 <!-- 登録ボタン -->
-                <button type="submit" class="c-button c-button__submit c-button__convenience u-pd__s">ユーザー登録する</button>
-
+                <button type="submit" class="c-button c-button__submit c-button__main u-pd__s">ユーザー登録する</button>
             </form>
         </section>
         <a @click="$router.back()" class="c-link c-link__back u-mt__s u-mb__s">前のページに戻る</a>

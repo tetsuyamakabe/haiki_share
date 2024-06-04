@@ -1,11 +1,12 @@
 <template>
     <main class="l-main">
         <section class="l-main__wrapper">
-            <h1 class="c-title u-mb__xl">利用者パスワード変更</h1>
+            <h1 class="c-title u-mt__xl u-mb__xl">利用者パスワード変更</h1>
             <form @submit.prevent="resetPassword" class="c-form">
 
                 <!-- 新しいパスワード -->
                 <label for="new_password" class="c-label">新しいパスワード<span class="c-required">必須</span></label>
+                <span class="c-text c-text__note">※新しいパスワードと新しいパスワード（再入力）は、半角数字・英字大文字・小文字、記号（!@#$%^&*）を使って8文字以上で入力してください</span>
                 <span v-if="errors && errors.newPassword" class="c-error u-mt__s">{{ errors.newPassword[0] }}</span>
                 <div class="c-input__password">
                     <input v-model="formData.newPassword" id="new_password" :type="NewPasswordType" class="c-input u-pd__s u-mt__m u-mb__m" :class="{ 'is-invalid': errors && errors.newPassword }" placeholder="英数字8文字以上で入力してください">
@@ -25,7 +26,7 @@
                 <input type="hidden" name="email" v-model="email">
 
                 <!-- メール送信ボタン -->
-                <button type="submit" class="c-button c-button__submit c-button__convenience u-pd__s u-mt__m">パスワードを変更する</button>
+                <button type="submit" class="c-button c-button__submit c-button__main u-pd__s u-mt__m">パスワードを変更する</button>
 
             </form>
         </section>

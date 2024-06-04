@@ -36,15 +36,10 @@ class LoginController extends Controller
      *
      * @return void
      */
-    // public function __construct()
-    // {
-    //     $this->middleware('guest')->except('logout');
-    // }
 
     // ユーザー情報の取得
     public function getUser(Request $request)
     {
-        \Log::info('getUserメソッドです。');
         $user = $request->user();
         return Auth::user();
     }
@@ -57,13 +52,9 @@ class LoginController extends Controller
         $email = $request->input('email');
         $user = User::where('email', $email)->first();
         \Log::debug('$userは、', [$user]);
-        // ユーザーが見つからない場合
-        if (!$user) {
-            return response()->json(['message' => 'ユーザーが見つかりません'], 404);
-        }
-        // roleがconvenienceの場合は422エラーを返す
-        if ($user->role == 'convenience') {
-            return response()->json(['errors' => ['email' => ['このメールアドレスは利用者側のメールアドレスではありません。']]], 422);
+        // ユーザーが見つからない場合とroleがコンビニユーザーの場合はエラーを返す
+        if (!$user || $user->role == 'convenience') {
+            return response()->json(['errors' => ['email' => ['メールアドレスかパスワードが間違っています。']]], 422);
         }
         // ユーザーIDを取得
         $userId = $user->id;

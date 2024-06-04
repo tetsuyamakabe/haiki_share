@@ -1,7 +1,7 @@
 <template>
     <main class="l-main">
         <section class="l-main__wrapper">
-            <h1 class="c-title u-mb__xl">コンビニ退会</h1>
+            <h1 class="c-title u-mt__xl u-mb__xl">利用者退会</h1>
             <form class="c-form">
 
                 <h3 class="c-title c-title__sub">退会手続きを行いますか？</h3>
@@ -11,7 +11,7 @@
                     </p>
                 </div>
                 <!-- 退会ボタン -->
-                <button @click="withdraw" class="c-button c-button__submit c-button__user u-pd__s u-mt__m">退会する</button>
+                <button @click="withdraw" class="c-button c-button__submit c-button__main u-pd__s u-mt__m">退会する</button>
 
             </form>
         </section>
@@ -21,12 +21,6 @@
 
 <script>
 export default {
-    data() {
-        return {
-            flashMessage: '', // フラッシュメッセージ
-        }
-    },
-
     computed: {
         // ログインユーザーかどうか
         isLogin() {
@@ -41,7 +35,6 @@ export default {
             axios.delete('/api/user/mypage/withdraw').then(response => {
                 this.$router.push({ name: 'top' }); // 退会処理完了後、TOP画面に遷移
             }).catch(error => {
-                console.log('errorは、', error);
                 console.error('退会処理失敗:', error.response.data);
                 this.errors = error.response.data.errors;
             });

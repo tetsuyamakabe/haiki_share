@@ -1,6 +1,5 @@
 .p-article {
     display: flex;
-    font-size: $font-size_m;
 
     @include mq(sm) {
         display: block;
