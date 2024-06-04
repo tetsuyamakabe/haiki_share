@@ -23,14 +23,14 @@
                                             <h3 class="c-card__name">{{ product.product.name }}</h3> <!-- 商品名 -->
                                         </div>
                                         <div class="p-card__container">
-                                            <img class="c-card__picture u-mb__s" :src="getProductPicturePath(product)" alt="商品画像"> <!-- 商品画像 -->
-                                            <p class="c-card__price">{{ product.product.price }}円</p> <!-- 価格 -->
-                                            <p class="c-card__date">{{ formatDate(product.product.expiration_date) }}</p> <!-- 賞味期限日付 -->
+                                            <img class="c-card__picture u-mb__s" :src="getProductPicturePath(product.product)" alt="商品画像"> <!-- 商品画像 -->
+                                            <p class="c-card__text">{{ product.product.price }}円</p> <!-- 価格 -->
+                                            <p class="c-card__text">{{ formatDate(product.product.expiration_date) }}</p> <!-- 賞味期限日付 -->
                                         </div>
                                         <div class="p-card__footer">
                                             <div class="c-button__container">
-                                                <router-link :to="getProductDetailLink(product.product.id)" class="c-button c-button__user c-button__detail u-pd__s u-m__s">詳細を見る</router-link>
-                                                <button class="c-button c-button__user c-button__cancel u-pd__s u-m__s" @click="cancelPurchase(product.product.id)">購入をキャンセルする</button>
+                                                <router-link :to="getProductDetailLink(product.product.id)" class="c-button c-button__default u-pd__s u-m__s">詳細を見る</router-link>
+                                                <button class="c-button c-button__default u-pd__s u-m__s" @click="cancelPurchase(product.product.id)">購入をキャンセルする</button>
                                             </div>
                                         </div>
                                     </div>
@@ -59,12 +59,14 @@
                                             <h3 class="c-card__name">{{ product.product.name }}</h3> <!-- 商品名 -->
                                         </div>
                                         <div class="p-card__container">
-                                            <img class="c-card__picture u-mb__s" :src="getProductPicturePath(product)" alt="商品画像"> <!-- 商品画像 -->
-                                            <p class="c-card__price">{{ product.product.price }}円</p> <!-- 価格 -->
-                                            <p class="c-card__date">{{ formatDate(product.product.expiration_date) }}</p> <!-- 賞味期限日付 -->
+                                            <img class="c-card__picture u-mb__s" :src="getProductPicturePath(product.product)" alt="商品画像"> <!-- 商品画像 -->
+                                            <p class="c-card__text">{{ product.product.price }}円</p> <!-- 価格 -->
+                                            <p class="c-card__text">{{ formatDate(product.product.expiration_date) }}</p> <!-- 賞味期限日付 -->
                                         </div>
                                         <div class="p-card__footer">
-                                            <router-link :to="getProductDetailLink(product.product.id)" class="c-button c-button__user c-button__detail">詳細を見る</router-link>
+                                            <div class="c-button__container">
+                                                <router-link :to="getProductDetailLink(product.product.id)" class="c-button c-button__default u-pd__s u-m__s">詳細を見る</router-link>
+                                            </div>
                                         </div>
                                     </div>
                                 </li>
@@ -77,41 +79,26 @@
 
                 </div>
             </section>
-
             <!-- サイドバー -->
-            <section class="l-sidebar">
-                <div class="p-mypage__sidebar">
-                    <!-- ユーザー情報の表示 -->
-                    <div class="p-mypage__user-info u-pd__s">
-                        <h2 class="c-title c-title__sub u-mt__m u-mb__m">プロフィール情報</h2>
-                        <div class="p-mypage__profile u-pd__s">
-                            <div class="p-mypage__icon--container">
-                                <img :src="icon" alt="アイコン画像" class="p-mypage__icon">
-                            </div>
-                            <div class="p-mypage__username u-mt__s u-mb__s">
-                                <p>{{ username }}</p>
-                            </div>
-                            <div class="c-button__container">
-                                <router-link class="c-button c-button__user u-pd__s u-m__s" :to="{ name: 'user.profile' }">プロフィール編集</router-link>
-                            </div>
-                        </div>
-                    </div>
-                    <router-link class="c-link u-mt__xl u-mb__xl" :to="{ name: 'products' }">商品一覧</router-link>
-                    <router-link class="c-link u-mt__xl u-mb__xl" :to="{ name: 'user.withdraw' }">退会</router-link>
-                </div>
-            </section>
-
+            <sidebar-component :introduction="introduction"></sidebar-component>
         </div>
         <a @click="$router.back()" class="c-link c-link__back u-mt__s u-mb__s">前のページに戻る</a>
     </main>
 </template>
 
 <script>
+import SidebarComponent from './SidebarComponent.vue';
+
 export default {
+    components: {
+        SidebarComponent // サイドバーコンポーネントを読み込み
+    },
+
     data() {
         return {
             purchasedProducts: [], // 購入された商品情報
             likedProducts: [], // お気に入り登録した商品情報
+            introduction: '', //自己紹介文
         };
     },
 
@@ -120,29 +107,11 @@ export default {
         isLogin() {
             return this.$store.getters['auth/check'];
         },
-
-        // ログインユーザーのIDを取得
-        loginId() {
-            if (this.isLogin) {
-                return this.$store.getters['auth/id'];
-            } else {
-                return null;
-            }
-        },
-
-        // アイコンを表示する
-        icon() {
-            return this.$store.getters['auth/icon'];
-        },
-
-        // ユーザーの名前を表示する
-        username() {
-            return this.$store.getters['auth/username'];
-        },
     },
 
     created() {
         this.getMyPageProducts(); // インスタンス初期化時にマイページに表示する購入・お気に入り商品情報を読み込む
+        this.getSidebarProfile(); // インスタンス初期化時にサイドバーに表示するプロフィール情報を読み込む
     },
 
     methods: {
@@ -166,11 +135,9 @@ export default {
             console.log('productは、', product);
             console.log('product.picturesは、', product.pictures);
             if (product.pictures.length > 0) {
-                return '/storage/product_pictures/' + product.pictures[0].file;
-                // return 'https://haikishare.com/product_pictures/' + product.pictures[0].file; // 商品画像がある場合は、その画像パスを返す
+                return product.pictures[0].file; // 商品画像がある場合は、その画像パスを返す
             } else {
-                return '/storage/product_pictures/no_image.png';
-                // return 'https://haikishare.com/product_pictures/no_image.png'; // 商品画像がない場合は、デフォルトの商品画像のパスを返す
+                return 'https://haikishare.com/product_pictures/no_image.png'; // 商品画像がない場合は、デフォルトの商品画像のパスを返す
             }
         },
 
@@ -197,6 +164,20 @@ export default {
             }).catch(error => {
                 console.error('商品購入キャンセル処理失敗:', error.response.data);
                 this.errors = error.response.data.errors;
+            });
+        },
+
+        // サイドバーに表示するプロフィール情報の取得
+        getSidebarProfile() {
+            // 利用者側プロフィール情報の取得APIをGET送信
+            axios.get('/api/user/mypage/profile').then(response => {
+                console.log('APIからのレスポンスデータ:', response.data);
+                this.user = response.data.user; // レスポンスデータのユーザー情報をuserプロパティにセット
+                // 取得した各プロフィール情報をintroductionプロパティにセット
+                this.introduction = this.user.introduction; // 自己紹介文
+            }).catch (error => {
+                console.error('プロフィール取得失敗:', error.response.data);
+                this.errors = error.response.data;
             });
         },
     },

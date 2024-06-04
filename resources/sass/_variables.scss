@@ -21,21 +21,25 @@ $cyan: #6cb2eb;
 // 変数
 $font-color_default: #434343;
 $font-color_msg: #ff3333;
-$color_corp: #82765c; // 要修正
 $font-color_sub: #fefefe;
 
 $font-color_like: #ff7fbf;
-$font-color_unlike: #999;
+$font-color_unlike: #ccc;
 
 $background-color_main: #f6f5f4;
 $background-color_sub: #fefefe;
 $background-color_sub2: #eee;
 $background-color_sub3: #434343;
-$background-color_btn: #ffa500;
+$background-color_btn_main: #ff2828;
+$background-color_btn_primary: #32cd32;
+$background-color_btn_default: #ffa500;
 $background-color_valid: #ffcccc;
 $background-color_label: #ff6666;
 
-$boader-color_default: #434343;
+$boader-color_line: #434343;
+$boader-color_main: #ff2828;
+$boader-color_primary: #32cd32;
+$boader-color_default: #ffa500;
 
 $twitter-share_color: #000;
 

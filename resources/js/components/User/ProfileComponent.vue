@@ -1,66 +1,77 @@
 <template>
     <main class="l-main">
-        <section class="l-main__wrapper">
-            <h1 class="c-title u-mb__xl">利用者プロフィール編集</h1>
-            <form @submit.prevent="submitForm" class="c-form">
+        <div class="p-article">
+            <section class="l-main__wrapper">
+                <h1 class="c-title u-mt__xl u-mb__xl">利用者プロフィール編集</h1>
+                <form @submit.prevent="submitForm" class="c-form c-form__column">
 
-                <!-- お名前 -->
-                <label for="name" class="c-label">お名前<span class="c-required">必須</span></label>
-                <span v-if="errors && errors.name" class="c-error u-mt__s">{{ errors.name[0] }}</span>
-                <input v-model="formData.name" id="name" type="name" class="c-input u-pd__s u-mt__m u-mb__m" :class="{ 'is-invalid': errors && errors.name }" autocomplete="name">
+                    <!-- お名前 -->
+                    <label for="name" class="c-label">お名前<span class="c-required">必須</span></label>
+                    <span v-if="errors && errors.name" class="c-error u-mt__s">{{ errors.name[0] }}</span>
+                    <input v-model="formData.name" id="name" type="name" class="c-input u-pd__s u-mt__m u-mb__m" :class="{ 'is-invalid': errors && errors.name }" autocomplete="name">
 
-                <!-- メールアドレス -->
-                <label for="email" class="c-label">メールアドレス<span class="c-required">必須</span></label>
-                <span v-if="errors && errors.email" class="c-error u-mt__s">{{ errors.email[0] }}</span>
-                <input v-model="formData.email" id="email" type="text" class="c-input u-pd__s u-mt__m u-mb__m" :class="{ 'is-invalid': errors && errors.email }" autocomplete="email">
+                    <!-- メールアドレス -->
+                    <label for="email" class="c-label">メールアドレス<span class="c-required">必須</span></label>
+                    <span v-if="errors && errors.email" class="c-error u-mt__s">{{ errors.email[0] }}</span>
+                    <input v-model="formData.email" id="email" type="text" class="c-input u-pd__s u-mt__m u-mb__m" :class="{ 'is-invalid': errors && errors.email }" autocomplete="email">
 
-                <!-- パスワード -->
-                <label for="password" class="c-label">パスワード<span class="c-required">必須</span></label>
-                <span v-if="errors && errors.password" class="c-error u-mt__s">{{ errors.password[0] }}</span>
-                <div class="c-input__password">
-                    <input v-model="formData.password" id="password" :type="PasswordType" class="c-input u-pd__s u-mt__m u-mb__m" :class="{ 'is-invalid': errors && errors.password }" placeholder="英数字8文字以上で入力してください">
-                    <span @click="togglePasswordVisibility('password')"><i :class="PasswordIconClass"></i></span>
-                </div>
+                    <!-- パスワード -->
+                    <label for="password" class="c-label">パスワード</label>
+                    <span class="c-text c-text__note">※パスワードとパスワード（再入力）は、半角数字・英字大文字・小文字、記号（!@#$%^&*）を使って8文字以上で入力してください</span>
+                    <span v-if="errors && errors.password" class="c-error u-mt__s">{{ errors.password[0] }}</span>
+                    <div class="c-input__password">
+                        <input v-model="formData.password" id="password" :type="PasswordType" class="c-input u-pd__s u-mt__m u-mb__m" :class="{ 'is-invalid': errors && errors.password }" placeholder="8文字以上で入力してください">
+                        <span @click="togglePasswordVisibility('password')"><i :class="PasswordIconClass"></i></span>
+                    </div>
 
-                <!-- パスワード（再入力） -->
-                <label for="password-confirm" class="c-label">パスワード（再入力）<span class="c-required">必須</span></label>
-                <span v-if="errors && errors.password_confirmation" class="c-error u-mt__s">{{ errors.password_confirmation[0] }}</span>
-                <div class="c-input__password">
-                    <input v-model="formData.password_confirmation" id="password-confirm" :type="PasswordConfirmType" class="c-input u-pd__s u-mt__m u-mb__m" :class="{ 'is-invalid': errors && errors.password_confirmation }" placeholder="英数字8文字以上で入力してください">
-                    <span @click="togglePasswordVisibility('password_confirm')"><i :class="PasswordConfirmIconClass"></i></span>
-                </div>
+                    <!-- パスワード（再入力） -->
+                    <label for="password-confirm" class="c-label">パスワード（再入力）</label>
+                    <span v-if="errors && errors.password_confirmation" class="c-error u-mt__s">{{ errors.password_confirmation[0] }}</span>
+                    <div class="c-input__password">
+                        <input v-model="formData.password_confirmation" id="password-confirm" :type="PasswordConfirmType" class="c-input u-pd__s u-mt__m u-mb__m" :class="{ 'is-invalid': errors && errors.password_confirmation }" placeholder="8文字以上で入力してください">
+                        <span @click="togglePasswordVisibility('password_confirm')"><i :class="PasswordConfirmIconClass"></i></span>
+                    </div>
 
-                <!-- 自己紹介文 -->
-                <label for="introduction" class="c-label">自己紹介</label>
-                <span v-if="errors && errors.introduction" class="c-error u-mt__s">{{ errors.introduction[0] }}</span>
-                <div class="p-textarea__form">
-                    <textarea v-model="formData.introduction" maxlength="50" id="introduction" type="text" class="c-textarea u-pd__s u-mt__m u-mb__m" autocomplete="introduction" @keyup="countCharacters" :class="{ 'is-invalid': errors && errors.introduction }" placeholder="50文字以内で入力してください"></textarea>
-                    <span class="c-textarea__count">{{ formData.introduction.length }} / 50文字</span>
-                </div>
+                    <!-- 自己紹介文 -->
+                    <label for="introduction" class="c-label">自己紹介</label>
+                    <span v-if="errors && errors.introduction" class="c-error u-mt__s">{{ errors.introduction[0] }}</span>
+                    <div class="p-textarea__form">
+                        <textarea v-model="formData.introduction" maxlength="50" id="introduction" type="text" class="c-textarea u-pd__s u-mt__m u-mb__m" autocomplete="introduction" @keyup="countCharacters" :class="{ 'is-invalid': errors && errors.introduction }" placeholder="50文字以内で入力してください"></textarea>
+                        <span class="c-textarea__count">{{ formData.introduction.length }} / 50文字</span>
+                    </div>
 
-                <!-- 顔写真 -->
-                <label for="profile-icon" class="c-label">顔写真</label>
-                <span v-if="errors && errors.icon" class="c-error u-mt__s">{{ errors.icon[0] }}</span>
-                <div class="p-profile__icon p-profile__icon--container u-pd__s" @drop="handleDrop" :class="{ 'is-invalid': errors && errors.icon }">
-                    <input type="file" id="profile-icon" @change="handleFileChange" class="c-input__hidden">
-                    <img v-if="!iconPreview && formData.icon" :src="'https://haikishare.com/icon/' + formData.icon" alt="アップロード顔写真" class="p-profile__icon">
-                    <img v-else-if="iconPreview" :src="iconPreview" alt="アップロード顔写真" class="p-profile__icon">
-                    <img v-else :src="'https://haikishare.com/icon/default.png'" alt="デフォルト顔写真" class="p-profile__icon">
-                </div>
+                    <!-- 顔写真 -->
+                    <label for="profile-icon" class="c-label">顔写真</label>
+                    <span v-if="errors && errors.icon" class="c-error u-mt__s u-mb__s">{{ errors.icon[0] }}</span>
+                    <div class="p-profile__icon p-profile__icon--container u-pd__s" @drop="handleDrop" :class="{ 'is-invalid': errors && errors.icon }">
+                        <input type="file" id="profile-icon" @change="handleFileChange" class="c-input__hidden">
+                        <img v-if="!iconPreview && formData.icon" :src="formData.icon" alt="アップロード顔写真" class="p-profile__icon">
+                        <img v-else-if="iconPreview" :src="iconPreview" alt="アップロード顔写真" class="p-profile__icon">
+                        <img v-else :src="'https://haikishare.com/icon/default.png'" alt="デフォルト顔写真" class="p-profile__icon">
+                    </div>
 
-                <!-- 更新ボタン -->
-                <button type="submit" class="c-button c-button__submit c-button__user u-pd__s u-mt__m">プロフィールを更新する</button>
+                    <!-- 更新ボタン -->
+                    <button type="submit" class="c-button c-button__submit c-button__main u-pd__s u-mt__m">プロフィールを更新する</button>
 
-            </form>
-        </section>
+                </form>
+                <router-link class="c-link c-link__withdraw u-mt__l u-mb__l u-pdr__s" :to="{ name: 'user.withdraw' }">退会はこちら</router-link>
+            </section>
+            <!-- サイドバー -->
+            <sidebar-component :introduction="introduction"></sidebar-component>
+        </div>
         <a @click="$router.back()" class="c-link c-link__back u-mt__s u-mb__s">前のページに戻る</a>
     </main>
 </template>
 
 <script>
 import axios from '../../axiosErrorHandler';
+import SidebarComponent from './SidebarComponent.vue';
 
 export default {
+    components: {
+        SidebarComponent // サイドバーコンポーネントを読み込み
+    },
+
     data() {
         return {
             formData: {
@@ -71,7 +82,7 @@ export default {
                 introduction: '', // 自己紹介文
                 icon: '', // 顔写真
             },
-            textareaCount: 0, // 自己紹介文の文字数カウント初期値
+            introduction: '', //自己紹介文
             iconPreview: '', // アイコン画像のプレビュー
             errors: null, // エラーメッセージ
             PasswordType: 'password', // パスワードの初期設定
@@ -90,6 +101,7 @@ export default {
 
     created() {
         this.getProfile(); // インスタンス初期化時に編集前のプロフィール情報を読み込む
+        this.getSidebarProfile(); // インスタンス初期化時にサイドバーに表示するプロフィール情報を読み込む
     },
 
     methods: {
@@ -185,7 +197,21 @@ export default {
                 this.iconPreview = e.target.result; // プレビュー画像のURLを生成し、formDataに設定
             };
             reader.readAsDataURL(file); // ファイルをデータURLとして読み込み
-        }
+        },
+
+        // サイドバーに表示するプロフィール情報の取得
+        getSidebarProfile() {
+            // 利用者側プロフィール情報の取得APIをGET送信
+            axios.get('/api/user/mypage/profile').then(response => {
+                console.log('APIからのレスポンスデータ:', response.data);
+                this.user = response.data.user; // レスポンスデータのユーザー情報をuserプロパティにセット
+                // 取得した各プロフィール情報をintroductionプロパティにセット
+                this.introduction = this.user.introduction; // 自己紹介文
+            }).catch (error => {
+                console.error('プロフィール取得失敗:', error.response.data);
+                this.errors = error.response.data;
+            });
+        },
     }
 }
 </script>

@@ -1,7 +1,7 @@
 <template>
     <main class="l-main">
         <section class="l-main__wrapper">
-            <h1 class="c-title u-mb__xl">コンビニ退会</h1>
+            <h1 class="c-title u-mt__xl u-mb__xl">コンビニ退会</h1>
             <form class="c-form">
 
                 <h3 class="c-title c-title__sub">退会手続きを行いますか？</h3>
@@ -11,7 +11,7 @@
                     </p>
                 </div>
                 <!-- 退会ボタン -->
-                <button @click="withdraw" class="c-button c-button__submit c-button__convenience u-pd__s u-mt__m">退会する</button>
+                <button @click="withdraw" class="c-button c-button__submit c-button__main u-pd__s u-mt__m">退会する</button>
 
             </form>
         </section>

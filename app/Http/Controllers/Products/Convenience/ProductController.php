@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use App\Models\ProductPicture;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\Convenience\ProductEditRequest;
 use App\Http\Requests\Convenience\ProductSaleRequest;
 
@@ -20,6 +21,7 @@ class ProductController extends Controller
     // 商品出品処理（商品の投稿）
     public function createProduct(ProductSaleRequest $request)
     {
+        \Log::info($request->all());
         try {
             // 未認証の場合
             if (!auth()->check()) {
@@ -36,14 +38,18 @@ class ProductController extends Controller
             $product->convenience_store_id = $convenienceId; // 商品情報とコンビニIDの紐付け
             $product->save();
             // 商品画像ファイルのアップロード処理
-            $picture = $request->file('product_picture'); // 商品画像
-            $extension = $picture->getClientOriginalExtension(); // ファイルの拡張子を取得
-            $fileName = sha1($picture->getClientOriginalName()) . '.' . $extension; // SHA-1ハッシュでファイル名を決定
-            $picturePath = $picture->storeAs('public/product_pictures', $fileName); // ファイルを保存
+            $productPicture = $request->file('product_picture'); // 商品画像
+            // $extension = $picture->getClientOriginalExtension(); // ファイルの拡張子を取得
+            // $fileName = sha1($picture->getClientOriginalName()) . '.' . $extension; // SHA-1ハッシュでファイル名を決定
+            $dir = 'product_pictures'; // アップロード先S3フォルダ名
+            $s3Upload = Storage::disk('s3')->putFile('/'.$dir, $productPicture); // S3にファイルを保存
+            $s3Url = Storage::disk('s3')->url($s3Upload); // アップロードファイルURLを取得
+            $s3UploadFileName = explode("/", $s3Url)[5]; // $s3UrlからS3でのファイル保存名取得
+            $s3Path = $dir.'/'.$s3UploadFileName; // アップロード先パスを取得
             // 商品画像の保存
             $productPicture = new ProductPicture();
             $productPicture->product_id = $product->id; // 商品IDとコンビニIDの紐付け
-            $productPicture->file = $fileName; // 商品画像ファイル名を保存
+            $productPicture->file = 'https://haikishare.com/' . $s3Path; // 商品画像ファイル名を保存
             $productPicture->save();
             $product->load('pictures'); // pictureリレーションをロード
             return response()->json(['message' => '商品の出品に成功しました', 'product' => $product], 200);
@@ -56,7 +62,7 @@ class ProductController extends Controller
     // 商品編集・更新処理
     public function editProduct(ProductEditRequest $request, $productId)
     {
-        try {
+        // try {
             // 未認証の場合
             if (!auth()->check()) {
                 return response()->json(['message' => 'Unauthenticated.'], 401);
@@ -84,9 +90,9 @@ class ProductController extends Controller
             }
             $product->load('pictures'); // pictureリレーションをロード
             return response()->json(['message' => '商品の編集に成功しました', 'product' => $product]);
-        } catch (\Exception $e) {
-            return response()->json(['message' => '商品の編集に失敗しました'], 500);
-        }
+        // } catch (\Exception $e) {
+        //     return response()->json(['message' => '商品の編集に失敗しました'], 500);
+        // }
     }
 
     // 商品削除処理
@@ -126,7 +132,7 @@ class ProductController extends Controller
                 return response()->json(['error' => 'コンビニが見つかりません'], 404);
             }
             // 商品情報と関連付けられた商品画像の中からコンビニIDと一致する商品を最新の投稿（降順）の順番で20件取得
-            $products = Product::with('pictures')->where('convenience_store_id', $convenience->id)->orderBy('created_at', 'desc')->paginate(20);
+            $products = Product::with('pictures')->where('convenience_store_id', $convenience->id)->orderBy('created_at', 'desc')->paginate(15);
             // 購入情報を取得し、各商品に購入状態is_purchasedプロパティを含める
             foreach ($products as $product) {
                 $purchase = Purchase::where('product_id', $product->id)->first(); // 各商品に対して商品IDから購入情報を検索
@@ -155,11 +161,11 @@ class ProductController extends Controller
             if (!$convenience) { // コンビニ情報がない場合
                 return response()->json(['error' => 'コンビニが見つかりません'], 404);
             }
-            // 商品情報と関連付けられた商品画像の中からコンビニIDと一致し、is_purchasedプロパティがtrueの商品を20件取得
+            // 商品情報と関連付けられた商品画像の中からコンビニIDと一致し、is_purchasedプロパティがtrueの商品を15件取得
             $products = Product::with('pictures')->where('convenience_store_id', $convenience->id)
                 ->whereHas('purchases', function ($query) {
                     $query->where('is_purchased', true);
-                })->paginate(20);
+                })->paginate(15);
             return response()->json(['message' => '購入された商品を取得します', 'products' => $products], 200);
         } catch (\Exception $e) {
             \Log::error('例外エラー: ' . $e->getMessage());
@@ -171,10 +177,6 @@ class ProductController extends Controller
     public function getAllProducts(Request $request)
     {
         try {
-            // 未認証の場合
-            if (!auth()->check()) {
-                return response()->json(['message' => 'Unauthenticated.'], 401);
-            }
             // 認証済みユーザーIDの取得
             $userId = auth()->id();
             // 商品情報と関連付けられていた商品画像とカテゴリ情報をいいね数と合わせて取得
@@ -187,11 +189,11 @@ class ProductController extends Controller
                     $addressQuery->where('prefecture', $prefecture);
                 });
             }
-            $minPrice = $request->input('minprice'); // 最小価格
+            $minPrice = $request->input('minPrice'); // 最小価格
             if ($minPrice !== null) { // 検索条件にminPriceがある場合
                 $query->where('price', '>=', $minPrice); // priceより小さい値を取得
             }
-            $maxPrice = $request->input('maxprice'); // 最大価格
+            $maxPrice = $request->input('maxPrice'); // 最大価格
             if ($maxPrice !== null) { // 検索条件にmaxPriceがある場合
                 $query->where('price', '<=', $maxPrice); // priceより大きい値を取得
             }
@@ -232,8 +234,11 @@ class ProductController extends Controller
             }
             // 認証済みユーザーIDの取得
             $userId = auth()->id();
-            // 商品IDをもとに商品情報と関連付けられていた商品画像とカテゴリ情報をいいね数と合わせて取得
-            $product = Product::with(['pictures', 'category'])->withCount('likes')->find($productId);
+            // 商品IDをもとに商品情報と関連付けられていた商品画像とカテゴリ情報とコンビニ情報をいいね数と合わせて取得
+            $product = Product::with(['pictures', 'category', 'convenience', 'convenience.user', 'convenience.address'])
+            ->withCount('likes')
+            ->find($productId);
+            \Log::info('商品は、', [$product]);
             // 商品が見つからない場合
             if (!$product) {
                 return response()->json(['error' => '商品が見つかりません'], 404);
@@ -254,6 +259,27 @@ class ProductController extends Controller
             return response()->json(['message' => '商品情報を取得できません'], 500);
         }
     }
+
+    // 未ログインユーザーの商品情報取得
+    public function getProductDetail(Request $request, $productId)
+    {
+        try {
+            // 商品IDをもとに商品情報と関連付けられていた商品画像とカテゴリ情報とコンビニ情報をいいね数と合わせて取得
+            $product = Product::with(['pictures', 'category', 'convenience', 'convenience.user', 'convenience.address'])
+            ->withCount('likes')
+            ->find($productId);
+            \Log::info('商品は、', [$product]);
+            // 商品が見つからない場合
+            if (!$product) {
+                return response()->json(['error' => '商品が見つかりません'], 404);
+            }
+            return response()->json(['message' => '商品情報を取得します', 'product' => $product], 200);
+        } catch (\Exception $e) {
+            \Log::error('例外エラー: ' . $e->getMessage());
+            return response()->json(['message' => '商品情報を取得できません'], 500);
+        }
+    }
+
 
     // 商品カテゴリー情報の取得
     public function getCategories()

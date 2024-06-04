@@ -50,10 +50,14 @@ class MyPageController extends Controller
             // ファイルがアップロードされているか確認
             if ($request->hasFile('icon')) {
                 $iconImage = $request->file('icon'); // 顔写真
-                $extension = $iconImage->getClientOriginalExtension(); // ファイルの拡張子を取得
-                $fileName = sha1($iconImage->getClientOriginalName()) . '.' . $extension; // SHA-1ハッシュでファイル名を決定
-                $path = Storage::disk('s3')->putFileAs('icons', $iconImage, $fileName, 'public'); // S3にファイルを保存
-                $user->icon = 'https://haikishare.com/' . $path; // ファイルURLを保存
+                // $extension = $iconImage->getClientOriginalExtension(); // ファイルの拡張子を取得
+                // $fileName = sha1($iconImage->getClientOriginalName()) . '.' . $extension; // SHA-1ハッシュでファイル名を決定
+                $dir = 'icon'; // アップロード先S3フォルダ名
+                $s3Upload = Storage::disk('s3')->putFile('/'.$dir, $iconImage); // S3にファイルを保存
+                $s3Url = Storage::disk('s3')->url($s3Upload); // アップロードファイルURLを取得
+                $s3UploadFileName = explode("/", $s3Url)[5]; // $s3UrlからS3でのファイル保存名取得
+                $s3Path = $dir.'/'.$s3UploadFileName; // アップロード先パスを取得
+                $user->icon = 'https://haikishare.com/' . $s3Path; // ファイルURLを保存
             }
             $user->save();
             return response()->json(['message' => 'プロフィール編集に成功しました', 'user' => $user], 200);
@@ -92,17 +96,26 @@ class MyPageController extends Controller
             if (!$user) {
                 return response()->json(['message' => 'Unauthenticated.'], 401);
             }
-            // マイページに購入した商品を最大5件表示
-            $purchasedProducts = $user->purchases()->with('product.pictures')
-                ->orderBy('created_at', 'desc') // 最新の購入履歴（降順）
-                ->limit(5)->get();
-            // \Log::info('$purchasedProducts', [$purchasedProducts]);
+            // マイページに購入した商品を最大5件表示（削除済みの商品は含めない）
+            $purchasedProducts = $user->purchases()
+                ->with('product.pictures')
+                ->whereHas('product', function ($query) {
+                    $query->whereNull('deleted_at');
+                })
+                ->orderBy('created_at', 'desc')// 最新の登録履歴（降順）
+                ->limit(5)
+                ->get();
+            // マイページにお気に入り登録商品を最大5件表示（削除済みの商品は含めない）
+            $likedProducts = $user->likes()
+                ->with('product.pictures')
+                ->whereHas('product', function ($query) {
+                    $query->whereNull('deleted_at');
+                })
+                ->orderBy('created_at', 'desc')// 最新の登録履歴（降順）
+                ->limit(5)
+                ->get();
 
-            // マイページにお気に入り登録商品を最大5件表示
-            $likedProducts = $user->likes()->with('product.pictures')
-                ->orderBy('created_at', 'desc') // 最新の登録履歴（降順）
-                ->limit(5)->get();
-            \Log::info('$likedProducts', [$likedProducts]);
+            // \Log::info('$likedProducts', [$likedProducts]);
             return response()->json(['purchased_products' => $purchasedProducts, 'liked_products' => $likedProducts]);
         // } catch (\Exception $e) {
         //     \Log::error('例外エラー: ' . $e->getMessage());

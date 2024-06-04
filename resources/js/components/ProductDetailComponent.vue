@@ -9,9 +9,10 @@
                     <div class="p-product">
                         <!-- いいねアイコンとエックスのシェア -->
                         <div class="p-icon">
-                            <i v-if="!product.liked" class="c-icon c-icon__unlike far fa-heart" @click="productLike(product)"></i>
-                            <i v-else class="c-icon c-icon__like fas fa-heart" @click="productUnlike(product)"></i>
-                            <span class="u-mr__m">{{ product.likes_count }}</span> <!-- いいね数 -->
+                            <div class="c-tooltip">
+                                <i class="c-icon c-icon__nolike fas fa-heart"></i><span class="u-mr__m">{{ product.likes_count }}</span> <!-- いいね数 -->
+                                <div class="c-tooltip__text">ユーザー登録・ログインしてください</div>
+                            </div>
                             <i class="fa-brands fa-x-twitter c-icon c-icon__share u-pd__s" @click="Xshare"><span class="c-text">でシェア</span></i>
                         </div>
                         <!-- 商品画像 -->
@@ -29,14 +30,12 @@
                     </div>
                 </div>
 
-                <!-- 利用者側の購入ボタンは購入済みの購入ボタンは購入できない・自分が購入した商品の場合は、「購入をキャンセルする」ボタンが表示される -->
-                <button v-if="product.is_purchased === false" class="c-button c-button__submit c-button__main u-pd__s" @click="purchaseProduct">購入する</button>
-                <button v-else-if="product.is_purchased === true && product.purchased_id === loginId" class="c-button c-button__submit c-button__primary u-pd__s" @click="cancelPurchase">購入をキャンセルする</button>
-                <button v-else class="c-button c-button__submit c-button__main u-pd__s">購入済み</button>
+                <!-- 未ログインユーザーの購入ボタンはユーザー登録する -->
+                <button  class="c-button c-button__submit c-button__main u-pd__s" @click="register">ユーザー登録する</button>
 
             </section>
-            <!-- サイドバー -->
-            <sidebar-component :introduction="introduction"></sidebar-component>
+            <!-- 絞り込み検索フォーム -->
+            <search-component />
         </div>
         <a @click="$router.back()" class="c-link c-link__back u-mt__s u-mb__s">前のページに戻る</a>
     </main>
@@ -44,11 +43,11 @@
 
 <script>
 import axios from 'axios';
-import SidebarComponent from './SidebarComponent.vue';
+import SearchComponent from './SearchComponent.vue'; // 絞り込み検索コンポーネント
 
 export default {
     components: {
-        SidebarComponent // サイドバーコンポーネントを読み込み
+        SearchComponent, // 絞り込み検索コンポーネント
     },
 
     data() {
@@ -56,38 +55,20 @@ export default {
             product: [], // 商品情報
             categories: [], // カテゴリ
             convenience: [], // コンビニ情報
-            introduction: '', //自己紹介文
             errors: null // エラーメッセージ
         };
-    },
-
-    computed: {
-        // ログインユーザーかどうか
-        isLogin() {
-            return this.$store.getters['auth/check'];
-        },
-
-        // ログインユーザーのIDを取得
-        loginId() {
-            if (this.isLogin) {
-                return this.$store.getters['auth/id'];
-            } else {
-                return null;
-            }
-        },
     },
 
     created() {
         this.productId = this.$route.params.productId; // ルートからproductIdを取得
         this.getProduct(); // インスタンス初期化時に商品情報を読み込む
-        this.getSidebarProfile(); // インスタンス初期化時にサイドバーに表示するプロフィール情報を読み込む
     },
 
     methods: {
         // 商品情報をサーバーから取得
         getProduct() {
             // 商品情報取得APIをGET送信
-            axios.get('/api/products/' + this.productId).then(response => {
+            axios.get('/api/products/detail/' + this.productId).then(response => {
                 // レスポンスデータをそれぞれのプロパティにセット
                 this.product = response.data.product; // 商品情報
                 this.category = response.data.product.category; // カテゴリ情報
@@ -127,71 +108,16 @@ export default {
         },
 
         // エックスのシェアボタン
-        Xshare(){
+        Xshare() {
             // エックスの投稿に遷移して商品を不特定多数の人がシェアできるようにする
             const shareURL = 'https://twitter.com/intent/tweet?text=' + "haiki share 商品をシェアする" + "%20%23haikishare" + '&url=' + "https://haikishare.com/user/products/detail/" + this.productId;  
             location.href = shareURL
         },
 
-        // 商品購入するメソッド
-        purchaseProduct() {
-            // 商品購入APIをPOST送信
-            axios.post('/api/user/products/purchase/' + this.productId).then(response => {
-                this.getProduct(); // 購入状態を更新（「購入する」から「購入をキャンセル」へ変更）
-            }).catch(error => {
-                console.log('errorは、', error);
-                console.error('商品購入処理失敗:', error.response.data);
-                this.errors = error.response.data.errors;
-            });
-        },
-
-        // 商品購入キャンセルするメソッド
-        cancelPurchase() {
-            // 商品キャンセルAPIをPOST送信
-            axios.delete('/api/user/products/purchase/cancel/' + this.productId).then(response => {
-                this.getProduct();　// 購入状態を更新（「購入キャンセル」から「購入する」へ変更）
-            }).catch(error => {
-                console.log('errorは、', error);
-                console.error('商品購入キャンセル処理失敗:', error.response.data);
-                this.errors = error.response.data.errors;
-            });
-        },
-
-        // 商品お気に入り登録
-        productLike(product) {
-            // お気に入り登録APIをPOST送信
-            axios.post('/api/user/like/' + product.id).then(response => {
-                product.liked = true; // いいねアイコンをtrueに切り替え
-                product.likes_count++; // いいね数のインクリメント
-            }).catch(error => {
-                console.error('商品のお気に入り登録失敗:', error);
-            });
-        },
-
-        // 商品お気に入り解除
-        productUnlike(product) {
-            // お気に入り解除APIをPOST送信
-            axios.post('/api/user/unlike/' + product.id).then(response => {
-                product.liked = false; // いいねアイコンをfalseに切り替え
-                product.likes_count--; // いいね数のデクリメント
-            }).catch(error => {
-                console.error('商品のお気に入り解除失敗:', error);
-            });
-        },
-
-        // サイドバーに表示するプロフィール情報の取得
-        getSidebarProfile() {
-            // 利用者側プロフィール情報の取得APIをGET送信
-            axios.get('/api/user/mypage/profile').then(response => {
-                console.log('APIからのレスポンスデータ:', response.data);
-                this.user = response.data.user; // レスポンスデータのユーザー情報をuserプロパティにセット
-                // 取得した各プロフィール情報をintroductionプロパティにセット
-                this.introduction = this.user.introduction; // 自己紹介文
-            }).catch (error => {
-                console.error('プロフィール取得失敗:', error.response.data);
-                this.errors = error.response.data;
-            });
-        },
+        // ユーザー登録するボタンの画面遷移先
+        register() {
+            this.$router.push({ name: 'top' });
+        }
     }
 }
 </script>

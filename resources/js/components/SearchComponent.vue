@@ -31,7 +31,7 @@
                         </div>
 
                         <!-- 検索ボタン -->
-                        <button type="submit" class="c-button c-button__submit c-button__common u-pd__s u-mt__m u-mb__m">商品を検索する</button>
+                        <button type="submit" class="c-button c-button__submit c-button__primary u-pd__s u-mt__m u-mb__m">商品を検索する</button>
 
                     </form>
                 </div>
@@ -50,7 +50,7 @@ export default {
             selectedPrefecture: '', // 都道府県
             minPrice: 0, // 最小価格
             maxPrice: 0, // 最大価格
-            isExpired: '' // 賞味期限切れかどうか
+            isExpired: '', // 賞味期限切れかどうか
         };
     },
 

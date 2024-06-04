@@ -1,51 +1,67 @@
 <template>
     <main class="l-main">
         <h1 class="c-title u-mb__xl">商品詳細</h1>
-        <section class="l-main__wrapper u-pd__l">
-            <div class="l-container">
+        <div class="p-article">
+            <section class="l-main__wrapper u-pd__l">
+                <div class="l-container">
 
-                <h1 class="c-title">{{ product.name }}</h1> <!-- 商品名 -->
-                <div class="p-product">
-                    <!-- いいねアイコン -->
-                    <div class="p-icon u-pdr__s">
-                        <i v-if="!product.liked" class="c-icon c-icon__unlike far fa-heart" @click="productLike(product)"></i>
-                        <i v-else class="c-icon c-icon__like fas fa-heart" @click="productUnlike(product)"></i>
-                        <span>いいね{{ product.likes_count }}</span> <!-- いいね数 -->
+                    <h1 class="c-title u-mt__xl u-mb__xl">{{ product.name }}</h1> <!-- 商品名 -->
+                    <div class="p-product">
+                        <!-- いいねアイコンとエックスのシェア -->
+                        <div class="p-icon">
+                            <div class="c-tooltip">
+                                <i class="c-icon c-icon__nolike fas fa-heart"></i><span class="u-mr__m">{{ product.likes_count }}</span> <!-- いいね数 -->
+                                <div class="c-tooltip__text">コンビニユーザーはお気に入りできません</div>
+                            </div>
+                            <i class="fa-brands fa-x-twitter c-icon c-icon__share u-pd__s" @click="Xshare"><span class="c-text">でシェア</span></i>
+                        </div>
+                        <!-- 商品画像 -->
+                        <div class="p-product__picture">
+                            <img class="c-product__picture--detail" :src="getProductPicturePath(product)" alt="商品画像">
+                        </div>
                     </div>
-                    <!-- エックスのシェアボタン -->
-                    <div class="p-icon">
-                        <button class="c-button c-button__share u-pd__s" @click="Xshare"><i class="fa-brands fa-x-twitter c-icon__share">でシェアする</i></button>
-                    </div>
-                    <!-- 商品画像 -->
-                    <div class="p-product__picture">
-                        <img class="c-product__picture--detail" :src="getProductPicturePath(product)" alt="商品画像">
+                    <!-- 商品情報 -->
+                    <div class="p-product__detail" v-if="product && product.convenience && product.convenience.user">
+                        <p class="c-card__text u-mt__s u-mb__s">価格：{{ product.price }}円</p>
+                        <p class="c-card__text u-mt__s u-mb__s">カテゴリ：{{ getCategoryName(product.category_id) }}</p>
+                        <p class="c-card__text u-mt__s u-mb__s">賞味期限：{{ formatDate(product.expiration_date) }}</p>
+                        <p class="c-card__text u-mt__s u-mb__s">この商品を出品したコンビニ：{{ product.convenience.user.name }} {{ product.convenience.branch_name }}</p>
+                        <p class="c-card__text u-mt__s u-mb__s">住所：{{ product.convenience.address.prefecture }}{{ product.convenience.address.city }}{{ product.convenience.address.town }}{{ product.convenience.address.building }}</p>
                     </div>
                 </div>
-                <!-- 商品情報 -->
-                <div class="p-product__detail">
-                    <p class="c-card__price u-mt__s u-mb__s">価格：{{ product.price }}円</p>
-                    <p class="c-card__category u-mt__s u-mb__s">カテゴリ：{{ getCategoryName(product.category_id) }}</p>
-                    <p class="c-card__date u-mt__s u-mb__s">賞味期限：{{ formatDate(product.expiration_date) }}</p>
-                </div>
 
-            </div>
+                <!-- コンビニ側の購入ボタンは自店舗・他店舗に限らず購入ボタンをクリックできないようにする -->
+                <button class="c-button c-button__submit c-button__purchase" :disabled="true">コンビニユーザーは購入できません</button>
 
-            <!-- コンビニ側の購入ボタンは自店舗・他店舗に限らず購入ボタンをクリックできないようにする -->
-            <button class="c-button c-button__submit c-button__purchase" :disabled="true">コンビニユーザーは購入できません</button>
-
-        </section>
+            </section>
+            <!-- サイドバー -->
+            <sidebar-component :convenience_name="convenience_name" :branch_name="branch_name" :prefecture="prefecture" :city="city" :town="town" :building="building" :introduction="introduction"></sidebar-component>
+        </div>
         <a @click="$router.back()" class="c-link c-link__back u-mt__s u-mb__s">前のページに戻る</a>
     </main>
 </template>
 
 <script>
 import axios from 'axios';
+import SidebarComponent from './SidebarComponent.vue';
 
 export default {
+    components: {
+        SidebarComponent // サイドバーコンポーネントを読み込み
+    },
+
     data() {
         return {
             product: [], // 商品情報
             categories: [], // カテゴリ
+            convenience: [], // コンビニ情報
+            convenience_name: '', // コンビニ名
+            branch_name: '', // 支店名
+            prefecture: '', // 都道府県
+            city: '', // 市区町村
+            town: '', // 地名・番地
+            building: '', // 建物名・部屋番号
+            introduction: '', // 自己紹介文
             errors: null // エラーメッセージ
         };
     },
@@ -60,16 +76,18 @@ export default {
     created() {
         this.productId = this.$route.params.productId; // ルートからproductIdを取得
         this.getProduct(); // インスタンス初期化時に商品情報を読み込む
+        this.getSidebarProfile(); // インスタンス初期化時にサイドバーに表示するプロフィール情報を読み込む
     },
 
     methods: {
         // 商品情報をサーバーから取得
         getProduct() {
             // 商品情報取得APIをGET送信
-            axios.get('/api/products/'+ this.productId).then(response => {
+            axios.get('/api/products/' + this.productId).then(response => {
                 // レスポンスデータをそれぞれのプロパティにセット
                 this.product = response.data.product; // 商品情報
                 this.category = response.data.product.category; // カテゴリ情報
+                this.convenience = response.data.product.convenience; // コンビニ情報
             }).catch(error => {
                 console.error('商品情報取得失敗:', error.response.data);
                 this.errors = error.response.data;
@@ -86,8 +104,10 @@ export default {
 
         // 商品画像のパスを取得するメソッド
         getProductPicturePath(product) {
-            if (product.pictures.length > 0) {
-                return 'https://haikishare.com/product_pictures/' + product.pictures[0].file; // 商品画像がある場合は、その画像パスを返す
+            console.log('productは、', product);
+            console.log('product.picturesは、', product.pictures);
+            if (product.pictures && product.pictures.length > 0) {
+                return product.pictures[0].file; // 商品画像がある場合は、その画像パスを返す
             } else {
                 return 'https://haikishare.com/product_pictures/no_image.png'; // 商品画像がない場合は、デフォルトの商品画像のパスを返す
             }
@@ -130,6 +150,29 @@ export default {
                 console.error('商品のお気に入り解除失敗:', error);
             });
         },
+
+        // サイドバーに表示するプロフィール情報の取得
+        getSidebarProfile() {
+            // コンビニ側プロフィール情報の取得APIをGET送信
+            axios.get('/api/convenience/mypage/profile').then(response => {
+                // レスポンスデータをそれぞれのプロパティにセット
+                this.user = response.data.user; // ユーザー情報
+                this.convenience = response.data.convenience; // コンビニ情報
+                this.address = response.data.address; // 住所情報
+                // 取得した各プロフィール情報をそれぞれのプロパティにセット
+                this.convenience_name = this.user.name; // コンビニ名
+                this.branch_name = this.convenience.branch_name; // 支店名
+                this.prefecture = this.address.prefecture; // 住所
+                this.city = this.address.city; // 市区町村
+                this.town = this.address.town; // 地名・番地
+                this.building = this.address.building; // 建物名・部屋番号
+                this.introduction = this.user.introduction; // 自己紹介文
+            })
+            .catch(error => {
+                console.error('プロフィール取得失敗:', error.response.data);
+                this.errors = error.response.data;
+            });
+        }
     },
 }
 </script>

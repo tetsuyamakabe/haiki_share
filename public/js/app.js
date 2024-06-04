@@ -5084,6 +5084,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -5107,10 +5108,18 @@ __webpack_require__.r(__webpack_exports__);
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/contact', this.formData).then(function (response) {
         console.log('お問い合わせ内容を送信します。');
       })["catch"](function (error) {
-        _this.flashMessage = error.response.data.message;
         console.error('お問い合わせ送信失敗:', error.response.data);
         _this.errors = error.response.data.errors;
       });
+    },
+    // お問い合わせ内容の文字数をカウントするメソッド
+    countCharacters: function countCharacters() {
+      this.countCharactersLength = this.formData.contact.length; // 文字数のカウント
+      if (this.countCharactersLength > 255) {
+        // 文字数が50文字を超えているか
+        this.formData.count = this.formData.count.slice(0, 255); // 文字列を255文字まで切り抜く
+        this.countCharactersLength = 255; // 255文字以上の文字数を制限する
+      }
     }
   }
 });
@@ -5233,6 +5242,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -5317,10 +5327,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-//
-//
-//
-//
+/* harmony import */ var _SidebarComponent_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./SidebarComponent.vue */ "./resources/js/components/Convenience/SidebarComponent.vue");
 //
 //
 //
@@ -5410,12 +5417,30 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
+  components: {
+    SidebarComponent: _SidebarComponent_vue__WEBPACK_IMPORTED_MODULE_0__["default"] // サイドバーコンポーネントを読み込み
+  },
   data: function data() {
     return {
       saleProducts: [],
       // 出品した商品情報
-      purchaseProducts: [] // 購入された商品情報
+      purchaseProducts: [],
+      // 購入された商品情報
+      convenience_name: '',
+      // コンビニ名
+      branch_name: '',
+      // 支店名
+      prefecture: '',
+      // 都道府県
+      city: '',
+      // 市区町村
+      town: '',
+      // 地名・番地
+      building: '',
+      // 建物名・部屋番号
+      introduction: '' // 自己紹介文
     };
   },
   computed: {
@@ -5426,6 +5451,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   created: function created() {
     this.getMyPageProducts(); // インスタンス初期化時にマイページに表示する出品・購入商品情報を読み込む
+    this.getSidebarProfile(); // インスタンス初期化時にサイドバーに表示するプロフィール情報を読み込む
   },
   methods: {
     // マイページに表示する出品・購入商品情報の取得
@@ -5443,8 +5469,10 @@ __webpack_require__.r(__webpack_exports__);
     },
     // 商品画像のパスを取得するメソッド
     getProductPicturePath: function getProductPicturePath(product) {
+      console.log('productは、', product);
+      console.log('product.picturesは、', product.pictures);
       if (product.pictures.length > 0) {
-        return 'https://haikishare.com/product_pictures/' + product.pictures[0].file; // 商品画像がある場合は、その画像パスを返す
+        return product.pictures[0].file; // 商品画像がある場合は、その画像パスを返す
       } else {
         return 'https://haikishare.com/product_pictures/no_image.png'; // 商品画像がない場合は、デフォルトの商品画像のパスを返す
       }
@@ -5456,6 +5484,37 @@ __webpack_require__.r(__webpack_exports__);
       var month = ('0' + (date.getMonth() + 1)).slice(-2); // 月数を取得、1桁の場合は2桁の数値に変換
       var day = ('0' + date.getDate()).slice(-2); // 日数を取得、1桁の場合は2桁の数値に変換
       return "".concat(year, "\u5E74").concat(month, "\u6708").concat(day, "\u65E5"); // 年月日のフォーマットされた賞味期限日付を返す
+    },
+    // 商品詳細画面のリンクを返すメソッド
+    getProductDetailLink: function getProductDetailLink(productId) {
+      return {
+        name: 'convenience.products.detail',
+        params: {
+          productId: productId
+        }
+      }; // 商品詳細画面のリンクを返す
+    },
+    // サイドバーに表示するプロフィール情報の取得
+    getSidebarProfile: function getSidebarProfile() {
+      var _this2 = this;
+      // コンビニ側プロフィール情報の取得APIをGET送信
+      axios.get('/api/convenience/mypage/profile').then(function (response) {
+        // レスポンスデータをそれぞれのプロパティにセット
+        _this2.user = response.data.user; // ユーザー情報
+        _this2.convenience = response.data.convenience; // コンビニ情報
+        _this2.address = response.data.address; // 住所情報
+        // 取得した各プロフィール情報をそれぞれのプロパティにセット
+        _this2.convenience_name = _this2.user.name; // コンビニ名
+        _this2.branch_name = _this2.convenience.branch_name; // 支店名
+        _this2.prefecture = _this2.address.prefecture; // 住所
+        _this2.city = _this2.address.city; // 市区町村
+        _this2.town = _this2.address.town; // 地名・番地
+        _this2.building = _this2.address.building; // 建物名・部屋番号
+        _this2.introduction = _this2.user.introduction; // 自己紹介文
+      })["catch"](function (error) {
+        console.error('プロフィール取得失敗:', error.response.data);
+        _this2.errors = error.response.data;
+      });
     }
   }
 });
@@ -5473,6 +5532,7 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _SidebarComponent_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./SidebarComponent.vue */ "./resources/js/components/Convenience/SidebarComponent.vue");
 //
 //
 //
@@ -5513,15 +5573,38 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+  components: {
+    SidebarComponent: _SidebarComponent_vue__WEBPACK_IMPORTED_MODULE_1__["default"] // サイドバーコンポーネントを読み込み
+  },
   data: function data() {
     return {
       product: [],
       // 商品情報
       categories: [],
       // カテゴリ
+      convenience: [],
+      // コンビニ情報
+      convenience_name: '',
+      // コンビニ名
+      branch_name: '',
+      // 支店名
+      prefecture: '',
+      // 都道府県
+      city: '',
+      // 市区町村
+      town: '',
+      // 地名・番地
+      building: '',
+      // 建物名・部屋番号
+      introduction: '',
+      // 自己紹介文
       errors: null // エラーメッセージ
     };
   },
@@ -5534,6 +5617,7 @@ __webpack_require__.r(__webpack_exports__);
   created: function created() {
     this.productId = this.$route.params.productId; // ルートからproductIdを取得
     this.getProduct(); // インスタンス初期化時に商品情報を読み込む
+    this.getSidebarProfile(); // インスタンス初期化時にサイドバーに表示するプロフィール情報を読み込む
   },
   methods: {
     // 商品情報をサーバーから取得
@@ -5544,6 +5628,7 @@ __webpack_require__.r(__webpack_exports__);
         // レスポンスデータをそれぞれのプロパティにセット
         _this.product = response.data.product; // 商品情報
         _this.category = response.data.product.category; // カテゴリ情報
+        _this.convenience = response.data.product.convenience; // コンビニ情報
       })["catch"](function (error) {
         console.error('商品情報取得失敗:', error.response.data);
         _this.errors = error.response.data;
@@ -5559,8 +5644,10 @@ __webpack_require__.r(__webpack_exports__);
     },
     // 商品画像のパスを取得するメソッド
     getProductPicturePath: function getProductPicturePath(product) {
-      if (product.pictures.length > 0) {
-        return 'https://haikishare.com/product_pictures/' + product.pictures[0].file; // 商品画像がある場合は、その画像パスを返す
+      console.log('productは、', product);
+      console.log('product.picturesは、', product.pictures);
+      if (product.pictures && product.pictures.length > 0) {
+        return product.pictures[0].file; // 商品画像がある場合は、その画像パスを返す
       } else {
         return 'https://haikishare.com/product_pictures/no_image.png'; // 商品画像がない場合は、デフォルトの商品画像のパスを返す
       }
@@ -5598,6 +5685,28 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (error) {
         console.error('商品のお気に入り解除失敗:', error);
       });
+    },
+    // サイドバーに表示するプロフィール情報の取得
+    getSidebarProfile: function getSidebarProfile() {
+      var _this2 = this;
+      // コンビニ側プロフィール情報の取得APIをGET送信
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/convenience/mypage/profile').then(function (response) {
+        // レスポンスデータをそれぞれのプロパティにセット
+        _this2.user = response.data.user; // ユーザー情報
+        _this2.convenience = response.data.convenience; // コンビニ情報
+        _this2.address = response.data.address; // 住所情報
+        // 取得した各プロフィール情報をそれぞれのプロパティにセット
+        _this2.convenience_name = _this2.user.name; // コンビニ名
+        _this2.branch_name = _this2.convenience.branch_name; // 支店名
+        _this2.prefecture = _this2.address.prefecture; // 住所
+        _this2.city = _this2.address.city; // 市区町村
+        _this2.town = _this2.address.town; // 地名・番地
+        _this2.building = _this2.address.building; // 建物名・部屋番号
+        _this2.introduction = _this2.user.introduction; // 自己紹介文
+      })["catch"](function (error) {
+        console.error('プロフィール取得失敗:', error.response.data);
+        _this2.errors = error.response.data;
+      });
     }
   }
 });
@@ -5615,6 +5724,7 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _SidebarComponent_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./SidebarComponent.vue */ "./resources/js/components/Convenience/SidebarComponent.vue");
 //
 //
 //
@@ -5668,9 +5778,30 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+  components: {
+    SidebarComponent: _SidebarComponent_vue__WEBPACK_IMPORTED_MODULE_1__["default"] // サイドバーコンポーネントを読み込み
+  },
   data: function data() {
     return {
       formData: {
@@ -5680,14 +5811,32 @@ __webpack_require__.r(__webpack_exports__);
         // 価格
         category: '',
         // カテゴリ名
-        expiration_date: '',
-        // 賞味期限
+        expiration_year: '',
+        // 賞味期限の年
+        expiration_month: '',
+        // 賞味期限の月
+        expiration_day: '',
+        // 賞味期限の日
         product_picture: '' // 商品画像
       },
       categories: [],
       // 商品カテゴリ
       picturePreview: '',
       // 商品画像のプレビュー
+      convenience_name: '',
+      // コンビニ名
+      branch_name: '',
+      // 支店名
+      prefecture: '',
+      // 都道府県
+      city: '',
+      // 市区町村
+      town: '',
+      // 地名・番地
+      building: '',
+      // 建物名・部屋番号
+      introduction: '',
+      // 自己紹介文
       errors: null // エラーメッセージ
     };
   },
@@ -5698,15 +5847,21 @@ __webpack_require__.r(__webpack_exports__);
     },
     // 賞味期限日付の入力値をYYYY-MM-DD形式に直すメソッド
     formattedExpirationDate: function formattedExpirationDate() {
-      var inputDate = this.formData.expiration_date; // 賞味期限フォームの入力値
-      // 賞味期限日付の形式をYYYY-MM-DD形式に直す
-      if (inputDate && inputDate.length === 8) {
-        var year = inputDate.substring(0, 4); // YYYYの部分を取り出す
-        var month = inputDate.substring(4, 6); // MMの部分を取り出す
-        var day = inputDate.substring(6, 8); // DDの部分を取り出す
-        return "".concat(year, "-").concat(month, "-").concat(day); // YYYY-MM-DD形式に変換して返す
+      var year = this.formData.expiration_year; // 年の部分を取得
+      var month = this.formData.expiration_month; // 月の部分を取得
+      var day = this.formData.expiration_day; // 日の部分を取得
+      // 年、月、日がすべて入力されている場合のみ処理を行う
+      if (year && month && day) {
+        // 新しいDateオブジェクトを作成し、入力された年月日をセット
+        var date = new Date(year, month - 1, day); // 月は0から始まるため、1を引く
+        // toLocaleString()メソッドを使用して日付をロケールに応じた文字列に変換し、返す
+        return date.toLocaleString('ja-JP', {
+          year: 'numeric',
+          month: '2-digit',
+          day: '2-digit'
+        });
       } else {
-        return ''; // 入力が不正な場合は空文字を返す
+        return ''; // 年、月、日のいずれかが入力されていない場合は空文字を返す
       }
     }
   },
@@ -5714,6 +5869,7 @@ __webpack_require__.r(__webpack_exports__);
     this.productId = this.$route.params.productId; // ルートからproductIdを取得
     this.getCategories(); // インスタンス初期化時に商品カテゴリ情報を読み込む
     this.getProduct(); // インスタンス初期化時に商品情報を読み込む
+    this.getSidebarProfile(); // インスタンス初期化時にサイドバーに表示するプロフィール情報を読み込む
   },
   methods: {
     // 商品カテゴリ情報をサーバーから取得
@@ -5738,7 +5894,16 @@ __webpack_require__.r(__webpack_exports__);
         _this2.formData.name = _this2.product.name || ''; // 商品名
         _this2.formData.price = _this2.product.price || ''; // 価格
         _this2.formData.category = _this2.product.category.id || ''; // カテゴリ名
-        _this2.formData.expiration_date = _this2.product.expiration_date.replace(/-/g, '') || ''; // 賞味期限、YY-MM-DD形式からハイフンだけを取り除く
+        // 賞味期限を年、月、日に分割して設定
+        if (_this2.product.expiration_date) {
+          _this2.formData.expiration_year = _this2.product.expiration_date.substring(0, 4) || ''; // 年
+          _this2.formData.expiration_month = _this2.product.expiration_date.substring(5, 7) || ''; // 月
+          _this2.formData.expiration_day = _this2.product.expiration_date.substring(8, 10) || ''; // 日
+        } else {
+          _this2.formData.expiration_year = ''; // 賞味期限がない場合は空文字列に設定
+          _this2.formData.expiration_month = '';
+          _this2.formData.expiration_day = '';
+        }
         _this2.formData.product_picture = _this2.product.pictures[0].file || ''; // 商品画像
       })["catch"](function (error) {
         console.error('商品情報取得失敗:', error.response.data);
@@ -5801,8 +5966,7 @@ __webpack_require__.r(__webpack_exports__);
       var file = event.target.files[0]; // 最初のファイルを取得
       if (file) {
         this.previewImage(file); // プレビューを表示する
-        this.formData.product_picture = file;
-        / / / formData.product_pictureにファイルオブジェクトを設定;
+        this.formData.product_picture = file; // formData.product_pictureにファイルオブジェクトを設定
       } else {
         this.formData.product_picture = null; // ファイルがない場合はnull
       }
@@ -5816,6 +5980,28 @@ __webpack_require__.r(__webpack_exports__);
         _this5.picturePreview = e.target.result; // プレビュー画像のURLを生成し、formDataに設定
       };
       reader.readAsDataURL(file); // ファイルをデータURLとして読み込み
+    },
+    // サイドバーに表示するプロフィール情報の取得
+    getSidebarProfile: function getSidebarProfile() {
+      var _this6 = this;
+      // コンビニ側プロフィール情報の取得APIをGET送信
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/convenience/mypage/profile').then(function (response) {
+        // レスポンスデータをそれぞれのプロパティにセット
+        _this6.user = response.data.user; // ユーザー情報
+        _this6.convenience = response.data.convenience; // コンビニ情報
+        _this6.address = response.data.address; // 住所情報
+        // 取得した各プロフィール情報をそれぞれのプロパティにセット
+        _this6.convenience_name = _this6.user.name; // コンビニ名
+        _this6.branch_name = _this6.convenience.branch_name; // 支店名
+        _this6.prefecture = _this6.address.prefecture; // 住所
+        _this6.city = _this6.address.city; // 市区町村
+        _this6.town = _this6.address.town; // 地名・番地
+        _this6.building = _this6.address.building; // 建物名・部屋番号
+        _this6.introduction = _this6.user.introduction; // 自己紹介文
+      })["catch"](function (error) {
+        console.error('プロフィール取得失敗:', error.response.data);
+        _this6.errors = error.response.data;
+      });
     }
   }
 });
@@ -5833,7 +6019,8 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _PaginationComponent_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../PaginationComponent.vue */ "./resources/js/components/PaginationComponent.vue");
+/* harmony import */ var _SidebarComponent_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./SidebarComponent.vue */ "./resources/js/components/Convenience/SidebarComponent.vue");
+/* harmony import */ var _PaginationComponent_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../PaginationComponent.vue */ "./resources/js/components/PaginationComponent.vue");
 //
 //
 //
@@ -5875,13 +6062,22 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+
 
 
  // ページネーションコンポーネント
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
-    PaginationComponent: _PaginationComponent_vue__WEBPACK_IMPORTED_MODULE_1__["default"] // ページネーションコンポーネント
+    SidebarComponent: _SidebarComponent_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
+    // サイドバーコンポーネントを読み込み
+    PaginationComponent: _PaginationComponent_vue__WEBPACK_IMPORTED_MODULE_2__["default"] // ページネーションコンポーネント
   },
   data: function data() {
     return {
@@ -5889,7 +6085,21 @@ __webpack_require__.r(__webpack_exports__);
       // 商品情報
       currentPage: 1,
       // 現在ページ
-      lastPage: 1 // 最後のページ
+      lastPage: 1,
+      // 最後のページ
+      convenience_name: '',
+      // コンビニ名
+      branch_name: '',
+      // 支店名
+      prefecture: '',
+      // 都道府県
+      city: '',
+      // 市区町村
+      town: '',
+      // 地名・番地
+      building: '',
+      // 建物名・部屋番号
+      introduction: '' // 自己紹介文
     };
   },
   computed: {
@@ -5900,6 +6110,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   created: function created() {
     this.getPurchasedProduct(); // インスタンス初期化時に購入された商品情報を読み込む
+    this.getSidebarProfile(); // インスタンス初期化時にサイドバーに表示するプロフィール情報を読み込む
   },
   methods: {
     // URLを作成する
@@ -5953,7 +6164,7 @@ __webpack_require__.r(__webpack_exports__);
     // 商品画像のパスを取得するメソッド
     getProductPicturePath: function getProductPicturePath(product) {
       if (product.pictures.length > 0) {
-        return 'https://haikishare.com/product_pictures/' + product.pictures[0].file; // 商品画像がある場合は、その画像パスを返す
+        return product.pictures[0].file; // 商品画像がある場合は、その画像パスを返す
       } else {
         return 'https://haikishare.com/product_pictures/no_image.png'; // 商品画像がない場合は、デフォルトの商品画像のパスを返す
       }
@@ -5974,6 +6185,28 @@ __webpack_require__.r(__webpack_exports__);
           productId: productId
         }
       }; // 商品詳細画面のリンクを返す
+    },
+    // サイドバーに表示するプロフィール情報の取得
+    getSidebarProfile: function getSidebarProfile() {
+      var _this3 = this;
+      // コンビニ側プロフィール情報の取得APIをGET送信
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/convenience/mypage/profile').then(function (response) {
+        // レスポンスデータをそれぞれのプロパティにセット
+        _this3.user = response.data.user; // ユーザー情報
+        _this3.convenience = response.data.convenience; // コンビニ情報
+        _this3.address = response.data.address; // 住所情報
+        // 取得した各プロフィール情報をそれぞれのプロパティにセット
+        _this3.convenience_name = _this3.user.name; // コンビニ名
+        _this3.branch_name = _this3.convenience.branch_name; // 支店名
+        _this3.prefecture = _this3.address.prefecture; // 住所
+        _this3.city = _this3.address.city; // 市区町村
+        _this3.town = _this3.address.town; // 地名・番地
+        _this3.building = _this3.address.building; // 建物名・部屋番号
+        _this3.introduction = _this3.user.introduction; // 自己紹介文
+      })["catch"](function (error) {
+        console.error('プロフィール取得失敗:', error.response.data);
+        _this3.errors = error.response.data;
+      });
     }
   }
 });
@@ -5991,6 +6224,7 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _SidebarComponent_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./SidebarComponent.vue */ "./resources/js/components/Convenience/SidebarComponent.vue");
 //
 //
 //
@@ -6042,9 +6276,30 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+  components: {
+    SidebarComponent: _SidebarComponent_vue__WEBPACK_IMPORTED_MODULE_1__["default"] // サイドバーコンポーネントを読み込み
+  },
   data: function data() {
     return {
       formData: {
@@ -6054,14 +6309,32 @@ __webpack_require__.r(__webpack_exports__);
         // 価格
         category: '',
         // カテゴリ名
-        expiration_date: '',
-        // 賞味期限
+        expiration_year: '',
+        // 賞味期限の年
+        expiration_month: '',
+        // 賞味期限の月
+        expiration_day: '',
+        // 賞味期限の日
         product_picture: '' // 商品画像
       },
       categories: [],
       // 商品カテゴリ
       picturePreview: '',
       // 商品画像のプレビュー
+      convenience_name: '',
+      // コンビニ名
+      branch_name: '',
+      // 支店名
+      prefecture: '',
+      // 都道府県
+      city: '',
+      // 市区町村
+      town: '',
+      // 地名・番地
+      building: '',
+      // 建物名・部屋番号
+      introduction: '',
+      // 自己紹介文
       errors: null // エラーメッセージ
     };
   },
@@ -6072,20 +6345,25 @@ __webpack_require__.r(__webpack_exports__);
     },
     // 賞味期限日付の入力値をYYYY-MM-DD形式に直すメソッド
     formattedExpirationDate: function formattedExpirationDate() {
-      var inputDate = this.formData.expiration_date; // 賞味期限フォームの入力値
-      // 賞味期限日付の形式をYYYY-MM-DD形式に直す
-      if (inputDate && inputDate.length === 8) {
-        var year = inputDate.substring(0, 4); // YYYYの部分を取り出す
-        var month = inputDate.substring(4, 6); // MMの部分を取り出す
-        var day = inputDate.substring(6, 8); // DDの部分を取り出す
-        return "".concat(year, "-").concat(month, "-").concat(day); // YYYY-MM-DD形式に変換して返す
+      var _this$formData = this.formData,
+        expiration_year = _this$formData.expiration_year,
+        expiration_month = _this$formData.expiration_month,
+        expiration_day = _this$formData.expiration_day;
+      if (expiration_year && expiration_month && expiration_day) {
+        var expirationDate = new Date(expiration_year, expiration_month - 1, expiration_day);
+        return expirationDate.toLocaleString('ja-JP', {
+          year: 'numeric',
+          month: '2-digit',
+          day: '2-digit'
+        });
       } else {
-        return ''; // 入力が不正な場合は空文字を返す
+        return '';
       }
     }
   },
   created: function created() {
     this.getCategories(); // インスタンス初期化時に商品カテゴリ情報を読み込む
+    this.getSidebarProfile(); // インスタンス初期化時にサイドバーに表示するプロフィール情報を読み込む
   },
   methods: {
     // 商品カテゴリ情報をサーバーから取得
@@ -6115,7 +6393,9 @@ __webpack_require__.r(__webpack_exports__);
       formData.append('price', this.formData.price); // 価格
       formData.append('category', this.formData.category); // カテゴリ名
       formData.append('expiration_date', this.formattedExpirationDate); // 賞味期限
-      formData.append('product_picture', this.formData.product_picture); // 商品画像
+      if (this.formData.product_picture !== '') {
+        formData.append('product_picture', this.formData.product_picture); // 商品画像
+      }
       // 商品出品APIをPOST送信
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/convenience/products/sale', formData, config).then(function (response) {
         // リクエストヘッダとフォームデータを含むリクエスト
@@ -6137,8 +6417,7 @@ __webpack_require__.r(__webpack_exports__);
       var file = event.target.files[0]; // 最初のファイルを取得
       if (file) {
         this.previewImage(file); // プレビューを表示する
-        this.formData.product_picture = file;
-        / / / formData.product_pictureにファイルオブジェクトを設定;
+        this.formData.product_picture = file; // formData.product_pictureにファイルオブジェクトを設定
       } else {
         this.formData.product_picture = null; // ファイルがない場合はnull
       }
@@ -6152,6 +6431,28 @@ __webpack_require__.r(__webpack_exports__);
         _this3.picturePreview = e.target.result; // プレビュー画像のURLを生成し、formDataに設定
       };
       reader.readAsDataURL(file); // ファイルをデータURLとして読み込み
+    },
+    // サイドバーに表示するプロフィール情報の取得
+    getSidebarProfile: function getSidebarProfile() {
+      var _this4 = this;
+      // コンビニ側プロフィール情報の取得APIをGET送信
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/convenience/mypage/profile').then(function (response) {
+        // レスポンスデータをそれぞれのプロパティにセット
+        _this4.user = response.data.user; // ユーザー情報
+        _this4.convenience = response.data.convenience; // コンビニ情報
+        _this4.address = response.data.address; // 住所情報
+        // 取得した各プロフィール情報をそれぞれのプロパティにセット
+        _this4.convenience_name = _this4.user.name; // コンビニ名
+        _this4.branch_name = _this4.convenience.branch_name; // 支店名
+        _this4.prefecture = _this4.address.prefecture; // 住所
+        _this4.city = _this4.address.city; // 市区町村
+        _this4.town = _this4.address.town; // 地名・番地
+        _this4.building = _this4.address.building; // 建物名・部屋番号
+        _this4.introduction = _this4.user.introduction; // 自己紹介文
+      })["catch"](function (error) {
+        console.error('プロフィール取得失敗:', error.response.data);
+        _this4.errors = error.response.data;
+      });
     }
   }
 });
@@ -6169,7 +6470,8 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _PaginationComponent_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../PaginationComponent.vue */ "./resources/js/components/PaginationComponent.vue");
+/* harmony import */ var _SidebarComponent_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./SidebarComponent.vue */ "./resources/js/components/Convenience/SidebarComponent.vue");
+/* harmony import */ var _PaginationComponent_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../PaginationComponent.vue */ "./resources/js/components/PaginationComponent.vue");
 //
 //
 //
@@ -6211,13 +6513,22 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+
 
 
  // ページネーションコンポーネント
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
-    PaginationComponent: _PaginationComponent_vue__WEBPACK_IMPORTED_MODULE_1__["default"] // ページネーションコンポーネント
+    SidebarComponent: _SidebarComponent_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
+    // サイドバーコンポーネントを読み込み
+    PaginationComponent: _PaginationComponent_vue__WEBPACK_IMPORTED_MODULE_2__["default"] // ページネーションコンポーネント
   },
   data: function data() {
     return {
@@ -6225,7 +6536,21 @@ __webpack_require__.r(__webpack_exports__);
       // 商品情報
       currentPage: 1,
       // 現在ページ
-      lastPage: 1 // 最後のページ
+      lastPage: 1,
+      // 最後のページ
+      convenience_name: '',
+      // コンビニ名
+      branch_name: '',
+      // 支店名
+      prefecture: '',
+      // 都道府県
+      city: '',
+      // 市区町村
+      town: '',
+      // 地名・番地
+      building: '',
+      // 建物名・部屋番号
+      introduction: '' // 自己紹介文
     };
   },
   computed: {
@@ -6236,6 +6561,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   created: function created() {
     this.getSaleProduct(); // インスタンス初期化時に出品した商品情報を読み込む
+    this.getSidebarProfile(); // インスタンス初期化時にサイドバーに表示するプロフィール情報を読み込む
   },
   methods: {
     // URLを作成する
@@ -6288,7 +6614,7 @@ __webpack_require__.r(__webpack_exports__);
     // 商品画像のパスを取得するメソッド
     getProductPicturePath: function getProductPicturePath(product) {
       if (product.pictures.length > 0) {
-        return 'https://haikishare.com/product_pictures/' + product.pictures[0].file; // 商品画像がある場合は、その画像パスを返す
+        return product.pictures[0].file; // 商品画像がある場合は、その画像パスを返す
       } else {
         return 'https://haikishare.com/product_pictures/no_image.png'; // 商品画像がない場合は、デフォルトの商品画像のパスを返す
       }
@@ -6318,6 +6644,28 @@ __webpack_require__.r(__webpack_exports__);
           productId: productId
         }
       }; // 商品編集画面のリンクを返す
+    },
+    // サイドバーに表示するプロフィール情報の取得
+    getSidebarProfile: function getSidebarProfile() {
+      var _this3 = this;
+      // コンビニ側プロフィール情報の取得APIをGET送信
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/convenience/mypage/profile').then(function (response) {
+        // レスポンスデータをそれぞれのプロパティにセット
+        _this3.user = response.data.user; // ユーザー情報
+        _this3.convenience = response.data.convenience; // コンビニ情報
+        _this3.address = response.data.address; // 住所情報
+        // 取得した各プロフィール情報をそれぞれのプロパティにセット
+        _this3.convenience_name = _this3.user.name; // コンビニ名
+        _this3.branch_name = _this3.convenience.branch_name; // 支店名
+        _this3.prefecture = _this3.address.prefecture; // 住所
+        _this3.city = _this3.address.city; // 市区町村
+        _this3.town = _this3.address.town; // 地名・番地
+        _this3.building = _this3.address.building; // 建物名・部屋番号
+        _this3.introduction = _this3.user.introduction; // 自己紹介文
+      })["catch"](function (error) {
+        console.error('プロフィール取得失敗:', error.response.data);
+        _this3.errors = error.response.data;
+      });
     }
   }
 });
@@ -6335,6 +6683,14 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _SidebarComponent_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./SidebarComponent.vue */ "./resources/js/components/Convenience/SidebarComponent.vue");
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -6429,7 +6785,11 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var jsonpAdapter = __webpack_require__(/*! axios-jsonp */ "./node_modules/axios-jsonp/lib/index.js");
+
 /* harmony default export */ __webpack_exports__["default"] = ({
+  components: {
+    SidebarComponent: _SidebarComponent_vue__WEBPACK_IMPORTED_MODULE_1__["default"] // サイドバーコンポーネントを読み込み
+  },
   data: function data() {
     return {
       formData: {
@@ -6455,10 +6815,22 @@ var jsonpAdapter = __webpack_require__(/*! axios-jsonp */ "./node_modules/axios-
         // 自己紹介文
         icon: '' // 顔写真
       },
-      textareaCount: 0,
-      // 自己紹介文の文字数カウント初期値
       iconPreview: '',
       // アイコン画像のプレビュー
+      convenience_name: '',
+      // コンビニ名
+      branch_name: '',
+      // 支店名
+      prefecture: '',
+      // 都道府県
+      city: '',
+      // 市区町村
+      town: '',
+      // 地名・番地
+      building: '',
+      // 建物名・部屋番号
+      introduction: '',
+      // 自己紹介文
       errors: null,
       // エラーメッセージ
       PasswordType: 'password',
@@ -6478,6 +6850,7 @@ var jsonpAdapter = __webpack_require__(/*! axios-jsonp */ "./node_modules/axios-
   },
   created: function created() {
     this.getProfile(); // インスタンス初期化時に編集前のプロフィール情報を読み込む
+    this.getSidebarProfile(); // インスタンス初期化時にサイドバーに表示するプロフィール情報を読み込む
   },
   methods: {
     // 編集前のプロフィール情報をサーバーから取得
@@ -6613,6 +6986,28 @@ var jsonpAdapter = __webpack_require__(/*! axios-jsonp */ "./node_modules/axios-
         _this4.iconPreview = e.target.result; // プレビュー画像のURLを生成し、formDataに設定
       };
       reader.readAsDataURL(file); // ファイルをデータURLとして読み込み
+    },
+    // サイドバーに表示するプロフィール情報の取得
+    getSidebarProfile: function getSidebarProfile() {
+      var _this5 = this;
+      // コンビニ側プロフィール情報の取得APIをGET送信
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/convenience/mypage/profile').then(function (response) {
+        // レスポンスデータをそれぞれのプロパティにセット
+        _this5.user = response.data.user; // ユーザー情報
+        _this5.convenience = response.data.convenience; // コンビニ情報
+        _this5.address = response.data.address; // 住所情報
+        // 取得した各プロフィール情報をそれぞれのプロパティにセット
+        _this5.convenience_name = _this5.user.name; // コンビニ名
+        _this5.branch_name = _this5.convenience.branch_name; // 支店名
+        _this5.prefecture = _this5.address.prefecture; // 住所
+        _this5.city = _this5.address.city; // 市区町村
+        _this5.town = _this5.address.town; // 地名・番地
+        _this5.building = _this5.address.building; // 建物名・部屋番号
+        _this5.introduction = _this5.user.introduction; // 自己紹介文
+      })["catch"](function (error) {
+        console.error('プロフィール取得失敗:', error.response.data);
+        _this5.errors = error.response.data;
+      });
     }
   }
 });
@@ -6631,6 +7026,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _TermsComponent_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../TermsComponent.vue */ "./resources/js/components/TermsComponent.vue");
+//
+//
 //
 //
 //
@@ -6857,6 +7254,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -6928,6 +7326,68 @@ __webpack_require__.r(__webpack_exports__);
         this.PasswordConfirmType = this.PasswordConfirmType === 'password' ? 'text' : 'password'; // PasswordTypeによってパスワードの表示・非表示を切り替え
         this.PasswordConfirmIconClass = this.PasswordConfirmIconClass === 'far fa-eye-slash' ? 'far fa-eye' : 'far fa-eye-slash'; // PasswordIconClassによってパスワードのアイコンを切り替え
       }
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Convenience/SidebarComponent.vue?vue&type=script&lang=js":
+/*!**************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Convenience/SidebarComponent.vue?vue&type=script&lang=js ***!
+  \**************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['convenience_name', 'branch_name', 'prefecture', 'city', 'town', 'building', 'introduction'],
+  computed: {
+    // ログインユーザーかどうか
+    isLogin: function isLogin() {
+      return this.$store.getters['auth/check'];
+    },
+    // 顔写真を表示する
+    icon: function icon() {
+      return this.$store.getters['auth/icon'];
     }
   }
 });
@@ -7084,8 +7544,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-//
-//
 //
 //
 //
@@ -7453,9 +7911,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({});
 
@@ -7474,6 +7929,20 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _SearchComponent_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./SearchComponent.vue */ "./resources/js/components/SearchComponent.vue");
 /* harmony import */ var _PaginationComponent_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./PaginationComponent.vue */ "./resources/js/components/PaginationComponent.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -7629,7 +8098,7 @@ __webpack_require__.r(__webpack_exports__);
     // 商品画像のパスを取得するメソッド
     getProductPicturePath: function getProductPicturePath(product) {
       if (product.pictures.length > 0) {
-        return 'https://haikishare.com/product_pictures/' + product.pictures[0].file; // 商品画像がある場合は、その画像パスを返す
+        return product.pictures[0].file; // 商品画像がある場合は、その画像パスを返す
       } else {
         return 'https://haikishare.com/product_pictures/no_image.png'; // 商品画像がない場合は、デフォルトの商品画像のパスを返す
       }
@@ -7644,7 +8113,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     // 商品詳細画面のリンクを返すメソッド
     getProductDetailLink: function getProductDetailLink(productId) {
-      // ログインユーザーのroleによって利用者・コンビニのマイページリンクを動的に変える
+      // ログイン状態と、ユーザーのroleによって利用者・コンビニのマイページリンクを動的に変える
       if (this.$store.getters['auth/role'] === 'user') {
         return {
           name: 'user.products.detail',
@@ -7660,7 +8129,12 @@ __webpack_require__.r(__webpack_exports__);
           }
         };
       }
-      return "/top"; // ログインしていない場合はTOP画面に遷移
+      return {
+        name: 'products.detail',
+        params: {
+          productId: productId
+        }
+      };
     },
     // 商品お気に入り登録
     productLike: function productLike(product) {
@@ -7680,6 +8154,142 @@ __webpack_require__.r(__webpack_exports__);
         product.likes_count--; // いいね数のデクリメント
       })["catch"](function (error) {
         console.error('商品のお気に入り解除失敗:', error);
+      });
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ProductDetailComponent.vue?vue&type=script&lang=js":
+/*!********************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ProductDetailComponent.vue?vue&type=script&lang=js ***!
+  \********************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _SearchComponent_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./SearchComponent.vue */ "./resources/js/components/SearchComponent.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+ // 絞り込み検索コンポーネント
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  components: {
+    SearchComponent: _SearchComponent_vue__WEBPACK_IMPORTED_MODULE_1__["default"] // 絞り込み検索コンポーネント
+  },
+  data: function data() {
+    return {
+      product: [],
+      // 商品情報
+      categories: [],
+      // カテゴリ
+      convenience: [],
+      // コンビニ情報
+      errors: null // エラーメッセージ
+    };
+  },
+  created: function created() {
+    this.productId = this.$route.params.productId; // ルートからproductIdを取得
+    this.getProduct(); // インスタンス初期化時に商品情報を読み込む
+  },
+  methods: {
+    // 商品情報をサーバーから取得
+    getProduct: function getProduct() {
+      var _this = this;
+      // 商品情報取得APIをGET送信
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/products/detail/' + this.productId).then(function (response) {
+        // レスポンスデータをそれぞれのプロパティにセット
+        _this.product = response.data.product; // 商品情報
+        _this.category = response.data.product.category; // カテゴリ情報
+        _this.convenience = response.data.product.convenience; // コンビニ情報
+      })["catch"](function (error) {
+        console.error('商品情報取得失敗:', error.response.data);
+        _this.errors = error.response.data;
+      });
+    },
+    // カテゴリIDからカテゴリ名を取得するメソッド
+    getCategoryName: function getCategoryName(categoryId) {
+      if (this.category && this.category.id === categoryId) {
+        // カテゴリ情報がある場合はcategoryIdと一致するidがあるか
+        return this.category.name; // カテゴリ名を返す
+      }
+      return ''; // ない場合は空文字を返す
+    },
+    // 商品画像のパスを取得するメソッド
+    getProductPicturePath: function getProductPicturePath(product) {
+      console.log('productは、', product);
+      console.log('product.picturesは、', product.pictures);
+      if (product.pictures && product.pictures.length > 0) {
+        return product.pictures[0].file; // 商品画像がある場合は、その画像パスを返す
+      } else {
+        return 'https://haikishare.com/product_pictures/no_image.png'; // 商品画像がない場合は、デフォルトの商品画像のパスを返す
+      }
+    },
+    // 賞味期限日付をフォーマットするメソッド
+    formatDate: function formatDate(dateString) {
+      var date = new Date(dateString); // Dateオブジェクトに変換する
+      var year = date.getFullYear(); // 年数を取得
+      var month = ('0' + (date.getMonth() + 1)).slice(-2); // 月数を取得、1桁の場合は2桁の数値に変換
+      var day = ('0' + date.getDate()).slice(-2); // 日数を取得、1桁の場合は2桁の数値に変換
+      return "".concat(year, "\u5E74").concat(month, "\u6708").concat(day, "\u65E5"); // 年月日のフォーマットされた賞味期限日付を返す
+    },
+    // エックスのシェアボタン
+    Xshare: function Xshare() {
+      // エックスの投稿に遷移して商品を不特定多数の人がシェアできるようにする
+      var shareURL = 'https://twitter.com/intent/tweet?text=' + "haiki share 商品をシェアする" + "%20%23haikishare" + '&url=' + "https://haikishare.com/user/products/detail/" + this.productId;
+      location.href = shareURL;
+    },
+    // ユーザー登録するボタンの画面遷移先
+    register: function register() {
+      this.$router.push({
+        name: 'top'
       });
     }
   }
@@ -7833,9 +8443,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-//
-//
-//
 //
 //
 //
@@ -8094,6 +8701,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -8101,11 +8712,14 @@ __webpack_require__.r(__webpack_exports__);
     return {
       formData: {
         name: '',
+        // お名前
         email: '',
-        contact: ''
+        // メールアドレス
+        contact: '' // お問い合わせ内容
       },
-      errors: null,
-      flashMessage: ''
+      textareaCount: 0,
+      // お問い合わせ内容の文字数カウント初期値
+      errors: null // エラーメッセージ
     };
   },
   methods: {
@@ -8114,12 +8728,20 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/contact', this.formData).then(function (response) {
         console.log('お問い合わせ内容を送信します。');
-        _this.flashMessage = 'お問い合わせ受付完了メールを送信しました。';
       })["catch"](function (error) {
         console.log('errorは、', error);
         console.error('ユーザー登録失敗:', error.response.data);
         _this.errors = error.response.data.errors;
       });
+    },
+    // お問い合わせ内容の文字数をカウントするメソッド
+    countCharacters: function countCharacters() {
+      this.countCharactersLength = this.formData.contact.length; // 文字数のカウント
+      if (this.countCharactersLength > 255) {
+        // 文字数が50文字を超えているか
+        this.formData.count = this.formData.count.slice(0, 255); // 文字列を255文字まで切り抜く
+        this.countCharactersLength = 255; // 255文字以上の文字数を制限する
+      }
     }
   }
 });
@@ -8241,6 +8863,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -8283,8 +8906,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             case 5:
               // ログイン状態を保持
               _this.$router.push({
-                name: 'user.mypage'
-              }); // ログイン後、マイページに遷移
+                name: 'products'
+              }); // ログイン後、商品一覧画面に遷移
               _context.next = 13;
               break;
             case 8:
@@ -8326,26 +8949,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+/* harmony import */ var _SidebarComponent_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./SidebarComponent.vue */ "./resources/js/components/User/SidebarComponent.vue");
 //
 //
 //
@@ -8435,38 +9039,29 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
+  components: {
+    SidebarComponent: _SidebarComponent_vue__WEBPACK_IMPORTED_MODULE_0__["default"] // サイドバーコンポーネントを読み込み
+  },
   data: function data() {
     return {
       purchasedProducts: [],
       // 購入された商品情報
-      likedProducts: [] // お気に入り登録した商品情報
+      likedProducts: [],
+      // お気に入り登録した商品情報
+      introduction: '' //自己紹介文
     };
   },
   computed: {
     // ログインユーザーかどうか
     isLogin: function isLogin() {
       return this.$store.getters['auth/check'];
-    },
-    // ログインユーザーのIDを取得
-    loginId: function loginId() {
-      if (this.isLogin) {
-        return this.$store.getters['auth/id'];
-      } else {
-        return null;
-      }
-    },
-    // アイコンを表示する
-    icon: function icon() {
-      return this.$store.getters['auth/icon'];
-    },
-    // ユーザーの名前を表示する
-    username: function username() {
-      return this.$store.getters['auth/username'];
     }
   },
   created: function created() {
     this.getMyPageProducts(); // インスタンス初期化時にマイページに表示する購入・お気に入り商品情報を読み込む
+    this.getSidebarProfile(); // インスタンス初期化時にサイドバーに表示するプロフィール情報を読み込む
   },
   methods: {
     // マイページに表示する購入・お気に入り商品情報の取得
@@ -8489,11 +9084,9 @@ __webpack_require__.r(__webpack_exports__);
       console.log('productは、', product);
       console.log('product.picturesは、', product.pictures);
       if (product.pictures.length > 0) {
-        return '/storage/product_pictures/' + product.pictures[0].file;
-        // return 'https://haikishare.com/product_pictures/' + product.pictures[0].file; // 商品画像がある場合は、その画像パスを返す
+        return product.pictures[0].file; // 商品画像がある場合は、その画像パスを返す
       } else {
-        return '/storage/product_pictures/no_image.png';
-        // return 'https://haikishare.com/product_pictures/no_image.png'; // 商品画像がない場合は、デフォルトの商品画像のパスを返す
+        return 'https://haikishare.com/product_pictures/no_image.png'; // 商品画像がない場合は、デフォルトの商品画像のパスを返す
       }
     },
     // 賞味期限日付をフォーマットするメソッド
@@ -8525,6 +9118,20 @@ __webpack_require__.r(__webpack_exports__);
         console.error('商品購入キャンセル処理失敗:', error.response.data);
         _this2.errors = error.response.data.errors;
       });
+    },
+    // サイドバーに表示するプロフィール情報の取得
+    getSidebarProfile: function getSidebarProfile() {
+      var _this3 = this;
+      // 利用者側プロフィール情報の取得APIをGET送信
+      axios.get('/api/user/mypage/profile').then(function (response) {
+        console.log('APIからのレスポンスデータ:', response.data);
+        _this3.user = response.data.user; // レスポンスデータのユーザー情報をuserプロパティにセット
+        // 取得した各プロフィール情報をintroductionプロパティにセット
+        _this3.introduction = _this3.user.introduction; // 自己紹介文
+      })["catch"](function (error) {
+        console.error('プロフィール取得失敗:', error.response.data);
+        _this3.errors = error.response.data;
+      });
     }
   }
 });
@@ -8542,6 +9149,7 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _SidebarComponent_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./SidebarComponent.vue */ "./resources/js/components/User/SidebarComponent.vue");
 //
 //
 //
@@ -8584,15 +9192,25 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+  components: {
+    SidebarComponent: _SidebarComponent_vue__WEBPACK_IMPORTED_MODULE_1__["default"] // サイドバーコンポーネントを読み込み
+  },
   data: function data() {
     return {
-      product: {},
+      product: [],
       // 商品情報
       categories: [],
       // カテゴリ
+      convenience: [],
+      // コンビニ情報
+      introduction: '',
+      //自己紹介文
       errors: null // エラーメッセージ
     };
   },
@@ -8613,6 +9231,7 @@ __webpack_require__.r(__webpack_exports__);
   created: function created() {
     this.productId = this.$route.params.productId; // ルートからproductIdを取得
     this.getProduct(); // インスタンス初期化時に商品情報を読み込む
+    this.getSidebarProfile(); // インスタンス初期化時にサイドバーに表示するプロフィール情報を読み込む
   },
   methods: {
     // 商品情報をサーバーから取得
@@ -8620,10 +9239,10 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
       // 商品情報取得APIをGET送信
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/products/' + this.productId).then(function (response) {
-        // 商品IDを含むリクエスト
         // レスポンスデータをそれぞれのプロパティにセット
         _this.product = response.data.product; // 商品情報
         _this.category = response.data.product.category; // カテゴリ情報
+        _this.convenience = response.data.product.convenience; // コンビニ情報
       })["catch"](function (error) {
         console.error('商品情報取得失敗:', error.response.data);
         _this.errors = error.response.data;
@@ -8641,8 +9260,8 @@ __webpack_require__.r(__webpack_exports__);
     getProductPicturePath: function getProductPicturePath(product) {
       console.log('productは、', product);
       console.log('product.picturesは、', product.pictures);
-      if (product.pictures.length > 0) {
-        return 'https://haikishare.com/product_pictures/' + product.pictures[0].file; // 商品画像がある場合は、その画像パスを返す
+      if (product.pictures && product.pictures.length > 0) {
+        return product.pictures[0].file; // 商品画像がある場合は、その画像パスを返す
       } else {
         return 'https://haikishare.com/product_pictures/no_image.png'; // 商品画像がない場合は、デフォルトの商品画像のパスを返す
       }
@@ -8704,6 +9323,20 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (error) {
         console.error('商品のお気に入り解除失敗:', error);
       });
+    },
+    // サイドバーに表示するプロフィール情報の取得
+    getSidebarProfile: function getSidebarProfile() {
+      var _this4 = this;
+      // 利用者側プロフィール情報の取得APIをGET送信
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/user/mypage/profile').then(function (response) {
+        console.log('APIからのレスポンスデータ:', response.data);
+        _this4.user = response.data.user; // レスポンスデータのユーザー情報をuserプロパティにセット
+        // 取得した各プロフィール情報をintroductionプロパティにセット
+        _this4.introduction = _this4.user.introduction; // 自己紹介文
+      })["catch"](function (error) {
+        console.error('プロフィール取得失敗:', error.response.data);
+        _this4.errors = error.response.data;
+      });
     }
   }
 });
@@ -8721,7 +9354,8 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _PaginationComponent_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../PaginationComponent.vue */ "./resources/js/components/PaginationComponent.vue");
+/* harmony import */ var _SidebarComponent_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./SidebarComponent.vue */ "./resources/js/components/User/SidebarComponent.vue");
+/* harmony import */ var _PaginationComponent_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../PaginationComponent.vue */ "./resources/js/components/PaginationComponent.vue");
 //
 //
 //
@@ -8769,13 +9403,22 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+
 
 
  // ページネーションコンポーネント
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
-    PaginationComponent: _PaginationComponent_vue__WEBPACK_IMPORTED_MODULE_1__["default"] // ページネーションコンポーネント
+    SidebarComponent: _SidebarComponent_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
+    // サイドバーコンポーネントを読み込み
+    PaginationComponent: _PaginationComponent_vue__WEBPACK_IMPORTED_MODULE_2__["default"] // ページネーションコンポーネント
   },
   data: function data() {
     return {
@@ -8783,7 +9426,9 @@ __webpack_require__.r(__webpack_exports__);
       // 商品
       currentPage: 1,
       // 現在ページ
-      lastPage: 1 // 最後のページ
+      lastPage: 1,
+      // 最後のページ
+      introduction: '' //自己紹介文
     };
   },
   computed: {
@@ -8794,6 +9439,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   created: function created() {
     this.getLikeProduct(); // インスタンス初期化時にお気に入り登録商品情報を読み込む
+    this.getSidebarProfile(); // インスタンス初期化時にサイドバーに表示するプロフィール情報を読み込む
   },
   methods: {
     // URLを作成する
@@ -8836,18 +9482,22 @@ __webpack_require__.r(__webpack_exports__);
         params: params
       }).then(function (response) {
         // パラメータを含むリクエスト
+        console.log('APIからのレスポンス：', response.data);
         // レスポンスデータをそれぞれのプロパティにセット
         _this2.products = response.data.products; // お気に入り登録商品情報
         _this2.lastPage = response.data.products.last_page; // ページ数
       })["catch"](function (error) {
+        console.log(error);
         console.error('商品情報取得失敗:', error.response.data);
         _this2.errors = error.response.data;
       });
     },
     // 商品画像のパスを取得するメソッド
     getProductPicturePath: function getProductPicturePath(product) {
-      if (product.product.pictures.length > 0) {
-        return 'https://haikishare.com/product_pictures/' + product.product.pictures[0].file; // 商品画像がある場合は、その画像パスを返す
+      console.log('productは、', product);
+      console.log('product.picturesは、', product.pictures);
+      if (product.pictures && product.pictures.length > 0) {
+        return product.pictures[0].file; // 商品画像がある場合は、その画像パスを返す
       } else {
         return 'https://haikishare.com/product_pictures/no_image.png'; // 商品画像がない場合は、デフォルトの商品画像のパスを返す
       }
@@ -8888,6 +9538,20 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (error) {
         console.error('商品のお気に入り解除失敗:', error);
       });
+    },
+    // サイドバーに表示するプロフィール情報の取得
+    getSidebarProfile: function getSidebarProfile() {
+      var _this3 = this;
+      // 利用者側プロフィール情報の取得APIをGET送信
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/user/mypage/profile').then(function (response) {
+        console.log('APIからのレスポンスデータ:', response.data);
+        _this3.user = response.data.user; // レスポンスデータのユーザー情報をuserプロパティにセット
+        // 取得した各プロフィール情報をintroductionプロパティにセット
+        _this3.introduction = _this3.user.introduction; // 自己紹介文
+      })["catch"](function (error) {
+        console.error('プロフィール取得失敗:', error.response.data);
+        _this3.errors = error.response.data;
+      });
     }
   }
 });
@@ -8905,7 +9569,8 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _PaginationComponent_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../PaginationComponent.vue */ "./resources/js/components/PaginationComponent.vue");
+/* harmony import */ var _SidebarComponent_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./SidebarComponent.vue */ "./resources/js/components/User/SidebarComponent.vue");
+/* harmony import */ var _PaginationComponent_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../PaginationComponent.vue */ "./resources/js/components/PaginationComponent.vue");
 //
 //
 //
@@ -8947,13 +9612,22 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+
 
 
  // ページネーションコンポーネント
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
-    PaginationComponent: _PaginationComponent_vue__WEBPACK_IMPORTED_MODULE_1__["default"] // ページネーションコンポーネント
+    SidebarComponent: _SidebarComponent_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
+    // サイドバーコンポーネントを読み込み
+    PaginationComponent: _PaginationComponent_vue__WEBPACK_IMPORTED_MODULE_2__["default"] // ページネーションコンポーネント
   },
   data: function data() {
     return {
@@ -8961,7 +9635,9 @@ __webpack_require__.r(__webpack_exports__);
       // 商品情報
       currentPage: 1,
       // 現在ページ
-      lastPage: 1 // 最後のページ
+      lastPage: 1,
+      // 最後のページ
+      introduction: '' //自己紹介文
     };
   },
   computed: {
@@ -8972,6 +9648,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   created: function created() {
     this.getPurchasedProduct(); // インスタンス初期化時に購入した商品情報を読み込む
+    this.getSidebarProfile(); // インスタンス初期化時にサイドバーに表示するプロフィール情報を読み込む
   },
   methods: {
     // URLを作成する
@@ -9024,7 +9701,7 @@ __webpack_require__.r(__webpack_exports__);
     // 商品画像のパスを取得するメソッド
     getProductPicturePath: function getProductPicturePath(product) {
       if (product.product.pictures.length > 0) {
-        return 'https://haikishare.com/product_pictures/' + product.product.pictures[0].file; // 商品画像がある場合は、その画像パスを返す
+        return product.product.pictures[0].file; // 商品画像がある場合は、その画像パスを返す
       } else {
         return 'https://haikishare.com/product_pictures/no_image.png'; // 商品画像がない場合は、デフォルトの商品画像のパスを返す
       }
@@ -9065,6 +9742,20 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (error) {
         console.error('商品のお気に入り解除失敗:', error);
       });
+    },
+    // サイドバーに表示するプロフィール情報の取得
+    getSidebarProfile: function getSidebarProfile() {
+      var _this3 = this;
+      // 利用者側プロフィール情報の取得APIをGET送信
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/user/mypage/profile').then(function (response) {
+        console.log('APIからのレスポンスデータ:', response.data);
+        _this3.user = response.data.user; // レスポンスデータのユーザー情報をuserプロパティにセット
+        // 取得した各プロフィール情報をintroductionプロパティにセット
+        _this3.introduction = _this3.user.introduction; // 自己紹介文
+      })["catch"](function (error) {
+        console.error('プロフィール取得失敗:', error.response.data);
+        _this3.errors = error.response.data;
+      });
     }
   }
 });
@@ -9081,6 +9772,7 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _axiosErrorHandler__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../axiosErrorHandler */ "./resources/js/axiosErrorHandler.js");
+/* harmony import */ var _SidebarComponent_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./SidebarComponent.vue */ "./resources/js/components/User/SidebarComponent.vue");
 //
 //
 //
@@ -9140,9 +9832,19 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+  components: {
+    SidebarComponent: _SidebarComponent_vue__WEBPACK_IMPORTED_MODULE_1__["default"] // サイドバーコンポーネントを読み込み
+  },
   data: function data() {
     return {
       formData: {
@@ -9158,8 +9860,8 @@ __webpack_require__.r(__webpack_exports__);
         // 自己紹介文
         icon: '' // 顔写真
       },
-      textareaCount: 0,
-      // 自己紹介文の文字数カウント初期値
+      introduction: '',
+      //自己紹介文
       iconPreview: '',
       // アイコン画像のプレビュー
       errors: null,
@@ -9181,6 +9883,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   created: function created() {
     this.getProfile(); // インスタンス初期化時に編集前のプロフィール情報を読み込む
+    this.getSidebarProfile(); // インスタンス初期化時にサイドバーに表示するプロフィール情報を読み込む
   },
   methods: {
     // 編集前のプロフィール情報をサーバーから取得
@@ -9279,6 +9982,20 @@ __webpack_require__.r(__webpack_exports__);
         _this3.iconPreview = e.target.result; // プレビュー画像のURLを生成し、formDataに設定
       };
       reader.readAsDataURL(file); // ファイルをデータURLとして読み込み
+    },
+    // サイドバーに表示するプロフィール情報の取得
+    getSidebarProfile: function getSidebarProfile() {
+      var _this4 = this;
+      // 利用者側プロフィール情報の取得APIをGET送信
+      _axiosErrorHandler__WEBPACK_IMPORTED_MODULE_0__["default"].get('/api/user/mypage/profile').then(function (response) {
+        console.log('APIからのレスポンスデータ:', response.data);
+        _this4.user = response.data.user; // レスポンスデータのユーザー情報をuserプロパティにセット
+        // 取得した各プロフィール情報をintroductionプロパティにセット
+        _this4.introduction = _this4.user.introduction; // 自己紹介文
+      })["catch"](function (error) {
+        console.error('プロフィール取得失敗:', error.response.data);
+        _this4.errors = error.response.data;
+      });
     }
   }
 });
@@ -9349,13 +10066,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
  // 利用規約
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
-    'terms-component': _TermsComponent_vue__WEBPACK_IMPORTED_MODULE_1__["default"] // 利用規約コンポーネントを読み込み
+    TermsComponent: _TermsComponent_vue__WEBPACK_IMPORTED_MODULE_1__["default"] // 利用規約コンポーネントを読み込み
   },
   data: function data() {
     return {
@@ -9426,6 +10144,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
 //
 //
 //
@@ -9538,6 +10257,63 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/User/SidebarComponent.vue?vue&type=script&lang=js":
+/*!*******************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/User/SidebarComponent.vue?vue&type=script&lang=js ***!
+  \*******************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['introduction'],
+  computed: {
+    // 顔写真を表示する
+    icon: function icon() {
+      return this.$store.getters['auth/icon'];
+    },
+    // ユーザーの名前を表示する
+    username: function username() {
+      return this.$store.getters['auth/username'];
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/User/WithdrawComponent.vue?vue&type=script&lang=js":
 /*!********************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/User/WithdrawComponent.vue?vue&type=script&lang=js ***!
@@ -9570,11 +10346,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  data: function data() {
-    return {
-      flashMessage: '' // フラッシュメッセージ
-    };
-  },
   computed: {
     // ログインユーザーかどうか
     isLogin: function isLogin() {
@@ -9591,7 +10362,6 @@ __webpack_require__.r(__webpack_exports__);
           name: 'top'
         }); // 退会処理完了後、TOP画面に遷移
       })["catch"](function (error) {
-        console.log('errorは、', error);
         console.error('退会処理失敗:', error.response.data);
         _this.errors = error.response.data.errors;
       });
@@ -45166,7 +45936,9 @@ var render = function () {
   var _c = _vm._self._c || _h
   return _c("main", { staticClass: "l-main" }, [
     _c("section", { staticClass: "l-main__wrapper" }, [
-      _c("h1", { staticClass: "c-title u-mb__xl" }, [_vm._v("お問い合わせ")]),
+      _c("h1", { staticClass: "c-title u-mt__xl u-mb__xl" }, [
+        _vm._v("お問い合わせ"),
+      ]),
       _vm._v(" "),
       _c(
         "form",
@@ -45197,7 +45969,7 @@ var render = function () {
                 expression: "formData.name",
               },
             ],
-            staticClass: "c-input u-pd__s u-mt__m u-mb__m",
+            staticClass: "c-input u-pd__s u-mt__s u-mb__m",
             class: { "is-invalid": _vm.errors && _vm.errors.name },
             attrs: { id: "name", type: "name", autocomplete: "name" },
             domProps: { value: _vm.formData.name },
@@ -45228,7 +46000,7 @@ var render = function () {
                 expression: "formData.email",
               },
             ],
-            staticClass: "c-input u-pd__s u-mt__m u-mb__m",
+            staticClass: "c-input u-pd__s u-mt__s u-mb__m",
             class: { "is-invalid": _vm.errors && _vm.errors.email },
             attrs: { id: "email", type: "text", autocomplete: "email" },
             domProps: { value: _vm.formData.email },
@@ -45259,11 +46031,18 @@ var render = function () {
                 expression: "formData.contact",
               },
             ],
-            staticClass: "c-textarea u-pd__s u-mt__m u-mb__m",
+            staticClass: "c-textarea u-pd__s u-mt__s u-mb__m",
             class: { "is-invalid": _vm.errors && _vm.errors.contact },
-            attrs: { id: "contact", type: "text", cols: "30", rows: "10" },
+            attrs: {
+              maxlength: "255",
+              id: "contact",
+              type: "text",
+              cols: "30",
+              rows: "10",
+            },
             domProps: { value: _vm.formData.contact },
             on: {
+              keyup: _vm.countCharacters,
               input: function ($event) {
                 if ($event.target.composing) {
                   return
@@ -45273,11 +46052,15 @@ var render = function () {
             },
           }),
           _vm._v(" "),
+          _c("span", { staticClass: "c-textarea__count" }, [
+            _vm._v(_vm._s(_vm.formData.contact.length) + " / 255文字"),
+          ]),
+          _vm._v(" "),
           _c(
             "button",
             {
               staticClass:
-                "c-button c-button__submit c-button__user u-pd__s u-mt__m",
+                "c-button c-button__submit c-button__main u-pd__s u-mt__m",
               attrs: { type: "submit" },
             },
             [_vm._v("お問い合わせ内容を送信する")]
@@ -45352,7 +46135,7 @@ var render = function () {
   var _c = _vm._self._c || _h
   return _c("main", { staticClass: "l-main" }, [
     _c("section", { staticClass: "l-main__wrapper" }, [
-      _c("h1", { staticClass: "c-title u-mb__xl" }, [
+      _c("h1", { staticClass: "c-title u-mt__xl u-mb__xl" }, [
         _vm._v("コンビニパスワード変更メール送信"),
       ]),
       _vm._v(" "),
@@ -45403,7 +46186,7 @@ var render = function () {
             "button",
             {
               staticClass:
-                "c-button c-button__submit c-button__convenience u-pd__s u-mt__m",
+                "c-button c-button__submit c-button__main u-pd__s u-mt__m",
               attrs: { type: "submit" },
             },
             [_vm._v("パスワード変更メールを送信する")]
@@ -45460,7 +46243,7 @@ var render = function () {
   var _c = _vm._self._c || _h
   return _c("main", { staticClass: "l-main" }, [
     _c("section", { staticClass: "l-main__wrapper" }, [
-      _c("h1", { staticClass: "c-title u-mb__xl" }, [
+      _c("h1", { staticClass: "c-title u-mt__xl u-mb__xl" }, [
         _vm._v("コンビニログイン"),
       ]),
       _vm._v(" "),
@@ -45495,7 +46278,7 @@ var render = function () {
             ],
             staticClass: "c-input u-pd__s u-mt__m u-mb__m",
             class: { "is-invalid": _vm.errors && _vm.errors.email },
-            attrs: { id: "email", type: "email", autocomplete: "email" },
+            attrs: { id: "email", type: "text", autocomplete: "email" },
             domProps: { value: _vm.formData.email },
             on: {
               input: function ($event) {
@@ -45508,6 +46291,12 @@ var render = function () {
           }),
           _vm._v(" "),
           _vm._m(1),
+          _vm._v(" "),
+          _c("span", { staticClass: "c-text c-text__note" }, [
+            _vm._v(
+              "※パスワードは、半角数字・英字大文字・小文字、記号（!@#$%^&*）を使って8文字以上で入力してください"
+            ),
+          ]),
           _vm._v(" "),
           _vm.errors && _vm.errors.password
             ? _c("span", { staticClass: "c-error u-mt__s" }, [
@@ -45530,7 +46319,7 @@ var render = function () {
                   class: { "is-invalid": _vm.errors && _vm.errors.password },
                   attrs: {
                     id: "password",
-                    placeholder: "英数字8文字以上で入力してください",
+                    placeholder: "8文字以上で入力してください",
                     type: "checkbox",
                   },
                   domProps: {
@@ -45581,7 +46370,7 @@ var render = function () {
                   class: { "is-invalid": _vm.errors && _vm.errors.password },
                   attrs: {
                     id: "password",
-                    placeholder: "英数字8文字以上で入力してください",
+                    placeholder: "8文字以上で入力してください",
                     type: "radio",
                   },
                   domProps: { checked: _vm._q(_vm.formData.password, null) },
@@ -45604,7 +46393,7 @@ var render = function () {
                   class: { "is-invalid": _vm.errors && _vm.errors.password },
                   attrs: {
                     id: "password",
-                    placeholder: "英数字8文字以上で入力してください",
+                    placeholder: "8文字以上で入力してください",
                     type: _vm.PasswordType,
                   },
                   domProps: { value: _vm.formData.password },
@@ -45695,7 +46484,7 @@ var render = function () {
             "button",
             {
               staticClass:
-                "c-button c-button__submit c-button__convenience u-pd__s u-mt__m",
+                "c-button c-button__submit c-button__main u-pd__s u-mt__m",
               attrs: { type: "submit" },
             },
             [_vm._v("ログインする")]
@@ -45764,228 +46553,224 @@ var render = function () {
       _vm._v("コンビニマイページ"),
     ]),
     _vm._v(" "),
-    _c("div", { staticClass: "p-article" }, [
-      _c("section", { staticClass: "l-main__wrapper" }, [
-        _c("div", { staticClass: "l-container" }, [
-          _c("div", { staticClass: "p-mypage__sale" }, [
-            _c("h2", { staticClass: "c-title c-title__sub" }, [
-              _vm._v("出品した商品"),
-            ]),
-            _c("span", { staticClass: "c-text c-text__max" }, [
-              _vm._v("最大5件表示"),
-            ]),
-            _vm._v(" "),
-            _vm.saleProducts.length === 0
-              ? _c("div", [_vm._m(0)])
-              : _c("div", [
-                  _c(
-                    "ul",
-                    { staticClass: "p-product__list" },
-                    _vm._l(_vm.saleProducts, function (product) {
-                      return _c(
-                        "li",
-                        { key: product.id, staticClass: "p-product__item" },
-                        [
-                          _c("div", { staticClass: "c-card u-m__s" }, [
-                            _c(
-                              "div",
-                              { staticClass: "p-card__header u-pd__s" },
-                              [
-                                _c("h3", { staticClass: "c-card__name" }, [
-                                  _vm._v(_vm._s(product.name)),
+    _c(
+      "div",
+      { staticClass: "p-article" },
+      [
+        _c("section", { staticClass: "l-main__wrapper" }, [
+          _c("div", { staticClass: "l-container" }, [
+            _c("div", { staticClass: "p-mypage__sale" }, [
+              _c("h2", { staticClass: "c-title c-title__sub" }, [
+                _vm._v("出品した商品"),
+              ]),
+              _c("span", { staticClass: "c-text c-text__max" }, [
+                _vm._v("最大5件表示"),
+              ]),
+              _vm._v(" "),
+              _vm.saleProducts.length === 0
+                ? _c("div", [_vm._m(0)])
+                : _c("div", [
+                    _c(
+                      "ul",
+                      { staticClass: "p-product__list" },
+                      _vm._l(_vm.saleProducts, function (product) {
+                        return _c(
+                          "li",
+                          { key: product.id, staticClass: "p-product__item" },
+                          [
+                            _c("div", { staticClass: "c-card u-m__s" }, [
+                              _c(
+                                "div",
+                                { staticClass: "p-card__header u-pd__s" },
+                                [
+                                  _c("h3", { staticClass: "c-card__name" }, [
+                                    _vm._v(_vm._s(product.name)),
+                                  ]),
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "p-card__container" }, [
+                                _c("img", {
+                                  staticClass: "c-card__picture u-mb__s",
+                                  attrs: {
+                                    src: _vm.getProductPicturePath(product),
+                                    alt: "商品画像",
+                                  },
+                                }),
+                                _vm._v(" "),
+                                _c("p", { staticClass: "c-card__text" }, [
+                                  _vm._v(_vm._s(product.price) + "円"),
                                 ]),
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "p-card__container" }, [
-                              _c("img", {
-                                staticClass: "c-card__picture u-mb__s",
-                                attrs: {
-                                  src: _vm.getProductPicturePath(product),
-                                  alt: "商品画像",
-                                },
-                              }),
-                            ]),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "p-card__footer" }, [
-                              _c("p", { staticClass: "c-card__price" }, [
-                                _vm._v(_vm._s(product.price) + "円"),
+                                _vm._v(" "),
+                                _c("p", { staticClass: "c-card__text" }, [
+                                  _vm._v(
+                                    _vm._s(
+                                      _vm.formatDate(product.expiration_date)
+                                    )
+                                  ),
+                                ]),
                               ]),
                               _vm._v(" "),
-                              _c("p", { staticClass: "c-card__date" }, [
-                                _vm._v(
-                                  _vm._s(
-                                    _vm.formatDate(product.expiration_date)
-                                  )
+                              _c("div", { staticClass: "p-card__footer" }, [
+                                _c(
+                                  "div",
+                                  { staticClass: "c-button__container" },
+                                  [
+                                    _c(
+                                      "router-link",
+                                      {
+                                        staticClass:
+                                          "c-button c-button__default u-pd__s u-m__s",
+                                        attrs: {
+                                          to: _vm.getProductDetailLink(
+                                            product.id
+                                          ),
+                                        },
+                                      },
+                                      [_vm._v("詳細を見る")]
+                                    ),
+                                  ],
+                                  1
                                 ),
                               ]),
                             ]),
-                          ]),
-                        ]
-                      )
-                    })
-                  ),
-                ]),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "c-link__products u-mt__s" },
-              [
-                _c(
-                  "router-link",
-                  {
-                    staticClass: "c-link",
-                    attrs: { to: { name: "convenience.products.sale" } },
-                  },
-                  [_vm._v("全件表示")]
-                ),
-              ],
-              1
-            ),
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "p-mypage__purchased" }, [
-            _c("h2", { staticClass: "c-title c-title__sub" }, [
-              _vm._v("購入された商品"),
-            ]),
-            _c("span", { staticClass: "c-text c-text__max" }, [
-              _vm._v("最大5件表示"),
-            ]),
-            _vm._v(" "),
-            _vm.purchaseProducts.length === 0
-              ? _c("div", [_vm._m(1)])
-              : _c("div", [
+                          ]
+                        )
+                      })
+                    ),
+                  ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "c-link__products u-mt__s" },
+                [
                   _c(
-                    "ul",
-                    { staticClass: "p-product__list" },
-                    _vm._l(_vm.purchaseProducts, function (product) {
-                      return _c(
-                        "li",
-                        { key: product.id, staticClass: "p-product__item" },
-                        [
-                          _c("div", { staticClass: "c-card u-m__s" }, [
-                            _c(
-                              "div",
-                              { staticClass: "p-card__header u-pd__s" },
-                              [
-                                _c("h3", { staticClass: "c-card__name" }, [
-                                  _vm._v(_vm._s(product.name)),
+                    "router-link",
+                    {
+                      staticClass: "c-link",
+                      attrs: { to: { name: "convenience.products.sale" } },
+                    },
+                    [_vm._v("全件表示")]
+                  ),
+                ],
+                1
+              ),
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "p-mypage__purchased" }, [
+              _c("h2", { staticClass: "c-title c-title__sub" }, [
+                _vm._v("購入された商品"),
+              ]),
+              _c("span", { staticClass: "c-text c-text__max" }, [
+                _vm._v("最大5件表示"),
+              ]),
+              _vm._v(" "),
+              _vm.purchaseProducts.length === 0
+                ? _c("div", [_vm._m(1)])
+                : _c("div", [
+                    _c(
+                      "ul",
+                      { staticClass: "p-product__list" },
+                      _vm._l(_vm.purchaseProducts, function (product) {
+                        return _c(
+                          "li",
+                          { key: product.id, staticClass: "p-product__item" },
+                          [
+                            _c("div", { staticClass: "c-card u-m__s" }, [
+                              _c(
+                                "div",
+                                { staticClass: "p-card__header u-pd__s" },
+                                [
+                                  _c("h3", { staticClass: "c-card__name" }, [
+                                    _vm._v(_vm._s(product.name)),
+                                  ]),
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "p-card__container" }, [
+                                _c("img", {
+                                  staticClass: "c-card__picture u-mb__s",
+                                  attrs: {
+                                    src: _vm.getProductPicturePath(product),
+                                    alt: "商品画像",
+                                  },
+                                }),
+                                _vm._v(" "),
+                                _c("p", { staticClass: "c-card__text" }, [
+                                  _vm._v(_vm._s(product.price) + "円"),
                                 ]),
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "p-card__container" }, [
-                              _c("img", {
-                                staticClass: "c-card__picture u-mb__s",
-                                attrs: {
-                                  src: _vm.getProductPicturePath(product),
-                                  alt: "商品画像",
-                                },
-                              }),
-                            ]),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "p-card__footer" }, [
-                              _c("p", { staticClass: "c-card__price" }, [
-                                _vm._v(_vm._s(product.price) + "円"),
+                                _vm._v(" "),
+                                _c("p", { staticClass: "c-card__text" }, [
+                                  _vm._v(
+                                    _vm._s(
+                                      _vm.formatDate(product.expiration_date)
+                                    )
+                                  ),
+                                ]),
                               ]),
                               _vm._v(" "),
-                              _c("p", { staticClass: "c-card__date" }, [
-                                _vm._v(
-                                  _vm._s(
-                                    _vm.formatDate(product.expiration_date)
-                                  )
+                              _c("div", { staticClass: "p-card__footer" }, [
+                                _c(
+                                  "div",
+                                  { staticClass: "c-button__container" },
+                                  [
+                                    _c(
+                                      "router-link",
+                                      {
+                                        staticClass:
+                                          "c-button c-button__default u-pd__s u-m__s",
+                                        attrs: {
+                                          to: _vm.getProductDetailLink(
+                                            product.id
+                                          ),
+                                        },
+                                      },
+                                      [_vm._v("詳細を見る")]
+                                    ),
+                                  ],
+                                  1
                                 ),
                               ]),
                             ]),
-                          ]),
-                        ]
-                      )
-                    })
+                          ]
+                        )
+                      })
+                    ),
+                  ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "c-link__products u-mt__s" },
+                [
+                  _c(
+                    "router-link",
+                    {
+                      staticClass: "c-link",
+                      attrs: { to: { name: "convenience.products.purchase" } },
+                    },
+                    [_vm._v("全件表示")]
                   ),
-                ]),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "c-link__products u-mt__s" },
-              [
-                _c(
-                  "router-link",
-                  {
-                    staticClass: "c-link",
-                    attrs: { to: { name: "convenience.products.purchase" } },
-                  },
-                  [_vm._v("全件表示")]
-                ),
-              ],
-              1
-            ),
+                ],
+                1
+              ),
+            ]),
           ]),
         ]),
-      ]),
-      _vm._v(" "),
-      _c("section", { staticClass: "l-sidebar" }, [
-        _c(
-          "div",
-          { staticClass: "p-mypage__sidebar" },
-          [
-            _c(
-              "router-link",
-              {
-                staticClass: "c-link u-mt__xl u-mb__xl",
-                attrs: { to: { name: "convenience.profile" } },
-              },
-              [_vm._v("プロフィール編集")]
-            ),
-            _vm._v(" "),
-            _c(
-              "router-link",
-              {
-                staticClass: "c-link u-mt__xl u-mb__xl",
-                attrs: { to: { name: "convenience.withdraw" } },
-              },
-              [_vm._v("退会")]
-            ),
-            _vm._v(" "),
-            _c(
-              "router-link",
-              {
-                staticClass: "c-link u-mt__xl u-mb__xl",
-                attrs: { to: { name: "convenience.products.create" } },
-              },
-              [_vm._v("商品出品")]
-            ),
-            _vm._v(" "),
-            _c(
-              "router-link",
-              {
-                staticClass: "c-link u-mt__xl u-mb__xl",
-                attrs: { to: { name: "convenience.products.sale" } },
-              },
-              [_vm._v("出品した商品一覧")]
-            ),
-            _vm._v(" "),
-            _c(
-              "router-link",
-              {
-                staticClass: "c-link u-mt__xl u-mb__xl",
-                attrs: { to: { name: "convenience.products.purchase" } },
-              },
-              [_vm._v("購入された商品一覧")]
-            ),
-            _vm._v(" "),
-            _c(
-              "router-link",
-              {
-                staticClass: "c-link u-mt__xl u-mb__xl",
-                attrs: { to: { name: "products" } },
-              },
-              [_vm._v("商品一覧")]
-            ),
-          ],
-          1
-        ),
-      ]),
-    ]),
+        _vm._v(" "),
+        _c("sidebar-component", {
+          attrs: {
+            convenience_name: _vm.convenience_name,
+            branch_name: _vm.branch_name,
+            prefecture: _vm.prefecture,
+            city: _vm.city,
+            town: _vm.town,
+            building: _vm.building,
+            introduction: _vm.introduction,
+          },
+        }),
+      ],
+      1
+    ),
     _vm._v(" "),
     _c(
       "a",
@@ -46047,92 +46832,121 @@ var render = function () {
   return _c("main", { staticClass: "l-main" }, [
     _c("h1", { staticClass: "c-title u-mb__xl" }, [_vm._v("商品詳細")]),
     _vm._v(" "),
-    _c("section", { staticClass: "l-main__wrapper u-pd__l" }, [
-      _c("div", { staticClass: "l-container" }, [
-        _c("h1", { staticClass: "c-title" }, [
-          _vm._v(_vm._s(_vm.product.name)),
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "p-product" }, [
-          _c("div", { staticClass: "p-icon u-pdr__s" }, [
-            !_vm.product.liked
-              ? _c("i", {
-                  staticClass: "c-icon c-icon__unlike far fa-heart",
-                  on: {
-                    click: function ($event) {
-                      _vm.productLike(_vm.product)
-                    },
-                  },
-                })
-              : _c("i", {
-                  staticClass: "c-icon c-icon__like fas fa-heart",
-                  on: {
-                    click: function ($event) {
-                      _vm.productUnlike(_vm.product)
-                    },
-                  },
-                }),
+    _c(
+      "div",
+      { staticClass: "p-article" },
+      [
+        _c("section", { staticClass: "l-main__wrapper u-pd__l" }, [
+          _c("div", { staticClass: "l-container" }, [
+            _c("h1", { staticClass: "c-title u-mt__xl u-mb__xl" }, [
+              _vm._v(_vm._s(_vm.product.name)),
+            ]),
             _vm._v(" "),
-            _c("span", [_vm._v("いいね" + _vm._s(_vm.product.likes_count))]),
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "p-icon" }, [
-            _c(
-              "button",
-              {
-                staticClass: "c-button c-button__share u-pd__s",
-                on: { click: _vm.Xshare },
-              },
-              [
+            _c("div", { staticClass: "p-product" }, [
+              _c("div", { staticClass: "p-icon" }, [
+                _c("div", { staticClass: "c-tooltip" }, [
+                  _c("i", {
+                    staticClass: "c-icon c-icon__nolike fas fa-heart",
+                  }),
+                  _c("span", { staticClass: "u-mr__m" }, [
+                    _vm._v(_vm._s(_vm.product.likes_count)),
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "c-tooltip__text" }, [
+                    _vm._v("コンビニユーザーはお気に入りできません"),
+                  ]),
+                ]),
+                _vm._v(" "),
                 _c(
                   "i",
-                  { staticClass: "fa-brands fa-x-twitter c-icon__share" },
-                  [_vm._v("でシェアする")]
+                  {
+                    staticClass:
+                      "fa-brands fa-x-twitter c-icon c-icon__share u-pd__s",
+                    on: { click: _vm.Xshare },
+                  },
+                  [_c("span", { staticClass: "c-text" }, [_vm._v("でシェア")])]
                 ),
-              ]
-            ),
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "p-product__picture" }, [
+                _c("img", {
+                  staticClass: "c-product__picture--detail",
+                  attrs: {
+                    src: _vm.getProductPicturePath(_vm.product),
+                    alt: "商品画像",
+                  },
+                }),
+              ]),
+            ]),
+            _vm._v(" "),
+            _vm.product &&
+            _vm.product.convenience &&
+            _vm.product.convenience.user
+              ? _c("div", { staticClass: "p-product__detail" }, [
+                  _c("p", { staticClass: "c-card__text u-mt__s u-mb__s" }, [
+                    _vm._v("価格：" + _vm._s(_vm.product.price) + "円"),
+                  ]),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "c-card__text u-mt__s u-mb__s" }, [
+                    _vm._v(
+                      "カテゴリ：" +
+                        _vm._s(_vm.getCategoryName(_vm.product.category_id))
+                    ),
+                  ]),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "c-card__text u-mt__s u-mb__s" }, [
+                    _vm._v(
+                      "賞味期限：" +
+                        _vm._s(_vm.formatDate(_vm.product.expiration_date))
+                    ),
+                  ]),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "c-card__text u-mt__s u-mb__s" }, [
+                    _vm._v(
+                      "この商品を出品したコンビニ：" +
+                        _vm._s(_vm.product.convenience.user.name) +
+                        " " +
+                        _vm._s(_vm.product.convenience.branch_name)
+                    ),
+                  ]),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "c-card__text u-mt__s u-mb__s" }, [
+                    _vm._v(
+                      "住所：" +
+                        _vm._s(_vm.product.convenience.address.prefecture) +
+                        _vm._s(_vm.product.convenience.address.city) +
+                        _vm._s(_vm.product.convenience.address.town) +
+                        _vm._s(_vm.product.convenience.address.building)
+                    ),
+                  ]),
+                ])
+              : _vm._e(),
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "p-product__picture" }, [
-            _c("img", {
-              staticClass: "c-product__picture--detail",
-              attrs: {
-                src: _vm.getProductPicturePath(_vm.product),
-                alt: "商品画像",
-              },
-            }),
-          ]),
+          _c(
+            "button",
+            {
+              staticClass: "c-button c-button__submit c-button__purchase",
+              attrs: { disabled: true },
+            },
+            [_vm._v("コンビニユーザーは購入できません")]
+          ),
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "p-product__detail" }, [
-          _c("p", { staticClass: "c-card__price u-mt__s u-mb__s" }, [
-            _vm._v("価格：" + _vm._s(_vm.product.price) + "円"),
-          ]),
-          _vm._v(" "),
-          _c("p", { staticClass: "c-card__category u-mt__s u-mb__s" }, [
-            _vm._v(
-              "カテゴリ：" +
-                _vm._s(_vm.getCategoryName(_vm.product.category_id))
-            ),
-          ]),
-          _vm._v(" "),
-          _c("p", { staticClass: "c-card__date u-mt__s u-mb__s" }, [
-            _vm._v(
-              "賞味期限：" + _vm._s(_vm.formatDate(_vm.product.expiration_date))
-            ),
-          ]),
-        ]),
-      ]),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "c-button c-button__submit c-button__purchase",
-          attrs: { disabled: true },
-        },
-        [_vm._v("コンビニユーザーは購入できません")]
-      ),
-    ]),
+        _c("sidebar-component", {
+          attrs: {
+            convenience_name: _vm.convenience_name,
+            branch_name: _vm.branch_name,
+            prefecture: _vm.prefecture,
+            city: _vm.city,
+            town: _vm.town,
+            building: _vm.building,
+            introduction: _vm.introduction,
+          },
+        }),
+      ],
+      1
+    ),
     _vm._v(" "),
     _c(
       "a",
@@ -46171,253 +46985,392 @@ var render = function () {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("main", { staticClass: "l-main" }, [
-    _c("section", { staticClass: "l-main__wrapper" }, [
-      _c("h1", { staticClass: "c-title u-mb__xl" }, [
-        _vm._v("コンビニ商品編集画面"),
-      ]),
-      _vm._v(" "),
-      _c(
-        "form",
-        {
-          staticClass: "c-form",
-          on: {
-            submit: function ($event) {
-              $event.preventDefault()
-              return _vm.submitForm($event)
-            },
-          },
-        },
-        [
-          _vm._m(0),
-          _vm._v(" "),
-          _vm.errors && _vm.errors.name
-            ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
-                _vm._v(_vm._s(_vm.errors.name[0])),
-              ])
-            : _vm._e(),
-          _vm._v(" "),
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.formData.name,
-                expression: "formData.name",
-              },
-            ],
-            staticClass: "c-input u-pd__s u-mt__m u-mb__m",
-            class: { "is-invalid": _vm.errors && _vm.errors.name },
-            attrs: { id: "name", type: "text", autocomplete: "name" },
-            domProps: { value: _vm.formData.name },
-            on: {
-              input: function ($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.$set(_vm.formData, "name", $event.target.value)
-              },
-            },
-          }),
-          _vm._v(" "),
-          _vm._m(1),
-          _vm._v(" "),
-          _vm.errors && _vm.errors.price
-            ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
-                _vm._v(_vm._s(_vm.errors.price[0])),
-              ])
-            : _vm._e(),
-          _vm._v(" "),
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.formData.price,
-                expression: "formData.price",
-              },
-            ],
-            staticClass: "c-input u-pd__s u-mt__m u-mb__m",
-            class: { "is-invalid": _vm.errors && _vm.errors.price },
-            attrs: { id: "price", type: "number", autocomplete: "price" },
-            domProps: { value: _vm.formData.price },
-            on: {
-              input: function ($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.$set(_vm.formData, "price", $event.target.value)
-              },
-            },
-          }),
-          _vm._v(" "),
-          _vm._m(2),
-          _vm._v(" "),
-          _vm.errors && _vm.errors.category
-            ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
-                _vm._v(_vm._s(_vm.errors.category[0])),
-              ])
-            : _vm._e(),
-          _vm._v(" "),
-          _c(
-            "select",
-            {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.formData.category,
-                  expression: "formData.category",
-                },
-              ],
-              staticClass: "c-input u-pd__s u-mt__m u-mb__m",
-              class: { "is-invalid": _vm.errors && _vm.errors.category },
-              attrs: { id: "category" },
-              on: {
-                change: function ($event) {
-                  var $$selectedVal = Array.prototype.filter
-                    .call($event.target.options, function (o) {
-                      return o.selected
-                    })
-                    .map(function (o) {
-                      var val = "_value" in o ? o._value : o.value
-                      return val
-                    })
-                  _vm.$set(
-                    _vm.formData,
-                    "category",
-                    $event.target.multiple ? $$selectedVal : $$selectedVal[0]
-                  )
-                },
-              },
-            },
-            [
-              _c("option", { attrs: { value: "" } }, [
-                _vm._v("カテゴリを選択してください"),
-              ]),
-              _vm._v(" "),
-              _vm._l(_vm.categories, function (category) {
-                return _c("option", { domProps: { value: category.id } }, [
-                  _vm._v(_vm._s(category.name)),
-                ])
-              }),
-            ],
-            2
-          ),
-          _vm._v(" "),
-          _vm._m(3),
-          _vm._v(" "),
-          _vm.errors && _vm.errors.expiration_date
-            ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
-                _vm._v(_vm._s(_vm.errors.expiration_date[0])),
-              ])
-            : _vm._e(),
-          _vm._v(" "),
-          _c("div", { staticClass: "p-text__form" }, [
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.formData.expiration_date,
-                  expression: "formData.expiration_date",
-                },
-              ],
-              staticClass: "c-input u-pd__s u-mt__m u-mb__m",
-              class: { "is-invalid": _vm.errors && _vm.errors.expiration_date },
-              attrs: {
-                id: "expiration_date",
-                type: "text",
-                placeholder: "（例）2024年4月10日の場合　20240410　と入力",
-              },
-              domProps: { value: _vm.formData.expiration_date },
-              on: {
-                input: function ($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.$set(_vm.formData, "expiration_date", $event.target.value)
-                },
-              },
-            }),
-            _vm._v(" "),
-            _c("span", { staticClass: "c-text c-text__attention" }, [
-              _vm._v("賞味期限は西暦・半角数字8桁で入力してください"),
-            ]),
+    _c(
+      "div",
+      { staticClass: "p-article" },
+      [
+        _c("section", { staticClass: "l-main__wrapper" }, [
+          _c("h1", { staticClass: "c-title u-mt__xl u-mb__xl" }, [
+            _vm._v("コンビニ商品編集画面"),
           ]),
           _vm._v(" "),
-          _vm._m(4),
-          _vm._v(" "),
-          _vm.errors && _vm.errors.product_picture
-            ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
-                _vm._v(_vm._s(_vm.errors.product_picture[0])),
-              ])
-            : _vm._e(),
-          _vm._v(" "),
           _c(
-            "div",
+            "form",
             {
-              staticClass:
-                "p-product__picture p-product__picture--container u-pd__s u-mt__m u-mb__m",
-              class: { "is-invalid": _vm.errors && _vm.errors.product_picture },
-              on: { drop: _vm.handleDrop },
+              staticClass: "c-form c-form__column",
+              on: {
+                submit: function ($event) {
+                  $event.preventDefault()
+                  return _vm.submitForm($event)
+                },
+              },
             },
             [
+              _vm._m(0),
+              _vm._v(" "),
+              _vm.errors && _vm.errors.name
+                ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
+                    _vm._v(_vm._s(_vm.errors.name[0])),
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
               _c("input", {
-                staticClass: "c-input__hidden",
-                attrs: { type: "file", id: "product_picture" },
-                on: { change: _vm.handleFileChange },
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.formData.name,
+                    expression: "formData.name",
+                  },
+                ],
+                staticClass: "c-input u-pd__s u-mt__m u-mb__m",
+                class: { "is-invalid": _vm.errors && _vm.errors.name },
+                attrs: { id: "name", type: "text", autocomplete: "name" },
+                domProps: { value: _vm.formData.name },
+                on: {
+                  input: function ($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.formData, "name", $event.target.value)
+                  },
+                },
               }),
               _vm._v(" "),
-              !_vm.picturePreview && _vm.formData.product_picture !== ""
-                ? _c("img", {
-                    staticClass: "c-product__picture",
-                    attrs: {
-                      src:
-                        "https://haikishare.com/product_pictures/" +
-                        _vm.formData.product_picture,
-                      alt: "アップロード商品画像",
+              _vm._m(1),
+              _vm._v(" "),
+              _vm.errors && _vm.errors.price
+                ? _c("span", { staticClass: "c-error u-mt__s" }, [
+                    _vm._v(_vm._s(_vm.errors.price[0])),
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
+              _c("div", [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.formData.price,
+                      expression: "formData.price",
                     },
-                  })
-                : _vm.picturePreview
-                ? _c("img", {
-                    staticClass: "c-product__picture",
-                    attrs: {
-                      src: _vm.picturePreview,
-                      alt: "アップロード商品画像",
+                  ],
+                  staticClass: "c-input c-input__price u-pd__s u-mt__m u-mb__m",
+                  class: { "is-invalid": _vm.errors && _vm.errors.price },
+                  attrs: {
+                    id: "price",
+                    type: "number",
+                    maxlength: "4",
+                    autocomplete: "price",
+                  },
+                  domProps: { value: _vm.formData.price },
+                  on: {
+                    input: function ($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.formData, "price", $event.target.value)
                     },
-                  })
-                : _c("img", {
-                    staticClass: "c-product__picture",
+                  },
+                }),
+                _vm._v(" "),
+                _c("span", { staticClass: "c-text" }, [_vm._v("円（税込）")]),
+              ]),
+              _vm._v(" "),
+              _vm._m(2),
+              _vm._v(" "),
+              _vm.errors && _vm.errors.category
+                ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
+                    _vm._v(_vm._s(_vm.errors.category[0])),
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
+              _c(
+                "select",
+                {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.formData.category,
+                      expression: "formData.category",
+                    },
+                  ],
+                  staticClass: "c-input u-pd__s u-mt__m u-mb__m",
+                  class: { "is-invalid": _vm.errors && _vm.errors.category },
+                  attrs: { id: "category" },
+                  on: {
+                    change: function ($event) {
+                      var $$selectedVal = Array.prototype.filter
+                        .call($event.target.options, function (o) {
+                          return o.selected
+                        })
+                        .map(function (o) {
+                          var val = "_value" in o ? o._value : o.value
+                          return val
+                        })
+                      _vm.$set(
+                        _vm.formData,
+                        "category",
+                        $event.target.multiple
+                          ? $$selectedVal
+                          : $$selectedVal[0]
+                      )
+                    },
+                  },
+                },
+                [
+                  _c("option", { attrs: { value: "" } }, [
+                    _vm._v("カテゴリを選択してください"),
+                  ]),
+                  _vm._v(" "),
+                  _vm._l(_vm.categories, function (category) {
+                    return _c("option", { domProps: { value: category.id } }, [
+                      _vm._v(_vm._s(category.name)),
+                    ])
+                  }),
+                ],
+                2
+              ),
+              _vm._v(" "),
+              _vm._m(3),
+              _vm._v(" "),
+              _vm.errors && _vm.errors.expiration_date
+                ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
+                    _vm._v(_vm._s(_vm.errors.expiration_date[0])),
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
+              _c("div", { staticClass: "p-expiration u-mt__m u-mb__m" }, [
+                _c("div", { staticClass: "c-input__date" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.formData.expiration_year,
+                        expression: "formData.expiration_year",
+                      },
+                    ],
+                    staticClass: "c-input u-pd__s",
+                    class: {
+                      "is-invalid": _vm.errors && _vm.errors.expiration_date,
+                    },
                     attrs: {
-                      src: "https://haikishare.com/product_pictures/no_image.png",
-                      alt: "NO_IMAGE",
+                      id: "expiration_year",
+                      type: "text",
+                      placeholder: "YYYY",
+                      maxlength: "4",
+                    },
+                    domProps: { value: _vm.formData.expiration_year },
+                    on: {
+                      input: function ($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(
+                          _vm.formData,
+                          "expiration_year",
+                          $event.target.value
+                        )
+                      },
                     },
                   }),
+                  _vm._v(" "),
+                  _c(
+                    "label",
+                    {
+                      staticClass: "c-label u-mr__s u-ml__s",
+                      attrs: { for: "expiration_year" },
+                    },
+                    [_vm._v("年")]
+                  ),
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "c-input__date" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.formData.expiration_month,
+                        expression: "formData.expiration_month",
+                      },
+                    ],
+                    staticClass: "c-input u-pd__s",
+                    class: {
+                      "is-invalid": _vm.errors && _vm.errors.expiration_date,
+                    },
+                    attrs: {
+                      id: "expiration_month",
+                      type: "text",
+                      placeholder: "MM",
+                      maxlength: "2",
+                    },
+                    domProps: { value: _vm.formData.expiration_month },
+                    on: {
+                      input: function ($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(
+                          _vm.formData,
+                          "expiration_month",
+                          $event.target.value
+                        )
+                      },
+                    },
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "label",
+                    {
+                      staticClass: "c-label u-mr__s u-ml__s",
+                      attrs: { for: "expiration_month" },
+                    },
+                    [_vm._v("月")]
+                  ),
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "c-input__date" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.formData.expiration_day,
+                        expression: "formData.expiration_day",
+                      },
+                    ],
+                    staticClass: "c-input u-pd__s",
+                    class: {
+                      "is-invalid": _vm.errors && _vm.errors.expiration_date,
+                    },
+                    attrs: {
+                      id: "expiration_day",
+                      type: "text",
+                      placeholder: "DD",
+                      maxlength: "2",
+                    },
+                    domProps: { value: _vm.formData.expiration_day },
+                    on: {
+                      input: function ($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(
+                          _vm.formData,
+                          "expiration_day",
+                          $event.target.value
+                        )
+                      },
+                    },
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "label",
+                    {
+                      staticClass: "c-label u-mr__s u-ml__s",
+                      attrs: { for: "expiration_day" },
+                    },
+                    [_vm._v("日")]
+                  ),
+                ]),
+              ]),
+              _vm._v(" "),
+              _vm._m(4),
+              _vm._v(" "),
+              _vm.errors && _vm.errors.product_picture
+                ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
+                    _vm._v(_vm._s(_vm.errors.product_picture[0])),
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass:
+                    "p-product__picture p-product__picture--container u-pd__s u-mt__m u-mb__m",
+                  class: {
+                    "is-invalid": _vm.errors && _vm.errors.product_picture,
+                  },
+                  on: { drop: _vm.handleDrop },
+                },
+                [
+                  _c("input", {
+                    staticClass: "c-input__hidden",
+                    attrs: { type: "file", id: "product_picture" },
+                    on: { change: _vm.handleFileChange },
+                  }),
+                  _vm._v(" "),
+                  !_vm.picturePreview && _vm.formData.product_picture !== ""
+                    ? _c("img", {
+                        staticClass: "c-product__picture",
+                        attrs: {
+                          src: _vm.formData.product_picture,
+                          alt: "アップロード商品画像",
+                        },
+                      })
+                    : _vm.picturePreview
+                    ? _c("img", {
+                        staticClass: "c-product__picture",
+                        attrs: {
+                          src: _vm.picturePreview,
+                          alt: "アップロード商品画像",
+                        },
+                      })
+                    : _c("img", {
+                        staticClass: "c-product__picture",
+                        attrs: {
+                          src: "https://haikishare.com/product_pictures/no_image.png",
+                          alt: "NO_IMAGE",
+                        },
+                      }),
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass:
+                    "c-button c-button__submit c-button__main u-pd__s u-mt__m",
+                  attrs: { type: "submit" },
+                },
+                [_vm._v("商品を更新する")]
+              ),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass:
+                    "c-button c-button__submit c-button__primary u-pd__s u-mt__m",
+                  on: {
+                    click: function ($event) {
+                      $event.preventDefault()
+                      return _vm.deleteProduct($event)
+                    },
+                  },
+                },
+                [_vm._v("商品を削除する")]
+              ),
             ]
           ),
-          _vm._v(" "),
-          _c(
-            "button",
-            {
-              staticClass:
-                "c-button c-button__submit c-button__convenience u-pd__s u-mt__m",
-              attrs: { type: "submit" },
-            },
-            [_vm._v("商品を更新する")]
-          ),
-          _vm._v(" "),
-          _c(
-            "button",
-            {
-              staticClass:
-                "c-button c-button__submit c-button__convenience u-pd__s u-mt__m",
-              on: { click: _vm.deleteProduct },
-            },
-            [_vm._v("商品を削除する")]
-          ),
-        ]
-      ),
-    ]),
+        ]),
+        _vm._v(" "),
+        _c("sidebar-component", {
+          attrs: {
+            convenience_name: _vm.convenience_name,
+            branch_name: _vm.branch_name,
+            prefecture: _vm.prefecture,
+            city: _vm.city,
+            town: _vm.town,
+            building: _vm.building,
+            introduction: _vm.introduction,
+          },
+        }),
+      ],
+      1
+    ),
     _vm._v(" "),
     _c(
       "a",
@@ -46517,112 +47470,142 @@ var render = function () {
         _vm._v("コンビニ購入された商品一覧"),
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "l-main__wrapper" }, [
-        _c(
-          "div",
-          { staticClass: "p-product__index p-product__index--purchased" },
-          [
-            _c("p", { staticClass: "c-text" }, [
-              _vm._v(
-                _vm._s(_vm.products.data ? _vm.products.data.length : 0) +
-                  "件表示 / 全" +
-                  _vm._s(_vm.products.total ? _vm.products.total : 0) +
-                  "件中"
-              ),
-            ]),
-            _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "p-article" },
+        [
+          _c("div", { staticClass: "l-main__wrapper" }, [
             _c(
-              "ul",
-              { staticClass: "p-product__list" },
+              "div",
+              { staticClass: "p-product__index p-product__index--purchased" },
               [
-                !_vm.products.data || _vm.products.data.length === 0
-                  ? _c("li", { staticClass: "p-product__item" }, [
-                      _c("p", { staticClass: "c-text u-pd__xl" }, [
-                        _vm._v("購入された商品はありません。"),
-                      ]),
-                    ])
-                  : _vm._l(_vm.products.data, function (product) {
-                      return _c(
-                        "li",
-                        { key: product.id, staticClass: "p-product__item" },
-                        [
-                          _c("div", { staticClass: "c-card u-m__s" }, [
-                            _c(
-                              "div",
-                              { staticClass: "p-card__header u-pd__s" },
-                              [
-                                _c("h3", { staticClass: "c-card__name" }, [
-                                  _vm._v(_vm._s(product.name)),
-                                ]),
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "p-card__container" }, [
-                              _c("img", {
-                                staticClass: "c-card__picture u-mb__s",
-                                attrs: {
-                                  src: _vm.getProductPicturePath(product),
-                                  alt: "商品画像",
-                                },
-                              }),
-                              _vm._v(" "),
-                              _c(
-                                "label",
-                                {
-                                  directives: [
-                                    {
-                                      name: "show",
-                                      rawName: "v-show",
-                                      value: product.is_purchased,
-                                      expression: "product.is_purchased",
-                                    },
-                                  ],
-                                  staticClass: "c-label__purchase u-pd__m",
-                                },
-                                [_vm._v("購入済み")]
-                              ),
-                              _vm._v(" "),
-                              _c("p", { staticClass: "c-card__price" }, [
-                                _vm._v(_vm._s(product.price) + "円"),
-                              ]),
-                              _vm._v(" "),
-                              _c("p", { staticClass: "c-card__price" }, [
-                                _vm._v(
-                                  _vm._s(
-                                    _vm.formatDate(product.expiration_date)
-                                  )
-                                ),
-                              ]),
-                            ]),
-                            _vm._v(" "),
-                            _c(
-                              "div",
-                              { staticClass: "p-card__footer" },
-                              [
-                                _c(
-                                  "router-link",
-                                  {
-                                    staticClass:
-                                      "c-button c-button__convenience c-button__detail u-pd__s u-m__s",
-                                    attrs: {
-                                      to: _vm.getProductDetailLink(product.id),
-                                    },
-                                  },
-                                  [_vm._v("詳細を見る")]
-                                ),
-                              ],
-                              1
-                            ),
+                _c("p", { staticClass: "c-text" }, [
+                  _vm._v(
+                    _vm._s(_vm.products.data ? _vm.products.data.length : 0) +
+                      "件表示 / 全" +
+                      _vm._s(_vm.products.total ? _vm.products.total : 0) +
+                      "件中"
+                  ),
+                ]),
+                _vm._v(" "),
+                _c(
+                  "ul",
+                  { staticClass: "p-product__list" },
+                  [
+                    !_vm.products.data || _vm.products.data.length === 0
+                      ? _c("li", { staticClass: "p-product__item" }, [
+                          _c("p", { staticClass: "c-text u-pd__xl" }, [
+                            _vm._v("購入された商品はありません。"),
                           ]),
-                        ]
-                      )
-                    }),
-              ],
-              2
+                        ])
+                      : _vm._l(_vm.products.data, function (product) {
+                          return _c(
+                            "li",
+                            { key: product.id, staticClass: "p-product__item" },
+                            [
+                              _c("div", { staticClass: "c-card u-m__s" }, [
+                                _c(
+                                  "div",
+                                  { staticClass: "p-card__header u-pd__s" },
+                                  [
+                                    _c("h3", { staticClass: "c-card__name" }, [
+                                      _vm._v(_vm._s(product.name)),
+                                    ]),
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  { staticClass: "p-card__container" },
+                                  [
+                                    _c("img", {
+                                      staticClass: "c-card__picture u-mb__s",
+                                      attrs: {
+                                        src: _vm.getProductPicturePath(product),
+                                        alt: "商品画像",
+                                      },
+                                    }),
+                                    _vm._v(" "),
+                                    _c(
+                                      "label",
+                                      {
+                                        directives: [
+                                          {
+                                            name: "show",
+                                            rawName: "v-show",
+                                            value: product.is_purchased,
+                                            expression: "product.is_purchased",
+                                          },
+                                        ],
+                                        staticClass:
+                                          "c-label__purchase u-pd__m",
+                                      },
+                                      [_vm._v("購入済み")]
+                                    ),
+                                    _vm._v(" "),
+                                    _c("p", { staticClass: "c-card__text" }, [
+                                      _vm._v(_vm._s(product.price) + "円"),
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("p", { staticClass: "c-card__text" }, [
+                                      _vm._v(
+                                        _vm._s(
+                                          _vm.formatDate(
+                                            product.expiration_date
+                                          )
+                                        )
+                                      ),
+                                    ]),
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "p-card__footer" }, [
+                                  _c(
+                                    "div",
+                                    { staticClass: "c-button__container" },
+                                    [
+                                      _c(
+                                        "router-link",
+                                        {
+                                          staticClass:
+                                            "c-button c-button__default u-pd__s u-m__s",
+                                          attrs: {
+                                            to: _vm.getProductDetailLink(
+                                              product.id
+                                            ),
+                                          },
+                                        },
+                                        [_vm._v("詳細を見る")]
+                                      ),
+                                    ],
+                                    1
+                                  ),
+                                ]),
+                              ]),
+                            ]
+                          )
+                        }),
+                  ],
+                  2
+                ),
+              ]
             ),
-          ]
-        ),
-      ]),
+          ]),
+          _vm._v(" "),
+          _c("sidebar-component", {
+            attrs: {
+              convenience_name: _vm.convenience_name,
+              branch_name: _vm.branch_name,
+              prefecture: _vm.prefecture,
+              city: _vm.city,
+              town: _vm.town,
+              building: _vm.building,
+              introduction: _vm.introduction,
+            },
+          }),
+        ],
+        1
+      ),
       _vm._v(" "),
       _c("pagination-component", {
         attrs: { current_page: _vm.currentPage, last_page: _vm.lastPage },
@@ -46668,243 +47651,379 @@ var render = function () {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("main", { staticClass: "l-main" }, [
-    _c("section", { staticClass: "l-main__wrapper" }, [
-      _c("h1", { staticClass: "c-title u-mb__xl" }, [
-        _vm._v("コンビニ商品出品画面"),
-      ]),
-      _vm._v(" "),
-      _c(
-        "form",
-        {
-          staticClass: "c-form",
-          on: {
-            submit: function ($event) {
-              $event.preventDefault()
-              return _vm.submitForm($event)
-            },
-          },
-        },
-        [
-          _vm._m(0),
-          _vm._v(" "),
-          _vm.errors && _vm.errors.name
-            ? _c("span", { staticClass: "c-error u-mt__s" }, [
-                _vm._v(_vm._s(_vm.errors.name[0])),
-              ])
-            : _vm._e(),
-          _vm._v(" "),
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.formData.name,
-                expression: "formData.name",
-              },
-            ],
-            staticClass: "c-input u-pd__s u-mt__m u-mb__m",
-            class: { "is-invalid": _vm.errors && _vm.errors.name },
-            attrs: { id: "name", type: "text", autocomplete: "name" },
-            domProps: { value: _vm.formData.name },
-            on: {
-              input: function ($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.$set(_vm.formData, "name", $event.target.value)
-              },
-            },
-          }),
-          _vm._v(" "),
-          _vm._m(1),
-          _vm._v(" "),
-          _vm.errors && _vm.errors.price
-            ? _c("span", { staticClass: "c-error u-mt__s" }, [
-                _vm._v(_vm._s(_vm.errors.price[0])),
-              ])
-            : _vm._e(),
-          _vm._v(" "),
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.formData.price,
-                expression: "formData.price",
-              },
-            ],
-            staticClass: "c-input u-pd__s u-mt__m u-mb__m",
-            class: { "is-invalid": _vm.errors && _vm.errors.price },
-            attrs: { id: "price", type: "text", autocomplete: "price" },
-            domProps: { value: _vm.formData.price },
-            on: {
-              input: function ($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.$set(_vm.formData, "price", $event.target.value)
-              },
-            },
-          }),
-          _vm._v(" "),
-          _vm._m(2),
-          _vm._v(" "),
-          _vm.errors && _vm.errors.category
-            ? _c("span", { staticClass: "c-error u-mt__s" }, [
-                _vm._v(_vm._s(_vm.errors.category[0])),
-              ])
-            : _vm._e(),
-          _vm._v(" "),
-          _c(
-            "select",
-            {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.formData.category,
-                  expression: "formData.category",
-                },
-              ],
-              staticClass: "c-input u-pd__s u-mt__m u-mb__m",
-              class: { "is-invalid": _vm.errors && _vm.errors.category },
-              attrs: { id: "category" },
-              on: {
-                change: function ($event) {
-                  var $$selectedVal = Array.prototype.filter
-                    .call($event.target.options, function (o) {
-                      return o.selected
-                    })
-                    .map(function (o) {
-                      var val = "_value" in o ? o._value : o.value
-                      return val
-                    })
-                  _vm.$set(
-                    _vm.formData,
-                    "category",
-                    $event.target.multiple ? $$selectedVal : $$selectedVal[0]
-                  )
-                },
-              },
-            },
-            [
-              _c("option", { attrs: { value: "" } }, [
-                _vm._v("カテゴリを選択してください"),
-              ]),
-              _vm._v(" "),
-              _vm._l(_vm.categories, function (category) {
-                return _c("option", { domProps: { value: category.id } }, [
-                  _vm._v(_vm._s(category.name)),
-                ])
-              }),
-            ],
-            2
-          ),
-          _vm._v(" "),
-          _vm._m(3),
-          _vm._v(" "),
-          _vm.errors && _vm.errors.expiration_date
-            ? _c("span", { staticClass: "c-error u-mt__s" }, [
-                _vm._v(_vm._s(_vm.errors.expiration_date[0])),
-              ])
-            : _vm._e(),
-          _vm._v(" "),
-          _c("div", { staticClass: "p-text__form" }, [
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.formData.expiration_date,
-                  expression: "formData.expiration_date",
-                },
-              ],
-              staticClass: "c-input u-pd__s u-mt__m u-mb__m",
-              class: { "is-invalid": _vm.errors && _vm.errors.expiration_date },
-              attrs: {
-                id: "expiration_date",
-                type: "text",
-                placeholder: "（例）2024年4月10日の場合　20240410　と入力",
-              },
-              domProps: { value: _vm.formData.expiration_date },
-              on: {
-                input: function ($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.$set(_vm.formData, "expiration_date", $event.target.value)
-                },
-              },
-            }),
-            _vm._v(" "),
-            _c("span", { staticClass: "c-text c-text__attention" }, [
-              _vm._v("賞味期限は西暦・半角数字8桁で入力してください"),
-            ]),
+    _c(
+      "div",
+      { staticClass: "p-article" },
+      [
+        _c("section", { staticClass: "l-main__wrapper" }, [
+          _c("h1", { staticClass: "c-title u-mt__xl u-mb__xl" }, [
+            _vm._v("コンビニ商品出品画面"),
           ]),
           _vm._v(" "),
-          _vm._m(4),
-          _vm._v(" "),
-          _vm.errors && _vm.errors.product_picture
-            ? _c("span", { staticClass: "c-error u-mt__s" }, [
-                _vm._v(_vm._s(_vm.errors.product_picture[0])),
-              ])
-            : _vm._e(),
-          _vm._v(" "),
           _c(
-            "div",
+            "form",
             {
-              staticClass:
-                "p-product__picture p-product__picture--container u-pd__s u-pd__s u-mt__m u-mb__m",
-              class: { "is-invalid": _vm.errors && _vm.errors.product_picture },
-              on: { drop: _vm.handleDrop },
+              staticClass: "c-form c-form__column",
+              on: {
+                submit: function ($event) {
+                  $event.preventDefault()
+                  return _vm.submitForm($event)
+                },
+              },
             },
             [
+              _vm._m(0),
+              _vm._v(" "),
+              _vm.errors && _vm.errors.name
+                ? _c("span", { staticClass: "c-error u-mt__s" }, [
+                    _vm._v(_vm._s(_vm.errors.name[0])),
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
               _c("input", {
-                staticClass: "c-input__hidden",
-                attrs: { type: "file", id: "product_picture" },
-                on: { change: _vm.handleFileChange },
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.formData.name,
+                    expression: "formData.name",
+                  },
+                ],
+                staticClass: "c-input u-pd__s u-mt__m u-mb__m",
+                class: { "is-invalid": _vm.errors && _vm.errors.name },
+                attrs: { id: "name", type: "text", autocomplete: "name" },
+                domProps: { value: _vm.formData.name },
+                on: {
+                  input: function ($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.formData, "name", $event.target.value)
+                  },
+                },
               }),
               _vm._v(" "),
-              !_vm.picturePreview && _vm.formData.product_picture !== ""
-                ? _c("img", {
-                    staticClass: "c-product__picture",
-                    attrs: {
-                      src:
-                        "https://haikishare.com/product_pictures/" +
-                        _vm.formData.product_picture,
-                      alt: "アップロード商品画像",
+              _vm._m(1),
+              _vm._v(" "),
+              _vm.errors && _vm.errors.price
+                ? _c("span", { staticClass: "c-error u-mt__s" }, [
+                    _vm._v(_vm._s(_vm.errors.price[0])),
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
+              _c("div", [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.formData.price,
+                      expression: "formData.price",
                     },
-                  })
-                : _vm.picturePreview
-                ? _c("img", {
-                    staticClass: "c-product__picture",
-                    attrs: {
-                      src: _vm.picturePreview,
-                      alt: "アップロード商品画像",
+                  ],
+                  staticClass: "c-input c-input__price u-pd__s u-mt__m u-mb__m",
+                  class: { "is-invalid": _vm.errors && _vm.errors.price },
+                  attrs: {
+                    id: "price",
+                    type: "text",
+                    maxlength: "4",
+                    autocomplete: "price",
+                  },
+                  domProps: { value: _vm.formData.price },
+                  on: {
+                    input: function ($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.formData, "price", $event.target.value)
                     },
-                  })
-                : _c("img", {
-                    staticClass: "c-product__picture",
+                  },
+                }),
+                _vm._v(" "),
+                _c("span", { staticClass: "c-text" }, [_vm._v("円（税込）")]),
+              ]),
+              _vm._v(" "),
+              _vm._m(2),
+              _vm._v(" "),
+              _vm.errors && _vm.errors.category
+                ? _c("span", { staticClass: "c-error u-mt__s" }, [
+                    _vm._v(_vm._s(_vm.errors.category[0])),
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
+              _c(
+                "select",
+                {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.formData.category,
+                      expression: "formData.category",
+                    },
+                  ],
+                  staticClass: "c-input u-pd__s u-mt__m u-mb__m",
+                  class: { "is-invalid": _vm.errors && _vm.errors.category },
+                  attrs: { id: "category" },
+                  on: {
+                    change: function ($event) {
+                      var $$selectedVal = Array.prototype.filter
+                        .call($event.target.options, function (o) {
+                          return o.selected
+                        })
+                        .map(function (o) {
+                          var val = "_value" in o ? o._value : o.value
+                          return val
+                        })
+                      _vm.$set(
+                        _vm.formData,
+                        "category",
+                        $event.target.multiple
+                          ? $$selectedVal
+                          : $$selectedVal[0]
+                      )
+                    },
+                  },
+                },
+                [
+                  _c("option", { attrs: { value: "" } }, [
+                    _vm._v("カテゴリを選択してください"),
+                  ]),
+                  _vm._v(" "),
+                  _vm._l(_vm.categories, function (category) {
+                    return _c("option", { domProps: { value: category.id } }, [
+                      _vm._v(_vm._s(category.name)),
+                    ])
+                  }),
+                ],
+                2
+              ),
+              _vm._v(" "),
+              _vm._m(3),
+              _vm._v(" "),
+              _vm.errors && _vm.errors.expiration_date
+                ? _c("span", { staticClass: "c-error u-mt__s" }, [
+                    _vm._v(_vm._s(_vm.errors.expiration_date[0])),
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
+              _c("div", { staticClass: "p-expiration u-mt__m u-mb__m" }, [
+                _c("div", { staticClass: "c-input__date" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.formData.expiration_year,
+                        expression: "formData.expiration_year",
+                      },
+                    ],
+                    staticClass: "c-input u-pd__s",
+                    class: {
+                      "is-invalid": _vm.errors && _vm.errors.expiration_date,
+                    },
                     attrs: {
-                      src: "https://haikishare.com/product_pictures/no_image.png",
-                      alt: "NO_IMAGE",
+                      id: "expiration_year",
+                      type: "text",
+                      placeholder: "YYYY",
+                      maxlength: "4",
+                    },
+                    domProps: { value: _vm.formData.expiration_year },
+                    on: {
+                      input: function ($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(
+                          _vm.formData,
+                          "expiration_year",
+                          $event.target.value
+                        )
+                      },
                     },
                   }),
+                  _vm._v(" "),
+                  _c(
+                    "label",
+                    {
+                      staticClass: "c-label u-mr__s u-ml__s",
+                      attrs: { for: "expiration_year" },
+                    },
+                    [_vm._v("年")]
+                  ),
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "c-input__date" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.formData.expiration_month,
+                        expression: "formData.expiration_month",
+                      },
+                    ],
+                    staticClass: "c-input u-pd__s",
+                    class: {
+                      "is-invalid": _vm.errors && _vm.errors.expiration_date,
+                    },
+                    attrs: {
+                      id: "expiration_month",
+                      type: "text",
+                      placeholder: "MM",
+                      maxlength: "2",
+                    },
+                    domProps: { value: _vm.formData.expiration_month },
+                    on: {
+                      input: function ($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(
+                          _vm.formData,
+                          "expiration_month",
+                          $event.target.value
+                        )
+                      },
+                    },
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "label",
+                    {
+                      staticClass: "c-label u-mr__s u-ml__s",
+                      attrs: { for: "expiration_month" },
+                    },
+                    [_vm._v("月")]
+                  ),
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "c-input__date" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.formData.expiration_day,
+                        expression: "formData.expiration_day",
+                      },
+                    ],
+                    staticClass: "c-input u-pd__s",
+                    class: {
+                      "is-invalid": _vm.errors && _vm.errors.expiration_date,
+                    },
+                    attrs: {
+                      id: "expiration_day",
+                      type: "text",
+                      placeholder: "DD",
+                      maxlength: "2",
+                    },
+                    domProps: { value: _vm.formData.expiration_day },
+                    on: {
+                      input: function ($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(
+                          _vm.formData,
+                          "expiration_day",
+                          $event.target.value
+                        )
+                      },
+                    },
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "label",
+                    {
+                      staticClass: "c-label u-mr__s u-ml__s",
+                      attrs: { for: "expiration_day" },
+                    },
+                    [_vm._v("日")]
+                  ),
+                ]),
+              ]),
+              _vm._v(" "),
+              _vm._m(4),
+              _vm._v(" "),
+              _vm.errors && _vm.errors.product_picture
+                ? _c("span", { staticClass: "c-error u-mt__s" }, [
+                    _vm._v(_vm._s(_vm.errors.product_picture[0])),
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass:
+                    "p-product__picture p-product__picture--container u-pd__s u-pd__s u-mt__m u-mb__m",
+                  class: {
+                    "is-invalid": _vm.errors && _vm.errors.product_picture,
+                  },
+                  on: { drop: _vm.handleDrop },
+                },
+                [
+                  _c("input", {
+                    staticClass: "c-input__hidden",
+                    attrs: { type: "file", id: "product_picture" },
+                    on: { change: _vm.handleFileChange },
+                  }),
+                  _vm._v(" "),
+                  !_vm.picturePreview && _vm.formData.product_picture !== ""
+                    ? _c("img", {
+                        staticClass: "c-product__picture",
+                        attrs: {
+                          src:
+                            "https://haikishare.com/product_pictures/" +
+                            _vm.formData.product_picture,
+                          alt: "アップロード商品画像",
+                        },
+                      })
+                    : _vm.picturePreview
+                    ? _c("img", {
+                        staticClass: "c-product__picture",
+                        attrs: {
+                          src: _vm.picturePreview,
+                          alt: "アップロード商品画像",
+                        },
+                      })
+                    : _c("img", {
+                        staticClass: "c-product__picture",
+                        attrs: {
+                          src: "https://haikishare.com/product_pictures/no_image.png",
+                          alt: "NO_IMAGE",
+                        },
+                      }),
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass:
+                    "c-button c-button__submit c-button__main u-pd__s u-mt__m",
+                  attrs: { type: "submit" },
+                },
+                [_vm._v("商品を出品する")]
+              ),
             ]
           ),
-          _vm._v(" "),
-          _c(
-            "button",
-            {
-              staticClass:
-                "c-button c-button__submit c-button__convenience u-pd__s u-mt__m",
-              attrs: { type: "submit" },
-            },
-            [_vm._v("商品を出品する")]
-          ),
-        ]
-      ),
-    ]),
+        ]),
+        _vm._v(" "),
+        _c("sidebar-component", {
+          attrs: {
+            convenience_name: _vm.convenience_name,
+            branch_name: _vm.branch_name,
+            prefecture: _vm.prefecture,
+            city: _vm.city,
+            town: _vm.town,
+            building: _vm.building,
+            introduction: _vm.introduction,
+          },
+        }),
+      ],
+      1
+    ),
     _vm._v(" "),
     _c(
       "a",
@@ -47000,100 +48119,141 @@ var render = function () {
         _vm._v("コンビニ出品した商品一覧"),
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "l-main__wrapper" }, [
-        _c("div", { staticClass: "p-product__index p-product__index--sale" }, [
-          _c("p", { staticClass: "c-text" }, [
-            _vm._v(
-              _vm._s(_vm.products.data ? _vm.products.data.length : 0) +
-                "件表示 / 全" +
-                _vm._s(_vm.products.total ? _vm.products.total : 0) +
-                "件中"
+      _c(
+        "div",
+        { staticClass: "p-article" },
+        [
+          _c("div", { staticClass: "l-main__wrapper" }, [
+            _c(
+              "div",
+              { staticClass: "p-product__index p-product__index--sale" },
+              [
+                _c("p", { staticClass: "c-text" }, [
+                  _vm._v(
+                    _vm._s(_vm.products.data ? _vm.products.data.length : 0) +
+                      "件表示 / 全" +
+                      _vm._s(_vm.products.total ? _vm.products.total : 0) +
+                      "件中"
+                  ),
+                ]),
+                _vm._v(" "),
+                _c(
+                  "ul",
+                  { staticClass: "p-product__list" },
+                  [
+                    !_vm.products.data || _vm.products.data.length === 0
+                      ? _c("li", { staticClass: "p-product__item" }, [
+                          _c("p", { staticClass: "c-text u-pd__xl" }, [
+                            _vm._v("出品した商品はありません。"),
+                          ]),
+                        ])
+                      : _vm._l(_vm.products.data, function (product) {
+                          return _c(
+                            "li",
+                            { key: product.id, staticClass: "p-product__item" },
+                            [
+                              _c("div", { staticClass: "c-card u-m__s" }, [
+                                _c(
+                                  "div",
+                                  { staticClass: "p-card__header u-pd__s" },
+                                  [
+                                    _c("h3", { staticClass: "c-card__name" }, [
+                                      _vm._v(_vm._s(product.name)),
+                                    ]),
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  { staticClass: "p-card__container" },
+                                  [
+                                    _c("img", {
+                                      staticClass: "c-card__picture u-mb__s",
+                                      attrs: {
+                                        src: _vm.getProductPicturePath(product),
+                                        alt: "商品画像",
+                                      },
+                                    }),
+                                    _vm._v(" "),
+                                    _c("p", { staticClass: "c-card__text" }, [
+                                      _vm._v(_vm._s(product.price) + "円"),
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("p", { staticClass: "c-card__text" }, [
+                                      _vm._v(
+                                        _vm._s(
+                                          _vm.formatDate(
+                                            product.expiration_date
+                                          )
+                                        )
+                                      ),
+                                    ]),
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "p-card__footer" }, [
+                                  _c(
+                                    "div",
+                                    { staticClass: "c-button__container" },
+                                    [
+                                      _c(
+                                        "router-link",
+                                        {
+                                          staticClass:
+                                            "c-button c-button__default u-pd__s u-m__s",
+                                          attrs: {
+                                            to: _vm.getProductDetailLink(
+                                              product.id
+                                            ),
+                                          },
+                                        },
+                                        [_vm._v("詳細を見る")]
+                                      ),
+                                      _vm._v(" "),
+                                      !product.is_purchased
+                                        ? _c(
+                                            "router-link",
+                                            {
+                                              staticClass:
+                                                "c-button c-button__default u-pd__s u-m__s",
+                                              attrs: {
+                                                to: _vm.getProductEditLink(
+                                                  product.id
+                                                ),
+                                              },
+                                            },
+                                            [_vm._v("編集する")]
+                                          )
+                                        : _vm._e(),
+                                    ],
+                                    1
+                                  ),
+                                ]),
+                              ]),
+                            ]
+                          )
+                        }),
+                  ],
+                  2
+                ),
+              ]
             ),
           ]),
           _vm._v(" "),
-          _c(
-            "ul",
-            { staticClass: "p-product__list" },
-            [
-              !_vm.products.data || _vm.products.data.length === 0
-                ? _c("li", { staticClass: "p-product__item" }, [
-                    _c("p", { staticClass: "c-text u-pd__xl" }, [
-                      _vm._v("出品した商品はありません。"),
-                    ]),
-                  ])
-                : _vm._l(_vm.products.data, function (product) {
-                    return _c(
-                      "li",
-                      { key: product.id, staticClass: "p-product__item" },
-                      [
-                        _c("div", { staticClass: "c-card u-m__s" }, [
-                          _c("div", { staticClass: "p-card__header u-pd__s" }, [
-                            _c("h3", { staticClass: "c-card__name" }, [
-                              _vm._v(_vm._s(product.name)),
-                            ]),
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "p-card__container" }, [
-                            _c("img", {
-                              staticClass: "c-card__picture u-mb__s",
-                              attrs: {
-                                src: _vm.getProductPicturePath(product),
-                                alt: "商品画像",
-                              },
-                            }),
-                            _vm._v(" "),
-                            _c("p", { staticClass: "c-card__price" }, [
-                              _vm._v(_vm._s(product.price) + "円"),
-                            ]),
-                            _vm._v(" "),
-                            _c("p", { staticClass: "c-card__price" }, [
-                              _vm._v(
-                                _vm._s(_vm.formatDate(product.expiration_date))
-                              ),
-                            ]),
-                          ]),
-                          _vm._v(" "),
-                          _c(
-                            "div",
-                            { staticClass: "p-card__footer" },
-                            [
-                              _c(
-                                "router-link",
-                                {
-                                  staticClass:
-                                    "c-button c-button__convenience c-button__detail u-pd__s u-m__s",
-                                  attrs: {
-                                    to: _vm.getProductDetailLink(product.id),
-                                  },
-                                },
-                                [_vm._v("詳細を見る")]
-                              ),
-                              _vm._v(" "),
-                              !product.is_purchased
-                                ? _c(
-                                    "router-link",
-                                    {
-                                      staticClass:
-                                        "c-button c-button__convenience c-button__edit u-pd__s u-m__s",
-                                      attrs: {
-                                        to: _vm.getProductEditLink(product.id),
-                                      },
-                                    },
-                                    [_vm._v("編集する")]
-                                  )
-                                : _vm._e(),
-                            ],
-                            1
-                          ),
-                        ]),
-                      ]
-                    )
-                  }),
-            ],
-            2
-          ),
-        ]),
-      ]),
+          _c("sidebar-component", {
+            attrs: {
+              convenience_name: _vm.convenience_name,
+              branch_name: _vm.branch_name,
+              prefecture: _vm.prefecture,
+              city: _vm.city,
+              town: _vm.town,
+              building: _vm.building,
+              introduction: _vm.introduction,
+            },
+          }),
+        ],
+        1
+      ),
       _vm._v(" "),
       _c("pagination-component", {
         attrs: { current_page: _vm.currentPage, last_page: _vm.lastPage },
@@ -47139,534 +48299,57 @@ var render = function () {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("main", { staticClass: "l-main" }, [
-    _c("section", { staticClass: "l-main__wrapper" }, [
-      _c("h1", { staticClass: "c-title u-mb__xl" }, [
-        _vm._v("コンビニプロフィール編集"),
-      ]),
-      _vm._v(" "),
-      _c(
-        "form",
-        {
-          staticClass: "c-form",
-          on: {
-            submit: function ($event) {
-              $event.preventDefault()
-              return _vm.submitForm($event)
-            },
-          },
-        },
-        [
-          _vm._m(0),
-          _vm._v(" "),
-          _vm.errors && _vm.errors.convenience_name
-            ? _c("span", { staticClass: "c-error u-mt__s" }, [
-                _vm._v(_vm._s(_vm.errors.convenience_name[0])),
-              ])
-            : _vm._e(),
-          _vm._v(" "),
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.formData.convenience_name,
-                expression: "formData.convenience_name",
-              },
-            ],
-            staticClass: "c-input u-pd__s u-mt__m u-mb__m",
-            class: { "is-invalid": _vm.errors && _vm.errors.convenience_name },
-            attrs: {
-              id: "convenience_name",
-              type: "text",
-              autocomplete: "name",
-            },
-            domProps: { value: _vm.formData.convenience_name },
-            on: {
-              input: function ($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.$set(_vm.formData, "convenience_name", $event.target.value)
-              },
-            },
-          }),
-          _vm._v(" "),
-          _vm._m(1),
-          _vm._v(" "),
-          _vm.errors && _vm.errors.branch_name
-            ? _c("span", { staticClass: "c-error u-mt__s" }, [
-                _vm._v(_vm._s(_vm.errors.branch_name[0])),
-              ])
-            : _vm._e(),
-          _vm._v(" "),
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.formData.branch_name,
-                expression: "formData.branch_name",
-              },
-            ],
-            staticClass: "c-input u-pd__s u-mt__m u-mb__m",
-            class: { "is-invalid": _vm.errors && _vm.errors.branch_name },
-            attrs: {
-              id: "branch_name",
-              type: "text",
-              autocomplete: "branch_name",
-            },
-            domProps: { value: _vm.formData.branch_name },
-            on: {
-              input: function ($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.$set(_vm.formData, "branch_name", $event.target.value)
-              },
-            },
-          }),
-          _vm._v(" "),
-          _c("label", { staticClass: "c-label", attrs: { for: "address" } }, [
-            _vm._v("郵便番号"),
-          ]),
-          _vm._v(" "),
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.formData.postalcode,
-                expression: "formData.postalcode",
-              },
-            ],
-            staticClass: "c-input u-pd__s u-mt__m u-mb__m",
-            class: { "is-invalid": _vm.errors && _vm.errors.address },
-            attrs: {
-              id: "address",
-              type: "text",
-              autocomplete: "address",
-              placeholder: "郵便番号で住所を簡単入力できます",
-            },
-            domProps: { value: _vm.formData.postalcode },
-            on: {
-              input: function ($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.$set(_vm.formData, "postalcode", $event.target.value)
-              },
-            },
-          }),
-          _vm._v(" "),
-          _c("div", { staticClass: "p-register__zip" }, [
-            _c(
-              "button",
-              {
-                staticClass: "c-button c-button__convenience",
-                attrs: { type: "button" },
-                on: { click: _vm.searchAddress },
-              },
-              [_vm._v("郵便番号検索")]
-            ),
-          ]),
-          _vm._v(" "),
-          _vm._m(2),
-          _vm._v(" "),
-          _vm.errors && _vm.errors.prefecture
-            ? _c("span", { staticClass: "c-error u-mt__s" }, [
-                _vm._v(_vm._s(_vm.errors.prefecture[0])),
-              ])
-            : _vm._e(),
-          _vm._v(" "),
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.formData.prefecture,
-                expression: "formData.prefecture",
-              },
-            ],
-            staticClass: "c-input u-pd__s u-mt__m u-mb__m",
-            class: { "is-invalid": _vm.errors && _vm.errors.prefecture },
-            attrs: {
-              id: "prefecture",
-              type: "text",
-              autocomplete: "prefecture",
-            },
-            domProps: { value: _vm.formData.prefecture },
-            on: {
-              input: function ($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.$set(_vm.formData, "prefecture", $event.target.value)
-              },
-            },
-          }),
-          _vm._v(" "),
-          _vm._m(3),
-          _vm._v(" "),
-          _vm.errors && _vm.errors.city
-            ? _c("span", { staticClass: "c-error u-mt__s" }, [
-                _vm._v(_vm._s(_vm.errors.city[0])),
-              ])
-            : _vm._e(),
-          _vm._v(" "),
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.formData.city,
-                expression: "formData.city",
-              },
-            ],
-            staticClass: "c-input u-pd__s u-mt__m u-mb__m",
-            class: { "is-invalid": _vm.errors && _vm.errors.city },
-            attrs: { id: "city", type: "text", autocomplete: "city" },
-            domProps: { value: _vm.formData.city },
-            on: {
-              input: function ($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.$set(_vm.formData, "city", $event.target.value)
-              },
-            },
-          }),
-          _vm._v(" "),
-          _vm._m(4),
-          _vm._v(" "),
-          _vm.errors && _vm.errors.town
-            ? _c("span", { staticClass: "c-error u-mt__s" }, [
-                _vm._v(_vm._s(_vm.errors.town[0])),
-              ])
-            : _vm._e(),
-          _vm._v(" "),
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.formData.town,
-                expression: "formData.town",
-              },
-            ],
-            staticClass: "c-input u-pd__s u-mt__m u-mb__m",
-            class: { "is-invalid": _vm.errors && _vm.errors.town },
-            attrs: { id: "town", type: "text", autocomplete: "town" },
-            domProps: { value: _vm.formData.town },
-            on: {
-              input: function ($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.$set(_vm.formData, "town", $event.target.value)
-              },
-            },
-          }),
-          _vm._v(" "),
-          _c("label", { staticClass: "c-label", attrs: { for: "building" } }, [
-            _vm._v("建物名・部屋番号"),
-          ]),
-          _vm._v(" "),
-          _vm.errors && _vm.errors.building
-            ? _c("span", { staticClass: "c-error u-mt__s" }, [
-                _vm._v(_vm._s(_vm.errors.building[0])),
-              ])
-            : _vm._e(),
-          _vm._v(" "),
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.formData.building,
-                expression: "formData.building",
-              },
-            ],
-            staticClass: "c-input u-pd__s u-mt__m u-mb__m",
-            class: { "is-invalid": _vm.errors && _vm.errors.building },
-            attrs: { id: "building", type: "text", autocomplete: "building" },
-            domProps: { value: _vm.formData.building },
-            on: {
-              input: function ($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.$set(_vm.formData, "building", $event.target.value)
-              },
-            },
-          }),
-          _vm._v(" "),
-          _vm._m(5),
-          _vm._v(" "),
-          _vm.errors && _vm.errors.email
-            ? _c("span", { staticClass: "c-error u-mt__s" }, [
-                _vm._v(_vm._s(_vm.errors.email[0])),
-              ])
-            : _vm._e(),
-          _vm._v(" "),
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.formData.email,
-                expression: "formData.email",
-              },
-            ],
-            staticClass: "c-input u-pd__s u-mt__m u-mb__m",
-            class: { "is-invalid": _vm.errors && _vm.errors.email },
-            attrs: { id: "email", type: "email", autocomplete: "email" },
-            domProps: { value: _vm.formData.email },
-            on: {
-              input: function ($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.$set(_vm.formData, "email", $event.target.value)
-              },
-            },
-          }),
-          _vm._v(" "),
-          _vm._m(6),
-          _vm._v(" "),
-          _vm.errors && _vm.errors.password
-            ? _c("span", { staticClass: "c-error u-mt__s" }, [
-                _vm._v(_vm._s(_vm.errors.password[0])),
-              ])
-            : _vm._e(),
-          _vm._v(" "),
-          _c("div", { staticClass: "c-input__password" }, [
-            _vm.PasswordType === "checkbox"
-              ? _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.formData.password,
-                      expression: "formData.password",
-                    },
-                  ],
-                  staticClass: "c-input u-pd__s u-mt__m u-mb__m",
-                  class: { "is-invalid": _vm.errors && _vm.errors.password },
-                  attrs: {
-                    id: "password",
-                    placeholder: "英数字8文字以上で入力してください",
-                    type: "checkbox",
-                  },
-                  domProps: {
-                    checked: Array.isArray(_vm.formData.password)
-                      ? _vm._i(_vm.formData.password, null) > -1
-                      : _vm.formData.password,
-                  },
-                  on: {
-                    change: function ($event) {
-                      var $$a = _vm.formData.password,
-                        $$el = $event.target,
-                        $$c = $$el.checked ? true : false
-                      if (Array.isArray($$a)) {
-                        var $$v = null,
-                          $$i = _vm._i($$a, $$v)
-                        if ($$el.checked) {
-                          $$i < 0 &&
-                            _vm.$set(
-                              _vm.formData,
-                              "password",
-                              $$a.concat([$$v])
-                            )
-                        } else {
-                          $$i > -1 &&
-                            _vm.$set(
-                              _vm.formData,
-                              "password",
-                              $$a.slice(0, $$i).concat($$a.slice($$i + 1))
-                            )
-                        }
-                      } else {
-                        _vm.$set(_vm.formData, "password", $$c)
-                      }
-                    },
-                  },
-                })
-              : _vm.PasswordType === "radio"
-              ? _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.formData.password,
-                      expression: "formData.password",
-                    },
-                  ],
-                  staticClass: "c-input u-pd__s u-mt__m u-mb__m",
-                  class: { "is-invalid": _vm.errors && _vm.errors.password },
-                  attrs: {
-                    id: "password",
-                    placeholder: "英数字8文字以上で入力してください",
-                    type: "radio",
-                  },
-                  domProps: { checked: _vm._q(_vm.formData.password, null) },
-                  on: {
-                    change: function ($event) {
-                      _vm.$set(_vm.formData, "password", null)
-                    },
-                  },
-                })
-              : _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.formData.password,
-                      expression: "formData.password",
-                    },
-                  ],
-                  staticClass: "c-input u-pd__s u-mt__m u-mb__m",
-                  class: { "is-invalid": _vm.errors && _vm.errors.password },
-                  attrs: {
-                    id: "password",
-                    placeholder: "英数字8文字以上で入力してください",
-                    type: _vm.PasswordType,
-                  },
-                  domProps: { value: _vm.formData.password },
-                  on: {
-                    input: function ($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.$set(_vm.formData, "password", $event.target.value)
-                    },
-                  },
-                }),
+    _c(
+      "div",
+      { staticClass: "p-article" },
+      [
+        _c(
+          "section",
+          { staticClass: "l-main__wrapper" },
+          [
+            _c("h1", { staticClass: "c-title u-mt__xl u-mb__xl" }, [
+              _vm._v("コンビニプロフィール編集"),
+            ]),
             _vm._v(" "),
             _c(
-              "span",
+              "form",
               {
+                staticClass: "c-form c-form__column",
                 on: {
-                  click: function ($event) {
-                    _vm.togglePasswordVisibility("password")
+                  submit: function ($event) {
+                    $event.preventDefault()
+                    return _vm.submitForm($event)
                   },
                 },
               },
-              [_c("i", { class: _vm.PasswordIconClass })]
-            ),
-          ]),
-          _vm._v(" "),
-          _vm._m(7),
-          _vm._v(" "),
-          _vm.errors && _vm.errors.password_confirmation
-            ? _c("span", { staticClass: "c-error u-mt__s" }, [
-                _vm._v(_vm._s(_vm.errors.password_confirmation[0])),
-              ])
-            : _vm._e(),
-          _vm._v(" "),
-          _c("div", { staticClass: "c-input__password" }, [
-            _vm.PasswordConfirmType === "checkbox"
-              ? _c("input", {
+              [
+                _vm._m(0),
+                _vm._v(" "),
+                _vm.errors && _vm.errors.convenience_name
+                  ? _c("span", { staticClass: "c-error u-mt__s" }, [
+                      _vm._v(_vm._s(_vm.errors.convenience_name[0])),
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _c("input", {
                   directives: [
                     {
                       name: "model",
                       rawName: "v-model",
-                      value: _vm.formData.password_confirmation,
-                      expression: "formData.password_confirmation",
+                      value: _vm.formData.convenience_name,
+                      expression: "formData.convenience_name",
                     },
                   ],
                   staticClass: "c-input u-pd__s u-mt__m u-mb__m",
                   class: {
-                    "is-invalid":
-                      _vm.errors && _vm.errors.password_confirmation,
+                    "is-invalid": _vm.errors && _vm.errors.convenience_name,
                   },
                   attrs: {
-                    id: "password-confirm",
-                    placeholder: "英数字8文字以上で入力してください",
-                    type: "checkbox",
+                    id: "convenience_name",
+                    type: "text",
+                    autocomplete: "convenience_name",
                   },
-                  domProps: {
-                    checked: Array.isArray(_vm.formData.password_confirmation)
-                      ? _vm._i(_vm.formData.password_confirmation, null) > -1
-                      : _vm.formData.password_confirmation,
-                  },
-                  on: {
-                    change: function ($event) {
-                      var $$a = _vm.formData.password_confirmation,
-                        $$el = $event.target,
-                        $$c = $$el.checked ? true : false
-                      if (Array.isArray($$a)) {
-                        var $$v = null,
-                          $$i = _vm._i($$a, $$v)
-                        if ($$el.checked) {
-                          $$i < 0 &&
-                            _vm.$set(
-                              _vm.formData,
-                              "password_confirmation",
-                              $$a.concat([$$v])
-                            )
-                        } else {
-                          $$i > -1 &&
-                            _vm.$set(
-                              _vm.formData,
-                              "password_confirmation",
-                              $$a.slice(0, $$i).concat($$a.slice($$i + 1))
-                            )
-                        }
-                      } else {
-                        _vm.$set(_vm.formData, "password_confirmation", $$c)
-                      }
-                    },
-                  },
-                })
-              : _vm.PasswordConfirmType === "radio"
-              ? _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.formData.password_confirmation,
-                      expression: "formData.password_confirmation",
-                    },
-                  ],
-                  staticClass: "c-input u-pd__s u-mt__m u-mb__m",
-                  class: {
-                    "is-invalid":
-                      _vm.errors && _vm.errors.password_confirmation,
-                  },
-                  attrs: {
-                    id: "password-confirm",
-                    placeholder: "英数字8文字以上で入力してください",
-                    type: "radio",
-                  },
-                  domProps: {
-                    checked: _vm._q(_vm.formData.password_confirmation, null),
-                  },
-                  on: {
-                    change: function ($event) {
-                      _vm.$set(_vm.formData, "password_confirmation", null)
-                    },
-                  },
-                })
-              : _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.formData.password_confirmation,
-                      expression: "formData.password_confirmation",
-                    },
-                  ],
-                  staticClass: "c-input u-pd__s u-mt__m u-mb__m",
-                  class: {
-                    "is-invalid":
-                      _vm.errors && _vm.errors.password_confirmation,
-                  },
-                  attrs: {
-                    id: "password-confirm",
-                    placeholder: "英数字8文字以上で入力してください",
-                    type: _vm.PasswordConfirmType,
-                  },
-                  domProps: { value: _vm.formData.password_confirmation },
+                  domProps: { value: _vm.formData.convenience_name },
                   on: {
                     input: function ($event) {
                       if ($event.target.composing) {
@@ -47674,143 +48357,717 @@ var render = function () {
                       }
                       _vm.$set(
                         _vm.formData,
-                        "password_confirmation",
+                        "convenience_name",
                         $event.target.value
                       )
                     },
                   },
                 }),
-            _vm._v(" "),
-            _c(
-              "span",
-              {
-                on: {
-                  click: function ($event) {
-                    _vm.togglePasswordVisibility("password_confirm")
-                  },
-                },
-              },
-              [_c("i", { class: _vm.PasswordConfirmIconClass })]
-            ),
-          ]),
-          _vm._v(" "),
-          _c(
-            "label",
-            { staticClass: "c-label", attrs: { for: "introduction" } },
-            [_vm._v("自己紹介")]
-          ),
-          _vm._v(" "),
-          _vm.errors && _vm.errors.introduction
-            ? _c("span", { staticClass: "c-error u-mt__s" }, [
-                _vm._v(_vm._s(_vm.errors.introduction[0])),
-              ])
-            : _vm._e(),
-          _vm._v(" "),
-          _c("div", { staticClass: "p-textarea__form" }, [
-            _c("textarea", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model.trim",
-                  value: _vm.formData.introduction,
-                  expression: "formData.introduction",
-                  modifiers: { trim: true },
-                },
-              ],
-              staticClass: "c-textarea u-pd__s u-mt__m u-mb__m",
-              class: { "is-invalid": _vm.errors && _vm.errors.introduction },
-              attrs: {
-                maxlength: "50",
-                id: "introduction",
-                type: "text",
-                autocomplete: "introduction",
-                placeholder: "50文字以内で入力してください",
-              },
-              domProps: { value: _vm.formData.introduction },
-              on: {
-                keyup: _vm.countCharacters,
-                input: function ($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.$set(
-                    _vm.formData,
-                    "introduction",
-                    $event.target.value.trim()
-                  )
-                },
-                blur: function ($event) {
-                  _vm.$forceUpdate()
-                },
-              },
-            }),
-            _vm._v(" "),
-            _c("span", { staticClass: "c-textarea__count" }, [
-              _vm._v(_vm._s(_vm.formData.introduction.length) + " / 50文字"),
-            ]),
-          ]),
-          _vm._v(" "),
-          _c(
-            "label",
-            { staticClass: "c-label", attrs: { for: "profile-icon" } },
-            [_vm._v("顔写真")]
-          ),
-          _vm._v(" "),
-          _vm.errors && _vm.errors.icon
-            ? _c("span", { staticClass: "c-error u-mt__s" }, [
-                _vm._v(_vm._s(_vm.errors.icon[0])),
-              ])
-            : _vm._e(),
-          _vm._v(" "),
-          _c(
-            "div",
-            {
-              staticClass: "p-profile__icon p-profile__icon--container u-pd__s",
-              class: { "is-invalid": _vm.errors && _vm.errors.icon },
-              on: { drop: _vm.handleDrop },
-            },
-            [
-              _c("input", {
-                staticClass: "c-input__hidden",
-                attrs: { type: "file", id: "profile-icon" },
-                on: { change: _vm.handleFileChange },
-              }),
-              _vm._v(" "),
-              !_vm.iconPreview && _vm.formData.icon
-                ? _c("img", {
-                    staticClass: "p-profile__icon",
-                    attrs: {
-                      src: "https://haikishare.com/icon/" + _vm.formData.icon,
-                      alt: "アップロード顔写真",
+                _vm._v(" "),
+                _vm._m(1),
+                _vm._v(" "),
+                _vm.errors && _vm.errors.branch_name
+                  ? _c("span", { staticClass: "c-error u-mt__s" }, [
+                      _vm._v(_vm._s(_vm.errors.branch_name[0])),
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.formData.branch_name,
+                      expression: "formData.branch_name",
                     },
-                  })
-                : _vm.iconPreview
-                ? _c("img", {
-                    staticClass: "p-profile__icon",
-                    attrs: { src: _vm.iconPreview, alt: "アップロード顔写真" },
-                  })
-                : _c("img", {
-                    staticClass: "p-profile__icon",
+                  ],
+                  staticClass: "c-input u-pd__s u-mt__m u-mb__m",
+                  class: { "is-invalid": _vm.errors && _vm.errors.branch_name },
+                  attrs: {
+                    id: "branch_name",
+                    type: "text",
+                    autocomplete: "branch_name",
+                  },
+                  domProps: { value: _vm.formData.branch_name },
+                  on: {
+                    input: function ($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.formData, "branch_name", $event.target.value)
+                    },
+                  },
+                }),
+                _vm._v(" "),
+                _c("label", { staticClass: "c-label", attrs: { for: "zip" } }, [
+                  _vm._v("郵便番号"),
+                ]),
+                _vm._v(" "),
+                _c("span", { staticClass: "c-text c-text__note" }, [
+                  _vm._v(
+                    "※数字のみを入力し、ハイフンを含む場合は3桁と4桁の間に挿入してください。ハイフンを含まない場合は数字を7桁入力してください。"
+                  ),
+                ]),
+                _vm._v(" "),
+                _vm.errors && _vm.errors.zip
+                  ? _c("span", { staticClass: "c-error u-mt__s" }, [
+                      _vm._v(_vm._s(_vm.errors.zip[0])),
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.formData.postalcode,
+                      expression: "formData.postalcode",
+                    },
+                  ],
+                  staticClass: "c-input u-pd__s u-mt__m u-mb__m",
+                  class: { "is-invalid": _vm.errors && _vm.errors.zip },
+                  attrs: {
+                    id: "zip",
+                    type: "text",
+                    autocomplete: "zip",
+                    placeholder: "郵便番号で住所を簡単入力できます",
+                  },
+                  domProps: { value: _vm.formData.postalcode },
+                  on: {
+                    input: function ($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.formData, "postalcode", $event.target.value)
+                    },
+                  },
+                }),
+                _vm._v(" "),
+                _c("div", { staticClass: "p-register__zip" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "c-button c-button__primary u-pd__s",
+                      attrs: { type: "button" },
+                      on: { click: _vm.searchAddress },
+                    },
+                    [_vm._v("郵便番号検索")]
+                  ),
+                ]),
+                _vm._v(" "),
+                _vm._m(2),
+                _vm._v(" "),
+                _vm.errors && _vm.errors.prefecture
+                  ? _c("span", { staticClass: "c-error u-mt__s" }, [
+                      _vm._v(_vm._s(_vm.errors.prefecture[0])),
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.formData.prefecture,
+                      expression: "formData.prefecture",
+                    },
+                  ],
+                  staticClass: "c-input u-pd__s u-mt__m u-mb__m",
+                  class: { "is-invalid": _vm.errors && _vm.errors.prefecture },
+                  attrs: {
+                    id: "prefecture",
+                    type: "text",
+                    autocomplete: "prefecture",
+                  },
+                  domProps: { value: _vm.formData.prefecture },
+                  on: {
+                    input: function ($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.formData, "prefecture", $event.target.value)
+                    },
+                  },
+                }),
+                _vm._v(" "),
+                _vm._m(3),
+                _vm._v(" "),
+                _vm.errors && _vm.errors.city
+                  ? _c("span", { staticClass: "c-error u-mt__s" }, [
+                      _vm._v(_vm._s(_vm.errors.city[0])),
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.formData.city,
+                      expression: "formData.city",
+                    },
+                  ],
+                  staticClass: "c-input u-pd__s u-mt__m u-mb__m",
+                  class: { "is-invalid": _vm.errors && _vm.errors.city },
+                  attrs: { id: "city", type: "text", autocomplete: "city" },
+                  domProps: { value: _vm.formData.city },
+                  on: {
+                    input: function ($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.formData, "city", $event.target.value)
+                    },
+                  },
+                }),
+                _vm._v(" "),
+                _vm._m(4),
+                _vm._v(" "),
+                _vm.errors && _vm.errors.town
+                  ? _c("span", { staticClass: "c-error u-mt__s" }, [
+                      _vm._v(_vm._s(_vm.errors.town[0])),
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.formData.town,
+                      expression: "formData.town",
+                    },
+                  ],
+                  staticClass: "c-input u-pd__s u-mt__m u-mb__m",
+                  class: { "is-invalid": _vm.errors && _vm.errors.town },
+                  attrs: { id: "town", type: "text", autocomplete: "town" },
+                  domProps: { value: _vm.formData.town },
+                  on: {
+                    input: function ($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.formData, "town", $event.target.value)
+                    },
+                  },
+                }),
+                _vm._v(" "),
+                _c(
+                  "label",
+                  { staticClass: "c-label", attrs: { for: "building" } },
+                  [_vm._v("建物名・部屋番号")]
+                ),
+                _vm._v(" "),
+                _vm.errors && _vm.errors.building
+                  ? _c("span", { staticClass: "c-error u-mt__s" }, [
+                      _vm._v(_vm._s(_vm.errors.building[0])),
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.formData.building,
+                      expression: "formData.building",
+                    },
+                  ],
+                  staticClass: "c-input u-pd__s u-mt__m u-mb__m",
+                  class: { "is-invalid": _vm.errors && _vm.errors.building },
+                  attrs: {
+                    id: "building",
+                    type: "text",
+                    autocomplete: "building",
+                  },
+                  domProps: { value: _vm.formData.building },
+                  on: {
+                    input: function ($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.formData, "building", $event.target.value)
+                    },
+                  },
+                }),
+                _vm._v(" "),
+                _vm._m(5),
+                _vm._v(" "),
+                _vm.errors && _vm.errors.email
+                  ? _c("span", { staticClass: "c-error u-mt__s" }, [
+                      _vm._v(_vm._s(_vm.errors.email[0])),
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.formData.email,
+                      expression: "formData.email",
+                    },
+                  ],
+                  staticClass: "c-input u-pd__s u-mt__m u-mb__m",
+                  class: { "is-invalid": _vm.errors && _vm.errors.email },
+                  attrs: { id: "email", type: "text", autocomplete: "email" },
+                  domProps: { value: _vm.formData.email },
+                  on: {
+                    input: function ($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.formData, "email", $event.target.value)
+                    },
+                  },
+                }),
+                _vm._v(" "),
+                _vm._m(6),
+                _vm._v(" "),
+                _vm.errors && _vm.errors.password
+                  ? _c("span", { staticClass: "c-error u-mt__s" }, [
+                      _vm._v(_vm._s(_vm.errors.password[0])),
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _c("div", { staticClass: "c-input__password" }, [
+                  _vm.PasswordType === "checkbox"
+                    ? _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.formData.password,
+                            expression: "formData.password",
+                          },
+                        ],
+                        staticClass: "c-input u-pd__s u-mt__m u-mb__m",
+                        class: {
+                          "is-invalid": _vm.errors && _vm.errors.password,
+                        },
+                        attrs: {
+                          id: "password",
+                          placeholder: "8文字以上で入力してください",
+                          type: "checkbox",
+                        },
+                        domProps: {
+                          checked: Array.isArray(_vm.formData.password)
+                            ? _vm._i(_vm.formData.password, null) > -1
+                            : _vm.formData.password,
+                        },
+                        on: {
+                          change: function ($event) {
+                            var $$a = _vm.formData.password,
+                              $$el = $event.target,
+                              $$c = $$el.checked ? true : false
+                            if (Array.isArray($$a)) {
+                              var $$v = null,
+                                $$i = _vm._i($$a, $$v)
+                              if ($$el.checked) {
+                                $$i < 0 &&
+                                  _vm.$set(
+                                    _vm.formData,
+                                    "password",
+                                    $$a.concat([$$v])
+                                  )
+                              } else {
+                                $$i > -1 &&
+                                  _vm.$set(
+                                    _vm.formData,
+                                    "password",
+                                    $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                                  )
+                              }
+                            } else {
+                              _vm.$set(_vm.formData, "password", $$c)
+                            }
+                          },
+                        },
+                      })
+                    : _vm.PasswordType === "radio"
+                    ? _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.formData.password,
+                            expression: "formData.password",
+                          },
+                        ],
+                        staticClass: "c-input u-pd__s u-mt__m u-mb__m",
+                        class: {
+                          "is-invalid": _vm.errors && _vm.errors.password,
+                        },
+                        attrs: {
+                          id: "password",
+                          placeholder: "8文字以上で入力してください",
+                          type: "radio",
+                        },
+                        domProps: {
+                          checked: _vm._q(_vm.formData.password, null),
+                        },
+                        on: {
+                          change: function ($event) {
+                            _vm.$set(_vm.formData, "password", null)
+                          },
+                        },
+                      })
+                    : _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.formData.password,
+                            expression: "formData.password",
+                          },
+                        ],
+                        staticClass: "c-input u-pd__s u-mt__m u-mb__m",
+                        class: {
+                          "is-invalid": _vm.errors && _vm.errors.password,
+                        },
+                        attrs: {
+                          id: "password",
+                          placeholder: "8文字以上で入力してください",
+                          type: _vm.PasswordType,
+                        },
+                        domProps: { value: _vm.formData.password },
+                        on: {
+                          input: function ($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              _vm.formData,
+                              "password",
+                              $event.target.value
+                            )
+                          },
+                        },
+                      }),
+                  _vm._v(" "),
+                  _c(
+                    "span",
+                    {
+                      on: {
+                        click: function ($event) {
+                          _vm.togglePasswordVisibility("password")
+                        },
+                      },
+                    },
+                    [_c("i", { class: _vm.PasswordIconClass })]
+                  ),
+                ]),
+                _vm._v(" "),
+                _vm._m(7),
+                _vm._v(" "),
+                _c("span", { staticClass: "c-text c-text__note" }, [
+                  _vm._v(
+                    "※パスワードとパスワード（再入力）は、半角数字・英字大文字・小文字、記号（!@#$%^&*）を使って8文字以上で入力してください"
+                  ),
+                ]),
+                _vm._v(" "),
+                _vm.errors && _vm.errors.password_confirmation
+                  ? _c("span", { staticClass: "c-error u-mt__s" }, [
+                      _vm._v(_vm._s(_vm.errors.password_confirmation[0])),
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _c("div", { staticClass: "c-input__password" }, [
+                  _vm.PasswordConfirmType === "checkbox"
+                    ? _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.formData.password_confirmation,
+                            expression: "formData.password_confirmation",
+                          },
+                        ],
+                        staticClass: "c-input u-pd__s u-mt__m u-mb__m",
+                        class: {
+                          "is-invalid":
+                            _vm.errors && _vm.errors.password_confirmation,
+                        },
+                        attrs: {
+                          id: "password-confirm",
+                          placeholder: "8文字以上で入力してください",
+                          type: "checkbox",
+                        },
+                        domProps: {
+                          checked: Array.isArray(
+                            _vm.formData.password_confirmation
+                          )
+                            ? _vm._i(_vm.formData.password_confirmation, null) >
+                              -1
+                            : _vm.formData.password_confirmation,
+                        },
+                        on: {
+                          change: function ($event) {
+                            var $$a = _vm.formData.password_confirmation,
+                              $$el = $event.target,
+                              $$c = $$el.checked ? true : false
+                            if (Array.isArray($$a)) {
+                              var $$v = null,
+                                $$i = _vm._i($$a, $$v)
+                              if ($$el.checked) {
+                                $$i < 0 &&
+                                  _vm.$set(
+                                    _vm.formData,
+                                    "password_confirmation",
+                                    $$a.concat([$$v])
+                                  )
+                              } else {
+                                $$i > -1 &&
+                                  _vm.$set(
+                                    _vm.formData,
+                                    "password_confirmation",
+                                    $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                                  )
+                              }
+                            } else {
+                              _vm.$set(
+                                _vm.formData,
+                                "password_confirmation",
+                                $$c
+                              )
+                            }
+                          },
+                        },
+                      })
+                    : _vm.PasswordConfirmType === "radio"
+                    ? _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.formData.password_confirmation,
+                            expression: "formData.password_confirmation",
+                          },
+                        ],
+                        staticClass: "c-input u-pd__s u-mt__m u-mb__m",
+                        class: {
+                          "is-invalid":
+                            _vm.errors && _vm.errors.password_confirmation,
+                        },
+                        attrs: {
+                          id: "password-confirm",
+                          placeholder: "8文字以上で入力してください",
+                          type: "radio",
+                        },
+                        domProps: {
+                          checked: _vm._q(
+                            _vm.formData.password_confirmation,
+                            null
+                          ),
+                        },
+                        on: {
+                          change: function ($event) {
+                            _vm.$set(
+                              _vm.formData,
+                              "password_confirmation",
+                              null
+                            )
+                          },
+                        },
+                      })
+                    : _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.formData.password_confirmation,
+                            expression: "formData.password_confirmation",
+                          },
+                        ],
+                        staticClass: "c-input u-pd__s u-mt__m u-mb__m",
+                        class: {
+                          "is-invalid":
+                            _vm.errors && _vm.errors.password_confirmation,
+                        },
+                        attrs: {
+                          id: "password-confirm",
+                          placeholder: "8文字以上で入力してください",
+                          type: _vm.PasswordConfirmType,
+                        },
+                        domProps: { value: _vm.formData.password_confirmation },
+                        on: {
+                          input: function ($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              _vm.formData,
+                              "password_confirmation",
+                              $event.target.value
+                            )
+                          },
+                        },
+                      }),
+                  _vm._v(" "),
+                  _c(
+                    "span",
+                    {
+                      on: {
+                        click: function ($event) {
+                          _vm.togglePasswordVisibility("password_confirm")
+                        },
+                      },
+                    },
+                    [_c("i", { class: _vm.PasswordConfirmIconClass })]
+                  ),
+                ]),
+                _vm._v(" "),
+                _c(
+                  "label",
+                  { staticClass: "c-label", attrs: { for: "introduction" } },
+                  [_vm._v("自己紹介")]
+                ),
+                _vm._v(" "),
+                _vm.errors && _vm.errors.introduction
+                  ? _c("span", { staticClass: "c-error u-mt__s" }, [
+                      _vm._v(_vm._s(_vm.errors.introduction[0])),
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _c("div", { staticClass: "p-textarea__form" }, [
+                  _c("textarea", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model.trim",
+                        value: _vm.formData.introduction,
+                        expression: "formData.introduction",
+                        modifiers: { trim: true },
+                      },
+                    ],
+                    staticClass: "c-textarea u-pd__s u-mt__m u-mb__m",
+                    class: {
+                      "is-invalid": _vm.errors && _vm.errors.introduction,
+                    },
                     attrs: {
-                      src: "https://haikishare.com/icon/default.png",
-                      alt: "デフォルト顔写真",
+                      maxlength: "50",
+                      id: "introduction",
+                      type: "text",
+                      autocomplete: "introduction",
+                      placeholder: "50文字以内で入力してください",
+                    },
+                    domProps: { value: _vm.formData.introduction },
+                    on: {
+                      keyup: _vm.countCharacters,
+                      input: function ($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(
+                          _vm.formData,
+                          "introduction",
+                          $event.target.value.trim()
+                        )
+                      },
+                      blur: function ($event) {
+                        _vm.$forceUpdate()
+                      },
                     },
                   }),
-            ]
-          ),
-          _vm._v(" "),
-          _c(
-            "button",
-            {
-              staticClass:
-                "c-button c-button__submit c-button__convenience u-pd__s u-mt__m",
-              attrs: { type: "submit" },
-            },
-            [_vm._v("プロフィールを更新する")]
-          ),
-        ]
-      ),
-    ]),
+                  _vm._v(" "),
+                  _c("span", { staticClass: "c-textarea__count" }, [
+                    _vm._v(
+                      _vm._s(_vm.formData.introduction.length) + " / 50文字"
+                    ),
+                  ]),
+                ]),
+                _vm._v(" "),
+                _c(
+                  "label",
+                  { staticClass: "c-label", attrs: { for: "profile-icon" } },
+                  [_vm._v("顔写真")]
+                ),
+                _vm._v(" "),
+                _vm.errors && _vm.errors.icon
+                  ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
+                      _vm._v(_vm._s(_vm.errors.icon[0])),
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass:
+                      "p-profile__icon p-profile__icon--container u-pd__s",
+                    class: { "is-invalid": _vm.errors && _vm.errors.icon },
+                    on: { drop: _vm.handleDrop },
+                  },
+                  [
+                    _c("input", {
+                      staticClass: "c-input__hidden",
+                      attrs: { type: "file", id: "profile-icon" },
+                      on: { change: _vm.handleFileChange },
+                    }),
+                    _vm._v(" "),
+                    !_vm.iconPreview && _vm.formData.icon
+                      ? _c("img", {
+                          staticClass: "p-profile__icon",
+                          attrs: {
+                            src: _vm.formData.icon,
+                            alt: "アップロード顔写真",
+                          },
+                        })
+                      : _vm.iconPreview
+                      ? _c("img", {
+                          staticClass: "p-profile__icon",
+                          attrs: {
+                            src: _vm.iconPreview,
+                            alt: "アップロード顔写真",
+                          },
+                        })
+                      : _c("img", {
+                          staticClass: "p-profile__icon",
+                          attrs: {
+                            src: "https://haikishare.com/icon/default.png",
+                            alt: "デフォルト顔写真",
+                          },
+                        }),
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass:
+                      "c-button c-button__submit c-button__main u-pd__s u-mt__m",
+                    attrs: { type: "submit" },
+                  },
+                  [_vm._v("プロフィールを更新する")]
+                ),
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "router-link",
+              {
+                staticClass: "c-link c-link__withdraw u-mt__l u-mb__l u-pdr__s",
+                attrs: { to: { name: "convenience.withdraw" } },
+              },
+              [_vm._v("退会はこちら")]
+            ),
+          ],
+          1
+        ),
+        _vm._v(" "),
+        _c("sidebar-component", {
+          attrs: {
+            convenience_name: _vm.convenience_name,
+            branch_name: _vm.branch_name,
+            prefecture: _vm.prefecture,
+            city: _vm.city,
+            town: _vm.town,
+            building: _vm.building,
+            introduction: _vm.introduction,
+          },
+        }),
+      ],
+      1
+    ),
     _vm._v(" "),
     _c(
       "a",
@@ -47939,7 +49196,7 @@ var render = function () {
   var _c = _vm._self._c || _h
   return _c("main", { staticClass: "l-main" }, [
     _c("section", { staticClass: "l-main__wrapper" }, [
-      _c("h1", { staticClass: "c-title u-mb__xl" }, [
+      _c("h1", { staticClass: "c-title u-mt__xl u-mb__xl" }, [
         _vm._v("コンビニユーザー登録"),
       ]),
       _vm._v(" "),
@@ -48025,9 +49282,21 @@ var render = function () {
             },
           }),
           _vm._v(" "),
-          _c("label", { staticClass: "c-label", attrs: { for: "address" } }, [
+          _c("label", { staticClass: "c-label", attrs: { for: "zip" } }, [
             _vm._v("郵便番号"),
           ]),
+          _vm._v(" "),
+          _c("span", { staticClass: "c-text c-text__note" }, [
+            _vm._v(
+              "※数字のみを入力し、ハイフンを含む場合は3桁と4桁の間に挿入してください。ハイフンを含まない場合は数字を7桁入力してください。"
+            ),
+          ]),
+          _vm._v(" "),
+          _vm.errors && _vm.errors.zip
+            ? _c("span", { staticClass: "c-error u-mt__s" }, [
+                _vm._v(_vm._s(_vm.errors.zip[0])),
+              ])
+            : _vm._e(),
           _vm._v(" "),
           _c("input", {
             directives: [
@@ -48039,11 +49308,11 @@ var render = function () {
               },
             ],
             staticClass: "c-input u-pd__s u-mt__m u-mb__m",
-            class: { "is-invalid": _vm.errors && _vm.errors.address },
+            class: { "is-invalid": _vm.errors && _vm.errors.zip },
             attrs: {
-              id: "address",
+              id: "zip",
               type: "text",
-              autocomplete: "address",
+              autocomplete: "zip",
               placeholder: "郵便番号で住所を簡単入力できます",
             },
             domProps: { value: _vm.formData.postalcode },
@@ -48061,7 +49330,7 @@ var render = function () {
             _c(
               "button",
               {
-                staticClass: "c-button c-button__convenience",
+                staticClass: "c-button c-button__primary u-pd__s",
                 attrs: { type: "button" },
                 on: { click: _vm.searchAddress },
               },
@@ -48232,6 +49501,12 @@ var render = function () {
           _vm._v(" "),
           _vm._m(6),
           _vm._v(" "),
+          _c("span", { staticClass: "c-text c-text__note" }, [
+            _vm._v(
+              "※パスワードとパスワード（再入力）は、半角数字・英字大文字・小文字、記号（!@#$%^&*）を使って8文字以上で入力してください"
+            ),
+          ]),
+          _vm._v(" "),
           _vm.errors && _vm.errors.password
             ? _c("span", { staticClass: "c-error u-mt__s" }, [
                 _vm._v(_vm._s(_vm.errors.password[0])),
@@ -48253,7 +49528,7 @@ var render = function () {
                   class: { "is-invalid": _vm.errors && _vm.errors.password },
                   attrs: {
                     id: "password",
-                    placeholder: "英数字8文字以上で入力してください",
+                    placeholder: "8文字以上で入力してください",
                     type: "checkbox",
                   },
                   domProps: {
@@ -48304,7 +49579,7 @@ var render = function () {
                   class: { "is-invalid": _vm.errors && _vm.errors.password },
                   attrs: {
                     id: "password",
-                    placeholder: "英数字8文字以上で入力してください",
+                    placeholder: "8文字以上で入力してください",
                     type: "radio",
                   },
                   domProps: { checked: _vm._q(_vm.formData.password, null) },
@@ -48327,7 +49602,7 @@ var render = function () {
                   class: { "is-invalid": _vm.errors && _vm.errors.password },
                   attrs: {
                     id: "password",
-                    placeholder: "英数字8文字以上で入力してください",
+                    placeholder: "8文字以上で入力してください",
                     type: _vm.PasswordType,
                   },
                   domProps: { value: _vm.formData.password },
@@ -48380,7 +49655,7 @@ var render = function () {
                   },
                   attrs: {
                     id: "password-confirm",
-                    placeholder: "英数字8文字以上で入力してください",
+                    placeholder: "8文字以上で入力してください",
                     type: "checkbox",
                   },
                   domProps: {
@@ -48434,7 +49709,7 @@ var render = function () {
                   },
                   attrs: {
                     id: "password-confirm",
-                    placeholder: "英数字8文字以上で入力してください",
+                    placeholder: "8文字以上で入力してください",
                     type: "radio",
                   },
                   domProps: {
@@ -48462,7 +49737,7 @@ var render = function () {
                   },
                   attrs: {
                     id: "password-confirm",
-                    placeholder: "英数字8文字以上で入力してください",
+                    placeholder: "8文字以上で入力してください",
                     type: _vm.PasswordConfirmType,
                   },
                   domProps: { value: _vm.formData.password_confirmation },
@@ -48495,7 +49770,7 @@ var render = function () {
           _vm._v(" "),
           _c(
             "div",
-            { staticClass: "p-register__terms u-pd__s u-m__s" },
+            { staticClass: "p-register__terms u-pd__s u-mt__m" },
             [_c("terms-component")],
             1
           ),
@@ -48560,8 +49835,7 @@ var render = function () {
           _c(
             "button",
             {
-              staticClass:
-                "c-button c-button__submit c-button__convenience u-pd__s",
+              staticClass: "c-button c-button__submit c-button__main u-pd__s",
               attrs: { type: "submit" },
             },
             [_vm._v("ユーザー登録する")]
@@ -48697,7 +49971,7 @@ var render = function () {
   var _c = _vm._self._c || _h
   return _c("main", { staticClass: "l-main" }, [
     _c("section", { staticClass: "l-main__wrapper" }, [
-      _c("h1", { staticClass: "c-title u-mb__xl" }, [
+      _c("h1", { staticClass: "c-title u-mt__xl u-mb__xl" }, [
         _vm._v("利用者パスワード変更"),
       ]),
       _vm._v(" "),
@@ -48714,6 +49988,12 @@ var render = function () {
         },
         [
           _vm._m(0),
+          _vm._v(" "),
+          _c("span", { staticClass: "c-text c-text__note" }, [
+            _vm._v(
+              "※新しいパスワードと新しいパスワード（再入力）は、半角数字・英字大文字・小文字、記号（!@#$%^&*）を使って8文字以上で入力してください"
+            ),
+          ]),
           _vm._v(" "),
           _vm.errors && _vm.errors.newPassword
             ? _c("span", { staticClass: "c-error u-mt__s" }, [
@@ -49022,7 +50302,7 @@ var render = function () {
             "button",
             {
               staticClass:
-                "c-button c-button__submit c-button__convenience u-pd__s u-mt__m",
+                "c-button c-button__submit c-button__main u-pd__s u-mt__m",
               attrs: { type: "submit" },
             },
             [_vm._v("パスワードを変更する")]
@@ -49079,6 +50359,140 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Convenience/SidebarComponent.vue?vue&type=template&id=0477fba4":
+/*!******************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Convenience/SidebarComponent.vue?vue&type=template&id=0477fba4 ***!
+  \******************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function () {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("section", { staticClass: "l-sidebar" }, [
+    _c(
+      "div",
+      { staticClass: "p-mypage__sidebar" },
+      [
+        _c("div", { staticClass: "p-mypage__user-info u-pd__s" }, [
+          _c("h2", { staticClass: "c-title c-title__sub u-mt__m u-mb__m" }, [
+            _vm._v("プロフィール情報"),
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "p-mypage__profile u-pd__s" }, [
+            _c("div", { staticClass: "p-mypage__icon--container" }, [
+              _c("img", {
+                staticClass: "p-mypage__icon",
+                attrs: { src: _vm.icon, alt: "顔写真画像" },
+              }),
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "p-mypage__profile--header u-mt__s" }, [
+              _c("p", [
+                _vm._v(_vm._s(_vm.convenience_name) + _vm._s(_vm.branch_name)),
+              ]),
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "p-mypage__profile--container" }, [
+              _c("p", { staticClass: "p-mypage__profile--content u-m__m" }, [
+                _c("i", { staticClass: "fa-solid fa-location-dot" }),
+                _vm._v(
+                  _vm._s(_vm.prefecture) +
+                    _vm._s(_vm.city) +
+                    _vm._s(_vm.town) +
+                    _vm._s(_vm.building)
+                ),
+              ]),
+              _vm._v(" "),
+              _vm.introduction
+                ? _c(
+                    "p",
+                    { staticClass: "p-mypage__profile--content u-m__m" },
+                    [
+                      _c("i", { staticClass: "fa-solid fa-message" }),
+                      _vm._v(_vm._s(_vm.introduction)),
+                    ]
+                  )
+                : _vm._e(),
+            ]),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "p-mypage__profile--footer c-button__container" },
+              [
+                _c(
+                  "router-link",
+                  {
+                    staticClass: "c-button c-button__primary u-pd__s u-m__s",
+                    attrs: { to: { name: "convenience.profile" } },
+                  },
+                  [_vm._v("プロフィール編集")]
+                ),
+              ],
+              1
+            ),
+          ]),
+        ]),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "c-button__container" },
+          [
+            _c(
+              "router-link",
+              {
+                staticClass: "c-button c-button__main u-pd__s u-m__l",
+                attrs: { to: { name: "convenience.products.create" } },
+              },
+              [_vm._v("商品出品する")]
+            ),
+          ],
+          1
+        ),
+        _vm._v(" "),
+        _c(
+          "router-link",
+          {
+            staticClass: "c-link u-mt__xl u-mb__xl",
+            attrs: { to: { name: "convenience.products.sale" } },
+          },
+          [_vm._v("出品した商品一覧")]
+        ),
+        _vm._v(" "),
+        _c(
+          "router-link",
+          {
+            staticClass: "c-link u-mt__xl u-mb__xl",
+            attrs: { to: { name: "convenience.products.purchase" } },
+          },
+          [_vm._v("購入された商品一覧")]
+        ),
+        _vm._v(" "),
+        _c(
+          "router-link",
+          {
+            staticClass: "c-link u-mt__xl u-mb__xl",
+            attrs: { to: { name: "products" } },
+          },
+          [_vm._v("商品一覧")]
+        ),
+      ],
+      1
+    ),
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Convenience/WithdrawComponent.vue?vue&type=template&id=09d28700":
 /*!*******************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Convenience/WithdrawComponent.vue?vue&type=template&id=09d28700 ***!
@@ -49096,7 +50510,9 @@ var render = function () {
   var _c = _vm._self._c || _h
   return _c("main", { staticClass: "l-main" }, [
     _c("section", { staticClass: "l-main__wrapper" }, [
-      _c("h1", { staticClass: "c-title u-mb__xl" }, [_vm._v("コンビニ退会")]),
+      _c("h1", { staticClass: "c-title u-mt__xl u-mb__xl" }, [
+        _vm._v("コンビニ退会"),
+      ]),
       _vm._v(" "),
       _c("form", { staticClass: "c-form" }, [
         _c("h3", { staticClass: "c-title c-title__sub" }, [
@@ -49109,7 +50525,7 @@ var render = function () {
           "button",
           {
             staticClass:
-              "c-button c-button__submit c-button__convenience u-pd__s u-mt__m",
+              "c-button c-button__submit c-button__main u-pd__s u-mt__m",
             on: { click: _vm.withdraw },
           },
           [_vm._v("退会する")]
@@ -49381,80 +50797,47 @@ var render = function () {
                 1
               )
             : _vm.isTopPage
-            ? _c(
-                "div",
-                { staticClass: "l-nav__menu--item" },
-                [
-                  _c(
-                    "a",
-                    {
-                      staticClass: "l-nav__menu--link",
-                      attrs: { href: "#about" },
-                      on: { click: _vm.closeMenu },
-                    },
-                    [_vm._v("サービス概要")]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "a",
-                    {
-                      staticClass: "l-nav__menu--link",
-                      attrs: { href: "#merit" },
-                      on: { click: _vm.closeMenu },
-                    },
-                    [_vm._v("メリット")]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "a",
-                    {
-                      staticClass: "l-nav__menu--link",
-                      attrs: { href: "#usage" },
-                      on: { click: _vm.closeMenu },
-                    },
-                    [_vm._v("利用方法")]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "a",
-                    {
-                      staticClass: "l-nav__menu--link",
-                      attrs: { href: "#contact" },
-                      on: { click: _vm.closeMenu },
-                    },
-                    [_vm._v("お問い合わせ")]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "RouterLink",
-                    {
-                      staticClass: "l-nav__menu--link",
-                      attrs: { to: "/user/register" },
-                      nativeOn: {
-                        click: function ($event) {
-                          return _vm.closeMenu($event)
-                        },
-                      },
-                    },
-                    [_vm._v("利用者ユーザー登録")]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "RouterLink",
-                    {
-                      staticClass: "l-nav__menu--link",
-                      attrs: { to: "/convenience/register" },
-                      nativeOn: {
-                        click: function ($event) {
-                          return _vm.closeMenu($event)
-                        },
-                      },
-                    },
-                    [_vm._v("コンビニユーザー登録")]
-                  ),
-                ],
-                1
-              )
+            ? _c("div", { staticClass: "l-nav__menu--item" }, [
+                _c(
+                  "a",
+                  {
+                    staticClass: "l-nav__menu--link",
+                    attrs: { href: "#about" },
+                    on: { click: _vm.closeMenu },
+                  },
+                  [_vm._v("サービス概要")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "a",
+                  {
+                    staticClass: "l-nav__menu--link",
+                    attrs: { href: "#merit" },
+                    on: { click: _vm.closeMenu },
+                  },
+                  [_vm._v("メリット")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "a",
+                  {
+                    staticClass: "l-nav__menu--link",
+                    attrs: { href: "#usage" },
+                    on: { click: _vm.closeMenu },
+                  },
+                  [_vm._v("利用方法")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "a",
+                  {
+                    staticClass: "l-nav__menu--link",
+                    attrs: { href: "#contact" },
+                    on: { click: _vm.closeMenu },
+                  },
+                  [_vm._v("お問い合わせ")]
+                ),
+              ])
             : _c(
                 "div",
                 { staticClass: "l-nav__menu--item" },
@@ -49719,313 +51102,303 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("main", { staticClass: "l-container" }, [
-      _c(
-        "article",
-        { staticClass: "l-main__wrapper l-main__wrapper--policy" },
-        [
-          _c("h1", { staticClass: "c-title c-title__header u-mb__xl" }, [
-            _vm._v("プライバシーポリシー"),
+      _c("h1", { staticClass: "c-title c-title__sub u-mt__xl u-mb__xl" }, [
+        _vm._v("プライバシーポリシー"),
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "p-terms u-pd__3l" }, [
+        _c("section", { staticClass: "u-pdt__m u-pdb__m" }, [
+          _c("p", [
+            _vm._v(
+              "haiki share（以下，「当社」といいます。）は，本ウェブサイト上で提供するサービス（以下,「本サービス」といいます。）における，ユーザーの個人情報の取扱いについて，以下のとおりプライバシーポリシー（以下，「本ポリシー」といいます。）を定めます。"
+            ),
+          ]),
+        ]),
+        _vm._v(" "),
+        _c("section", { staticClass: "u-pdt__m u-pdb__m" }, [
+          _c("h2", { staticClass: "c-title c-title__policy" }, [
+            _vm._v("第1条（個人情報）"),
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "p-policy" }, [
-            _c("section", { staticClass: "u-pdt__m u-pdb__m" }, [
-              _c("p", [
-                _vm._v(
-                  "haiki share（以下，「当社」といいます。）は，本ウェブサイト上で提供するサービス（以下,「本サービス」といいます。）における，ユーザーの個人情報の取扱いについて，以下のとおりプライバシーポリシー（以下，「本ポリシー」といいます。）を定めます。"
-                ),
-              ]),
-            ]),
-            _vm._v(" "),
-            _c("section", { staticClass: "u-pdt__m u-pdb__m" }, [
-              _c("h2", { staticClass: "c-title c-title__policy" }, [
-                _vm._v("第1条（個人情報）"),
-              ]),
-              _vm._v(" "),
-              _c("p", [
-                _vm._v(
-                  "「個人情報」とは，個人情報保護法にいう「個人情報」を指すものとし，生存する個人に関する情報であって，当該情報に含まれる氏名，生年月日，住所，電話番号，連絡先その他の記述等により特定の個人を識別できる情報及び容貌，指紋，声紋にかかるデータ，及び健康保険証の保険者番号などの当該情報単体から特定の個人を識別できる情報（個人識別情報）を指します。"
-                ),
-              ]),
-            ]),
-            _vm._v(" "),
-            _c("section", { staticClass: "u-pdt__m u-pdb__m" }, [
-              _c("h2", { staticClass: "c-title c-title__policy" }, [
-                _vm._v("第2条（個人情報の収集方法）"),
-              ]),
-              _vm._v(" "),
-              _c("p", [
-                _vm._v(
-                  "当社は，ユーザーが利用登録をする際に氏名，生年月日，住所，電話番号，メールアドレス，銀行口座番号，クレジットカード番号，運転免許証番号などの個人情報をお尋ねすることがあります。また，ユーザーと提携先などとの間でなされたユーザーの個人情報を含む取引記録や決済に関する情報を,当社の提携先（情報提供元，広告主，広告配信先などを含みます。以下，｢提携先｣といいます。）などから収集することがあります。"
-                ),
-              ]),
-            ]),
-            _vm._v(" "),
-            _c("section", { staticClass: "u-pdt__m u-pdb__m" }, [
-              _c("h2", { staticClass: "c-title c-title__policy" }, [
-                _vm._v("第3条（個人情報を収集・利用する目的）"),
-              ]),
-              _vm._v(" "),
-              _c("p", [
-                _vm._v(
-                  "当社が個人情報を収集・利用する目的は，以下のとおりです。"
-                ),
-              ]),
-              _vm._v(" "),
-              _c("p", [_vm._v("1、当社サービスの提供・運営のため")]),
-              _vm._v(" "),
-              _c("p", [
-                _vm._v(
-                  "2、ユーザーからのお問い合わせに回答するため（本人確認を行うことを含む）"
-                ),
-              ]),
-              _vm._v(" "),
-              _c("p", [
-                _vm._v(
-                  "3、ユーザーが利用中のサービスの新機能，更新情報，キャンペーン等及び当社が提供する他のサービスの案内のメールを送付するため"
-                ),
-              ]),
-              _vm._v(" "),
-              _c("p", [
-                _vm._v(
-                  "4、メンテナンス，重要なお知らせなど必要に応じたご連絡のため"
-                ),
-              ]),
-              _vm._v(" "),
-              _c("p", [
-                _vm._v(
-                  "5、利用規約に違反したユーザーや，不正・不当な目的でサービスを利用しようとするユーザーの特定をし，ご利用をお断りするため"
-                ),
-              ]),
-              _vm._v(" "),
-              _c("p", [
-                _vm._v(
-                  "6、ユーザーにご自身の登録情報の閲覧や変更，削除，ご利用状況の閲覧を行っていただくため"
-                ),
-              ]),
-              _vm._v(" "),
-              _c("p", [
-                _vm._v(
-                  "7、有料サービスにおいて，ユーザーに利用料金を請求するため"
-                ),
-              ]),
-              _vm._v(" "),
-              _c("p", [_vm._v("8、上記の利用目的に付随する目的")]),
-            ]),
-            _vm._v(" "),
-            _c("section", { staticClass: "u-pdt__m u-pdb__m" }, [
-              _c("h2", { staticClass: "c-title c-title__policy" }, [
-                _vm._v("第4条（利用目的の変更）"),
-              ]),
-              _vm._v(" "),
-              _c("p", [
-                _vm._v(
-                  "当社は，利用目的が変更前と関連性を有すると合理的に認められる場合に限り，個人情報の利用目的を変更するものとします。"
-                ),
-              ]),
-              _vm._v(" "),
-              _c("p", [
-                _vm._v(
-                  "利用目的の変更を行った場合には，変更後の目的について，当社所定の方法により，ユーザーに通知し，または本ウェブサイト上に公表するものとします。"
-                ),
-              ]),
-            ]),
-            _vm._v(" "),
-            _c("section", { staticClass: "u-pdt__m u-pdb__m" }, [
-              _c("h2", { staticClass: "c-title c-title__policy" }, [
-                _vm._v("第5条（個人情報の第三者提供）"),
-              ]),
-              _vm._v(" "),
-              _c("p", [
-                _vm._v(
-                  "当社は，次に掲げる場合を除いて，あらかじめユーザーの同意を得ることなく，第三者に個人情報を提供することはありません。ただし，個人情報保護法その他の法令で認められる場合を除きます。"
-                ),
-              ]),
-              _vm._v(" "),
-              _c("p", [
-                _vm._v(
-                  "1、人の生命，身体または財産の保護のために必要がある場合であって，本人の同意を得ることが困難であるとき"
-                ),
-              ]),
-              _vm._v(" "),
-              _c("p", [
-                _vm._v(
-                  "2、公衆衛生の向上または児童の健全な育成の推進のために特に必要がある場合であって，本人の同意を得ることが困難であるとき"
-                ),
-              ]),
-              _vm._v(" "),
-              _c("p", [
-                _vm._v(
-                  "3、国の機関もしくは地方公共団体またはその委託を受けた者が法令の定める事務を遂行することに対して協力する必要がある場合であって，本人の同意を得ることにより当該事務の遂行に支障を及ぼすおそれがあるとき"
-                ),
-              ]),
-              _vm._v(" "),
-              _c("p", [
-                _vm._v(
-                  "4、予め次の事項を告知あるいは公表し，かつ当社が個人情報保護委員会に届出をしたとき"
-                ),
-              ]),
-              _vm._v(" "),
-              _c("p", [_vm._v("（1）利用目的に第三者への提供を含むこと")]),
-              _vm._v(" "),
-              _c("p", [_vm._v("（2）第三者に提供されるデータの項目")]),
-              _vm._v(" "),
-              _c("p", [_vm._v("（3）第三者への提供の手段または方法")]),
-              _vm._v(" "),
-              _c("p", [
-                _vm._v(
-                  "（4）本人の求めに応じて個人情報の第三者への提供を停止すること"
-                ),
-              ]),
-              _vm._v(" "),
-              _c("p", [_vm._v("（5）本人の求めを受け付ける方法")]),
-              _vm._v(" "),
-              _c("p", [
-                _vm._v(
-                  "5、前項の定めにかかわらず，次に掲げる場合には，当該情報の提供先は第三者に該当しないものとします。"
-                ),
-              ]),
-              _vm._v(" "),
-              _c("p", [
-                _vm._v(
-                  "（1）当社が利用目的の達成に必要な範囲内において個人情報の取扱いの全部または一部を委託する場合"
-                ),
-              ]),
-              _vm._v(" "),
-              _c("p", [
-                _vm._v(
-                  "（2）合併その他の事由による事業の承継に伴って個人情報が提供される場合"
-                ),
-              ]),
-              _vm._v(" "),
-              _c("p", [
-                _vm._v(
-                  "（3）個人情報を特定の者との間で共同して利用する場合であって，その旨並びに共同して利用される個人情報の項目，共同して利用する者の範囲，利用する者の利用目的および当該個人情報の管理について責任を有する者の氏名または名称について，あらかじめ本人に通知し，または本人が容易に知り得る状態に置いた場合"
-                ),
-              ]),
-            ]),
-            _vm._v(" "),
-            _c("section", { staticClass: "u-pdt__m u-pdb__m" }, [
-              _c("h2", { staticClass: "c-title c-title__policy" }, [
-                _vm._v("第6条（個人情報の開示）"),
-              ]),
-              _vm._v(" "),
-              _c("p", [
-                _vm._v(
-                  "当社は，本人から個人情報の開示を求められたときは，本人に対し，遅滞なくこれを開示します。ただし，開示することにより次のいずれかに該当する場合は，その全部または一部を開示しないこともあり，開示しない決定をした場合には，その旨を遅滞なく通知します。なお，個人情報の開示に際しては，1件あたり1，000円の手数料を申し受けます。"
-                ),
-              ]),
-              _vm._v(" "),
-              _c("p", [
-                _vm._v(
-                  "1、本人または第三者の生命，身体，財産その他の権利利益を害するおそれがある場合"
-                ),
-              ]),
-              _vm._v(" "),
-              _c("p", [
-                _vm._v(
-                  "2、当社の業務の適正な実施に著しい支障を及ぼすおそれがある場合"
-                ),
-              ]),
-              _vm._v(" "),
-              _c("p", [_vm._v("3、その他法令に違反することとなる場合")]),
-              _vm._v(" "),
-              _c("p", [
-                _vm._v(
-                  "前項の定めにかかわらず，履歴情報および特性情報などの個人情報以外の情報については，原則として開示いたしません。"
-                ),
-              ]),
-            ]),
-            _vm._v(" "),
-            _c("section", { staticClass: "u-pdt__m u-pdb__m" }, [
-              _c("h2", { staticClass: "c-title c-title__policy" }, [
-                _vm._v("第7条（個人情報の訂正および削除）"),
-              ]),
-              _vm._v(" "),
-              _c("p", [
-                _vm._v(
-                  "ユーザーは，当社の保有する自己の個人情報が誤った情報である場合には，当社が定める手続きにより，当社に対して個人情報の訂正，追加または削除（以下，「訂正等」といいます。）を請求することができます。"
-                ),
-              ]),
-              _vm._v(" "),
-              _c("p", [
-                _vm._v(
-                  "当社は，ユーザーから前項の請求を受けてその請求に応じる必要があると判断した場合には，遅滞なく，当該個人情報の訂正等を行うものとします。"
-                ),
-              ]),
-              _vm._v(" "),
-              _c("p", [
-                _vm._v(
-                  "当社は，前項の規定に基づき訂正等を行った場合，または訂正等を行わない旨の決定をしたときは遅滞なく，これをユーザーに通知します。"
-                ),
-              ]),
-            ]),
-            _vm._v(" "),
-            _c("section", { staticClass: "u-pdt__m u-pdb__m" }, [
-              _c("h2", { staticClass: "c-title c-title__policy" }, [
-                _vm._v("第8条（個人情報の利用停止等）"),
-              ]),
-              _vm._v(" "),
-              _c("p", [
-                _vm._v(
-                  "当社は，本人から，個人情報が，利用目的の範囲を超えて取り扱われているという理由，または不正の手段により取得されたものであるという理由により，その利用の停止または消去（以下，「利用停止等」といいます。）を求められた場合には，遅滞なく必要な調査を行います。"
-                ),
-              ]),
-              _vm._v(" "),
-              _c("p", [
-                _vm._v(
-                  "前項の調査結果に基づき，その請求に応じる必要があると判断した場合には，遅滞なく，当該個人情報の利用停止等を行います。"
-                ),
-              ]),
-              _vm._v(" "),
-              _c("p", [
-                _vm._v(
-                  "当社は，前項の規定に基づき利用停止等を行った場合，または利用停止等を行わない旨の決定をしたときは，遅滞なく，これをユーザーに通知します。"
-                ),
-              ]),
-              _vm._v(" "),
-              _c("p", [
-                _vm._v(
-                  "前2項にかかわらず，利用停止等に多額の費用を有する場合その他利用停止等を行うことが困難な場合であって，ユーザーの権利利益を保護するために必要なこれに代わるべき措置をとれる場合は，この代替策を講じるものとします。"
-                ),
-              ]),
-            ]),
-            _vm._v(" "),
-            _c("section", { staticClass: "u-pdt__m u-pdb__m" }, [
-              _c("h2", { staticClass: "c-title c-title__policy" }, [
-                _vm._v("第9条（プライバシーポリシーの変更）"),
-              ]),
-              _vm._v(" "),
-              _c("p", [
-                _vm._v(
-                  "本ポリシーの内容は，法令その他本ポリシーに別段の定めのある事項を除いて，ユーザーに通知することなく，変更することができるものとします。"
-                ),
-              ]),
-              _vm._v(" "),
-              _c("p", [
-                _vm._v(
-                  "当社が別途定める場合を除いて，変更後のプライバシーポリシーは，本ウェブサイトに掲載したときから効力を生じるものとします。"
-                ),
-              ]),
-            ]),
-            _vm._v(" "),
-            _c("section", { staticClass: "u-pdt__m u-pdb__m" }, [
-              _c("h2", { staticClass: "c-title c-title__policy" }, [
-                _vm._v("第10条（お問い合わせ窓口）"),
-              ]),
-              _vm._v(" "),
-              _c("p", [
-                _vm._v(
-                  "本ポリシーに関するお問い合わせは，下記の窓口までお願いいたします。"
-                ),
-              ]),
-              _vm._v(" "),
-              _c("p", [_vm._v("Eメールアドレス：haikishare.com")]),
-            ]),
-            _vm._v(" "),
-            _c("p", [_vm._v("以上")]),
+          _c("p", [
+            _vm._v(
+              "「個人情報」とは，個人情報保護法にいう「個人情報」を指すものとし，生存する個人に関する情報であって，当該情報に含まれる氏名，生年月日，住所，電話番号，連絡先その他の記述等により特定の個人を識別できる情報及び容貌，指紋，声紋にかかるデータ，及び健康保険証の保険者番号などの当該情報単体から特定の個人を識別できる情報（個人識別情報）を指します。"
+            ),
           ]),
-        ]
-      ),
+        ]),
+        _vm._v(" "),
+        _c("section", { staticClass: "u-pdt__m u-pdb__m" }, [
+          _c("h2", { staticClass: "c-title c-title__policy" }, [
+            _vm._v("第2条（個人情報の収集方法）"),
+          ]),
+          _vm._v(" "),
+          _c("p", [
+            _vm._v(
+              "当社は，ユーザーが利用登録をする際に氏名，生年月日，住所，電話番号，メールアドレス，銀行口座番号，クレジットカード番号，運転免許証番号などの個人情報をお尋ねすることがあります。また，ユーザーと提携先などとの間でなされたユーザーの個人情報を含む取引記録や決済に関する情報を,当社の提携先（情報提供元，広告主，広告配信先などを含みます。以下，｢提携先｣といいます。）などから収集することがあります。"
+            ),
+          ]),
+        ]),
+        _vm._v(" "),
+        _c("section", { staticClass: "u-pdt__m u-pdb__m" }, [
+          _c("h2", { staticClass: "c-title c-title__policy" }, [
+            _vm._v("第3条（個人情報を収集・利用する目的）"),
+          ]),
+          _vm._v(" "),
+          _c("p", [
+            _vm._v("当社が個人情報を収集・利用する目的は，以下のとおりです。"),
+          ]),
+          _vm._v(" "),
+          _c("p", [_vm._v("1、当社サービスの提供・運営のため")]),
+          _vm._v(" "),
+          _c("p", [
+            _vm._v(
+              "2、ユーザーからのお問い合わせに回答するため（本人確認を行うことを含む）"
+            ),
+          ]),
+          _vm._v(" "),
+          _c("p", [
+            _vm._v(
+              "3、ユーザーが利用中のサービスの新機能，更新情報，キャンペーン等及び当社が提供する他のサービスの案内のメールを送付するため"
+            ),
+          ]),
+          _vm._v(" "),
+          _c("p", [
+            _vm._v(
+              "4、メンテナンス，重要なお知らせなど必要に応じたご連絡のため"
+            ),
+          ]),
+          _vm._v(" "),
+          _c("p", [
+            _vm._v(
+              "5、利用規約に違反したユーザーや，不正・不当な目的でサービスを利用しようとするユーザーの特定をし，ご利用をお断りするため"
+            ),
+          ]),
+          _vm._v(" "),
+          _c("p", [
+            _vm._v(
+              "6、ユーザーにご自身の登録情報の閲覧や変更，削除，ご利用状況の閲覧を行っていただくため"
+            ),
+          ]),
+          _vm._v(" "),
+          _c("p", [
+            _vm._v("7、有料サービスにおいて，ユーザーに利用料金を請求するため"),
+          ]),
+          _vm._v(" "),
+          _c("p", [_vm._v("8、上記の利用目的に付随する目的")]),
+        ]),
+        _vm._v(" "),
+        _c("section", { staticClass: "u-pdt__m u-pdb__m" }, [
+          _c("h2", { staticClass: "c-title c-title__policy" }, [
+            _vm._v("第4条（利用目的の変更）"),
+          ]),
+          _vm._v(" "),
+          _c("p", [
+            _vm._v(
+              "当社は，利用目的が変更前と関連性を有すると合理的に認められる場合に限り，個人情報の利用目的を変更するものとします。"
+            ),
+          ]),
+          _vm._v(" "),
+          _c("p", [
+            _vm._v(
+              "利用目的の変更を行った場合には，変更後の目的について，当社所定の方法により，ユーザーに通知し，または本ウェブサイト上に公表するものとします。"
+            ),
+          ]),
+        ]),
+        _vm._v(" "),
+        _c("section", { staticClass: "u-pdt__m u-pdb__m" }, [
+          _c("h2", { staticClass: "c-title c-title__policy" }, [
+            _vm._v("第5条（個人情報の第三者提供）"),
+          ]),
+          _vm._v(" "),
+          _c("p", [
+            _vm._v(
+              "当社は，次に掲げる場合を除いて，あらかじめユーザーの同意を得ることなく，第三者に個人情報を提供することはありません。ただし，個人情報保護法その他の法令で認められる場合を除きます。"
+            ),
+          ]),
+          _vm._v(" "),
+          _c("p", [
+            _vm._v(
+              "1、人の生命，身体または財産の保護のために必要がある場合であって，本人の同意を得ることが困難であるとき"
+            ),
+          ]),
+          _vm._v(" "),
+          _c("p", [
+            _vm._v(
+              "2、公衆衛生の向上または児童の健全な育成の推進のために特に必要がある場合であって，本人の同意を得ることが困難であるとき"
+            ),
+          ]),
+          _vm._v(" "),
+          _c("p", [
+            _vm._v(
+              "3、国の機関もしくは地方公共団体またはその委託を受けた者が法令の定める事務を遂行することに対して協力する必要がある場合であって，本人の同意を得ることにより当該事務の遂行に支障を及ぼすおそれがあるとき"
+            ),
+          ]),
+          _vm._v(" "),
+          _c("p", [
+            _vm._v(
+              "4、予め次の事項を告知あるいは公表し，かつ当社が個人情報保護委員会に届出をしたとき"
+            ),
+          ]),
+          _vm._v(" "),
+          _c("p", [_vm._v("（1）利用目的に第三者への提供を含むこと")]),
+          _vm._v(" "),
+          _c("p", [_vm._v("（2）第三者に提供されるデータの項目")]),
+          _vm._v(" "),
+          _c("p", [_vm._v("（3）第三者への提供の手段または方法")]),
+          _vm._v(" "),
+          _c("p", [
+            _vm._v(
+              "（4）本人の求めに応じて個人情報の第三者への提供を停止すること"
+            ),
+          ]),
+          _vm._v(" "),
+          _c("p", [_vm._v("（5）本人の求めを受け付ける方法")]),
+          _vm._v(" "),
+          _c("p", [
+            _vm._v(
+              "5、前項の定めにかかわらず，次に掲げる場合には，当該情報の提供先は第三者に該当しないものとします。"
+            ),
+          ]),
+          _vm._v(" "),
+          _c("p", [
+            _vm._v(
+              "（1）当社が利用目的の達成に必要な範囲内において個人情報の取扱いの全部または一部を委託する場合"
+            ),
+          ]),
+          _vm._v(" "),
+          _c("p", [
+            _vm._v(
+              "（2）合併その他の事由による事業の承継に伴って個人情報が提供される場合"
+            ),
+          ]),
+          _vm._v(" "),
+          _c("p", [
+            _vm._v(
+              "（3）個人情報を特定の者との間で共同して利用する場合であって，その旨並びに共同して利用される個人情報の項目，共同して利用する者の範囲，利用する者の利用目的および当該個人情報の管理について責任を有する者の氏名または名称について，あらかじめ本人に通知し，または本人が容易に知り得る状態に置いた場合"
+            ),
+          ]),
+        ]),
+        _vm._v(" "),
+        _c("section", { staticClass: "u-pdt__m u-pdb__m" }, [
+          _c("h2", { staticClass: "c-title c-title__policy" }, [
+            _vm._v("第6条（個人情報の開示）"),
+          ]),
+          _vm._v(" "),
+          _c("p", [
+            _vm._v(
+              "当社は，本人から個人情報の開示を求められたときは，本人に対し，遅滞なくこれを開示します。ただし，開示することにより次のいずれかに該当する場合は，その全部または一部を開示しないこともあり，開示しない決定をした場合には，その旨を遅滞なく通知します。なお，個人情報の開示に際しては，1件あたり1，000円の手数料を申し受けます。"
+            ),
+          ]),
+          _vm._v(" "),
+          _c("p", [
+            _vm._v(
+              "1、本人または第三者の生命，身体，財産その他の権利利益を害するおそれがある場合"
+            ),
+          ]),
+          _vm._v(" "),
+          _c("p", [
+            _vm._v(
+              "2、当社の業務の適正な実施に著しい支障を及ぼすおそれがある場合"
+            ),
+          ]),
+          _vm._v(" "),
+          _c("p", [_vm._v("3、その他法令に違反することとなる場合")]),
+          _vm._v(" "),
+          _c("p", [
+            _vm._v(
+              "前項の定めにかかわらず，履歴情報および特性情報などの個人情報以外の情報については，原則として開示いたしません。"
+            ),
+          ]),
+        ]),
+        _vm._v(" "),
+        _c("section", { staticClass: "u-pdt__m u-pdb__m" }, [
+          _c("h2", { staticClass: "c-title c-title__policy" }, [
+            _vm._v("第7条（個人情報の訂正および削除）"),
+          ]),
+          _vm._v(" "),
+          _c("p", [
+            _vm._v(
+              "ユーザーは，当社の保有する自己の個人情報が誤った情報である場合には，当社が定める手続きにより，当社に対して個人情報の訂正，追加または削除（以下，「訂正等」といいます。）を請求することができます。"
+            ),
+          ]),
+          _vm._v(" "),
+          _c("p", [
+            _vm._v(
+              "当社は，ユーザーから前項の請求を受けてその請求に応じる必要があると判断した場合には，遅滞なく，当該個人情報の訂正等を行うものとします。"
+            ),
+          ]),
+          _vm._v(" "),
+          _c("p", [
+            _vm._v(
+              "当社は，前項の規定に基づき訂正等を行った場合，または訂正等を行わない旨の決定をしたときは遅滞なく，これをユーザーに通知します。"
+            ),
+          ]),
+        ]),
+        _vm._v(" "),
+        _c("section", { staticClass: "u-pdt__m u-pdb__m" }, [
+          _c("h2", { staticClass: "c-title c-title__policy" }, [
+            _vm._v("第8条（個人情報の利用停止等）"),
+          ]),
+          _vm._v(" "),
+          _c("p", [
+            _vm._v(
+              "当社は，本人から，個人情報が，利用目的の範囲を超えて取り扱われているという理由，または不正の手段により取得されたものであるという理由により，その利用の停止または消去（以下，「利用停止等」といいます。）を求められた場合には，遅滞なく必要な調査を行います。"
+            ),
+          ]),
+          _vm._v(" "),
+          _c("p", [
+            _vm._v(
+              "前項の調査結果に基づき，その請求に応じる必要があると判断した場合には，遅滞なく，当該個人情報の利用停止等を行います。"
+            ),
+          ]),
+          _vm._v(" "),
+          _c("p", [
+            _vm._v(
+              "当社は，前項の規定に基づき利用停止等を行った場合，または利用停止等を行わない旨の決定をしたときは，遅滞なく，これをユーザーに通知します。"
+            ),
+          ]),
+          _vm._v(" "),
+          _c("p", [
+            _vm._v(
+              "前2項にかかわらず，利用停止等に多額の費用を有する場合その他利用停止等を行うことが困難な場合であって，ユーザーの権利利益を保護するために必要なこれに代わるべき措置をとれる場合は，この代替策を講じるものとします。"
+            ),
+          ]),
+        ]),
+        _vm._v(" "),
+        _c("section", { staticClass: "u-pdt__m u-pdb__m" }, [
+          _c("h2", { staticClass: "c-title c-title__policy" }, [
+            _vm._v("第9条（プライバシーポリシーの変更）"),
+          ]),
+          _vm._v(" "),
+          _c("p", [
+            _vm._v(
+              "本ポリシーの内容は，法令その他本ポリシーに別段の定めのある事項を除いて，ユーザーに通知することなく，変更することができるものとします。"
+            ),
+          ]),
+          _vm._v(" "),
+          _c("p", [
+            _vm._v(
+              "当社が別途定める場合を除いて，変更後のプライバシーポリシーは，本ウェブサイトに掲載したときから効力を生じるものとします。"
+            ),
+          ]),
+        ]),
+        _vm._v(" "),
+        _c("section", { staticClass: "u-pdt__m u-pdb__m" }, [
+          _c("h2", { staticClass: "c-title c-title__policy" }, [
+            _vm._v("第10条（お問い合わせ窓口）"),
+          ]),
+          _vm._v(" "),
+          _c("p", [
+            _vm._v(
+              "本ポリシーに関するお問い合わせは，下記の窓口までお願いいたします。"
+            ),
+          ]),
+          _vm._v(" "),
+          _c("p", [_vm._v("Eメールアドレス：haikishare.com")]),
+        ]),
+        _vm._v(" "),
+        _c("p", [_vm._v("以上")]),
+      ]),
     ])
   },
 ]
@@ -50122,39 +51495,80 @@ var render = function () {
                                   [_vm._v("購入済み")]
                                 ),
                                 _vm._v(" "),
-                                _c("div", { staticClass: "p-icon u-pdr__s" }, [
-                                  !product.liked
-                                    ? _c("i", {
-                                        staticClass:
-                                          "c-icon c-icon__unlike far fa-heart",
-                                        on: {
-                                          click: function ($event) {
-                                            _vm.productLike(product)
-                                          },
-                                        },
-                                      })
-                                    : _c("i", {
-                                        staticClass:
-                                          "c-icon c-icon__like fas fa-heart",
-                                        on: {
-                                          click: function ($event) {
-                                            _vm.productUnlike(product)
-                                          },
-                                        },
-                                      }),
-                                  _vm._v(" "),
-                                  _c("span", [
-                                    _vm._v(
-                                      "いいね" + _vm._s(product.likes_count)
-                                    ),
-                                  ]),
+                                _c("div", { staticClass: "p-icon" }, [
+                                  _vm.$store.getters["auth/check"] &&
+                                  _vm.$store.getters["auth/role"] === "user"
+                                    ? _c("div", [
+                                        !product.liked
+                                          ? _c("i", {
+                                              staticClass:
+                                                "c-icon c-icon__unlike far fa-heart",
+                                              on: {
+                                                click: function ($event) {
+                                                  _vm.productLike(product)
+                                                },
+                                              },
+                                            })
+                                          : _c("i", {
+                                              staticClass:
+                                                "c-icon c-icon__like fas fa-heart",
+                                              on: {
+                                                click: function ($event) {
+                                                  _vm.productUnlike(product)
+                                                },
+                                              },
+                                            }),
+                                        _vm._v(" "),
+                                        _c("span", { staticClass: "u-mr__m" }, [
+                                          _vm._v(_vm._s(product.likes_count)),
+                                        ]),
+                                      ])
+                                    : !_vm.$store.getters["auth/check"]
+                                    ? _c("div", { staticClass: "c-tooltip" }, [
+                                        _c("i", {
+                                          staticClass:
+                                            "c-icon c-icon__nolike fas fa-heart",
+                                        }),
+                                        _c("span", { staticClass: "u-mr__m" }, [
+                                          _vm._v(_vm._s(product.likes_count)),
+                                        ]),
+                                        _vm._v(" "),
+                                        _c(
+                                          "div",
+                                          { staticClass: "c-tooltip__text" },
+                                          [
+                                            _vm._v(
+                                              "ユーザー登録・ログインしてください"
+                                            ),
+                                          ]
+                                        ),
+                                      ])
+                                    : _c("div", { staticClass: "c-tooltip" }, [
+                                        _c("i", {
+                                          staticClass:
+                                            "c-icon c-icon__nolike fas fa-heart",
+                                        }),
+                                        _c("span", { staticClass: "u-mr__m" }, [
+                                          _vm._v(_vm._s(product.likes_count)),
+                                        ]),
+                                        _vm._v(" "),
+                                        _c(
+                                          "div",
+                                          { staticClass: "c-tooltip__text" },
+                                          [
+                                            _vm._v(
+                                              "コンビニユーザーはお気に入りできません"
+                                            ),
+                                          ]
+                                        ),
+                                      ]),
                                 ]),
                                 _vm._v(" "),
-                                _c("p", { staticClass: "c-card__price" }, [
+                                _c("p", { staticClass: "c-card__text" }, [
                                   _vm._v(_vm._s(product.price) + "円"),
                                 ]),
                                 _vm._v(" "),
-                                _c("p", { staticClass: "c-card__price" }, [
+                                _c("p", { staticClass: "c-card__text" }, [
                                   _vm._v(
                                     _vm._s(
                                       _vm.formatDate(product.expiration_date)
@@ -50163,26 +51577,28 @@ var render = function () {
                                 ]),
                               ]),
                               _vm._v(" "),
-                              _c(
-                                "div",
-                                { staticClass: "p-card__footer" },
-                                [
-                                  _c(
-                                    "router-link",
-                                    {
-                                      staticClass:
-                                        "c-button c-button__common c-button__detail u-pd__s u-m__s",
-                                      attrs: {
-                                        to: _vm.getProductDetailLink(
-                                          product.id
-                                        ),
+                              _c("div", { staticClass: "p-card__footer" }, [
+                                _c(
+                                  "div",
+                                  { staticClass: "c-button__container" },
+                                  [
+                                    _c(
+                                      "router-link",
+                                      {
+                                        staticClass:
+                                          "c-button c-button__default u-pd__s u-m__s",
+                                        attrs: {
+                                          to: _vm.getProductDetailLink(
+                                            product.id
+                                          ),
+                                        },
                                       },
-                                    },
-                                    [_vm._v("詳細を見る")]
-                                  ),
-                                ],
-                                1
-                              ),
+                                      [_vm._v("詳細を見る")]
+                                    ),
+                                  ],
+                                  1
+                                ),
+                              ]),
                             ]),
                           ]
                         )
@@ -50218,6 +51634,151 @@ var render = function () {
     ],
     1
   )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ProductDetailComponent.vue?vue&type=template&id=62e50068":
+/*!************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ProductDetailComponent.vue?vue&type=template&id=62e50068 ***!
+  \************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function () {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("main", { staticClass: "l-main" }, [
+    _c("h1", { staticClass: "c-title u-mb__xl" }, [_vm._v("商品詳細")]),
+    _vm._v(" "),
+    _c(
+      "div",
+      { staticClass: "p-article" },
+      [
+        _c("section", { staticClass: "l-main__wrapper u-pd__l" }, [
+          _c("div", { staticClass: "l-container" }, [
+            _c("h1", { staticClass: "c-title" }, [
+              _vm._v(_vm._s(_vm.product.name)),
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "p-product" }, [
+              _c("div", { staticClass: "p-icon" }, [
+                _c("div", { staticClass: "c-tooltip" }, [
+                  _c("i", {
+                    staticClass: "c-icon c-icon__nolike fas fa-heart",
+                  }),
+                  _c("span", { staticClass: "u-mr__m" }, [
+                    _vm._v(_vm._s(_vm.product.likes_count)),
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "c-tooltip__text" }, [
+                    _vm._v("ユーザー登録・ログインしてください"),
+                  ]),
+                ]),
+                _vm._v(" "),
+                _c(
+                  "i",
+                  {
+                    staticClass:
+                      "fa-brands fa-x-twitter c-icon c-icon__share u-pd__s",
+                    on: { click: _vm.Xshare },
+                  },
+                  [_c("span", { staticClass: "c-text" }, [_vm._v("でシェア")])]
+                ),
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "p-product__picture" }, [
+                _c("img", {
+                  staticClass: "c-product__picture--detail",
+                  attrs: {
+                    src: _vm.getProductPicturePath(_vm.product),
+                    alt: "商品画像",
+                  },
+                }),
+              ]),
+            ]),
+            _vm._v(" "),
+            _vm.product &&
+            _vm.product.convenience &&
+            _vm.product.convenience.user
+              ? _c("div", { staticClass: "p-product__detail" }, [
+                  _c("p", { staticClass: "c-card__text u-mt__s u-mb__s" }, [
+                    _vm._v("価格：" + _vm._s(_vm.product.price) + "円"),
+                  ]),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "c-card__text u-mt__s u-mb__s" }, [
+                    _vm._v(
+                      "カテゴリ：" +
+                        _vm._s(_vm.getCategoryName(_vm.product.category_id))
+                    ),
+                  ]),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "c-card__text u-mt__s u-mb__s" }, [
+                    _vm._v(
+                      "賞味期限：" +
+                        _vm._s(_vm.formatDate(_vm.product.expiration_date))
+                    ),
+                  ]),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "c-card__text u-mt__s u-mb__s" }, [
+                    _vm._v(
+                      "この商品を出品したコンビニ：" +
+                        _vm._s(_vm.product.convenience.user.name) +
+                        " " +
+                        _vm._s(_vm.product.convenience.branch_name)
+                    ),
+                  ]),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "c-card__text u-mt__s u-mb__s" }, [
+                    _vm._v(
+                      "住所：" +
+                        _vm._s(_vm.product.convenience.address.prefecture) +
+                        _vm._s(_vm.product.convenience.address.city) +
+                        _vm._s(_vm.product.convenience.address.town) +
+                        _vm._s(_vm.product.convenience.address.building)
+                    ),
+                  ]),
+                ])
+              : _vm._e(),
+          ]),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              staticClass: "c-button c-button__submit c-button__main u-pd__s",
+              on: { click: _vm.register },
+            },
+            [_vm._v("ユーザー登録する")]
+          ),
+        ]),
+        _vm._v(" "),
+        _c("search-component"),
+      ],
+      1
+    ),
+    _vm._v(" "),
+    _c(
+      "a",
+      {
+        staticClass: "c-link c-link__back u-mt__s u-mb__s",
+        on: {
+          click: function ($event) {
+            _vm.$router.back()
+          },
+        },
+      },
+      [_vm._v("前のページに戻る")]
+    ),
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -50413,7 +51974,7 @@ var render = function () {
                 "button",
                 {
                   staticClass:
-                    "c-button c-button__submit c-button__common u-pd__s u-mt__m u-mb__m",
+                    "c-button c-button__submit c-button__primary u-pd__s u-mt__m u-mb__m",
                   attrs: { type: "submit" },
                 },
                 [_vm._v("商品を検索する")]
@@ -50455,288 +52016,284 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("main", { staticClass: "l-container" }, [
-      _c("article", { staticClass: "l-main__wrapper l-main__wrapper--terms" }, [
-        _c("h1", { staticClass: "c-title c-title__header u-mb__xl" }, [
-          _vm._v("利用規約"),
+      _c("h1", { staticClass: "c-title c-title__sub u-mt__xl u-mb__xl" }, [
+        _vm._v("利用規約"),
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "p-terms u-pd__3l" }, [
+        _c("section", { staticClass: "u-pdt__m u-pdb__m" }, [
+          _c("p", [
+            _vm._v(
+              "この利用規約（以下、「本規約」といいます。）は、haiki share（以下、「当社」といいます。）がこのECサイト上で提供するサービス（以下、「本サービス」といいます。）の利用条件を定めるものです。登録会員の皆さま（以下、「会員さま」といいます。）には、本規約に従って、本サービスをご利用いただきます。"
+            ),
+          ]),
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "p-terms" }, [
-          _c("section", { staticClass: "u-pdt__m u-pdb__m" }, [
-            _c("p", [
-              _vm._v(
-                "この利用規約（以下、「本規約」といいます。）は、haiki share（以下、「当社」といいます。）がこのECサイト上で提供するサービス（以下、「本サービス」といいます。）の利用条件を定めるものです。登録会員の皆さま（以下、「会員さま」といいます。）には、本規約に従って、本サービスをご利用いただきます。"
-              ),
-            ]),
+        _c("section", { staticClass: "u-pdt__m u-pdb__m" }, [
+          _c("h2", { staticClass: "c-title c-title__terms" }, [
+            _vm._v("第1条（適用）"),
           ]),
           _vm._v(" "),
-          _c("section", { staticClass: "u-pdt__m u-pdb__m" }, [
-            _c("h2", { staticClass: "c-title c-title__terms" }, [
-              _vm._v("第1条（適用）"),
-            ]),
-            _vm._v(" "),
-            _c("p", [
-              _vm._v(
-                "本規約は、会員さまと当社との間の本サービスの利用に関わる一切の関係に適用されるものとします。"
-              ),
-            ]),
+          _c("p", [
+            _vm._v(
+              "本規約は、会員さまと当社との間の本サービスの利用に関わる一切の関係に適用されるものとします。"
+            ),
           ]),
-          _vm._v(" "),
-          _c("section", { staticClass: "u-pdt__m u-pdb__m" }, [
-            _c("h2", { staticClass: "c-title c-title__terms" }, [
-              _vm._v("第2条（利用登録）"),
-            ]),
-            _vm._v(" "),
-            _c("p", [
-              _vm._v(
-                "登録希望者が当社の定める方法によって利用登録を申請し、当社がこれを承認することによって、利用登録が完了するものとします。"
-              ),
-            ]),
-            _vm._v(" "),
-            _c("p", [
-              _vm._v(
-                "当社は、利用登録の申請者に以下の事由があると判断した場合、利用登録の申請を承認しないことがあり、その理由については一切の開示義務を負わないものとします。"
-              ),
-            ]),
-            _vm._v(" "),
-            _c("p", [
-              _vm._v("（1）利用登録の申請に際して虚偽の事項を届け出た場合"),
-            ]),
-            _vm._v(" "),
-            _c("p", [
-              _vm._v("（2）本規約に違反したことがある者からの申請である場合"),
-            ]),
-            _vm._v(" "),
-            _c("p", [
-              _vm._v("（3）その他、当社が利用登録を相当でないと判断した場合"),
-            ]),
-          ]),
-          _vm._v(" "),
-          _c("section", { staticClass: "u-pdt__m u-pdb__m" }, [
-            _c("h2", { staticClass: "c-title c-title__terms" }, [
-              _vm._v("第3条（会員さまIDおよびパスワードの管理）"),
-            ]),
-            _vm._v(" "),
-            _c("p", [
-              _vm._v(
-                "会員さまは、自己の責任において、本サービスの会員さまIDおよびパスワードを管理するものとします。"
-              ),
-            ]),
-            _vm._v(" "),
-            _c("p", [
-              _vm._v(
-                "会員さまは、いかなる場合にも、会員さまIDおよびパスワードを第三者に譲渡または貸与することはできません。当社は、会員さまIDとパスワードの組み合わせが登録情報と一致してログインされた場合には、その会員さまIDを登録している会員さま自身による利用とみなします。"
-              ),
-            ]),
-          ]),
-          _vm._v(" "),
-          _c("section", { staticClass: "u-pdt__m u-pdb__m" }, [
-            _c("h2", { staticClass: "c-title c-title__terms" }, [
-              _vm._v("第4条（利用料金および支払方法）"),
-            ]),
-            _vm._v(" "),
-            _c("p", [
-              _vm._v(
-                "会員さまは、本サービス利用の対価として、当社が別途定め、本ウェブサイトに表示する利用料金を、当社が指定する方法により支払うものとします。"
-              ),
-            ]),
-          ]),
-          _vm._v(" "),
-          _c("section", { staticClass: "u-pdt__m u-pdb__m" }, [
-            _c("h2", { staticClass: "c-title c-title__terms" }, [
-              _vm._v("第5条（禁止事項）"),
-            ]),
-            _vm._v(" "),
-            _c("p", [
-              _vm._v(
-                "会員さまは、本サービスの利用にあたり、以下の行為をしてはなりません。"
-              ),
-            ]),
-            _vm._v(" "),
-            _c("p", [_vm._v("（1）法令または公序良俗に違反する行為")]),
-            _vm._v(" "),
-            _c("p", [_vm._v("（2）犯罪行為に関連する行為")]),
-            _vm._v(" "),
-            _c("p", [
-              _vm._v(
-                "（3）当社のサーバーまたはネットワークの機能を破壊したり、妨害したりする行為"
-              ),
-            ]),
-            _vm._v(" "),
-            _c("p", [
-              _vm._v("（4）当社のサービスの運営を妨害するおそれのある行為"),
-            ]),
-            _vm._v(" "),
-            _c("p", [
-              _vm._v(
-                "（5）他の会員さまに関する個人情報等を収集または蓄積する行為"
-              ),
-            ]),
-            _vm._v(" "),
-            _c("p", [_vm._v("（6）他の会員さまに成りすます行為")]),
-            _vm._v(" "),
-            _c("p", [
-              _vm._v(
-                "（7）当社のサービスに関連して、反社会的勢力に対して直接または間接に利益を供与する行為"
-              ),
-            ]),
-            _vm._v(" "),
-            _c("p", [_vm._v("（8）その他、当社が不適切と判断する行為")]),
-          ]),
-          _vm._v(" "),
-          _c("section", { staticClass: "u-pdt__m u-pdb__m" }, [
-            _c("h2", { staticClass: "c-title c-title__terms" }, [
-              _vm._v("第6条（本サービスの提供の停止等）"),
-            ]),
-            _vm._v(" "),
-            _c("p", [
-              _vm._v(
-                "当社は、以下のいずれかの事由があると判断した場合、会員さまに事前に通知することなく本サービスの全部または一部の提供を停止または中断することができるものとします。"
-              ),
-            ]),
-            _vm._v(" "),
-            _c("p", [
-              _vm._v(
-                "（1）本サービスにかかるコンピュータシステムの保守点検または更新を行う場合"
-              ),
-            ]),
-            _vm._v(" "),
-            _c("p", [
-              _vm._v(
-                "（2）地震、落雷、火災、停電または天災などの不可抗力により、本サービスの提供が困難となった場合"
-              ),
-            ]),
-            _vm._v(" "),
-            _c("p", [
-              _vm._v(
-                "（3）コンピュータまたは通信回線等が事故により停止した場合"
-              ),
-            ]),
-            _vm._v(" "),
-            _c("p", [
-              _vm._v("（4）その他、当社が本サービスの提供が困難と判断した場合"),
-            ]),
-            _vm._v(" "),
-            _c("p", [
-              _vm._v(
-                "当社は、本サービスの提供の停止または中断により、会員さままたは第三者が被ったいかなる不利益または損害について、理由を問わず一切の責任を負わないものとします。"
-              ),
-            ]),
-          ]),
-          _vm._v(" "),
-          _c("section", { staticClass: "u-pdt__m u-pdb__m" }, [
-            _c("h2", { staticClass: "c-title c-title__terms" }, [
-              _vm._v("第7条（利用制限および登録抹消）"),
-            ]),
-            _vm._v(" "),
-            _c("p", [
-              _vm._v(
-                "当社は、以下の場合には、事前の通知なく、会員さまに対して、本サービスの全部もしくは一部の利用を制限し、または会員さまとしての登録を抹消することができるものとします。"
-              ),
-            ]),
-            _vm._v(" "),
-            _c("p", [_vm._v("（1）本規約のいずれかの条項に違反した場合")]),
-            _vm._v(" "),
-            _c("p", [
-              _vm._v("（2）登録事項に虚偽の事実があることが判明した場合"),
-            ]),
-            _vm._v(" "),
-            _c("p", [
-              _vm._v(
-                "（3）その他、当社が本サービスの利用を適当でないと判断した場合"
-              ),
-            ]),
-            _vm._v(" "),
-            _c("p", [
-              _vm._v(
-                "当社は、本条に基づき当社が行った行為により会員さまに生じた損害について、一切の責任を負いません。"
-              ),
-            ]),
-          ]),
-          _vm._v(" "),
-          _c("section", { staticClass: "u-pdt__m u-pdb__m" }, [
-            _c("h2", { staticClass: "c-title c-title__terms" }, [
-              _vm._v("第8条（免責事項）"),
-            ]),
-            _vm._v(" "),
-            _c("p", [
-              _vm._v(
-                "当社の債務不履行責任は、当社の故意または重過失によらない場合には免責されるものとします。"
-              ),
-            ]),
-            _vm._v(" "),
-            _c("p", [
-              _vm._v(
-                "当社は、本サービスに関して、会員さまと他の会員さままたは第三者との間において生じた取引、連絡または紛争等について一切責任を負いません。"
-              ),
-            ]),
-          ]),
-          _vm._v(" "),
-          _c("section", { staticClass: "u-pdt__m u-pdb__m" }, [
-            _c("h2", { staticClass: "c-title c-title__terms" }, [
-              _vm._v("第9条（サービス内容の変更等）"),
-            ]),
-            _vm._v(" "),
-            _c("p", [
-              _vm._v(
-                "当社は、会員さまに通知することなく、本サービスの内容を変更しまたは本サービスの提供を中止することができるものとし、これによって会員さまに生じた損害について一切の責任を負いません。"
-              ),
-            ]),
-          ]),
-          _vm._v(" "),
-          _c("section", { staticClass: "u-pdt__m u-pdb__m" }, [
-            _c("h2", { staticClass: "c-title c-title__terms" }, [
-              _vm._v("第10条（利用規約の変更）"),
-            ]),
-            _vm._v(" "),
-            _c("p", [
-              _vm._v(
-                "当社は、必要と判断した場合には、会員さまに通知することなくいつでも本規約を変更することができるものとします。"
-              ),
-            ]),
-          ]),
-          _vm._v(" "),
-          _c("section", { staticClass: "u-pdt__m u-pdb__m" }, [
-            _c("h2", { staticClass: "c-title c-title__terms" }, [
-              _vm._v("第11条（通知または連絡）"),
-            ]),
-            _vm._v(" "),
-            _c("p", [
-              _vm._v(
-                "会員さまと当社との間の通知または連絡は、当社の定める方法によって行うものとします。"
-              ),
-            ]),
-          ]),
-          _vm._v(" "),
-          _c("section", { staticClass: "u-pdt__m u-pdb__m" }, [
-            _c("h2", { staticClass: "c-title c-title__terms" }, [
-              _vm._v("第12条（権利義務の譲渡の禁止）"),
-            ]),
-            _vm._v(" "),
-            _c("p", [
-              _vm._v(
-                "会員さまは、当社の書面による事前の承諾なく、利用契約上の地位または本規約に基づく権利もしくは義務を第三者に譲渡し、または担保に供することはできません。"
-              ),
-            ]),
-          ]),
-          _vm._v(" "),
-          _c("section", { staticClass: "u-pdt__m u-pdb__m" }, [
-            _c("h2", { staticClass: "c-title c-title__terms" }, [
-              _vm._v("第13条（準拠法・裁判管轄）"),
-            ]),
-            _vm._v(" "),
-            _c("p", [
-              _vm._v("本規約の解釈にあたっては、日本法を準拠法とします。"),
-            ]),
-            _vm._v(" "),
-            _c("p", [
-              _vm._v(
-                "本サービスに関して紛争が生じた場合には、当社の本店所在地を管轄する裁判所を専属的合意管轄とします。"
-              ),
-            ]),
-          ]),
-          _vm._v(" "),
-          _c("p", [_vm._v("以上")]),
         ]),
+        _vm._v(" "),
+        _c("section", { staticClass: "u-pdt__m u-pdb__m" }, [
+          _c("h2", { staticClass: "c-title c-title__terms" }, [
+            _vm._v("第2条（利用登録）"),
+          ]),
+          _vm._v(" "),
+          _c("p", [
+            _vm._v(
+              "登録希望者が当社の定める方法によって利用登録を申請し、当社がこれを承認することによって、利用登録が完了するものとします。"
+            ),
+          ]),
+          _vm._v(" "),
+          _c("p", [
+            _vm._v(
+              "当社は、利用登録の申請者に以下の事由があると判断した場合、利用登録の申請を承認しないことがあり、その理由については一切の開示義務を負わないものとします。"
+            ),
+          ]),
+          _vm._v(" "),
+          _c("p", [
+            _vm._v("（1）利用登録の申請に際して虚偽の事項を届け出た場合"),
+          ]),
+          _vm._v(" "),
+          _c("p", [
+            _vm._v("（2）本規約に違反したことがある者からの申請である場合"),
+          ]),
+          _vm._v(" "),
+          _c("p", [
+            _vm._v("（3）その他、当社が利用登録を相当でないと判断した場合"),
+          ]),
+        ]),
+        _vm._v(" "),
+        _c("section", { staticClass: "u-pdt__m u-pdb__m" }, [
+          _c("h2", { staticClass: "c-title c-title__terms" }, [
+            _vm._v("第3条（会員さまIDおよびパスワードの管理）"),
+          ]),
+          _vm._v(" "),
+          _c("p", [
+            _vm._v(
+              "会員さまは、自己の責任において、本サービスの会員さまIDおよびパスワードを管理するものとします。"
+            ),
+          ]),
+          _vm._v(" "),
+          _c("p", [
+            _vm._v(
+              "会員さまは、いかなる場合にも、会員さまIDおよびパスワードを第三者に譲渡または貸与することはできません。当社は、会員さまIDとパスワードの組み合わせが登録情報と一致してログインされた場合には、その会員さまIDを登録している会員さま自身による利用とみなします。"
+            ),
+          ]),
+        ]),
+        _vm._v(" "),
+        _c("section", { staticClass: "u-pdt__m u-pdb__m" }, [
+          _c("h2", { staticClass: "c-title c-title__terms" }, [
+            _vm._v("第4条（利用料金および支払方法）"),
+          ]),
+          _vm._v(" "),
+          _c("p", [
+            _vm._v(
+              "会員さまは、本サービス利用の対価として、当社が別途定め、本ウェブサイトに表示する利用料金を、当社が指定する方法により支払うものとします。"
+            ),
+          ]),
+        ]),
+        _vm._v(" "),
+        _c("section", { staticClass: "u-pdt__m u-pdb__m" }, [
+          _c("h2", { staticClass: "c-title c-title__terms" }, [
+            _vm._v("第5条（禁止事項）"),
+          ]),
+          _vm._v(" "),
+          _c("p", [
+            _vm._v(
+              "会員さまは、本サービスの利用にあたり、以下の行為をしてはなりません。"
+            ),
+          ]),
+          _vm._v(" "),
+          _c("p", [_vm._v("（1）法令または公序良俗に違反する行為")]),
+          _vm._v(" "),
+          _c("p", [_vm._v("（2）犯罪行為に関連する行為")]),
+          _vm._v(" "),
+          _c("p", [
+            _vm._v(
+              "（3）当社のサーバーまたはネットワークの機能を破壊したり、妨害したりする行為"
+            ),
+          ]),
+          _vm._v(" "),
+          _c("p", [
+            _vm._v("（4）当社のサービスの運営を妨害するおそれのある行為"),
+          ]),
+          _vm._v(" "),
+          _c("p", [
+            _vm._v(
+              "（5）他の会員さまに関する個人情報等を収集または蓄積する行為"
+            ),
+          ]),
+          _vm._v(" "),
+          _c("p", [_vm._v("（6）他の会員さまに成りすます行為")]),
+          _vm._v(" "),
+          _c("p", [
+            _vm._v(
+              "（7）当社のサービスに関連して、反社会的勢力に対して直接または間接に利益を供与する行為"
+            ),
+          ]),
+          _vm._v(" "),
+          _c("p", [_vm._v("（8）その他、当社が不適切と判断する行為")]),
+        ]),
+        _vm._v(" "),
+        _c("section", { staticClass: "u-pdt__m u-pdb__m" }, [
+          _c("h2", { staticClass: "c-title c-title__terms" }, [
+            _vm._v("第6条（本サービスの提供の停止等）"),
+          ]),
+          _vm._v(" "),
+          _c("p", [
+            _vm._v(
+              "当社は、以下のいずれかの事由があると判断した場合、会員さまに事前に通知することなく本サービスの全部または一部の提供を停止または中断することができるものとします。"
+            ),
+          ]),
+          _vm._v(" "),
+          _c("p", [
+            _vm._v(
+              "（1）本サービスにかかるコンピュータシステムの保守点検または更新を行う場合"
+            ),
+          ]),
+          _vm._v(" "),
+          _c("p", [
+            _vm._v(
+              "（2）地震、落雷、火災、停電または天災などの不可抗力により、本サービスの提供が困難となった場合"
+            ),
+          ]),
+          _vm._v(" "),
+          _c("p", [
+            _vm._v("（3）コンピュータまたは通信回線等が事故により停止した場合"),
+          ]),
+          _vm._v(" "),
+          _c("p", [
+            _vm._v("（4）その他、当社が本サービスの提供が困難と判断した場合"),
+          ]),
+          _vm._v(" "),
+          _c("p", [
+            _vm._v(
+              "当社は、本サービスの提供の停止または中断により、会員さままたは第三者が被ったいかなる不利益または損害について、理由を問わず一切の責任を負わないものとします。"
+            ),
+          ]),
+        ]),
+        _vm._v(" "),
+        _c("section", { staticClass: "u-pdt__m u-pdb__m" }, [
+          _c("h2", { staticClass: "c-title c-title__terms" }, [
+            _vm._v("第7条（利用制限および登録抹消）"),
+          ]),
+          _vm._v(" "),
+          _c("p", [
+            _vm._v(
+              "当社は、以下の場合には、事前の通知なく、会員さまに対して、本サービスの全部もしくは一部の利用を制限し、または会員さまとしての登録を抹消することができるものとします。"
+            ),
+          ]),
+          _vm._v(" "),
+          _c("p", [_vm._v("（1）本規約のいずれかの条項に違反した場合")]),
+          _vm._v(" "),
+          _c("p", [
+            _vm._v("（2）登録事項に虚偽の事実があることが判明した場合"),
+          ]),
+          _vm._v(" "),
+          _c("p", [
+            _vm._v(
+              "（3）その他、当社が本サービスの利用を適当でないと判断した場合"
+            ),
+          ]),
+          _vm._v(" "),
+          _c("p", [
+            _vm._v(
+              "当社は、本条に基づき当社が行った行為により会員さまに生じた損害について、一切の責任を負いません。"
+            ),
+          ]),
+        ]),
+        _vm._v(" "),
+        _c("section", { staticClass: "u-pdt__m u-pdb__m" }, [
+          _c("h2", { staticClass: "c-title c-title__terms" }, [
+            _vm._v("第8条（免責事項）"),
+          ]),
+          _vm._v(" "),
+          _c("p", [
+            _vm._v(
+              "当社の債務不履行責任は、当社の故意または重過失によらない場合には免責されるものとします。"
+            ),
+          ]),
+          _vm._v(" "),
+          _c("p", [
+            _vm._v(
+              "当社は、本サービスに関して、会員さまと他の会員さままたは第三者との間において生じた取引、連絡または紛争等について一切責任を負いません。"
+            ),
+          ]),
+        ]),
+        _vm._v(" "),
+        _c("section", { staticClass: "u-pdt__m u-pdb__m" }, [
+          _c("h2", { staticClass: "c-title c-title__terms" }, [
+            _vm._v("第9条（サービス内容の変更等）"),
+          ]),
+          _vm._v(" "),
+          _c("p", [
+            _vm._v(
+              "当社は、会員さまに通知することなく、本サービスの内容を変更しまたは本サービスの提供を中止することができるものとし、これによって会員さまに生じた損害について一切の責任を負いません。"
+            ),
+          ]),
+        ]),
+        _vm._v(" "),
+        _c("section", { staticClass: "u-pdt__m u-pdb__m" }, [
+          _c("h2", { staticClass: "c-title c-title__terms" }, [
+            _vm._v("第10条（利用規約の変更）"),
+          ]),
+          _vm._v(" "),
+          _c("p", [
+            _vm._v(
+              "当社は、必要と判断した場合には、会員さまに通知することなくいつでも本規約を変更することができるものとします。"
+            ),
+          ]),
+        ]),
+        _vm._v(" "),
+        _c("section", { staticClass: "u-pdt__m u-pdb__m" }, [
+          _c("h2", { staticClass: "c-title c-title__terms" }, [
+            _vm._v("第11条（通知または連絡）"),
+          ]),
+          _vm._v(" "),
+          _c("p", [
+            _vm._v(
+              "会員さまと当社との間の通知または連絡は、当社の定める方法によって行うものとします。"
+            ),
+          ]),
+        ]),
+        _vm._v(" "),
+        _c("section", { staticClass: "u-pdt__m u-pdb__m" }, [
+          _c("h2", { staticClass: "c-title c-title__terms" }, [
+            _vm._v("第12条（権利義務の譲渡の禁止）"),
+          ]),
+          _vm._v(" "),
+          _c("p", [
+            _vm._v(
+              "会員さまは、当社の書面による事前の承諾なく、利用契約上の地位または本規約に基づく権利もしくは義務を第三者に譲渡し、または担保に供することはできません。"
+            ),
+          ]),
+        ]),
+        _vm._v(" "),
+        _c("section", { staticClass: "u-pdt__m u-pdb__m" }, [
+          _c("h2", { staticClass: "c-title c-title__terms" }, [
+            _vm._v("第13条（準拠法・裁判管轄）"),
+          ]),
+          _vm._v(" "),
+          _c("p", [
+            _vm._v("本規約の解釈にあたっては、日本法を準拠法とします。"),
+          ]),
+          _vm._v(" "),
+          _c("p", [
+            _vm._v(
+              "本サービスに関して紛争が生じた場合には、当社の本店所在地を管轄する裁判所を専属的合意管轄とします。"
+            ),
+          ]),
+        ]),
+        _vm._v(" "),
+        _c("p", [_vm._v("以上")]),
       ]),
     ])
   },
@@ -50762,386 +52319,408 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("main", { staticClass: "l-container" }, [
-    _vm._m(0),
-    _vm._v(" "),
-    _c(
-      "section",
-      { staticClass: "u-color__bg u-pd__xl u-pd__xl", attrs: { id: "about" } },
-      [
-        _c("h2", { staticClass: "c-title u-mb__xl" }, [_vm._v("サービス概要")]),
+  return _c(
+    "main",
+    { staticClass: "l-container" },
+    [
+      _vm._m(0),
+      _vm._v(" "),
+      _c(
+        "section",
+        {
+          staticClass: "u-color__bg u-pd__xl u-pd__xl",
+          attrs: { id: "about" },
+        },
+        [
+          _c("h2", { staticClass: "c-title u-mb__xl" }, [
+            _vm._v("サービス概要"),
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "c-container" }, [
+            _c("div", { staticClass: "c-container__body" }, [
+              _c("img", {
+                staticClass: "c-attachment",
+                attrs: {
+                  src: "/images/attachment.jpeg",
+                  alt: "てまえどり画像",
+                },
+              }),
+              _vm._v(" "),
+              _vm._m(1),
+            ]),
+          ]),
+        ]
+      ),
+      _vm._v(" "),
+      _c("section", { attrs: { id: "merit" } }, [
+        _c("h2", { staticClass: "c-title u-mt__xl u-mb__xl" }, [
+          _vm._v("メリット"),
+        ]),
         _vm._v(" "),
         _c("div", { staticClass: "c-container" }, [
           _c("div", { staticClass: "c-container__body" }, [
-            _c("img", {
-              staticClass: "c-attachment",
-              attrs: { src: "/images/attachment.jpeg", alt: "てまえどり画像" },
-            }),
-            _vm._v(" "),
-            _vm._m(1),
+            _c("div", { staticClass: "c-panel__group c-panel__group--flex" }, [
+              _c(
+                "div",
+                { staticClass: "c-panel c-panel__border c-panel__user" },
+                [
+                  _vm._m(2),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "c-panel__body" }, [
+                    _c("img", {
+                      staticClass: "c-panel__image c-panel__image--user",
+                      attrs: {
+                        src: "/images/merit_user.png",
+                        alt: "利用者メリット画像",
+                      },
+                    }),
+                  ]),
+                  _vm._v(" "),
+                  _vm._m(3),
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "c-panel c-panel__border c-panel__convenience" },
+                [
+                  _vm._m(4),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "c-panel__body" }, [
+                    _c("img", {
+                      staticClass: "c-panel__image c-panel__image--convenience",
+                      attrs: {
+                        src: "/images/merit_convenience.png",
+                        alt: "コンビニメリット画像",
+                      },
+                    }),
+                  ]),
+                  _vm._v(" "),
+                  _vm._m(5),
+                ]
+              ),
+            ]),
           ]),
         ]),
-      ]
-    ),
-    _vm._v(" "),
-    _c("section", { attrs: { id: "merit" } }, [
-      _c("h2", { staticClass: "c-title u-mt__xl u-mb__xl" }, [
-        _vm._v("メリット"),
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "c-container" }, [
-        _c("div", { staticClass: "c-container__body" }, [
-          _c("div", { staticClass: "c-panel__group c-panel__group--flex" }, [
-            _c(
-              "div",
-              { staticClass: "c-panel c-panel__border c-panel__user" },
-              [
-                _vm._m(2),
-                _vm._v(" "),
-                _c("div", { staticClass: "c-panel__body" }, [
-                  _c("img", {
-                    staticClass: "c-panel__image c-panel__image--user",
-                    attrs: {
-                      src: "/images/merit_user.png",
-                      alt: "利用者メリット画像",
-                    },
-                  }),
-                ]),
-                _vm._v(" "),
-                _vm._m(3),
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "c-panel c-panel__border c-panel__convenience" },
-              [
-                _vm._m(4),
-                _vm._v(" "),
-                _c("div", { staticClass: "c-panel__body" }, [
-                  _c("img", {
-                    staticClass: "c-panel__image c-panel__image--convenience",
-                    attrs: {
-                      src: "/images/merit_convenience.png",
-                      alt: "コンビニメリット画像",
-                    },
-                  }),
-                ]),
-                _vm._v(" "),
-                _vm._m(5),
-              ]
-            ),
-          ]),
-        ]),
-      ]),
-    ]),
-    _vm._v(" "),
-    _c("section", { attrs: { id: "usage" } }, [
-      _c("h2", { staticClass: "c-title u-mt__xl u-mb__xl" }, [
-        _vm._v("利用方法"),
-      ]),
+      _c(
+        "RouterLink",
+        {
+          staticClass: "c-button c-button__primary c-button__top u-pd__s",
+          attrs: { to: "/products" },
+        },
+        [_vm._v("出品されている商品を見てみる")]
+      ),
       _vm._v(" "),
-      _c("div", { staticClass: "c-container" }, [
-        _c("div", { staticClass: "c-container__body" }, [
-          _c("div", { staticClass: "c-panel__group c-panel__group--flex" }, [
-            _c(
-              "div",
-              { staticClass: "c-panel c-panel__border c-panel__user" },
-              [
-                _vm._m(6),
-                _vm._v(" "),
-                _c("div", { staticClass: "c-panel__container" }, [
-                  _c("div", { staticClass: "c-panel__content" }, [
-                    _c("img", {
-                      staticClass: "c-panel__image c-panel__image--usage",
-                      attrs: {
-                        src: "/images/register_image.png",
-                        alt: "利用方法画像",
-                      },
-                    }),
-                    _vm._v(" "),
-                    _c("p", [_vm._v("１．ユーザー登録する")]),
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "c-panel__content" }, [
-                    _c("img", {
-                      staticClass: "c-panel__image c-panel__image--usage",
-                      attrs: {
-                        src: "/images/user_purchase.png",
-                        alt: "利用方法画像",
-                      },
-                    }),
-                    _vm._v(" "),
-                    _c("p", [_vm._v("２．商品一覧から気になる商品を探す")]),
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "c-panel__content" }, [
-                    _c("img", {
-                      staticClass: "c-panel__image c-panel__image--usage",
-                      attrs: {
-                        src: "/images/purchase.png",
-                        alt: "利用方法画像",
-                      },
-                    }),
-                    _vm._v(" "),
-                    _c("p", [
-                      _vm._v(
-                        "３．購入の意思が固まったら、商品詳細画面で購入ボタンを押す"
-                      ),
-                    ]),
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "c-panel__content" }, [
-                    _c("img", {
-                      staticClass: "c-panel__image c-panel__image--usage",
-                      attrs: {
-                        src: "/images/convenience.png",
-                        alt: "利用方法画像",
-                      },
-                    }),
-                    _vm._v(" "),
-                    _c("p", [
-                      _vm._v("４．利用者はコンビニに商品を購入しに行く"),
-                    ]),
-                  ]),
-                ]),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  { staticClass: "c-panel__foot" },
-                  [
-                    _c(
-                      "RouterLink",
-                      {
-                        staticClass: "c-button c-button__register u-pd__s",
-                        attrs: { to: "/user/register" },
-                      },
-                      [_vm._v("利用者ユーザー登録")]
-                    ),
-                  ],
-                  1
-                ),
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "c-panel c-panel__border c-panel__convenience" },
-              [
-                _vm._m(7),
-                _vm._v(" "),
-                _c("div", { staticClass: "c-panel__container" }, [
-                  _c("div", { staticClass: "c-panel__content" }, [
-                    _c("img", {
-                      staticClass: "c-panel__image c-panel__image--usage",
-                      attrs: {
-                        src: "/images/register_image.png",
-                        alt: "利用方法画像",
-                      },
-                    }),
-                    _vm._v(" "),
-                    _c("p", [_vm._v("１．ユーザー登録する")]),
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "c-panel__content" }, [
-                    _c("img", {
-                      staticClass: "c-panel__image c-panel__image--usage",
-                      attrs: {
-                        src: "/images/product.png",
-                        alt: "利用方法画像",
-                      },
-                    }),
-                    _vm._v(" "),
-                    _c("p", [_vm._v("２．廃棄となった商品を登録する")]),
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "c-panel__content" }, [
-                    _c("img", {
-                      staticClass: "c-panel__image c-panel__image--usage",
-                      attrs: {
-                        src: "/images/convenience_man.png",
-                        alt: "利用方法画像",
-                      },
-                    }),
-                    _vm._v(" "),
-                    _c("p", [
-                      _vm._v(
-                        "３．「商品購入完了メール」というメール通知があれば、実際の商品を用意しておく"
-                      ),
-                    ]),
-                  ]),
-                ]),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  { staticClass: "c-panel__foot" },
-                  [
-                    _c(
-                      "RouterLink",
-                      {
-                        staticClass:
-                          "c-button c-button__register c-button__register--convenience u-pd__s",
-                        attrs: { to: "/convenience/register" },
-                      },
-                      [_vm._v("コンビニユーザー登録")]
-                    ),
-                  ],
-                  1
-                ),
-              ]
-            ),
-          ]),
-        ]),
-      ]),
-    ]),
-    _vm._v(" "),
-    _c(
-      "section",
-      { staticClass: "u-pd__xl u-pd__xl", attrs: { id: "contact" } },
-      [
+      _c("section", { attrs: { id: "usage" } }, [
         _c("h2", { staticClass: "c-title u-mt__xl u-mb__xl" }, [
-          _vm._v("お問い合わせ"),
+          _vm._v("利用方法"),
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "c-container" }, [
-          _c("div", { staticClass: "c-container__contact" }, [
-            _c(
-              "form",
-              {
-                staticClass: "c-form",
-                on: {
-                  submit: function ($event) {
-                    $event.preventDefault()
-                    return _vm.submitForm($event)
-                  },
-                },
-              },
-              [
-                _vm.flashMessage
-                  ? _c("div", { staticClass: "c-flash" }, [
-                      _vm._v(_vm._s(_vm.flashMessage)),
-                    ])
-                  : _vm._e(),
-                _vm._v(" "),
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.formData.name,
-                      expression: "formData.name",
-                    },
-                  ],
-                  staticClass: "c-input u-pd__s u-mt__m",
-                  class: { "is-invalid": _vm.errors && _vm.errors.name },
-                  attrs: {
-                    id: "name",
-                    type: "name",
-                    autocomplete: "name",
-                    placeholder: "お名前",
-                  },
-                  domProps: { value: _vm.formData.name },
-                  on: {
-                    input: function ($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.$set(_vm.formData, "name", $event.target.value)
-                    },
-                  },
-                }),
-                _vm._v(" "),
-                _vm.errors && _vm.errors.name
-                  ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
-                      _vm._v(_vm._s(_vm.errors.name[0])),
-                    ])
-                  : _vm._e(),
-                _vm._v(" "),
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.formData.email,
-                      expression: "formData.email",
-                    },
-                  ],
-                  staticClass: "c-input u-pd__s u-mt__m",
-                  class: { "is-invalid": _vm.errors && _vm.errors.email },
-                  attrs: {
-                    id: "email",
-                    type: "email",
-                    autocomplete: "email",
-                    placeholder: "メールアドレス",
-                  },
-                  domProps: { value: _vm.formData.email },
-                  on: {
-                    input: function ($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.$set(_vm.formData, "email", $event.target.value)
-                    },
-                  },
-                }),
-                _vm._v(" "),
-                _vm.errors && _vm.errors.email
-                  ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
-                      _vm._v(_vm._s(_vm.errors.email[0])),
-                    ])
-                  : _vm._e(),
-                _vm._v(" "),
-                _c("textarea", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.formData.contact,
-                      expression: "formData.contact",
-                    },
-                  ],
-                  staticClass: "c-textarea u-pd__s u-mt__m",
-                  class: { "is-invalid": _vm.errors && _vm.errors.contact },
-                  attrs: {
-                    id: "contact",
-                    type: "text",
-                    cols: "30",
-                    rows: "10",
-                    placeholder: "お問い合わせ内容",
-                  },
-                  domProps: { value: _vm.formData.contact },
-                  on: {
-                    input: function ($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.$set(_vm.formData, "contact", $event.target.value)
-                    },
-                  },
-                }),
-                _vm._v(" "),
-                _vm.errors && _vm.errors.contact
-                  ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
-                      _vm._v(_vm._s(_vm.errors.contact[0])),
-                    ])
-                  : _vm._e(),
-                _vm._v(" "),
-                _c(
-                  "button",
-                  {
-                    staticClass:
-                      "c-button c-button__submit c-button__user u-pd__s u-mt__m",
-                    attrs: { type: "submit" },
-                  },
-                  [_vm._v("送信する")]
-                ),
-              ]
-            ),
+          _c("div", { staticClass: "c-container__body" }, [
+            _c("div", { staticClass: "c-panel__group c-panel__group--flex" }, [
+              _c(
+                "div",
+                { staticClass: "c-panel c-panel__border c-panel__user" },
+                [
+                  _vm._m(6),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "c-panel__container" }, [
+                    _c("div", { staticClass: "c-panel__content" }, [
+                      _c("img", {
+                        staticClass: "c-panel__image c-panel__image--usage",
+                        attrs: {
+                          src: "/images/register_image.png",
+                          alt: "利用方法画像",
+                        },
+                      }),
+                      _vm._v(" "),
+                      _c("p", [_vm._v("１．ユーザー登録する")]),
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "c-panel__content" }, [
+                      _c("img", {
+                        staticClass: "c-panel__image c-panel__image--usage",
+                        attrs: {
+                          src: "/images/user_purchase.png",
+                          alt: "利用方法画像",
+                        },
+                      }),
+                      _vm._v(" "),
+                      _c("p", [_vm._v("２．商品一覧から気になる商品を探す")]),
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "c-panel__content" }, [
+                      _c("img", {
+                        staticClass: "c-panel__image c-panel__image--usage",
+                        attrs: {
+                          src: "/images/purchase.png",
+                          alt: "利用方法画像",
+                        },
+                      }),
+                      _vm._v(" "),
+                      _c("p", [
+                        _vm._v(
+                          "３．購入の意思が固まったら、商品詳細画面で購入ボタンを押す"
+                        ),
+                      ]),
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "c-panel__content" }, [
+                      _c("img", {
+                        staticClass: "c-panel__image c-panel__image--usage",
+                        attrs: {
+                          src: "/images/convenience.png",
+                          alt: "利用方法画像",
+                        },
+                      }),
+                      _vm._v(" "),
+                      _c("p", [
+                        _vm._v("４．利用者はコンビニに商品を購入しに行く"),
+                      ]),
+                    ]),
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { staticClass: "c-panel__foot" },
+                    [
+                      _c(
+                        "RouterLink",
+                        {
+                          staticClass:
+                            "c-button c-button__main c-button__register u-pd__s",
+                          attrs: { to: "/user/register" },
+                        },
+                        [_vm._v("利用者ユーザー登録")]
+                      ),
+                    ],
+                    1
+                  ),
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "c-panel c-panel__border c-panel__convenience" },
+                [
+                  _vm._m(7),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "c-panel__container" }, [
+                    _c("div", { staticClass: "c-panel__content" }, [
+                      _c("img", {
+                        staticClass: "c-panel__image c-panel__image--usage",
+                        attrs: {
+                          src: "/images/register_image.png",
+                          alt: "利用方法画像",
+                        },
+                      }),
+                      _vm._v(" "),
+                      _c("p", [_vm._v("１．ユーザー登録する")]),
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "c-panel__content" }, [
+                      _c("img", {
+                        staticClass: "c-panel__image c-panel__image--usage",
+                        attrs: {
+                          src: "/images/product.png",
+                          alt: "利用方法画像",
+                        },
+                      }),
+                      _vm._v(" "),
+                      _c("p", [_vm._v("２．廃棄となった商品を登録する")]),
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "c-panel__content" }, [
+                      _c("img", {
+                        staticClass: "c-panel__image c-panel__image--usage",
+                        attrs: {
+                          src: "/images/convenience_man.png",
+                          alt: "利用方法画像",
+                        },
+                      }),
+                      _vm._v(" "),
+                      _c("p", [
+                        _vm._v(
+                          "３．「商品購入完了メール」というメール通知があれば、実際の商品を用意しておく"
+                        ),
+                      ]),
+                    ]),
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { staticClass: "c-panel__foot" },
+                    [
+                      _c(
+                        "RouterLink",
+                        {
+                          staticClass:
+                            "c-button c-button__main c-button__register u-pd__s",
+                          attrs: { to: "/convenience/register" },
+                        },
+                        [_vm._v("コンビニユーザー登録")]
+                      ),
+                    ],
+                    1
+                  ),
+                ]
+              ),
+            ]),
           ]),
         ]),
-      ]
-    ),
-  ])
+      ]),
+      _vm._v(" "),
+      _c(
+        "section",
+        { staticClass: "u-pd__xl u-pd__xl", attrs: { id: "contact" } },
+        [
+          _c("h2", { staticClass: "c-title u-mt__xl u-mb__xl" }, [
+            _vm._v("お問い合わせ"),
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "c-container" }, [
+            _c("div", { staticClass: "c-container__contact" }, [
+              _c(
+                "form",
+                {
+                  staticClass: "c-form",
+                  on: {
+                    submit: function ($event) {
+                      $event.preventDefault()
+                      return _vm.submitForm($event)
+                    },
+                  },
+                },
+                [
+                  _vm._m(8),
+                  _vm._v(" "),
+                  _vm.errors && _vm.errors.name
+                    ? _c("span", { staticClass: "c-error" }, [
+                        _vm._v(_vm._s(_vm.errors.name[0])),
+                      ])
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.formData.name,
+                        expression: "formData.name",
+                      },
+                    ],
+                    staticClass: "c-input u-pd__s",
+                    class: { "is-invalid": _vm.errors && _vm.errors.name },
+                    attrs: { id: "name", type: "name", autocomplete: "name" },
+                    domProps: { value: _vm.formData.name },
+                    on: {
+                      input: function ($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.formData, "name", $event.target.value)
+                      },
+                    },
+                  }),
+                  _vm._v(" "),
+                  _vm._m(9),
+                  _vm._v(" "),
+                  _vm.errors && _vm.errors.email
+                    ? _c("span", { staticClass: "c-error" }, [
+                        _vm._v(_vm._s(_vm.errors.email[0])),
+                      ])
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.formData.email,
+                        expression: "formData.email",
+                      },
+                    ],
+                    staticClass: "c-input u-pd__s",
+                    class: { "is-invalid": _vm.errors && _vm.errors.email },
+                    attrs: {
+                      id: "email",
+                      type: "email",
+                      autocomplete: "email",
+                    },
+                    domProps: { value: _vm.formData.email },
+                    on: {
+                      input: function ($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.formData, "email", $event.target.value)
+                      },
+                    },
+                  }),
+                  _vm._v(" "),
+                  _vm._m(10),
+                  _vm._v(" "),
+                  _vm.errors && _vm.errors.contact
+                    ? _c("span", { staticClass: "c-error" }, [
+                        _vm._v(_vm._s(_vm.errors.contact[0])),
+                      ])
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _c("textarea", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.formData.contact,
+                        expression: "formData.contact",
+                      },
+                    ],
+                    staticClass: "c-textarea u-pd__s",
+                    class: { "is-invalid": _vm.errors && _vm.errors.contact },
+                    attrs: {
+                      maxlength: "255",
+                      id: "contact",
+                      type: "text",
+                      cols: "30",
+                      rows: "10",
+                    },
+                    domProps: { value: _vm.formData.contact },
+                    on: {
+                      keyup: _vm.countCharacters,
+                      input: function ($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.formData, "contact", $event.target.value)
+                      },
+                    },
+                  }),
+                  _vm._v(" "),
+                  _c("span", { staticClass: "c-textarea__count" }, [
+                    _vm._v(_vm._s(_vm.formData.contact.length) + " / 255文字"),
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass:
+                        "c-button c-button__submit c-button__main u-pd__s u-mt__m",
+                      attrs: { type: "submit" },
+                    },
+                    [_vm._v("送信する")]
+                  ),
+                ]
+              ),
+            ]),
+          ]),
+        ]
+      ),
+    ],
+    1
+  )
 }
 var staticRenderFns = [
   function () {
@@ -51239,6 +52818,33 @@ var staticRenderFns = [
       ]),
     ])
   },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { staticClass: "c-label", attrs: { for: "name" } }, [
+      _vm._v("お名前"),
+      _c("span", { staticClass: "c-required" }, [_vm._v("必須")]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { staticClass: "c-label", attrs: { for: "email" } }, [
+      _vm._v("メールアドレス"),
+      _c("span", { staticClass: "c-required" }, [_vm._v("必須")]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { staticClass: "c-label", attrs: { for: "contact" } }, [
+      _vm._v("お問い合わせ内容"),
+      _c("span", { staticClass: "c-required" }, [_vm._v("必須")]),
+    ])
+  },
 ]
 render._withStripped = true
 
@@ -51263,7 +52869,7 @@ var render = function () {
   var _c = _vm._self._c || _h
   return _c("main", { staticClass: "l-main" }, [
     _c("section", { staticClass: "l-main__wrapper" }, [
-      _c("h1", { staticClass: "c-title u-mb__xl" }, [
+      _c("h1", { staticClass: "c-title u-mt__xl u-mb__xl" }, [
         _vm._v("利用者パスワード変更メール送信"),
       ]),
       _vm._v(" "),
@@ -51314,7 +52920,7 @@ var render = function () {
             "button",
             {
               staticClass:
-                "c-button c-button__submit c-button__user u-pd__s u-mt__m",
+                "c-button c-button__submit c-button__main u-pd__s u-mt__m",
               attrs: { type: "submit" },
             },
             [_vm._v("パスワード変更メールを送信する")]
@@ -51371,7 +52977,9 @@ var render = function () {
   var _c = _vm._self._c || _h
   return _c("main", { staticClass: "l-main" }, [
     _c("section", { staticClass: "l-main__wrapper" }, [
-      _c("h1", { staticClass: "c-title u-mb__xl" }, [_vm._v("利用者ログイン")]),
+      _c("h1", { staticClass: "c-title u-mt__xl u-mb__xl" }, [
+        _vm._v("利用者ログイン"),
+      ]),
       _vm._v(" "),
       _c(
         "form",
@@ -51404,7 +53012,7 @@ var render = function () {
             ],
             staticClass: "c-input u-pd__s u-mt__m u-mb__m",
             class: { "is-invalid": _vm.errors && _vm.errors.email },
-            attrs: { id: "email", type: "email", autocomplete: "email" },
+            attrs: { id: "email", type: "text", autocomplete: "email" },
             domProps: { value: _vm.formData.email },
             on: {
               input: function ($event) {
@@ -51417,6 +53025,12 @@ var render = function () {
           }),
           _vm._v(" "),
           _vm._m(1),
+          _vm._v(" "),
+          _c("span", { staticClass: "c-text c-text__note" }, [
+            _vm._v(
+              "※パスワードは、半角数字・英字大文字・小文字、記号（!@#$%^&*）を使って8文字以上で入力してください"
+            ),
+          ]),
           _vm._v(" "),
           _vm.errors && _vm.errors.password
             ? _c("span", { staticClass: "c-error u-mt__s" }, [
@@ -51439,7 +53053,7 @@ var render = function () {
                   class: { "is-invalid": _vm.errors && _vm.errors.password },
                   attrs: {
                     id: "password",
-                    placeholder: "英数字8文字以上で入力してください",
+                    placeholder: "8文字以上で入力してください",
                     type: "checkbox",
                   },
                   domProps: {
@@ -51490,7 +53104,7 @@ var render = function () {
                   class: { "is-invalid": _vm.errors && _vm.errors.password },
                   attrs: {
                     id: "password",
-                    placeholder: "英数字8文字以上で入力してください",
+                    placeholder: "8文字以上で入力してください",
                     type: "radio",
                   },
                   domProps: { checked: _vm._q(_vm.formData.password, null) },
@@ -51513,7 +53127,7 @@ var render = function () {
                   class: { "is-invalid": _vm.errors && _vm.errors.password },
                   attrs: {
                     id: "password",
-                    placeholder: "英数字8文字以上で入力してください",
+                    placeholder: "8文字以上で入力してください",
                     type: _vm.PasswordType,
                   },
                   domProps: { value: _vm.formData.password },
@@ -51601,7 +53215,7 @@ var render = function () {
             "button",
             {
               staticClass:
-                "c-button c-button__submit c-button__user u-pd__s u-mt__m",
+                "c-button c-button__submit c-button__main u-pd__s u-mt__m",
               attrs: { type: "submit" },
             },
             [_vm._v("ログインする")]
@@ -51668,289 +53282,238 @@ var render = function () {
   return _c("main", { staticClass: "l-main" }, [
     _c("h1", { staticClass: "c-title u-mb__xl" }, [_vm._v("利用者マイページ")]),
     _vm._v(" "),
-    _c("div", { staticClass: "p-article" }, [
-      _c("section", { staticClass: "l-main__wrapper" }, [
-        _c("div", { staticClass: "l-container" }, [
-          _c("div", { staticClass: "p-mypage__purchased" }, [
-            _c("h2", { staticClass: "c-title c-title__sub" }, [
-              _vm._v("購入した商品"),
-            ]),
-            _c("span", { staticClass: "c-text c-text__max" }, [
-              _vm._v("最大5件表示"),
-            ]),
-            _vm._v(" "),
-            _vm.purchasedProducts.length === 0
-              ? _c("div", [_vm._m(0)])
-              : _c("div", [
-                  _c(
-                    "ul",
-                    { staticClass: "p-product__list" },
-                    _vm._l(_vm.purchasedProducts, function (product) {
-                      return _c(
-                        "li",
-                        { key: product.id, staticClass: "p-product__item" },
-                        [
-                          _c("div", { staticClass: "c-card u-m__s" }, [
-                            _c(
-                              "div",
-                              { staticClass: "p-card__header u-pd__s" },
-                              [
-                                _c("h3", { staticClass: "c-card__name" }, [
-                                  _vm._v(_vm._s(product.product.name)),
-                                ]),
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "p-card__container" }, [
-                              _c("img", {
-                                staticClass: "c-card__picture u-mb__s",
-                                attrs: {
-                                  src: _vm.getProductPicturePath(product),
-                                  alt: "商品画像",
-                                },
-                              }),
-                              _vm._v(" "),
-                              _c("p", { staticClass: "c-card__price" }, [
-                                _vm._v(_vm._s(product.product.price) + "円"),
-                              ]),
-                              _vm._v(" "),
-                              _c("p", { staticClass: "c-card__date" }, [
-                                _vm._v(
-                                  _vm._s(
-                                    _vm.formatDate(
-                                      product.product.expiration_date
-                                    )
-                                  )
-                                ),
-                              ]),
-                            ]),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "p-card__footer" }, [
+    _c(
+      "div",
+      { staticClass: "p-article" },
+      [
+        _c("section", { staticClass: "l-main__wrapper" }, [
+          _c("div", { staticClass: "l-container" }, [
+            _c("div", { staticClass: "p-mypage__purchased" }, [
+              _c("h2", { staticClass: "c-title c-title__sub" }, [
+                _vm._v("購入した商品"),
+              ]),
+              _c("span", { staticClass: "c-text c-text__max" }, [
+                _vm._v("最大5件表示"),
+              ]),
+              _vm._v(" "),
+              _vm.purchasedProducts.length === 0
+                ? _c("div", [_vm._m(0)])
+                : _c("div", [
+                    _c(
+                      "ul",
+                      { staticClass: "p-product__list" },
+                      _vm._l(_vm.purchasedProducts, function (product) {
+                        return _c(
+                          "li",
+                          { key: product.id, staticClass: "p-product__item" },
+                          [
+                            _c("div", { staticClass: "c-card u-m__s" }, [
                               _c(
                                 "div",
-                                { staticClass: "c-button__container" },
+                                { staticClass: "p-card__header u-pd__s" },
                                 [
-                                  _c(
-                                    "router-link",
-                                    {
-                                      staticClass:
-                                        "c-button c-button__user c-button__detail u-pd__s u-m__s",
-                                      attrs: {
-                                        to: _vm.getProductDetailLink(
-                                          product.product.id
-                                        ),
-                                      },
-                                    },
-                                    [_vm._v("詳細を見る")]
+                                  _c("h3", { staticClass: "c-card__name" }, [
+                                    _vm._v(_vm._s(product.product.name)),
+                                  ]),
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "p-card__container" }, [
+                                _c("img", {
+                                  staticClass: "c-card__picture u-mb__s",
+                                  attrs: {
+                                    src: _vm.getProductPicturePath(
+                                      product.product
+                                    ),
+                                    alt: "商品画像",
+                                  },
+                                }),
+                                _vm._v(" "),
+                                _c("p", { staticClass: "c-card__text" }, [
+                                  _vm._v(_vm._s(product.product.price) + "円"),
+                                ]),
+                                _vm._v(" "),
+                                _c("p", { staticClass: "c-card__text" }, [
+                                  _vm._v(
+                                    _vm._s(
+                                      _vm.formatDate(
+                                        product.product.expiration_date
+                                      )
+                                    )
                                   ),
-                                  _vm._v(" "),
-                                  _c(
-                                    "button",
-                                    {
-                                      staticClass:
-                                        "c-button c-button__user c-button__cancel u-pd__s u-m__s",
-                                      on: {
-                                        click: function ($event) {
-                                          _vm.cancelPurchase(product.product.id)
+                                ]),
+                              ]),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "p-card__footer" }, [
+                                _c(
+                                  "div",
+                                  { staticClass: "c-button__container" },
+                                  [
+                                    _c(
+                                      "router-link",
+                                      {
+                                        staticClass:
+                                          "c-button c-button__default u-pd__s u-m__s",
+                                        attrs: {
+                                          to: _vm.getProductDetailLink(
+                                            product.product.id
+                                          ),
                                         },
                                       },
-                                    },
-                                    [_vm._v("購入をキャンセルする")]
-                                  ),
-                                ],
-                                1
-                              ),
+                                      [_vm._v("詳細を見る")]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "button",
+                                      {
+                                        staticClass:
+                                          "c-button c-button__default u-pd__s u-m__s",
+                                        on: {
+                                          click: function ($event) {
+                                            _vm.cancelPurchase(
+                                              product.product.id
+                                            )
+                                          },
+                                        },
+                                      },
+                                      [_vm._v("購入をキャンセルする")]
+                                    ),
+                                  ],
+                                  1
+                                ),
+                              ]),
                             ]),
-                          ]),
-                        ]
-                      )
-                    })
-                  ),
-                ]),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "c-link__products u-mt__s" },
-              [
-                _c(
-                  "router-link",
-                  {
-                    staticClass: "c-link",
-                    attrs: { to: { name: "user.products.purchased" } },
-                  },
-                  [_vm._v("全件表示")]
-                ),
-              ],
-              1
-            ),
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "p-mypage__liked" }, [
-            _c("h2", { staticClass: "c-title c-title__sub" }, [
-              _vm._v("お気に入り商品"),
-            ]),
-            _c("span", { staticClass: "c-text c-text__max" }, [
-              _vm._v("最大5件表示"),
-            ]),
-            _vm._v(" "),
-            _vm.likedProducts.length === 0
-              ? _c("div", [_vm._m(1)])
-              : _c("div", [
+                          ]
+                        )
+                      })
+                    ),
+                  ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "c-link__products u-mt__s" },
+                [
                   _c(
-                    "ul",
-                    { staticClass: "p-product__list" },
-                    _vm._l(_vm.likedProducts, function (product) {
-                      return _c(
-                        "li",
-                        { key: product.id, staticClass: "p-product__item" },
-                        [
-                          _c("div", { staticClass: "c-card u-m__s" }, [
-                            _c(
-                              "div",
-                              { staticClass: "p-card__header u-pd__s" },
-                              [
-                                _c("h3", { staticClass: "c-card__name" }, [
-                                  _vm._v(_vm._s(product.product.name)),
-                                ]),
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "p-card__container" }, [
-                              _c("img", {
-                                staticClass: "c-card__picture u-mb__s",
-                                attrs: {
-                                  src: _vm.getProductPicturePath(product),
-                                  alt: "商品画像",
-                                },
-                              }),
+                    "router-link",
+                    {
+                      staticClass: "c-link",
+                      attrs: { to: { name: "user.products.purchased" } },
+                    },
+                    [_vm._v("全件表示")]
+                  ),
+                ],
+                1
+              ),
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "p-mypage__liked" }, [
+              _c("h2", { staticClass: "c-title c-title__sub" }, [
+                _vm._v("お気に入り商品"),
+              ]),
+              _c("span", { staticClass: "c-text c-text__max" }, [
+                _vm._v("最大5件表示"),
+              ]),
+              _vm._v(" "),
+              _vm.likedProducts.length === 0
+                ? _c("div", [_vm._m(1)])
+                : _c("div", [
+                    _c(
+                      "ul",
+                      { staticClass: "p-product__list" },
+                      _vm._l(_vm.likedProducts, function (product) {
+                        return _c(
+                          "li",
+                          { key: product.id, staticClass: "p-product__item" },
+                          [
+                            _c("div", { staticClass: "c-card u-m__s" }, [
+                              _c(
+                                "div",
+                                { staticClass: "p-card__header u-pd__s" },
+                                [
+                                  _c("h3", { staticClass: "c-card__name" }, [
+                                    _vm._v(_vm._s(product.product.name)),
+                                  ]),
+                                ]
+                              ),
                               _vm._v(" "),
-                              _c("p", { staticClass: "c-card__price" }, [
-                                _vm._v(_vm._s(product.product.price) + "円"),
+                              _c("div", { staticClass: "p-card__container" }, [
+                                _c("img", {
+                                  staticClass: "c-card__picture u-mb__s",
+                                  attrs: {
+                                    src: _vm.getProductPicturePath(
+                                      product.product
+                                    ),
+                                    alt: "商品画像",
+                                  },
+                                }),
+                                _vm._v(" "),
+                                _c("p", { staticClass: "c-card__text" }, [
+                                  _vm._v(_vm._s(product.product.price) + "円"),
+                                ]),
+                                _vm._v(" "),
+                                _c("p", { staticClass: "c-card__text" }, [
+                                  _vm._v(
+                                    _vm._s(
+                                      _vm.formatDate(
+                                        product.product.expiration_date
+                                      )
+                                    )
+                                  ),
+                                ]),
                               ]),
                               _vm._v(" "),
-                              _c("p", { staticClass: "c-card__date" }, [
-                                _vm._v(
-                                  _vm._s(
-                                    _vm.formatDate(
-                                      product.product.expiration_date
-                                    )
-                                  )
+                              _c("div", { staticClass: "p-card__footer" }, [
+                                _c(
+                                  "div",
+                                  { staticClass: "c-button__container" },
+                                  [
+                                    _c(
+                                      "router-link",
+                                      {
+                                        staticClass:
+                                          "c-button c-button__default u-pd__s u-m__s",
+                                        attrs: {
+                                          to: _vm.getProductDetailLink(
+                                            product.product.id
+                                          ),
+                                        },
+                                      },
+                                      [_vm._v("詳細を見る")]
+                                    ),
+                                  ],
+                                  1
                                 ),
                               ]),
                             ]),
-                            _vm._v(" "),
-                            _c(
-                              "div",
-                              { staticClass: "p-card__footer" },
-                              [
-                                _c(
-                                  "router-link",
-                                  {
-                                    staticClass:
-                                      "c-button c-button__user c-button__detail",
-                                    attrs: {
-                                      to: _vm.getProductDetailLink(
-                                        product.product.id
-                                      ),
-                                    },
-                                  },
-                                  [_vm._v("詳細を見る")]
-                                ),
-                              ],
-                              1
-                            ),
-                          ]),
-                        ]
-                      )
-                    })
+                          ]
+                        )
+                      })
+                    ),
+                  ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "c-link__products u-mt__s" },
+                [
+                  _c(
+                    "router-link",
+                    {
+                      staticClass: "c-link",
+                      attrs: { to: { name: "user.products.liked" } },
+                    },
+                    [_vm._v("全件表示")]
                   ),
-                ]),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "c-link__products u-mt__s" },
-              [
-                _c(
-                  "router-link",
-                  {
-                    staticClass: "c-link",
-                    attrs: { to: { name: "user.products.liked" } },
-                  },
-                  [_vm._v("全件表示")]
-                ),
-              ],
-              1
-            ),
+                ],
+                1
+              ),
+            ]),
           ]),
         ]),
-      ]),
-      _vm._v(" "),
-      _c("section", { staticClass: "l-sidebar" }, [
-        _c(
-          "div",
-          { staticClass: "p-mypage__sidebar" },
-          [
-            _c("div", { staticClass: "p-mypage__user-info u-pd__s" }, [
-              _c(
-                "h2",
-                { staticClass: "c-title c-title__sub u-mt__m u-mb__m" },
-                [_vm._v("プロフィール情報")]
-              ),
-              _vm._v(" "),
-              _c("div", { staticClass: "p-mypage__profile u-pd__s" }, [
-                _c("div", { staticClass: "p-mypage__icon--container" }, [
-                  _c("img", {
-                    staticClass: "p-mypage__icon",
-                    attrs: { src: _vm.icon, alt: "アイコン画像" },
-                  }),
-                ]),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  { staticClass: "p-mypage__username u-mt__s u-mb__s" },
-                  [_c("p", [_vm._v(_vm._s(_vm.username))])]
-                ),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  { staticClass: "c-button__container" },
-                  [
-                    _c(
-                      "router-link",
-                      {
-                        staticClass: "c-button c-button__user u-pd__s u-m__s",
-                        attrs: { to: { name: "user.profile" } },
-                      },
-                      [_vm._v("プロフィール編集")]
-                    ),
-                  ],
-                  1
-                ),
-              ]),
-            ]),
-            _vm._v(" "),
-            _c(
-              "router-link",
-              {
-                staticClass: "c-link u-mt__xl u-mb__xl",
-                attrs: { to: { name: "products" } },
-              },
-              [_vm._v("商品一覧")]
-            ),
-            _vm._v(" "),
-            _c(
-              "router-link",
-              {
-                staticClass: "c-link u-mt__xl u-mb__xl",
-                attrs: { to: { name: "user.withdraw" } },
-              },
-              [_vm._v("退会")]
-            ),
-          ],
-          1
-        ),
-      ]),
-    ]),
+        _vm._v(" "),
+        _c("sidebar-component", { attrs: { introduction: _vm.introduction } }),
+      ],
+      1
+    ),
     _vm._v(" "),
     _c(
       "a",
@@ -52012,108 +53575,141 @@ var render = function () {
   return _c("main", { staticClass: "l-main" }, [
     _c("h1", { staticClass: "c-title u-mb__xl" }, [_vm._v("商品詳細")]),
     _vm._v(" "),
-    _c("section", { staticClass: "l-main__wrapper u-pd__l" }, [
-      _c("div", { staticClass: "l-container" }, [
-        _c("h1", { staticClass: "c-title" }, [
-          _vm._v(_vm._s(_vm.product.name)),
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "p-product" }, [
-          _c("div", { staticClass: "p-icon u-pdr__s" }, [
-            !_vm.product.liked
-              ? _c("i", {
-                  staticClass: "c-icon c-icon__unlike far fa-heart",
-                  on: {
-                    click: function ($event) {
-                      _vm.productLike(_vm.product)
-                    },
-                  },
-                })
-              : _c("i", {
-                  staticClass: "c-icon c-icon__like fas fa-heart",
-                  on: {
-                    click: function ($event) {
-                      _vm.productUnlike(_vm.product)
-                    },
-                  },
-                }),
+    _c(
+      "div",
+      { staticClass: "p-article" },
+      [
+        _c("section", { staticClass: "l-main__wrapper u-pd__l" }, [
+          _c("div", { staticClass: "l-container" }, [
+            _c("h1", { staticClass: "c-title" }, [
+              _vm._v(_vm._s(_vm.product.name)),
+            ]),
             _vm._v(" "),
-            _c("span", [_vm._v("いいね" + _vm._s(_vm.product.likes_count))]),
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "p-icon" }, [
-            _c(
-              "button",
-              {
-                staticClass: "c-button c-button__share u-pd__s",
-                on: { click: _vm.Xshare },
-              },
-              [
+            _c("div", { staticClass: "p-product" }, [
+              _c("div", { staticClass: "p-icon" }, [
+                !_vm.product.liked
+                  ? _c("i", {
+                      staticClass: "c-icon c-icon__unlike far fa-heart",
+                      on: {
+                        click: function ($event) {
+                          _vm.productLike(_vm.product)
+                        },
+                      },
+                    })
+                  : _c("i", {
+                      staticClass: "c-icon c-icon__like fas fa-heart",
+                      on: {
+                        click: function ($event) {
+                          _vm.productUnlike(_vm.product)
+                        },
+                      },
+                    }),
+                _vm._v(" "),
+                _c("span", { staticClass: "u-mr__m" }, [
+                  _vm._v(_vm._s(_vm.product.likes_count)),
+                ]),
+                _vm._v(" "),
                 _c(
                   "i",
-                  { staticClass: "fa-brands fa-x-twitter c-icon__share" },
-                  [_vm._v("でシェアする")]
+                  {
+                    staticClass:
+                      "fa-brands fa-x-twitter c-icon c-icon__share u-pd__s",
+                    on: { click: _vm.Xshare },
+                  },
+                  [_c("span", { staticClass: "c-text" }, [_vm._v("でシェア")])]
                 ),
-              ]
-            ),
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "p-product__picture" }, [
+                _c("img", {
+                  staticClass: "c-product__picture--detail",
+                  attrs: {
+                    src: _vm.getProductPicturePath(_vm.product),
+                    alt: "商品画像",
+                  },
+                }),
+              ]),
+            ]),
+            _vm._v(" "),
+            _vm.product &&
+            _vm.product.convenience &&
+            _vm.product.convenience.user
+              ? _c("div", { staticClass: "p-product__detail" }, [
+                  _c("p", { staticClass: "c-card__text u-mt__s u-mb__s" }, [
+                    _vm._v("価格：" + _vm._s(_vm.product.price) + "円"),
+                  ]),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "c-card__text u-mt__s u-mb__s" }, [
+                    _vm._v(
+                      "カテゴリ：" +
+                        _vm._s(_vm.getCategoryName(_vm.product.category_id))
+                    ),
+                  ]),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "c-card__text u-mt__s u-mb__s" }, [
+                    _vm._v(
+                      "賞味期限：" +
+                        _vm._s(_vm.formatDate(_vm.product.expiration_date))
+                    ),
+                  ]),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "c-card__text u-mt__s u-mb__s" }, [
+                    _vm._v(
+                      "この商品を出品したコンビニ：" +
+                        _vm._s(_vm.product.convenience.user.name) +
+                        " " +
+                        _vm._s(_vm.product.convenience.branch_name)
+                    ),
+                  ]),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "c-card__text u-mt__s u-mb__s" }, [
+                    _vm._v(
+                      "住所：" +
+                        _vm._s(_vm.product.convenience.address.prefecture) +
+                        _vm._s(_vm.product.convenience.address.city) +
+                        _vm._s(_vm.product.convenience.address.town) +
+                        _vm._s(_vm.product.convenience.address.building)
+                    ),
+                  ]),
+                ])
+              : _vm._e(),
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "p-product__picture" }, [
-            _c("img", {
-              staticClass: "c-product__picture--detail",
-              attrs: {
-                src: _vm.getProductPicturePath(_vm.product),
-                alt: "商品画像",
-              },
-            }),
-          ]),
+          _vm.product.is_purchased === false
+            ? _c(
+                "button",
+                {
+                  staticClass:
+                    "c-button c-button__submit c-button__main u-pd__s",
+                  on: { click: _vm.purchaseProduct },
+                },
+                [_vm._v("購入する")]
+              )
+            : _vm.product.is_purchased === true &&
+              _vm.product.purchased_id === _vm.loginId
+            ? _c(
+                "button",
+                {
+                  staticClass:
+                    "c-button c-button__submit c-button__primary u-pd__s",
+                  on: { click: _vm.cancelPurchase },
+                },
+                [_vm._v("購入をキャンセルする")]
+              )
+            : _c(
+                "button",
+                {
+                  staticClass:
+                    "c-button c-button__submit c-button__main u-pd__s",
+                },
+                [_vm._v("購入済み")]
+              ),
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "p-product__detail" }, [
-          _c("p", { staticClass: "c-card__price u-mt__s u-mb__s" }, [
-            _vm._v("価格：" + _vm._s(_vm.product.price) + "円"),
-          ]),
-          _vm._v(" "),
-          _c("p", { staticClass: "c-card__category u-mt__s u-mb__s" }, [
-            _vm._v(
-              "カテゴリ：" +
-                _vm._s(_vm.getCategoryName(_vm.product.category_id))
-            ),
-          ]),
-          _vm._v(" "),
-          _c("p", { staticClass: "c-card__date u-mt__s u-mb__s" }, [
-            _vm._v(
-              "賞味期限：" + _vm._s(_vm.formatDate(_vm.product.expiration_date))
-            ),
-          ]),
-        ]),
-      ]),
-      _vm._v(" "),
-      _vm.product.is_purchased === false
-        ? _c(
-            "button",
-            {
-              staticClass: "c-button c-button__submit c-button__user u-pd__s",
-              on: { click: _vm.purchaseProduct },
-            },
-            [_vm._v("購入する")]
-          )
-        : _vm.product.is_purchased === true &&
-          _vm.product.purchased_id === _vm.loginId
-        ? _c(
-            "button",
-            {
-              staticClass: "c-button c-button__submit c-button__user u-pd__s",
-              on: { click: _vm.cancelPurchase },
-            },
-            [_vm._v("購入をキャンセルする")]
-          )
-        : _c(
-            "button",
-            { staticClass: "c-button c-button__submit c-button__user u-pd__s" },
-            [_vm._v("購入済み")]
-          ),
-    ]),
+        _c("sidebar-component", { attrs: { introduction: _vm.introduction } }),
+      ],
+      1
+    ),
     _vm._v(" "),
     _c(
       "a",
@@ -52159,136 +53755,174 @@ var render = function () {
         _vm._v("利用者お気に入り登録商品一覧"),
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "l-main__wrapper" }, [
-        _c("div", { staticClass: "p-product__index p-product__index--like" }, [
-          _c("p", { staticClass: "c-text" }, [
-            _vm._v(
-              _vm._s(_vm.products.data ? _vm.products.data.length : 0) +
-                "件表示 / 全" +
-                _vm._s(_vm.products.total ? _vm.products.total : 0) +
-                "件中"
+      _c(
+        "div",
+        { staticClass: "p-article" },
+        [
+          _c("div", { staticClass: "l-main__wrapper" }, [
+            _c(
+              "div",
+              { staticClass: "p-product__index p-product__index--like" },
+              [
+                _c("p", { staticClass: "c-text" }, [
+                  _vm._v(
+                    _vm._s(_vm.products.data ? _vm.products.data.length : 0) +
+                      "件表示 / 全" +
+                      _vm._s(_vm.products.total ? _vm.products.total : 0) +
+                      "件中"
+                  ),
+                ]),
+                _vm._v(" "),
+                _c(
+                  "ul",
+                  { staticClass: "p-product__list" },
+                  [
+                    !_vm.products.data || _vm.products.data.length === 0
+                      ? _c("li", { staticClass: "p-product__item" }, [
+                          _c("p", { staticClass: "c-text u-pd__xl" }, [
+                            _vm._v("お気に入り登録された商品はありません。"),
+                          ]),
+                        ])
+                      : _vm._l(_vm.products.data, function (product) {
+                          return _c(
+                            "li",
+                            { key: product.id, staticClass: "p-product__item" },
+                            [
+                              _c("div", { staticClass: "c-card u-m__s" }, [
+                                _c(
+                                  "div",
+                                  { staticClass: "p-card__header u-pd__s" },
+                                  [
+                                    _c("h3", { staticClass: "c-card__name" }, [
+                                      _vm._v(_vm._s(product.product.name)),
+                                    ]),
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  { staticClass: "p-card__container" },
+                                  [
+                                    _c("img", {
+                                      staticClass: "c-card__picture u-mb__s",
+                                      attrs: {
+                                        src: _vm.getProductPicturePath(
+                                          product.product
+                                        ),
+                                        alt: "商品画像",
+                                      },
+                                    }),
+                                    _vm._v(" "),
+                                    _c(
+                                      "label",
+                                      {
+                                        directives: [
+                                          {
+                                            name: "show",
+                                            rawName: "v-show",
+                                            value: product.product.is_purchased,
+                                            expression:
+                                              "product.product.is_purchased",
+                                          },
+                                        ],
+                                        staticClass:
+                                          "c-label__purchase u-pd__m",
+                                      },
+                                      [_vm._v("購入済み")]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "div",
+                                      { staticClass: "p-icon u-pdr__s" },
+                                      [
+                                        !product.product.liked
+                                          ? _c("i", {
+                                              staticClass:
+                                                "c-icon c-icon__unlike far fa-heart",
+                                              on: {
+                                                click: function ($event) {
+                                                  _vm.productLike(product)
+                                                },
+                                              },
+                                            })
+                                          : _c("i", {
+                                              staticClass:
+                                                "c-icon c-icon__like fas fa-heart",
+                                              on: {
+                                                click: function ($event) {
+                                                  _vm.productUnlike(product)
+                                                },
+                                              },
+                                            }),
+                                        _vm._v(" "),
+                                        _c("span", [
+                                          _vm._v(
+                                            "いいね" +
+                                              _vm._s(
+                                                product.product.likes_count
+                                              )
+                                          ),
+                                        ]),
+                                      ]
+                                    ),
+                                    _vm._v(" "),
+                                    _c("p", { staticClass: "c-card__" }, [
+                                      _vm._v(
+                                        _vm._s(product.product.price) + "円"
+                                      ),
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("p", { staticClass: "c-card__price" }, [
+                                      _vm._v(
+                                        _vm._s(
+                                          _vm.formatDate(
+                                            product.product.expiration_date
+                                          )
+                                        )
+                                      ),
+                                    ]),
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "p-card__footer" }, [
+                                  _c(
+                                    "div",
+                                    { staticClass: "c-button__container" },
+                                    [
+                                      _c(
+                                        "router-link",
+                                        {
+                                          staticClass:
+                                            "c-button c-button__default u-pd__s u-m__s",
+                                          attrs: {
+                                            to: _vm.getProductDetailLink(
+                                              product.product.id
+                                            ),
+                                          },
+                                        },
+                                        [_vm._v("詳細を見る")]
+                                      ),
+                                    ],
+                                    1
+                                  ),
+                                ]),
+                              ]),
+                            ]
+                          )
+                        }),
+                  ],
+                  2
+                ),
+              ]
             ),
           ]),
           _vm._v(" "),
-          _c(
-            "ul",
-            { staticClass: "p-product__list" },
-            [
-              !_vm.products.data || _vm.products.data.length === 0
-                ? _c("li", { staticClass: "p-product__item" }, [
-                    _c("p", { staticClass: "c-text u-pd__xl" }, [
-                      _vm._v("お気に入り登録された商品はありません。"),
-                    ]),
-                  ])
-                : _vm._l(_vm.products.data, function (product) {
-                    return _c(
-                      "li",
-                      { key: product.id, staticClass: "p-product__item" },
-                      [
-                        _c("div", { staticClass: "c-card u-m__s" }, [
-                          _c("div", { staticClass: "p-card__header u-pd__s" }, [
-                            _c("h3", { staticClass: "c-card__name" }, [
-                              _vm._v(_vm._s(product.product.name)),
-                            ]),
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "p-card__container" }, [
-                            _c("img", {
-                              staticClass: "c-card__picture u-mb__s",
-                              attrs: {
-                                src: _vm.getProductPicturePath(product),
-                                alt: "商品画像",
-                              },
-                            }),
-                            _vm._v(" "),
-                            _c(
-                              "label",
-                              {
-                                directives: [
-                                  {
-                                    name: "show",
-                                    rawName: "v-show",
-                                    value: product.is_purchased,
-                                    expression: "product.is_purchased",
-                                  },
-                                ],
-                                staticClass: "c-label__purchase u-pd__m",
-                              },
-                              [_vm._v("購入済み")]
-                            ),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "p-icon u-pdr__s" }, [
-                              !product.product.liked
-                                ? _c("i", {
-                                    staticClass:
-                                      "c-icon c-icon__unlike far fa-heart",
-                                    on: {
-                                      click: function ($event) {
-                                        _vm.productLike(product)
-                                      },
-                                    },
-                                  })
-                                : _c("i", {
-                                    staticClass:
-                                      "c-icon c-icon__like fas fa-heart",
-                                    on: {
-                                      click: function ($event) {
-                                        _vm.productUnlike(product)
-                                      },
-                                    },
-                                  }),
-                              _vm._v(" "),
-                              _c("span", [
-                                _vm._v(
-                                  "いいね" + _vm._s(product.product.likes_count)
-                                ),
-                              ]),
-                            ]),
-                            _vm._v(" "),
-                            _c("p", { staticClass: "c-card__price" }, [
-                              _vm._v(_vm._s(product.product.price) + "円"),
-                            ]),
-                            _vm._v(" "),
-                            _c("p", { staticClass: "c-card__price" }, [
-                              _vm._v(
-                                _vm._s(
-                                  _vm.formatDate(
-                                    product.product.expiration_date
-                                  )
-                                )
-                              ),
-                            ]),
-                          ]),
-                          _vm._v(" "),
-                          _c(
-                            "div",
-                            { staticClass: "p-card__footer" },
-                            [
-                              _c(
-                                "router-link",
-                                {
-                                  staticClass:
-                                    "c-button c-button__user c-button__detail u-pd__s u-m__s",
-                                  attrs: {
-                                    to: _vm.getProductDetailLink(
-                                      product.product.id
-                                    ),
-                                  },
-                                },
-                                [_vm._v("詳細を見る")]
-                              ),
-                            ],
-                            1
-                          ),
-                        ]),
-                      ]
-                    )
-                  }),
-            ],
-            2
-          ),
-        ]),
-      ]),
+          _c("sidebar-component", {
+            attrs: { introduction: _vm.introduction },
+          }),
+        ],
+        1
+      ),
       _vm._v(" "),
       _c("pagination-component", {
         attrs: { current_page: _vm.currentPage, last_page: _vm.lastPage },
@@ -52341,116 +53975,136 @@ var render = function () {
         _vm._v("利用者購入した商品一覧"),
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "l-main__wrapper" }, [
-        _c(
-          "div",
-          { staticClass: "p-product__index p-product__index--purchased" },
-          [
-            _c("p", { staticClass: "c-text" }, [
-              _vm._v(
-                _vm._s(_vm.products.data ? _vm.products.data.length : 0) +
-                  "件表示 / 全" +
-                  _vm._s(_vm.products.total ? _vm.products.total : 0) +
-                  "件中"
-              ),
-            ]),
-            _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "p-article" },
+        [
+          _c("div", { staticClass: "l-main__wrapper" }, [
             _c(
-              "ul",
-              { staticClass: "p-product__list" },
+              "div",
+              { staticClass: "p-product__index p-product__index--purchased" },
               [
-                !_vm.products.data || _vm.products.data.length === 0
-                  ? _c("li", { staticClass: "p-product__item" }, [
-                      _c("p", { staticClass: "c-text u-pd__xl" }, [
-                        _vm._v("購入した商品はありません。"),
-                      ]),
-                    ])
-                  : _vm._l(_vm.products.data, function (product) {
-                      return _c(
-                        "li",
-                        { key: product.id, staticClass: "p-product__item" },
-                        [
-                          _c("div", { staticClass: "c-card u-m__s" }, [
-                            _c(
-                              "div",
-                              { staticClass: "p-card__header u-pd__s" },
-                              [
-                                _c("h3", { staticClass: "c-card__name" }, [
-                                  _vm._v(_vm._s(product.product.name)),
-                                ]),
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "p-card__container" }, [
-                              _c("img", {
-                                staticClass: "c-card__picture u-mb__s",
-                                attrs: {
-                                  src: _vm.getProductPicturePath(product),
-                                  alt: "商品画像",
-                                },
-                              }),
-                              _vm._v(" "),
-                              _c(
-                                "label",
-                                {
-                                  directives: [
-                                    {
-                                      name: "show",
-                                      rawName: "v-show",
-                                      value: product.is_purchased,
-                                      expression: "product.is_purchased",
-                                    },
-                                  ],
-                                  staticClass: "c-label__purchase u-pd__m",
-                                },
-                                [_vm._v("購入済み")]
-                              ),
-                              _vm._v(" "),
-                              _c("p", { staticClass: "c-card__price" }, [
-                                _vm._v(_vm._s(product.product.price) + "円"),
-                              ]),
-                              _vm._v(" "),
-                              _c("p", { staticClass: "c-card__price" }, [
-                                _vm._v(
-                                  _vm._s(
-                                    _vm.formatDate(
-                                      product.product.expiration_date
-                                    )
-                                  )
-                                ),
-                              ]),
-                            ]),
-                            _vm._v(" "),
-                            _c(
-                              "div",
-                              { staticClass: "p-card__footer" },
-                              [
-                                _c(
-                                  "router-link",
-                                  {
-                                    staticClass:
-                                      "c-button c-button__user c-button__detail u-pd__s u-m__s",
-                                    attrs: {
-                                      to: _vm.getProductDetailLink(
-                                        product.product.id
-                                      ),
-                                    },
-                                  },
-                                  [_vm._v("詳細を見る")]
-                                ),
-                              ],
-                              1
-                            ),
+                _c("p", { staticClass: "c-text" }, [
+                  _vm._v(
+                    _vm._s(_vm.products.data ? _vm.products.data.length : 0) +
+                      "件表示 / 全" +
+                      _vm._s(_vm.products.total ? _vm.products.total : 0) +
+                      "件中"
+                  ),
+                ]),
+                _vm._v(" "),
+                _c(
+                  "ul",
+                  { staticClass: "p-product__list" },
+                  [
+                    !_vm.products.data || _vm.products.data.length === 0
+                      ? _c("li", { staticClass: "p-product__item" }, [
+                          _c("p", { staticClass: "c-text u-pd__xl" }, [
+                            _vm._v("購入した商品はありません。"),
                           ]),
-                        ]
-                      )
-                    }),
-              ],
-              2
+                        ])
+                      : _vm._l(_vm.products.data, function (product) {
+                          return _c(
+                            "li",
+                            { key: product.id, staticClass: "p-product__item" },
+                            [
+                              _c("div", { staticClass: "c-card u-m__s" }, [
+                                _c(
+                                  "div",
+                                  { staticClass: "p-card__header u-pd__s" },
+                                  [
+                                    _c("h3", { staticClass: "c-card__name" }, [
+                                      _vm._v(_vm._s(product.product.name)),
+                                    ]),
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  { staticClass: "p-card__container" },
+                                  [
+                                    _c("img", {
+                                      staticClass: "c-card__picture u-mb__s",
+                                      attrs: {
+                                        src: _vm.getProductPicturePath(product),
+                                        alt: "商品画像",
+                                      },
+                                    }),
+                                    _vm._v(" "),
+                                    _c(
+                                      "label",
+                                      {
+                                        directives: [
+                                          {
+                                            name: "show",
+                                            rawName: "v-show",
+                                            value: product.is_purchased,
+                                            expression: "product.is_purchased",
+                                          },
+                                        ],
+                                        staticClass:
+                                          "c-label__purchase u-pd__m",
+                                      },
+                                      [_vm._v("購入済み")]
+                                    ),
+                                    _vm._v(" "),
+                                    _c("p", { staticClass: "c-card__price" }, [
+                                      _vm._v(
+                                        _vm._s(product.product.price) + "円"
+                                      ),
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("p", { staticClass: "c-card__price" }, [
+                                      _vm._v(
+                                        _vm._s(
+                                          _vm.formatDate(
+                                            product.product.expiration_date
+                                          )
+                                        )
+                                      ),
+                                    ]),
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "p-card__footer" }, [
+                                  _c(
+                                    "div",
+                                    { staticClass: "c-button__container" },
+                                    [
+                                      _c(
+                                        "router-link",
+                                        {
+                                          staticClass:
+                                            "c-button c-button__default u-pd__s u-m__s",
+                                          attrs: {
+                                            to: _vm.getProductDetailLink(
+                                              product.product.id
+                                            ),
+                                          },
+                                        },
+                                        [_vm._v("詳細を見る")]
+                                      ),
+                                    ],
+                                    1
+                                  ),
+                                ]),
+                              ]),
+                            ]
+                          )
+                        }),
+                  ],
+                  2
+                ),
+              ]
             ),
-          ]
-        ),
-      ]),
+          ]),
+          _vm._v(" "),
+          _c("sidebar-component", {
+            attrs: { introduction: _vm.introduction },
+          }),
+        ],
+        1
+      ),
       _vm._v(" "),
       _c("pagination-component", {
         attrs: { current_page: _vm.currentPage, last_page: _vm.lastPage },
@@ -52496,457 +54150,535 @@ var render = function () {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("main", { staticClass: "l-main" }, [
-    _c("section", { staticClass: "l-main__wrapper" }, [
-      _c("h1", { staticClass: "c-title u-mb__xl" }, [
-        _vm._v("利用者プロフィール編集"),
-      ]),
-      _vm._v(" "),
-      _c(
-        "form",
-        {
-          staticClass: "c-form",
-          on: {
-            submit: function ($event) {
-              $event.preventDefault()
-              return _vm.submitForm($event)
-            },
-          },
-        },
-        [
-          _vm._m(0),
-          _vm._v(" "),
-          _vm.errors && _vm.errors.name
-            ? _c("span", { staticClass: "c-error u-mt__s" }, [
-                _vm._v(_vm._s(_vm.errors.name[0])),
-              ])
-            : _vm._e(),
-          _vm._v(" "),
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.formData.name,
-                expression: "formData.name",
-              },
-            ],
-            staticClass: "c-input u-pd__s u-mt__m u-mb__m",
-            class: { "is-invalid": _vm.errors && _vm.errors.name },
-            attrs: { id: "name", type: "name", autocomplete: "name" },
-            domProps: { value: _vm.formData.name },
-            on: {
-              input: function ($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.$set(_vm.formData, "name", $event.target.value)
-              },
-            },
-          }),
-          _vm._v(" "),
-          _vm._m(1),
-          _vm._v(" "),
-          _vm.errors && _vm.errors.email
-            ? _c("span", { staticClass: "c-error u-mt__s" }, [
-                _vm._v(_vm._s(_vm.errors.email[0])),
-              ])
-            : _vm._e(),
-          _vm._v(" "),
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.formData.email,
-                expression: "formData.email",
-              },
-            ],
-            staticClass: "c-input u-pd__s u-mt__m u-mb__m",
-            class: { "is-invalid": _vm.errors && _vm.errors.email },
-            attrs: { id: "email", type: "text", autocomplete: "email" },
-            domProps: { value: _vm.formData.email },
-            on: {
-              input: function ($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.$set(_vm.formData, "email", $event.target.value)
-              },
-            },
-          }),
-          _vm._v(" "),
-          _vm._m(2),
-          _vm._v(" "),
-          _vm.errors && _vm.errors.password
-            ? _c("span", { staticClass: "c-error u-mt__s" }, [
-                _vm._v(_vm._s(_vm.errors.password[0])),
-              ])
-            : _vm._e(),
-          _vm._v(" "),
-          _c("div", { staticClass: "c-input__password" }, [
-            _vm.PasswordType === "checkbox"
-              ? _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.formData.password,
-                      expression: "formData.password",
-                    },
-                  ],
-                  staticClass: "c-input u-pd__s u-mt__m u-mb__m",
-                  class: { "is-invalid": _vm.errors && _vm.errors.password },
-                  attrs: {
-                    id: "password",
-                    placeholder: "英数字8文字以上で入力してください",
-                    type: "checkbox",
-                  },
-                  domProps: {
-                    checked: Array.isArray(_vm.formData.password)
-                      ? _vm._i(_vm.formData.password, null) > -1
-                      : _vm.formData.password,
-                  },
-                  on: {
-                    change: function ($event) {
-                      var $$a = _vm.formData.password,
-                        $$el = $event.target,
-                        $$c = $$el.checked ? true : false
-                      if (Array.isArray($$a)) {
-                        var $$v = null,
-                          $$i = _vm._i($$a, $$v)
-                        if ($$el.checked) {
-                          $$i < 0 &&
-                            _vm.$set(
-                              _vm.formData,
-                              "password",
-                              $$a.concat([$$v])
-                            )
-                        } else {
-                          $$i > -1 &&
-                            _vm.$set(
-                              _vm.formData,
-                              "password",
-                              $$a.slice(0, $$i).concat($$a.slice($$i + 1))
-                            )
-                        }
-                      } else {
-                        _vm.$set(_vm.formData, "password", $$c)
-                      }
-                    },
-                  },
-                })
-              : _vm.PasswordType === "radio"
-              ? _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.formData.password,
-                      expression: "formData.password",
-                    },
-                  ],
-                  staticClass: "c-input u-pd__s u-mt__m u-mb__m",
-                  class: { "is-invalid": _vm.errors && _vm.errors.password },
-                  attrs: {
-                    id: "password",
-                    placeholder: "英数字8文字以上で入力してください",
-                    type: "radio",
-                  },
-                  domProps: { checked: _vm._q(_vm.formData.password, null) },
-                  on: {
-                    change: function ($event) {
-                      _vm.$set(_vm.formData, "password", null)
-                    },
-                  },
-                })
-              : _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.formData.password,
-                      expression: "formData.password",
-                    },
-                  ],
-                  staticClass: "c-input u-pd__s u-mt__m u-mb__m",
-                  class: { "is-invalid": _vm.errors && _vm.errors.password },
-                  attrs: {
-                    id: "password",
-                    placeholder: "英数字8文字以上で入力してください",
-                    type: _vm.PasswordType,
-                  },
-                  domProps: { value: _vm.formData.password },
-                  on: {
-                    input: function ($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.$set(_vm.formData, "password", $event.target.value)
-                    },
-                  },
-                }),
-            _vm._v(" "),
-            _c(
-              "span",
-              {
-                on: {
-                  click: function ($event) {
-                    _vm.togglePasswordVisibility("password")
-                  },
-                },
-              },
-              [_c("i", { class: _vm.PasswordIconClass })]
-            ),
-          ]),
-          _vm._v(" "),
-          _vm._m(3),
-          _vm._v(" "),
-          _vm.errors && _vm.errors.password_confirmation
-            ? _c("span", { staticClass: "c-error u-mt__s" }, [
-                _vm._v(_vm._s(_vm.errors.password_confirmation[0])),
-              ])
-            : _vm._e(),
-          _vm._v(" "),
-          _c("div", { staticClass: "c-input__password" }, [
-            _vm.PasswordConfirmType === "checkbox"
-              ? _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.formData.password_confirmation,
-                      expression: "formData.password_confirmation",
-                    },
-                  ],
-                  staticClass: "c-input u-pd__s u-mt__m u-mb__m",
-                  class: {
-                    "is-invalid":
-                      _vm.errors && _vm.errors.password_confirmation,
-                  },
-                  attrs: {
-                    id: "password-confirm",
-                    placeholder: "英数字8文字以上で入力してください",
-                    type: "checkbox",
-                  },
-                  domProps: {
-                    checked: Array.isArray(_vm.formData.password_confirmation)
-                      ? _vm._i(_vm.formData.password_confirmation, null) > -1
-                      : _vm.formData.password_confirmation,
-                  },
-                  on: {
-                    change: function ($event) {
-                      var $$a = _vm.formData.password_confirmation,
-                        $$el = $event.target,
-                        $$c = $$el.checked ? true : false
-                      if (Array.isArray($$a)) {
-                        var $$v = null,
-                          $$i = _vm._i($$a, $$v)
-                        if ($$el.checked) {
-                          $$i < 0 &&
-                            _vm.$set(
-                              _vm.formData,
-                              "password_confirmation",
-                              $$a.concat([$$v])
-                            )
-                        } else {
-                          $$i > -1 &&
-                            _vm.$set(
-                              _vm.formData,
-                              "password_confirmation",
-                              $$a.slice(0, $$i).concat($$a.slice($$i + 1))
-                            )
-                        }
-                      } else {
-                        _vm.$set(_vm.formData, "password_confirmation", $$c)
-                      }
-                    },
-                  },
-                })
-              : _vm.PasswordConfirmType === "radio"
-              ? _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.formData.password_confirmation,
-                      expression: "formData.password_confirmation",
-                    },
-                  ],
-                  staticClass: "c-input u-pd__s u-mt__m u-mb__m",
-                  class: {
-                    "is-invalid":
-                      _vm.errors && _vm.errors.password_confirmation,
-                  },
-                  attrs: {
-                    id: "password-confirm",
-                    placeholder: "英数字8文字以上で入力してください",
-                    type: "radio",
-                  },
-                  domProps: {
-                    checked: _vm._q(_vm.formData.password_confirmation, null),
-                  },
-                  on: {
-                    change: function ($event) {
-                      _vm.$set(_vm.formData, "password_confirmation", null)
-                    },
-                  },
-                })
-              : _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.formData.password_confirmation,
-                      expression: "formData.password_confirmation",
-                    },
-                  ],
-                  staticClass: "c-input u-pd__s u-mt__m u-mb__m",
-                  class: {
-                    "is-invalid":
-                      _vm.errors && _vm.errors.password_confirmation,
-                  },
-                  attrs: {
-                    id: "password-confirm",
-                    placeholder: "英数字8文字以上で入力してください",
-                    type: _vm.PasswordConfirmType,
-                  },
-                  domProps: { value: _vm.formData.password_confirmation },
-                  on: {
-                    input: function ($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.$set(
-                        _vm.formData,
-                        "password_confirmation",
-                        $event.target.value
-                      )
-                    },
-                  },
-                }),
-            _vm._v(" "),
-            _c(
-              "span",
-              {
-                on: {
-                  click: function ($event) {
-                    _vm.togglePasswordVisibility("password_confirm")
-                  },
-                },
-              },
-              [_c("i", { class: _vm.PasswordConfirmIconClass })]
-            ),
-          ]),
-          _vm._v(" "),
-          _c(
-            "label",
-            { staticClass: "c-label", attrs: { for: "introduction" } },
-            [_vm._v("自己紹介")]
-          ),
-          _vm._v(" "),
-          _vm.errors && _vm.errors.introduction
-            ? _c("span", { staticClass: "c-error u-mt__s" }, [
-                _vm._v(_vm._s(_vm.errors.introduction[0])),
-              ])
-            : _vm._e(),
-          _vm._v(" "),
-          _c("div", { staticClass: "p-textarea__form" }, [
-            _c("textarea", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.formData.introduction,
-                  expression: "formData.introduction",
-                },
-              ],
-              staticClass: "c-textarea u-pd__s u-mt__m u-mb__m",
-              class: { "is-invalid": _vm.errors && _vm.errors.introduction },
-              attrs: {
-                maxlength: "50",
-                id: "introduction",
-                type: "text",
-                autocomplete: "introduction",
-                placeholder: "50文字以内で入力してください",
-              },
-              domProps: { value: _vm.formData.introduction },
-              on: {
-                keyup: _vm.countCharacters,
-                input: function ($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.$set(_vm.formData, "introduction", $event.target.value)
-                },
-              },
-            }),
-            _vm._v(" "),
-            _c("span", { staticClass: "c-textarea__count" }, [
-              _vm._v(_vm._s(_vm.formData.introduction.length) + " / 50文字"),
+    _c(
+      "div",
+      { staticClass: "p-article" },
+      [
+        _c(
+          "section",
+          { staticClass: "l-main__wrapper" },
+          [
+            _c("h1", { staticClass: "c-title u-mt__xl u-mb__xl" }, [
+              _vm._v("利用者プロフィール編集"),
             ]),
-          ]),
-          _vm._v(" "),
-          _c(
-            "label",
-            { staticClass: "c-label", attrs: { for: "profile-icon" } },
-            [_vm._v("顔写真")]
-          ),
-          _vm._v(" "),
-          _vm.errors && _vm.errors.icon
-            ? _c("span", { staticClass: "c-error u-mt__s" }, [
-                _vm._v(_vm._s(_vm.errors.icon[0])),
-              ])
-            : _vm._e(),
-          _vm._v(" "),
-          _c(
-            "div",
-            {
-              staticClass: "p-profile__icon p-profile__icon--container u-pd__s",
-              class: { "is-invalid": _vm.errors && _vm.errors.icon },
-              on: { drop: _vm.handleDrop },
-            },
-            [
-              _c("input", {
-                staticClass: "c-input__hidden",
-                attrs: { type: "file", id: "profile-icon" },
-                on: { change: _vm.handleFileChange },
-              }),
-              _vm._v(" "),
-              !_vm.iconPreview && _vm.formData.icon
-                ? _c("img", {
-                    staticClass: "p-profile__icon",
-                    attrs: {
-                      src: "https://haikishare.com/icon/" + _vm.formData.icon,
-                      alt: "アップロード顔写真",
+            _vm._v(" "),
+            _c(
+              "form",
+              {
+                staticClass: "c-form c-form__column",
+                on: {
+                  submit: function ($event) {
+                    $event.preventDefault()
+                    return _vm.submitForm($event)
+                  },
+                },
+              },
+              [
+                _vm._m(0),
+                _vm._v(" "),
+                _vm.errors && _vm.errors.name
+                  ? _c("span", { staticClass: "c-error u-mt__s" }, [
+                      _vm._v(_vm._s(_vm.errors.name[0])),
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.formData.name,
+                      expression: "formData.name",
                     },
-                  })
-                : _vm.iconPreview
-                ? _c("img", {
-                    staticClass: "p-profile__icon",
-                    attrs: { src: _vm.iconPreview, alt: "アップロード顔写真" },
-                  })
-                : _c("img", {
-                    staticClass: "p-profile__icon",
+                  ],
+                  staticClass: "c-input u-pd__s u-mt__m u-mb__m",
+                  class: { "is-invalid": _vm.errors && _vm.errors.name },
+                  attrs: { id: "name", type: "name", autocomplete: "name" },
+                  domProps: { value: _vm.formData.name },
+                  on: {
+                    input: function ($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.formData, "name", $event.target.value)
+                    },
+                  },
+                }),
+                _vm._v(" "),
+                _vm._m(1),
+                _vm._v(" "),
+                _vm.errors && _vm.errors.email
+                  ? _c("span", { staticClass: "c-error u-mt__s" }, [
+                      _vm._v(_vm._s(_vm.errors.email[0])),
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.formData.email,
+                      expression: "formData.email",
+                    },
+                  ],
+                  staticClass: "c-input u-pd__s u-mt__m u-mb__m",
+                  class: { "is-invalid": _vm.errors && _vm.errors.email },
+                  attrs: { id: "email", type: "text", autocomplete: "email" },
+                  domProps: { value: _vm.formData.email },
+                  on: {
+                    input: function ($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.formData, "email", $event.target.value)
+                    },
+                  },
+                }),
+                _vm._v(" "),
+                _c(
+                  "label",
+                  { staticClass: "c-label", attrs: { for: "password" } },
+                  [_vm._v("パスワード")]
+                ),
+                _vm._v(" "),
+                _c("span", { staticClass: "c-text c-text__note" }, [
+                  _vm._v(
+                    "※パスワードとパスワード（再入力）は、半角数字・英字大文字・小文字、記号（!@#$%^&*）を使って8文字以上で入力してください"
+                  ),
+                ]),
+                _vm._v(" "),
+                _vm.errors && _vm.errors.password
+                  ? _c("span", { staticClass: "c-error u-mt__s" }, [
+                      _vm._v(_vm._s(_vm.errors.password[0])),
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _c("div", { staticClass: "c-input__password" }, [
+                  _vm.PasswordType === "checkbox"
+                    ? _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.formData.password,
+                            expression: "formData.password",
+                          },
+                        ],
+                        staticClass: "c-input u-pd__s u-mt__m u-mb__m",
+                        class: {
+                          "is-invalid": _vm.errors && _vm.errors.password,
+                        },
+                        attrs: {
+                          id: "password",
+                          placeholder: "8文字以上で入力してください",
+                          type: "checkbox",
+                        },
+                        domProps: {
+                          checked: Array.isArray(_vm.formData.password)
+                            ? _vm._i(_vm.formData.password, null) > -1
+                            : _vm.formData.password,
+                        },
+                        on: {
+                          change: function ($event) {
+                            var $$a = _vm.formData.password,
+                              $$el = $event.target,
+                              $$c = $$el.checked ? true : false
+                            if (Array.isArray($$a)) {
+                              var $$v = null,
+                                $$i = _vm._i($$a, $$v)
+                              if ($$el.checked) {
+                                $$i < 0 &&
+                                  _vm.$set(
+                                    _vm.formData,
+                                    "password",
+                                    $$a.concat([$$v])
+                                  )
+                              } else {
+                                $$i > -1 &&
+                                  _vm.$set(
+                                    _vm.formData,
+                                    "password",
+                                    $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                                  )
+                              }
+                            } else {
+                              _vm.$set(_vm.formData, "password", $$c)
+                            }
+                          },
+                        },
+                      })
+                    : _vm.PasswordType === "radio"
+                    ? _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.formData.password,
+                            expression: "formData.password",
+                          },
+                        ],
+                        staticClass: "c-input u-pd__s u-mt__m u-mb__m",
+                        class: {
+                          "is-invalid": _vm.errors && _vm.errors.password,
+                        },
+                        attrs: {
+                          id: "password",
+                          placeholder: "8文字以上で入力してください",
+                          type: "radio",
+                        },
+                        domProps: {
+                          checked: _vm._q(_vm.formData.password, null),
+                        },
+                        on: {
+                          change: function ($event) {
+                            _vm.$set(_vm.formData, "password", null)
+                          },
+                        },
+                      })
+                    : _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.formData.password,
+                            expression: "formData.password",
+                          },
+                        ],
+                        staticClass: "c-input u-pd__s u-mt__m u-mb__m",
+                        class: {
+                          "is-invalid": _vm.errors && _vm.errors.password,
+                        },
+                        attrs: {
+                          id: "password",
+                          placeholder: "8文字以上で入力してください",
+                          type: _vm.PasswordType,
+                        },
+                        domProps: { value: _vm.formData.password },
+                        on: {
+                          input: function ($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              _vm.formData,
+                              "password",
+                              $event.target.value
+                            )
+                          },
+                        },
+                      }),
+                  _vm._v(" "),
+                  _c(
+                    "span",
+                    {
+                      on: {
+                        click: function ($event) {
+                          _vm.togglePasswordVisibility("password")
+                        },
+                      },
+                    },
+                    [_c("i", { class: _vm.PasswordIconClass })]
+                  ),
+                ]),
+                _vm._v(" "),
+                _c(
+                  "label",
+                  {
+                    staticClass: "c-label",
+                    attrs: { for: "password-confirm" },
+                  },
+                  [_vm._v("パスワード（再入力）")]
+                ),
+                _vm._v(" "),
+                _vm.errors && _vm.errors.password_confirmation
+                  ? _c("span", { staticClass: "c-error u-mt__s" }, [
+                      _vm._v(_vm._s(_vm.errors.password_confirmation[0])),
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _c("div", { staticClass: "c-input__password" }, [
+                  _vm.PasswordConfirmType === "checkbox"
+                    ? _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.formData.password_confirmation,
+                            expression: "formData.password_confirmation",
+                          },
+                        ],
+                        staticClass: "c-input u-pd__s u-mt__m u-mb__m",
+                        class: {
+                          "is-invalid":
+                            _vm.errors && _vm.errors.password_confirmation,
+                        },
+                        attrs: {
+                          id: "password-confirm",
+                          placeholder: "8文字以上で入力してください",
+                          type: "checkbox",
+                        },
+                        domProps: {
+                          checked: Array.isArray(
+                            _vm.formData.password_confirmation
+                          )
+                            ? _vm._i(_vm.formData.password_confirmation, null) >
+                              -1
+                            : _vm.formData.password_confirmation,
+                        },
+                        on: {
+                          change: function ($event) {
+                            var $$a = _vm.formData.password_confirmation,
+                              $$el = $event.target,
+                              $$c = $$el.checked ? true : false
+                            if (Array.isArray($$a)) {
+                              var $$v = null,
+                                $$i = _vm._i($$a, $$v)
+                              if ($$el.checked) {
+                                $$i < 0 &&
+                                  _vm.$set(
+                                    _vm.formData,
+                                    "password_confirmation",
+                                    $$a.concat([$$v])
+                                  )
+                              } else {
+                                $$i > -1 &&
+                                  _vm.$set(
+                                    _vm.formData,
+                                    "password_confirmation",
+                                    $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                                  )
+                              }
+                            } else {
+                              _vm.$set(
+                                _vm.formData,
+                                "password_confirmation",
+                                $$c
+                              )
+                            }
+                          },
+                        },
+                      })
+                    : _vm.PasswordConfirmType === "radio"
+                    ? _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.formData.password_confirmation,
+                            expression: "formData.password_confirmation",
+                          },
+                        ],
+                        staticClass: "c-input u-pd__s u-mt__m u-mb__m",
+                        class: {
+                          "is-invalid":
+                            _vm.errors && _vm.errors.password_confirmation,
+                        },
+                        attrs: {
+                          id: "password-confirm",
+                          placeholder: "8文字以上で入力してください",
+                          type: "radio",
+                        },
+                        domProps: {
+                          checked: _vm._q(
+                            _vm.formData.password_confirmation,
+                            null
+                          ),
+                        },
+                        on: {
+                          change: function ($event) {
+                            _vm.$set(
+                              _vm.formData,
+                              "password_confirmation",
+                              null
+                            )
+                          },
+                        },
+                      })
+                    : _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.formData.password_confirmation,
+                            expression: "formData.password_confirmation",
+                          },
+                        ],
+                        staticClass: "c-input u-pd__s u-mt__m u-mb__m",
+                        class: {
+                          "is-invalid":
+                            _vm.errors && _vm.errors.password_confirmation,
+                        },
+                        attrs: {
+                          id: "password-confirm",
+                          placeholder: "8文字以上で入力してください",
+                          type: _vm.PasswordConfirmType,
+                        },
+                        domProps: { value: _vm.formData.password_confirmation },
+                        on: {
+                          input: function ($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              _vm.formData,
+                              "password_confirmation",
+                              $event.target.value
+                            )
+                          },
+                        },
+                      }),
+                  _vm._v(" "),
+                  _c(
+                    "span",
+                    {
+                      on: {
+                        click: function ($event) {
+                          _vm.togglePasswordVisibility("password_confirm")
+                        },
+                      },
+                    },
+                    [_c("i", { class: _vm.PasswordConfirmIconClass })]
+                  ),
+                ]),
+                _vm._v(" "),
+                _c(
+                  "label",
+                  { staticClass: "c-label", attrs: { for: "introduction" } },
+                  [_vm._v("自己紹介")]
+                ),
+                _vm._v(" "),
+                _vm.errors && _vm.errors.introduction
+                  ? _c("span", { staticClass: "c-error u-mt__s" }, [
+                      _vm._v(_vm._s(_vm.errors.introduction[0])),
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _c("div", { staticClass: "p-textarea__form" }, [
+                  _c("textarea", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.formData.introduction,
+                        expression: "formData.introduction",
+                      },
+                    ],
+                    staticClass: "c-textarea u-pd__s u-mt__m u-mb__m",
+                    class: {
+                      "is-invalid": _vm.errors && _vm.errors.introduction,
+                    },
                     attrs: {
-                      src: "https://haikishare.com/icon/default.png",
-                      alt: "デフォルト顔写真",
+                      maxlength: "50",
+                      id: "introduction",
+                      type: "text",
+                      autocomplete: "introduction",
+                      placeholder: "50文字以内で入力してください",
+                    },
+                    domProps: { value: _vm.formData.introduction },
+                    on: {
+                      keyup: _vm.countCharacters,
+                      input: function ($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(
+                          _vm.formData,
+                          "introduction",
+                          $event.target.value
+                        )
+                      },
                     },
                   }),
-            ]
-          ),
-          _vm._v(" "),
-          _c(
-            "button",
-            {
-              staticClass:
-                "c-button c-button__submit c-button__user u-pd__s u-mt__m",
-              attrs: { type: "submit" },
-            },
-            [_vm._v("プロフィールを更新する")]
-          ),
-        ]
-      ),
-    ]),
+                  _vm._v(" "),
+                  _c("span", { staticClass: "c-textarea__count" }, [
+                    _vm._v(
+                      _vm._s(_vm.formData.introduction.length) + " / 50文字"
+                    ),
+                  ]),
+                ]),
+                _vm._v(" "),
+                _c(
+                  "label",
+                  { staticClass: "c-label", attrs: { for: "profile-icon" } },
+                  [_vm._v("顔写真")]
+                ),
+                _vm._v(" "),
+                _vm.errors && _vm.errors.icon
+                  ? _c("span", { staticClass: "c-error u-mt__s u-mb__s" }, [
+                      _vm._v(_vm._s(_vm.errors.icon[0])),
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass:
+                      "p-profile__icon p-profile__icon--container u-pd__s",
+                    class: { "is-invalid": _vm.errors && _vm.errors.icon },
+                    on: { drop: _vm.handleDrop },
+                  },
+                  [
+                    _c("input", {
+                      staticClass: "c-input__hidden",
+                      attrs: { type: "file", id: "profile-icon" },
+                      on: { change: _vm.handleFileChange },
+                    }),
+                    _vm._v(" "),
+                    !_vm.iconPreview && _vm.formData.icon
+                      ? _c("img", {
+                          staticClass: "p-profile__icon",
+                          attrs: {
+                            src: _vm.formData.icon,
+                            alt: "アップロード顔写真",
+                          },
+                        })
+                      : _vm.iconPreview
+                      ? _c("img", {
+                          staticClass: "p-profile__icon",
+                          attrs: {
+                            src: _vm.iconPreview,
+                            alt: "アップロード顔写真",
+                          },
+                        })
+                      : _c("img", {
+                          staticClass: "p-profile__icon",
+                          attrs: {
+                            src: "https://haikishare.com/icon/default.png",
+                            alt: "デフォルト顔写真",
+                          },
+                        }),
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass:
+                      "c-button c-button__submit c-button__main u-pd__s u-mt__m",
+                    attrs: { type: "submit" },
+                  },
+                  [_vm._v("プロフィールを更新する")]
+                ),
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "router-link",
+              {
+                staticClass: "c-link c-link__withdraw u-mt__l u-mb__l u-pdr__s",
+                attrs: { to: { name: "user.withdraw" } },
+              },
+              [_vm._v("退会はこちら")]
+            ),
+          ],
+          1
+        ),
+        _vm._v(" "),
+        _c("sidebar-component", { attrs: { introduction: _vm.introduction } }),
+      ],
+      1
+    ),
     _vm._v(" "),
     _c(
       "a",
@@ -52981,28 +54713,6 @@ var staticRenderFns = [
       _c("span", { staticClass: "c-required" }, [_vm._v("必須")]),
     ])
   },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("label", { staticClass: "c-label", attrs: { for: "password" } }, [
-      _vm._v("パスワード"),
-      _c("span", { staticClass: "c-required" }, [_vm._v("必須")]),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "label",
-      { staticClass: "c-label", attrs: { for: "password-confirm" } },
-      [
-        _vm._v("パスワード（再入力）"),
-        _c("span", { staticClass: "c-required" }, [_vm._v("必須")]),
-      ]
-    )
-  },
 ]
 render._withStripped = true
 
@@ -53027,7 +54737,7 @@ var render = function () {
   var _c = _vm._self._c || _h
   return _c("main", { staticClass: "l-main" }, [
     _c("section", { staticClass: "l-main__wrapper" }, [
-      _c("h1", { staticClass: "c-title u-mb__xl" }, [
+      _c("h1", { staticClass: "c-title u-mt__xl u-mb__xl" }, [
         _vm._v("利用者ユーザー登録"),
       ]),
       _vm._v(" "),
@@ -53107,6 +54817,12 @@ var render = function () {
           _vm._v(" "),
           _vm._m(2),
           _vm._v(" "),
+          _c("span", { staticClass: "c-text c-text__note" }, [
+            _vm._v(
+              "※パスワードとパスワード（再入力）は、半角数字・英字大文字・小文字、記号（!@#$%^&*）を使って8文字以上で入力してください"
+            ),
+          ]),
+          _vm._v(" "),
           _vm.errors && _vm.errors.password
             ? _c("span", { staticClass: "c-error u-mt__s" }, [
                 _vm._v(_vm._s(_vm.errors.password[0])),
@@ -53128,7 +54844,7 @@ var render = function () {
                   class: { "is-invalid": _vm.errors && _vm.errors.password },
                   attrs: {
                     id: "password",
-                    placeholder: "英数字8文字以上で入力してください",
+                    placeholder: "8文字以上で入力してください",
                     type: "checkbox",
                   },
                   domProps: {
@@ -53179,7 +54895,7 @@ var render = function () {
                   class: { "is-invalid": _vm.errors && _vm.errors.password },
                   attrs: {
                     id: "password",
-                    placeholder: "英数字8文字以上で入力してください",
+                    placeholder: "8文字以上で入力してください",
                     type: "radio",
                   },
                   domProps: { checked: _vm._q(_vm.formData.password, null) },
@@ -53202,7 +54918,7 @@ var render = function () {
                   class: { "is-invalid": _vm.errors && _vm.errors.password },
                   attrs: {
                     id: "password",
-                    placeholder: "英数字8文字以上で入力してください",
+                    placeholder: "8文字以上で入力してください",
                     type: _vm.PasswordType,
                   },
                   domProps: { value: _vm.formData.password },
@@ -53255,7 +54971,7 @@ var render = function () {
                   },
                   attrs: {
                     id: "password-confirm",
-                    placeholder: "英数字8文字以上で入力してください",
+                    placeholder: "8文字以上で入力してください",
                     type: "checkbox",
                   },
                   domProps: {
@@ -53309,7 +55025,7 @@ var render = function () {
                   },
                   attrs: {
                     id: "password-confirm",
-                    placeholder: "英数字8文字以上で入力してください",
+                    placeholder: "8文字以上で入力してください",
                     type: "radio",
                   },
                   domProps: {
@@ -53337,7 +55053,7 @@ var render = function () {
                   },
                   attrs: {
                     id: "password-confirm",
-                    placeholder: "英数字8文字以上で入力してください",
+                    placeholder: "8文字以上で入力してください",
                     type: _vm.PasswordConfirmType,
                   },
                   domProps: { value: _vm.formData.password_confirmation },
@@ -53435,7 +55151,7 @@ var render = function () {
           _c(
             "button",
             {
-              staticClass: "c-button c-button__submit c-button__user u-pd__s",
+              staticClass: "c-button c-button__submit c-button__main u-pd__s",
               attrs: { type: "submit" },
             },
             [_vm._v("ユーザー登録する")]
@@ -53523,7 +55239,7 @@ var render = function () {
   var _c = _vm._self._c || _h
   return _c("main", { staticClass: "l-main" }, [
     _c("section", { staticClass: "l-main__wrapper" }, [
-      _c("h1", { staticClass: "c-title u-mb__xl" }, [
+      _c("h1", { staticClass: "c-title u-mt__xl u-mb__xl" }, [
         _vm._v("利用者パスワード変更"),
       ]),
       _vm._v(" "),
@@ -53540,6 +55256,12 @@ var render = function () {
         },
         [
           _vm._m(0),
+          _vm._v(" "),
+          _c("span", { staticClass: "c-text c-text__note" }, [
+            _vm._v(
+              "※新しいパスワードと新しいパスワード（再入力）は、半角数字・英字大文字・小文字、記号（!@#$%^&*）を使って8文字以上で入力してください"
+            ),
+          ]),
           _vm._v(" "),
           _vm.errors && _vm.errors.newPassword
             ? _c("span", { staticClass: "c-error u-mt__s" }, [
@@ -53848,7 +55570,7 @@ var render = function () {
             "button",
             {
               staticClass:
-                "c-button c-button__submit c-button__user u-pd__s u-mt__m",
+                "c-button c-button__submit c-button__main u-pd__s u-mt__m",
               attrs: { type: "submit" },
             },
             [_vm._v("パスワードを変更する")]
@@ -53905,6 +55627,112 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/User/SidebarComponent.vue?vue&type=template&id=5b13c70a":
+/*!***********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/User/SidebarComponent.vue?vue&type=template&id=5b13c70a ***!
+  \***********************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function () {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("section", { staticClass: "l-sidebar" }, [
+    _c(
+      "div",
+      { staticClass: "p-mypage__sidebar" },
+      [
+        _c("div", { staticClass: "p-mypage__user-info u-pd__s" }, [
+          _c("h2", { staticClass: "c-title c-title__sub u-mt__m u-mb__m" }, [
+            _vm._v("プロフィール情報"),
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "p-mypage__profile u-pd__s" }, [
+            _c("div", { staticClass: "p-mypage__icon--container" }, [
+              _c("img", {
+                staticClass: "p-mypage__icon",
+                attrs: { src: _vm.icon, alt: "顔写真画像" },
+              }),
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "p-mypage__profile--header u-mt__s" }, [
+              _c("p", [_vm._v(_vm._s(_vm.username))]),
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "p-mypage__profile--container" }, [
+              _vm.introduction
+                ? _c(
+                    "p",
+                    { staticClass: "p-mypage__profile--content u-m__m" },
+                    [
+                      _c("i", { staticClass: "fa-solid fa-message" }),
+                      _vm._v(_vm._s(_vm.introduction)),
+                    ]
+                  )
+                : _vm._e(),
+            ]),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "p-mypage__profile--footer c-button__container" },
+              [
+                _c(
+                  "router-link",
+                  {
+                    staticClass: "c-button c-button__primary u-pd__s u-m__s",
+                    attrs: { to: { name: "user.profile" } },
+                  },
+                  [_vm._v("プロフィール編集")]
+                ),
+              ],
+              1
+            ),
+          ]),
+        ]),
+        _vm._v(" "),
+        _c(
+          "router-link",
+          {
+            staticClass: "c-link u-mt__xl u-mb__xl",
+            attrs: { to: { name: "products" } },
+          },
+          [_vm._v("商品一覧")]
+        ),
+        _vm._v(" "),
+        _c(
+          "router-link",
+          {
+            staticClass: "c-link u-mt__xl u-mb__xl",
+            attrs: { to: { name: "user.products.purchased" } },
+          },
+          [_vm._v("購入した商品一覧")]
+        ),
+        _vm._v(" "),
+        _c(
+          "router-link",
+          {
+            staticClass: "c-link u-mt__xl u-mb__xl",
+            attrs: { to: { name: "user.products.liked" } },
+          },
+          [_vm._v("お気に入り登録した商品一覧")]
+        ),
+      ],
+      1
+    ),
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/User/WithdrawComponent.vue?vue&type=template&id=f29faf4c":
 /*!************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/User/WithdrawComponent.vue?vue&type=template&id=f29faf4c ***!
@@ -53922,7 +55750,9 @@ var render = function () {
   var _c = _vm._self._c || _h
   return _c("main", { staticClass: "l-main" }, [
     _c("section", { staticClass: "l-main__wrapper" }, [
-      _c("h1", { staticClass: "c-title u-mb__xl" }, [_vm._v("コンビニ退会")]),
+      _c("h1", { staticClass: "c-title u-mt__xl u-mb__xl" }, [
+        _vm._v("利用者退会"),
+      ]),
       _vm._v(" "),
       _c("form", { staticClass: "c-form" }, [
         _c("h3", { staticClass: "c-title c-title__sub" }, [
@@ -53935,7 +55765,7 @@ var render = function () {
           "button",
           {
             staticClass:
-              "c-button c-button__submit c-button__user u-pd__s u-mt__m",
+              "c-button c-button__submit c-button__main u-pd__s u-mt__m",
             on: { click: _vm.withdraw },
           },
           [_vm._v("退会する")]
@@ -70606,6 +72436,75 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/Convenience/SidebarComponent.vue":
+/*!******************************************************************!*\
+  !*** ./resources/js/components/Convenience/SidebarComponent.vue ***!
+  \******************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _SidebarComponent_vue_vue_type_template_id_0477fba4__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./SidebarComponent.vue?vue&type=template&id=0477fba4 */ "./resources/js/components/Convenience/SidebarComponent.vue?vue&type=template&id=0477fba4");
+/* harmony import */ var _SidebarComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./SidebarComponent.vue?vue&type=script&lang=js */ "./resources/js/components/Convenience/SidebarComponent.vue?vue&type=script&lang=js");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _SidebarComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"],
+  _SidebarComponent_vue_vue_type_template_id_0477fba4__WEBPACK_IMPORTED_MODULE_0__["render"],
+  _SidebarComponent_vue_vue_type_template_id_0477fba4__WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/Convenience/SidebarComponent.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/Convenience/SidebarComponent.vue?vue&type=script&lang=js":
+/*!******************************************************************************************!*\
+  !*** ./resources/js/components/Convenience/SidebarComponent.vue?vue&type=script&lang=js ***!
+  \******************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_SidebarComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./SidebarComponent.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Convenience/SidebarComponent.vue?vue&type=script&lang=js");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_SidebarComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/Convenience/SidebarComponent.vue?vue&type=template&id=0477fba4":
+/*!************************************************************************************************!*\
+  !*** ./resources/js/components/Convenience/SidebarComponent.vue?vue&type=template&id=0477fba4 ***!
+  \************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SidebarComponent_vue_vue_type_template_id_0477fba4__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./SidebarComponent.vue?vue&type=template&id=0477fba4 */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Convenience/SidebarComponent.vue?vue&type=template&id=0477fba4");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SidebarComponent_vue_vue_type_template_id_0477fba4__WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SidebarComponent_vue_vue_type_template_id_0477fba4__WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/components/Convenience/WithdrawComponent.vue":
 /*!*******************************************************************!*\
   !*** ./resources/js/components/Convenience/WithdrawComponent.vue ***!
@@ -71222,6 +73121,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ProductAllIndexComponent_vue_vue_type_template_id_a686fff0__WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ProductAllIndexComponent_vue_vue_type_template_id_a686fff0__WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/ProductDetailComponent.vue":
+/*!************************************************************!*\
+  !*** ./resources/js/components/ProductDetailComponent.vue ***!
+  \************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _ProductDetailComponent_vue_vue_type_template_id_62e50068__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ProductDetailComponent.vue?vue&type=template&id=62e50068 */ "./resources/js/components/ProductDetailComponent.vue?vue&type=template&id=62e50068");
+/* harmony import */ var _ProductDetailComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ProductDetailComponent.vue?vue&type=script&lang=js */ "./resources/js/components/ProductDetailComponent.vue?vue&type=script&lang=js");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _ProductDetailComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"],
+  _ProductDetailComponent_vue_vue_type_template_id_62e50068__WEBPACK_IMPORTED_MODULE_0__["render"],
+  _ProductDetailComponent_vue_vue_type_template_id_62e50068__WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/ProductDetailComponent.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/ProductDetailComponent.vue?vue&type=script&lang=js":
+/*!************************************************************************************!*\
+  !*** ./resources/js/components/ProductDetailComponent.vue?vue&type=script&lang=js ***!
+  \************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ProductDetailComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./ProductDetailComponent.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ProductDetailComponent.vue?vue&type=script&lang=js");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ProductDetailComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/ProductDetailComponent.vue?vue&type=template&id=62e50068":
+/*!******************************************************************************************!*\
+  !*** ./resources/js/components/ProductDetailComponent.vue?vue&type=template&id=62e50068 ***!
+  \******************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ProductDetailComponent_vue_vue_type_template_id_62e50068__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./ProductDetailComponent.vue?vue&type=template&id=62e50068 */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ProductDetailComponent.vue?vue&type=template&id=62e50068");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ProductDetailComponent_vue_vue_type_template_id_62e50068__WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ProductDetailComponent_vue_vue_type_template_id_62e50068__WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
@@ -72055,6 +74023,75 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/User/SidebarComponent.vue":
+/*!***********************************************************!*\
+  !*** ./resources/js/components/User/SidebarComponent.vue ***!
+  \***********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _SidebarComponent_vue_vue_type_template_id_5b13c70a__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./SidebarComponent.vue?vue&type=template&id=5b13c70a */ "./resources/js/components/User/SidebarComponent.vue?vue&type=template&id=5b13c70a");
+/* harmony import */ var _SidebarComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./SidebarComponent.vue?vue&type=script&lang=js */ "./resources/js/components/User/SidebarComponent.vue?vue&type=script&lang=js");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _SidebarComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"],
+  _SidebarComponent_vue_vue_type_template_id_5b13c70a__WEBPACK_IMPORTED_MODULE_0__["render"],
+  _SidebarComponent_vue_vue_type_template_id_5b13c70a__WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/User/SidebarComponent.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/User/SidebarComponent.vue?vue&type=script&lang=js":
+/*!***********************************************************************************!*\
+  !*** ./resources/js/components/User/SidebarComponent.vue?vue&type=script&lang=js ***!
+  \***********************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_SidebarComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./SidebarComponent.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/User/SidebarComponent.vue?vue&type=script&lang=js");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_SidebarComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/User/SidebarComponent.vue?vue&type=template&id=5b13c70a":
+/*!*****************************************************************************************!*\
+  !*** ./resources/js/components/User/SidebarComponent.vue?vue&type=template&id=5b13c70a ***!
+  \*****************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SidebarComponent_vue_vue_type_template_id_5b13c70a__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./SidebarComponent.vue?vue&type=template&id=5b13c70a */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/User/SidebarComponent.vue?vue&type=template&id=5b13c70a");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SidebarComponent_vue_vue_type_template_id_5b13c70a__WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SidebarComponent_vue_vue_type_template_id_5b13c70a__WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/components/User/WithdrawComponent.vue":
 /*!************************************************************!*\
   !*** ./resources/js/components/User/WithdrawComponent.vue ***!
@@ -72166,6 +74203,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_Convenience_ProductSaleIndexComponent_vue__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ./components/Convenience/ProductSaleIndexComponent.vue */ "./resources/js/components/Convenience/ProductSaleIndexComponent.vue");
 /* harmony import */ var _components_Convenience_ProductPurchaseIndexComponent_vue__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ./components/Convenience/ProductPurchaseIndexComponent.vue */ "./resources/js/components/Convenience/ProductPurchaseIndexComponent.vue");
 /* harmony import */ var _components_ProductAllIndexComponent_vue__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! ./components/ProductAllIndexComponent.vue */ "./resources/js/components/ProductAllIndexComponent.vue");
+/* harmony import */ var _components_ProductDetailComponent_vue__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! ./components/ProductDetailComponent.vue */ "./resources/js/components/ProductDetailComponent.vue");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == _typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw new Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(_typeof(e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw new Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, "catch": function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw new Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -72210,6 +74248,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
  // 出品した商品一覧画面
  // 購入された商品一覧画面
  // 商品一覧画面
+ // 商品詳細画面
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]);
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
@@ -72377,6 +74416,12 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
     name: 'convenience.products.detail',
     component: _components_Convenience_ProductDetailComponent_vue__WEBPACK_IMPORTED_MODULE_26__["default"]
   },
+  // 商品詳細画面
+  {
+    path: '/products/detail/:productId',
+    name: 'products.detail',
+    component: _components_ProductDetailComponent_vue__WEBPACK_IMPORTED_MODULE_32__["default"]
+  },
   // 利用者側お気に入り登録した商品一覧画面
   {
     path: '/user/products/liked',
@@ -72398,8 +74443,8 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
   }
 });
 
-// セッションが必要ないパス（TOP画面、利用規約、プライバシーポリシー、お問い合わせフォーム、ユーザー登録画面、ログイン画面、パスワードメール送信画面、パスワードリセット画面）
-var publicPaths = ['/top', '/terms', '/privacy', '/contact', '/user/register', '/convenience/register', '/user/login', '/convenience/login', '/user/password/email', '/convenience/password/email', '/user/password/reset/:token', '/convenience/password/reset/:token'];
+// セッションが必要ないパス（TOP画面、利用規約、プライバシーポリシー、お問い合わせフォーム、ユーザー登録画面、ログイン画面、パスワードメール送信画面、パスワードリセット画面、商品一覧画面、商品詳細画面）
+var publicPaths = ['/top', '/terms', '/privacy', '/contact', '/user/register', '/convenience/register', '/user/login', '/convenience/login', '/user/password/email', '/convenience/password/email', '/user/password/reset/:token', '/convenience/password/reset/:token', '/products', '/products/detail/:productId'];
 
 // セッションタイムアウトした場合のナビゲーションガード
 router.beforeEach( /*#__PURE__*/function () {
@@ -72412,7 +74457,9 @@ router.beforeEach( /*#__PURE__*/function () {
           console.log('現在のパス:', to.path);
 
           // セッションタイムアウトして、現在パスが公開パスではない場合はTOP画面にリダイレクト
-          if (!(!isLogin && !publicPaths.includes(to.path) && !to.path.includes('/password/reset'))) {
+          if (!(!isLogin && !publicPaths.some(function (path) {
+            return to.path.startsWith(path);
+          }) && !to.path.includes('/password/reset'))) {
             _context.next = 7;
             break;
           }
@@ -72467,7 +74514,7 @@ var getters = {
   },
   // ユーザー名
   icon: function icon(state) {
-    return state.user ? "https://haikishare.com/icon/".concat(state.user.icon) : 'https://haikishare.com/icon/default.png';
+    return state.user ? "".concat(state.user.icon) : 'https://haikishare.com/icon/default.png';
   },
   // 顔写真
   role: function role(state) {

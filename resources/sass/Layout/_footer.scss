@@ -9,7 +9,7 @@
         right: 30px;
         bottom: 30px;
         background: $background-color_sub;
-        border: solid 2px $boader-color_default;
+        border: solid 2px $boader-color_line;
         border-radius: 50%;
         display: flex;
         justify-content: center;
@@ -19,8 +19,8 @@
         &--arrow {
             height: 10px;
             width: 10px;
-            border-top: 3px solid $boader-color_default;
-            border-right: 3px solid $boader-color_default;
+            border-top: 3px solid $boader-color_line;
+            border-right: 3px solid $boader-color_line;
             transform: translateY(20%) rotate(-45deg);
         }
 

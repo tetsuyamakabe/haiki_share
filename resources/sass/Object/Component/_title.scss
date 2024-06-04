@@ -8,14 +8,6 @@
         font-size: $font-size_default;
     }
 
-    &__header {
-        font-size: $font-size_l;
-
-        @include mq(sm) {
-            font-size: $font-size_default;
-        }
-    }
-
     &__sub {
         font-size: $font-size_l;
 

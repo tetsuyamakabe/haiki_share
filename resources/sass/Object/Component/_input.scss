@@ -3,7 +3,7 @@
     height: 50px;
     box-sizing: border-box;
     background: $background-color_main;
-    border: 1px solid $boader-color_default;
+    border: 1px solid $boader-color_line;
     font-size: $font-size_default;
 
     @include mq(sm) {
@@ -14,6 +14,15 @@
         &::placeholder {
             font-size: $font-size_m;
         }
+    }
+
+    &__price {
+        width: 35%;
+    }
+
+    &__date {
+        display: flex;
+        align-items: center;
     }
 
     &__password {

@@ -1,7 +1,7 @@
 .c-textarea {
     width: 100%;
     box-sizing: border-box;
-    border: 1px solid $boader-color_default;
+    border: 1px solid $boader-color_line;
     background: $background-color_main;
     font-size: $font-size_default;
 
@@ -16,9 +16,9 @@
     }
 
     &__count {
-        position: absolute;
-        right: 0px;
-        bottom: 0px;
-        font-size: $font-size_m;
+        position: relative;
+        right: -80%;
+        bottom: 15px;
+        font-size: $font-size_default;
     }
 }

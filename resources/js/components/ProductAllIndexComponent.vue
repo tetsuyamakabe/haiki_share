@@ -22,17 +22,31 @@
                                 <div class="p-card__container">
                                     <img class="c-card__picture u-mb__s" :src="getProductPicturePath(product)" alt="商品画像"> <!-- 商品画像 -->
                                     <label v-show="product.is_purchased" class="c-label__purchase u-pd__m">購入済み</label> <!-- 購入済みラベル -->
-                                    <div class="p-icon u-pdr__s">
-                                        <!-- いいねアイコン -->
-                                        <i v-if="!product.liked" class="c-icon c-icon__unlike far fa-heart" @click="productLike(product)"></i>
-                                        <i v-else class="c-icon c-icon__like fas fa-heart" @click="productUnlike(product)"></i>
-                                        <span>いいね{{ product.likes_count }}</span> <!-- いいね数 -->
+                                    <div class="p-icon">
+                                        <!-- 利用者ユーザーの場合にいいねアイコンを表示 -->
+                                        <div v-if="$store.getters['auth/check'] && $store.getters['auth/role'] === 'user'">
+                                            <i v-if="!product.liked" class="c-icon c-icon__unlike far fa-heart" @click="productLike(product)"></i>
+                                            <i v-else class="c-icon c-icon__like fas fa-heart" @click="productUnlike(product)"></i>
+                                            <span class="u-mr__m">{{ product.likes_count }}</span> <!-- いいね数 -->
+                                        </div>
+                                        <!-- 未ログインユーザーの場合にユーザー登録・ログインのツールチップを表示 -->
+                                        <div v-else-if="!$store.getters['auth/check']" class="c-tooltip">
+                                            <i class="c-icon c-icon__nolike fas fa-heart"></i><span class="u-mr__m">{{ product.likes_count }}</span> <!-- いいね数 -->
+                                            <div class="c-tooltip__text">ユーザー登録・ログインしてください</div>
+                                        </div>
+                                        <!-- コンビニユーザーの場合にコンビニユーザーツールチップを表示 -->
+                                        <div v-else class="c-tooltip">
+                                            <i class="c-icon c-icon__nolike fas fa-heart"></i><span class="u-mr__m">{{ product.likes_count }}</span> <!-- いいね数 -->
+                                            <div class="c-tooltip__text">コンビニユーザーはお気に入りできません</div>
+                                        </div>
                                     </div>
-                                    <p class="c-card__price">{{ product.price }}円</p> <!-- 価格 -->
-                                    <p class="c-card__price">{{ formatDate(product.expiration_date) }}</p> <!-- 賞味期限日付 -->
+                                    <p class="c-card__text">{{ product.price }}円</p> <!-- 価格 -->
+                                    <p class="c-card__text">{{ formatDate(product.expiration_date) }}</p> <!-- 賞味期限日付 -->
                                 </div>
                                 <div class="p-card__footer">
-                                    <router-link :to="getProductDetailLink(product.id)" class="c-button c-button__common c-button__detail u-pd__s u-m__s">詳細を見る</router-link>
+                                    <div class="c-button__container">
+                                        <router-link :to="getProductDetailLink(product.id)" class="c-button c-button__default u-pd__s u-m__s">詳細を見る</router-link>
+                                    </div>
                                 </div>
                             </div>
                         </li>
@@ -144,7 +158,7 @@ export default {
         // 商品画像のパスを取得するメソッド
         getProductPicturePath(product) {
             if (product.pictures.length > 0) {
-                return 'https://haikishare.com/product_pictures/' + product.pictures[0].file; // 商品画像がある場合は、その画像パスを返す
+                return product.pictures[0].file; // 商品画像がある場合は、その画像パスを返す
             } else {
                 return 'https://haikishare.com/product_pictures/no_image.png'; // 商品画像がない場合は、デフォルトの商品画像のパスを返す
             }
@@ -161,13 +175,13 @@ export default {
 
         // 商品詳細画面のリンクを返すメソッド
         getProductDetailLink(productId) {
-            // ログインユーザーのroleによって利用者・コンビニのマイページリンクを動的に変える
+            // ログイン状態と、ユーザーのroleによって利用者・コンビニのマイページリンクを動的に変える
             if (this.$store.getters['auth/role'] === 'user') {
-                    return { name: 'user.products.detail', params: { productId: productId } };
-                } else if (this.$store.getters['auth/role'] === 'convenience') {
-                    return { name: 'convenience.products.detail', params: { productId: productId } };
-                }
-            return "/top"; // ログインしていない場合はTOP画面に遷移
+                return { name: 'user.products.detail', params: { productId: productId } };
+            } else if (this.$store.getters['auth/role'] === 'convenience') {
+                return { name: 'convenience.products.detail', params: { productId: productId } };
+            }
+            return {name: 'products.detail', params: { productId: productId } };
         },
 
         // 商品お気に入り登録

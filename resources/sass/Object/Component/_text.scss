@@ -5,6 +5,10 @@
         font-size: $font-size_m;
     }
 
+    &__note {
+        font-size: $font-size_m;
+    }
+
     &__max {
         display: flex;
         justify-content: flex-end;
@@ -13,16 +17,5 @@
     &__withdraw {
         font-weight: bold;
         line-height: 1.5;
-    }
-
-    &__attention {
-        position: absolute;
-        right: 0px;
-        bottom: -3px;
-        font-size: $font-size_m;
-
-        @include mq(sm) {
-            font-size: $font-size_s;
-        }
     }
 }
