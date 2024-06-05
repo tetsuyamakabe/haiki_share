@@ -8361,6 +8361,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['errors'],
   data: function data() {
     return {
       prefectures: [],
@@ -8371,9 +8372,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       // 最小価格
       maxPrice: 0,
       // 最大価格
-      isExpired: '',
-      // 賞味期限切れかどうか
-      errors: null // エラーメッセージ
+      isExpired: '' // 賞味期限切れかどうか
     };
   },
   created: function created() {
@@ -8433,7 +8432,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }
       console.log('検索パラメータ:', params);
       // 親コンポーネントに通知
-      this.$emit('search', params, 'errors'); // パラメータをつけたオブジェクトをemitする
+      this.$emit('search', params, this.errors); // パラメータをつけたオブジェクトをemitする。バリデーションメッセージを表示するerrorsを追加。
     }
   }
 });

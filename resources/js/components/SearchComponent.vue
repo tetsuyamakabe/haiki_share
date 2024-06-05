@@ -46,6 +46,8 @@
 import axios from 'axios';
 
 export default {
+    props: ['errors'],
+
     data() {
         return {
             prefectures: [], // 都道府県の選択肢
@@ -53,7 +55,6 @@ export default {
             minPrice: 0, // 最小価格
             maxPrice: 0, // 最大価格
             isExpired: '', // 賞味期限切れかどうか
-            errors: null, // エラーメッセージ
         };
     },
 
@@ -94,7 +95,7 @@ export default {
             }
             console.log('検索パラメータ:', params);
             // 親コンポーネントに通知
-            this.$emit('search', params, 'errors'); // パラメータをつけたオブジェクトをemitする。バリデーションメッセージを表示するerrorsを追加。
+            this.$emit('search', params, this.errors); // パラメータをつけたオブジェクトをemitする。バリデーションメッセージを表示するerrorsを追加。
         },
     }
 }
