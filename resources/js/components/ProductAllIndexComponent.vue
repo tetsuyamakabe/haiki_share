@@ -55,7 +55,7 @@
 
             </div>
             <!-- 絞り込み検索フォーム -->
-            <search-component @search="searchResult" />
+            <search-component @search="searchResult" :errors="errors" />
         </div>
         <!-- ページネーション -->
         <pagination-component @onClick="onPageChange" :current_page="currentPage" :last_page="lastPage" />
@@ -80,6 +80,7 @@ export default {
             currentPage: 1, // 現在ページ
             lastPage: 1, // 最後のページ
             lastParams: [], // 最後の検索条件
+            errors: null, // エラーメッセージ
         };
     },
 

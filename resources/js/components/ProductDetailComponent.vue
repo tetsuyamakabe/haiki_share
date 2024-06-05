@@ -110,7 +110,7 @@ export default {
         // エックスのシェアボタン
         Xshare() {
             // エックスの投稿に遷移して商品を不特定多数の人がシェアできるようにする
-            const shareURL = 'https://twitter.com/intent/tweet?text=' + "haiki share 商品をシェアする" + "%20%23haikishare" + '&url=' + "https://haikishare.com/user/products/detail/" + this.productId;  
+            const shareURL = 'https://twitter.com/intent/tweet?text=' + "haiki share 商品をシェアする" + "%20%23haikishare" + '&url=' + "https://haikishare.com/products/detail/" + this.productId;  
             location.href = shareURL
         },
 
