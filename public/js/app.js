@@ -5663,7 +5663,7 @@ __webpack_require__.r(__webpack_exports__);
     // エックスのシェアボタン
     Xshare: function Xshare() {
       // エックスの投稿に遷移して商品を不特定多数の人がシェアできるようにする
-      var shareURL = 'https://twitter.com/intent/tweet?text=' + "haiki share 商品をシェアする" + "%20%23haikishare" + '&url=' + "https://haikishare.com/user/products/detail/" + this.productId;
+      var shareURL = 'https://twitter.com/intent/tweet?text=' + "haiki share 商品をシェアする" + "%20%23haikishare" + '&url=' + "https://haikishare.com/products/detail/" + this.productId;
       location.href = shareURL;
     },
     // 商品お気に入り登録
@@ -8013,7 +8013,9 @@ __webpack_require__.r(__webpack_exports__);
       // 現在ページ
       lastPage: 1,
       // 最後のページ
-      lastParams: [] // 最後の検索条件
+      lastParams: [],
+      // 最後の検索条件
+      errors: null // エラーメッセージ
     };
   },
   created: function created() {
@@ -8283,7 +8285,7 @@ __webpack_require__.r(__webpack_exports__);
     // エックスのシェアボタン
     Xshare: function Xshare() {
       // エックスの投稿に遷移して商品を不特定多数の人がシェアできるようにする
-      var shareURL = 'https://twitter.com/intent/tweet?text=' + "haiki share 商品をシェアする" + "%20%23haikishare" + '&url=' + "https://haikishare.com/user/products/detail/" + this.productId;
+      var shareURL = 'https://twitter.com/intent/tweet?text=' + "haiki share 商品をシェアする" + "%20%23haikishare" + '&url=' + "https://haikishare.com/products/detail/" + this.productId;
       location.href = shareURL;
     },
     // ユーザー登録するボタンの画面遷移先
@@ -8354,6 +8356,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -8367,7 +8371,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       // 最小価格
       maxPrice: 0,
       // 最大価格
-      isExpired: '' // 賞味期限切れかどうか
+      isExpired: '',
+      // 賞味期限切れかどうか
+      errors: null // エラーメッセージ
     };
   },
   created: function created() {
@@ -8427,7 +8433,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }
       console.log('検索パラメータ:', params);
       // 親コンポーネントに通知
-      this.$emit('search', params); // パラメータをつけたオブジェクトをemitする
+      this.$emit('search', params, 'errors'); // パラメータをつけたオブジェクトをemitする
     }
   }
 });
@@ -9277,7 +9283,7 @@ __webpack_require__.r(__webpack_exports__);
     // エックスのシェアボタン
     Xshare: function Xshare() {
       // エックスの投稿に遷移して商品を不特定多数の人がシェアできるようにする
-      var shareURL = 'https://twitter.com/intent/tweet?text=' + "haiki share 商品をシェアする" + "%20%23haikishare" + '&url=' + "https://haikishare.com/user/products/detail/" + this.productId;
+      var shareURL = 'https://twitter.com/intent/tweet?text=' + "haiki share 商品をシェアする" + "%20%23haikishare" + '&url=' + "https://haikishare.com/products/detail/" + this.productId;
       location.href = shareURL;
     },
     // 商品購入するメソッド
@@ -51609,7 +51615,10 @@ var render = function () {
             ]),
           ]),
           _vm._v(" "),
-          _c("search-component", { on: { search: _vm.searchResult } }),
+          _c("search-component", {
+            attrs: { errors: _vm.errors },
+            on: { search: _vm.searchResult },
+          }),
         ],
         1
       ),
@@ -51870,6 +51879,12 @@ var render = function () {
               _vm._v(" "),
               _c("label", { staticClass: "c-label" }, [_vm._v("最低価格")]),
               _vm._v(" "),
+              _vm.errors && _vm.errors.minprice
+                ? _c("span", { staticClass: "c-error u-mt__s" }, [
+                    _vm._v(_vm._s(_vm.errors.minprice[0])),
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
               _c("input", {
                 directives: [
                   {
@@ -51880,7 +51895,7 @@ var render = function () {
                   },
                 ],
                 staticClass: "c-input c-input__search u-mt__s u-mb__s u-pd__s",
-                attrs: { type: "number", name: "minprice" },
+                attrs: { type: "text", name: "minprice", maxlength: "4" },
                 domProps: { value: _vm.minPrice },
                 on: {
                   input: function ($event) {
@@ -51895,6 +51910,12 @@ var render = function () {
               _vm._v(" "),
               _c("label", { staticClass: "c-label" }, [_vm._v("最高価格")]),
               _vm._v(" "),
+              _vm.errors && _vm.errors.maxprice
+                ? _c("span", { staticClass: "c-error u-mt__s" }, [
+                    _vm._v(_vm._s(_vm.errors.maxprice[0])),
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
               _c("input", {
                 directives: [
                   {
@@ -51905,7 +51926,7 @@ var render = function () {
                   },
                 ],
                 staticClass: "c-input c-input__search u-mt__s u-mb__s u-pd__s",
-                attrs: { type: "number", name: "maxprice" },
+                attrs: { type: "text", name: "maxprice", maxlength: "4" },
                 domProps: { value: _vm.maxPrice },
                 on: {
                   input: function ($event) {

@@ -13,6 +13,7 @@ use App\Models\ProductPicture;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Requests\Convenience\SearchRequest;
 use App\Http\Requests\Convenience\ProductEditRequest;
 use App\Http\Requests\Convenience\ProductSaleRequest;
 
@@ -21,7 +22,6 @@ class ProductController extends Controller
     // 商品出品処理（商品の投稿）
     public function createProduct(ProductSaleRequest $request)
     {
-        \Log::info($request->all());
         try {
             // 未認証の場合
             if (!auth()->check()) {
@@ -39,8 +39,6 @@ class ProductController extends Controller
             $product->save();
             // 商品画像ファイルのアップロード処理
             $productPicture = $request->file('product_picture'); // 商品画像
-            // $extension = $picture->getClientOriginalExtension(); // ファイルの拡張子を取得
-            // $fileName = sha1($picture->getClientOriginalName()) . '.' . $extension; // SHA-1ハッシュでファイル名を決定
             $dir = 'product_pictures'; // アップロード先S3フォルダ名
             $s3Upload = Storage::disk('s3')->putFile('/'.$dir, $productPicture); // S3にファイルを保存
             $s3Url = Storage::disk('s3')->url($s3Upload); // アップロードファイルURLを取得
@@ -62,7 +60,7 @@ class ProductController extends Controller
     // 商品編集・更新処理
     public function editProduct(ProductEditRequest $request, $productId)
     {
-        // try {
+        try {
             // 未認証の場合
             if (!auth()->check()) {
                 return response()->json(['message' => 'Unauthenticated.'], 401);
@@ -90,9 +88,9 @@ class ProductController extends Controller
             }
             $product->load('pictures'); // pictureリレーションをロード
             return response()->json(['message' => '商品の編集に成功しました', 'product' => $product]);
-        // } catch (\Exception $e) {
-        //     return response()->json(['message' => '商品の編集に失敗しました'], 500);
-        // }
+        } catch (\Exception $e) {
+            return response()->json(['message' => '商品の編集に失敗しました'], 500);
+        }
     }
 
     // 商品削除処理
@@ -174,7 +172,7 @@ class ProductController extends Controller
     }
 
     // すべての商品情報の取得
-    public function getAllProducts(Request $request)
+    public function getAllProducts(SearchRequest $request)
     {
         try {
             // 認証済みユーザーIDの取得
@@ -189,11 +187,11 @@ class ProductController extends Controller
                     $addressQuery->where('prefecture', $prefecture);
                 });
             }
-            $minPrice = $request->input('minPrice'); // 最小価格
+            $minPrice = $request->input('minprice'); // 最小価格
             if ($minPrice !== null) { // 検索条件にminPriceがある場合
                 $query->where('price', '>=', $minPrice); // priceより小さい値を取得
             }
-            $maxPrice = $request->input('maxPrice'); // 最大価格
+            $maxPrice = $request->input('maxprice'); // 最大価格
             if ($maxPrice !== null) { // 検索条件にmaxPriceがある場合
                 $query->where('price', '<=', $maxPrice); // priceより大きい値を取得
             }

@@ -15,9 +15,11 @@
 
                         <!-- 価格 -->
                         <label class="c-label">最低価格</label>
-                        <input class="c-input c-input__search u-mt__s u-mb__s u-pd__s" type="number" name="minprice" v-model="minPrice"><span class="c-text u-ml__s">円</span>
+                        <span v-if="errors && errors.minprice" class="c-error u-mt__s">{{ errors.minprice[0] }}</span>
+                        <input class="c-input c-input__search u-mt__s u-mb__s u-pd__s" type="text" name="minprice" maxlength="4" v-model="minPrice"><span class="c-text u-ml__s">円</span>
                         <label class="c-label">最高価格</label>
-                        <input class="c-input c-input__search u-mt__s u-mb__s u-pd__s" type="number" name="maxprice" v-model="maxPrice"><span class="c-text u-ml__s">円</span>
+                        <span v-if="errors && errors.maxprice" class="c-error u-mt__s">{{ errors.maxprice[0] }}</span>
+                        <input class="c-input c-input__search u-mt__s u-mb__s u-pd__s" type="text" name="maxprice" maxlength="4" v-model="maxPrice"><span class="c-text u-ml__s">円</span>
 
                         <!-- 賞味期限切れかどうか -->
                         <label class="c-label">賞味期限切れかどうか</label>
@@ -51,6 +53,7 @@ export default {
             minPrice: 0, // 最小価格
             maxPrice: 0, // 最大価格
             isExpired: '', // 賞味期限切れかどうか
+            errors: null, // エラーメッセージ
         };
     },
 
@@ -91,7 +94,7 @@ export default {
             }
             console.log('検索パラメータ:', params);
             // 親コンポーネントに通知
-            this.$emit('search', params); // パラメータをつけたオブジェクトをemitする
+            this.$emit('search', params, 'errors'); // パラメータをつけたオブジェクトをemitする。バリデーションメッセージを表示するerrorsを追加。
         },
     }
 }
