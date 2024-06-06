@@ -174,6 +174,7 @@ class ProductController extends Controller
     // すべての商品情報の取得
     public function getAllProducts(SearchRequest $request)
     {
+        \Log::info('$requestは、', $request->all());
         try {
             // 認証済みユーザーIDの取得
             $userId = auth()->id();
@@ -187,14 +188,17 @@ class ProductController extends Controller
                     $addressQuery->where('prefecture', $prefecture);
                 });
             }
+            \Log::info('$prefectureは、', [$prefecture]);
             $minPrice = $request->input('minprice'); // 最小価格
             if ($minPrice !== null) { // 検索条件にminPriceがある場合
                 $query->where('price', '>=', $minPrice); // priceより小さい値を取得
             }
+            \Log::info('$minPriceは、', [$minPrice]);
             $maxPrice = $request->input('maxprice'); // 最大価格
             if ($maxPrice !== null) { // 検索条件にmaxPriceがある場合
                 $query->where('price', '<=', $maxPrice); // priceより大きい値を取得
             }
+            \Log::info('$maxPriceは、', [$maxPrice]);
             $expired = $request->input('expiration_date'); // 賞味期限切れかどうか
             if ($expired !== null) { // 検索条件に$expiredがある場合
                 $today = Carbon::today()->toDateString(); // 現在の日付を取得
@@ -204,6 +208,7 @@ class ProductController extends Controller
                     $query->where('expiration_date', '>=', $today); // （現在日付より新しい）賞味期限内の商品を検索
                 }
             }
+            \Log::info('$expiredは、', [$expired]);
             // コレクションを出品した日の降順で15件ずつ取得
             $products = $query->orderBy('created_at', 'desc')->paginate(15);
             // 各商品に対して処理を行う
