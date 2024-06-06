@@ -8015,7 +8015,7 @@ __webpack_require__.r(__webpack_exports__);
       // 最後のページ
       lastParams: [],
       // 最後の検索条件
-      errors: null // エラーメッセージ
+      errors: [] // エラーメッセージ
     };
   },
   created: function created() {
@@ -8070,6 +8070,7 @@ __webpack_require__.r(__webpack_exports__);
     // 検索結果を表示する
     searchResult: function searchResult(params) {
       console.log('searchResultのparamsは、', params);
+      this.errors = []; // バリデーションエラーメッセージをリセットする
       if (JSON.stringify(params) === JSON.stringify(this.lastParams)) {
         // 前回の検索条件が同じであればページ遷移を行わずに検索結果を再取得する
         this.getProduct(params); // 前回と同じ検索条件での再取得
@@ -9576,7 +9577,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _SidebarComponent_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./SidebarComponent.vue */ "./resources/js/components/User/SidebarComponent.vue");
 /* harmony import */ var _PaginationComponent_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../PaginationComponent.vue */ "./resources/js/components/PaginationComponent.vue");
-//
 //
 //
 //
@@ -51615,7 +51615,7 @@ var render = function () {
           ]),
           _vm._v(" "),
           _c("search-component", {
-            attrs: { errors: _vm.errors },
+            attrs: { errors: _vm.errors.errors },
             on: { search: _vm.searchResult },
           }),
         ],
@@ -53772,7 +53772,7 @@ var render = function () {
     { staticClass: "l-main" },
     [
       _c("h1", { staticClass: "c-title u-mb__xl" }, [
-        _vm._v("利用者お気に入り登録商品一覧"),
+        _vm._v("お気に入り登録商品一覧"),
       ]),
       _vm._v(" "),
       _c(
@@ -53886,13 +53886,13 @@ var render = function () {
                                       ]
                                     ),
                                     _vm._v(" "),
-                                    _c("p", { staticClass: "c-card__" }, [
+                                    _c("p", { staticClass: "c-card__text" }, [
                                       _vm._v(
                                         _vm._s(product.product.price) + "円"
                                       ),
                                     ]),
                                     _vm._v(" "),
-                                    _c("p", { staticClass: "c-card__price" }, [
+                                    _c("p", { staticClass: "c-card__text" }, [
                                       _vm._v(
                                         _vm._s(
                                           _vm.formatDate(
@@ -53992,7 +53992,7 @@ var render = function () {
     { staticClass: "l-main" },
     [
       _c("h1", { staticClass: "c-title u-mb__xl" }, [
-        _vm._v("利用者購入した商品一覧"),
+        _vm._v("購入した商品一覧"),
       ]),
       _vm._v(" "),
       _c(
@@ -54051,30 +54051,13 @@ var render = function () {
                                       },
                                     }),
                                     _vm._v(" "),
-                                    _c(
-                                      "label",
-                                      {
-                                        directives: [
-                                          {
-                                            name: "show",
-                                            rawName: "v-show",
-                                            value: product.is_purchased,
-                                            expression: "product.is_purchased",
-                                          },
-                                        ],
-                                        staticClass:
-                                          "c-label__purchase u-pd__m",
-                                      },
-                                      [_vm._v("購入済み")]
-                                    ),
-                                    _vm._v(" "),
-                                    _c("p", { staticClass: "c-card__price" }, [
+                                    _c("p", { staticClass: "c-card__text" }, [
                                       _vm._v(
                                         _vm._s(product.product.price) + "円"
                                       ),
                                     ]),
                                     _vm._v(" "),
-                                    _c("p", { staticClass: "c-card__price" }, [
+                                    _c("p", { staticClass: "c-card__text" }, [
                                       _vm._v(
                                         _vm._s(
                                           _vm.formatDate(

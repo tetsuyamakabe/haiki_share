@@ -25,16 +25,15 @@
         }
     }
 
-    &__icon--container {
-        width: 80%;
-        height: 80%;
-        margin: auto;
-    }
-
     &__icon {
-        width: 100%;
-        height: 100%;
+        width: 150px;
+        height: 150px;
         border-radius: 50%;
+        &--container {
+            width: 80%;
+            height: 80%;
+            margin: auto;
+        }
     }
 
 

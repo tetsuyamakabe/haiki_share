@@ -1,6 +1,6 @@
 <template>
     <main class="l-main">
-        <h1 class="c-title u-mb__xl">利用者購入した商品一覧</h1>
+        <h1 class="c-title u-mb__xl">購入した商品一覧</h1>
         <div class="p-article">
             <div class="l-main__wrapper">
 
@@ -21,9 +21,8 @@
                                 </div>
                                 <div class="p-card__container">
                                     <img class="c-card__picture u-mb__s" :src="getProductPicturePath(product)" alt="商品画像"> <!-- 商品画像 -->
-                                    <label v-show="product.is_purchased" class="c-label__purchase u-pd__m">購入済み</label><!-- 購入済みラベル -->
-                                    <p class="c-card__price">{{ product.product.price }}円</p> <!-- 価格 -->
-                                    <p class="c-card__price">{{ formatDate(product.product.expiration_date) }}</p> <!-- 賞味期限 -->
+                                    <p class="c-card__text">{{ product.product.price }}円</p> <!-- 価格 -->
+                                    <p class="c-card__text">{{ formatDate(product.product.expiration_date) }}</p> <!-- 賞味期限 -->
                                 </div>
                                 <div class="p-card__footer">
                                     <div class="c-button__container">

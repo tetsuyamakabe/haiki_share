@@ -41,7 +41,7 @@ class ProfileRequest extends FormRequest
         // 顔写真がアップロードされた場合のみバリデーションルールを適用
         if ($this->hasFile('icon')) {
             // 顔写真のバリデーションルール（NULL許容、画像ファイル、拡張子、最大画像ファイルサイズ2MB以下）
-            $rules['icon'] = 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048';
+            $rules['icon'] = 'nullable|file|mimes:jpeg,png,jpg,gif|max:2048';
         }
 
         return $rules;
