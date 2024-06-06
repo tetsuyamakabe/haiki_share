@@ -1,6 +1,6 @@
 <template>
     <main class="l-main">
-        <h1 class="c-title u-mb__xl">利用者お気に入り登録商品一覧</h1>
+        <h1 class="c-title u-mb__xl">お気に入り登録商品一覧</h1>
         <div class="p-article">
             <div class="l-main__wrapper">
 
@@ -28,8 +28,8 @@
                                         <i v-else class="c-icon c-icon__like fas fa-heart" @click="productUnlike(product)"></i>
                                         <span>いいね{{ product.product.likes_count }}</span> <!-- いいね数 -->
                                     </div>
-                                    <p class="c-card__">{{ product.product.price }}円</p> <!-- 価格 -->
-                                    <p class="c-card__price">{{ formatDate(product.product.expiration_date) }}</p> <!-- 賞味期限 -->
+                                    <p class="c-card__text">{{ product.product.price }}円</p> <!-- 価格 -->
+                                    <p class="c-card__text">{{ formatDate(product.product.expiration_date) }}</p> <!-- 賞味期限 -->
                                 </div>
                                 <div class="p-card__footer">
                                     <div class="c-button__container">

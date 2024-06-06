@@ -55,7 +55,7 @@
 
             </div>
             <!-- 絞り込み検索フォーム -->
-            <search-component @search="searchResult" :errors="errors" />
+            <search-component @search="searchResult" :errors="errors.errors" />
         </div>
         <!-- ページネーション -->
         <pagination-component @onClick="onPageChange" :current_page="currentPage" :last_page="lastPage" />
@@ -80,7 +80,7 @@ export default {
             currentPage: 1, // 現在ページ
             lastPage: 1, // 最後のページ
             lastParams: [], // 最後の検索条件
-            errors: null, // エラーメッセージ
+            errors: [], // エラーメッセージ
         };
     },
 
@@ -132,6 +132,7 @@ export default {
         // 検索結果を表示する
         searchResult(params) {
             console.log('searchResultのparamsは、', params);
+            this.errors = []; // バリデーションエラーメッセージをリセットする
             if (JSON.stringify(params) === JSON.stringify(this.lastParams)) { // 前回の検索条件が同じであればページ遷移を行わずに検索結果を再取得する
                 this.getProduct(params); // 前回と同じ検索条件での再取得
             } else {
