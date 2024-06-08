@@ -16,7 +16,7 @@ class AddDefaultIconUsersTable extends Migration
         // ユーザーテーブルのマイグレーション
         Schema::table('users', function (Blueprint $table) {
             // アイコンカラムのデフォルト値にデフォルト画像のパスを指定
-            $table->string('icon')->default('default.png')->change();
+            $table->string('icon')->default('https://haikishare.com/icon/default.png')->change();
         });
     }
 
@@ -30,7 +30,7 @@ class AddDefaultIconUsersTable extends Migration
         // ユーザーテーブルのロールバック
         Schema::table('users', function (Blueprint $table) {
             // アイコンカラムをロールバック
-            $table->string('icon')->nullable()->change();
+            $table->string('icon')->default(NULL)->change();
         });
     }
 }

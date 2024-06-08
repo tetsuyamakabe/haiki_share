@@ -5,16 +5,16 @@
     &__text {
         display: none;
         position: absolute;
-        padding: 10px;
+        padding: 8px;
         font-size: 12px;
         line-height: 1.6em;
         color: #fff;
-        border-radius: 5px;
+        border-radius: 4px;
         background: #000;
         width: 150px;
-        top: -75%;
-        right: -25%;
-        transform: translateX(-50%);
+        top: -180%;
+        z-index: 2;
+        transform: translateX(-110%);
 
         &:before {
             content: "";

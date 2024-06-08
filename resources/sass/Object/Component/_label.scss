@@ -23,4 +23,13 @@
             left: 20%;
         }
     }
+
+    &__category {
+        font-size: 12px;
+        margin: 0 8px;
+        padding: 8px 0;
+        border-radius: 100vh;
+        border: 1px solid;
+        text-align: center;
+    }
 }

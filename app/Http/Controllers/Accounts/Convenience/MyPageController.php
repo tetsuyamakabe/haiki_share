@@ -49,16 +49,14 @@ class MyPageController extends Controller
             }
             $user->introduction = $request->input('introduction'); // 自己紹介文
             // ファイルがアップロードされているか確認
-            if ($request->hasFile('icon')) {
-                $iconImage = $request->file('icon'); // 顔写真
-                // $extension = $iconImage->getClientOriginalExtension(); // ファイルの拡張子を取得
-                // $fileName = sha1($iconImage->getClientOriginalName()) . '.' . $extension; // SHA-1ハッシュでファイル名を決定
-                $dir = 'icon'; // アップロード先S3フォルダ名
-                $s3Upload = Storage::disk('s3')->putFile('/'.$dir, $iconImage); // S3にファイルを保存
+            if ($request->hasFile('avatar')) {
+                $avatarImage = $request->file('avatar'); // 顔写真
+                $dir = 'avatar'; // アップロード先S3フォルダ名
+                $s3Upload = Storage::disk('s3')->putFile('/'.$dir, $avatarImage); // S3にファイルを保存
                 $s3Url = Storage::disk('s3')->url($s3Upload); // アップロードファイルURLを取得
                 $s3UploadFileName = explode("/", $s3Url)[5]; // $s3UrlからS3でのファイル保存名取得
                 $s3Path = $dir.'/'.$s3UploadFileName; // アップロード先パスを取得
-                $user->icon = 'https://haikishare.com/' . $s3Path; // ファイルURLを保存
+                $user->avatar = 'https://haikishare.com/' . $s3Path; // ファイルURLを保存
             }
             $user->save();
             // コンビニ情報を取得
@@ -119,14 +117,14 @@ class MyPageController extends Controller
         $convenience = $user->convenience;
 
         // 出品した商品を最大5件表示（論理削除された商品も含む）
-        $saleProducts = Product::with('pictures')
+        $saleProducts = Product::with(['pictures', 'category'])->withCount('likes')
             ->where('convenience_store_id', $convenience->id)
             ->whereNull('deleted_at') // 論理削除された商品を除外する
             ->orderBy('created_at', 'desc') // 最新の投稿（降順）
             ->limit(5)->get();
         
         // 購入された商品を最大5件表示（論理削除された商品も含む）
-        $purchasedProducts = Product::with('pictures')
+        $purchasedProducts = Product::with(['pictures', 'category'])->withCount('likes')
             ->where('convenience_store_id', $convenience->id)
             ->whereHas('purchases', function ($query) {
                 $query->where('is_purchased', true);

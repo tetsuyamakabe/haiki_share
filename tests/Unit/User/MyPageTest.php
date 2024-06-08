@@ -36,7 +36,7 @@ class MyPageTest extends TestCase
         $this->assertEquals($user->id, $responseData['user']['id']);
         $this->assertEquals($user->name, $responseData['user']['name']);
         $this->assertEquals($user->email, $responseData['user']['email']);
-        $this->assertEquals($user->icon, $responseData['user']['icon']);
+        $this->assertEquals($user->avatar, $responseData['user']['avatar']);
         $this->assertEquals($user->introduction, $responseData['user']['introduction']);
     }
 
@@ -45,7 +45,7 @@ class MyPageTest extends TestCase
         // テスト用の利用者ユーザーを作成
         $user = factory(User::class)->create(['role' => 'user']);
         // 画像fakeメソッドの準備
-        Storage::fake('icon');
+        Storage::fake('avatar');
         // テストデータの作成
         $data = [
             'name' => 'サンプルユーザー', // 名前
@@ -56,7 +56,7 @@ class MyPageTest extends TestCase
         ];
         // テスト画像ファイル
         $file = [
-            'icon' => UploadedFile::fake()->image('icon.jpg', 100, 100)->size(2000), // 2MB以内の顔写真
+            'avatar' => UploadedFile::fake()->image('avatar.jpg', 100, 100)->size(2000), // 2MB以内の顔写真
         ];
         // テスト用のリクエストを作成（リクエストヘッダーを含める）
         $response = $this->actingAs($user)
@@ -74,7 +74,7 @@ class MyPageTest extends TestCase
         // パスワードが更新されているか
         $this->assertTrue(Hash::check('newpassword', $user->fresh()->password));
         // 顔写真がアップロードされているか
-        Storage::disk('public')->assertExists('icons/' . $responseData['user']['icon']);
+        Storage::disk('public')->assertExists('avatar/' . $responseData['user']['avatar']);
     }
 
     public function test_利用者側退会処理()
@@ -212,7 +212,7 @@ class MyPageTest extends TestCase
             'password' => 'pass', // パスワードが短すぎる
             'password_confirmation' => 'password', // パスワード確認が一致しない
             'introduction' => str_repeat('あ', 51), // 自己紹介文の文字数オーバー
-            'icon' => UploadedFile::fake()->image('sample_image.pdf')->size(3000), // 拡張子がpdfで画像サイズが3MB
+            'avatar' => UploadedFile::fake()->image('sample_image.pdf')->size(3000), // 拡張子がpdfで画像サイズが3MB
         ];
         // リクエストを送信
         $response = $this->actingAs($user)
@@ -222,7 +222,7 @@ class MyPageTest extends TestCase
         // エラーレスポンスが返されるか
         $response->assertStatus(422);
         // エラーメッセージが正しいか
-        $response->assertJsonValidationErrors(['name', 'email', 'password', 'introduction', 'icon']);
+        $response->assertJsonValidationErrors(['name', 'email', 'password', 'introduction', '']);
     }
 
     public function test_利用者側未認証ユーザーの退会処理()

@@ -75,13 +75,13 @@
                     </div>
 
                     <!-- 顔写真 -->
-                    <label for="profile-icon" class="c-label">顔写真</label>
-                    <span v-if="errors && errors.icon" class="c-error u-mt__s u-mb__s">{{ errors.icon[0] }}</span>
-                    <div class="p-profile__icon p-profile__icon--container u-pd__s" @drop="handleDrop" :class="{ 'is-invalid': errors && errors.icon }">
-                        <input type="file" id="profile-icon" @change="handleFileChange" class="c-input__hidden">
-                        <img v-if="!iconPreview && formData.icon" :src="formData.icon" alt="アップロード顔写真" class="p-profile__icon">
-                        <img v-else-if="iconPreview" :src="iconPreview" alt="アップロード顔写真" class="p-profile__icon">
-                        <img v-else :src="'https://haikishare.com/icon/default.png'" alt="デフォルト顔写真" class="p-profile__icon">
+                    <label for="avatar" class="c-label">顔写真</label>
+                    <span v-if="errors && errors.avatar" class="c-error u-mt__s u-mb__s">{{ errors.avatar[0] }}</span>
+                    <div class="c-avatar c-avatar__container u-pd__s" @drop="handleDrop" :class="{ 'is-invalid': errors && errors.avatar }">
+                        <input type="file" id="c-avatar" @change="handleFileChange" class="c-input__hidden">
+                        <img v-if="!avatarPreview && formData.avatar" :src="formData.avatar" alt="アップロード顔写真" class="c-avatar">
+                        <img v-else-if="avatarPreview" :src="avatarPreview" alt="アップロード顔写真" class="c-avatar">
+                        <img v-else :src="'https://haikishare.com/avatar/default.png'" alt="デフォルト顔写真" class="c-avatar">
                     </div>
 
                     <!-- 更新ボタン -->
@@ -119,9 +119,9 @@ export default {
                 password: '', // パスワード
                 password_confirmation: '', // パスワード（再入力）
                 introduction: '', // 自己紹介文
-                icon: '', // 顔写真
+                avatar: '', // 顔写真
             },
-            iconPreview: '', // アイコン画像のプレビュー
+            avatarPreview: '', // アイコン画像のプレビュー
             convenience_name: '', // コンビニ名
             branch_name: '', // 支店名
             prefecture: '', // 都道府県
@@ -170,7 +170,7 @@ export default {
                 this.formData.password = ''; // 編集前のパスワードは非表示（入力フォームを空）にする
                 this.formData.password_confirmation = ''; // 編集前のパスワード（再入力）は非表示（入力フォームを空）にする
                 this.formData.introduction = this.user.introduction || ''; // 自己紹介文
-                this.formData.icon = this.user.icon || ''; // 顔写真
+                this.formData.avatar = this.user.avatar || ''; // 顔写真
             }).catch(error => {
                 console.error('プロフィール取得失敗:', error.response.data);
                 this.errors = error.response.data;
@@ -216,8 +216,8 @@ export default {
             formData.append('password_confirmation', this.formData.password_confirmation); // パスワード（再入力）
             formData.append('introduction', this.formData.introduction); // 自己紹介文
             // 顔写真がアップロードされている場合はフォームデータに追加
-            if (this.formData.icon !== '') {
-                formData.append('icon', this.formData.icon); // 顔写真
+            if (this.formData.avatar !== '') {
+                formData.append('avatar', this.formData.avatar); // 顔写真
             }
             // コンビニ側プロフィール情報更新APIをPOST送信
             axios.post('/api/convenience/mypage/profile', formData, config).then(response => { // リクエストヘッダとフォームデータを含むリクエスト
@@ -259,9 +259,9 @@ export default {
             const file = event.target.files[0]; // 最初のファイルを取得
             if (file) {
                 this.previewImage(file); // プレビューを表示する
-                this.formData.icon = file; // formData.iconにファイルオブジェクトを設定
+                this.formData.avatar = file; // formData.avatarにファイルオブジェクトを設定
             } else {
-                this.formData.icon = null; // ファイルがない場合はnull
+                this.formData.avatar = null; // ファイルがない場合はnull
             }
         },
 
@@ -269,7 +269,7 @@ export default {
         previewImage(file) {
             const reader = new FileReader(); // FileReaderオブジェクトの作成
             reader.onload = (e) => { // 画像の読み込み
-                this.iconPreview = e.target.result; // プレビュー画像のURLを生成し、formDataに設定
+                this.avatarPreview = e.target.result; // プレビュー画像のURLを生成し、formDataに設定
             };
             reader.readAsDataURL(file); // ファイルをデータURLとして読み込み
         },
@@ -290,8 +290,7 @@ export default {
                 this.town = this.address.town; // 地名・番地
                 this.building = this.address.building; // 建物名・部屋番号
                 this.introduction = this.user.introduction; // 自己紹介文
-            })
-            .catch(error => {
+            }).catch(error => {
                 console.error('プロフィール取得失敗:', error.response.data);
                 this.errors = error.response.data;
             });

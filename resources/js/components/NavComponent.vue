@@ -9,7 +9,7 @@
         <nav class="l-nav__menu" v-bind:class="{'is-active' : open }">
             <ul class="l-nav__menu--list">
                 <!-- ログイン済みのナビゲーションメニュー -->
-                <img v-if="isLogin" :src="icon" alt="アイコン画像" class="l-nav__menu--icon u-mr__s">
+                <img v-if="isLogin" :src="avatar" alt="顔写真" class="l-nav__menu--avatar u-mr__s">
                 <div v-if="isLogin" class="l-nav__menu--item">
                     <span class="l-nav__menu--name">{{ username }}</span>
                     <RouterLink class="l-nav__menu--link" :to="userLink" @click.native="closeMenu">マイページ</RouterLink>
@@ -48,9 +48,9 @@ export default {
             return this.$store.getters['auth/check'];
         },
 
-        // アイコンを表示する
-        icon() {
-            return this.$store.getters['auth/icon'];
+        // 顔写真を表示する
+        avatar() {
+            return this.$store.getters['auth/avatar'];
         },
 
         // ユーザーの名前を表示する

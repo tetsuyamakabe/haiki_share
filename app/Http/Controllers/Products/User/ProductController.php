@@ -164,7 +164,7 @@ class ProductController extends Controller
         $user = Auth::user();
         // 購入した商品（と商品画像）を購入日の降順で15件ずつ取得（削除済みの商品は含めない）
         $products = $user->purchases()->with(['product' => function ($query) {
-            $query->whereNull('deleted_at')->with('pictures');
+            $query->whereNull('deleted_at')->with('pictures', 'category');
         }])->orderBy('created_at', 'desc')->paginate(15);
         return response()->json(['products' => $products], 200);
     }
@@ -180,7 +180,7 @@ class ProductController extends Controller
         $user = Auth::user();
         // お気に入り登録した商品（と商品画像）をお気に入り登録した日の降順で15件ずつ取得（削除済みの商品は含めない）
         $products = $user->likes()->with(['product' => function ($query) {
-            $query->whereNull('products.deleted_at')->withCount('likes')->with('pictures');
+            $query->whereNull('products.deleted_at')->withCount('likes')->with('pictures', 'category'); 
         }])->orderBy('created_at', 'desc')->paginate(15)->toArray();
         // \Log::info('$productsは、', [$products]);
         // productsの中にlikedプロパティを含める

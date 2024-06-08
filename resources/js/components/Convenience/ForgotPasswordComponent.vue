@@ -2,6 +2,9 @@
     <main class="l-main">
         <section class="l-main__wrapper">
             <h1 class="c-title u-mt__xl u-mb__xl">コンビニパスワード変更メール送信</h1>
+            <!-- フラッシュメッセージを表示 -->
+            <Toast />
+
             <form @submit.prevent="sendResetLink" class="c-form">
 
                 <!-- メールアドレス -->
@@ -19,7 +22,13 @@
 </template>
 
 <script>
+import Toast from '../Toast.vue'; // Toastコンポーネントをインポート
+
 export default {
+    components: {
+        Toast, // Toastコンポーネントを読み込み
+    },
+
     data() {
         return {
             formData: {
@@ -34,10 +43,15 @@ export default {
         sendResetLink() {
             // コンビニパスワード変更メール送信APIをPOST送信
             axios.post('/api/convenience/password/email', this.formData).then(response => { // formDataを含めたリクエスト
-                console.log('パスワード変更メールを送信します。');
-                this.message = response.data.message;
-                console.log('this.messageは、', this.message);
+                this.$store.dispatch('flash/setFlashMessage', { // フラッシュメッセージの表示
+                    message: 'パスワード変更メールを送信しました。',
+                    type: 'success'
+                });
             }).catch(error => {
+                this.$store.dispatch('flash/setFlashMessage', { // フラッシュメッセージの表示
+                    message: 'パスワード変更メールを送信できませんでした。',
+                    type: 'error'
+                });
                 console.log('errorは、', error);
                 console.log('メール送信失敗：', error.response.data);
                 this.errors = error.response.data.errors;

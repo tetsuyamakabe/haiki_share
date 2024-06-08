@@ -15,7 +15,7 @@
                         <!-- 商品一覧・検索結果を表示 -->
                         <li v-else v-for="product in products.data" :key="product.id" class="p-product__item">
                             <!-- 商品情報の表示 -->
-                            <div class="c-card u-m__s">
+                            <div class="c-card u-m__s u-pd__s">
                                 <div class="p-card__header u-pd__s">
                                     <h3 class="c-card__name">{{ product.name }}</h3> <!-- 商品名 -->
                                 </div>
@@ -27,21 +27,32 @@
                                         <div v-if="$store.getters['auth/check'] && $store.getters['auth/role'] === 'user'">
                                             <i v-if="!product.liked" class="c-icon c-icon__unlike far fa-heart" @click="productLike(product)"></i>
                                             <i v-else class="c-icon c-icon__like fas fa-heart" @click="productUnlike(product)"></i>
-                                            <span class="u-mr__m">{{ product.likes_count }}</span> <!-- いいね数 -->
+                                            {{ product.likes_count }} <!-- いいね数 -->
                                         </div>
                                         <!-- 未ログインユーザーの場合にユーザー登録・ログインのツールチップを表示 -->
                                         <div v-else-if="!$store.getters['auth/check']" class="c-tooltip">
-                                            <i class="c-icon c-icon__nolike fas fa-heart"></i><span class="u-mr__m">{{ product.likes_count }}</span> <!-- いいね数 -->
-                                            <div class="c-tooltip__text">ユーザー登録・ログインしてください</div>
+                                            <i class="c-icon c-icon__nolike far fa-heart"></i>{{ product.likes_count }} <!-- いいね数 -->
+                                            <div class="c-tooltip__text">お気に入り登録するにはユーザー登録・ログインしてください</div>
                                         </div>
                                         <!-- コンビニユーザーの場合にコンビニユーザーツールチップを表示 -->
                                         <div v-else class="c-tooltip">
-                                            <i class="c-icon c-icon__nolike fas fa-heart"></i><span class="u-mr__m">{{ product.likes_count }}</span> <!-- いいね数 -->
-                                            <div class="c-tooltip__text">コンビニユーザーはお気に入りできません</div>
+                                            <i class="c-icon c-icon__nolike far fa-heart"></i>{{ product.likes_count }} <!-- いいね数 -->
+                                            <div class="c-tooltip__text">コンビニユーザーはお気に入り登録できません</div>
                                         </div>
                                     </div>
-                                    <p class="c-card__text">{{ product.price }}円</p> <!-- 価格 -->
-                                    <p class="c-card__text">{{ formatDate(product.expiration_date) }}</p> <!-- 賞味期限日付 -->
+                                    <!-- 賞味期限までの残り日数を表示 -->
+                                    <p class="c-card__text">
+                                        <i class="fa-regular fa-clock"></i>
+                                        <span v-if="getExpirationDate(product.expiration_date) >= 0">
+                                            残り{{ getExpirationDate(product.expiration_date) }}日
+                                        </span>
+                                        <span v-if="getExpirationDate(product.expiration_date) < 0">
+                                            賞味期限切れ
+                                        </span>
+                                    </p>
+                                    <p class="c-card__text"><i class="fa-solid fa-calendar-days"></i>{{ formatDate(product.expiration_date) }}</p> <!-- 賞味期限日付 -->
+                                    <p class="c-card__label c-card__category u-pd__s">{{ product.category.name }}</p> <!-- カテゴリー名 -->
+                                    <p class="c-card__label c-card__price u-pd__s"><i class="fa-solid fa-yen-sign"></i>{{ product.price }}</p> <!-- 価格 -->
                                 </div>
                                 <div class="p-card__footer">
                                     <div class="c-button__container">
@@ -166,6 +177,11 @@ export default {
             }
         },
 
+        // カテゴリー名を取得するメソッド
+        getCategoryName(category) {
+            return category && category.name ? category.name : 'その他';
+        },
+
         // 賞味期限日付をフォーマットするメソッド
         formatDate(dateString) {
             const date = new Date(dateString); // Dateオブジェクトに変換する
@@ -173,6 +189,15 @@ export default {
             const month = ('0' + (date.getMonth() + 1)).slice(-2); // 月数を取得、1桁の場合は2桁の数値に変換
             const day = ('0' + date.getDate()).slice(-2); // 日数を取得、1桁の場合は2桁の数値に変換
             return `${year}年${month}月${day}日`; // 年月日のフォーマットされた賞味期限日付を返す
+        },
+
+        // 賞味期限までの残り日数を計算するメソッド
+        getExpirationDate(expirationDate) {
+            const today = new Date(); // 今日の日付を取得
+            const expiry = new Date(expirationDate); // 賞味期限の日付を取得
+            const difference = expiry.getTime() - today.getTime(); // 残り日数をミリ秒で計算
+            const daysRemaining = Math.ceil(difference / (1000 * 60 * 60 * 24)); // ミリ秒を日数に変換して切り上げ
+            return `${daysRemaining}`; // 残り日数を表示する文字列を返す
         },
 
         // 商品詳細画面のリンクを返すメソッド

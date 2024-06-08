@@ -2,6 +2,9 @@
     <main class="l-main">
         <section class="l-main__wrapper">
             <h1 class="c-title u-mt__xl u-mb__xl">利用者退会</h1>
+            <!-- フラッシュメッセージを表示 -->
+            <Toast />
+
             <form class="c-form">
 
                 <h3 class="c-title c-title__sub">退会手続きを行いますか？</h3>
@@ -20,7 +23,13 @@
 </template>
 
 <script>
+import Toast from '../Toast.vue'; // Toastコンポーネントをインポート
+
 export default {
+    components: {
+        Toast, // Toastコンポーネントを読み込み
+    },
+
     computed: {
         // ログインユーザーかどうか
         isLogin() {
@@ -33,8 +42,16 @@ export default {
         withdraw() {
             // 利用者退会APIをDELETE送信
             axios.delete('/api/user/mypage/withdraw').then(response => {
+                this.$store.dispatch('flash/setFlashMessage', { // フラッシュメッセージの表示
+                    message: '退会しました。',
+                    type: 'success'
+                });
                 this.$router.push({ name: 'top' }); // 退会処理完了後、TOP画面に遷移
             }).catch(error => {
+                this.$store.dispatch('flash/setFlashMessage', { // フラッシュメッセージの表示
+                    message: '退会できませんでした。',
+                    type: 'error'
+                });
                 console.error('退会処理失敗:', error.response.data);
                 this.errors = error.response.data.errors;
             });

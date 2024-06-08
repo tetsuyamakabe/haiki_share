@@ -1,6 +1,6 @@
 <template>
     <main class="l-main">
-        <h1 class="c-title u-mb__xl">コンビニ出品した商品一覧</h1>
+        <h1 class="c-title u-mb__xl">出品した商品一覧</h1>
         <div class="p-article">
             <div class="l-main__wrapper">
 
@@ -15,14 +15,33 @@
                         <!-- 出品した商品一覧を表示 -->
                         <li v-else v-for="product in products.data" :key="product.id" class="p-product__item">
                             <!-- 商品情報の表示 -->
-                            <div class="c-card u-m__s">
+                            <div class="c-card u-m__s u-pd__s">
                                 <div class="p-card__header u-pd__s">
                                     <h3 class="c-card__name">{{ product.name }}</h3> <!-- 商品名 -->
                                 </div>
                                 <div class="p-card__container">
                                     <img class="c-card__picture u-mb__s" :src="getProductPicturePath(product)" alt="商品画像"> <!-- 商品画像 -->
-                                    <p class="c-card__text">{{ product.price }}円</p> <!-- 価格 -->
-                                    <p class="c-card__text">{{ formatDate(product.expiration_date) }}</p> <!-- 賞味期限 -->
+                                    <label v-show="product.is_purchased" class="c-label__purchase u-pd__m">購入済み</label> <!-- 購入済みラベル -->
+                                    <div class="p-icon">
+                                    <!-- コンビニユーザーの場合にコンビニユーザーツールチップを表示 -->
+                                        <div class="c-tooltip">
+                                            <i class="c-icon c-icon__nolike far fa-heart"></i>{{ product.likes_count }} <!-- いいね数 -->
+                                            <div class="c-tooltip__text">コンビニユーザーはお気に入り登録できません</div>
+                                        </div>
+                                    </div>
+                                    <!-- 賞味期限までの残り日数を表示 -->
+                                    <p class="c-card__text">
+                                        <i class="fa-regular fa-clock"></i>
+                                        <span v-if="getExpirationDate(product.expiration_date) >= 0">
+                                            残り{{ getExpirationDate(product.expiration_date) }}日
+                                        </span>
+                                        <span v-if="getExpirationDate(product.expiration_date) < 0">
+                                            賞味期限切れ
+                                        </span>
+                                    </p>
+                                    <p class="c-card__text"><i class="fa-solid fa-calendar-days"></i>{{ formatDate(product.expiration_date) }}</p> <!-- 賞味期限日付 -->
+                                    <p class="c-card__label c-card__category u-pd__s">{{ product.category.name }}</p> <!-- カテゴリー名 -->
+                                    <p class="c-card__label c-card__price u-pd__s"><i class="fa-solid fa-yen-sign"></i>{{ product.price }}</p> <!-- 価格 -->
                                 </div>
                                 <div class="p-card__footer">
                                     <div class="c-button__container">
@@ -136,6 +155,11 @@ export default {
             }
         },
 
+        // カテゴリー名を取得するメソッド
+        getCategoryName(category) {
+            return category && category.name ? category.name : 'その他';
+        },
+
         // 賞味期限日付をフォーマットするメソッド
         formatDate(dateString) {
             const date = new Date(dateString); // Dateオブジェクトに変換する
@@ -143,6 +167,15 @@ export default {
             const month = ('0' + (date.getMonth() + 1)).slice(-2); // 月数を取得、1桁の場合は2桁の数値に変換
             const day = ('0' + date.getDate()).slice(-2); // 日数を取得、1桁の場合は2桁の数値に変換
             return `${year}年${month}月${day}日`; // 年月日のフォーマットされた賞味期限日付を返す
+        },
+
+        // 賞味期限までの残り日数を計算するメソッド
+        getExpirationDate(expirationDate) {
+            const today = new Date(); // 今日の日付を取得
+            const expiry = new Date(expirationDate); // 賞味期限の日付を取得
+            const difference = expiry.getTime() - today.getTime(); // 残り日数をミリ秒で計算
+            const daysRemaining = Math.ceil(difference / (1000 * 60 * 60 * 24)); // ミリ秒を日数に変換して切り上げ
+            return `${daysRemaining}`; // 残り日数を表示する文字列を返す
         },
 
         // 商品詳細画面のリンクを返すメソッド
