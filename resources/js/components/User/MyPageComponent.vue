@@ -18,14 +18,33 @@
                         <div v-else>
                             <ul class="p-product__list">
                                 <li v-for="product in purchasedProducts" :key="product.id" class="p-product__item">
-                                    <div class="c-card u-m__s">
+                                    <div class="c-card u-m__s u-pd__s">
                                         <div class="p-card__header u-pd__s">
                                             <h3 class="c-card__name">{{ product.product.name }}</h3> <!-- 商品名 -->
                                         </div>
                                         <div class="p-card__container">
                                             <img class="c-card__picture u-mb__s" :src="getProductPicturePath(product.product)" alt="商品画像"> <!-- 商品画像 -->
-                                            <p class="c-card__text">{{ product.product.price }}円</p> <!-- 価格 -->
-                                            <p class="c-card__text">{{ formatDate(product.product.expiration_date) }}</p> <!-- 賞味期限日付 -->
+                                            <div class="p-icon">
+                                                <!-- 利用者ユーザーの場合にいいねアイコンを表示 -->
+                                                <div v-if="$store.getters['auth/check'] && $store.getters['auth/role'] === 'user'">
+                                                    <i v-if="!product.product.liked" class="c-icon c-icon__unlike far fa-heart" @click="productLike(product.product)"></i>
+                                                    <i v-else class="c-icon c-icon__like fas fa-heart" @click="productUnlike(product.product)"></i>
+                                                    {{ product.product.likes_count }} <!-- いいね数 -->
+                                                </div>
+                                            </div>
+                                            <!-- 賞味期限までの残り日数を表示 -->
+                                            <p class="c-card__text">
+                                                <i class="fa-regular fa-clock"></i>
+                                                <span v-if="getExpirationDate(product.product.expiration_date) >= 0">
+                                                    残り{{ getExpirationDate(product.product.expiration_date) }}日
+                                                </span>
+                                                <span v-if="getExpirationDate(product.product.expiration_date) < 0">
+                                                    賞味期限切れ
+                                                </span>
+                                            </p>
+                                            <p class="c-card__text"><i class="fa-solid fa-calendar-days"></i>{{ formatDate(product.product.expiration_date) }}</p> <!-- 賞味期限日付 -->
+                                            <p class="c-card__label c-card__category u-pd__s">{{ product.product.category.name }}</p> <!-- カテゴリー名 -->
+                                            <p class="c-card__label c-card__price u-pd__s"><i class="fa-solid fa-yen-sign"></i>{{ product.product.price }}</p> <!-- 価格 -->
                                         </div>
                                         <div class="p-card__footer">
                                             <div class="c-button__container">
@@ -54,14 +73,33 @@
                         <div v-else>
                             <ul class="p-product__list">
                                 <li v-for="product in likedProducts" :key="product.id" class="p-product__item">
-                                    <div class="c-card u-m__s">
+                                    <div class="c-card u-m__s u-pd__s">
                                         <div class="p-card__header u-pd__s">
                                             <h3 class="c-card__name">{{ product.product.name }}</h3> <!-- 商品名 -->
                                         </div>
                                         <div class="p-card__container">
                                             <img class="c-card__picture u-mb__s" :src="getProductPicturePath(product.product)" alt="商品画像"> <!-- 商品画像 -->
-                                            <p class="c-card__text">{{ product.product.price }}円</p> <!-- 価格 -->
-                                            <p class="c-card__text">{{ formatDate(product.product.expiration_date) }}</p> <!-- 賞味期限日付 -->
+                                            <div class="p-icon">
+                                                <!-- 利用者ユーザーの場合にいいねアイコンを表示 -->
+                                                <div v-if="$store.getters['auth/check'] && $store.getters['auth/role'] === 'user'">
+                                                    <i v-if="!product.liked" class="c-icon c-icon__unlike far fa-heart" @click="productLike(product)"></i>
+                                                    <i v-else class="c-icon c-icon__like fas fa-heart" @click="productUnlike(product)"></i>
+                                                    {{ product.product.likes_count }} <!-- いいね数 -->
+                                                </div>
+                                            </div>
+                                            <!-- 賞味期限までの残り日数を表示 -->
+                                            <p class="c-card__text">
+                                                <i class="fa-regular fa-clock"></i>
+                                                <span v-if="getExpirationDate(product.product.expiration_date) >= 0">
+                                                    残り{{ getExpirationDate(product.product.expiration_date) }}日
+                                                </span>
+                                                <span v-if="getExpirationDate(product.product.expiration_date) < 0">
+                                                    賞味期限切れ
+                                                </span>
+                                            </p>
+                                            <p class="c-card__text"><i class="fa-solid fa-calendar-days"></i>{{ formatDate(product.product.expiration_date) }}</p> <!-- 賞味期限日付 -->
+                                            <p class="c-card__label c-card__category u-pd__s">{{ product.product.category.name }}</p> <!-- カテゴリー名 -->
+                                            <p class="c-card__label c-card__price u-pd__s"><i class="fa-solid fa-yen-sign"></i>{{ product.product.price }}</p> <!-- 価格 -->
                                         </div>
                                         <div class="p-card__footer">
                                             <div class="c-button__container">
@@ -141,6 +179,11 @@ export default {
             }
         },
 
+        // カテゴリー名を取得するメソッド
+        getCategoryName(category) {
+            return category && category.name ? category.name : 'その他';
+        },
+
         // 賞味期限日付をフォーマットするメソッド
         formatDate(dateString) {
             const date = new Date(dateString); // Dateオブジェクトに変換する
@@ -148,6 +191,15 @@ export default {
             const month = ('0' + (date.getMonth() + 1)).slice(-2); // 月数を取得、1桁の場合は2桁の数値に変換
             const day = ('0' + date.getDate()).slice(-2); // 日数を取得、1桁の場合は2桁の数値に変換
             return `${year}年${month}月${day}日`; // 年月日のフォーマットされた賞味期限日付を返す
+        },
+
+        // 賞味期限までの残り日数を計算するメソッド
+        getExpirationDate(expirationDate) {
+            const today = new Date(); // 今日の日付を取得
+            const expiry = new Date(expirationDate); // 賞味期限の日付を取得
+            const difference = expiry.getTime() - today.getTime(); // 残り日数をミリ秒で計算
+            const daysRemaining = Math.ceil(difference / (1000 * 60 * 60 * 24)); // ミリ秒を日数に変換して切り上げ
+            return `${daysRemaining}`; // 残り日数を表示する文字列を返す
         },
 
         // 商品詳細画面のリンクを返すメソッド
@@ -164,6 +216,28 @@ export default {
             }).catch(error => {
                 console.error('商品購入キャンセル処理失敗:', error.response.data);
                 this.errors = error.response.data.errors;
+            });
+        },
+
+        // 商品お気に入り登録
+        productLike(product) {
+            // お気に入り登録APIをPOST送信
+            axios.post('/api/user/like/' + product.id).then(response => {
+                product.liked = true; // いいねアイコンをtrueに切り替え
+                product.likes_count++; // いいね数のインクリメント
+            }).catch(error => {
+                console.error('商品のお気に入り登録失敗:', error);
+            });
+        },
+
+        // 商品お気に入り解除
+        productUnlike(product) {
+            // お気に入り解除APIをPOST送信
+            axios.post('/api/user/unlike/' + product.id).then(response => {
+                product.liked = false; // いいねアイコンをfalseに切り替え
+                product.likes_count--; // いいね数のデクリメント
+            }).catch(error => {
+                console.error('商品のお気に入り解除失敗:', error);
             });
         },
 

@@ -15,8 +15,6 @@ class DeletedPurchasedColumnsProductsTable extends Migration
     {
         // 商品テーブルのマイグレーション
         Schema::table('products', function (Blueprint $table) {
-            // 外部キー制約の削除
-            $table->dropForeign('products_purchased_id_foreign');
             // 購入者IDカラムを削除
             $table->dropColumn('purchased_id');
             // 購入状態カラムを削除
@@ -34,8 +32,6 @@ class DeletedPurchasedColumnsProductsTable extends Migration
     {
         // 商品テーブルのロールバック
         Schema::table('products', function (Blueprint $table) {
-            // 外部キー制約のロールバック
-            $table->foreign('purchased_id')->references('id')->on('purchased')->onDelete('cascade');
             // 購入者IDカラムをロールバック
             $table->unsignedBigInteger('purchased_id');
             // 購入状態カラムをロールバック

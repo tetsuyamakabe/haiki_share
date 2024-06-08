@@ -6,8 +6,8 @@
             <div class="p-mypage__user-info u-pd__s">
                 <h2 class="c-title c-title__sub u-mt__m u-mb__m">プロフィール情報</h2>
                 <div class="p-mypage__profile u-pd__s">
-                    <div class="p-mypage__icon--container">
-                        <img :src="icon" alt="顔写真画像" class="p-mypage__icon"> <!-- 顔写真 -->
+                    <div class="p-mypage__avatar--container">
+                        <img :src="avatar" alt="顔写真画像" class="p-mypage__avatar"> <!-- 顔写真 -->
                     </div>
                     <div class="p-mypage__profile--header u-mt__s">
                         <p>{{ convenience_name }}{{ branch_name }}</p> <!-- コンビニ名・支店名 -->
@@ -45,8 +45,8 @@ export default {
         },
 
         // 顔写真を表示する
-        icon() {
-            return this.$store.getters['auth/icon'];
+        avatar() {
+            return this.$store.getters['auth/avatar'];
         },
     },
 }

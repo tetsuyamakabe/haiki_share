@@ -170,7 +170,7 @@ return [
         'category' => 'カテゴリ名',
         'expiration_date' => '賞味期限',
         'contact' => 'お問い合わせ内容',
-        'icon' => '顔写真', 
+        'avatar' => '顔写真', 
         'product_picture' => '商品画像',
         'minprice' => '最低価格',
         'maxprice' => '最高価格'

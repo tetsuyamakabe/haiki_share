@@ -21,7 +21,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'icon', 'introduction', 'role',
+        'name', 'email', 'password', 'avatar', 'introduction', 'role',
     ];
 
     /**
@@ -87,7 +87,7 @@ class User extends Authenticatable
 // | email             | varchar(255)        | NO   | UNI | NULL        |                |
 // | email_verified_at | timestamp           | YES  |     | NULL        |                |
 // | password          | varchar(255)        | NO   |     | NULL        |                |
-// | icon              | varchar(255)        | NO   |     | default.png |                |
+// | avatar            | varchar(255)        | NO   |     | default.png |                |
 // | introduction      | text                | YES  |     | NULL        |                |
 // | role              | varchar(255)        | NO   |     | NULL        |                |
 // | deleted_at        | timestamp           | YES  |     | NULL        |                |

@@ -37,7 +37,7 @@ class MyPageTest extends TestCase
         $this->assertEquals($user->id, $responseData['user']['id']);
         $this->assertEquals($user->name, $responseData['user']['name']);
         $this->assertEquals($user->email, $responseData['user']['email']);
-        $this->assertEquals($user->icon, $responseData['user']['icon']);
+        $this->assertEquals($user->avatar, $responseData['user']['avatar']);
         $this->assertEquals($user->introduction, $responseData['user']['introduction']);
         // 正しいコンビニ情報が含まれているか
         $this->assertArrayHasKey('convenience', $responseData);
@@ -60,7 +60,7 @@ class MyPageTest extends TestCase
         $convenience = factory(Convenience::class)->create(['user_id' => $user->id]);
         $address = $convenience->address;
         // 画像fakeメソッドの準備
-        Storage::fake('icon');
+        Storage::fake('avatar');
         // テストデータの作成
         $data = [
             'convenience_name' => 'セブンイレブン', // コンビニ名
@@ -76,7 +76,7 @@ class MyPageTest extends TestCase
         ];
         // テスト画像ファイル
         $file = [
-            'icon' => UploadedFile::fake()->image('icon.jpg', 100, 100)->size(2000), // 2MB以内の顔写真
+            'avatar' => UploadedFile::fake()->image('avatar.jpg', 100, 100)->size(2000), // 2MB以内の顔写真
         ];
         // テスト用のリクエストを作成（リクエストヘッダーを含める）
         $response = $this->actingAs($user)
@@ -112,7 +112,7 @@ class MyPageTest extends TestCase
         // パスワードが更新されているか
         $this->assertTrue(Hash::check('newpassword', $user->fresh()->password));
         // 顔写真がアップロードされているか
-        Storage::disk('public')->assertExists('icons/' . $responseData['user']['icon']);
+        Storage::disk('public')->assertExists('avatar/' . $responseData['user']['avatar']);
     }
 
     public function test_コンビニ側退会処理()
@@ -241,7 +241,7 @@ class MyPageTest extends TestCase
             'password' => 'pass', // パスワードが短すぎる
             'password_confirmation' => 'password', // パスワード確認が一致しない
             'introduction' => str_repeat('あ', 51), // 自己紹介文の文字数オーバー
-            'icon' => UploadedFile::fake()->image('sample_image.pdf')->size(3000), // 拡張子がpdfで画像サイズが3MB
+            'avatar' => UploadedFile::fake()->image('sample_image.pdf')->size(3000), // 拡張子がpdfで画像サイズが3MB
             'prefecture' => '', // 必須項目なので空にする
             'city' => '', // 必須項目なので空にする
             'town' => '',// 必須項目なので空にする
@@ -255,7 +255,7 @@ class MyPageTest extends TestCase
         // エラーレスポンスが返されるか
         $response->assertStatus(422);
         // エラーメッセージが正しいか
-        $response->assertJsonValidationErrors(['convenience_name', 'email', 'password', 'introduction', 'icon', 'prefecture', 'city', 'town', 'branch_name']);
+        $response->assertJsonValidationErrors(['convenience_name', 'email', 'password', 'introduction', 'avatar', 'prefecture', 'city', 'town', 'branch_name']);
     }
 
     public function test_コンビニ側未認証ユーザーの退会処理()

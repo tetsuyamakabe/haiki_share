@@ -2,6 +2,9 @@
     <main class="l-main">
         <section class="l-main__wrapper">
             <h1 class="c-title u-mt__xl u-mb__xl">利用者パスワード変更</h1>
+            <!-- フラッシュメッセージを表示 -->
+            <Toast />
+
             <form @submit.prevent="resetPassword" class="c-form">
 
                 <!-- 新しいパスワード -->
@@ -35,7 +38,13 @@
 </template>
 
 <script>
+import Toast from '../Toast.vue'; // Toastコンポーネントをインポート
+
 export default {
+    components: {
+        Toast, // Toastコンポーネントを読み込み
+    },
+
     data() {
         return {
             formData: {
@@ -72,13 +81,18 @@ export default {
             };
             // 利用者パスワード変更APIをPOST送信
             axios.post('/api/user/password/reset', requestData).then(response => { // トークンとメールアドレスを含めたデータを含むリクエスト
-                this.message = response.data.message;
-                console.log('this.messageは、', this.message);
-                console.log('パスワードを変更します。');
+                this.$store.dispatch('flash/setFlashMessage', { // フラッシュメッセージの表示
+                    message: 'パスワードを変更しました。',
+                    type: 'success'
+                });
                 this.$router.push({ name: 'user.login' }); // パスワード変更後、ログイン画面に遷移
             }).catch(error => {
+                this.$store.dispatch('flash/setFlashMessage', { // フラッシュメッセージの表示
+                    message: 'パスワードを変更できませんでした。',
+                    type: 'error'
+                });
                 console.log('errorは、', error);
-		console.error('パスワード変更失敗:', error.response.data);
+                console.error('パスワード変更失敗:', error.response.data);
                 this.errors = error.response.data.errors;
             });
         },
