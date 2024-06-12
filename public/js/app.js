@@ -8174,7 +8174,7 @@ __webpack_require__.r(__webpack_exports__);
       // 現在のルートのクエリパラメータを取得
       var params = Object.assign({}, this.$route.query); // クエリパラメータのコピーを作成
       console.log('paramsは、', params, 'this.currentPageは、', this.currentPage);
-      axios.post('/api/products', null, {
+      axios.post('/api/products', {
         params: params
       }).then(function (response) {
         console.log('APIのレスポンスは、', response.data);
