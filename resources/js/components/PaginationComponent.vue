@@ -1,5 +1,5 @@
 <template>
-    <div class="p-pagination u-mt__m">
+    <div class="p-pagination">
         <!-- ページネーション -->
         <ul class="c-pagination">
             <!-- 前に移動する<<ボタン -->

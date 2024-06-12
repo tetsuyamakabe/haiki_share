@@ -5,6 +5,8 @@
         </div>
         <div class="l-article">
             <div class="l-article__main">
+                <!-- フラッシュメッセージを表示 -->
+                <Toast />
                 <div class="p-product">
                     <h2 class="c-title c-title--sub">{{ product.name }}</h2> <!-- 商品名 -->
                     <!-- いいねアイコンとエックスのシェア -->
@@ -29,14 +31,14 @@
                             </p>
                         </div>
                     </div>
-                    <div class="c-product c-product--convenience">
+                    <div class="c-product c-product--convenience" v-if="product.convenience && product.convenience.user">
                         <div class="c-product--avatar-wrap">
                             <img class="c-product--avatar" :src="product.convenience.user.avatar" alt="コンビニユーザー顔写真">
                         </div>
                         <div class="c-product--item-wrap">
                             <p class="c-product--item">この商品を出品したコンビニ：{{ product.convenience.user.name }} {{ product.convenience.branch_name }}</p>
                             <p class="c-product--item">住所：{{ product.convenience.address.prefecture }}{{ product.convenience.address.city }}{{ product.convenience.address.town }}{{ product.convenience.address.building }}</p>
-                            <p v-if="introduction" class="c-product--item">自己紹介文：{{ product.convenience.user.introduction }}</p>
+                            <p v-if="product.convenience.user.introduction" class="c-product--item">自己紹介文：{{ product.convenience.user.introduction }}</p>
                         </div>
                     </div>
                     <!-- 利用者側の購入ボタンは購入済みの購入ボタンは購入できない・自分が購入した商品の場合は、「購入をキャンセルする」ボタンが表示される -->
@@ -52,10 +54,12 @@
 </template>
 
 <script>
+import Toast from '../Toast.vue'; // Toastコンポーネントをインポート
 import SidebarComponent from './SidebarComponent.vue';
 
 export default {
     components: {
+        Toast, // Toastコンポーネントを読み込み
         SidebarComponent // サイドバーコンポーネントを読み込み
     },
 
@@ -154,6 +158,10 @@ export default {
         purchaseProduct() {
             // 商品購入APIをPOST送信
             axios.post('/api/user/products/purchase/' + this.productId).then(response => {
+                this.$store.dispatch('flash/setFlashMessage', { // フラッシュメッセージの表示
+                    message: '購入が完了しました。購入完了メールをご確認ください。',
+                    type: 'success'
+                });
                 this.getProduct(); // 購入状態を更新（「購入する」から「購入をキャンセル」へ変更）
             }).catch(error => {
                 console.log('errorは、', error);
@@ -166,6 +174,10 @@ export default {
         cancelPurchase() {
             // 商品キャンセルAPIをPOST送信
             axios.delete('/api/user/products/purchase/cancel/' + this.productId).then(response => {
+                this.$store.dispatch('flash/setFlashMessage', { // フラッシュメッセージの表示
+                    message: '購入キャンセルが完了しました。購入キャンセルメールをご確認ください。',
+                    type: 'success'
+                });
                 this.getProduct();　// 購入状態を更新（「購入キャンセル」から「購入する」へ変更）
             }).catch(error => {
                 console.log('errorは、', error);

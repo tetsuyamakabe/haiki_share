@@ -25,6 +25,7 @@
     }
     &--convenience {
         display: flex;
+        justify-content: space-around;
     }
     &--avatar {
         width: 100px;

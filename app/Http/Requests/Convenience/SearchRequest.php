@@ -24,8 +24,8 @@ class SearchRequest extends FormRequest
     public function rules()
     {
         return [
-            'maxprice' => ['nullable', 'numeric', 'min:0'], // 最大価格のバリデーションルール
-            'minprice' => ['nullable', 'numeric', 'min:0'], // 最小価格のバリデーションルール
+            'maxPrice' => ['nullable', 'numeric', 'min:0'], // 最大価格のバリデーションルール
+            'minPrice' => ['nullable', 'numeric', 'min:0'], // 最小価格のバリデーションルール
         ];
     }
 }

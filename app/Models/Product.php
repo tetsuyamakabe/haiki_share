@@ -19,7 +19,7 @@ class Product extends Model
     // カテゴリーモデルとの関連付け（一対一の関係）
     public function category()
     {
-        return $this->belongsTo(Category::class);
+        return $this->belongsTo(Category::class, 'category_id');
     }
 
     // コンビニモデルとの関連付け（多対一の関係）
