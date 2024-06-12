@@ -5,16 +5,17 @@
         font-size: $font-size_m;
     }
 
-    &__note {
+    &--note {
         font-size: $font-size_m;
     }
 
-    &__max {
+    &--max {
         display: flex;
         justify-content: flex-end;
     }
 
-    &__withdraw {
+    &--alert {
+        margin: $space_m 0;
         font-weight: bold;
         line-height: 1.5;
     }

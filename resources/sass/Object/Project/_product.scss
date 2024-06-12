@@ -1,8 +1,12 @@
 .p-product {
+    padding: $space_l $space_m;
 
-    &__list {
+    @include mq(sm) {
+        padding: $space_s;
+    }
+
+    &--list {
         width: 100%;
-        min-height: 200px;
         display: flex;
         flex-wrap: wrap;
 
@@ -17,24 +21,6 @@
             width: calc(100% / 2);
             padding: $space_s 0;
             margin: 0;
-        }
-    }
-
-    &__index {
-        padding: $space_l $space_m;
-        background: $background-color_sub;
-
-        @include mq(sm) {
-            padding: $space_s;
-        }
-    }
-
-    &__picture {
-        &--container {
-            position: relative;
-            height: 100%;
-            border: 1px solid $boader-color_line;
-            margin: auto;
         }
     }
 }

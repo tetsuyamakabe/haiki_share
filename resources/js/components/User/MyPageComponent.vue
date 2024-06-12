@@ -1,126 +1,108 @@
 <template>
     <main class="l-main">
-        <h1 class="c-title u-mb__xl">利用者マイページ</h1>
-        <div class="p-article">
-            <section class="l-main__wrapper">
-                <div class="l-container">
-
-                    <!-- 購入した商品を最大5件表示 -->
-                    <div class="p-mypage__purchased">
-                        <h2 class="c-title c-title__sub">購入した商品</h2><span class="c-text c-text__max">最大5件表示</span>
-                        <!-- 商品情報がない場合 -->
-                        <div v-if="purchasedProducts.length === 0">
-                            <ul class="p-product__list">
-                                <p class="c-text u-pd__xl">購入した商品はありません。</p>
-                            </ul>
-                        </div>
-                        <!-- 商品情報を表示 -->
-                        <div v-else>
-                            <ul class="p-product__list">
-                                <li v-for="product in purchasedProducts" :key="product.id" class="p-product__item">
-                                    <div class="c-card u-m__s u-pd__s">
-                                        <div class="p-card__header u-pd__s">
-                                            <h3 class="c-card__name">{{ product.product.name }}</h3> <!-- 商品名 -->
-                                        </div>
-                                        <div class="p-card__container">
-                                            <img class="c-card__picture u-mb__s" :src="getProductPicturePath(product.product)" alt="商品画像"> <!-- 商品画像 -->
-                                            <div class="p-icon">
-                                                <!-- 利用者ユーザーの場合にいいねアイコンを表示 -->
-                                                <div v-if="$store.getters['auth/check'] && $store.getters['auth/role'] === 'user'">
-                                                    <i v-if="!product.product.liked" class="c-icon c-icon__unlike far fa-heart" @click="productLike(product.product)"></i>
-                                                    <i v-else class="c-icon c-icon__like fas fa-heart" @click="productUnlike(product.product)"></i>
-                                                    {{ product.product.likes_count }} <!-- いいね数 -->
-                                                </div>
-                                            </div>
-                                            <!-- 賞味期限までの残り日数を表示 -->
-                                            <p class="c-card__text">
-                                                <i class="fa-regular fa-clock"></i>
-                                                <span v-if="getExpirationDate(product.product.expiration_date) >= 0">
-                                                    残り{{ getExpirationDate(product.product.expiration_date) }}日
-                                                </span>
-                                                <span v-if="getExpirationDate(product.product.expiration_date) < 0">
-                                                    賞味期限切れ
-                                                </span>
-                                            </p>
-                                            <p class="c-card__text"><i class="fa-solid fa-calendar-days"></i>{{ formatDate(product.product.expiration_date) }}</p> <!-- 賞味期限日付 -->
-                                            <p class="c-card__label c-card__category u-pd__s">{{ product.product.category.name }}</p> <!-- カテゴリー名 -->
-                                            <p class="c-card__label c-card__price u-pd__s"><i class="fa-solid fa-yen-sign"></i>{{ product.product.price }}</p> <!-- 価格 -->
-                                        </div>
-                                        <div class="p-card__footer">
-                                            <div class="c-button__container">
-                                                <router-link :to="getProductDetailLink(product.product.id)" class="c-button c-button__default u-pd__s u-m__s">詳細を見る</router-link>
-                                                <button class="c-button c-button__default u-pd__s u-m__s" @click="cancelPurchase(product.product.id)">購入をキャンセルする</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="c-link__products u-mt__s">
-                            <router-link class="c-link" :to="{ name: 'user.products.purchased' }">全件表示</router-link>
-                        </div>
+        <div class="l-main__header">
+            <h1 class="c-title">利用者マイページ</h1>
+        </div>
+        <div class="l-article">
+            <div class="l-article__main">
+                <!-- 購入した商品を最大5件表示 -->
+                <div class="p-mypage">
+                    <h2 class="c-title c-title--sub">購入した商品</h2><span class="c-text c-text--max">最大5件表示</span>
+                    <!-- 商品情報がない場合 -->
+                    <div v-if="purchasedProducts.length === 0">
+                        <ul class="p-mypage--list"><p class="c-text">購入した商品はありません。</p></ul>
                     </div>
-
-                    <!-- お気に入りした商品を最大5件表示 -->
-                    <div class="p-mypage__liked">
-                        <h2 class="c-title c-title__sub">お気に入り商品</h2><span class="c-text c-text__max">最大5件表示</span>
-                        <div v-if="likedProducts.length === 0">
-                            <ul class="p-product__list">
-                                <p class="c-text u-pd__xl">お気に入り登録した商品はありません。</p>
-                            </ul>
-                        </div>
-                        <!-- 商品情報を表示 -->
-                        <div v-else>
-                            <ul class="p-product__list">
-                                <li v-for="product in likedProducts" :key="product.id" class="p-product__item">
-                                    <div class="c-card u-m__s u-pd__s">
-                                        <div class="p-card__header u-pd__s">
-                                            <h3 class="c-card__name">{{ product.product.name }}</h3> <!-- 商品名 -->
-                                        </div>
-                                        <div class="p-card__container">
-                                            <img class="c-card__picture u-mb__s" :src="getProductPicturePath(product.product)" alt="商品画像"> <!-- 商品画像 -->
-                                            <div class="p-icon">
-                                                <!-- 利用者ユーザーの場合にいいねアイコンを表示 -->
-                                                <div v-if="$store.getters['auth/check'] && $store.getters['auth/role'] === 'user'">
-                                                    <i v-if="!product.liked" class="c-icon c-icon__unlike far fa-heart" @click="productLike(product)"></i>
-                                                    <i v-else class="c-icon c-icon__like fas fa-heart" @click="productUnlike(product)"></i>
-                                                    {{ product.product.likes_count }} <!-- いいね数 -->
-                                                </div>
-                                            </div>
-                                            <!-- 賞味期限までの残り日数を表示 -->
-                                            <p class="c-card__text">
-                                                <i class="fa-regular fa-clock"></i>
-                                                <span v-if="getExpirationDate(product.product.expiration_date) >= 0">
-                                                    残り{{ getExpirationDate(product.product.expiration_date) }}日
-                                                </span>
-                                                <span v-if="getExpirationDate(product.product.expiration_date) < 0">
-                                                    賞味期限切れ
-                                                </span>
-                                            </p>
-                                            <p class="c-card__text"><i class="fa-solid fa-calendar-days"></i>{{ formatDate(product.product.expiration_date) }}</p> <!-- 賞味期限日付 -->
-                                            <p class="c-card__label c-card__category u-pd__s">{{ product.product.category.name }}</p> <!-- カテゴリー名 -->
-                                            <p class="c-card__label c-card__price u-pd__s"><i class="fa-solid fa-yen-sign"></i>{{ product.product.price }}</p> <!-- 価格 -->
-                                        </div>
-                                        <div class="p-card__footer">
-                                            <div class="c-button__container">
-                                                <router-link :to="getProductDetailLink(product.product.id)" class="c-button c-button__default u-pd__s u-m__s">詳細を見る</router-link>
-                                            </div>
-                                        </div>
+                    <!-- 商品情報を表示 -->
+                    <div v-else>
+                        <ul class="p-mypage--list">
+                            <li v-for="product in purchasedProducts" :key="product.id" class="p-product__item">
+                                <div class="c-card">
+                                    <div class="c-card__header">
+                                        <h3 class="c-card__name">{{ product.product.name }}</h3> <!-- 商品名 -->
                                     </div>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="c-link__products u-mt__s">
-                            <router-link class="c-link" :to="{ name: 'user.products.liked' }">全件表示</router-link>
-                        </div>
+                                    <div class="c-card__body">
+                                        <img class="c-card__img" :src="getProductPicturePath(product.product)" alt="商品画像"> <!-- 商品画像 -->
+                                        <div class="c-icon">
+                                            <!-- 利用者ユーザーの場合にいいねアイコンを表示 -->
+                                            <div v-if="$store.getters['auth/check'] && $store.getters['auth/role'] === 'user'">
+                                                <i v-if="!product.product.liked" class="c-icon c-icon--unlike far fa-heart" @click="productLike(product.product)"></i>
+                                                <i v-else class="c-icon c-icon--like fas fa-heart" @click="productUnlike(product.product)"></i>
+                                                {{ product.product.likes_count }} <!-- いいね数 -->
+                                            </div>
+                                        </div>
+                                        <!-- 賞味期限までの残り日数を表示 -->
+                                        <p class="c-card__text">
+                                            <i class="fa-regular fa-clock"></i>
+                                            <span v-if="getExpirationDate(product.product.expiration_date) >= 0">残り{{ getExpirationDate(product.product.expiration_date) }}日</span>
+                                            <span v-if="getExpirationDate(product.product.expiration_date) < 0">賞味期限切れ</span>
+                                        </p>
+                                        <p class="c-card__text"><i class="fa-solid fa-calendar-days"></i>{{ formatDate(product.product.expiration_date) }}</p> <!-- 賞味期限日付 -->
+                                        <p class="c-card__label c-card__category">{{ product.product.category.name }}</p> <!-- カテゴリー名 -->
+                                        <p class="c-card__label c-card__price"><i class="fa-solid fa-yen-sign"></i>{{ product.product.price }}</p> <!-- 価格 -->
+                                    </div>
+                                    <div class="c-card__footer">
+                                        <router-link :to="getProductDetailLink(product.product.id)" class="c-button c-button--default">詳細を見る</router-link>
+                                        <button class="c-button c-button--default" @click="cancelPurchase(product.product.id)">購入をキャンセルする</button>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
                     </div>
-
+                    <div class="p-mypage--link">
+                        <router-link class="c-link c-link--all" :to="{ name: 'user.products.purchased' }">全件表示</router-link>
+                    </div>
                 </div>
-            </section>
+
+                <!-- お気に入りした商品を最大5件表示 -->
+                <div class="p-mypage">
+                    <h2 class="c-title c-title--sub">お気に入り商品</h2><span class="c-text c-text--max">最大5件表示</span>
+                    <!-- 商品情報がない場合 -->
+                    <div v-if="likedProducts.length === 0">
+                        <ul class="p-mypage--list"><p class="c-text">お気に入り登録した商品はありません。</p></ul>
+                    </div>
+                    <!-- 商品情報を表示 -->
+                    <div v-else>
+                        <ul class="p-mypage--list">
+                            <li v-for="product in likedProducts" :key="product.id" class="p-product__item">
+                                <div class="c-card">
+                                    <div class="c-card__header">
+                                        <h3 class="c-card__name">{{ product.product.name }}</h3> <!-- 商品名 -->
+                                    </div>
+                                    <div class="c-card__body">
+                                        <img class="c-card__img" :src="getProductPicturePath(product.product)" alt="商品画像"> <!-- 商品画像 -->
+                                        <div class="c-icon">
+                                            <!-- 利用者ユーザーの場合にいいねアイコンを表示 -->
+                                            <div v-if="$store.getters['auth/check'] && $store.getters['auth/role'] === 'user'">
+                                                <i v-if="!product.liked" class="c-icon c-icon--unlike far fa-heart" @click="productLike(product)"></i>
+                                                <i v-else class="c-icon c-icon--like fas fa-heart" @click="productUnlike(product)"></i>
+                                                {{ product.product.likes_count }} <!-- いいね数 -->
+                                            </div>
+                                        </div>
+                                        <!-- 賞味期限までの残り日数を表示 -->
+                                        <p class="c-card__text">
+                                            <i class="fa-regular fa-clock"></i>
+                                            <span v-if="getExpirationDate(product.product.expiration_date) >= 0">残り{{ getExpirationDate(product.product.expiration_date) }}日</span>
+                                            <span v-if="getExpirationDate(product.product.expiration_date) < 0">賞味期限切れ</span>
+                                        </p>
+                                        <p class="c-card__text"><i class="fa-solid fa-calendar-days"></i>{{ formatDate(product.product.expiration_date) }}</p> <!-- 賞味期限日付 -->
+                                        <p class="c-card__label c-card__category">{{ product.product.category.name }}</p> <!-- カテゴリー名 -->
+                                        <p class="c-card__label c-card__price"><i class="fa-solid fa-yen-sign"></i>{{ product.product.price }}</p> <!-- 価格 -->
+                                    </div>
+                                    <div class="c-card__footer">
+                                        <router-link :to="getProductDetailLink(product.product.id)" class="c-button c-button--default">詳細を見る</router-link>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="p-mypage--link">
+                        <router-link class="c-link c-link--all" :to="{ name: 'user.products.liked' }">全件表示</router-link>
+                    </div>
+                </div>
+            </div>
             <!-- サイドバー -->
             <sidebar-component :introduction="introduction"></sidebar-component>
         </div>
-        <a @click="$router.back()" class="c-link c-link__back u-mt__s u-mb__s">前のページに戻る</a>
     </main>
 </template>
 

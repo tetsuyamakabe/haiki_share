@@ -24,8 +24,10 @@ class SearchRequest extends FormRequest
     public function rules()
     {
         return [
+            'prefecture' => ['nullable', 'string'], // 都道府県のバリデーションルール
             'maxprice' => ['nullable', 'numeric', 'min:0'], // 最大価格のバリデーションルール
             'minprice' => ['nullable', 'numeric', 'min:0'], // 最小価格のバリデーションルール
+            'expired' => ['nullable', 'boolean'], // 賞味期限のバリデーションルール
         ];
     }
 }

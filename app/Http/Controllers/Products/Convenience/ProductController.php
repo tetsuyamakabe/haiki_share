@@ -174,7 +174,9 @@ class ProductController extends Controller
     // すべての商品情報の取得
     public function getAllProducts(SearchRequest $request)
     {
-        \Log::info('$requestは、', $request->all());
+        \Log::info('getAllProductsメソッドを呼んでいます。');
+        \Log::info('$request->allは、', $request->all());
+        \Log::info('$request->queryは、', $request->query());
         try {
             // 認証済みユーザーIDの取得
             $userId = auth()->id();
@@ -209,8 +211,10 @@ class ProductController extends Controller
                 }
             }
             \Log::info('$expiredは、', [$expired]);
-            // コレクションを出品した日の降順で15件ずつ取得
-            $products = $query->orderBy('created_at', 'desc')->paginate(15);
+            $sortOrder = $request->input('sort', 'desc'); // デフォルトは降順
+            \Log::info('$sortOrderは、', [$sortOrder]);
+            // コレクションを並び替えて15件ずつ取得
+            $products = $query->orderBy('created_at', $sortOrder)->paginate(15);
             // 各商品に対して処理を行う
             foreach ($products as $product) {
                 // 商品情報にお気に入り情報を含める

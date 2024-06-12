@@ -22,7 +22,7 @@ actions = {
         commit('SET_FLASH_MESSAGE', payload);
         setTimeout(() => {
             commit('CLEAR_FLASH_MESSAGE');
-        }, 3000);
+        }, 50000);
     }
 },
 

@@ -1,70 +1,64 @@
 <template>
     <main class="l-main">
-        <div class="p-article">
-            <section class="l-main__wrapper">
-                <h1 class="c-title u-mt__xl u-mb__xl">利用者プロフィール編集</h1>
-                <form @submit.prevent="submitForm" class="c-form c-form__column">
-
+        <div class="l-main__header">
+            <h1 class="c-title">利用者プロフィール編集</h1>
+        </div>
+        <div class="l-article">
+            <div class="l-article__main">
+                <form @submit.prevent="submitForm" class="c-form">
                     <!-- お名前 -->
-                    <label for="name" class="c-label">お名前<span class="c-required">必須</span></label>
-                    <span v-if="errors && errors.name" class="c-error u-mt__s">{{ errors.name[0] }}</span>
-                    <input v-model="formData.name" id="name" type="name" class="c-input u-pd__s u-mt__m u-mb__m" :class="{ 'is-invalid': errors && errors.name }" autocomplete="name">
-
+                    <label for="name" class="c-label">お名前<span class="c-badge">必須</span></label>
+                    <span v-if="errors && errors.name" class="c-error">{{ errors.name[0] }}</span>
+                    <input v-model="formData.name" id="name" type="name" class="c-input" :class="{ 'is-invalid': errors && errors.name }" autocomplete="name">
                     <!-- メールアドレス -->
-                    <label for="email" class="c-label">メールアドレス<span class="c-required">必須</span></label>
-                    <span v-if="errors && errors.email" class="c-error u-mt__s">{{ errors.email[0] }}</span>
-                    <input v-model="formData.email" id="email" type="text" class="c-input u-pd__s u-mt__m u-mb__m" :class="{ 'is-invalid': errors && errors.email }" autocomplete="email">
-
+                    <label for="email" class="c-label">メールアドレス<span class="c-badge">必須</span></label>
+                    <span v-if="errors && errors.email" class="c-error">{{ errors.email[0] }}</span>
+                    <input v-model="formData.email" id="email" type="text" class="c-input" :class="{ 'is-invalid': errors && errors.email }" autocomplete="email">
                     <!-- パスワード -->
                     <label for="password" class="c-label">パスワード</label>
-                    <span class="c-text c-text__note">※パスワードとパスワード（再入力）は、半角数字・英字大文字・小文字、記号（!@#$%^&*）を使って8文字以上で入力してください</span>
-                    <span v-if="errors && errors.password" class="c-error u-mt__s">{{ errors.password[0] }}</span>
-                    <div class="c-input__password">
-                        <input v-model="formData.password" id="password" :type="PasswordType" class="c-input u-pd__s u-mt__m u-mb__m" :class="{ 'is-invalid': errors && errors.password }" placeholder="8文字以上で入力してください">
-                        <span @click="togglePasswordVisibility('password')"><i :class="PasswordIconClass"></i></span>
+                    <span class="c-text c-text--note u-fz-10@sm">※パスワードとパスワード（再入力）は、半角数字・英字大文字・小文字、記号（!@#$%^&*）を使って8文字以上で入力してください</span>
+                    <span v-if="errors && errors.password" class="c-error">{{ errors.password[0] }}</span>
+                    <div class="c-password">
+                        <input v-model="formData.password" id="password" :type="PasswordType" class="c-input" :class="{ 'is-invalid': errors && errors.password }" placeholder="8文字以上で入力してください">
+                        <span @click="togglePasswordVisibility('password')" class="c-password__icon">
+                            <i :class="PasswordIconClass"></i>
+                        </span>
                     </div>
-
                     <!-- パスワード（再入力） -->
                     <label for="password-confirm" class="c-label">パスワード（再入力）</label>
-                    <span v-if="errors && errors.password_confirmation" class="c-error u-mt__s">{{ errors.password_confirmation[0] }}</span>
-                    <div class="c-input__password">
-                        <input v-model="formData.password_confirmation" id="password-confirm" :type="PasswordConfirmType" class="c-input u-pd__s u-mt__m u-mb__m" :class="{ 'is-invalid': errors && errors.password_confirmation }" placeholder="8文字以上で入力してください">
-                        <span @click="togglePasswordVisibility('password_confirm')"><i :class="PasswordConfirmIconClass"></i></span>
+                    <span v-if="errors && errors.password_confirmation" class="c-error">{{ errors.password_confirmation[0] }}</span>
+                    <div class="c-password">
+                        <input v-model="formData.password_confirmation" id="password-confirm" :type="PasswordConfirmType" class="c-input" :class="{ 'is-invalid': errors && errors.password_confirmation }" placeholder="8文字以上で入力してください">
+                        <span @click="togglePasswordVisibility('password_confirm')" class="c-password__icon">
+                            <i :class="PasswordConfirmIconClass"></i>
+                        </span>
                     </div>
-
                     <!-- 自己紹介文 -->
                     <label for="introduction" class="c-label">自己紹介</label>
-                    <span v-if="errors && errors.introduction" class="c-error u-mt__s">{{ errors.introduction[0] }}</span>
-                    <div class="p-textarea__form">
-                        <textarea v-model="formData.introduction" maxlength="50" id="introduction" type="text" class="c-textarea u-pd__s u-mt__m u-mb__m" autocomplete="introduction" @keyup="countCharacters" :class="{ 'is-invalid': errors && errors.introduction }" placeholder="50文字以内で入力してください"></textarea>
-                        <span class="c-textarea__count">{{ formData.introduction.length }} / 50文字</span>
-                    </div>
-
+                    <span v-if="errors && errors.introduction" class="c-error">{{ errors.introduction[0] }}</span>
+                    <textarea v-model="formData.introduction" maxlength="50" id="introduction" type="text" class="c-textarea" autocomplete="introduction" @keyup="countCharacters" :class="{ 'is-invalid': errors && errors.introduction }" placeholder="50文字以内で入力してください"></textarea>
+                    <span class="c-textarea--count">{{ formData.introduction.length }} / 50文字</span>
                     <!-- 顔写真 -->
                     <label for="avatar" class="c-label">顔写真</label>
-                    <span v-if="errors && errors.avatar" class="c-error u-mt__s u-mb__s">{{ errors.avatar[0] }}</span>
-                    <div class="c-avatar c-avatar__container u-pd__s" @drop="handleDrop" :class="{ 'is-invalid': errors && errors.avatar }">
-                        <input type="file" id="avatar" @change="handleFileChange" class="c-input__hidden">
-                        <img v-if="!avatarPreview && formData.avatar" :src="formData.avatar" alt="アップロード顔写真" class="c-avatar">
-                        <img v-else-if="avatarPreview" :src="avatarPreview" alt="アップロード顔写真" class="c-avatar">
-                        <img v-else :src="'https://haikishare.com/avatar/default.png'" alt="デフォルト顔写真" class="c-avatar">
+                    <span v-if="errors && errors.avatar" class="c-error">{{ errors.avatar[0] }}</span>
+                    <div class="c-avatar" @drop="handleDrop" :class="{ 'is-invalid': errors && errors.avatar }">
+                        <input type="file" id="avatar" @change="handleFileChange" class="c-input--hidden">
+                        <img v-if="!avatarPreview && formData.avatar" :src="formData.avatar" alt="アップロード顔写真" class="c-avatar--img">
+                        <img v-else-if="avatarPreview" :src="avatarPreview" alt="アップロード顔写真" class="c-avatar--img">
+                        <img v-else :src="'https://haikishare.com/avatar/default.png'" alt="デフォルト顔写真" class="c-avatar--img">
                     </div>
-
                     <!-- 更新ボタン -->
-                    <button type="submit" class="c-button c-button__submit c-button__main u-pd__s u-mt__m">プロフィールを更新する</button>
-
+                    <button type="submit" class="c-button c-button--submit c-button--main">プロフィールを更新する</button>
                 </form>
-                <router-link class="c-link c-link__withdraw u-mt__l u-mb__l u-pdr__s" :to="{ name: 'user.withdraw' }">退会はこちら</router-link>
-            </section>
+                <router-link class="c-link c-link--withdraw" :to="{ name: 'user.withdraw' }">退会はこちら</router-link>
+            </div>
             <!-- サイドバー -->
             <sidebar-component :introduction="introduction"></sidebar-component>
         </div>
-        <a @click="$router.back()" class="c-link c-link__back u-mt__s u-mb__s">前のページに戻る</a>
     </main>
 </template>
 
 <script>
-import axios from '../../axiosErrorHandler';
 import SidebarComponent from './SidebarComponent.vue';
 
 export default {

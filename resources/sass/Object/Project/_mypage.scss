@@ -1,48 +1,19 @@
 .p-mypage {
-
-    &__sidebar {
+    padding: $space_m;
+    @include mq(sm) {
+        padding: $space_s;
+    }
+    &--list {
+        width: 100%;
+        min-height: 200px;
         display: flex;
-        flex-direction: column;
-
+        flex-wrap: wrap;
         @include mq(sm) {
             width: 100%;
+            flex-wrap: wrap;
         }
     }
-
-    &__profile {
-        background: $background-color_sub;
-        &--header {
-            text-align: center;
-            font-weight: bold;
-            font-size: $font-size_default;
-        }
-        &--container {
-            opacity: .7;
-        }
-        &--content {
-            display: flex;
-            justify-content: center;
-        }
-    }
-
-    &__avatar {
-        width: 150px;
-        height: 150px;
-        border-radius: 50%;
-        &--container {
-            width: 70%;
-            margin: auto;
-        }
-    }
-
-    &__sale,
-    &__liked,
-    &__purchased {
-        background: $background-color_sub;
-        padding: $space_m;
-
-        @include mq(sm) {
-            padding: $space_s;
-        }
+    &--link {
+        margin-top: $space_s;
     }
 }

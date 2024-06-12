@@ -1,5 +1,7 @@
 .c-textarea {
     width: 100%;
+    padding: $space_s;
+    margin: $space_m 0;
     box-sizing: border-box;
     border: 1px solid $boader-color_line;
     background: $background-color_main;
@@ -15,10 +17,13 @@
         background-color: $background-color_valid;
     }
 
-    &__count {
+    &--count {
         position: relative;
         right: -80%;
         bottom: 10px;
         font-size: $font-size_default;
+        @include mq(sm) {
+            right: -68%;
+        }
     }
 }

@@ -17,6 +17,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+// デバッグ
+Route::get('/test', 'TestController@test');
+
 Route::middleware(['cors'])->group(function () {
 
     // 商品

@@ -1,24 +1,24 @@
 .c-icon {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
     font-size: $font-size_default;
 
     &:hover {
         cursor: pointer;
     }
-
-    &__like {
+    &--like {
         color: $font-color_like;
     }
-
-    &__unlike {
+    &--unlike {
         color: $font-color_unlike;
     }
-
-    &__nolike {
+    &--notlike {
         color: $font-color_unlike;
         pointer-events: none;
     }
-
-    &__share {
+    &--share {
+        padding: $space_s;
         border: 1px solid;
         border-radius: 50px;
         color: $font-color_default;

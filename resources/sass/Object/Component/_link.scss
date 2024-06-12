@@ -1,5 +1,5 @@
 .c-link {
-    display: inline;
+    display: block;
     text-align: center;
     text-decoration: none;
     color: $font-color_default;
@@ -13,16 +13,19 @@
         text-decoration: underline;
     }
 
-    &__products {
+    &--all {
         text-align: right;
     }
 
-    &__withdraw {
+    &--withdraw {
+        margin: $space_l 0;
+        padding-right: $space_s;
         display: block;
         text-align: right;
     }
 
-    &__back {
+    &--back {
+        margin: $space_s;
         display: inline-block;
     }
 }

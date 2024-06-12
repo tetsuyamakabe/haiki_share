@@ -1,81 +1,73 @@
 <template>
     <main class="l-main">
-        <h1 class="c-title u-mb__xl">商品一覧</h1>
-        <div class="p-article">
-            <div class="l-main__wrapper">
-
-                <div class="p-product__index">
+        <div class="l-main__header">
+            <h1 class="c-title">商品一覧</h1>
+        </div>
+        <div class="l-article">
+            <div class="l-article__main">
+                <div class="p-product">
                     <!-- 全体件数と1ページの表示件数を表示 -->
                     <p class="c-text">{{ products.data ? products.data.length : 0 }}件表示 / 全{{ products.total ? products.total : 0 }}件中</p>
-                    <ul class="p-product__list">
+                    <ul class="p-product--list">
                         <!-- 検索結果がない場合 -->
                         <li v-if="!products.data || products.data.length === 0" class="p-product__item">
-                            <p class="c-text u-pd__xl">検索結果はありません。</p>
+                            <p class="c-text u-m__xl">検索結果はありません。</p>
                         </li>
                         <!-- 商品一覧・検索結果を表示 -->
                         <li v-else v-for="product in products.data" :key="product.id" class="p-product__item">
                             <!-- 商品情報の表示 -->
-                            <div class="c-card u-m__s u-pd__s">
-                                <div class="p-card__header u-pd__s">
+                            <div class="c-card">
+                                <div class="c-card__header">
                                     <h3 class="c-card__name">{{ product.name }}</h3> <!-- 商品名 -->
                                 </div>
-                                <div class="p-card__container">
-                                    <img class="c-card__picture u-mb__s" :src="getProductPicturePath(product)" alt="商品画像"> <!-- 商品画像 -->
-                                    <label v-show="product.is_purchased" class="c-label__purchase u-pd__m">購入済み</label> <!-- 購入済みラベル -->
-                                    <div class="p-icon">
+                                <div class="c-card__body">
+                                    <img class="c-card__img" :src="getProductPicturePath(product)" alt="商品画像"> <!-- 商品画像 -->
+                                    <label v-show="product.is_purchased" class="c-label__purchase">購入済み</label> <!-- 購入済みラベル -->
+                                    <div class="c-icon">
                                         <!-- 利用者ユーザーの場合にいいねアイコンを表示 -->
                                         <div v-if="$store.getters['auth/check'] && $store.getters['auth/role'] === 'user'">
-                                            <i v-if="!product.liked" class="c-icon c-icon__unlike far fa-heart" @click="productLike(product)"></i>
-                                            <i v-else class="c-icon c-icon__like fas fa-heart" @click="productUnlike(product)"></i>
+                                            <i v-if="!product.liked" class="c-icon c-icon--unlike far fa-heart" @click="productLike(product)"></i>
+                                            <i v-else class="c-icon c-icon--like fas fa-heart" @click="productUnlike(product)"></i>
                                             {{ product.likes_count }} <!-- いいね数 -->
                                         </div>
                                         <!-- 未ログインユーザーの場合にユーザー登録・ログインのツールチップを表示 -->
                                         <div v-else-if="!$store.getters['auth/check']" class="c-tooltip">
-                                            <i class="c-icon c-icon__nolike far fa-heart"></i>{{ product.likes_count }} <!-- いいね数 -->
-                                            <div class="c-tooltip__text">お気に入り登録するにはユーザー登録・ログインしてください</div>
+                                            <i class="c-icon c-icon--notlike far fa-heart"></i>{{ product.likes_count }} <!-- いいね数 -->
+                                            <div class="c-tooltip__message">お気に入り登録するにはユーザー登録・ログインしてください</div>
                                         </div>
                                         <!-- コンビニユーザーの場合にコンビニユーザーツールチップを表示 -->
                                         <div v-else class="c-tooltip">
-                                            <i class="c-icon c-icon__nolike far fa-heart"></i>{{ product.likes_count }} <!-- いいね数 -->
-                                            <div class="c-tooltip__text">コンビニユーザーはお気に入り登録できません</div>
+                                            <i class="c-icon c-icon--notlike far fa-heart"></i>{{ product.likes_count }} <!-- いいね数 -->
+                                            <div class="c-tooltip__message">コンビニユーザーはお気に入り登録できません</div>
                                         </div>
                                     </div>
                                     <!-- 賞味期限までの残り日数を表示 -->
                                     <p class="c-card__text">
                                         <i class="fa-regular fa-clock"></i>
-                                        <span v-if="getExpirationDate(product.expiration_date) >= 0">
-                                            残り{{ getExpirationDate(product.expiration_date) }}日
-                                        </span>
-                                        <span v-if="getExpirationDate(product.expiration_date) < 0">
-                                            賞味期限切れ
-                                        </span>
+                                        <span v-if="getExpirationDate(product.expiration_date) >= 0">残り{{ getExpirationDate(product.expiration_date) }}日</span>
+                                        <span v-if="getExpirationDate(product.expiration_date) < 0">賞味期限切れ</span>
                                     </p>
                                     <p class="c-card__text"><i class="fa-solid fa-calendar-days"></i>{{ formatDate(product.expiration_date) }}</p> <!-- 賞味期限日付 -->
-                                    <p class="c-card__label c-card__category u-pd__s">{{ product.category.name }}</p> <!-- カテゴリー名 -->
-                                    <p class="c-card__label c-card__price u-pd__s"><i class="fa-solid fa-yen-sign"></i>{{ product.price }}</p> <!-- 価格 -->
+                                    <p class="c-card__label c-card__category">{{ product.category.name }}</p> <!-- カテゴリー名 -->
+                                    <p class="c-card__label c-card__price"><i class="fa-solid fa-yen-sign"></i>{{ product.price }}</p> <!-- 価格 -->
                                 </div>
-                                <div class="p-card__footer">
-                                    <div class="c-button__container">
-                                        <router-link :to="getProductDetailLink(product.id)" class="c-button c-button__default u-pd__s u-m__s">詳細を見る</router-link>
-                                    </div>
+                                <div class="c-card__footer">
+                                    <router-link :to="getProductDetailLink(product.id)" class="c-button c-button--default">詳細を見る</router-link>
                                 </div>
                             </div>
                         </li>
                     </ul>
                 </div>
-
             </div>
             <!-- 絞り込み検索フォーム -->
             <search-component @search="searchResult" :errors="errors.errors" />
         </div>
         <!-- ページネーション -->
         <pagination-component @onClick="onPageChange" :current_page="currentPage" :last_page="lastPage" />
-        <a @click="$router.back()" class="c-link c-link__back u-mt__s u-mb__s">前のページに戻る</a>
     </main>
 </template>
 
 <script>
-import axios from 'axios';
 import SearchComponent from './SearchComponent.vue'; // 絞り込み検索コンポーネント
 import PaginationComponent from './PaginationComponent.vue'; // ページネーションコンポーネント
 
@@ -122,6 +114,9 @@ export default {
             if (params && params.expiration_date) { // パラメータとパラメータのexpiration_dateがある場合
                 url += `&expiration_date=${params.expiration_date}`; // urlにparams.expiration_dateを追加
             }
+            if (params && params.sort) { // ソート順
+                url += `&sort=${params.sort}`; // urlにparams.sortを追加
+            }
             console.log('検索URL:', url);
             // ページ遷移
             this.$router.push(url).then(() => {
@@ -159,8 +154,10 @@ export default {
             const params = Object.assign({}, this.$route.query); // クエリパラメータのコピーを作成
             console.log('paramsは、', params, 'this.currentPageは、', this.currentPage);
             axios.get('/api/products', { params: params }).then(response => { // パラメータを含むリクエスト
+                console.log('APIのレスポンスは、', response.data);
                 // レスポンスデータをそれぞれのプロパティにセット
                 this.products = response.data.products; // 商品情報
+                console.log('this.productsは、', this.products);
                 this.lastPage = response.data.products.last_page; // ページ数
             }).catch(error => {
                 console.error('商品情報取得失敗:', error.response.data);
