@@ -10,19 +10,16 @@
     top: 0;
     z-index: 2;
     opacity: 0.9;
-
+    padding: 0 $space_xl;
     @include mq(sm) {
         height: 60px;
-        padding-right: $space_l;
-        padding-left: $space_l;
+        padding: 0 $space_l;
     }
-
     &__inner {
         display: flex;
         justify-content: space-between;
     }
-
-    &__title {
+    &__logo {
         font-family: $font-family_corp;
         font-style: italic;
         font-weight: bold;
@@ -30,7 +27,6 @@
         text-decoration: none;
         color: $font-color_default;
         line-height: 60px;
-
         @include mq(sm) {
             font-size: $font-size_xxl;
         }

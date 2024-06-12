@@ -190,12 +190,12 @@ class ProductController extends Controller
                 });
             }
             \Log::info('$prefectureは、', [$prefecture]);
-            $minPrice = $request->input('minprice'); // 最小価格
+            $minPrice = $request->input('minPrice'); // 最小価格
             if ($minPrice !== null) { // 検索条件にminPriceがある場合
                 $query->where('price', '>=', $minPrice); // priceより小さい値を取得
             }
             \Log::info('$minPriceは、', [$minPrice]);
-            $maxPrice = $request->input('maxprice'); // 最大価格
+            $maxPrice = $request->input('maxPrice'); // 最大価格
             if ($maxPrice !== null) { // 検索条件にmaxPriceがある場合
                 $query->where('price', '<=', $maxPrice); // priceより大きい値を取得
             }
@@ -210,11 +210,23 @@ class ProductController extends Controller
                 }
             }
             \Log::info('$expiredは、', [$expired]);
+            // カテゴリのIDを取得
+            $categoryId = $request->input('category_id');
+            if ($categoryId !== null) {
+                $query->where('category_id', $categoryId);
+            }
+            \Log::info('$categoryIdは、', [$categoryId]);
             $sortOrder = $request->sort ?? 'desc'; // デフォルトは降順
             \Log::info('$sortOrderは、', [$sortOrder]);
+            $sortExpiredOrder = $request->input('sortExpired');
+            \Log::info('$sortExpiredOrderは', [$sortExpiredOrder]);
             // コレクションを並び替えて15件ずつ取得
-            $products = $query->orderBy('created_at', $sortOrder)->paginate(15);
-            \Log::info('$productsは、', [$products]);
+            if ($sortExpiredOrder === 'asc' || $sortExpiredOrder === 'desc') {
+                $products = $query->orderBy('expiration_date', $sortExpiredOrder)->orderBy('created_at', $sortOrder)->paginate(15);
+            } else {
+                $products = $query->orderBy('created_at', $sortOrder)->paginate(15);
+            }
+            // \Log::info('$productsは、', [$products]);
             // 各商品に対して処理を行う
             foreach ($products as $product) {
                 // 商品情報にお気に入り情報を含める
@@ -230,6 +242,7 @@ class ProductController extends Controller
             return response()->json(['message' => 'すべての商品情報を取得できません'], 500);
         }
     }
+
 
     // 商品情報の取得処理
     public function getProduct(Request $request, $productId)

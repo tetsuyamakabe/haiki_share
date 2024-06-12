@@ -1,6 +1,5 @@
-#l-footer {
+.l-footer {
     width: 100%;
-    height: 30px;
 
     &__pagetop {
         height: 50px;
@@ -60,14 +59,18 @@
         text-align: center;
         background-color: $background-color_sub2;
         color: $font-color_default;
+        padding: $space_m;
     }
 
-    &__text {
+    &__copyright {
         font-size: $font-size_default;
         color: $font-color_default;
-        @include mq(sm){
-            font-size: $font-size_s;
+        @include mq(sm) {
+            font-size: $font-size_m;
         }
     }
 
+    &__link {
+        margin-top: $space_s;
+    }
 }

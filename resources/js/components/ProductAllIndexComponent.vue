@@ -105,17 +105,23 @@ export default {
             if (params && params.prefecture) { // パラメータとパラメータのprefectureがある場合
                 url += `&prefecture=${params.prefecture}`; // urlにparams.prefectureを追加
             }
-            if (params && params.minprice) { // パラメータとパラメータのminpriceがある場合
-                url += `&minprice=${params.minprice}`; // urlにparams.minpriceを追加
+            if (params && params.minPrice) { // パラメータとパラメータのminpriceがある場合
+                url += `&minPrice=${params.minPrice}`; // urlにparams.minpriceを追加
             }
-            if (params && params.maxprice) { // パラメータとパラメータのmaxpriceがある場合
-                url += `&maxprice=${params.maxprice}`; // urlにparams.maxpriceを追加
+            if (params && params.maxPrice) { // パラメータとパラメータのmaxpriceがある場合
+                url += `&maxPrice=${params.maxPrice}`; // urlにparams.maxpriceを追加
             }
             if (params && params.expiration_date) { // パラメータとパラメータのexpiration_dateがある場合
                 url += `&expiration_date=${params.expiration_date}`; // urlにparams.expiration_dateを追加
             }
+            if (params && params.category_id) { // カテゴリ
+                url += `&category_id=${params.category_id}`;
+            }
             if (params && params.sort) { // ソート順
                 url += `&sort=${params.sort}`; // urlにparams.sortを追加
+            }
+            if (params && params.sortExpired) { // ソート順
+                url += `&sortExpired=${params.sortExpired}`; // urlにparams.sortを追加
             }
             console.log('検索URL:', url);
             // ページ遷移
@@ -147,23 +153,6 @@ export default {
             }
             this.lastParams = params; // 最後の検索条件を更新
         },
-
-        // 商品情報をサーバーから取得
-        // getProduct() {
-        //     // 現在のルートのクエリパラメータを取得
-        //     const params = Object.assign({}, this.$route.query); // クエリパラメータのコピーを作成
-        //     console.log('paramsは、', params, 'this.currentPageは、', this.currentPage);
-        //     axios.get('/api/products', { params: params }).then(response => { // パラメータを含むリクエスト
-        //         console.log('APIのレスポンスは、', response.data);
-        //         // レスポンスデータをそれぞれのプロパティにセット
-        //         this.products = response.data.products; // 商品情報
-        //         console.log('this.productsは、', this.products);
-        //         this.lastPage = response.data.products.last_page; // ページ数
-        //     }).catch(error => {
-        //         console.error('商品情報取得失敗:', error.response.data);
-        //         this.errors = error.response.data;
-        //     });
-        // },
 
         getProduct() {
             // 現在のルートのクエリパラメータを取得

@@ -110,6 +110,8 @@
 
         <section class="u-pd__xl u-pd__xl" id="contact">
             <h2 class="c-title c-title--top">お問い合わせ</h2>
+            <!-- フラッシュメッセージを表示 -->
+            <Toast />
             <div class="c-container">
                 <form @submit.prevent="submitForm" class="c-form">
                     <!-- お名前 -->
@@ -134,7 +136,13 @@
 </template>
 
 <script>
+import Toast from './Toast.vue'; // Toastコンポーネントをインポート
+
 export default {
+    components: {
+        Toast, // Toastコンポーネントを読み込み
+    },
+
     data() {
         return {
             formData: {
@@ -151,7 +159,10 @@ export default {
         // 入力された値をサーバー側に送信するメソッド
         submitForm() {
             axios.post('/api/contact', this.formData).then(response => {
-                console.log('お問い合わせ内容を送信します。');
+                this.$store.dispatch('flash/setFlashMessage', { // フラッシュメッセージの表示
+                    message: 'お問い合わせ内容を受け付けました。',
+                    type: 'success'
+                });
             }).catch(error => {
                 this.errors = error.response.data.errors;
             });

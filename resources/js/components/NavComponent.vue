@@ -1,37 +1,32 @@
 <template>
-    <div class="l-nav">
-        <div class="l-nav__menu--trigger" @click="toggleMenu" v-bind:class="{'is-active' : open }">
+    <nav class="l-nav">
+        <div class="l-nav__trigger" @click="toggleMenu" v-bind:class="{'is-active' : open }">
             <span></span>
             <span></span>
             <span></span>
         </div>
-
-        <nav class="l-nav__menu" v-bind:class="{'is-active' : open }">
-            <ul class="l-nav__menu--list">
+        <ul class="l-nav__menu" :class="{ 'is-active': open }">
+            <li v-if="isLogin" class="l-nav__item">
                 <!-- ログイン済みのナビゲーションメニュー -->
-                <img v-if="isLogin" :src="avatar" alt="顔写真" class="l-nav__menu--avatar u-mr__s">
-                <div v-if="isLogin" class="l-nav__menu--item">
-                    <span class="l-nav__menu--name">{{ username }}</span>
-                    <RouterLink class="l-nav__menu--link" :to="userLink" @click.native="closeMenu">マイページ</RouterLink>
-                    <a class="l-nav__menu--link" @click="logout">ログアウト</a>
-                </div>
+                <RouterLink class="l-nav__link" :to="userLink" @click.native="closeMenu">マイページ</RouterLink>
+                <a class="l-nav__link" @click="logout">ログアウト</a>
+            </li>
+            <li v-else-if="isTopPage" class="l-nav__item">
                 <!-- TOP画面のナビゲーションメニュー -->
-                <div v-else-if="isTopPage" class="l-nav__menu--item">
-                    <a class="l-nav__menu--link" href="#about" @click="closeMenu">サービス概要</a>
-                    <a class="l-nav__menu--link" href="#merit" @click="closeMenu">メリット</a>
-                    <a class="l-nav__menu--link" href="#usage" @click="closeMenu">利用方法</a>
-                    <a class="l-nav__menu--link" href="#contact" @click="closeMenu">お問い合わせ</a>
-                </div>
+                <a class="l-nav__link" href="#about" @click="closeMenu">サービス概要</a>
+                <a class="l-nav__link" href="#merit" @click="closeMenu">メリット</a>
+                <a class="l-nav__link" href="#usage" @click="closeMenu">利用方法</a>
+                <a class="l-nav__link" href="#contact" @click="closeMenu">お問い合わせ</a>
+            </li>
+            <li v-else class="l-nav__item">
                 <!-- ログインしていないTOP画面以外のナビゲーションメニュー -->
-                <div v-else class="l-nav__menu--item">
-                    <RouterLink class="l-nav__menu--link" to="/user/register" @click.native="closeMenu">利用者ユーザー登録</RouterLink>
-                    <RouterLink class="l-nav__menu--link" to="/convenience/register" @click.native="closeMenu">コンビニユーザー登録</RouterLink>
-                    <RouterLink class="l-nav__menu--link" to="/user/login" @click.native="closeMenu">利用者ログイン</RouterLink>
-                    <RouterLink class="l-nav__menu--link" to="/convenience/login" @click.native="closeMenu">コンビニログイン</RouterLink>
-                </div>
-            </ul>
-        </nav>
-    </div>
+                <RouterLink class="l-nav__link" to="/user/register" @click.native="closeMenu">利用者ユーザー登録</RouterLink>
+                <RouterLink class="l-nav__link" to="/convenience/register" @click.native="closeMenu">コンビニユーザー登録</RouterLink>
+                <RouterLink class="l-nav__link" to="/user/login" @click.native="closeMenu">利用者ログイン</RouterLink>
+                <RouterLink class="l-nav__link" to="/convenience/login" @click.native="closeMenu">コンビニログイン</RouterLink>
+            </li>
+        </ul>
+    </nav>
 </template>
 
 <script>

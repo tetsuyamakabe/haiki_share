@@ -1,15 +1,15 @@
 .c-toast {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
+    right: 0;
     width: 100%;
-    padding: $space_m;
+    padding: $space_s 0;
     color: $background-color_sub;
     font-weight: bold;
     opacity: 0.9;
     z-index: 3;
-    display: flex;
-    justify-content: center;
+    text-align: center; // テキストを中央揃え
 
     &__success {
         background-color: #28a745;

@@ -31,14 +31,14 @@
                             </p>
                         </div>
                     </div>
-                    <div class="c-product c-product--convenience">
+                    <div class="c-product c-product--convenience" v-if="product.convenience && product.convenience.user">
                         <div class="c-product--avatar-wrap">
                             <img class="c-product--avatar" :src="product.convenience.user.avatar" alt="コンビニユーザー顔写真">
                         </div>
                         <div class="c-product--item-wrap">
                             <p class="c-product--item">この商品を出品したコンビニ：{{ product.convenience.user.name }} {{ product.convenience.branch_name }}</p>
                             <p class="c-product--item">住所：{{ product.convenience.address.prefecture }}{{ product.convenience.address.city }}{{ product.convenience.address.town }}{{ product.convenience.address.building }}</p>
-                            <p v-if="introduction" class="c-product--item">自己紹介文：{{ product.convenience.user.introduction }}</p>
+                            <p v-if="product.convenience.user.introduction" class="c-product--item">自己紹介文：{{ product.convenience.user.introduction }}</p>
                         </div>
                     </div>
                     <!-- 未ログインユーザーの購入ボタンはユーザー登録する -->
@@ -114,6 +114,15 @@ export default {
             const month = ('0' + (date.getMonth() + 1)).slice(-2); // 月数を取得、1桁の場合は2桁の数値に変換
             const day = ('0' + date.getDate()).slice(-2); // 日数を取得、1桁の場合は2桁の数値に変換
             return `${year}年${month}月${day}日`; // 年月日のフォーマットされた賞味期限日付を返す
+        },
+
+        // 賞味期限までの残り日数を計算するメソッド
+        getExpirationDate(expirationDate) {
+            const today = new Date(); // 今日の日付を取得
+            const expiry = new Date(expirationDate); // 賞味期限の日付を取得
+            const difference = expiry.getTime() - today.getTime(); // 残り日数をミリ秒で計算
+            const daysRemaining = Math.ceil(difference / (1000 * 60 * 60 * 24)); // ミリ秒を日数に変換して切り上げ
+            return `${daysRemaining}`; // 残り日数を表示する文字列を返す
         },
 
         // エックスのシェアボタン
