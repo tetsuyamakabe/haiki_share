@@ -1,38 +1,41 @@
 <template>
     <main class="l-main">
+        <div class="l-main__header">
+            <h1 class="c-title">お問い合わせ</h1>
+        </div>
         <section class="l-main__wrapper">
-            <h1 class="c-title u-mt__xl u-mb__xl">お問い合わせ</h1>
+            <!-- フラッシュメッセージを表示 -->
+            <Toast />
             <form @submit.prevent="submitForm" class="c-form">
-
                 <!-- お名前 -->
-                <label for="name" class="c-label">お名前<span class="c-required">必須</span></label>
-                <span v-if="errors && errors.name" class="c-error u-mt__s">{{ errors.name[0] }}</span>
-                <input v-model="formData.name" id="name" type="name" class="c-input u-pd__s u-mt__s u-mb__m" :class="{ 'is-invalid': errors && errors.name }" autocomplete="name">
-
+                <label for="name" class="c-label">お名前<span class="c-badge">必須</span></label>
+                <span v-if="errors && errors.name" class="c-error">{{ errors.name[0] }}</span>
+                <input v-model="formData.name" id="name" type="name" class="c-input" :class="{ 'is-invalid': errors && errors.name }" autocomplete="name">
                 <!-- メールアドレス -->
-                <label for="email" class="c-label">メールアドレス<span class="c-required">必須</span></label>
-                <span v-if="errors && errors.email" class="c-error u-mt__s">{{ errors.email[0] }}</span>
-                <input v-model="formData.email" id="email" type="text" class="c-input u-pd__s u-mt__s u-mb__m" :class="{ 'is-invalid': errors && errors.email }" autocomplete="email">
-
+                <label for="email" class="c-label">メールアドレス<span class="c-badge">必須</span></label>
+                <span v-if="errors && errors.email" class="c-error">{{ errors.email[0] }}</span>
+                <input v-model="formData.email" id="email" type="text" class="c-input" :class="{ 'is-invalid': errors && errors.email }" autocomplete="email">
                 <!--お問い合わせ内容 -->
-                <label for="contact" class="c-label">お問い合わせ内容<span class="c-required">必須</span></label>
-                <span v-if="errors && errors.contact" class="c-error u-mt__s">{{ errors.contact[0] }}</span>
-                <textarea v-model="formData.contact" maxlength="255" id="contact" type="text" class="c-textarea u-pd__s u-mt__s u-mb__m" cols="30" rows="10" @keyup="countCharacters" :class="{ 'is-invalid': errors && errors.contact }"></textarea>
-                <span class="c-textarea__count">{{ formData.contact.length }} / 255文字</span>
-
+                <label for="contact" class="c-label">お問い合わせ内容<span class="c-badge">必須</span></label>
+                <span v-if="errors && errors.contact" class="c-error">{{ errors.contact[0] }}</span>
+                <textarea v-model="formData.contact" maxlength="255" id="contact" type="text" class="c-textarea" cols="30" rows="10" @keyup="countCharacters" :class="{ 'is-invalid': errors && errors.contact }"></textarea>
+                <span class="c-textarea--count">{{ formData.contact.length }} / 255文字</span>
                 <!-- 送信ボタン -->
-                <button type="submit" class="c-button c-button__submit c-button__main u-pd__s u-mt__m">お問い合わせ内容を送信する</button>
+                <button type="submit" class="c-button c-button--submit c-button--main">お問い合わせ内容を送信する</button>
 
             </form>
         </section>
-        <a @click="$router.back()" class="c-link c-link__back u-mt__s u-mb__s">前のページに戻る</a>
     </main>
 </template>
 
 <script>
-import axios from 'axios';
+import Toast from './Toast.vue'; // Toastコンポーネントをインポート
 
 export default {
+    components: {
+        Toast, // Toastコンポーネントを読み込み
+    },
+
     data() {
         return {
             formData: {
@@ -49,9 +52,11 @@ export default {
         submitForm() {
             // お問い合わせ送信APIをPOST送信
             axios.post('/api/contact', this.formData).then(response => {
-                console.log('お問い合わせ内容を送信します。');
+                this.$store.dispatch('flash/setFlashMessage', { // フラッシュメッセージの表示
+                    message: 'お問い合わせ内容を受け付けました。',
+                    type: 'success'
+                });
             }).catch(error => {
-                console.error('お問い合わせ送信失敗:', error.response.data);
                 this.errors = error.response.data.errors;
             });
         },

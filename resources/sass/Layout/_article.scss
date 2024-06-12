@@ -1,18 +1,14 @@
-.l-main {
-    width: $site-width;
-    margin: auto;
-    padding: 40px 0;
+.l-article {
+    display: flex;
     @include mq(md){
-        width: 100%;
+        display: block;
     }
-    @include mq(sm){
-        width: 100%;
-    }
-    &__header {
-        margin: $space_xl 0;
+    @include mq(sm) {
+        display: block;
     }
 
-    &__wrapper {
+    &__main {
+        min-width: 75%;
         border: 0.5px solid $boader-color_line;
         @include mq(md){
             margin: $space_m;
@@ -21,6 +17,14 @@
         @include mq(sm){
             margin: $space_s;
             width: calc(100% - $space_s * 2);
+        }
+    }
+
+    &__sidebar {
+        min-width: 25%;
+        background: $background-color_sub2;
+        @include mq(sm) {
+            width: 100%;
         }
     }
 }

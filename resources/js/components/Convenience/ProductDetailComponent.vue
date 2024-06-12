@@ -1,48 +1,59 @@
 <template>
     <main class="l-main">
-        <h1 class="c-title u-mb__xl">商品詳細</h1>
-        <div class="p-article">
-            <section class="l-main__wrapper u-pd__l">
-                <div class="l-container">
-
-                    <h1 class="c-title u-mt__xl u-mb__xl">{{ product.name }}</h1> <!-- 商品名 -->
-                    <div class="p-product">
-                        <!-- いいねアイコンとエックスのシェア -->
-                        <div class="p-icon">
+        <div class="l-main__header">
+            <h1 class="c-title">商品詳細</h1>
+        </div>
+        <div class="l-article">
+            <div class="l-article__main">
+                <div class="p-product">
+                    <h2 class="c-title c-title--sub">{{ product.name }}</h2> <!-- 商品名 -->
+                    <!-- いいねアイコンとエックスのシェア -->
+                    <div class="c-icon">
+                        <div v-if="$store.getters['auth/check'] && $store.getters['auth/role'] === 'convenience'">
                             <div class="c-tooltip">
-                                <i class="c-icon c-icon__nolike fas fa-heart"></i><span class="u-mr__m">{{ product.likes_count }}</span> <!-- いいね数 -->
-                                <div class="c-tooltip__text">コンビニユーザーはお気に入りできません</div>
+                                <i class="c-icon c-icon--notlike far fa-heart"></i>{{ product.likes_count }} <!-- いいね数 -->
+                                <div class="c-tooltip__message">コンビニユーザーはお気に入り登録できません</div>
                             </div>
                             <i class="fa-brands fa-x-twitter c-icon c-icon__share u-pd__s" @click="Xshare"><span class="c-text">でシェア</span></i>
                         </div>
-                        <!-- 商品画像 -->
-                        <div class="p-product__picture">
-                            <img class="c-product__picture--detail" :src="getProductPicturePath(product)" alt="商品画像">
+                    </div>
+                    <!-- 商品画像 -->
+                    <img class="c-product__picture--detail" :src="getProductPicturePath(product)" alt="商品画像">
+                    <!-- 商品情報 -->
+                    <div class="c-product" v-if="product && product.convenience && product.convenience.user">
+                        <p class="c-product--item c-product__price--value">{{ product.price }}</p><span class="c-product__price--unit">円（税込）</span>
+                        <p class="c-product--item">商品カテゴリ：{{ getCategoryName(product.category_id) }}</p>
+                        <div class="c-product__expiration">
+                            <p class="c-product--item">賞味期限：{{ formatDate(product.expiration_date) }}</p>
+                            <!-- 賞味期限までの残り日数を表示 -->
+                            <p class="c-product--item">
+                                <i class="fa-regular fa-clock"></i>
+                                <span v-if="getExpirationDate(product.expiration_date) >= 0">残り{{ getExpirationDate(product.expiration_date) }}日</span>
+                                <span v-if="getExpirationDate(product.expiration_date) < 0">賞味期限切れ</span>
+                            </p>
                         </div>
                     </div>
-                    <!-- 商品情報 -->
-                    <div class="p-product__detail" v-if="product && product.convenience && product.convenience.user">
-                        <p class="c-card__text u-mt__s u-mb__s">価格：{{ product.price }}円</p>
-                        <p class="c-card__text u-mt__s u-mb__s">カテゴリ：{{ getCategoryName(product.category_id) }}</p>
-                        <p class="c-card__text u-mt__s u-mb__s">賞味期限：{{ formatDate(product.expiration_date) }}</p>
-                        <p class="c-card__text u-mt__s u-mb__s">この商品を出品したコンビニ：{{ product.convenience.user.name }} {{ product.convenience.branch_name }}</p>
-                        <p class="c-card__text u-mt__s u-mb__s">住所：{{ product.convenience.address.prefecture }}{{ product.convenience.address.city }}{{ product.convenience.address.town }}{{ product.convenience.address.building }}</p>
+                    <div class="c-product c-product--convenience">
+                        <div class="c-product--avatar-wrap">
+                            <img class="c-product--avatar" :src="product.convenience.user.avatar" alt="コンビニユーザー顔写真">
+                        </div>
+                        <div class="c-product--item-wrap">
+                            <p class="c-product--item">この商品を出品したコンビニ：{{ product.convenience.user.name }} {{ product.convenience.branch_name }}</p>
+                            <p class="c-product--item">住所：{{ product.convenience.address.prefecture }}{{ product.convenience.address.city }}{{ product.convenience.address.town }}{{ product.convenience.address.building }}</p>
+                            <p v-if="introduction" class="c-product--item">自己紹介文：{{ product.convenience.user.introduction }}</p>
+                        </div>
                     </div>
+                    <!-- コンビニ側の購入ボタンは自店舗・他店舗に限らず購入ボタンをクリックできないようにする -->
+                    <button class="c-button c-button--submit c-button--purchase" :disabled="true">コンビニユーザーは購入できません</button>
                 </div>
-
-                <!-- コンビニ側の購入ボタンは自店舗・他店舗に限らず購入ボタンをクリックできないようにする -->
-                <button class="c-button c-button__submit c-button__purchase" :disabled="true">コンビニユーザーは購入できません</button>
-
-            </section>
+            </div>
             <!-- サイドバー -->
             <sidebar-component :convenience_name="convenience_name" :branch_name="branch_name" :prefecture="prefecture" :city="city" :town="town" :building="building" :introduction="introduction"></sidebar-component>
         </div>
-        <a @click="$router.back()" class="c-link c-link__back u-mt__s u-mb__s">前のページに戻る</a>
     </main>
 </template>
 
 <script>
-import axios from 'axios';
 import SidebarComponent from './SidebarComponent.vue';
 
 export default {

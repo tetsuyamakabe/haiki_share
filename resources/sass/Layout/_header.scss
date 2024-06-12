@@ -8,9 +8,8 @@
     background-color: $background-color_sub2;
     position: sticky;
     top: 0;
-    z-index: 1;
+    z-index: 2;
     opacity: 0.9;
-
 
     @include mq(sm) {
         height: 60px;

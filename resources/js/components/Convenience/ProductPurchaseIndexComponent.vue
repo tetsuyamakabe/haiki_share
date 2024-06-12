@@ -1,69 +1,63 @@
 <template>
     <main class="l-main">
-        <h1 class="c-title u-mb__xl">購入された商品一覧</h1>
-        <div class="p-article">
-            <div class="l-main__wrapper">
-
-                <div class="p-product__index p-product__index--purchased">
+        <div class="l-main__header">
+            <h1 class="c-title">購入された商品一覧</h1>
+        </div>
+        <div class="l-article">
+            <div class="l-article__main">
+                <div class="p-product">
                     <!-- 全体件数と1ページの表示件数を表示 -->
                     <p class="c-text">{{ products.data ? products.data.length : 0 }}件表示 / 全{{ products.total ? products.total : 0 }}件中</p>
-                    <ul class="p-product__list">
+                    <ul class="p-product--list">
                         <!-- 購入された商品がない場合 -->
                         <li v-if="!products.data || products.data.length === 0" class="p-product__item">
-                            <p class="c-text u-pd__xl">購入された商品はありません。</p>
+                            <p class="c-text u-m__xl">購入された商品はありません。</p>
                         </li>
                         <!-- 購入された商品一覧を表示 -->
                         <li v-else v-for="product in products.data" :key="product.id" class="p-product__item">
                             <!-- 商品情報の表示 -->
-                            <div class="c-card u-m__s u-pd__s">
-                                <div class="p-card__header u-pd__s">
+                            <div class="c-card">
+                                <div class="c-card__header">
                                     <h3 class="c-card__name">{{ product.name }}</h3> <!-- 商品名 -->
                                 </div>
-                                <div class="p-card__container">
-                                    <img class="c-card__picture u-mb__s" :src="getProductPicturePath(product)" alt="商品画像"> <!-- 商品画像 -->
-                                    <div class="p-icon">
-                                    <!-- コンビニユーザーの場合にコンビニユーザーツールチップを表示 -->
-                                        <div class="c-tooltip">
-                                            <i class="c-icon c-icon__nolike far fa-heart"></i>{{ product.likes_count }} <!-- いいね数 -->
-                                            <div class="c-tooltip__text">コンビニユーザーはお気に入り登録できません</div>
+                                <div class="c-card__body">
+                                    <img class="c-card__img" :src="getProductPicturePath(product)" alt="商品画像"> <!-- 商品画像 -->
+                                    <div class="c-icon">
+                                        <!-- コンビニユーザーの場合にコンビニユーザーツールチップを表示 -->
+                                        <div v-if="$store.getters['auth/check'] && $store.getters['auth/role'] === 'convenience'">
+                                            <div class="c-tooltip">
+                                                <i class="c-icon c-icon--notlike far fa-heart"></i>{{ product.likes_count }} <!-- いいね数 -->
+                                                <div class="c-tooltip__message">コンビニユーザーはお気に入り登録できません</div>
+                                            </div>
                                         </div>
                                     </div>
                                     <!-- 賞味期限までの残り日数を表示 -->
                                     <p class="c-card__text">
                                         <i class="fa-regular fa-clock"></i>
-                                        <span v-if="getExpirationDate(product.expiration_date) >= 0">
-                                            残り{{ getExpirationDate(product.expiration_date) }}日
-                                        </span>
-                                        <span v-if="getExpirationDate(product.expiration_date) < 0">
-                                            賞味期限切れ
-                                        </span>
+                                        <span v-if="getExpirationDate(product.expiration_date) >= 0">残り{{ getExpirationDate(product.expiration_date) }}日</span>
+                                        <span v-if="getExpirationDate(product.expiration_date) < 0">賞味期限切れ</span>
                                     </p>
                                     <p class="c-card__text"><i class="fa-solid fa-calendar-days"></i>{{ formatDate(product.expiration_date) }}</p> <!-- 賞味期限日付 -->
-                                    <p class="c-card__label c-card__category u-pd__s">{{ product.category.name }}</p> <!-- カテゴリー名 -->
-                                    <p class="c-card__label c-card__price u-pd__s"><i class="fa-solid fa-yen-sign"></i>{{ product.price }}</p> <!-- 価格 -->
+                                    <p class="c-card__label c-card__category">{{ product.category.name }}</p> <!-- カテゴリー名 -->
+                                    <p class="c-card__label c-card__price"><i class="fa-solid fa-yen-sign"></i>{{ product.price }}</p> <!-- 価格 -->
                                 </div>
-                                <div class="p-card__footer">
-                                    <div class="c-button__container">
-                                        <router-link :to="getProductDetailLink(product.id)" class="c-button c-button__default u-pd__s u-m__s">詳細を見る</router-link>
-                                    </div>
+                                <div class="c-card__footer">
+                                    <router-link :to="getProductDetailLink(product.id)" class="c-button c-button--default">詳細を見る</router-link>
                                 </div>
                             </div>
                         </li>
                     </ul>
                 </div>
-
             </div>
             <!-- サイドバー -->
             <sidebar-component :convenience_name="convenience_name" :branch_name="branch_name" :prefecture="prefecture" :city="city" :town="town" :building="building" :introduction="introduction"></sidebar-component>
         </div>
         <!-- ページネーション -->
         <pagination-component @onClick="onPageChange" :current_page="currentPage" :last_page="lastPage" />
-        <a @click="$router.back()" class="c-link c-link__back u-mt__s u-mb__s">前のページに戻る</a>
     </main>
 </template>
 
 <script>
-import axios from 'axios';
 import SidebarComponent from './SidebarComponent.vue';
 import PaginationComponent from '../PaginationComponent.vue'; // ページネーションコンポーネント
 

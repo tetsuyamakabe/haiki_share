@@ -2,7 +2,7 @@
     position: relative;
     display: inline-block;
 
-    &__text {
+    &__message {
         display: none;
         position: absolute;
         padding: 8px;
@@ -28,7 +28,7 @@
         }
     }
 
-    &:hover .c-tooltip__text {
+    &:hover .c-tooltip__message {
         display: block;
     }
 }

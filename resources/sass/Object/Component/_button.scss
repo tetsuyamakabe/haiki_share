@@ -1,4 +1,5 @@
 .c-button {
+    padding: $space_s;
     border-radius: 3px;
     text-decoration: none;
     text-align: center;
@@ -12,8 +13,68 @@
         color: $font-color_sub;
     }
 
-    @include mq(sm) {
-        font-size: $font-size_m;
+    &--submit {
+        margin-top: $space_m;
+        transition: 0.3s;
+        width: 100%;
+        height: 50px;
+    }
+
+    &--purchase {
+        display: block;
+        color: $font-color_sub;
+        background: $background-color_sub2;
+        &:disabled{
+            cursor: not-allowed;
+            background: $background-color_sub3;
+        }
+    }
+
+    &--main {
+        border: 2px solid $boader-color_main;
+        &:hover {
+            color: $font-color_sub;
+            background: $background-color_btn_main;
+        }
+    }
+
+    &--primary {
+        border: 2px solid $boader-color_primary;
+        &:hover {
+            background: $background-color_btn_primary;
+        }
+    }
+
+    &--default {
+        margin: $space_s;
+        padding: $space_s;
+        border: 2px solid $boader-color_line;
+        &:hover {
+            color: $font-color_sub;
+            background: $background-color_btn_default;
+        }
+    }
+
+    &__container {
+        display: flex;
+        flex-direction: column;
+    }
+
+    &--zip {
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    &--top {
+        margin: auto;
+        padding: $space_s;
+        display: flex;
+        width: 30%;
+        justify-content: center;
+        height: 50px;
+        align-items: center;
+        border-radius: 100vh;
+        font-size: 24px;
     }
 
     &__register {
@@ -27,16 +88,6 @@
         }
     }
 
-    &__top {
-        margin: auto;
-        display: flex;
-        width: 30%;
-        justify-content: center;
-        height: 50px;
-        align-items: center;
-        border-radius: 100vh;
-        font-size: 24px;
-    }
 
     &__contact {
         width: 100%;
@@ -50,53 +101,8 @@
         }
     }
 
-    &__submit {
-        transition: 0.3s;
-        width: 100%;
-        height: 50px;
-        font-weight: bold;
-    }
-
-    &__primary {
-        border: 2px solid $boader-color_primary;
-        &:hover {
-            background: $background-color_btn_primary;
-        }
-    }
-
-    &__main {
-        border: 2px solid $boader-color_main;
-        &:hover {
-            color: $font-color_sub;
-            background: $background-color_btn_main;
-        }
-    }
-
-    &__default {
-        border: 2px solid $boader-color_line;
-        &:hover {
-            color: $font-color_sub;
-            background: $background-color_btn_default;
-        }
-    }
-
     &__share {
         background: #000;
         border: #000;
-    }
-
-    &__purchase {
-        display: block;
-        color: $font-color_sub;
-        background: $background-color_sub2;
-        &:disabled{
-            cursor: not-allowed;
-            background: $background-color_sub3;
-        }
-    }
-
-    &__container {
-        display: flex;
-        flex-direction: column;
     }
 }

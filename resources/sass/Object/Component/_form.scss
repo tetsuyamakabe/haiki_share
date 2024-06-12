@@ -1,12 +1,22 @@
 .c-form {
-    padding: 40px 240px;
-    background: $background-color_sub;
-
-    @include mq(sm){
-        padding: $font-size_l
+    margin: 0 auto;
+    padding: 40px;
+    max-width: 500px;
+    @include mq(sm) {
+        max-width: 100%;
+        padding: $space_l;
     }
-
-    &__column {
-        padding: 40px 120px;
+    &__group {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: $space_m 0;
+    }
+    &--expiration {
+        display: flex;
+    }
+    &--search {
+        padding: $space_s;
+        background-color: $background-color_sub;
     }
 }

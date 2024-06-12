@@ -1,0 +1,19 @@
+.c-product__picture {
+    margin: $space_m 0;
+    padding: $space_s;
+    position: relative;
+    height: 100%;
+    border: 1px solid $boader-color_line;
+    &--img {
+        width: 100%;
+    }
+    &--detail {
+        display: block;
+        margin: auto;
+        padding: $space_s;
+        max-width: 500px;
+        @include mq(sm) {
+            width: 100%;
+        }
+    }
+}

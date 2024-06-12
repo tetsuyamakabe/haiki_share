@@ -1,28 +1,42 @@
 .c-product {
-    &__picture {
-        width: 100%;
-
-        &--detail {
-            display: block;
-            margin: auto;
-            max-width: 700px;
-            padding: $space_l 0;
-
-            @include mq(sm) {
-                width: 100%;
-            }
+    width: 80%;
+    padding: $space_s;
+    margin: auto;
+    &--item{
+        font-size: $font-size_default;
+        line-height: 1.5;
+    }
+    &__price {
+        &--value {
+            font-size: $font-size_l;
+            font-weight: bold;
+            display: inline-block;
+        }
+        &--unit {
+            font-size: $font-size_default;
         }
     }
-
-    &__name {
-        font-weight: bold;
-        font-size: $font-size_m;
-    }
-
-    &__price,
-    &__date {
+    &__expiration {
         display: flex;
+        justify-content: space-between;
+        @include mq(sm) {
+            display: block;
+        }
+    }
+    &--convenience {
+        display: flex;
+    }
+    &--avatar {
+        width: 100px;
+        border-radius: 50%;
+    }
+    &--avatar-wrap {
+        display: flex;
+        align-items: center;
+    }
+    &--item-wrap {
+        display: flex;
+        flex-direction: column;
         justify-content: center;
-        font-size: $font-size_m;
     }
 }

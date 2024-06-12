@@ -3,17 +3,18 @@
     text-align: center;
     font-size: $font-size_xl;
     color: $font-color_default;
-
     @include mq(sm){
-        font-size: $font-size_default;
-    }
-
-    &__sub {
         font-size: $font-size_l;
-
+    }
+    &--sub {
+        margin: $space_m 0;
+        font-size: $font-size_l;
         @include mq(sm) {
             font-size: $font-size_default;
         }
+    }
+    &--top {
+        margin: $space_xl 0;
     }
 
     &__terms,

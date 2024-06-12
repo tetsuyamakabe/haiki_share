@@ -1,50 +1,42 @@
 <template>
-    <section class="l-sidebar">
-        <div class="p-mypage__sidebar">
-            <div class="p-search__form u-pd__s">
-                <h3 class="c-title c-title__sub u-mt__m u-mb__m">絞り込み検索</h3>
-                <div class="p-search__container">
-                    <form @submit.prevent="submitForm" class="c-form u-pd__s">
-
-                        <!-- 都道府県 -->
-                        <label class="c-label">出品したコンビニがある都道府県</label>
-                        <select class="c-selectbox u-mt__s u-mb__s" v-model="selectedPrefecture">
-                            <option value="">都道府県を選択</option>
-                            <option v-for="prefecture in prefectures" :key="prefecture">{{ prefecture }}</option>
-                        </select>
-
-                        <!-- 価格 -->
-                        <label class="c-label">最低価格</label>
-                        <span v-if="errors && errors.minprice" class="c-error u-mt__s">{{ errors.minprice[0] }}</span>
-                        <input class="c-input c-input__search u-mt__s u-mb__s u-pd__s" type="text" name="minprice" maxlength="4" v-model="minPrice"><span class="c-text u-ml__s">円</span>
-                        <label class="c-label">最高価格</label>
-                        <span v-if="errors && errors.maxprice" class="c-error u-mt__s">{{ errors.maxprice[0] }}</span>
-                        <input class="c-input c-input__search u-mt__s u-mb__s u-pd__s" type="text" name="maxprice" maxlength="4" v-model="maxPrice"><span class="c-text u-ml__s">円</span>
-
-                        <!-- 賞味期限切れかどうか -->
-                        <label class="c-label">賞味期限切れかどうか</label>
-                        <div class="c-input__radio u-mt__s u-mb__s">
-                            <div class="p-search__expired">
-                                <input type="radio" value="true" v-model="isExpired"><label class="c-text u-ml__s">賞味期限切れ</label>
-                            </div>
-                            <div class="p-search__expired">
-                                <input type="radio" value="false" v-model="isExpired"><label class="c-text u-ml__s">賞味期限内</label>
-                            </div>
-                        </div>
-
-                        <!-- 検索ボタン -->
-                        <button type="submit" class="c-button c-button__submit c-button__primary u-pd__s u-mt__m u-mb__m">商品を検索する</button>
-
-                    </form>
+    <section class="l-article__sidebar">
+        <div class="p-sidebar">
+            <h2 class="c-title c-title--sub">絞り込み検索</h2>
+            <form @submit.prevent="submitForm" class="c-form c-form--search">
+                <!-- 都道府県 -->
+                <label class="c-label">出品したコンビニがある都道府県</label>
+                <select class="c-selectbox" v-model="selectedPrefecture">
+                    <option value="">都道府県を選択</option>
+                    <option v-for="prefecture in prefectures" :key="prefecture">{{ prefecture }}</option>
+                </select>
+                <!-- 価格 -->
+                <label class="c-label">最低価格</label>
+                <span v-if="errors && errors.minprice" class="c-error">{{ errors.minprice[0] }}</span>
+                <input class="c-input c-input__search" type="text" name="minprice" maxlength="4" v-model="minPrice"><span class="c-text">円</span>
+                <label class="c-label">最高価格</label>
+                <span v-if="errors && errors.maxprice" class="c-error">{{ errors.maxprice[0] }}</span>
+                <input class="c-input c-input__search" type="text" name="maxprice" maxlength="4" v-model="maxPrice"><span class="c-text">円</span>
+                <!-- 賞味期限切れかどうか -->
+                <label class="c-label">賞味期限切れかどうか</label>
+                <div class="c-input__radio">
+                    <input type="radio" value="true" v-model="isExpired"><label class="c-text">賞味期限切れ</label></br>
+                    <input type="radio" value="false" v-model="isExpired"><label class="c-text">賞味期限内</label>
                 </div>
-            </div>
+
+                <label class="c-label">並び替え</label>
+                <select class="c-selectbox" v-model="sortOrder">
+                    <option value="">選択してください</option>
+                    <option value="desc">新しい順</option>
+                    <option value="asc">古い順</option>
+                </select>
+                <!-- 検索ボタン -->
+                <button type="submit" class="c-button c-button--submit c-button--primary">商品を検索する</button>
+            </form>
         </div>
     </section>
 </template>
 
 <script>
-import axios from 'axios';
-
 export default {
     props: ['errors'],
 
@@ -55,6 +47,7 @@ export default {
             minPrice: 0, // 最小価格
             maxPrice: 0, // 最大価格
             isExpired: '', // 賞味期限切れかどうか
+            sortOrder: '', // 並び替えの順序を保持する変数
         };
     },
 
@@ -92,6 +85,9 @@ export default {
             }
             if (this.isExpired !== null) { // 検索条件に賞味期限がある場合
                 params.expiration_date = this.isExpired; // paramsオブジェクトにisExpiredを入れる
+            }
+            if (this.sortOrder) { // ソート順が選択されている場合
+                params.sort = this.sortOrder; // paramsオブジェクトにsortOrderを入れる
             }
             console.log('検索パラメータ:', params);
             // 親コンポーネントに通知

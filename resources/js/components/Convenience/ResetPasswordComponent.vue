@@ -1,39 +1,38 @@
 <template>
     <main class="l-main">
+        <div class="l-main__header">
+            <h1 class="c-title">コンビニパスワード変更</h1>
+        </div>
         <section class="l-main__wrapper">
-            <h1 class="c-title u-mt__xl u-mb__xl">コンビニパスワード変更</h1>
             <!-- フラッシュメッセージを表示 -->
             <Toast />
-
             <form @submit.prevent="resetPassword" class="c-form">
-
                 <!-- 新しいパスワード -->
-                <label for="new_password" class="c-label">新しいパスワード<span class="c-required">必須</span></label>
-                <span class="c-text c-text__note">※新しいパスワードと新しいパスワード（再入力）は、半角数字・英字大文字・小文字、記号（!@#$%^&*）を使って8文字以上で入力してください</span>
-                <span v-if="errors && errors.newPassword" class="c-error u-mt__s">{{ errors.newPassword[0] }}</span>
-                <div class="c-input__password">
-                    <input v-model="formData.newPassword" id="new_password" :type="NewPasswordType" class="c-input u-pd__s u-mt__m u-mb__m" :class="{ 'is-invalid': errors && errors.newPassword }" placeholder="英数字8文字以上で入力してください">
-                    <span @click="togglePasswordVisibility('new_password')"><i :class="NewPasswordIconClass"></i></span>
+                <label for="new_password" class="c-label">新しいパスワード<span class="c-badge">必須</span></label>
+                <span class="c-text c-text--note">※新しいパスワードと新しいパスワード（再入力）は、半角数字・英字大文字・小文字、記号（!@#$%^&*）を使って8文字以上で入力してください</span>
+                <span v-if="errors && errors.newPassword" class="c-error">{{ errors.newPassword[0] }}</span>
+                <div class="c-password">
+                    <input v-model="formData.newPassword" id="new_password" :type="NewPasswordType" class="c-input" :class="{ 'is-invalid': errors && errors.newPassword }" placeholder="英数字8文字以上で入力してください">
+                    <span @click="togglePasswordVisibility('new_password')" class="c-password__icon">
+                        <i :class="NewPasswordIconClass"></i>
+                    </span>
                 </div>
-
                 <!-- 新しいパスワード（再入力） -->
-                <label for="password-confirm" class="c-label">新しいパスワード（再入力）<span class="c-required">必須</span></label>
-                <span v-if="errors && errors.password_confirmation" class="c-error u-mt__s">{{ errors.password_confirmation[0] }}</span>
+                <label for="password-confirm" class="c-label">新しいパスワード（再入力）<span class="c-badge">必須</span></label>
+                <span v-if="errors && errors.password_confirmation" class="c-error">{{ errors.password_confirmation[0] }}</span>
                 <div class="c-input__password">
-                    <input v-model="formData.password_confirmation" id="password-confirm" :type="PasswordConfirmType" class="c-input u-pd__s u-mt__m u-mb__m" :class="{ 'is-invalid': errors && errors.password_confirmation }" placeholder="英数字8文字以上で入力してください">
-                    <span @click="togglePasswordVisibility('password_confirm')"><i :class="PasswordConfirmIconClass"></i></span>
+                    <input v-model="formData.password_confirmation" id="password-confirm" :type="PasswordConfirmType" class="c-input" :class="{ 'is-invalid': errors && errors.password_confirmation }" placeholder="英数字8文字以上で入力してください">
+                    <span @click="togglePasswordVisibility('password_confirm')" class="c-password__icon">
+                        <i :class="PasswordConfirmIconClass"></i>
+                    </span>
                 </div>
-
                 <!-- パスワード再設定のトークンとメールアドレスの隠しフィールド -->
                 <input type="hidden" name="token" v-model="token">
                 <input type="hidden" name="email" v-model="email">
-
                 <!-- メール送信ボタン -->
-                <button type="submit" class="c-button c-button__submit c-button__main u-pd__s u-mt__m">パスワードを変更する</button>
-
+                <button type="submit" class="c-button c-button--submit c-button--main">パスワードを変更する</button>
             </form>
         </section>
-        <a @click="$router.back()" class="c-link c-link__back u-mt__s u-mb__s">前のページに戻る</a>
     </main>
 </template>
 
@@ -87,12 +86,6 @@ export default {
                 });
                 this.$router.push({ name: 'convenience.login' }); // パスワード変更後、ログイン画面に遷移
             }).catch(error => {
-                this.$store.dispatch('flash/setFlashMessage', { // フラッシュメッセージの表示
-                    message: 'パスワードを変更できませんでした。',
-                    type: 'error'
-                });
-                console.log('errorは、', error);
-                console.error('パスワード変更失敗:', error.response.data);
                 this.errors = error.response.data.errors;
             });
         },

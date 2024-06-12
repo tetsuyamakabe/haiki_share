@@ -7,7 +7,7 @@
 購入商品情報<br>
 =============================<br>
 【商品名】{{ $product->name }}<br>
-【価格】{{ $product->price }} 円<br>
+【価格】{{ $product->price }} 円（税込）<br>
 【賞味期限】{{ $formattedExpirationDate }}<br>
 <br>
 =============================<br>

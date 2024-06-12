@@ -1,119 +1,109 @@
 <template>
     <main class="l-main">
-        <h1 class="c-title u-mb__xl">コンビニマイページ</h1>
-        <div class="p-article">
-            <section class="l-main__wrapper">
-                <div class="l-container">
-
-                    <!-- 出品した商品を最大5件表示 -->
-                    <div class="p-mypage__sale">
-                        <h2 class="c-title c-title__sub">出品した商品</h2><span class="c-text c-text__max">最大5件表示</span>
-                        <!-- 商品情報がない場合 -->
-                        <div v-if="saleProducts.length === 0">
-                            <ul class="p-product__list">
-                                <p class="c-text u-pd__xl">出品した商品はありません。</p>
-                            </ul>
-                        </div>
-                        <!-- 商品情報を表示 -->
-                        <div v-else>
-                            <ul class="p-product__list">
-                                <li v-for="product in saleProducts" :key="product.id" class="p-product__item">
-                                    <div class="c-card u-m__s u-pd__s">
-                                        <div class="p-card__header u-pd__s">
-                                            <h3 class="c-card__name">{{ product.name }}</h3> <!-- 商品名 -->
-                                        </div>
-                                        <div class="p-card__container">
-                                            <img class="c-card__picture u-mb__s" :src="getProductPicturePath(product)" alt="商品画像"> <!-- 商品画像 -->
-                                            <div class="p-icon">
-                                                <!-- コンビニユーザーの場合にコンビニユーザーツールチップを表示 -->
-                                                <div v-if="$store.getters['auth/check'] && $store.getters['auth/role'] === 'convenience'">
-                                                    <div class="c-tooltip">
-                                                        <i class="c-icon c-icon__nolike far fa-heart"></i>{{ product.likes_count }} <!-- いいね数 -->
-                                                        <div class="c-tooltip__text">コンビニユーザーはお気に入り登録できません</div>
-                                                    </div>
+        <div class="l-main__header">
+            <h1 class="c-title">コンビニマイページ</h1>
+        </div>
+        <div class="l-article">
+            <div class="l-article__main">
+                <!-- 出品した商品を最大5件表示 -->
+                <div class="p-mypage">
+                    <h2 class="c-title c-title--sub">出品した商品</h2><span class="c-text c-text--max">最大5件表示</span>
+                    <!-- 商品情報がない場合 -->
+                    <div v-if="saleProducts.length === 0">
+                        <ul class="p-mypage--list"><p class="c-text">出品した商品はありません。</p></ul>
+                    </div>
+                    <!-- 商品情報を表示 -->
+                    <div v-else>
+                        <ul class="p-mypage--list">
+                            <li v-for="product in saleProducts" :key="product.id" class="p-product__item">
+                                <div class="c-card">
+                                    <div class="c-card__header">
+                                        <h3 class="c-card__name">{{ product.name }}</h3> <!-- 商品名 -->
+                                    </div>
+                                    <div class="c-card__body">
+                                        <img class="c-card__img" :src="getProductPicturePath(product)" alt="商品画像"> <!-- 商品画像 -->
+                                        <div class="c-icon">
+                                            <!-- コンビニユーザーの場合にコンビニユーザーツールチップを表示 -->
+                                            <div v-if="$store.getters['auth/check'] && $store.getters['auth/role'] === 'convenience'">
+                                                <div class="c-tooltip">
+                                                    <i class="c-icon c-icon--notlike far fa-heart"></i>{{ product.likes_count }} <!-- いいね数 -->
+                                                    <div class="c-tooltip__message">コンビニユーザーはお気に入り登録できません</div>
                                                 </div>
                                             </div>
-                                            <!-- 賞味期限までの残り日数を表示 -->
-                                            <p class="c-card__text">
-                                                <i class="fa-regular fa-clock"></i>
-                                                <span v-if="getExpirationDate(product.expiration_date) >= 0">
-                                                    残り{{ getExpirationDate(product.expiration_date) }}日
-                                                </span>
-                                                <span v-if="getExpirationDate(product.expiration_date) < 0">
-                                                    賞味期限切れ
-                                                </span>
-                                            </p>
-                                            <p class="c-card__text"><i class="fa-solid fa-calendar-days"></i>{{ formatDate(product.expiration_date) }}</p> <!-- 賞味期限日付 -->
-                                            <p class="c-card__label c-card__category u-pd__s">{{ product.category.name }}</p> <!-- カテゴリー名 -->
-                                            <p class="c-card__label c-card__price u-pd__s"><i class="fa-solid fa-yen-sign"></i>{{ product.price }}</p> <!-- 価格 -->
                                         </div>
-                                        <div class="p-card__footer">
-                                            <div class="c-button__container">
-                                                <router-link :to="getProductDetailLink(product.id)" class="c-button c-button__default u-pd__s u-m__s">詳細を見る</router-link>
-                                            </div>
-                                        </div>
+                                        <!-- 賞味期限までの残り日数を表示 -->
+                                        <p class="c-card__text">
+                                            <i class="fa-regular fa-clock"></i>
+                                            <span v-if="getExpirationDate(product.expiration_date) >= 0">残り{{ getExpirationDate(product.expiration_date) }}日</span>
+                                            <span v-if="getExpirationDate(product.expiration_date) < 0">賞味期限切れ</span>
+                                        </p>
+                                        <p class="c-card__text"><i class="fa-solid fa-calendar-days"></i>{{ formatDate(product.expiration_date) }}</p> <!-- 賞味期限日付 -->
+                                        <p class="c-card__label c-card__category">{{ product.category.name }}</p> <!-- カテゴリー名 -->
+                                        <p class="c-card__label c-card__price"><i class="fa-solid fa-yen-sign"></i>{{ product.price }}</p> <!-- 価格 -->
                                     </div>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="c-link__products u-mt__s">
-                            <router-link class="c-link" :to="{ name: 'convenience.products.sale' }">全件表示</router-link>
-                        </div>
-                    </div>
-
-                    <!-- 購入された商品を最大5件表示 -->
-                    <div class="p-mypage__purchased">
-                        <h2 class="c-title c-title__sub">購入された商品</h2><span class="c-text c-text__max">最大5件表示</span>
-                        <!-- 商品情報がない場合 -->
-                        <div v-if="purchaseProducts.length === 0">
-                            <ul class="p-product__list">
-                                <p class="c-text u-pd__xl">購入された商品はありません。</p>
-                            </ul>
-                        </div>
-                        <!-- 商品情報を表示 -->
-                        <div v-else>
-                            <ul class="p-product__list">
-                                <li v-for="product in purchaseProducts" :key="product.id" class="p-product__item">
-                                    <div class="c-card u-m__s u-pd__s">
-                                        <div class="p-card__header u-pd__s">
-                                            <h3 class="c-card__name">{{ product.name }}</h3> <!-- 商品名 -->
-                                        </div>
-                                        <div class="p-card__container">
-                                            <img class="c-card__picture u-mb__s" :src="getProductPicturePath(product)" alt="商品画像"> <!-- 商品画像 -->
-                                            <!-- 賞味期限までの残り日数を表示 -->
-                                            <p class="c-card__text">
-                                                <i class="fa-regular fa-clock"></i>
-                                                <span v-if="getExpirationDate(product.expiration_date) >= 0">
-                                                    残り{{ getExpirationDate(product.expiration_date) }}日
-                                                </span>
-                                                <span v-if="getExpirationDate(product.expiration_date) < 0">
-                                                    賞味期限切れ
-                                                </span>
-                                            </p>
-                                            <p class="c-card__text"><i class="fa-solid fa-calendar-days"></i>{{ formatDate(product.expiration_date) }}</p> <!-- 賞味期限日付 -->
-                                            <p class="c-card__label c-card__category u-pd__s">{{ product.category.name }}</p> <!-- カテゴリー名 -->
-                                            <p class="c-card__label c-card__price u-pd__s"><i class="fa-solid fa-yen-sign"></i>{{ product.price }}</p> <!-- 価格 -->
-                                        </div>
-                                        <div class="p-card__footer">
-                                            <div class="c-button__container">
-                                                <router-link :to="getProductDetailLink(product.id)" class="c-button c-button__default u-pd__s u-m__s">詳細を見る</router-link>
-                                            </div>
-                                        </div>
+                                    <div class="c-card__footer">
+                                        <router-link :to="getProductDetailLink(product.id)" class="c-button c-button--default">詳細を見る</router-link>
                                     </div>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="c-link__products u-mt__s">
-                            <router-link class="c-link" :to="{ name: 'convenience.products.purchase' }">全件表示</router-link>
-                        </div>
+                                </div>
+                            </li>
+                        </ul>
                     </div>
-
+                    <div class="p-mypage--link">
+                        <router-link class="c-link c-link--all" :to="{ name: 'convenience.products.sale' }">全件表示</router-link>
+                    </div>
                 </div>
-            </section>
+
+                <!-- 購入された商品を最大5件表示 -->
+                <div class="p-mypage">
+                    <h2 class="c-title c-title--sub">購入された商品</h2><span class="c-text c-text--max">最大5件表示</span>
+                    <!-- 商品情報がない場合 -->
+                    <div v-if="purchaseProducts.length === 0">
+                        <ul class="p-mypage--list"><p class="c-text">購入された商品はありません。</p></ul>
+                    </div>
+                    <!-- 商品情報を表示 -->
+                    <div v-else>
+                        <ul class="p-mypage--list">
+                            <li v-for="product in purchaseProducts" :key="product.id" class="p-product__item">
+                                <div class="c-card">
+                                    <div class="c-card__header">
+                                        <h3 class="c-card__name">{{ product.name }}</h3> <!-- 商品名 -->
+                                    </div>
+                                    <div class="c-card__body">
+                                        <img class="c-card__img" :src="getProductPicturePath(product)" alt="商品画像"> <!-- 商品画像 -->
+                                        <div class="c-icon">
+                                            <!-- コンビニユーザーの場合にコンビニユーザーツールチップを表示 -->
+                                            <div v-if="$store.getters['auth/check'] && $store.getters['auth/role'] === 'convenience'">
+                                                <div class="c-tooltip">
+                                                    <i class="c-icon c-icon--notlike far fa-heart"></i>{{ product.likes_count }} <!-- いいね数 -->
+                                                    <div class="c-tooltip__message">コンビニユーザーはお気に入り登録できません</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- 賞味期限までの残り日数を表示 -->
+                                        <p class="c-card__text">
+                                            <i class="fa-regular fa-clock"></i>
+                                            <span v-if="getExpirationDate(product.expiration_date) >= 0">残り{{ getExpirationDate(product.expiration_date) }}日</span>
+                                            <span v-if="getExpirationDate(product.expiration_date) < 0">賞味期限切れ</span>
+                                        </p>
+                                        <p class="c-card__text"><i class="fa-solid fa-calendar-days"></i>{{ formatDate(product.expiration_date) }}</p> <!-- 賞味期限日付 -->
+                                        <p class="c-card__label c-card__category">{{ product.category.name }}</p> <!-- カテゴリー名 -->
+                                        <p class="c-card__label c-card__price"><i class="fa-solid fa-yen-sign"></i>{{ product.price }}</p> <!-- 価格 -->
+                                    </div>
+                                    <div class="c-card__footer">
+                                        <router-link :to="getProductDetailLink(product.id)" class="c-button c-button--default">詳細を見る</router-link>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="p-mypage--link">
+                        <router-link class="c-link c-link--all" :to="{ name: 'convenience.products.purchase' }">全件表示</router-link>
+                    </div>
+                </div>
+            </div>
             <!-- サイドバー -->
             <sidebar-component :convenience_name="convenience_name" :branch_name="branch_name" :prefecture="prefecture" :city="city" :town="town" :building="building" :introduction="introduction"></sidebar-component>
         </div>
-        <a @click="$router.back()" class="c-link c-link__back u-mt__s u-mb__s">前のページに戻る</a>
     </main>
 </template>
 
@@ -220,8 +210,7 @@ export default {
                 this.town = this.address.town; // 地名・番地
                 this.building = this.address.building; // 建物名・部屋番号
                 this.introduction = this.user.introduction; // 自己紹介文
-            })
-            .catch(error => {
+            }).catch(error => {
                 console.error('プロフィール取得失敗:', error.response.data);
                 this.errors = error.response.data;
             });
