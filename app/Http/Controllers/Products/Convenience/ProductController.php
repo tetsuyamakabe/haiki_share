@@ -13,6 +13,7 @@ use App\Models\ProductPicture;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Requests\Convenience\SearchRequest;
 use App\Http\Requests\Convenience\ProductEditRequest;
 use App\Http\Requests\Convenience\ProductSaleRequest;
 
@@ -171,7 +172,7 @@ class ProductController extends Controller
     }
 
     // すべての商品情報の取得
-    public function getAllProducts(Request $request)
+    public function getAllProducts(SearchRequest $request)
     {
         \Log::info('getAllProductsメソッドを呼んでいます。');
         \Log::info('$request->allは、', $request->all());
@@ -180,7 +181,7 @@ class ProductController extends Controller
             $userId = auth()->id();
             // 商品情報と関連付けられていた商品画像とカテゴリ情報をいいね数と合わせて取得
             $query = Product::with(['pictures', 'category'])->withCount('likes'); // withCountでいいね数の取得
-            $prefecture = $request->params['prefecture'] ?? null; // 出品しているコンビニがある都道府県
+            $prefecture = $request->input('prefecture'); // 出品しているコンビニがある都道府県
             if ($prefecture !== null) { // 検索条件にprefectureがある場合
                 // Convenienceモデル経由でAddressモデルのprefectureの値を取得
                 $query->whereHas('convenience.address', function ($addressQuery) use ($prefecture) {
@@ -189,17 +190,17 @@ class ProductController extends Controller
                 });
             }
             \Log::info('$prefectureは、', [$prefecture]);
-            $minPrice = $request->params['minprice'] ?? null; // 最小価格
+            $minPrice = $request->input('minprice'); // 最小価格
             if ($minPrice !== null) { // 検索条件にminPriceがある場合
                 $query->where('price', '>=', $minPrice); // priceより小さい値を取得
             }
             \Log::info('$minPriceは、', [$minPrice]);
-            $maxPrice = $request->params['maxprice'] ?? null; // 最大価格
+            $maxPrice = $request->input('maxprice'); // 最大価格
             if ($maxPrice !== null) { // 検索条件にmaxPriceがある場合
                 $query->where('price', '<=', $maxPrice); // priceより大きい値を取得
             }
             \Log::info('$maxPriceは、', [$maxPrice]);
-            $expired = $request->params['expiration_date'] ?? null; // 賞味期限切れかどうか
+            $expired = $request->input('expiration_date');; // 賞味期限切れかどうか
             if ($expired !== null) { // 検索条件に$expiredがある場合
                 $today = Carbon::today()->toDateString(); // 現在の日付を取得
                 if ($expired === 'true') { // $expiredがtrueの場合
@@ -209,7 +210,7 @@ class ProductController extends Controller
                 }
             }
             \Log::info('$expiredは、', [$expired]);
-            $sortOrder = $request->params['sort'] ?? 'desc'; // デフォルトは降順
+            $sortOrder = $request->sort ?? 'desc'; // デフォルトは降順
             \Log::info('$sortOrderは、', [$sortOrder]);
             // コレクションを並び替えて15件ずつ取得
             $products = $query->orderBy('created_at', $sortOrder)->paginate(15);
