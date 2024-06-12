@@ -8153,30 +8153,12 @@ __webpack_require__.r(__webpack_exports__);
       }
       this.lastParams = params; // 最後の検索条件を更新
     },
-    // 商品情報をサーバーから取得
-    // getProduct() {
-    //     // 現在のルートのクエリパラメータを取得
-    //     const params = Object.assign({}, this.$route.query); // クエリパラメータのコピーを作成
-    //     console.log('paramsは、', params, 'this.currentPageは、', this.currentPage);
-    //     axios.get('/api/products', { params: params }).then(response => { // パラメータを含むリクエスト
-    //         console.log('APIのレスポンスは、', response.data);
-    //         // レスポンスデータをそれぞれのプロパティにセット
-    //         this.products = response.data.products; // 商品情報
-    //         console.log('this.productsは、', this.products);
-    //         this.lastPage = response.data.products.last_page; // ページ数
-    //     }).catch(error => {
-    //         console.error('商品情報取得失敗:', error.response.data);
-    //         this.errors = error.response.data;
-    //     });
-    // },
     getProduct: function getProduct() {
       var _this2 = this;
       // 現在のルートのクエリパラメータを取得
       var params = Object.assign({}, this.$route.query); // クエリパラメータのコピーを作成
       console.log('paramsは、', params, 'this.currentPageは、', this.currentPage);
-      axios.post('/api/products', {
-        params: params
-      }).then(function (response) {
+      axios.post('/api/products', params).then(function (response) {
         console.log('APIのレスポンスは、', response.data);
         // レスポンスデータをそれぞれのプロパティにセット
         _this2.products = response.data.products; // 商品情報
@@ -52445,7 +52427,12 @@ var render = function () {
               },
             ],
             staticClass: "c-input c-input__search",
-            attrs: { type: "text", name: "minprice", maxlength: "4" },
+            attrs: {
+              type: "text",
+              name: "minprice",
+              maxlength: "4",
+              placeholder: "半角数字で入力",
+            },
             domProps: { value: _vm.minPrice },
             on: {
               input: function ($event) {
@@ -52476,7 +52463,12 @@ var render = function () {
               },
             ],
             staticClass: "c-input c-input__search",
-            attrs: { type: "text", name: "maxprice", maxlength: "4" },
+            attrs: {
+              type: "text",
+              name: "maxprice",
+              maxlength: "4",
+              placeholder: "半角数字で入力",
+            },
             domProps: { value: _vm.maxPrice },
             on: {
               input: function ($event) {
