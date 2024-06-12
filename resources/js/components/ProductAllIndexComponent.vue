@@ -169,7 +169,8 @@ export default {
             // 現在のルートのクエリパラメータを取得
             const params = Object.assign({}, this.$route.query); // クエリパラメータのコピーを作成
             console.log('paramsは、', params, 'this.currentPageは、', this.currentPage);
-            axios.post('/api/products', null, { params: params }).then(response => {
+
+            axios.post('/api/products', { params: params }).then(response => {
                 console.log('APIのレスポンスは、', response.data);
                 // レスポンスデータをそれぞれのプロパティにセット
                 this.products = response.data.products; // 商品情報
