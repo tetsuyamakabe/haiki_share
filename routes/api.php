@@ -23,7 +23,7 @@ Route::get('/test', 'TestController@test');
 Route::middleware(['cors'])->group(function () {
 
     // 商品
-    Route::get('products', 'Products\Convenience\ProductController@getAllProducts'); // すべての商品情報の取得
+    Route::post('products', 'Products\Convenience\ProductController@getAllProducts'); // すべての商品情報の取得
     Route::get('/products/{productId}', 'Products\Convenience\ProductController@getProduct'); // 商品情報の取得
     Route::get('/products/detail/{productId}', 'Products\Convenience\ProductController@getProductDetail'); // （未ログインユーザーの）商品情報の取得
     Route::get('categories', 'Products\Convenience\ProductController@getCategories'); // 商品カテゴリー情報の取得

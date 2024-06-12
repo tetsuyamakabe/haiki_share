@@ -149,20 +149,39 @@ export default {
         },
 
         // 商品情報をサーバーから取得
+        // getProduct() {
+        //     // 現在のルートのクエリパラメータを取得
+        //     const params = Object.assign({}, this.$route.query); // クエリパラメータのコピーを作成
+        //     console.log('paramsは、', params, 'this.currentPageは、', this.currentPage);
+        //     axios.get('/api/products', { params: params }).then(response => { // パラメータを含むリクエスト
+        //         console.log('APIのレスポンスは、', response.data);
+        //         // レスポンスデータをそれぞれのプロパティにセット
+        //         this.products = response.data.products; // 商品情報
+        //         console.log('this.productsは、', this.products);
+        //         this.lastPage = response.data.products.last_page; // ページ数
+        //     }).catch(error => {
+        //         console.error('商品情報取得失敗:', error.response.data);
+        //         this.errors = error.response.data;
+        //     });
+        // },
+
         getProduct() {
             // 現在のルートのクエリパラメータを取得
             const params = Object.assign({}, this.$route.query); // クエリパラメータのコピーを作成
             console.log('paramsは、', params, 'this.currentPageは、', this.currentPage);
-            axios.get('/api/products', { params: params }).then(response => { // パラメータを含むリクエスト
-                console.log('APIのレスポンスは、', response.data);
-                // レスポンスデータをそれぞれのプロパティにセット
-                this.products = response.data.products; // 商品情報
-                console.log('this.productsは、', this.products);
-                this.lastPage = response.data.products.last_page; // ページ数
-            }).catch(error => {
-                console.error('商品情報取得失敗:', error.response.data);
-                this.errors = error.response.data;
-            });
+
+            axios.post('/api/products', params) // POSTリクエストに変更し、パラメータをリクエストボディに含める
+                .then(response => {
+                    console.log('APIのレスポンスは、', response.data);
+                    // レスポンスデータをそれぞれのプロパティにセット
+                    this.products = response.data.products; // 商品情報
+                    console.log('this.productsは、', this.products);
+                    this.lastPage = response.data.products.last_page; // ページ数
+                })
+                .catch(error => {
+                    console.error('商品情報取得失敗:', error.response.data);
+                    this.errors = error.response.data;
+                });
         },
 
         // 商品画像のパスを取得するメソッド
