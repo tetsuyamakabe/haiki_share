@@ -12,10 +12,10 @@
                 <!-- 価格 -->
                 <label class="c-label">最低価格</label>
                 <span v-if="errors && errors.minprice" class="c-error">{{ errors.minprice[0] }}</span>
-                <input class="c-input c-input__search" type="text" name="minprice" maxlength="4" v-model="minPrice"><span class="c-text">円</span>
+                <input class="c-input c-input__search" type="text" name="minprice" maxlength="4" v-model="minPrice" placeholder="半角数字で入力"><span class="c-text">円</span>
                 <label class="c-label">最高価格</label>
                 <span v-if="errors && errors.maxprice" class="c-error">{{ errors.maxprice[0] }}</span>
-                <input class="c-input c-input__search" type="text" name="maxprice" maxlength="4" v-model="maxPrice"><span class="c-text">円</span>
+                <input class="c-input c-input__search" type="text" name="maxprice" maxlength="4" v-model="maxPrice" placeholder="半角数字で入力"><span class="c-text">円</span>
                 <!-- 賞味期限切れかどうか -->
                 <label class="c-label">賞味期限切れかどうか</label>
                 <div class="c-input__radio">
