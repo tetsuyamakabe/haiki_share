@@ -1,26 +1,22 @@
 .p-product {
     padding: $space_l $space_m;
-
     @include mq(sm) {
         padding: $space_s;
     }
-
     &--list {
         width: 100%;
         display: flex;
         flex-wrap: wrap;
-
         @include mq(sm) {
             width: 100%;
             flex-wrap: wrap;
         }
     }
-
     &__item {
         @include mq(sm) {
             width: calc(100% / 2);
-            padding: $space_s 0;
             margin: 0;
+            padding: $space_s 0;
         }
     }
 }

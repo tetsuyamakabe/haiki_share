@@ -45,16 +45,6 @@ export default {
             return this.$store.getters['auth/check'];
         },
 
-        // 顔写真を表示する
-        avatar() {
-            return this.$store.getters['auth/avatar'];
-        },
-
-        // ユーザーの名前を表示する
-        username() {
-            return this.$store.getters['auth/username'];
-        },
-
         // ログインユーザーのroleによって利用者・コンビニのマイページリンクを動的に変える
         userLink() {
             if (this.$store.getters['auth/role'] === 'user') {

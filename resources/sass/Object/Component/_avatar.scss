@@ -1,9 +1,9 @@
 .c-avatar {
     width: 200px;
     height: 200px;
+    margin: auto;
     padding: $space_s;
     position: relative;
-    margin: auto;
     border-radius: 50%;
     border: 1px solid $boader-color_line;
     &--img {

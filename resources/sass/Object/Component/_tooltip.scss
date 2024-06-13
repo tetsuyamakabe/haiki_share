@@ -1,33 +1,34 @@
 .c-tooltip {
     position: relative;
     display: inline-block;
-
     &__message {
+        width: 150px;
+        padding: $space_s;
         display: none;
         position: absolute;
-        padding: 8px;
-        font-size: 12px;
-        line-height: 1.6em;
-        color: #fff;
-        border-radius: 4px;
-        background: #000;
-        width: 150px;
         top: -150%;
+        font-size: $font-size_m;
+        line-height: 1.6em;
+        color: $font-color_sub;
+        border-radius: 4px;
+        background: $background-color_sub3;
         z-index: 2;
         transform: translateX(-110%);
-
+        @include mq(sm){
+            width: 100px;
+            top: -220%;
+        }
         &:before {
             content: "";
+            margin-left: -20px;
             position: absolute;
             left: 110%;
             bottom: 30%;
             border: 15px solid transparent;
-            border-top: 15px solid #000;
-            margin-left: -20px;
+            border-top: 15px solid $boader-color_line;
             transform: rotateZ(270deg);
         }
     }
-
     &:hover .c-tooltip__message {
         display: block;
     }

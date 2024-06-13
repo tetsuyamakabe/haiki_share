@@ -1,43 +1,38 @@
 .c-card {
+    max-width: 200px;
+    min-height: 265px;
     margin: $space_s;
     padding: $space_s;
-    border: 1px solid $boader-color_line;
-    max-width: 200px;
     font-size: $font-size_default;
+    border: 1px solid $boader-color_line;
     @include mq(sm) {
         max-width: 100%;
         font-size: $font-size_m;
     }
-
     &__header {
-        padding: $space_s;
         min-height: 40px;
+        padding: $space_s;
     }
-
     &__name {
         font-weight: bold;
     }
-
     &__body {
         position: relative;
         display: inline-block;
     }
-
     &__img {
-        display: block;
         width: 200px;
         height: 180px;
         margin-bottom: $space_s;
+        display: block;
         @include mq(sm) {
             width: 100%;
             height: 100%;
         }
     }
-
     &__text {
         text-align: center;
     }
-
     &__label {
         position: absolute;
         z-index: 1;
@@ -45,28 +40,25 @@
         color: $font-color_default;
         background-color: $background-color_sub;
     }
-
     &__price {
         width: 25%;
+        padding: $space_s 0 $space_s $space_s;
         right: 0px;
         bottom: 55px;
         font-weight: bold;
-        padding: $space_s 0 $space_s $space_s;
         @include mq(sm) {
             width: 30%;
             bottom: 48px;
         }
     }
-
     &__category {
+        padding: $space_s;
         top: 0%;
         font-size: $font-size_m;
-        padding: $space_s;
         @include mq(sm) {
             font-size: $font-size_s;
         }
     }
-
     &__footer {
         display: flex;
         flex-direction: column;
