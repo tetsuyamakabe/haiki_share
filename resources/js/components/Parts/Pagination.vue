@@ -37,8 +37,6 @@ export default {
     computed: {
         // ページネーションの表示を制御するためのメソッド
         sizeCheck() {
-            console.log('sizecheckメソッド');
-            console.log('this.rangeは、', this.range);
             if (this.last_page <= this.range + 4) { // 表示するページ数が少ない（最後のページ番号が表示されるページの範囲より4以下）の場合
                 return false; // falseを返す
             }
@@ -88,7 +86,6 @@ export default {
         // current_pageプロパティの監視
         current_page(newValue) {
             this.currentPage = newValue; // current_pageプロパティの値が変更されると、newValueとしてthis.currentPageに渡される
-            console.log('watchのthis.currentPageは、', this.currentPage);
         },
     },
 
@@ -109,13 +106,8 @@ export default {
 
         // ページが変更されたときの処理
         changePage(page) {
-            console.log('changePageメソッドです。');
-            console.log('pageは、', page);
-            console.log('this.currentPageは、', this.currentPage);
             if (page > 0 && page <= this.last_page) { // ページ番号が0以上、最後のページ番号以下の場合
-                console.log('this.currentPageは、', this.currentPage);
                 this.currentPage = page; // this.currentPageを更新
-                console.log('pageは、', page);
                 this.$emit("onClick", this.currentPage); // 親コンポーネントに正しいページ番号を伝達
             }
         },

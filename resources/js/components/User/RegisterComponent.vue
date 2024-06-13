@@ -50,7 +50,7 @@
 </template>
 
 <script>
-import TermsComponent from '../TermsComponent.vue'; // 利用規約
+import TermsComponent from '../Common/TermsComponent.vue'; // 利用規約コンポーネント
 
 export default {
     components: {

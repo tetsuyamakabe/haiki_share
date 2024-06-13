@@ -3,12 +3,14 @@ import VueRouter from 'vue-router';
 import store from './store';
 
 // 共通コンポーネント
-import TopComponent from "./components/TopComponent"; // TOP画面
-import TermsComponent from './components/TermsComponent.vue'; // 利用規約ページ
-import PrivacyPolicyComponent from './components/PrivacyPolicyComponent.vue'; // プライバシーポリシーページ
-import ContactComponent from './components/ContactComponent.vue'; // お問い合わせページ
-import ErrorComponent from './components/ErrorComponent.vue'; // エラーページ
-import NotFoundComponent from './components/NotFoundComponent.vue' // NotFoundページ
+import TopComponent from "./components/Common/TopComponent.vue"; // TOP画面
+import TermsComponent from './components/Common/TermsComponent.vue'; // 利用規約ページ
+import PrivacyPolicyComponent from './components/Common/PrivacyPolicyComponent.vue'; // プライバシーポリシーページ
+import ContactComponent from './components/Common/ContactComponent.vue'; // お問い合わせページ
+import ErrorComponent from './components/Common/ErrorComponent.vue'; // エラーページ
+import NotFoundComponent from './components/Common/NotFoundComponent.vue' // NotFoundページ
+import ProductAllIndexComponent from './components/Common/ProductAllIndexComponent.vue'; // 商品一覧画面
+import ProductDetailComponent from './components/Common/ProductDetailComponent.vue'; // 商品詳細画面
 
 // 利用者側
 import UserRegisterComponent from './components/User/RegisterComponent.vue'; // ユーザー登録画面
@@ -31,14 +33,10 @@ import ConvenienceResetPasswordPasswordComponent from './components/Convenience/
 import ConvenienceProfileComponent from './components/Convenience/ProfileComponent.vue'; // プロフィール編集画面
 import ConvenienceWithdrawComponent from './components/Convenience/WithdrawComponent.vue'; // 退会画面
 import ConvenienceProductDetailComponent from './components/Convenience/ProductDetailComponent.vue'; // 商品詳細画面
-
-// 商品
-import ProductSaleComponent from './components/Convenience/ProductSaleComponent.vue'; // 商品出品画面
-import ProductEditComponent from './components/Convenience/ProductEditComponent.vue'; // 商品編集画面
-import ProductSaleIndexComponent from './components/Convenience/ProductSaleIndexComponent.vue'; // 出品した商品一覧画面
-import ProductPurchaseIndexComponent from './components/Convenience/ProductPurchaseIndexComponent.vue'; // 購入された商品一覧画面
-import ProductAllIndexComponent from './components/ProductAllIndexComponent.vue'; // 商品一覧画面
-import ProductDetailComponent from './components/ProductDetailComponent.vue'; // 商品詳細画面
+import ConvenienceProductSaleComponent from './components/Convenience/ProductSaleComponent.vue'; // 商品出品画面
+import ConvenienceProductEditComponent from './components/Convenience/ProductEditComponent.vue'; // 商品編集画面
+import ConvenienceProductSaleIndexComponent from './components/Convenience/ProductSaleIndexComponent.vue'; // 出品した商品一覧画面
+import ConvenienceProductPurchaseIndexComponent from './components/Convenience/ProductPurchaseIndexComponent.vue'; // 購入された商品一覧画面
 
 Vue.use(VueRouter);
 
@@ -165,31 +163,31 @@ const router = new VueRouter({
             name: 'convenience.withdraw',
             component: ConvenienceWithdrawComponent,
         },
-        // 商品出品画面
+        // コンビニ側商品出品画面
         {
             path: '/convenience/products/create',
             name: 'convenience.products.create',
-            component: ProductSaleComponent,
+            component: ConvenienceProductSaleComponent,
         },
-        // 商品編集画面
+        // コンビニ側商品編集画面
         {
             path: '/convenience/products/edit/:productId',
             name: 'convenience.products.edit',
-            component: ProductEditComponent,
+            component: ConvenienceProductEditComponent,
         },
-        // 出品した商品一覧画面
+        // コンビニ側出品した商品一覧画面
         {
             path: '/convenience/products/sale',
             name: 'convenience.products.sale',
-            component: ProductSaleIndexComponent,
+            component: ConvenienceProductSaleIndexComponent,
         },
-        // 購入された商品一覧画面
+        // コンビニ側購入された商品一覧画面
         {
             path: '/convenience/products/purchase',
             name: 'convenience.products.purchase',
-            component: ProductPurchaseIndexComponent,
+            component: ConvenienceProductPurchaseIndexComponent,
         },
-        // 商品一覧画面
+        // コンビニ側商品一覧画面
         {
             path: '/products',
             name: 'products',
@@ -207,7 +205,7 @@ const router = new VueRouter({
             name: 'convenience.products.detail',
             component: ConvenienceProductDetailComponent,
         },
-        // 商品詳細画面
+        // コンビニ側商品詳細画面
         {
             path: '/products/detail/:productId',
             name: 'products.detail',
@@ -228,7 +226,11 @@ const router = new VueRouter({
     ],
     // ページ遷移時に必ずページの最上部から表示させる
     scrollBehavior (to, from, savedPosition) {
-        return { x: 0, y: 0 }
+        if (to.path === from.path && to.hash) {
+            return { selector: to.hash };
+        } else {
+            return { x: 0, y: 0 };
+        }
     }
 });
 
@@ -257,7 +259,6 @@ router.beforeEach(async (to, from, next) => {
 
     // セッションタイムアウトして、現在パスが公開パスではない場合はTOP画面にリダイレクト
     if (!isLogin && !publicPaths.some(path => to.path.startsWith(path)) && !to.path.includes('/password/reset')) { // パスワードリセット画面のパスは除外
-        console.log('セッションタイムアウトのため、リダイレクトします');
         next('/top');
     } else {
         await store.dispatch('auth/currentUser'); // ログイン状態を保持

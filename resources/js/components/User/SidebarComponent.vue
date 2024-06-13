@@ -31,7 +31,7 @@
 
 <script>
 export default {
-    props: ['introduction'],
+    props: ['introduction'],  // 親コンポーネントからプロフィール情報を受け取る
 
     computed: {
         // 顔写真を表示する

@@ -54,8 +54,8 @@
 </template>
 
 <script>
-import Toast from '../Toast.vue'; // Toastコンポーネントをインポート
-import SidebarComponent from './SidebarComponent.vue';
+import Toast from '../Parts/Toast.vue'; // Toastコンポーネント
+import SidebarComponent from './SidebarComponent.vue'; // サイドバーコンポーネント
 
 export default {
     components: {

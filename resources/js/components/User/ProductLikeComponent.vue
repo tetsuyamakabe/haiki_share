@@ -52,18 +52,18 @@
             <sidebar-component :introduction="introduction"></sidebar-component>
         </div>
         <!-- ページネーション -->
-        <pagination-component @onClick="onPageChange" :current_page="currentPage" :last_page="lastPage" />
+        <pagination @onClick="onPageChange" :current_page="currentPage" :last_page="lastPage" />
     </main>
 </template>
 
 <script>
-import SidebarComponent from './SidebarComponent.vue';
-import PaginationComponent from '../PaginationComponent.vue'; // ページネーションコンポーネント
+import SidebarComponent from './SidebarComponent.vue'; // サイドバーコンポーネント
+import Pagination from '../Parts/Pagination.vue'; // ページネーションコンポーネント
 
 export default {
     components: {
         SidebarComponent, // サイドバーコンポーネントを読み込み
-        PaginationComponent, // ページネーションコンポーネント
+        Pagination, // ページネーションコンポーネントを読み込み
     },
 
     data() {
@@ -90,7 +90,6 @@ export default {
     methods: {
         // URLを作成する
         createURL(params) {
-            console.log('検索URLを作成します');
             // URLの組み立て
             let url = `/user/products/liked`;
             if (params && params.page) { // パラメータとパラメータのpageがある場合
@@ -98,7 +97,6 @@ export default {
             } else {
                 url += `?page=${this.currentPage}`; // urlにthis.currentPageを追加
             }
-            console.log('検索URL:', url);
             // ページ遷移
             this.$router.push(url).then(() => {
                 this.getLikeProduct(); // ページ遷移が完了した後にgetLikeProduct()メソッドを呼び出す
@@ -107,7 +105,6 @@ export default {
 
         // ページが変更されたときの処理
         onPageChange(page) {
-            console.log('onPageChangeメソッドのpageは、', page);
             if (this.currentPage !== page) { // 現在のページ番号と新しいページ番号が異なるか
                 this.currentPage = page; // ページ番号を更新
                 const params = Object.assign({}, this.$route.query); // 新しいクエリパラメータをparamsオブジェクトにコピー
@@ -120,10 +117,8 @@ export default {
         getLikeProduct() {
             // 現在のルートのクエリパラメータを取得
             const params = Object.assign({}, this.$route.query); // クエリパラメータのコピーを作成
-            console.log('paramsは、', params, 'this.currentPageは、', this.currentPage);
             // お気に入り登録商品情報取得APIをGET送信
             axios.get('/api/user/products/liked', { params: params }).then(response => { // パラメータを含むリクエスト
-                console.log('APIからのレスポンス：', response.data);
                 // レスポンスデータをそれぞれのプロパティにセット
                 this.products = response.data.products; // お気に入り登録商品情報
                 this.lastPage = response.data.products.last_page; // ページ数
@@ -136,8 +131,6 @@ export default {
 
         // 商品画像のパスを取得するメソッド
         getProductPicturePath(product) {
-            console.log('productは、', product);
-            console.log('product.picturesは、', product.pictures);
             if (product.pictures && product.pictures.length > 0) {
                 return product.pictures[0].file; // 商品画像がある場合は、その画像パスを返す
             } else {
@@ -200,12 +193,10 @@ export default {
         getSidebarProfile() {
             // 利用者側プロフィール情報の取得APIをGET送信
             axios.get('/api/user/mypage/profile').then(response => {
-                console.log('APIからのレスポンスデータ:', response.data);
                 this.user = response.data.user; // レスポンスデータのユーザー情報をuserプロパティにセット
                 // 取得した各プロフィール情報をintroductionプロパティにセット
                 this.introduction = this.user.introduction; // 自己紹介文
             }).catch (error => {
-                console.error('プロフィール取得失敗:', error.response.data);
                 this.errors = error.response.data;
             });
         },

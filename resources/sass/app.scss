@@ -28,9 +28,10 @@
 @import 'Object/component/button';
 @import 'Object/component/card';
 @import 'Object/component/checkbox';
-@import 'Object/component/container';
+@import 'Object/component/content';
 @import 'Object/component/error';
 @import 'Object/component/form';
+@import 'Object/component/heading';
 @import 'Object/component/hero';
 @import 'Object/component/icon';
 @import 'Object/component/input';
@@ -41,6 +42,7 @@
 @import 'Object/component/password';
 @import 'Object/component/product__picture';
 @import 'Object/component/product';
+@import 'Object/component/section';
 @import 'Object/component/selectbox';
 @import 'Object/component/text';
 @import 'Object/component/textarea';
@@ -61,7 +63,8 @@
 @import 'Object/project/withdraw';
 
 // Utility
-@import 'Object/utility/color';
-@import 'Object/utility/font-size';
+@import 'Object/utility/bgColor';
+@import 'Object/utility/ftColor';
+@import 'Object/utility/ftSize';
 @import 'Object/utility/m-x';
 @import 'Object/utility/pd-x';

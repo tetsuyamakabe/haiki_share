@@ -3,12 +3,11 @@
         <div class="l-main__header">
             <h1 class="c-title">商品詳細</h1>
         </div>
-        <div class="l-article">
-            <div class="l-article__main">
-                <div class="p-product">
-                    <h2 class="c-title c-title--sub">{{ product.name }}</h2> <!-- 商品名 -->
-                    <!-- いいねアイコンとエックスのシェア -->
-                    <div class="c-icon">
+        <section class="l-main__wrapper">
+            <div class="p-product">
+                <h2 class="c-title c-title--sub">{{ product.name }}</h2> <!-- 商品名 -->
+                <!-- いいねアイコンとエックスのシェア -->
+                <div class="c-icon">
                         <div class="c-tooltip">
                             <i class="c-icon c-icon--notlike fas fa-heart"></i>{{ product.likes_count }} <!-- いいね数 -->
                             <div class="c-tooltip__message">ユーザー登録・ログインしてください</div>
@@ -44,21 +43,12 @@
                     <!-- 未ログインユーザーの購入ボタンはユーザー登録する -->
                     <button  class="c-button c-button--submit c-button--main" @click="register">ユーザー登録する</button>
                 </div>
-            </div>
-            <!-- 絞り込み検索フォーム -->
-            <search-component />
-        </div>
+        </section>
     </main>
 </template>
 
 <script>
-import SearchComponent from './SearchComponent.vue'; // 絞り込み検索コンポーネント
-
 export default {
-    components: {
-        SearchComponent, // 絞り込み検索コンポーネント
-    },
-
     data() {
         return {
             product: [], // 商品情報
@@ -83,7 +73,6 @@ export default {
                 this.category = response.data.product.category; // カテゴリ情報
                 this.convenience = response.data.product.convenience; // コンビニ情報
             }).catch(error => {
-                console.error('商品情報取得失敗:', error.response.data);
                 this.errors = error.response.data;
             });
         },
@@ -134,7 +123,7 @@ export default {
 
         // ユーザー登録するボタンの画面遷移先
         register() {
-            this.$router.push({ name: 'top' });
+            this.$router.push({ name: 'top' }); // TOP画面に遷移
         }
     }
 }

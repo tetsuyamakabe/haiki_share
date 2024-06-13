@@ -88,7 +88,7 @@
 
 <script>
 const jsonpAdapter = require('axios-jsonp');
-import SidebarComponent from './SidebarComponent.vue';
+import SidebarComponent from './SidebarComponent.vue'; // サイドバーコンポーネント
 
 export default {
     components: {
@@ -147,7 +147,6 @@ export default {
                 this.user = response.data.user; // ユーザー情報
                 this.convenience = response.data.convenience; // コンビニ情報
                 this.address = response.data.address; // 住所情報
-                console.log('APIからのレスポンス:', response.data);
                 // 取得した各プロフィール情報をformDataに入れる
                 this.formData.convenience_name = this.user.name || ''; // コンビニ名
                 this.formData.branch_name = this.convenience.branch_name || '', // 支店名
@@ -161,7 +160,6 @@ export default {
                 this.formData.introduction = this.user.introduction || ''; // 自己紹介文
                 this.formData.avatar = this.user.avatar || ''; // 顔写真
             }).catch(error => {
-                console.error('プロフィール取得失敗:', error.response.data);
                 this.errors = error.response.data;
             });
         },
@@ -210,10 +208,8 @@ export default {
             }
             // コンビニ側プロフィール情報更新APIをPOST送信
             axios.post('/api/convenience/mypage/profile', formData, config).then(response => { // リクエストヘッダとフォームデータを含むリクエスト
-                console.log('axios.post Response:', response.data);
                 this.$router.push({ name: 'convenience.mypage' }); // プロフィール更新完了後、マイページに遷移する
             }).catch(error => {
-                console.error('プロフィール編集失敗:', error.response.data);
                 this.errors = error.response.data.errors;
             });
         },
@@ -281,7 +277,6 @@ export default {
                 this.building = this.address.building; // 建物名・部屋番号
                 this.introduction = this.user.introduction; // 自己紹介文
             }).catch(error => {
-                console.error('プロフィール取得失敗:', error.response.data);
                 this.errors = error.response.data;
             });
         }

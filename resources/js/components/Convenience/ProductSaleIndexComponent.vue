@@ -22,7 +22,7 @@
                                 </div>
                                 <div class="c-card__body">
                                     <img class="c-card__img" :src="getProductPicturePath(product)" alt="商品画像"> <!-- 商品画像 -->
-                                    <label v-show="product.is_purchased" class="c-label__purchase">購入済み</label> <!-- 購入済みラベル -->
+                                    <label v-show="product.is_purchased" class="c-label__purchase">購入<br>済み</label> <!-- 購入済みラベル -->
                                     <div class="c-icon">
                                     <!-- コンビニユーザーの場合にコンビニユーザーツールチップを表示 -->
                                         <div v-if="$store.getters['auth/check'] && $store.getters['auth/role'] === 'convenience'">
@@ -55,18 +55,18 @@
             <sidebar-component :convenience_name="convenience_name" :branch_name="branch_name" :prefecture="prefecture" :city="city" :town="town" :building="building" :introduction="introduction"></sidebar-component>
         </div>
         <!-- ページネーション -->
-        <pagination-component @onClick="onPageChange" :current_page="currentPage" :last_page="lastPage" />
+        <pagination @onClick="onPageChange" :current_page="currentPage" :last_page="lastPage" />
     </main>
 </template>
 
 <script>
-import SidebarComponent from './SidebarComponent.vue';
-import PaginationComponent from '../PaginationComponent.vue'; // ページネーションコンポーネント
+import SidebarComponent from './SidebarComponent.vue'; // サイドバーコンポーネント
+import Pagination from '../Parts/Pagination.vue'; // ページネーションコンポーネント
 
 export default {
     components: {
         SidebarComponent, // サイドバーコンポーネントを読み込み
-        PaginationComponent, // ページネーションコンポーネント
+        Pagination, // ページネーションコンポーネントを読み込み
     },
 
     data() {
@@ -99,7 +99,6 @@ export default {
     methods: {
         // URLを作成する
         createURL(params) {
-            console.log('検索URLを作成します');
             // URLの組み立て
             let url = `/convenience/products/sale`;
             if (params && params.page) { // パラメータとパラメータのpageがある場合
@@ -107,7 +106,6 @@ export default {
             } else {
                 url += `?page=${this.currentPage}`; // urlにthis.currentPageを追加
             }
-            console.log('検索URL:', url);
             // ページ遷移
             this.$router.push(url).then(() => {
                 this.getSaleProduct(); // ページ遷移が完了した後にgetSaleProduct()メソッドを呼び出す
@@ -116,7 +114,6 @@ export default {
 
         // ページが変更されたときの処理
         onPageChange(page) {
-            console.log('onPageChangeメソッドのpageは、', page);
             if (this.currentPage !== page) { // 現在のページ番号と新しいページ番号が異なるか
                 this.currentPage = page; // ページ番号を更新
                 const params = Object.assign({}, this.$route.query); // 新しいクエリパラメータをparamsオブジェクトにコピー
@@ -135,7 +132,6 @@ export default {
                 this.products = response.data.products; // 出品した商品情報
                 this.lastPage = response.data.products.last_page; // ページ数
             }).catch(error => {
-                console.error('商品情報取得失敗:', error.response.data);
                 this.errors = error.response.data;
             });
         },
@@ -200,7 +196,6 @@ export default {
                 this.introduction = this.user.introduction; // 自己紹介文
             })
             .catch(error => {
-                console.error('プロフィール取得失敗:', error.response.data);
                 this.errors = error.response.data;
             });
         }

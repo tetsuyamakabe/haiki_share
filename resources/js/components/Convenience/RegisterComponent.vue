@@ -78,7 +78,7 @@
 </template>
 
 <script>
-import TermsComponent from '../TermsComponent.vue'; // 利用規約
+import TermsComponent from '../Common/TermsComponent.vue'; // 利用規約コンポーネント
 const jsonpAdapter = require('axios-jsonp') // 郵便番号API
 
 export default {

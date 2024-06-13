@@ -54,7 +54,7 @@
 </template>
 
 <script>
-import SidebarComponent from './SidebarComponent.vue';
+import SidebarComponent from './SidebarComponent.vue'; // サイドバーコンポーネント
 
 export default {
     components: {
@@ -100,7 +100,6 @@ export default {
                 this.category = response.data.product.category; // カテゴリ情報
                 this.convenience = response.data.product.convenience; // コンビニ情報
             }).catch(error => {
-                console.error('商品情報取得失敗:', error.response.data);
                 this.errors = error.response.data;
             });
         },
@@ -115,8 +114,6 @@ export default {
 
         // 商品画像のパスを取得するメソッド
         getProductPicturePath(product) {
-            console.log('productは、', product);
-            console.log('product.picturesは、', product.pictures);
             if (product.pictures && product.pictures.length > 0) {
                 return product.pictures[0].file; // 商品画像がある場合は、その画像パスを返す
             } else {
@@ -187,9 +184,7 @@ export default {
                 this.town = this.address.town; // 地名・番地
                 this.building = this.address.building; // 建物名・部屋番号
                 this.introduction = this.user.introduction; // 自己紹介文
-            })
-            .catch(error => {
-                console.error('プロフィール取得失敗:', error.response.data);
+            }).catch(error => {
                 this.errors = error.response.data;
             });
         }

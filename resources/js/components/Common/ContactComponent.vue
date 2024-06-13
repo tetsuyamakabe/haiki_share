@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import Toast from './Toast.vue'; // Toastコンポーネントをインポート
+import Toast from '../Parts/Toast.vue'; // Toastコンポーネントをインポート
 
 export default {
     components: {

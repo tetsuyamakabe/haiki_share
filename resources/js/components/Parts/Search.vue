@@ -12,10 +12,12 @@
                 <!-- 価格 -->
                 <label class="c-label">最低価格</label>
                 <span v-if="errors && errors.minPrice" class="c-error">{{ errors.minPrice[0] }}</span>
-                <input class="c-input c-input__search" type="text" name="minPrice" maxlength="4" v-model="minPrice" placeholder="半角数字で入力"><span class="c-text u-ml__s">円</span>
+                <input class="c-input c-input__search" type="text" name="minPrice" maxlength="4" v-model="minPrice" placeholder="半角数字で入力">
+                <span class="c-text u-ml__s">円</span>
                 <label class="c-label">最高価格</label>
                 <span v-if="errors && errors.maxPrice" class="c-error">{{ errors.maxPrice[0] }}</span>
-                <input class="c-input c-input__search" type="text" name="maxPrice" maxlength="4" v-model="maxPrice" placeholder="半角数字で入力"><span class="c-text u-ml__s">円</span>
+                <input class="c-input c-input__search" type="text" name="maxPrice" maxlength="4" v-model="maxPrice" placeholder="半角数字で入力">
+                <span class="c-text u-ml__s">円</span>
                 <!-- 賞味期限切れかどうか -->
                 <label class="c-label">賞味期限切れかどうか</label>
                 <div class="c-input__radio">
@@ -50,7 +52,7 @@
 
 <script>
 export default {
-    props: ['errors'],
+    props: ['errors'],  // 親コンポーネントからerrorsを受け取る
 
     data() {
         return {
@@ -68,20 +70,17 @@ export default {
 
     created() {
         this.getPrefectures(); // インスタンス初期化時に都道府県情報を読み込む
-        this.getCategories();
+        this.getCategories(); // インスタンス初期化時に商品カテゴリ情報を読み込む
     },
 
     methods: {
         // 出品しているコンビニがある都道府県の取得
         async getPrefectures() {
             try {
-                console.log('都道府県情報を取得します');
                 // 出品しているコンビニがある都道府県の取得APIのGET送信
                 const response = await axios.get('/api/prefecture');
-                console.log('APIからのレスポンス:', response.data);
                 this.prefectures = response.data.prefectures;
             } catch (error) {
-                console.error('都道府県情報取得失敗:', error.response.data);
                 this.errors = error.response.data;
             }
         },
@@ -89,20 +88,16 @@ export default {
         // 商品カテゴリ情報の取得
         async getCategories() {
             try {
-                console.log('商品カテゴリ情報を取得します');
                 // カテゴリーの取得APIのGET送信
                 const response = await axios.get('/api/categories');
-                console.log('APIからのレスポンス:', response.data);
                 this.categories = response.data.categories;
             } catch (error) {
-                console.error('商品カテゴリ情報取得失敗:', error.response.data);
                 this.errors = error.response.data;
             }
         },
 
         // 検索フォームの値をサーバー側に送信するメソッド
         submitForm() {
-            console.log('検索条件を送信します');
             let params = {}; // paramsオブジェクト
             if (this.selectedPrefecture) { // 検索条件に都道府県がある場合
                 params.prefecture = this.selectedPrefecture; // paramsオブジェクトにselectedPrefectureを入れる
@@ -119,14 +114,12 @@ export default {
             if (this.selectedCategory) { // 検索条件にカテゴリーがある場合
                 params.category_id = this.selectedCategory; // paramsオブジェクトにselectedCategoryを入れる
             }
-            if (this.sortOrder) { // ソート順が選択されている場合
+            if (this.sortOrder) { // ソート順（出品した順）が選択されている場合
                 params.sort = this.sortOrder; // paramsオブジェクトにsortOrderを入れる
             }
-            if (this.sortExpiredOrder) { // ソート順が選択されている場合
-                params.sortExpired = this.sortExpiredOrder; // paramsオブジェクトにsortOrderを入れる
+            if (this.sortExpiredOrder) { // ソート順（賞味期限順）が選択されている場合
+                params.sortExpired = this.sortExpiredOrder; // paramsオブジェクトにsortExpiredOrderを入れる
             }
-
-            console.log('検索パラメータ:', params);
             // 親コンポーネントに通知
             this.$emit('search', params, this.errors); // パラメータをつけたオブジェクトをemitする。バリデーションメッセージを表示するerrorsを追加。
         },

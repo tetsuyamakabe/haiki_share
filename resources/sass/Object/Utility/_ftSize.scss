@@ -1,0 +1,11 @@
+.u-fz-10\@sm {
+    @include mq(sm) {
+        font-size: 10px;
+    }
+}
+
+.u-fz-20\@sm {
+    @include mq(sm) {
+        font-size: 20px;
+    }
+}

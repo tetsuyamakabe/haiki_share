@@ -14,7 +14,7 @@
         color: $font-color_sub;
     }
     & .inactive{
-        color: $background-color_btn_primary;
+        color: $font-color_default;
     }
     & li + li {
         border-left: none;
