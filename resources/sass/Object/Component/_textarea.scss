@@ -1,22 +1,19 @@
 .c-textarea {
     width: 100%;
-    padding: $space_s;
     margin: $space_m 0;
+    padding: $space_s;
     box-sizing: border-box;
+    font-size: $font-size_default;
     border: 1px solid $boader-color_line;
     background: $background-color_main;
-    font-size: $font-size_default;
-
     @include mq(sm) {
         &::placeholder {
             font-size: $font-size_m;
         }
     }
-
     &.is-invalid {
         background-color: $background-color_valid;
     }
-
     &--count {
         position: relative;
         right: -80%;

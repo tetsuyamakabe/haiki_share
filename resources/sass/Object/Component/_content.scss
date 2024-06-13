@@ -18,10 +18,8 @@
     &__contact {
         line-height: 1.7;
         font-size: $font-size_default;
-
         @include mq(sm) {
             flex-direction: column;
         }
     }
-
 }

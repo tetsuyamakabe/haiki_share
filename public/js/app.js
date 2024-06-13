@@ -8520,14 +8520,6 @@ __webpack_require__.r(__webpack_exports__);
     isLogin: function isLogin() {
       return this.$store.getters['auth/check'];
     },
-    // 顔写真を表示する
-    avatar: function avatar() {
-      return this.$store.getters['auth/avatar'];
-    },
-    // ユーザーの名前を表示する
-    username: function username() {
-      return this.$store.getters['auth/username'];
-    },
     // ログインユーザーのroleによって利用者・コンビニのマイページリンクを動的に変える
     userLink: function userLink() {
       if (this.$store.getters['auth/role'] === 'user') {
@@ -52679,25 +52671,25 @@ var render = function () {
           _vm._v("プロフィール情報"),
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "p-sidebar__profile" }, [
-          _c("div", { staticClass: "p-sidebar__avatar-wrap" }, [
-            _c("div", { staticClass: "p-sidebar__avatar" }, [
+        _c("div", { staticClass: "c-sidebar" }, [
+          _c("div", { staticClass: "c-sidebar__avatar--wrap" }, [
+            _c("div", { staticClass: "c-sidebar__avatar" }, [
               _c("img", {
-                staticClass: "p-sidebar__avatar--img",
+                staticClass: "c-sidebar__avatar--img",
                 attrs: { src: _vm.avatar, alt: "顔写真画像" },
               }),
             ]),
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "p-sidebar__content-wrap" }, [
-            _c("div", { staticClass: "p-sidebar--header" }, [
+          _c("div", { staticClass: "c-sidebar__content--wrap" }, [
+            _c("div", { staticClass: "c-sidebar__header" }, [
               _c("p", [
                 _vm._v(_vm._s(_vm.convenience_name) + _vm._s(_vm.branch_name)),
               ]),
             ]),
             _vm._v(" "),
-            _c("div", { staticClass: "p-sidebar--body" }, [
-              _c("p", { staticClass: "p-sidebar--content" }, [
+            _c("div", { staticClass: "c-sidebar__body" }, [
+              _c("p", { staticClass: "c-sidebar--content" }, [
                 _c("i", { staticClass: "fa-solid fa-location-dot" }),
                 _vm._v(
                   _vm._s(_vm.prefecture) +
@@ -52709,7 +52701,7 @@ var render = function () {
               ]),
               _vm._v(" "),
               _vm.introduction
-                ? _c("p", { staticClass: "p-sidebar--content" }, [
+                ? _c("p", { staticClass: "c-sidebar--content" }, [
                     _c("i", { staticClass: "fa-solid fa-message" }),
                     _vm._v(_vm._s(_vm.introduction) + "\n                    "),
                   ])
@@ -52718,7 +52710,7 @@ var render = function () {
             _vm._v(" "),
             _c(
               "div",
-              { staticClass: "p-sidebar--footer" },
+              { staticClass: "c-sidebar__footer" },
               [
                 _c(
                   "router-link",
@@ -52753,7 +52745,7 @@ var render = function () {
         _c(
           "router-link",
           {
-            staticClass: "p-sidebar--link c-link",
+            staticClass: "c-sidebar--link c-link",
             attrs: { to: { name: "products" } },
           },
           [_vm._v("商品一覧")]
@@ -52762,7 +52754,7 @@ var render = function () {
         _c(
           "router-link",
           {
-            staticClass: "p-sidebar--link c-link",
+            staticClass: "c-sidebar--link c-link",
             attrs: { to: { name: "convenience.products.sale" } },
           },
           [_vm._v("出品した商品一覧")]
@@ -52771,7 +52763,7 @@ var render = function () {
         _c(
           "router-link",
           {
-            staticClass: "p-sidebar--link c-link",
+            staticClass: "c-sidebar--link c-link",
             attrs: { to: { name: "convenience.products.purchase" } },
           },
           [_vm._v("購入された商品一覧")]
@@ -56761,24 +56753,24 @@ var render = function () {
           _vm._v("プロフィール情報"),
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "p-sidebar__profile" }, [
-          _c("div", { staticClass: "p-sidebar__avatar-wrap" }, [
-            _c("div", { staticClass: "p-sidebar__avatar" }, [
+        _c("div", { staticClass: "c-sidebar" }, [
+          _c("div", { staticClass: "c-sidebar__avatar--wrap" }, [
+            _c("div", { staticClass: "c-sidebar__avatar" }, [
               _c("img", {
-                staticClass: "p-sidebar__avatar--img",
+                staticClass: "c-sidebar__avatar--img",
                 attrs: { src: _vm.avatar, alt: "顔写真画像" },
               }),
             ]),
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "p-sidebar__content-wrap" }, [
-            _c("div", { staticClass: "p-sidebar--header" }, [
+          _c("div", { staticClass: "c-sidebar__content--wrap" }, [
+            _c("div", { staticClass: "c-sidebar__header" }, [
               _c("p", [_vm._v(_vm._s(_vm.username))]),
             ]),
             _vm._v(" "),
-            _c("div", { staticClass: "p-sidebar--body" }, [
+            _c("div", { staticClass: "c-sidebar__body" }, [
               _vm.introduction
-                ? _c("p", { staticClass: "p-sidebar--content" }, [
+                ? _c("p", { staticClass: "c-sidebar--content" }, [
                     _c("i", { staticClass: "fa-solid fa-message" }),
                     _vm._v(_vm._s(_vm.introduction) + " "),
                   ])
@@ -56787,7 +56779,7 @@ var render = function () {
             _vm._v(" "),
             _c(
               "div",
-              { staticClass: "p-sidebar--footer" },
+              { staticClass: "c-sidebar__footer" },
               [
                 _c(
                   "router-link",
@@ -56806,7 +56798,7 @@ var render = function () {
         _c(
           "router-link",
           {
-            staticClass: "p-sidebar--link c-link",
+            staticClass: "c-sidebar--link c-link",
             attrs: { to: { name: "products" } },
           },
           [_vm._v("商品一覧")]
@@ -56815,7 +56807,7 @@ var render = function () {
         _c(
           "router-link",
           {
-            staticClass: "p-sidebar--link c-link",
+            staticClass: "c-sidebar--link c-link",
             attrs: { to: { name: "user.products.purchased" } },
           },
           [_vm._v("購入した商品一覧")]
@@ -56824,7 +56816,7 @@ var render = function () {
         _c(
           "router-link",
           {
-            staticClass: "p-sidebar--link c-link",
+            staticClass: "c-sidebar--link c-link",
             attrs: { to: { name: "user.products.liked" } },
           },
           [_vm._v("お気に入り商品一覧")]

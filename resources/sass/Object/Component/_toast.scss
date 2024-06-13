@@ -1,13 +1,13 @@
 .c-toast {
+    width: 100%;
+    padding: $space_m 0;
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
-    width: 100%;
-    padding: $space_m 0;
     color: $background-color_sub;
     font-weight: bold;
-    opacity: 0.9;
+    opacity: .9;
     z-index: 3;
     text-align: center;
     &--success {

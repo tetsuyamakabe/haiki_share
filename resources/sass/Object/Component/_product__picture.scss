@@ -1,17 +1,17 @@
 .c-product__picture {
+    height: 100%;
     margin: $space_m 0;
     padding: $space_s;
     position: relative;
-    height: 100%;
     border: 1px solid $boader-color_line;
     &--img {
         width: 100%;
     }
     &--detail {
-        display: block;
+        max-width: 500px;
         margin: auto;
         padding: $space_s;
-        max-width: 500px;
+        display: block;
         @include mq(sm) {
             width: 100%;
         }

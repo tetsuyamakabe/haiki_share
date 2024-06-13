@@ -21,18 +21,18 @@
         height: 600px;
     }
     &__content {
-        font-weight: bold;
         padding: $space_xl;
+        font-weight: bold;
         display: flex;
         align-items: center;
     }
     &__image {
         height: 250px;
-        &--convenience {
-            width: 70%;
-        }
         &--user {
             width: 50%;
+        }
+        &--convenience {
+            width: 70%;
         }
         &--usage {
             width: 25%;
@@ -41,7 +41,6 @@
         }
     }
 }
-
 .c-panel__group--flex {
     display: flex;
     @include mq(sm) {

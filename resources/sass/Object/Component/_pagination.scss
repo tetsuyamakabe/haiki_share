@@ -2,12 +2,12 @@
     display: flex;
     list-style-type: none;
     & li {
-        border: 1px solid $boader-color_line;
         padding: $space_l;
+        border: 1px solid $boader-color_line;
         text-align: center;
         @include mq(sm) {
             padding: $space_s;
-        }  
+        }
     }
     & .active {
         background-color: $background-color_btn_primary;

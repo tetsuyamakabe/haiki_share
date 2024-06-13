@@ -2,18 +2,16 @@
     display: block;
     font-weight: bold;
     font-size: $font-size_default;
-
     @include mq(sm) {
         font-size: $font-size_m;
     }
-
     &__purchase {
+        width: 60px;
+        height: 60px;
         padding: $space_m;
         position: absolute;
         top: 25%;
         left: 25%;
-        width: 60px;
-        height: 60px;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -30,9 +28,9 @@
         }
     }
     &__category {
-        font-size: 12px;
         margin: 0 8px;
         padding: 8px 0;
+        font-size: 12px;
         border-radius: 100vh;
         border: 1px solid;
         text-align: center;

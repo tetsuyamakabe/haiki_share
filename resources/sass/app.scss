@@ -8,9 +8,8 @@
 // @import '~bootstrap/scss/bootstrap';
 
 // Foundation
-@import "foundation/_reset";
 @import "foundation/_base";
-
+@import "foundation/_reset";
 
 // Layout
 @import 'Layout/article';
@@ -20,8 +19,7 @@
 @import 'Layout/main';
 @import 'Layout/nav';
 
-// Object
-// Component
+// Object / Component
 @import 'Object/component/attachment';
 @import 'Object/component/avatar';
 @import 'Object/component/badge';
@@ -44,25 +42,23 @@
 @import 'Object/component/product';
 @import 'Object/component/section';
 @import 'Object/component/selectbox';
+@import 'Object/component/sidebar';
 @import 'Object/component/text';
 @import 'Object/component/textarea';
 @import 'Object/component/title';
 @import 'Object/component/toast';
 @import 'Object/component/tooltip';
 
-// Project
+// Object / Project
 @import 'Object/project/mypage';
 @import 'Object/project/pagination';
 @import 'Object/project/product';
 @import 'Object/project/profile';
 @import 'Object/project/register';
 @import 'Object/project/sidebar';
-@import 'Object/project/terms';
-@import 'Object/project/text';
-@import 'Object/project/textarea';
 @import 'Object/project/withdraw';
 
-// Utility
+// Object / Utility
 @import 'Object/utility/bgColor';
 @import 'Object/utility/ftColor';
 @import 'Object/utility/ftSize';

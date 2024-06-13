@@ -175,5 +175,4 @@ return [
         'minprice' => '最低価格',
         'maxprice' => '最高価格'
     ],
-
 ];

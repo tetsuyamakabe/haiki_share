@@ -1,32 +1,28 @@
 .l-footer {
     width: 100%;
-
     &__pagetop {
-        height: 50px;
         width: 50px;
+        height: 50px;
         position: fixed;
         right: 30px;
         bottom: 30px;
-        background: $background-color_sub;
-        border: solid 2px $boader-color_line;
-        border-radius: 50%;
         display: flex;
         justify-content: center;
         align-items: center;
+        background: $background-color_sub;
+        border: solid 2px $boader-color_line;
+        border-radius: 50%;
         z-index: 2;
-
         &--arrow {
-            height: 10px;
             width: 10px;
+            height: 10px;
             border-top: 3px solid $boader-color_line;
             border-right: 3px solid $boader-color_line;
             transform: translateY(20%) rotate(-45deg);
         }
-
         &.UpMove {
             animation: UpAnime 0.5s forwards;
         }
-
         @keyframes UpAnime {
             from {
                 opacity: 0;
@@ -37,11 +33,9 @@
                 transform: translateY(0);
             }
         }
-
         &.DownMove {
             animation: DownAnime 0.5s forwards;
         }
-
         @keyframes DownAnime{
             from {
                 opacity: 1;
@@ -53,15 +47,13 @@
             }
         }
     }
-
     &__inner {
+        padding: $space_m;
         line-height: 2.5;
         text-align: center;
-        background-color: $background-color_sub2;
         color: $font-color_default;
-        padding: $space_m;
+        background-color: $background-color_sub2;
     }
-
     &__copyright {
         font-size: $font-size_default;
         color: $font-color_default;
@@ -69,7 +61,6 @@
             font-size: $font-size_m;
         }
     }
-
     &__link {
         margin-top: $space_s;
     }
