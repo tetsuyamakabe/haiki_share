@@ -37,7 +37,7 @@
 </template>
 
 <script>
-import Toast from '../Toast.vue'; // Toastコンポーネントをインポート
+import Toast from '../Parts/Toast.vue'; // Toastコンポーネントをインポート
 
 export default {
     components: {
@@ -64,8 +64,6 @@ export default {
         // URLからトークンとメールアドレスを取得
         this.token = this.$route.params.token;
         this.email = this.$route.query.email;
-        console.log('emailは、', this.email); 
-        console.log('tokenは、', this.token);
     },
 
     methods: {

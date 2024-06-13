@@ -9,8 +9,7 @@
     display: inline-block;
     color: $font-color_sub;
     font-size: $font-size_m;
-    background-color: $background-color_label;
-
+    background-color: $background-color_badge;
     @include mq(sm) {
         font-size: $font-size_s;
     }

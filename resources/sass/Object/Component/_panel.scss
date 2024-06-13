@@ -1,49 +1,39 @@
 .c-panel {
     position: relative;
     box-sizing: border-box;
-
     &__border {
         border-radius: 5px;
-        border: 5px solid #f6f5f4;
+        border: 5px solid $boader-color_sub;
     }
-
     &__head, &__foot {
         padding: $space_m;
     }
-
     &__head {
         text-align: center;
         font-size: $font-size_l;
         font-weight: bold;
     }
-
     &__body {
         display: flex;
         justify-content: center;
     }
-
     &__container {
         height: 600px;
     }
-
     &__content {
         font-weight: bold;
         padding: $space_xl;
         display: flex;
         align-items: center;
     }
-
     &__image {
         height: 250px;
-
         &--convenience {
             width: 70%;
         }
-
         &--user {
             width: 50%;
         }
-
         &--usage {
             width: 25%;
             height: 25%;
@@ -54,19 +44,16 @@
 
 .c-panel__group--flex {
     display: flex;
-
     @include mq(sm) {
         display: block;
     }
 }
-
 .c-panel__group .c-panel {
     width: 50%;
-    margin: $space_m;
     box-sizing: border-box;
-
+    margin: $space_s;
     @include mq(sm) {
-        width: 90%;
-        margin: $space_l;
+        width: 100%;
+        margin: $space_s 0;
     }
 }

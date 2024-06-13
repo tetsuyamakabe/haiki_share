@@ -61,7 +61,7 @@
 </template>
 
 <script>
-import SidebarComponent from './SidebarComponent.vue';
+import SidebarComponent from './SidebarComponent.vue'; // サイドバーコンポーネント
 
 export default {
     components: {
@@ -123,7 +123,6 @@ export default {
             axios.get('/api/categories').then(response => {
                 this.categories = response.data.categories; // レスポンスデータのカテゴリ情報をcategoriesプロパティにセット
             }).catch(error => {
-                console.error('商品カテゴリー情報取得失敗:', error.response.data);
                 this.errors = error.response.data;
             });
         },
@@ -150,7 +149,6 @@ export default {
             axios.post('/api/convenience/products/sale', formData, config).then(response => { // リクエストヘッダとフォームデータを含むリクエスト
                 this.$router.push({ name: 'convenience.mypage' }); // 商品出品後、マイページに遷移
             }).catch(error => {
-                console.error('商品出品失敗:', error.response.data);
                 this.errors = error.response.data.errors;
             });
         },
@@ -197,8 +195,7 @@ export default {
                 this.town = this.address.town; // 地名・番地
                 this.building = this.address.building; // 建物名・部屋番号
                 this.introduction = this.user.introduction; // 自己紹介文
-            })
-            .catch(error => {
+            }).catch(error => {
                 console.error('プロフィール取得失敗:', error.response.data);
                 this.errors = error.response.data;
             });

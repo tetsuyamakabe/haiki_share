@@ -18,14 +18,12 @@
     }
     &__expiration {
         display: flex;
-        justify-content: space-between;
         @include mq(sm) {
             display: block;
         }
     }
     &--convenience {
         display: flex;
-        justify-content: space-around;
     }
     &--avatar {
         width: 100px;

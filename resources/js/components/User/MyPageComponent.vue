@@ -5,6 +5,8 @@
         </div>
         <div class="l-article">
             <div class="l-article__main">
+                <!-- フラッシュメッセージを表示 -->
+                <Toast />
                 <!-- 購入した商品を最大5件表示 -->
                 <div class="p-mypage">
                     <h2 class="c-title c-title--sub">購入した商品</h2><span class="c-text c-text--max">最大5件表示</span>
@@ -73,8 +75,8 @@
                                         <div class="c-icon">
                                             <!-- 利用者ユーザーの場合にいいねアイコンを表示 -->
                                             <div v-if="$store.getters['auth/check'] && $store.getters['auth/role'] === 'user'">
-                                                <i v-if="!product.liked" class="c-icon c-icon--unlike far fa-heart" @click="productLike(product)"></i>
-                                                <i v-else class="c-icon c-icon--like fas fa-heart" @click="productUnlike(product)"></i>
+                                                <i v-if="!product.product.liked" class="c-icon c-icon--unlike far fa-heart" @click="productLike(product.product)"></i>
+                                                <i v-else class="c-icon c-icon--like fas fa-heart" @click="productUnlike(product.product)"></i>
                                                 {{ product.product.likes_count }} <!-- いいね数 -->
                                             </div>
                                         </div>
@@ -107,10 +109,12 @@
 </template>
 
 <script>
-import SidebarComponent from './SidebarComponent.vue';
+import Toast from '../Parts/Toast.vue'; // Toastコンポーネント
+import SidebarComponent from './SidebarComponent.vue'; // サイドバーコンポーネント
 
 export default {
     components: {
+        Toast, // Toastコンポーネントを読み込み
         SidebarComponent // サイドバーコンポーネントを読み込み
     },
 
@@ -139,21 +143,16 @@ export default {
         getMyPageProducts() {
             // 利用者マイページに表示する出品・購入商品情報の取得APIをGET送信
             axios.get('/api/user/mypage/products').then(response => {
-                console.log('APIのレスポンスは、', response.data);
                 // コンビニマイページに表示する出品・購入商品情報の取得APIをGET送信
                 this.purchasedProducts = response.data.purchased_products; // 購入した商品情報
                 this.likedProducts = response.data.liked_products; // お気に入り登録商品情報
-                console.log('likedProductsは、', this.likedProducts);
             }).catch(error => {
-                console.error('商品情報取得失敗:', error.response.data);
                 this.errors = error.response.data;
             });
         },
 
         // 商品画像のパスを取得するメソッド
         getProductPicturePath(product) {
-            console.log('productは、', product);
-            console.log('product.picturesは、', product.pictures);
             if (product.pictures.length > 0) {
                 return product.pictures[0].file; // 商品画像がある場合は、その画像パスを返す
             } else {
@@ -193,7 +192,10 @@ export default {
         cancelPurchase(productId) {
             // 購入キャンセルAPIをDELETE送信
             axios.delete(`/api/user/products/purchase/cancel/${productId}`).then(response => { // 商品IDを含むリクエスト
-                console.log('APIからのレスポンス:', response.data);
+                this.$store.dispatch('flash/setFlashMessage', { // フラッシュメッセージの表示
+                    message: '購入キャンセルが完了しました。購入キャンセルメールをご確認ください。',
+                    type: 'success'
+                });
                 this.getMyPageProducts();　// 購入した商品のリストを再取得する
             }).catch(error => {
                 console.error('商品購入キャンセル処理失敗:', error.response.data);
@@ -207,6 +209,7 @@ export default {
             axios.post('/api/user/like/' + product.id).then(response => {
                 product.liked = true; // いいねアイコンをtrueに切り替え
                 product.likes_count++; // いいね数のインクリメント
+                this.getMyPageProducts();
             }).catch(error => {
                 console.error('商品のお気に入り登録失敗:', error);
             });
@@ -218,6 +221,7 @@ export default {
             axios.post('/api/user/unlike/' + product.id).then(response => {
                 product.liked = false; // いいねアイコンをfalseに切り替え
                 product.likes_count--; // いいね数のデクリメント
+                this.getMyPageProducts();
             }).catch(error => {
                 console.error('商品のお気に入り解除失敗:', error);
             });
@@ -227,12 +231,10 @@ export default {
         getSidebarProfile() {
             // 利用者側プロフィール情報の取得APIをGET送信
             axios.get('/api/user/mypage/profile').then(response => {
-                console.log('APIからのレスポンスデータ:', response.data);
                 this.user = response.data.user; // レスポンスデータのユーザー情報をuserプロパティにセット
                 // 取得した各プロフィール情報をintroductionプロパティにセット
                 this.introduction = this.user.introduction; // 自己紹介文
             }).catch (error => {
-                console.error('プロフィール取得失敗:', error.response.data);
                 this.errors = error.response.data;
             });
         },

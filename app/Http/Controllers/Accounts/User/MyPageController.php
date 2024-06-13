@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Accounts\User;
 
+use App\Models\Like;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -90,6 +91,9 @@ class MyPageController extends Controller
         try {
             // 認証済みユーザー情報の取得
             $user = Auth::user();
+            // 認証済みユーザーIDの取得
+            $userId = auth()->id();
+
             // 未認証の場合
             if (!$user) {
                 return response()->json(['message' => 'Unauthenticated.'], 401);
@@ -104,6 +108,12 @@ class MyPageController extends Controller
                 ->orderBy('created_at', 'desc')// 最新の登録履歴（降順）
                 ->limit(5)
                 ->get();
+            foreach ($purchasedProducts as $product) {
+                // 商品情報にお気に入り情報を含める
+                $like = Like::where('user_id', $userId)->where('product_id', $product->product->id)->first(); // Likeモデルから特定のユーザーがお気に入り登録した商品を取得
+                $product->product->liked = $like ? true : false; // お気に入り登録（true）の場合はlikedプロパティをtrueにする
+            }
+
             // マイページにお気に入り登録商品を最大5件表示（削除済みの商品は含めない）
             $likedProducts = $user->likes()
                 ->with(['product' => function ($query) {
@@ -114,8 +124,11 @@ class MyPageController extends Controller
                 ->orderBy('created_at', 'desc')// 最新の登録履歴（降順）
                 ->limit(5)
                 ->get();
-
-
+            foreach ($likedProducts as $product) {
+                // 商品情報にお気に入り情報を含める
+                $like = Like::where('user_id', $userId)->where('product_id', $product->product->id)->first(); // Likeモデルから特定のユーザーがお気に入り登録した商品を取得
+                $product->product->liked = $like ? true : false; // お気に入り登録（true）の場合はlikedプロパティをtrueにする
+            }
             \Log::info('$likedProducts', [$likedProducts]);
             return response()->json(['purchased_products' => $purchasedProducts, 'liked_products' => $likedProducts]);
         } catch (\Exception $e) {

@@ -26,7 +26,7 @@
                 </div>
             </div>
             <div class="c-button__container">
-                <router-link class="c-button c-button--main u-m__m" :to="{ name: 'convenience.products.create' }">商品出品する</router-link>
+                <router-link class="c-button c-button--main" :to="{ name: 'convenience.products.create' }">商品出品する</router-link>
             </div>
             <router-link class="p-sidebar--link c-link" :to="{ name: 'products' }">商品一覧</router-link>
             <router-link class="p-sidebar--link c-link" :to="{ name: 'convenience.products.sale' }">出品した商品一覧</router-link>
@@ -37,7 +37,7 @@
 
 <script>
 export default {
-    props: ['convenience_name', 'branch_name', 'prefecture', 'city', 'town', 'building', 'introduction'],
+    props: ['convenience_name', 'branch_name', 'prefecture', 'city', 'town', 'building', 'introduction'], // 親コンポーネントからプロフィール情報を受け取る
 
     computed: {
         // ログインユーザーかどうか

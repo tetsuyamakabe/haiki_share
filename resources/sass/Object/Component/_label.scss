@@ -12,19 +12,23 @@
         position: absolute;
         top: 25%;
         left: 25%;
-        opacity: 0.8;
-        text-align: center;
+        width: 60px;
+        height: 60px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
         font-weight: bold;
-        border-radius: 5px;
+        border-radius: 50%;
+        font-size: $font-size_l;
         color: $font-color_sub;
         background: $background-color_label;
-
         @include mq(sm) {
-            top: 35%;
-            left: 20%;
+            width: 30px;
+            height: 30px;
+            font-size: 12px;
+            z-index: 2;
         }
     }
-
     &__category {
         font-size: 12px;
         margin: 0 8px;

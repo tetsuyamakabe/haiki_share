@@ -1,19 +1,15 @@
 .c-text {
     font-size: $font-size_default;
-
     @include mq(sm) {
         font-size: $font-size_m;
     }
-
     &--note {
         font-size: $font-size_m;
     }
-
     &--max {
         display: flex;
         justify-content: flex-end;
     }
-
     &--alert {
         margin: $space_m 0;
         font-weight: bold;

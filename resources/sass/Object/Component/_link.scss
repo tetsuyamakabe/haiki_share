@@ -4,26 +4,22 @@
     text-decoration: none;
     color: $font-color_default;
     font-size: $font-size_default;
-
     @include mq(sm){
         font-size: $font-size_m;
     }
-
     &:hover {
         text-decoration: underline;
     }
-
     &--all {
+        display: block;
         text-align: right;
     }
-
     &--withdraw {
         margin: $space_l 0;
         padding-right: $space_s;
         display: block;
         text-align: right;
     }
-
     &--back {
         margin: $space_s;
         display: inline-block;

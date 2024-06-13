@@ -22,7 +22,7 @@
                                 </div>
                                 <div class="c-card__body">
                                     <img class="c-card__img" :src="getProductPicturePath(product)" alt="商品画像"> <!-- 商品画像 -->
-                                    <label v-show="product.is_purchased" class="c-label__purchase">購入済み</label> <!-- 購入済みラベル -->
+                                    <label v-show="product.is_purchased" class="c-label__purchase">購入<br>済み</label> <!-- 購入済みラベル -->
                                     <div class="c-icon">
                                         <!-- 利用者ユーザーの場合にいいねアイコンを表示 -->
                                         <div v-if="$store.getters['auth/check'] && $store.getters['auth/role'] === 'user'">
@@ -60,21 +60,21 @@
                 </div>
             </div>
             <!-- 絞り込み検索フォーム -->
-            <search-component @search="searchResult" :errors="errors.errors" />
+            <search @search="searchResult" :errors="errors.errors" />
         </div>
         <!-- ページネーション -->
-        <pagination-component @onClick="onPageChange" :current_page="currentPage" :last_page="lastPage" />
+        <pagination @onClick="onPageChange" :current_page="currentPage" :last_page="lastPage" />
     </main>
 </template>
 
 <script>
-import SearchComponent from './SearchComponent.vue'; // 絞り込み検索コンポーネント
-import PaginationComponent from './PaginationComponent.vue'; // ページネーションコンポーネント
+import Search from '../Parts/Search.vue'; // 絞り込み検索コンポーネント
+import Pagination from '../Parts/Pagination.vue'; // ページネーションコンポーネント
 
 export default {
     components: {
-        SearchComponent, // 絞り込み検索コンポーネント
-        PaginationComponent, // ページネーションコンポーネント
+        Search, // 絞り込み検索コンポーネントを読み込み
+        Pagination, // ページネーションコンポーネントを読み込み
     },
 
     data() {
@@ -94,7 +94,6 @@ export default {
     methods: {
         // URLを作成する
         createURL(params) {
-            console.log('検索URLを作成します');
             // URLの組み立て
             let url = `/products`;
             if (params && params.page) { // パラメータとパラメータのpageがある場合
@@ -115,15 +114,14 @@ export default {
                 url += `&expiration_date=${params.expiration_date}`; // urlにparams.expiration_dateを追加
             }
             if (params && params.category_id) { // カテゴリ
-                url += `&category_id=${params.category_id}`;
+                url += `&category_id=${params.category_id}`; // urlにparams.category_idを追加
             }
-            if (params && params.sort) { // ソート順
+            if (params && params.sort) { // ソート順（出品した順）
                 url += `&sort=${params.sort}`; // urlにparams.sortを追加
             }
-            if (params && params.sortExpired) { // ソート順
-                url += `&sortExpired=${params.sortExpired}`; // urlにparams.sortを追加
+            if (params && params.sortExpired) { // ソート順（賞味期限日付順）
+                url += `&sortExpired=${params.sortExpired}`; // urlにparams.sortExpiredを追加
             }
-            console.log('検索URL:', url);
             // ページ遷移
             this.$router.push(url).then(() => {
                 this.getProduct(); // ページ遷移が完了した後にgetProduct()メソッドを呼び出す
@@ -132,7 +130,6 @@ export default {
 
         // ページが変更されたときの処理
         onPageChange(page) {
-            console.log('onPageChangeメソッドのpageは、', page);
             if (this.currentPage !== page) { // 現在のページ番号と新しいページ番号が異なるか
                 this.currentPage = page; // ページ番号を更新
                 const params = Object.assign({}, this.$route.query); // 新しいクエリパラメータをparamsオブジェクトにコピー
@@ -143,7 +140,6 @@ export default {
 
         // 検索結果を表示する
         searchResult(params) {
-            console.log('searchResultのparamsは、', params);
             this.errors = []; // バリデーションエラーメッセージをリセットする
             if (JSON.stringify(params) === JSON.stringify(this.lastParams)) { // 前回の検索条件が同じであればページ遷移を行わずに検索結果を再取得する
                 this.getProduct(params); // 前回と同じ検索条件での再取得
@@ -157,15 +153,11 @@ export default {
         getProduct() {
             // 現在のルートのクエリパラメータを取得
             const params = Object.assign({}, this.$route.query); // クエリパラメータのコピーを作成
-            console.log('paramsは、', params, 'this.currentPageは、', this.currentPage);
             axios.post('/api/products', params).then(response => {
-                console.log('APIのレスポンスは、', response.data);
                 // レスポンスデータをそれぞれのプロパティにセット
                 this.products = response.data.products; // 商品情報
-                console.log('this.productsは、', this.products);
                 this.lastPage = response.data.products.last_page; // ページ数
             }).catch(error => {
-                console.error('商品情報取得失敗:', error.response.data);
                 this.errors = error.response.data;
             });
         },

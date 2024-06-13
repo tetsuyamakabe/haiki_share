@@ -17,6 +17,8 @@
                 <a class="l-nav__link" href="#merit" @click="closeMenu">メリット</a>
                 <a class="l-nav__link" href="#usage" @click="closeMenu">利用方法</a>
                 <a class="l-nav__link" href="#contact" @click="closeMenu">お問い合わせ</a>
+                <RouterLink class="l-nav__link" to="/user/login" @click.native="closeMenu">利用者ログイン</RouterLink>
+                <RouterLink class="l-nav__link" to="/convenience/login" @click.native="closeMenu">コンビニログイン</RouterLink>
             </li>
             <li v-else class="l-nav__item">
                 <!-- ログインしていないTOP画面以外のナビゲーションメニュー -->
@@ -75,9 +77,7 @@ export default {
             // roleによってログアウトのAPIのエンドポイントとログアウト後のログイン画面のルートを動的に変える
             const logoutEndpoint = this.$store.getters['auth/role'] === 'user' ? '/api/user/logout' : '/api/convenience/logout';
             const loginRoute = this.$store.getters['auth/role'] === 'user' ? 'user.login' : 'convenience.login';
-
             axios.post(logoutEndpoint).then(response => {
-                console.log('ログアウト成功:', response.data.message);
                 this.$store.commit('auth/clearUser');
                 this.closeMenu(); // メニューを閉じる
                 this.$router.push({ name: loginRoute }); // ログアウト処理完了後、ログイン画面に遷移

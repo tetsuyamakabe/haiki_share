@@ -59,7 +59,7 @@
 </template>
 
 <script>
-import SidebarComponent from './SidebarComponent.vue';
+import SidebarComponent from './SidebarComponent.vue'; // サイドバーコンポーネント
 
 export default {
     components: {
@@ -112,7 +112,6 @@ export default {
                 this.formData.introduction = this.user.introduction || ''; // 自己紹介文
                 this.formData.avatar = this.user.avatar || ''; // 顔写真
             }).catch (error => {
-                console.error('プロフィール取得失敗:', error.response.data);
                 this.errors = error.response.data;
             });
         },
@@ -141,8 +140,6 @@ export default {
             axios.post('/api/user/mypage/profile', formData, config).then(response => { // リクエストヘッダとフォームデータを含むリクエスト
                 this.$router.push({ name: 'user.mypage' }); // プロフィール更新完了後、マイページに遷移する
             }).catch(error => {
-                console.log('errorは、', error);
-                console.error('プロフィール編集失敗:', error.response.data);
                 this.errors = error.response.data.errors;
             });
         },
@@ -197,12 +194,10 @@ export default {
         getSidebarProfile() {
             // 利用者側プロフィール情報の取得APIをGET送信
             axios.get('/api/user/mypage/profile').then(response => {
-                console.log('APIからのレスポンスデータ:', response.data);
                 this.user = response.data.user; // レスポンスデータのユーザー情報をuserプロパティにセット
                 // 取得した各プロフィール情報をintroductionプロパティにセット
                 this.introduction = this.user.introduction; // 自己紹介文
             }).catch (error => {
-                console.error('プロフィール取得失敗:', error.response.data);
                 this.errors = error.response.data;
             });
         },

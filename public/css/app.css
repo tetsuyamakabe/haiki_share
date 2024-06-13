@@ -202,6 +202,20 @@ body {
   width: 100%;
 }
 
+.l-container__header {
+  margin: 32px 0;
+}
+
+.l-container__inner {
+  padding: 32px;
+}
+
+@media screen and (max-width: 414px) {
+  .l-container__inner {
+    padding: 40px 16px;
+  }
+}
+
 .l-footer {
   width: 100%;
 }
@@ -301,7 +315,7 @@ body {
 
 @media screen and (max-width: 414px) {
   .l-header {
-    height: 60px;
+    height: 100%;
     padding: 0 24px;
   }
 }
@@ -575,13 +589,20 @@ body {
 
 .c-attachment {
   width: 50%;
-  margin-right: 16px;
+  margin: 16px;
+  box-shadow: 0 20px 20px -20px rgba(0, 0, 0, 0.7);
+  -webkit-box-shadow: 0 20px 20px -20px rgba(0, 0, 0, 0.7);
+}
+
+@media screen and (max-width: 768px) {
+  .c-attachment {
+    width: 100%;
+  }
 }
 
 @media screen and (max-width: 414px) {
   .c-attachment {
     width: 100%;
-    margin-bottom: 16px;
   }
 }
 
@@ -686,6 +707,7 @@ body {
 .c-button__container {
   display: flex;
   flex-direction: column;
+  margin: 16px;
 }
 
 .c-button--zip {
@@ -695,7 +717,6 @@ body {
 
 .c-button--top {
   margin: auto;
-  padding: 8px;
   display: flex;
   width: 30%;
   justify-content: center;
@@ -705,16 +726,25 @@ body {
   font-size: 24px;
 }
 
-.c-button__register {
+@media screen and (max-width: 768px) {
+  .c-button--top {
+    width: 60%;
+  }
+}
+
+@media screen and (max-width: 414px) {
+  .c-button--top {
+    width: 90%;
+  }
+}
+
+.c-button--register {
   display: block;
   text-align: center;
   font-weight: bold;
   color: #434343;
-  border: 2px solid #ff2828;
-}
-
-.c-button__register:hover {
-  background: #ff2828;
+  padding: 8px;
+  font-size: 24px;
 }
 
 .c-button__contact {
@@ -826,37 +856,39 @@ body {
   margin-right: 8px;
 }
 
-.c-container {
+.c-content {
   width: 980px;
   margin: auto;
-}
-
-@media screen and (max-width: 414px) {
-  .c-container {
-    width: 100%;
-  }
-}
-
-.c-container__body {
-  line-height: 1.7;
   display: flex;
   align-items: center;
+}
+
+.c-content__text {
+  line-height: 1.7;
   font-size: 16px;
 }
 
-@media screen and (max-width: 414px) {
-  .c-container__body {
+@media screen and (max-width: 768px) {
+  .c-content {
+    width: 100%;
     flex-direction: column;
   }
 }
 
-.c-container__contact {
+@media screen and (max-width: 414px) {
+  .c-content {
+    width: 100%;
+    flex-direction: column;
+  }
+}
+
+.c-content__contact {
   line-height: 1.7;
   font-size: 16px;
 }
 
 @media screen and (max-width: 414px) {
-  .c-container__contact {
+  .c-content__contact {
     flex-direction: column;
   }
 }
@@ -903,27 +935,70 @@ body {
   background-color: #fefefe;
 }
 
+.c-heading {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+@media screen and (max-width: 414px) {
+  .c-heading {
+    font-size: 12px;
+  }
+}
+
 .c-hero {
   width: 100%;
-  height: 600px;
+  height: 700px;
+  background: linear-gradient(0deg, rgba(238, 238, 238, 0.5) 0%, rgba(255, 255, 255, 0.8) 100%), url("/images/convenience_shopping.jpg") no-repeat center/cover;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
+@media screen and (max-width: 414px) {
+  .c-hero {
+    height: 50%;
+  }
+}
+
+.c-hero__inner {
+  text-align: center;
+  font-weight: bold;
+  color: #434343;
+}
+
+@media screen and (max-width: 768px) {
+  .c-hero__inner {
+    padding: 48px;
+  }
+}
+
+@media screen and (max-width: 414px) {
+  .c-hero__inner {
+    padding: 48px;
+  }
+}
+
 .c-hero__title {
   font-family: "Arial", sans-serif;
   font-style: italic;
-  font-weight: bold;
   font-size: 200px;
-  color: #434343;
+}
+
+@media screen and (max-width: 768px) {
+  .c-hero__title {
+    font-size: 100px;
+  }
 }
 
 @media screen and (max-width: 414px) {
   .c-hero__title {
     font-size: 100px;
-    padding: 48px;
   }
+}
+
+.c-hero__text {
+  font-size: 32px;
 }
 
 .c-icon {
@@ -1034,18 +1109,24 @@ body {
   position: absolute;
   top: 25%;
   left: 25%;
-  opacity: 0.8;
-  text-align: center;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   font-weight: bold;
-  border-radius: 5px;
+  border-radius: 50%;
+  font-size: 24px;
   color: #fefefe;
-  background: #ff6666;
+  background: #ff2828;
 }
 
 @media screen and (max-width: 414px) {
   .c-label__purchase {
-    top: 35%;
-    left: 20%;
+    width: 30px;
+    height: 30px;
+    font-size: 12px;
+    z-index: 2;
   }
 }
 
@@ -1077,6 +1158,7 @@ body {
 }
 
 .c-link--all {
+  display: block;
   text-align: right;
 }
 
@@ -1115,7 +1197,7 @@ body {
 }
 
 .c-pagination .inactive {
-  color: #32cd32;
+  color: #434343;
 }
 
 .c-pagination li + li {
@@ -1193,14 +1275,14 @@ body {
 
 .c-panel__group .c-panel {
   width: 50%;
-  margin: 16px;
   box-sizing: border-box;
+  margin: 8px;
 }
 
 @media screen and (max-width: 414px) {
   .c-panel__group .c-panel {
-    width: 90%;
-    margin: 24px;
+    width: 100%;
+    margin: 8px 0;
   }
 }
 
@@ -1264,7 +1346,6 @@ body {
 
 .c-product__expiration {
   display: flex;
-  justify-content: space-between;
 }
 
 @media screen and (max-width: 414px) {
@@ -1292,6 +1373,10 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center;
+}
+
+.c-section {
+  padding: 16px;
 }
 
 .c-selectbox {
@@ -1390,20 +1475,13 @@ body {
   margin: 32px 0;
 }
 
-.c-title__terms,
-.c-title__policy {
-  text-align: left;
-  font-weight: bold;
-  font-size: 16px;
-}
-
 .c-toast {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   width: 100%;
-  padding: 8px 0;
+  padding: 16px 0;
   color: #fefefe;
   font-weight: bold;
   opacity: 0.9;
@@ -1411,12 +1489,12 @@ body {
   text-align: center;
 }
 
-.c-toast__success {
-  background-color: #28a745;
+.c-toast--success {
+  background-color: #32cd32;
 }
 
-.c-toast__error {
-  background-color: #dc3545;
+.c-toast--error {
+  background-color: #ff2828;
 }
 
 .c-tooltip {
@@ -1644,21 +1722,27 @@ body {
   justify-content: center;
 }
 
-.u-color__user {
+.u-bgColor {
+  background-color: #eee;
+}
+
+.u-ftColor__user {
   color: #ff1493;
 }
 
-.u-color__convenience {
+.u-ftColor__convenience {
   color: #00bfff;
-}
-
-.u-color__bg {
-  background: #f6f5f4;
 }
 
 @media screen and (max-width: 414px) {
   .u-fz-10\@sm {
     font-size: 10px;
+  }
+}
+
+@media screen and (max-width: 414px) {
+  .u-fz-20\@sm {
+    font-size: 20px;
   }
 }
 

@@ -1,7 +1,0 @@
-$font-size_xs: 10px;
-
-.u-fz-10\@sm {
-    @include mq(sm) {
-        font-size: $font-size_xs;
-    }
-}

@@ -1,21 +1,36 @@
 .c-hero {
     width: 100%;
-    height: 600px;
+    height: 700px;
+    background: linear-gradient(0deg, rgba(238,238,238,0.5) 0%, rgba(255,255,255,0.8) 100%), url('/images/convenience_shopping.jpg') no-repeat center/cover;
     display: flex;
     justify-content: center;
     align-items: center;
-
+    @include mq(sm) {
+        height: 50%;
+    }
+    &__inner {
+        text-align: center;
+        font-weight: bold;
+        color: $font-color_default;
+        @include mq(md) {
+            padding: $font-size_3l;
+        }
+        @include mq(sm) {
+            padding: $font-size_3l;
+        }
+    }
     &__title {
         font-family: $font-family_corp;
         font-style: italic;
-        font-weight: bold;
         font-size: 200px;
-        color: $font-color_default;
-
+        @include mq(md) {
+            font-size: 100px;
+        }
         @include mq(sm) {
             font-size: 100px;
-            padding: $font-size_3l;
         }
-
+    }
+    &__text {
+        font-size: $font-size_xl;
     }
 }

@@ -2,17 +2,17 @@
     <header class="l-header">
         <div class="l-header__inner">
             <router-link class="l-header__logo" :to="{ name: 'top' }">haiki share</router-link>
-            <nav-component />
+            <Nav />
         </div>
     </header>
 </template>
 
 <script>
-import NavComponent from './NavComponent.vue';
+import Nav from './Nav.vue'; // ナビゲーションコンポーネント
 
 export default {
     components: {
-        NavComponent
+        Nav, // ナビゲーションコンポーネントを読み込み
     }
 }
 </script>

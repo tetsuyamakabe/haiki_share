@@ -164,8 +164,19 @@ class ProductController extends Controller
         $user = Auth::user();
         // 購入した商品（と商品画像）を購入日の降順で15件ずつ取得（削除済みの商品は含めない）
         $products = $user->purchases()->with(['product' => function ($query) {
-            $query->whereNull('deleted_at')->with('pictures', 'category');
-        }])->orderBy('created_at', 'desc')->paginate(15);
+            $query->whereNull('deleted_at')->withCount('likes')->with('pictures', 'category'); 
+        }])->orderBy('created_at', 'desc')->paginate(15)->toArray();
+        $totalProducts = count($products['data']);
+        $filteredProducts = [];
+        foreach ($products['data'] as $like) {
+            if ($like['product'] !== null) {
+                $like['product']['liked'] = true; // お気に入りに追加されている商品なのでtrue
+                $filteredProducts[] = $like;
+            }
+        }
+        $products['data'] = $filteredProducts;
+        $products['total'] = count($filteredProducts); // フィルタリング後の商品数を更新する
+
         return response()->json(['products' => $products], 200);
     }
 

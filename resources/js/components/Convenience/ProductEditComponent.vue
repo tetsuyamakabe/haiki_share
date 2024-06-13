@@ -64,7 +64,7 @@
 </template>
 
 <script>
-import SidebarComponent from './SidebarComponent.vue';
+import SidebarComponent from './SidebarComponent.vue'; // サイドバーコンポーネント
 
 export default {
     components: {
@@ -132,7 +132,6 @@ export default {
             axios.get('/api/categories').then(response => {
                 this.categories = response.data.categories; // レスポンスデータのカテゴリ情報をcategoriesプロパティにセット
             }).catch(error => {
-                console.error('商品カテゴリー情報取得失敗:', error.response.data);
                 this.errors = error.response.data;
             });
         },
@@ -158,7 +157,6 @@ export default {
                 }
                 this.formData.product_picture = this.product.pictures[0].file || ''; // 商品画像
             }).catch(error => {
-                console.error('商品情報取得失敗:', error.response.data);
                 this.errors = error.response.data;
             });
         },
@@ -184,7 +182,6 @@ export default {
             axios.post('/api/convenience/products/edit/' + productId, formData, config).then(response => { // 商品IDとリクエストヘッダとフォームデータを含むリクエスト
                 this.$router.push({ name: 'convenience.products.sale' }); // 商品更新処理後、出品した商品一覧画面に遷移
             }).catch(error => {
-                console.error('商品編集失敗:', error.response.data);
                 this.errors = error.response.data.errors;
             });
         },
@@ -196,7 +193,6 @@ export default {
             axios.delete('/api/convenience/products/' + productId).then(response => {
                 this.$router.push({ name: 'convenience.products.sale' }); // 商品削除処理後、出品した商品一覧画面に遷移
             }).catch(error => {
-                console.error('商品削除失敗:', error.response.data);
                 this.errors = error.response.data.errors;
             });
         },
@@ -243,9 +239,7 @@ export default {
                 this.town = this.address.town; // 地名・番地
                 this.building = this.address.building; // 建物名・部屋番号
                 this.introduction = this.user.introduction; // 自己紹介文
-            })
-            .catch(error => {
-                console.error('プロフィール取得失敗:', error.response.data);
+            }).catch(error => {
                 this.errors = error.response.data;
             });
         }
