@@ -77,18 +77,21 @@ class ProductController extends Controller
             $product->save();
             // 商品画像の処理
             if ($request->hasFile('product_picture')) {
-                $picture = $request->file('product_picture'); // 商品画像
-                $extension = $picture->getClientOriginalExtension(); // ファイルの拡張子を取得
-                $fileName = sha1($picture->getClientOriginalName()) . '.' . $extension; // SHA-1ハッシュでファイル名を決定
-                $picturePath = $picture->storeAs('public/product_pictures', $fileName); // ファイルを保存
+                $productPicture = $request->file('product_picture'); // 商品画像
+                $dir = 'product_pictures'; // アップロード先S3フォルダ名
+                $s3Upload = Storage::disk('s3')->putFile('/'.$dir, $productPicture); // S3にファイルを保存
+                $s3Url = Storage::disk('s3')->url($s3Upload); // アップロードファイルURLを取得
+                $s3UploadFileName = explode("/", $s3Url)[5]; // $s3UrlからS3でのファイル保存名取得
+                $s3Path = $dir.'/'.$s3UploadFileName; // アップロード先パスを取得
                 // 商品画像をproduct_picturesテーブルに保存
-                $ProductPicture = ProductPicture::where('product_id', $product->id)->first(); // 商品IDに紐づいた商品画像の取得
-                $ProductPicture->file = $fileName; // 商品画像ファイル名を更新
-                $ProductPicture->save();
+                $productPicture = ProductPicture::where('product_id', $product->id)->first(); // 商品IDに紐づいた商品画像の取得
+                $productPicture->file = 'https://haikishare.com/' . $s3Path; // 商品画像ファイル名を保存
+                $productPicture->save();
             }
             $product->load('pictures'); // pictureリレーションをロード
             return response()->json(['message' => '商品の編集に成功しました。', 'product' => $product]);
         } catch (\Exception $e) {
+            \Log::error('例外エラー: ' . $e->getMessage());
             return response()->json(['message' => '商品の編集に失敗しました。'], 500);
         }
     }

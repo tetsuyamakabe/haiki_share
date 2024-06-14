@@ -4,8 +4,6 @@
             <h1 class="c-title">コンビニパスワード変更</h1>
         </div>
         <section class="l-main__wrapper">
-            <!-- フラッシュメッセージを表示 -->
-            <Toast />
             <form @submit.prevent="resetPassword" class="c-form">
                 <!-- 新しいパスワード -->
                 <label for="new_password" class="c-label">新しいパスワード<span class="c-badge">必須</span></label>
@@ -20,7 +18,7 @@
                 <!-- 新しいパスワード（再入力） -->
                 <label for="password-confirm" class="c-label">新しいパスワード（再入力）<span class="c-badge">必須</span></label>
                 <span v-if="errors && errors.password_confirmation" class="c-error">{{ errors.password_confirmation[0] }}</span>
-                <div class="c-input__password">
+                <div class="c-password">
                     <input v-model="formData.password_confirmation" id="password-confirm" :type="PasswordConfirmType" class="c-input" :class="{ 'is-invalid': errors && errors.password_confirmation }" placeholder="英数字8文字以上で入力してください">
                     <span @click="togglePasswordVisibility('password_confirm')" class="c-password__icon">
                         <i :class="PasswordConfirmIconClass"></i>
@@ -37,13 +35,7 @@
 </template>
 
 <script>
-import Toast from '../Parts/Toast.vue'; // Toastコンポーネントをインポート
-
 export default {
-    components: {
-        Toast, // Toastコンポーネントを読み込み
-    },
-
     data() {
         return {
             formData: {
@@ -78,10 +70,6 @@ export default {
             };
             // コンビニパスワード変更APIをPOST送信
             axios.post('/api/convenience/password/reset', requestData).then(response => { // トークンとメールアドレスを含めたデータを含むリクエスト
-                this.$store.dispatch('flash/setFlashMessage', { // フラッシュメッセージの表示
-                    message: 'パスワードを変更しました。',
-                    type: 'success'
-                });
                 this.$router.push({ name: 'convenience.login' }); // パスワード変更後、ログイン画面に遷移
             }).catch(error => {
                 this.errors = error.response.data.errors;

@@ -27,15 +27,15 @@ class ProfileRequest extends FormRequest
             // コンビニ名のバリデーションルール（必須、string型、最大文字数255文字以下）
             'convenience_name' => 'required|string|max:255',
             // 支店名のバリデーションルール（必須、string型、最大文字数255文字以下）
-            'branch_name' => 'required', 'string', 'max:255',
+            'branch_name' => 'required|string|max:255',
             // 都道府県のバリデーションルール（必須、string型、最大文字数255文字以下）
-            'prefecture' => 'required', 'string', 'max:255',
+            'prefecture' =>'required|string|max:255',
             // 市区町村のバリデーションルール（必須、string型、最大文字数255文字以下）
-            'city' => 'required', 'string', 'max:255',
+            'city' => 'required|string|max:255',
             // 地名・番地のバリデーションルール（必須、string型、最大文字数255文字以下）
-            'town' => 'required', 'string', 'max:255',
+            'town' => 'required|string|max:255',
             // 建物名・部屋番号のバリデーションルール（NULL許容、string型、最大文字数255文字以下）
-            'building' => 'nullable', 'string', 'max:255',
+            'building' => 'nullable|string|max:255',
             // パスワードのバリデーションルール（NULL許容、string型、最小文字数8文字以上、パスワード再入力と同じ値か、半角数字・英字大文字・小文字・記号を許可）
             'password' => 'nullable|string|min:8|confirmed|regex:/^[a-zA-Z0-9!@#$%^&*]+$/',
             // 自己紹介文のバリデーションルール（NULL許容、string型、最大文字数50文字）
