@@ -35,7 +35,7 @@ class ResetPasswordTest extends TestCase
         // レスポンスデータに必要な情報が含まれているか
         $this->assertArrayHasKey('message', $responseData);
         // レスポンスデータの内容が正しいか
-        $this->assertEquals('パスワードが変更されました', $responseData['message']);
+        $this->assertEquals('パスワードが変更されました。', $responseData['message']);
     }
 
     // 異常系テスト
@@ -52,7 +52,7 @@ class ResetPasswordTest extends TestCase
         // エラーレスポンスが返されるか
         $response->assertStatus(404);
         // エラーメッセージが正しいか
-        $response->assertJson(['message' => 'ユーザーが見つかりません']);
+        $response->assertJson(['message' => 'ユーザーが見つかりません。']);
     }
 
     public function test_コンビニユーザーのパスワード変更処理()
@@ -75,7 +75,7 @@ class ResetPasswordTest extends TestCase
         // エラーレスポンスが返されるか
         $response->assertStatus(422);
         // エラーメッセージが正しいか
-        $response->assertJson(['errors' => ['email' => ['このメールアドレスは利用者側のメールアドレスではありません。']]]);
+        $response->assertJson(['errors' => ['email' => ['メールアドレスが無効です。']]]);
     }
 
     public function test_利用者側パスワード変更バリデーションチェック()

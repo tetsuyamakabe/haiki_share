@@ -95,7 +95,7 @@ class MyPageTest extends TestCase
         $this->assertArrayHasKey('message', $responseData);
         $this->assertArrayHasKey('user', $responseData);
         // レスポンスデータの内容が正しいか
-        $this->assertEquals('ユーザーが退会しました', $responseData['message']);
+        $this->assertEquals('ユーザーが退会しました。', $responseData['message']);
         $this->assertEquals($user->toArray(), $responseData['user']);
     }
 
@@ -169,7 +169,7 @@ class MyPageTest extends TestCase
         // レスポンスデータに必要な情報が含まれているか
         $this->assertArrayHasKey('message', $responseData);
         // レスポンスデータの内容が正しいか
-        $this->assertEquals('お問い合わせが送信されました', $responseData['message']);
+        $this->assertEquals('お問い合わせ受付完了メールを送信しました。', $responseData['message']);
     }
 
     // 異常系テスト
@@ -222,7 +222,7 @@ class MyPageTest extends TestCase
         // エラーレスポンスが返されるか
         $response->assertStatus(422);
         // エラーメッセージが正しいか
-        $response->assertJsonValidationErrors(['name', 'email', 'password', 'introduction', '']);
+        $response->assertJsonValidationErrors(['name', 'email', 'password', 'introduction', 'avatar']);
     }
 
     public function test_利用者側未認証ユーザーの退会処理()

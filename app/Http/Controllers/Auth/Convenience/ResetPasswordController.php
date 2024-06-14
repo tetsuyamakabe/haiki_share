@@ -56,7 +56,7 @@ class ResetPasswordController extends Controller
             }
             // roleがuserの場合は422エラーを返す
             if ($user->role == 'user') {
-                return response()->json(['errors' => ['email' => ['このメールアドレスはコンビニ側のメールアドレスではありません。']]], 422);
+                return response()->json(['errors' => ['email' => ['メールアドレスが無効です。']]], 422);
             }
             // パスワードを更新
             $user->password = Hash::make($password);

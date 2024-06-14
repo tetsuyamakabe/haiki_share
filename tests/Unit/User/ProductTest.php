@@ -87,7 +87,7 @@ class ProductTest extends TestCase
         // レスポンスデータに必要な情報が含まれているか
         $this->assertArrayHasKey('message', $responseData);
         // レスポンスデータの内容が正しいか
-        $this->assertEquals('商品をお気に入り登録しました', $responseData['message']);
+        $this->assertEquals('商品をお気に入り登録しました。', $responseData['message']);
     }
 
     public function test_商品お気に入り解除処理()
@@ -107,7 +107,7 @@ class ProductTest extends TestCase
         // レスポンスデータに必要な情報が含まれているか
         $this->assertArrayHasKey('message', $responseData);
         // レスポンスデータの内容が正しいか
-        $this->assertEquals('商品のお気に入り登録を解除しました', $responseData['message']);
+        $this->assertEquals('商品のお気に入り登録を解除しました。', $responseData['message']);
     }
 
     public function test_購入した商品情報の取得処理()
@@ -286,7 +286,7 @@ class ProductTest extends TestCase
         $responseData = $response->json();
         // エラーメッセージが含まれているか
         $this->assertArrayHasKey('message', $responseData);
-        $this->assertEquals('すでにお気に入り登録されています', $responseData['message']);
+        $this->assertEquals('すでにお気に入り登録されています。', $responseData['message']);
     }
 
     public function test_未認証ユーザーの商品お気に入り解除処理()
@@ -318,7 +318,7 @@ class ProductTest extends TestCase
         $responseData = $response->json();
         // エラーメッセージが含まれているか
         $this->assertArrayHasKey('message', $responseData);
-        $this->assertEquals('お気に入り登録が見つかりません', $responseData['message']);
+        $this->assertEquals('お気に入り登録が見つかりません。', $responseData['message']);
     }
 
     public function test_未認証ユーザーの購入した商品情報の取得処理()

@@ -75,7 +75,7 @@ class ResetPasswordTest extends TestCase
         // エラーレスポンスが返されるか
         $response->assertStatus(422);
         // エラーメッセージが正しいか
-        $response->assertJson(['errors' => ['email' => ['このメールアドレスはコンビニ側のメールアドレスではありません。']]]);
+        $response->assertJson(['errors' => ['email' => ['メールアドレスが無効です。']]]);
     }
 
     public function test_コンビニ側パスワード変更バリデーションチェック()

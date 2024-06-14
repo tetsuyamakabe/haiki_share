@@ -38,7 +38,7 @@ class ForgotPasswordTest extends TestCase
         // レスポンスデータに必要な情報が含まれているか
         $this->assertArrayHasKey('message', $responseData);
         // レスポンスデータの内容が正しいか
-        $this->assertEquals('パスワードリセットリンクを送信しました。', $responseData['message']);
+        $this->assertEquals('パスワードリセットメールを送信しました。', $responseData['message']);
     }
 
     // 異常系テスト
@@ -51,9 +51,9 @@ class ForgotPasswordTest extends TestCase
         // 不正なリクエストを送信
         $response = $this->json('POST', '/api/convenience/password/email', $data);
         // エラーレスポンスが返されるか
-        $response->assertStatus(404);
+        $response->assertStatus(422);
         // エラーメッセージが正しいか
-        $response->assertJson(['message' => 'ユーザーが見つかりません']);
+        $response->assertJson(['errors' => ['email' => ['メールアドレスが無効です。']]]);
     }
 
     public function test_利用者ユーザーのパスワードリセットメールの送信処理()
@@ -74,7 +74,7 @@ class ForgotPasswordTest extends TestCase
         // エラーレスポンスが返されるか
         $response->assertStatus(422);
         // エラーメッセージが正しいか
-        $response->assertJson(['errors' => ['email' => ['このメールアドレスはコンビニ側のメールアドレスではありません。']]]);
+        $response->assertJson(['errors' => ['email' => ['メールアドレスが無効です。']]]);
     }
 
     public function test_コンビニ側パスワードリセットメール送信バリデーションチェック()
