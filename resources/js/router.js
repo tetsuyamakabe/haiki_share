@@ -255,8 +255,6 @@ const publicPaths = [
 // セッションタイムアウトした場合のナビゲーションガード
 router.beforeEach(async (to, from, next) => {
     const isLogin = store.getters['auth/check'];
-    console.log('現在のパス:', to.path);
-
     // セッションタイムアウトして、現在パスが公開パスではない場合はTOP画面にリダイレクト
     if (!isLogin && !publicPaths.some(path => to.path.startsWith(path)) && !to.path.includes('/password/reset')) { // パスワードリセット画面のパスは除外
         next('/top');
