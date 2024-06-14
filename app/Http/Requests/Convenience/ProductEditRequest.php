@@ -37,7 +37,7 @@ class ProductEditRequest extends FormRequest
         // 商品画像がアップロードされた場合のみバリデーションルールを適用
         if ($this->hasFile('product_picture')) {
             // 商品画像（配列内のすべての要素に適用）のバリデーションルール（NULL許可、画像ファイル、拡張子、最大画像ファイルサイズ2MB以下）
-            $rules['product_picture.*'] = 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048';
+            $rules['product_picture'] = 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048';
         }
         return $rules;
     }

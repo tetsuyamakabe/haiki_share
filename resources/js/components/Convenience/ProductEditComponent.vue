@@ -180,6 +180,7 @@ export default {
             formData.append('product_picture', this.formData.product_picture); // 商品画像
             // 商品編集APIをPOST送信
             axios.post('/api/convenience/products/edit/' + productId, formData, config).then(response => { // 商品IDとリクエストヘッダとフォームデータを含むリクエスト
+                console.log('product_picturesは、', this.formData.product_picture);
                 this.$router.push({ name: 'convenience.products.sale' }); // 商品更新処理後、出品した商品一覧画面に遷移
             }).catch(error => {
                 this.errors = error.response.data.errors;

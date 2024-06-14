@@ -32,8 +32,8 @@ class ProductSaleRequest extends FormRequest
             'category' => 'required',
             // 賞味期限のバリデーションルール（必須、date型）
             'expiration_date' => 'required|date',
-            // 商品画像（配列内のすべての要素に適用）のバリデーションルール（必須、画像ファイル、拡張子、最大画像ファイルサイズ2MB以下）
-            'product_picture.*' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            // 商品画像のバリデーションルール（必須、画像ファイル、拡張子、最大画像ファイルサイズ2MB以下）
+            'product_picture' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
         ];
     }
 }
