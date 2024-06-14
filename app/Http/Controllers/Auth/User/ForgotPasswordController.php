@@ -37,22 +37,27 @@ class ForgotPasswordController extends Controller
     // パスワード変更メール送信処理
     public function sendResetLinkEmail(ForgotPasswordRequest $request)
     {
-        // DBからemailをキーにしてユーザーの存在を確認
-        $user = User::where('email', $request->email)->first();
-        // ユーザーが見つからない場合とroleがコンビニユーザーの場合はエラーを返す
-        if (!$user || $user->role == 'convenience') {
-            return response()->json(['errors' => ['email' => ['メールアドレスが無効です。']]], 422);
-        }
-        // パスワード変更メール送信実行
-        $response = $this->broker()->sendResetLink(
-            $request->only('email')
-        );
-        if ($response == Password::RESET_LINK_SENT) {
-            // パスワードリセットリンクが送信された場合
-            return response()->json(['message' => 'パスワードリセットリンクを送信しました。'], 200);
-        } else {
-            // パスワードリセットリンクの送信に失敗した場合
-            return response()->json(['message' => ['email' => ['パスワードリセットリンクの送信に失敗しました。']]], 422);
+        try {
+            // DBからemailをキーにしてユーザーの存在を確認
+            $user = User::where('email', $request->email)->first();
+            // ユーザーが見つからない場合とroleがコンビニユーザーの場合はエラーを返す
+            if (!$user || $user->role == 'convenience') {
+                return response()->json(['errors' => ['email' => ['メールアドレスが無効です。']]], 422);
+            }
+            // パスワード変更メール送信実行
+            $response = $this->broker()->sendResetLink(
+                $request->only('email')
+            );
+            if ($response == Password::RESET_LINK_SENT) {
+                // パスワードリセットリンクが送信された場合
+                return response()->json(['message' => 'パスワードリセットメールを送信しました。'], 200);
+            } else {
+                // パスワードリセットリンクの送信に失敗した場合
+                return response()->json(['message' => ['email' => ['パスワードリセットメールの送信に失敗しました。']]], 422);
+            }
+        } catch (\Exception $e) {
+            \Log::error('例外エラー: ' . $e->getMessage());
+            return response()->json(['message' => 'パスワードリセットメールを送信できませんでした。'], 500);
         }
     }
 }

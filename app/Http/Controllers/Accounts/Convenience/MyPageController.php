@@ -17,21 +17,25 @@ class MyPageController extends Controller
     // プロフィール情報の取得処理
     public function getProfile(Request $request)
     {
-        // 未認証の場合
-        if (!auth()->check()) {
-            return response()->json(['message' => 'Unauthenticated.'], 401);
+        try {
+            // 未認証の場合
+            if (!auth()->check()) {
+                return response()->json(['message' => 'Unauthenticated.'], 401);
+            }
+            // 認証済みユーザー情報・コンビニ情報・住所情報の取得
+            $user = Auth::user();
+            $convenience = $user->convenience()->first();
+            $address = $convenience->address;
+            return response()->json(['user' => $user, 'convenience' => $convenience, 'address' => $address], 200);
+        } catch (\Exception $e) {
+            \Log::error('例外エラー: ' . $e->getMessage());
+            return response()->json(['message' => 'プロフィール情報を取得できませんでした。'], 500);
         }
-        // 認証済みユーザー情報・コンビニ情報・住所情報の取得
-        $user = Auth::user();
-        $convenience = $user->convenience()->first();
-        $address = $convenience->address;
-        return response()->json(['user' => $user, 'convenience' => $convenience, 'address' => $address], 200);
     }
 
     // プロフィール編集・更新処理
     public function editProfile(ProfileRequest $request)
     {
-        \Log::info($request->all());
         try {
             // 認証済みユーザー情報の取得
             $user = Auth::user();
@@ -64,7 +68,6 @@ class MyPageController extends Controller
             // コンビニ情報を更新
             if ($convenience) {
                 $convenience->branch_name = $request->input('branch_name'); // 支店名
-
                 // 住所情報の更新
                 $address = $convenience->address;
                 if ($address) {
@@ -76,64 +79,71 @@ class MyPageController extends Controller
                 }
                 $convenience->save();
             }
-            return response()->json(['message' => 'プロフィール編集に成功しました', 'user' => $user], 200);
+            return response()->json(['message' => 'プロフィール編集に成功しました。', 'user' => $user], 200);
         } catch (\Exception $e) {
             \Log::error('例外エラー: ' . $e->getMessage());
-            return response()->json(['message' => 'プロフィール編集に失敗しました'], 500);
+            return response()->json(['message' => 'プロフィール編集に失敗しました。'], 500);
         }
     }
 
     // 退会処理の実行
     public function withdraw(Request $request)
     {
-        // 認証済みユーザー情報の取得
-        $user = Auth::user();
-        // 未認証の場合
-        if (!$user) {
-            return response()->json(['message' => 'Unauthenticated.'], 401);
-        }
-        Auth::logout(); // 自動ログアウト
-        if ($user->role === 'convenience') {
-            $convenience = $user->convenience()->first();
-            if ($convenience) {
-                $convenience->delete(); // コンビニ情報を論理削除
-                $convenience->address()->delete(); // 住所情報を論理削除
+        try {
+            // 認証済みユーザー情報の取得
+            $user = Auth::user();
+            // 未認証の場合
+            if (!$user) {
+                return response()->json(['message' => 'Unauthenticated.'], 401);
             }
+            Auth::logout(); // 自動ログアウト
+            if ($user->role === 'convenience') {
+                $convenience = $user->convenience()->first();
+                if ($convenience) {
+                    $convenience->delete(); // コンビニ情報を論理削除
+                    $convenience->address()->delete(); // 住所情報を論理削除
+                }
+            }
+            $user->delete(); // ユーザー情報を論理削除
+            return response()->json(['message' => 'ユーザーが退会しました。', 'user' => $user], 200);
+        } catch (\Exception $e) {
+            \Log::error('例外エラー: ' . $e->getMessage());
+            return response()->json(['message' => '退会できませんでした。'], 500);
         }
-        $user->delete(); // ユーザー情報を論理削除
-        return response()->json(['message' => 'ユーザーが退会しました', 'user' => $user], 200);
     }
 
     // マイページに表示する出品・購入商品情報の取得
     public function getMyProducts(Request $request)
     {
-        // 認証済みユーザー情報の取得
-        $user = Auth::user();
-        // 未認証の場合
-        if (!$user) {
-            return response()->json(['message' => 'Unauthenticated.'], 401);
+        try {
+            // 認証済みユーザー情報の取得
+            $user = Auth::user();
+            // 未認証の場合
+            if (!$user) {
+                return response()->json(['message' => 'Unauthenticated.'], 401);
+            }
+            // 関連づけられたコンビニ情報を取得
+            $convenience = $user->convenience;
+            // 出品した商品を最大5件表示（論理削除された商品も含む）
+            $saleProducts = Product::with(['pictures', 'category'])->withCount('likes')
+                ->where('convenience_store_id', $convenience->id)
+                ->whereNull('deleted_at') // 論理削除された商品を除外する
+                ->orderBy('created_at', 'desc') // 最新の投稿（降順）
+                ->limit(5)->get();
+            // 購入された商品を最大5件表示（論理削除された商品も含む）
+            $purchasedProducts = Product::with(['pictures', 'category'])->withCount('likes')
+                ->where('convenience_store_id', $convenience->id)
+                ->whereHas('purchases', function ($query) {
+                    $query->where('is_purchased', true);
+                })
+                ->whereNull('deleted_at') // 論理削除された商品を除外する
+                ->orderBy('created_at', 'desc') // 最新の購入履歴（降順）
+                ->limit(5)->get();
+
+            return response()->json(['sale_products' => $saleProducts, 'purchased_products' => $purchasedProducts], 200);
+        } catch (\Exception $e) {
+            \Log::error('例外エラー: ' . $e->getMessage());
+            return response()->json(['message' => 'マイページに表示する商品情報を取得できませんでした。'], 500);
         }
-        // 関連づけられたコンビニ情報を取得
-        $convenience = $user->convenience;
-
-        // 出品した商品を最大5件表示（論理削除された商品も含む）
-        $saleProducts = Product::with(['pictures', 'category'])->withCount('likes')
-            ->where('convenience_store_id', $convenience->id)
-            ->whereNull('deleted_at') // 論理削除された商品を除外する
-            ->orderBy('created_at', 'desc') // 最新の投稿（降順）
-            ->limit(5)->get();
-        
-        // 購入された商品を最大5件表示（論理削除された商品も含む）
-        $purchasedProducts = Product::with(['pictures', 'category'])->withCount('likes')
-            ->where('convenience_store_id', $convenience->id)
-            ->whereHas('purchases', function ($query) {
-                $query->where('is_purchased', true);
-            })
-            ->whereNull('deleted_at') // 論理削除された商品を除外する
-            ->orderBy('created_at', 'desc') // 最新の購入履歴（降順）
-            ->limit(5)->get();
-
-        return response()->json(['sale_products' => $saleProducts, 'purchased_products' => $purchasedProducts], 200);
     }
-
 }

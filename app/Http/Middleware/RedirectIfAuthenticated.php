@@ -17,11 +17,9 @@ class RedirectIfAuthenticated
      */
     public function handle($request, Closure $next, $guard = null)
     {
-        \Log::info('ログ');
         if (Auth::guard($guard)->check()) {
             return redirect('/top');
         }
-
         return $next($request);
     }
 }

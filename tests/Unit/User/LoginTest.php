@@ -36,7 +36,7 @@ class LoginTest extends TestCase
         $this->assertArrayHasKey('message', $responseData);
         $this->assertArrayHasKey('user_id', $responseData);
         // レスポンスデータの内容が正しいか
-        $this->assertEquals('認証に成功しました', $responseData['message']);
+        $this->assertEquals('認証に成功しました。', $responseData['message']);
         $this->assertEquals($user->id, $responseData['user_id']);
     }
 
@@ -51,7 +51,7 @@ class LoginTest extends TestCase
         // レスポンスが正常かどうか
         $response->assertStatus(200);
         // レスポンスに正しい内容が含まれているか
-        $response->assertJson(['message' => 'ログアウトしました']);
+        $response->assertJson(['message' => 'ログアウトしました。']);
         // ユーザーがログアウトできているか
         $this->assertFalse(Auth::check());
     }
@@ -67,9 +67,9 @@ class LoginTest extends TestCase
         // 不正なリクエストを送信
         $response = $this->json('POST', '/api/user/login', $data);
         // エラーレスポンスが返されるか
-        $response->assertStatus(404);
+        $response->assertStatus(422);
         // エラーメッセージが正しいか
-        $response->assertJson(['message' => 'ユーザーが見つかりません']);
+        $response->assertJson(['errors' => ['email' => ['メールアドレスかパスワードが間違っています。']]]);
     }
 
     public function test_コンビニユーザーのログイン処理()
@@ -83,15 +83,15 @@ class LoginTest extends TestCase
         // テストデータの作成
         $data = [
             'email' => 'convenience@example.com', // コンビニユーザーのメールアドレス
+            'password' => 'password',
         ];
         // リクエストを送信
         $response = $this->json('POST', '/api/user/password/email', $data);
         // エラーレスポンスが返されるか
         $response->assertStatus(422);
         // エラーメッセージが正しいか
-        $response->assertJson(['errors' => ['email' => ['このメールアドレスは利用者側のメールアドレスではありません。']]]);
+        $response->assertJson(['errors' => ['email' => ['メールアドレスが無効です。']]]);
     }
-
 
     public function test_利用者側ログインバリデーションチェック()
     {

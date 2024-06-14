@@ -52,11 +52,11 @@ class ResetPasswordController extends Controller
             $user = User::where('email', $email)->first();
             // ユーザーが見つからない場合
             if (!$user) {
-                return response()->json(['message' => 'ユーザーが見つかりません'], 404);
+                return response()->json(['message' => 'ユーザーが見つかりません。'], 404);
             }
             // roleがconvenienceの場合は422エラーを返す
             if ($user->role == 'convenience') {
-                return response()->json(['errors' => ['email' => ['このメールアドレスは利用者側のメールアドレスではありません。']]], 422);
+                return response()->json(['errors' => ['email' => ['メールアドレスが無効です。']]], 422);
             }
             // パスワードを更新
             $user->password = Hash::make($password);

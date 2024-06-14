@@ -50,10 +50,10 @@ class ProductController extends Controller
             $productPicture->file = 'https://haikishare.com/' . $s3Path; // 商品画像ファイル名を保存
             $productPicture->save();
             $product->load('pictures'); // pictureリレーションをロード
-            return response()->json(['message' => '商品の出品に成功しました', 'product' => $product], 200);
+            return response()->json(['message' => '商品の出品に成功しました。', 'product' => $product], 200);
         } catch (\Exception $e) {
             \Log::error('例外エラー: ' . $e->getMessage());
-            return response()->json(['message' => '商品の出品に失敗しました'], 500);
+            return response()->json(['message' => '商品の出品に失敗しました。'], 500);
         }
     }
 
@@ -87,32 +87,37 @@ class ProductController extends Controller
                 $ProductPicture->save();
             }
             $product->load('pictures'); // pictureリレーションをロード
-            return response()->json(['message' => '商品の編集に成功しました', 'product' => $product]);
+            return response()->json(['message' => '商品の編集に成功しました。', 'product' => $product]);
         } catch (\Exception $e) {
-            return response()->json(['message' => '商品の編集に失敗しました'], 500);
+            return response()->json(['message' => '商品の編集に失敗しました。'], 500);
         }
     }
 
     // 商品削除処理
     public function deleteProduct(Request $request, $productId)
     {
-        // 未認証の場合
-        if (!auth()->check()) {
-            return response()->json(['message' => 'Unauthenticated.'], 401);
+        try {
+            // 未認証の場合
+            if (!auth()->check()) {
+                return response()->json(['message' => 'Unauthenticated.'], 401);
+            }
+            // 商品を論理削除する
+            $product = Product::find($productId);
+            // 商品が見つからない場合
+            if (!$product) {
+                return response()->json(['error' => '商品が見つかりません。'], 404);
+            }
+            $product->delete();
+            // 商品画像を論理削除する
+            $productPicture = ProductPicture::where('product_id', $productId)->first();
+            if ($productPicture) {
+                $productPicture->delete();
+            }
+            return response()->json(['message' => '商品削除が完了しました。', 'product' => $product], 200);
+        } catch (\Exception $e) {
+            \Log::error('例外エラー: ' . $e->getMessage());
+            return response()->json(['message' => '商品を削除できませんでした。'], 500);
         }
-        // 商品を論理削除する
-        $product = Product::find($productId);
-        // 商品が見つからない場合
-        if (!$product) {
-            return response()->json(['error' => '商品が見つかりません'], 404);
-        }
-        $product->delete();
-        // 商品画像を論理削除する
-        $productPicture = ProductPicture::where('product_id', $productId)->first();
-        if ($productPicture) {
-            $productPicture->delete();
-        }
-        return response()->json(['message' => '商品削除が完了しました', 'product' => $product], 200);
     }
 
     // 出品した商品情報の取得
@@ -127,7 +132,7 @@ class ProductController extends Controller
             $user = Auth::user();
             $convenience = $user->convenience; // 関連付けられたコンビニ情報の取得
             if (!$convenience) { // コンビニ情報がない場合
-                return response()->json(['error' => 'コンビニが見つかりません'], 404);
+                return response()->json(['error' => 'コンビニが見つかりません。'], 404);
             }
             // 商品情報と関連付けられた商品画像の中からコンビニIDと一致する商品を最新の投稿（降順）の順番で20件取得
             $products = Product::with(['pictures', 'category'])->withCount('likes')->where('convenience_store_id', $convenience->id)->orderBy('created_at', 'desc')->paginate(15);
@@ -138,10 +143,10 @@ class ProductController extends Controller
                 $product->is_purchased = $purchase ? true : false; // 商品にis_purchasedプロパティを追加し、購入済みであればtrueを返す
                 $product->purchased_id = $purchasedId; // 商品情報にpurchased_idプロパティを追加し、購入者IDをつける
             }
-            return response()->json(['message' => '出品した商品を取得します', 'products' => $products], 200);
+            return response()->json(['message' => '出品した商品を取得します。', 'products' => $products], 200);
         } catch (\Exception $e) {
             \Log::error('例外エラー: ' . $e->getMessage());
-            return response()->json(['message' => '出品した商品を取得できません'], 500);
+            return response()->json(['message' => '出品した商品を取得できませんでした。'], 500);
         }
     }
 
@@ -157,25 +162,23 @@ class ProductController extends Controller
             $user = Auth::user();
             $convenience = $user->convenience; // 関連付けられたコンビニ情報の取得
             if (!$convenience) { // コンビニ情報がない場合
-                return response()->json(['error' => 'コンビニが見つかりません'], 404);
+                return response()->json(['error' => 'コンビニが見つかりません。'], 404);
             }
             // 商品情報と関連付けられた商品画像の中からコンビニIDと一致し、is_purchasedプロパティがtrueの商品を15件取得
             $products = Product::with(['pictures', 'category'])->withCount('likes')->where('convenience_store_id', $convenience->id)
                 ->whereHas('purchases', function ($query) {
                     $query->where('is_purchased', true);
                 })->paginate(15);
-            return response()->json(['message' => '購入された商品を取得します', 'products' => $products], 200);
+            return response()->json(['message' => '購入された商品を取得します。', 'products' => $products], 200);
         } catch (\Exception $e) {
             \Log::error('例外エラー: ' . $e->getMessage());
-            return response()->json(['message' => '購入された商品を取得できません'], 500);
+            return response()->json(['message' => '購入された商品を取得できませんでした。'], 500);
         }
     }
 
-    // すべての商品情報の取得
+    // すべての商品情報の取得（絞り込み検索機能含む）
     public function getAllProducts(SearchRequest $request)
     {
-        \Log::info('getAllProductsメソッドを呼んでいます。');
-        \Log::info('$request->allは、', $request->all());
         try {
             // 認証済みユーザーIDの取得
             $userId = auth()->id();
@@ -189,18 +192,15 @@ class ProductController extends Controller
                     $addressQuery->where('prefecture', $prefecture);
                 });
             }
-            \Log::info('$prefectureは、', [$prefecture]);
             $minPrice = $request->input('minPrice'); // 最小価格
             if ($minPrice !== null) { // 検索条件にminPriceがある場合
                 $query->where('price', '>=', $minPrice); // priceより小さい値を取得
             }
-            \Log::info('$minPriceは、', [$minPrice]);
             $maxPrice = $request->input('maxPrice'); // 最大価格
             if ($maxPrice !== null) { // 検索条件にmaxPriceがある場合
                 $query->where('price', '<=', $maxPrice); // priceより大きい値を取得
             }
-            \Log::info('$maxPriceは、', [$maxPrice]);
-            $expired = $request->input('expiration_date');; // 賞味期限切れかどうか
+            $expired = $request->input('expiration_date'); // 賞味期限切れかどうか
             if ($expired !== null) { // 検索条件に$expiredがある場合
                 $today = Carbon::today()->toDateString(); // 現在の日付を取得
                 if ($expired === 'true') { // $expiredがtrueの場合
@@ -209,24 +209,19 @@ class ProductController extends Controller
                     $query->where('expiration_date', '>=', $today); // （現在日付より新しい）賞味期限内の商品を検索
                 }
             }
-            \Log::info('$expiredは、', [$expired]);
             // カテゴリのIDを取得
             $categoryId = $request->input('category_id');
             if ($categoryId !== null) {
                 $query->where('category_id', $categoryId);
             }
-            \Log::info('$categoryIdは、', [$categoryId]);
             $sortOrder = $request->sort ?? 'desc'; // デフォルトは降順
-            \Log::info('$sortOrderは、', [$sortOrder]);
             $sortExpiredOrder = $request->input('sortExpired');
-            \Log::info('$sortExpiredOrderは', [$sortExpiredOrder]);
             // コレクションを並び替えて15件ずつ取得
             if ($sortExpiredOrder === 'asc' || $sortExpiredOrder === 'desc') {
                 $products = $query->orderBy('expiration_date', $sortExpiredOrder)->orderBy('created_at', $sortOrder)->paginate(15);
             } else {
                 $products = $query->orderBy('created_at', $sortOrder)->paginate(15);
             }
-            // \Log::info('$productsは、', [$products]);
             // 各商品に対して処理を行う
             foreach ($products as $product) {
                 // 商品情報にお気に入り情報を含める
@@ -236,10 +231,10 @@ class ProductController extends Controller
                 $is_purchased = Purchase::where('product_id', $product->id)->first(); // Purchaseモデルから特定の商品が購入されているかどうか検索
                 $product->is_purchased = $is_purchased ? true : false; // 購入済み（true）の場合はis_purchasedプロパティをtrueにする
             }
-            return response()->json(['message' => 'すべての商品を取得します', 'products' => $products], 200);
+            return response()->json(['message' => 'すべての商品を取得します。', 'products' => $products], 200);
         } catch (\Exception $e) {
             \Log::error('例外エラー: ' . $e->getMessage());
-            return response()->json(['message' => 'すべての商品情報を取得できません'], 500);
+            return response()->json(['message' => 'すべての商品情報を取得できませんでした。'], 500);
         }
     }
 
@@ -261,7 +256,7 @@ class ProductController extends Controller
             \Log::info('商品は、', [$product]);
             // 商品が見つからない場合
             if (!$product) {
-                return response()->json(['error' => '商品が見つかりません'], 404);
+                return response()->json(['error' => '商品が見つかりません。'], 404);
             }
             // 購入情報を取得
             $purchase = Purchase::where('product_id', $productId)->first(); // Purchaseモデルから特定の商品IDを検索
@@ -273,10 +268,10 @@ class ProductController extends Controller
             // お気に入り情報を取得
             $like = Like::where('user_id', $userId)->where('product_id', $product->id)->first(); // Likeモデルから特定のユーザーがお気に入り登録した商品を取得
             $product->liked = $like ? true : false; // お気に入り登録（true）の場合はlikedプロパティをtrueにする
-            return response()->json(['message' => '商品情報を取得します', 'product' => $product], 200);
+            return response()->json(['message' => '商品情報を取得します。', 'product' => $product], 200);
         } catch (\Exception $e) {
             \Log::error('例外エラー: ' . $e->getMessage());
-            return response()->json(['message' => '商品情報を取得できません'], 500);
+            return response()->json(['message' => '商品情報を取得できませんでした。'], 500);
         }
     }
 
@@ -291,21 +286,25 @@ class ProductController extends Controller
             \Log::info('商品は、', [$product]);
             // 商品が見つからない場合
             if (!$product) {
-                return response()->json(['error' => '商品が見つかりません'], 404);
+                return response()->json(['error' => '商品が見つかりません。'], 404);
             }
-            return response()->json(['message' => '商品情報を取得します', 'product' => $product], 200);
+            return response()->json(['message' => '商品情報を取得します。', 'product' => $product], 200);
         } catch (\Exception $e) {
             \Log::error('例外エラー: ' . $e->getMessage());
-            return response()->json(['message' => '商品情報を取得できません'], 500);
+            return response()->json(['message' => '商品情報を取得できませんでした。'], 500);
         }
     }
 
-
-    // 商品カテゴリー情報の取得
+    // 商品カテゴリ情報の取得
     public function getCategories()
     {
-        // Categoryモデルからすべてのカテゴリ情報を取得
-        $categories = Category::all();
-        return response()->json(['categories' => $categories, 200]);
+        try {
+            // Categoryモデルからすべてのカテゴリ情報を取得
+            $categories = Category::all();
+            return response()->json(['categories' => $categories, 200]);
+        } catch (\Exception $e) {
+            \Log::error('例外エラー: ' . $e->getMessage());
+            return response()->json(['message' => '商品カテゴリを取得できませんでした。'], 500);
+        }
     }
 }

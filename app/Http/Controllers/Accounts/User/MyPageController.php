@@ -19,19 +19,23 @@ class MyPageController extends Controller
     // プロフィール情報の取得処理
     public function getProfile(Request $request)
     {
-        // 未認証の場合
-        if (!auth()->check()) {
-            return response()->json(['message' => 'Unauthenticated.'], 401);
+        try {
+            // 未認証の場合
+            if (!auth()->check()) {
+                return response()->json(['message' => 'Unauthenticated.'], 401);
+            }
+            // 認証済みユーザー情報の取得
+            $user = Auth::user();
+            return response()->json(['user' => $user], 200);
+        } catch (\Exception $e) {
+            \Log::error('例外エラー: ' . $e->getMessage());
+            return response()->json(['message' => 'プロフィール情報を取得できませんでした。'], 500);
         }
-        // 認証済みユーザー情報の取得
-        $user = Auth::user();
-        return response()->json(['user' => $user], 200);
     }
 
     // プロフィール編集・更新処理
     public function editProfile(ProfileRequest $request)
     {
-        // \Log::info($request->all());
         try {
             // 認証済みユーザー情報の取得
             $user = Auth::user();
@@ -59,10 +63,10 @@ class MyPageController extends Controller
                 $user->avatar = 'https://haikishare.com/' . $s3Path; // ファイルURLを保存
             }
             $user->save();
-            return response()->json(['message' => 'プロフィール編集に成功しました', 'user' => $user], 200);
+            return response()->json(['message' => 'プロフィール編集に成功しました。', 'user' => $user], 200);
         } catch (\Exception $e) {
             \Log::error('例外エラー: ' . $e->getMessage());
-            return response()->json(['message' => 'プロフィール編集に失敗しました'], 500);
+            return response()->json(['message' => 'プロフィール編集に失敗しました。'], 500);
         }
     }
 
@@ -78,10 +82,10 @@ class MyPageController extends Controller
             }
             Auth::logout(); // 自動ログアウト
             $user->delete(); // 論理削除を実行
-            return response()->json(['message' => '退会処理が完了しました。', 'user' => $user], 200);
+            return response()->json(['message' => 'ユーザーが退会しました。', 'user' => $user], 200);
         } catch (\Exception $e) {
             \Log::error('例外エラー: ' . $e->getMessage());
-            return response()->json(['message' => '退会処理が完了できませんでした。'], 500);
+            return response()->json(['message' => '退会できませんでした。'], 500);
         }
     }
 
@@ -93,7 +97,6 @@ class MyPageController extends Controller
             $user = Auth::user();
             // 認証済みユーザーIDの取得
             $userId = auth()->id();
-
             // 未認証の場合
             if (!$user) {
                 return response()->json(['message' => 'Unauthenticated.'], 401);
@@ -113,7 +116,6 @@ class MyPageController extends Controller
                 $like = Like::where('user_id', $userId)->where('product_id', $product->product->id)->first(); // Likeモデルから特定のユーザーがお気に入り登録した商品を取得
                 $product->product->liked = $like ? true : false; // お気に入り登録（true）の場合はlikedプロパティをtrueにする
             }
-
             // マイページにお気に入り登録商品を最大5件表示（削除済みの商品は含めない）
             $likedProducts = $user->likes()
                 ->with(['product' => function ($query) {
@@ -129,11 +131,10 @@ class MyPageController extends Controller
                 $like = Like::where('user_id', $userId)->where('product_id', $product->product->id)->first(); // Likeモデルから特定のユーザーがお気に入り登録した商品を取得
                 $product->product->liked = $like ? true : false; // お気に入り登録（true）の場合はlikedプロパティをtrueにする
             }
-            \Log::info('$likedProducts', [$likedProducts]);
             return response()->json(['purchased_products' => $purchasedProducts, 'liked_products' => $likedProducts]);
         } catch (\Exception $e) {
             \Log::error('例外エラー: ' . $e->getMessage());
-            return response()->json(['message' => '商品取得に失敗しました'], 500);
+            return response()->json(['message' => 'マイページに表示する商品情報を取得できませんでした。'], 500);
         }
     }
 

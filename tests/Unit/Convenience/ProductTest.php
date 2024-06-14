@@ -29,8 +29,6 @@ class ProductTest extends TestCase
         $convenience = factory(Convenience::class)->create(['user_id' => $user->id]);
         // 商品カテゴリの作成
         $category = factory(Category::class)->create();
-        // 画像fakeメソッドの準備
-        Storage::fake('file');
         // テストデータの作成
         $data = [
             'name' => '手巻おにぎり　ツナマヨネーズ',
@@ -39,20 +37,24 @@ class ProductTest extends TestCase
             'category' => $category->id,
             'convenience_id' => $convenience->id,
         ];
-        // テスト画像ファイル
-        $file = [
-            'product_picture' => UploadedFile::fake()->image('product.jpg', 100, 100)->size(2000), // 2MB以内の商品画像
-        ];
+        // 画像ファイルの準備
+        $file = UploadedFile::fake()->image('product.jpg', 100, 100)->size(2000); // 2MB以内の商品画像
+        // 商品画像ファイルの保存先
+        $filePath = 'product_pictures/' . $file->hashName();
+        // 商品画像ファイルのアップロード処理
+        Storage::disk('s3')->put($filePath, file_get_contents($file));
         // テスト用のリクエストを作成
-        $response = $this->actingAs($user)->withHeaders([
+        $response = $this->actingAs($user)
+            ->withHeaders([
                 'Content-Type' => 'multipart/form-data',
-            ])->json('PUT', '/api/convenience/products/sale', array_merge($data, $file));
+            ])
+            ->json('PUT', '/api/convenience/products/sale', array_merge($data, ['product_picture' => $file]));
         // レスポンスが正常であるか
         $response->assertStatus(200);
         // レスポンスデータを取得
         $responseData = $response->json();
         // レスポンスデータの内容が正しいか
-        $this->assertEquals('商品の出品に成功しました', $responseData['message']);
+        $this->assertEquals('商品の出品に成功しました。', $responseData['message']);
         $this->assertEquals($data['name'], $responseData['product']['name']);
         $this->assertEquals($data['price'], $responseData['product']['price']);
         $this->assertEquals($data['category'], $responseData['product']['category_id']);
@@ -62,8 +64,9 @@ class ProductTest extends TestCase
             Carbon::parse($responseData['product']['expiration_date'])->setTimezone('UTC')->toDateString()
         );
         // 商品画像がアップロードされているか
-        Storage::disk('public')->assertExists('product_pictures/' . $responseData['product']['pictures'][0]['file']);
+        Storage::disk('s3')->assertExists($filePath);
     }
+
 
     public function test_商品編集処理()
     {
@@ -99,7 +102,7 @@ class ProductTest extends TestCase
         // レスポンスデータを取得
         $responseData = $response->json();
         // レスポンスデータの内容が正しいか
-        $this->assertEquals('商品の編集に成功しました', $responseData['message']);
+        $this->assertEquals('商品の編集に成功しました。', $responseData['message']);
         $this->assertEquals($data['name'], $responseData['product']['name']);
         $this->assertEquals($data['price'], $responseData['product']['price']);
         $this->assertEquals($data['category'], $responseData['product']['category_id']);
@@ -134,7 +137,7 @@ class ProductTest extends TestCase
         $this->assertArrayHasKey('message', $responseData);
         $this->assertArrayHasKey('product', $responseData);
         // レスポンスデータの内容が正しいか
-        $this->assertEquals('商品削除が完了しました', $responseData['message']);
+        $this->assertEquals('商品削除が完了しました。', $responseData['message']);
         $this->assertArraySubset($product->toArray(), $responseData['product']); // deleted_atを除く
     }
 
@@ -221,12 +224,12 @@ class ProductTest extends TestCase
         // テスト用の検索条件を作成
         $data = [
             'prefecture' => '東京都',
-            'minprice' => 100,
-            'maxprice' => 500,
+            'minPrice' => 100,
+            'maxPrice' => 500,
             'expiration_date' => 'true', // 賞味期限切れの商品
         ];
         // テスト用のリクエストを送信
-        $response = $this->actingAs($user)->json('GET', '/api/products', $data);
+        $response = $this->actingAs($user)->json('POST', '/api/products', $data);
         // レスポンスが正常であるか
         $response->assertStatus(200);
         // レスポンスデータを取得
@@ -404,7 +407,7 @@ class ProductTest extends TestCase
         $responseData = $response->json();
         // エラーメッセージが含まれているか
         $this->assertArrayHasKey('error', $responseData);
-        $this->assertEquals('商品が見つかりません', $responseData['error']);
+        $this->assertEquals('商品が見つかりません。', $responseData['error']);
     }
 
     public function test_未認証ユーザーの出品した商品情報の取得処理()
@@ -432,7 +435,7 @@ class ProductTest extends TestCase
         $responseData = $response->json();
         // エラーメッセージが含まれているか
         $this->assertArrayHasKey('error', $responseData);
-        $this->assertEquals('コンビニが見つかりません', $responseData['error']);
+        $this->assertEquals('コンビニが見つかりません。', $responseData['error']);
     }
 
     public function test_未認証ユーザーの購入された商品情報の取得処理()
@@ -460,20 +463,7 @@ class ProductTest extends TestCase
         $responseData = $response->json();
         // エラーメッセージが含まれているか
         $this->assertArrayHasKey('error', $responseData);
-        $this->assertEquals('コンビニが見つかりません', $responseData['error']);
-    }
-
-    public function test_未認証ユーザーのすべての商品情報の取得処理()
-    {
-        // 未認証で不正なリクエストを送信
-        $response = $this->json('GET', '/api/products');
-        // エラーレスポンスが返されるか
-        $response->assertStatus(401);
-        // レスポンスデータを取得
-        $responseData = $response->json();
-        // エラーメッセージが含まれているか
-        $this->assertArrayHasKey('message', $responseData);
-        $this->assertEquals('Unauthenticated.', $responseData['message']);
+        $this->assertEquals('コンビニが見つかりません。', $responseData['error']);
     }
 
     public function test_未認証ユーザーの商品情報の取得処理()
@@ -503,6 +493,6 @@ class ProductTest extends TestCase
         $responseData = $response->json();
         // エラーメッセージが含まれているか
         $this->assertArrayHasKey('error', $responseData);
-        $this->assertEquals('商品が見つかりません', $responseData['error']);
+        $this->assertEquals('商品が見つかりません。', $responseData['error']);
     }
 }

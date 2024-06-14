@@ -64,38 +64,43 @@ class RegisterController extends Controller
     // ユーザー登録
     public function create(RegisterRequest $request)
     {
-        // バリデーション済みデータの取得
-        $validated = $request->validated();
-        // ユーザー情報を「users」テーブルに保存
-        $user = User::create([
-            'name' => $validated['convenience_name'], // コンビニ名
-            'email' => $validated['email'], // メールアドレス
-            'password' => Hash::make($validated['password']), // パスワード
-            'role' => $validated['role'], // role
-        ]);
-        // コンビニ情報を「convenience_stores」テーブルに保存
-        if ($validated['role'] === 'convenience') {
-            // 住所情報を保存し、そのIDを取得
-            $address = Address::create([
-                'prefecture' => $validated['prefecture'], // 住所（都道府県）
-                'city' => $validated['city'], // 住所（市区町村）
-                'town' => $validated['town'], // 住所（地名・番地）
+        try {
+            // バリデーション済みデータの取得
+            $validated = $request->validated();
+            // ユーザー情報を「users」テーブルに保存
+            $user = User::create([
+                'name' => $validated['convenience_name'], // コンビニ名
+                'email' => $validated['email'], // メールアドレス
+                'password' => Hash::make($validated['password']), // パスワード
+                'role' => $validated['role'], // role
             ]);
-            if (isset($validated['building'])) { // 住所（建物名・部屋番号）
-                $address->building = $validated['building'];
-                $address->save();
+            // コンビニ情報を「convenience_stores」テーブルに保存
+            if ($validated['role'] === 'convenience') {
+                // 住所情報を保存し、そのIDを取得
+                $address = Address::create([
+                    'prefecture' => $validated['prefecture'], // 住所（都道府県）
+                    'city' => $validated['city'], // 住所（市区町村）
+                    'town' => $validated['town'], // 住所（地名・番地）
+                ]);
+                if (isset($validated['building'])) { // 住所（建物名・部屋番号）
+                    $address->building = $validated['building'];
+                    $address->save();
+                }
+                $addressId = $address->id;
+                // コンビニ情報を保存
+                $convenience = Convenience::create([
+                    'user_id' => $user->id, // ユーザーID
+                    'branch_name' => $validated['branch_name'], // 支店名
+                    'address_id' => $addressId, // 住所ID
+                ]);
+                // ConvenienceモデルとAddressモデルの関連付け
+                $convenience->address()->associate($address);
+                $convenience->save();
+                return response()->json(['user' => $user, 'convenience' => $convenience, 'address' => $address], 201);
             }
-            $addressId = $address->id;
-            // コンビニ情報を保存
-            $convenience = Convenience::create([
-                'user_id' => $user->id, // ユーザーID
-                'branch_name' => $validated['branch_name'], // 支店名
-                'address_id' => $addressId, // 住所ID
-            ]);
-            // ConvenienceモデルとAddressモデルの関連付け
-            $convenience->address()->associate($address);
-            $convenience->save();
-            return response()->json(['user' => $user, 'convenience' => $convenience, 'address' => $address], 201);
+        } catch (\Exception $e) {
+            \Log::error('例外エラー: ' . $e->getMessage());
+            return response()->json(['message' => 'ユーザー登録できませんでした。'], 500);
         }
     }
 }

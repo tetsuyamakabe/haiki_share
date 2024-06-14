@@ -40,43 +40,45 @@ class LoginController extends Controller
     // ログイン処理
     public function login(LoginRequest $request)
     {
-        \Log::debug('Request data:', $request->all());
-        // DBからemailをキーにしてユーザー情報を取得
-        $email = $request->input('email');
-        $user = User::where('email', $email)->first();
-        \Log::debug('$userは、', [$user]);
-        // ユーザーが見つからない場合とroleが利用者ユーザーの場合はエラーを返す
-        if (!$user || $user->role == 'user') {
-            return response()->json(['errors' => ['email' => ['メールアドレスかパスワードが間違っています。']]], 422);
-        }
-        // ユーザーIDを取得
-        $userId = $user->id;
-        \Log::debug('ユーザーIDは、' . $userId);
-        // ユーザーのroleを取得
-        $role = $user->role;
-        \Log::debug('ユーザーのroleは、' . $role);
-        if (($role === 'convenience')) {
-            \Log::debug('ログインします');
-            // 次回ログインを省略するチェックボックスにチェックが入っているか？
-            $remember = $request->input('remember', false);
-            \Log::info('rememberは、', [$remember]);
-            if (Auth::attempt(['email' => $email, 'password' => $request->input('password')], $remember)) {
-                \Log::debug('attemptLoginメソッド');
-                // ログイン成功時にユーザーIDを含んだURLにリダイレクト
-                return response()->json(['message' => '認証に成功しました', 'user_id' => $userId]);
-            } else {
-                return response()->json(['message' => '認証に失敗しました'], 401);
+        try {
+            // DBからemailをキーにしてユーザー情報を取得
+            $email = $request->input('email');
+            $user = User::where('email', $email)->first();
+            // ユーザーが見つからない場合とroleが利用者ユーザーの場合はエラーを返す
+            if (!$user || $user->role == 'user') {
+                return response()->json(['errors' => ['email' => ['メールアドレスかパスワードが間違っています。']]], 422);
             }
-        } else {
-            \Log::debug('ログインできません');
-            return response()->json(['message' => 'ログインできません'], 401);
+            // ユーザーIDを取得
+            $userId = $user->id;
+            // ユーザーのroleを取得
+            $role = $user->role;
+            if (($role === 'convenience')) {
+                // 次回ログインを省略するチェックボックスにチェックが入っているか？
+                $remember = $request->input('remember', false);
+                if (Auth::attempt(['email' => $email, 'password' => $request->input('password')], $remember)) {
+                    // ログイン成功時にユーザーIDを含んだURLにリダイレクト
+                    return response()->json(['message' => '認証に成功しました。', 'user_id' => $userId]);
+                } else {
+                    return response()->json(['message' => '認証に失敗しました。'], 401);
+                }
+            } else {
+                return response()->json(['message' => 'ログインできません。'], 401);
+            }
+        } catch (\Exception $e) {
+            \Log::error('例外エラー: ' . $e->getMessage());
+            return response()->json(['message' => 'ログインできませんでした。'], 500);
         }
     }
 
     // ログアウト処理
     public function logout(Request $request)
     {
-        Auth::logout();
-        return response()->json(['message' => 'ログアウトしました']);
+        try {
+            Auth::logout();
+            return response()->json(['message' => 'ログアウトしました。']);
+        } catch (\Exception $e) {
+            \Log::error('例外エラー: ' . $e->getMessage());
+            return response()->json(['message' => 'ログアウトできませんでした。'], 500);
+        }
     }
 }

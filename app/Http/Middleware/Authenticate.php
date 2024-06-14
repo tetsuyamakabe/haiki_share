@@ -15,12 +15,8 @@ class Authenticate extends Middleware
      */
     protected function redirectTo($request)
     {
-        Log::debug('Authミドルウェア');
-
         // リクエストからパスを取得してログに記録
         $path = $request->path();
-        Log::debug('リクエストのパスは、: ' . $path);
-
         // リクエストされたパスによって適切なリダイレクト先を設定
         if ($path === 'user/login') {
             return route('user.login'); // 利用者ログイン画面にリダイレクト

@@ -140,7 +140,7 @@ class MyPageTest extends TestCase
         $this->assertArrayHasKey('message', $responseData);
         $this->assertArrayHasKey('user', $responseData);
         // レスポンスデータの内容が正しいか
-        $this->assertEquals('ユーザーが退会しました', $responseData['message']);
+        $this->assertEquals('ユーザーが退会しました。', $responseData['message']);
         $this->assertEquals($user->toArray(), $responseData['user']);
     }
 
