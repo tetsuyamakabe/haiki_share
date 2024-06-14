@@ -11,9 +11,13 @@
         line-height: 1.6em;
         color: $font-color_sub;
         border-radius: 4px;
+        -webkit-border-radius: 4px;
+        -moz-border-radius: 4px;
         background: $background-color_sub;
         z-index: 2;
         transform: translateX(-110%);
+        -webkit-transform: translateX(-110%);
+        -ms-transform: translateX(-110%);
         @include mq(sm){
             width: 100px;
             top: -220%;
@@ -27,6 +31,8 @@
             border: 15px solid transparent;
             border-top: 15px solid $boader-color_line;
             transform: rotateZ(270deg);
+            -webkit-transform: rotateZ(270deg);
+            -ms-transform: rotateZ(270deg);
         }
     }
     &:hover .c-tooltip__message {

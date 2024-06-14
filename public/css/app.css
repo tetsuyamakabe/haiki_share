@@ -232,6 +232,8 @@ table {
   background: #fefefe;
   border: solid 2px #434343;
   border-radius: 50%;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
   z-index: 2;
 }
 
@@ -241,6 +243,8 @@ table {
   border-top: 3px solid #434343;
   border-right: 3px solid #434343;
   transform: translateY(20%) rotate(-45deg);
+  -webkit-transform: translateY(20%) rotate(-45deg);
+  -ms-transform: translateY(20%) rotate(-45deg);
 }
 
 .l-footer__pagetop.UpMove {
@@ -251,11 +255,15 @@ table {
   from {
     opacity: 0;
     transform: translateY(100px);
+    -webkit-transform: translateY(100px);
+    -ms-transform: translateY(100px);
   }
 
   to {
     opacity: 1;
     transform: translateY(0);
+    -webkit-transform: translateY(0);
+    -ms-transform: translateY(0);
   }
 }
 
@@ -267,11 +275,15 @@ table {
   from {
     opacity: 1;
     transform: translateY(0);
+    -webkit-transform: translateY(0);
+    -ms-transform: translateY(0);
   }
 
   to {
     opacity: 1;
     transform: translateY(100px);
+    -webkit-transform: translateY(100px);
+    -ms-transform: translateY(100px);
   }
 }
 
@@ -415,6 +427,8 @@ table {
   left: 0;
   background-color: #434343;
   border-radius: 4px;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
 }
 
 .l-nav__trigger span:nth-of-type(1) {
@@ -431,6 +445,8 @@ table {
 
 .l-nav__trigger.is-active span:nth-of-type(1) {
   transform: translateY(12px) rotate(-45deg);
+  -webkit-transform: translateY(12px) rotate(-45deg);
+  -ms-transform: translateY(12px) rotate(-45deg);
 }
 
 .l-nav__trigger.is-active span:nth-of-type(2) {
@@ -439,6 +455,8 @@ table {
 
 .l-nav__trigger.is-active span:nth-of-type(3) {
   transform: translateY(-15px) rotate(45deg);
+  -webkit-transform: translateY(-15px) rotate(45deg);
+  -ms-transform: translateY(-15px) rotate(45deg);
 }
 
 .l-nav__menu {
@@ -463,6 +481,8 @@ table {
   .l-nav__menu.is-active {
     transition: 0.5s;
     transform: translateX(-100%);
+    -webkit-transform: translateX(-100%);
+    -ms-transform: translateX(-100%);
   }
 }
 
@@ -483,6 +503,8 @@ table {
   .l-nav__menu.is-active {
     transition: 0.5s;
     transform: translateX(-100%);
+    -webkit-transform: translateX(-100%);
+    -ms-transform: translateX(-100%);
   }
 }
 
@@ -507,8 +529,14 @@ table {
   left: 0;
   bottom: -1px;
   transform: scale(0, 1);
+  -webkit-transform: scale(0, 1);
+  -ms-transform: scale(0, 1);
   transform-origin: left top;
+  -webkit-transform-origin: left top;
+  -ms-transform-origin: left top;
   transition: transform 0.3s;
+  -webkit-transition: transform 0.3s;
+  -ms-transition: transform 0.3s;
   background: #434343;
 }
 
@@ -526,6 +554,8 @@ table {
 
 .l-nav__link:hover::after {
   transform: scale(1, 1);
+  -webkit-transform: scale(1, 1);
+  -ms-transform: scale(1, 1);
 }
 
 @media screen and (max-width: 768px) {
@@ -582,6 +612,8 @@ table {
   padding: 8px;
   position: relative;
   border-radius: 50%;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
   border: 1px solid #434343;
 }
 
@@ -589,6 +621,8 @@ table {
   width: 100%;
   height: 100%;
   border-radius: 50%;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
 }
 
 .c-badge {
@@ -599,6 +633,8 @@ table {
   text-align: center;
   vertical-align: middle;
   border-radius: 10px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
   display: inline-block;
   color: #fefefe;
   font-size: 12px;
@@ -614,6 +650,8 @@ table {
 .c-button {
   padding: 8px;
   border-radius: 3px;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
   text-align: center;
   text-decoration: none;
   font-weight: bold;
@@ -692,6 +730,8 @@ table {
   justify-content: center;
   align-items: center;
   border-radius: 100vh;
+  -webkit-border-radius: 100vh;
+  -moz-border-radius: 100vh;
   font-size: 24px;
 }
 
@@ -723,6 +763,7 @@ table {
   padding: 8px;
   font-size: 16px;
   border: 1px solid #434343;
+  position: relative;
 }
 
 @media screen and (max-width: 414px) {
@@ -980,6 +1021,8 @@ table {
   padding: 8px;
   border: 1px solid;
   border-radius: 50px;
+  -webkit-border-radius: 50px;
+  -moz-border-radius: 50px;
   color: #434343;
 }
 
@@ -1056,24 +1099,39 @@ table {
 }
 
 .c-label__purchase {
-  width: 60px;
-  height: 60px;
-  padding: 16px;
+  list-style: none;
   position: absolute;
-  top: 25%;
-  left: 25%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-weight: bold;
-  border-radius: 50%;
+  top: 50px;
+  right: 50px;
+}
+
+.c-label__purchase span {
+  display: inline-block;
+  line-height: 40px;
+  vertical-align: middle;
+}
+
+.c-label__purchase ::before {
+  content: "\8CFC\5165\A\6E08\307F";
+  white-space: pre;
   font-size: 24px;
-  color: #fefefe;
-  background: #ff2828;
+  color: #ff2828;
+  padding: 14px;
+  display: inline-block;
+  line-height: 1em;
+  border: #ff2828 5px solid;
+  border-radius: 50%;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  font-weight: bold;
+  transform: rotate(-30deg);
+  -webkit-transform: rotate(-16deg);
+  -ms-transform: rotate(-16deg);
+  background: #fefefe;
 }
 
 @media screen and (max-width: 414px) {
-  .c-label__purchase {
+  .c-label__purchase ::before {
     width: 30px;
     height: 30px;
     font-size: 12px;
@@ -1086,6 +1144,8 @@ table {
   padding: 8px 0;
   font-size: 12px;
   border-radius: 100vh;
+  -webkit-border-radius: 100vh;
+  -moz-border-radius: 100vh;
   border: 1px solid;
   text-align: center;
 }
@@ -1166,6 +1226,8 @@ table {
 
 .c-panel__border {
   border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
   border: 5px solid #f6f5f4;
 }
 
@@ -1247,6 +1309,8 @@ table {
   top: 50%;
   right: 16px;
   transform: translateY(-50%);
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
 }
 
 .c-product__picture {
@@ -1312,6 +1376,8 @@ table {
 .c-product--avatar {
   width: 100px;
   border-radius: 50%;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
 }
 
 .c-product--avatar-wrap {
@@ -1409,6 +1475,8 @@ table {
   width: 150px;
   height: 150px;
   border-radius: 50%;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
 }
 
 .c-sidebar__footer {
@@ -1472,7 +1540,7 @@ table {
 
 .c-textarea--count {
   position: relative;
-  right: -80%;
+  right: -79%;
   bottom: 10px;
   font-size: 16px;
 }
@@ -1548,9 +1616,13 @@ table {
   line-height: 1.6em;
   color: #fefefe;
   border-radius: 4px;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
   background: #434343;
   z-index: 2;
   transform: translateX(-110%);
+  -webkit-transform: translateX(-110%);
+  -ms-transform: translateX(-110%);
 }
 
 @media screen and (max-width: 414px) {
@@ -1569,6 +1641,8 @@ table {
   border: 15px solid transparent;
   border-top: 15px solid #434343;
   transform: rotateZ(270deg);
+  -webkit-transform: rotateZ(270deg);
+  -ms-transform: rotateZ(270deg);
 }
 
 .c-tooltip:hover .c-tooltip__message {

@@ -5,10 +5,14 @@
     padding: $space_s;
     position: relative;
     border-radius: 50%;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
     border: 1px solid $boader-color_line;
     &--img {
         width: 100%;
         height: 100%;
         border-radius: 50%;
+        -webkit-border-radius: 50%;
+        -moz-border-radius: 50%;
     }
 }

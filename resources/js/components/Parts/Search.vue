@@ -34,14 +34,14 @@
                 <label class="c-label">並び替え（出品した順）</label>
                 <select class="c-selectbox" v-model="sortOrder">
                     <option value="">選択してください</option>
-                    <option value="desc">出品した新しい順</option>
-                    <option value="asc">出品した古い順</option>
+                    <option value="desc">新しい順</option>
+                    <option value="asc">古い順</option>
                 </select>
                 <label class="c-label">並び替え（賞味期限日付順）</label>
                 <select class="c-selectbox" v-model="sortExpiredOrder">
                     <option value="">選択してください</option>
-                    <option value="desc">賞味期限日付の新しい順</option>
-                    <option value="asc">賞味期限日付の古い順</option>
+                    <option value="desc">新しい順</option>
+                    <option value="asc">古い順</option>
                 </select>
                 <!-- 検索ボタン -->
                 <button type="submit" class="c-button c-button--submit c-button--primary">商品を検索する</button>

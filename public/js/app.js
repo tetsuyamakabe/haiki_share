@@ -5384,6 +5384,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
  // 絞り込み検索コンポーネント
  // ページネーションコンポーネント
@@ -5666,8 +5668,6 @@ __webpack_require__.r(__webpack_exports__);
     },
     // 商品画像のパスを取得するメソッド
     getProductPicturePath: function getProductPicturePath(product) {
-      console.log('productは、', product);
-      console.log('product.picturesは、', product.pictures);
       if (product.pictures && product.pictures.length > 0) {
         return product.pictures[0].file; // 商品画像がある場合は、その画像パスを返す
       } else {
@@ -7177,10 +7177,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _Parts_Toast_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Parts/Toast.vue */ "./resources/js/components/Parts/Toast.vue");
-/* harmony import */ var _SidebarComponent_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./SidebarComponent.vue */ "./resources/js/components/Convenience/SidebarComponent.vue");
-//
-//
+/* harmony import */ var _SidebarComponent_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./SidebarComponent.vue */ "./resources/js/components/Convenience/SidebarComponent.vue");
 //
 //
 //
@@ -7244,14 +7241,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
- // Toastコンポーネントをインポート
  // サイドバーコンポーネント
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
-    Toast: _Parts_Toast_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
-    // Toastコンポーネントを読み込み
-    SidebarComponent: _SidebarComponent_vue__WEBPACK_IMPORTED_MODULE_1__["default"] // サイドバーコンポーネントを読み込み
+    SidebarComponent: _SidebarComponent_vue__WEBPACK_IMPORTED_MODULE_0__["default"] // サイドバーコンポーネントを読み込み
   },
   data: function data() {
     return {
@@ -7354,11 +7348,6 @@ __webpack_require__.r(__webpack_exports__);
         _this2.$router.push({
           name: 'convenience.mypage'
         }); // 商品出品後、マイページに遷移
-        _this2.$store.dispatch('flash/setFlashMessage', {
-          // フラッシュメッセージの表示
-          message: '商品を出品しました。',
-          type: 'success'
-        });
       })["catch"](function (error) {
         _this2.errors = error.response.data.errors;
       });
@@ -9508,8 +9497,6 @@ __webpack_require__.r(__webpack_exports__);
     },
     // 商品画像のパスを取得するメソッド
     getProductPicturePath: function getProductPicturePath(product) {
-      console.log('productは、', product);
-      console.log('product.picturesは、', product.pictures);
       if (product.pictures && product.pictures.length > 0) {
         return product.pictures[0].file; // 商品画像がある場合は、その画像パスを返す
       } else {
@@ -9550,8 +9537,6 @@ __webpack_require__.r(__webpack_exports__);
         });
         _this2.getProduct(); // 購入状態を更新（「購入する」から「購入をキャンセル」へ変更）
       })["catch"](function (error) {
-        console.log('errorは、', error);
-        console.error('商品購入処理失敗:', error.response.data);
         _this2.errors = error.response.data.errors;
       });
     },
@@ -9567,8 +9552,6 @@ __webpack_require__.r(__webpack_exports__);
         });
         _this3.getProduct(); // 購入状態を更新（「購入キャンセル」から「購入する」へ変更）
       })["catch"](function (error) {
-        console.log('errorは、', error);
-        console.error('商品購入キャンセル処理失敗:', error.response.data);
         _this3.errors = error.response.data.errors;
       });
     },
@@ -9597,12 +9580,10 @@ __webpack_require__.r(__webpack_exports__);
       var _this4 = this;
       // 利用者側プロフィール情報の取得APIをGET送信
       axios.get('/api/user/mypage/profile').then(function (response) {
-        console.log('APIからのレスポンスデータ:', response.data);
         _this4.user = response.data.user; // レスポンスデータのユーザー情報をuserプロパティにセット
         // 取得した各プロフィール情報をintroductionプロパティにセット
         _this4.introduction = _this4.user.introduction; // 自己紹介文
       })["catch"](function (error) {
-        console.error('プロフィール取得失敗:', error.response.data);
         _this4.errors = error.response.data;
       });
     }
@@ -9752,8 +9733,6 @@ __webpack_require__.r(__webpack_exports__);
         _this2.products = response.data.products; // お気に入り登録商品情報
         _this2.lastPage = response.data.products.last_page; // ページ数
       })["catch"](function (error) {
-        console.log(error);
-        console.error('商品情報取得失敗:', error.response.data);
         _this2.errors = error.response.data;
       });
     },
@@ -46912,7 +46891,7 @@ var render = function () {
                                 }),
                                 _vm._v(" "),
                                 _c(
-                                  "label",
+                                  "ul",
                                   {
                                     directives: [
                                       {
@@ -46922,9 +46901,8 @@ var render = function () {
                                         expression: "product.is_purchased",
                                       },
                                     ],
-                                    staticClass: "c-label__purchase",
                                   },
-                                  [_vm._v("購入"), _c("br"), _vm._v("済み")]
+                                  [_vm._m(1, true)]
                                 ),
                                 _vm._v(" "),
                                 _c("div", { staticClass: "c-icon" }, [
@@ -47112,6 +47090,12 @@ var staticRenderFns = [
     return _c("div", { staticClass: "l-main__header" }, [
       _c("h1", { staticClass: "c-title" }, [_vm._v("商品一覧")]),
     ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("li", { staticClass: "c-label__purchase" }, [_c("span")])
   },
 ]
 render._withStripped = true
@@ -49902,386 +49886,377 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "main",
-    { staticClass: "l-main" },
-    [
-      _c("Toast"),
-      _vm._v(" "),
-      _vm._m(0),
-      _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "l-article" },
-        [
-          _c("div", { staticClass: "l-article__main" }, [
-            _c(
-              "form",
-              {
-                staticClass: "c-form",
-                on: {
-                  submit: function ($event) {
-                    $event.preventDefault()
-                    return _vm.submitForm($event)
-                  },
+  return _c("main", { staticClass: "l-main" }, [
+    _vm._m(0),
+    _vm._v(" "),
+    _c(
+      "div",
+      { staticClass: "l-article" },
+      [
+        _c("div", { staticClass: "l-article__main" }, [
+          _c(
+            "form",
+            {
+              staticClass: "c-form",
+              on: {
+                submit: function ($event) {
+                  $event.preventDefault()
+                  return _vm.submitForm($event)
                 },
               },
-              [
-                _vm._m(1),
-                _vm._v(" "),
-                _vm.errors && _vm.errors.name
-                  ? _c("span", { staticClass: "c-error" }, [
-                      _vm._v(_vm._s(_vm.errors.name[0])),
-                    ])
-                  : _vm._e(),
-                _vm._v(" "),
+            },
+            [
+              _vm._m(1),
+              _vm._v(" "),
+              _vm.errors && _vm.errors.name
+                ? _c("span", { staticClass: "c-error" }, [
+                    _vm._v(_vm._s(_vm.errors.name[0])),
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.formData.name,
+                    expression: "formData.name",
+                  },
+                ],
+                staticClass: "c-input",
+                class: { "is-invalid": _vm.errors && _vm.errors.name },
+                attrs: { id: "name", type: "text", autocomplete: "name" },
+                domProps: { value: _vm.formData.name },
+                on: {
+                  input: function ($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.formData, "name", $event.target.value)
+                  },
+                },
+              }),
+              _vm._v(" "),
+              _vm._m(2),
+              _vm._v(" "),
+              _vm.errors && _vm.errors.price
+                ? _c("span", { staticClass: "c-error" }, [
+                    _vm._v(_vm._s(_vm.errors.price[0])),
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
+              _c("div", [
                 _c("input", {
                   directives: [
                     {
                       name: "model",
                       rawName: "v-model",
-                      value: _vm.formData.name,
-                      expression: "formData.name",
+                      value: _vm.formData.price,
+                      expression: "formData.price",
                     },
                   ],
-                  staticClass: "c-input",
-                  class: { "is-invalid": _vm.errors && _vm.errors.name },
-                  attrs: { id: "name", type: "text", autocomplete: "name" },
-                  domProps: { value: _vm.formData.name },
+                  staticClass: "c-input c-input--price",
+                  class: { "is-invalid": _vm.errors && _vm.errors.price },
+                  attrs: {
+                    id: "price",
+                    type: "text",
+                    maxlength: "4",
+                    autocomplete: "price",
+                  },
+                  domProps: { value: _vm.formData.price },
                   on: {
                     input: function ($event) {
                       if ($event.target.composing) {
                         return
                       }
-                      _vm.$set(_vm.formData, "name", $event.target.value)
+                      _vm.$set(_vm.formData, "price", $event.target.value)
                     },
                   },
                 }),
                 _vm._v(" "),
-                _vm._m(2),
-                _vm._v(" "),
-                _vm.errors && _vm.errors.price
-                  ? _c("span", { staticClass: "c-error" }, [
-                      _vm._v(_vm._s(_vm.errors.price[0])),
+                _c("span", { staticClass: "c-text" }, [_vm._v("円（税込）")]),
+              ]),
+              _vm._v(" "),
+              _vm._m(3),
+              _vm._v(" "),
+              _vm.errors && _vm.errors.category
+                ? _c("span", { staticClass: "c-error" }, [
+                    _vm._v(_vm._s(_vm.errors.category[0])),
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
+              _c(
+                "select",
+                {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.formData.category,
+                      expression: "formData.category",
+                    },
+                  ],
+                  staticClass: "c-input",
+                  class: { "is-invalid": _vm.errors && _vm.errors.category },
+                  attrs: { id: "category" },
+                  on: {
+                    change: function ($event) {
+                      var $$selectedVal = Array.prototype.filter
+                        .call($event.target.options, function (o) {
+                          return o.selected
+                        })
+                        .map(function (o) {
+                          var val = "_value" in o ? o._value : o.value
+                          return val
+                        })
+                      _vm.$set(
+                        _vm.formData,
+                        "category",
+                        $event.target.multiple
+                          ? $$selectedVal
+                          : $$selectedVal[0]
+                      )
+                    },
+                  },
+                },
+                [
+                  _c("option", { attrs: { value: "" } }, [
+                    _vm._v("カテゴリを選択してください"),
+                  ]),
+                  _vm._v(" "),
+                  _vm._l(_vm.categories, function (category) {
+                    return _c("option", { domProps: { value: category.id } }, [
+                      _vm._v(_vm._s(category.name)),
                     ])
-                  : _vm._e(),
-                _vm._v(" "),
-                _c("div", [
+                  }),
+                ],
+                2
+              ),
+              _vm._v(" "),
+              _vm._m(4),
+              _vm._v(" "),
+              _vm.errors && _vm.errors.expiration_date
+                ? _c("span", { staticClass: "c-error" }, [
+                    _vm._v(_vm._s(_vm.errors.expiration_date[0])),
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
+              _c("div", { staticClass: "c-form--expiration" }, [
+                _c("div", { staticClass: "c-input--date" }, [
                   _c("input", {
                     directives: [
                       {
                         name: "model",
                         rawName: "v-model",
-                        value: _vm.formData.price,
-                        expression: "formData.price",
+                        value: _vm.formData.expiration_year,
+                        expression: "formData.expiration_year",
                       },
                     ],
-                    staticClass: "c-input c-input--price",
-                    class: { "is-invalid": _vm.errors && _vm.errors.price },
-                    attrs: {
-                      id: "price",
-                      type: "text",
-                      maxlength: "4",
-                      autocomplete: "price",
+                    staticClass: "c-input",
+                    class: {
+                      "is-invalid": _vm.errors && _vm.errors.expiration_date,
                     },
-                    domProps: { value: _vm.formData.price },
+                    attrs: {
+                      id: "expiration_year",
+                      type: "text",
+                      placeholder: "YYYY",
+                      maxlength: "4",
+                    },
+                    domProps: { value: _vm.formData.expiration_year },
                     on: {
                       input: function ($event) {
                         if ($event.target.composing) {
                           return
                         }
-                        _vm.$set(_vm.formData, "price", $event.target.value)
+                        _vm.$set(
+                          _vm.formData,
+                          "expiration_year",
+                          $event.target.value
+                        )
                       },
                     },
                   }),
                   _vm._v(" "),
-                  _c("span", { staticClass: "c-text" }, [_vm._v("円（税込）")]),
+                  _c(
+                    "label",
+                    {
+                      staticClass: "c-label",
+                      attrs: { for: "expiration_year" },
+                    },
+                    [_vm._v("年")]
+                  ),
                 ]),
                 _vm._v(" "),
-                _vm._m(3),
-                _vm._v(" "),
-                _vm.errors && _vm.errors.category
-                  ? _c("span", { staticClass: "c-error" }, [
-                      _vm._v(_vm._s(_vm.errors.category[0])),
-                    ])
-                  : _vm._e(),
-                _vm._v(" "),
-                _c(
-                  "select",
-                  {
+                _c("div", { staticClass: "c-input--date" }, [
+                  _c("input", {
                     directives: [
                       {
                         name: "model",
                         rawName: "v-model",
-                        value: _vm.formData.category,
-                        expression: "formData.category",
+                        value: _vm.formData.expiration_month,
+                        expression: "formData.expiration_month",
                       },
                     ],
                     staticClass: "c-input",
-                    class: { "is-invalid": _vm.errors && _vm.errors.category },
-                    attrs: { id: "category" },
+                    class: {
+                      "is-invalid": _vm.errors && _vm.errors.expiration_date,
+                    },
+                    attrs: {
+                      id: "expiration_month",
+                      type: "text",
+                      placeholder: "MM",
+                      maxlength: "2",
+                    },
+                    domProps: { value: _vm.formData.expiration_month },
                     on: {
-                      change: function ($event) {
-                        var $$selectedVal = Array.prototype.filter
-                          .call($event.target.options, function (o) {
-                            return o.selected
-                          })
-                          .map(function (o) {
-                            var val = "_value" in o ? o._value : o.value
-                            return val
-                          })
+                      input: function ($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
                         _vm.$set(
                           _vm.formData,
-                          "category",
-                          $event.target.multiple
-                            ? $$selectedVal
-                            : $$selectedVal[0]
+                          "expiration_month",
+                          $event.target.value
                         )
                       },
                     },
-                  },
-                  [
-                    _c("option", { attrs: { value: "" } }, [
-                      _vm._v("カテゴリを選択してください"),
-                    ]),
-                    _vm._v(" "),
-                    _vm._l(_vm.categories, function (category) {
-                      return _c(
-                        "option",
-                        { domProps: { value: category.id } },
-                        [_vm._v(_vm._s(category.name))]
-                      )
-                    }),
-                  ],
-                  2
-                ),
-                _vm._v(" "),
-                _vm._m(4),
-                _vm._v(" "),
-                _vm.errors && _vm.errors.expiration_date
-                  ? _c("span", { staticClass: "c-error" }, [
-                      _vm._v(_vm._s(_vm.errors.expiration_date[0])),
-                    ])
-                  : _vm._e(),
-                _vm._v(" "),
-                _c("div", { staticClass: "c-form--expiration" }, [
-                  _c("div", { staticClass: "c-input--date" }, [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.formData.expiration_year,
-                          expression: "formData.expiration_year",
-                        },
-                      ],
-                      staticClass: "c-input",
-                      class: {
-                        "is-invalid": _vm.errors && _vm.errors.expiration_date,
-                      },
-                      attrs: {
-                        id: "expiration_year",
-                        type: "text",
-                        placeholder: "YYYY",
-                        maxlength: "4",
-                      },
-                      domProps: { value: _vm.formData.expiration_year },
-                      on: {
-                        input: function ($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(
-                            _vm.formData,
-                            "expiration_year",
-                            $event.target.value
-                          )
-                        },
-                      },
-                    }),
-                    _vm._v(" "),
-                    _c(
-                      "label",
-                      {
-                        staticClass: "c-label",
-                        attrs: { for: "expiration_year" },
-                      },
-                      [_vm._v("年")]
-                    ),
-                  ]),
+                  }),
                   _vm._v(" "),
-                  _c("div", { staticClass: "c-input--date" }, [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.formData.expiration_month,
-                          expression: "formData.expiration_month",
-                        },
-                      ],
-                      staticClass: "c-input",
-                      class: {
-                        "is-invalid": _vm.errors && _vm.errors.expiration_date,
-                      },
-                      attrs: {
-                        id: "expiration_month",
-                        type: "text",
-                        placeholder: "MM",
-                        maxlength: "2",
-                      },
-                      domProps: { value: _vm.formData.expiration_month },
-                      on: {
-                        input: function ($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(
-                            _vm.formData,
-                            "expiration_month",
-                            $event.target.value
-                          )
-                        },
-                      },
-                    }),
-                    _vm._v(" "),
-                    _c(
-                      "label",
-                      {
-                        staticClass: "c-label",
-                        attrs: { for: "expiration_month" },
-                      },
-                      [_vm._v("月")]
-                    ),
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "c-input--date" }, [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.formData.expiration_day,
-                          expression: "formData.expiration_day",
-                        },
-                      ],
-                      staticClass: "c-input",
-                      class: {
-                        "is-invalid": _vm.errors && _vm.errors.expiration_date,
-                      },
-                      attrs: {
-                        id: "expiration_day",
-                        type: "text",
-                        placeholder: "DD",
-                        maxlength: "2",
-                      },
-                      domProps: { value: _vm.formData.expiration_day },
-                      on: {
-                        input: function ($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(
-                            _vm.formData,
-                            "expiration_day",
-                            $event.target.value
-                          )
-                        },
-                      },
-                    }),
-                    _vm._v(" "),
-                    _c(
-                      "label",
-                      {
-                        staticClass: "c-label",
-                        attrs: { for: "expiration_day" },
-                      },
-                      [_vm._v("日")]
-                    ),
-                  ]),
+                  _c(
+                    "label",
+                    {
+                      staticClass: "c-label",
+                      attrs: { for: "expiration_month" },
+                    },
+                    [_vm._v("月")]
+                  ),
                 ]),
                 _vm._v(" "),
-                _vm._m(5),
-                _vm._v(" "),
-                _vm.errors && _vm.errors.product_picture
-                  ? _c("span", { staticClass: "c-error" }, [
-                      _vm._v(_vm._s(_vm.errors.product_picture[0])),
-                    ])
-                  : _vm._e(),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  {
-                    staticClass: "c-product__picture",
+                _c("div", { staticClass: "c-input--date" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.formData.expiration_day,
+                        expression: "formData.expiration_day",
+                      },
+                    ],
+                    staticClass: "c-input",
                     class: {
-                      "is-invalid": _vm.errors && _vm.errors.product_picture,
+                      "is-invalid": _vm.errors && _vm.errors.expiration_date,
                     },
-                    on: { drop: _vm.handleDrop },
+                    attrs: {
+                      id: "expiration_day",
+                      type: "text",
+                      placeholder: "DD",
+                      maxlength: "2",
+                    },
+                    domProps: { value: _vm.formData.expiration_day },
+                    on: {
+                      input: function ($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(
+                          _vm.formData,
+                          "expiration_day",
+                          $event.target.value
+                        )
+                      },
+                    },
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "label",
+                    {
+                      staticClass: "c-label",
+                      attrs: { for: "expiration_day" },
+                    },
+                    [_vm._v("日")]
+                  ),
+                ]),
+              ]),
+              _vm._v(" "),
+              _vm._m(5),
+              _vm._v(" "),
+              _vm.errors && _vm.errors.product_picture
+                ? _c("span", { staticClass: "c-error" }, [
+                    _vm._v(_vm._s(_vm.errors.product_picture[0])),
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass: "c-product__picture",
+                  class: {
+                    "is-invalid": _vm.errors && _vm.errors.product_picture,
                   },
-                  [
-                    _c("input", {
-                      staticClass: "c-input--hidden",
-                      attrs: { type: "file", id: "product_picture" },
-                      on: { change: _vm.handleFileChange },
-                    }),
-                    _vm._v(" "),
-                    !_vm.picturePreview && _vm.formData.product_picture !== ""
-                      ? _c("img", {
-                          staticClass: "c-product__picture--img",
-                          attrs: {
-                            src:
-                              "https://haikishare.com/product_pictures/" +
-                              _vm.formData.product_picture,
-                            alt: "アップロード商品画像",
-                          },
-                        })
-                      : _vm.picturePreview
-                      ? _c("img", {
-                          staticClass: "c-product__picture--img",
-                          attrs: {
-                            src: _vm.picturePreview,
-                            alt: "アップロード商品画像",
-                          },
-                        })
-                      : _c("img", {
-                          staticClass: "c-product__picture--img",
-                          attrs: {
-                            src: "https://haikishare.com/product_pictures/no_image.png",
-                            alt: "NO_IMAGE",
-                          },
-                        }),
-                  ]
-                ),
-                _vm._v(" "),
-                _c(
-                  "button",
-                  {
-                    staticClass: "c-button c-button--submit c-button--main",
-                    attrs: { type: "submit" },
-                  },
-                  [_vm._v("商品を出品する")]
-                ),
-              ]
-            ),
-          ]),
-          _vm._v(" "),
-          _c("sidebar-component", {
-            attrs: {
-              convenience_name: _vm.convenience_name,
-              branch_name: _vm.branch_name,
-              prefecture: _vm.prefecture,
-              city: _vm.city,
-              town: _vm.town,
-              building: _vm.building,
-              introduction: _vm.introduction,
-            },
-          }),
-        ],
-        1
-      ),
-    ],
-    1
-  )
+                  on: { drop: _vm.handleDrop },
+                },
+                [
+                  _c("input", {
+                    staticClass: "c-input--hidden",
+                    attrs: { type: "file", id: "product_picture" },
+                    on: { change: _vm.handleFileChange },
+                  }),
+                  _vm._v(" "),
+                  !_vm.picturePreview && _vm.formData.product_picture !== ""
+                    ? _c("img", {
+                        staticClass: "c-product__picture--img",
+                        attrs: {
+                          src:
+                            "https://haikishare.com/product_pictures/" +
+                            _vm.formData.product_picture,
+                          alt: "アップロード商品画像",
+                        },
+                      })
+                    : _vm.picturePreview
+                    ? _c("img", {
+                        staticClass: "c-product__picture--img",
+                        attrs: {
+                          src: _vm.picturePreview,
+                          alt: "アップロード商品画像",
+                        },
+                      })
+                    : _c("img", {
+                        staticClass: "c-product__picture--img",
+                        attrs: {
+                          src: "https://haikishare.com/product_pictures/no_image.png",
+                          alt: "NO_IMAGE",
+                        },
+                      }),
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "c-button c-button--submit c-button--main",
+                  attrs: { type: "submit" },
+                },
+                [_vm._v("商品を出品する")]
+              ),
+            ]
+          ),
+        ]),
+        _vm._v(" "),
+        _c("sidebar-component", {
+          attrs: {
+            convenience_name: _vm.convenience_name,
+            branch_name: _vm.branch_name,
+            prefecture: _vm.prefecture,
+            city: _vm.city,
+            town: _vm.town,
+            building: _vm.building,
+            introduction: _vm.introduction,
+          },
+        }),
+      ],
+      1
+    ),
+  ])
 }
 var staticRenderFns = [
   function () {
@@ -53605,13 +53580,9 @@ var render = function () {
                 _vm._v("選択してください"),
               ]),
               _vm._v(" "),
-              _c("option", { attrs: { value: "desc" } }, [
-                _vm._v("出品した新しい順"),
-              ]),
+              _c("option", { attrs: { value: "desc" } }, [_vm._v("新しい順")]),
               _vm._v(" "),
-              _c("option", { attrs: { value: "asc" } }, [
-                _vm._v("出品した古い順"),
-              ]),
+              _c("option", { attrs: { value: "asc" } }, [_vm._v("古い順")]),
             ]
           ),
           _vm._v(" "),
@@ -53652,13 +53623,9 @@ var render = function () {
                 _vm._v("選択してください"),
               ]),
               _vm._v(" "),
-              _c("option", { attrs: { value: "desc" } }, [
-                _vm._v("賞味期限日付の新しい順"),
-              ]),
+              _c("option", { attrs: { value: "desc" } }, [_vm._v("新しい順")]),
               _vm._v(" "),
-              _c("option", { attrs: { value: "asc" } }, [
-                _vm._v("賞味期限日付の古い順"),
-              ]),
+              _c("option", { attrs: { value: "asc" } }, [_vm._v("古い順")]),
             ]
           ),
           _vm._v(" "),
@@ -75649,27 +75616,24 @@ router.beforeEach( /*#__PURE__*/function () {
     return _regeneratorRuntime().wrap(function _callee$(_context) {
       while (1) switch (_context.prev = _context.next) {
         case 0:
-          isLogin = _store__WEBPACK_IMPORTED_MODULE_2__["default"].getters['auth/check'];
-          console.log('現在のパス:', to.path);
-
-          // セッションタイムアウトして、現在パスが公開パスではない場合はTOP画面にリダイレクト
+          isLogin = _store__WEBPACK_IMPORTED_MODULE_2__["default"].getters['auth/check']; // セッションタイムアウトして、現在パスが公開パスではない場合はTOP画面にリダイレクト
           if (!(!isLogin && !publicPaths.some(function (path) {
             return to.path.startsWith(path);
           }) && !to.path.includes('/password/reset'))) {
-            _context.next = 6;
+            _context.next = 5;
             break;
           }
           // パスワードリセット画面のパスは除外
           next('/top');
-          _context.next = 9;
-          break;
-        case 6:
           _context.next = 8;
+          break;
+        case 5:
+          _context.next = 7;
           return _store__WEBPACK_IMPORTED_MODULE_2__["default"].dispatch('auth/currentUser');
-        case 8:
+        case 7:
           // ログイン状態を保持
           next();
-        case 9:
+        case 8:
         case "end":
           return _context.stop();
       }

@@ -25,6 +25,8 @@
             left: 0;
             background-color: $font-color_default;
             border-radius: 4px;
+            -webkit-border-radius: 4px;
+            -moz-border-radius: 4px;
             &:nth-of-type(1) {
                 top: 0;
             }
@@ -38,12 +40,16 @@
         &.is-active span {
             &:nth-of-type(1) {
                 transform: translateY(12px) rotate(-45deg);
+                -webkit-transform: translateY(12px) rotate(-45deg);
+                -ms-transform: translateY(12px) rotate(-45deg);
             }
             &:nth-of-type(2) {
                 opacity: 0;
             }
             &:nth-of-type(3) {
                 transform: translateY(-15px) rotate(45deg);
+                -webkit-transform: translateY(-15px) rotate(45deg);
+                -ms-transform: translateY(-15px) rotate(45deg);
             }
         }
     }
@@ -64,6 +70,8 @@
             &.is-active {
                 transition: .5s;
                 transform: translateX(-100%);
+                -webkit-transform: translateX(-100%);
+                -ms-transform: translateX(-100%);
             }
         }
         @include mq(sm) {
@@ -80,6 +88,8 @@
             &.is-active {
                 transition: .5s;
                 transform: translateX(-100%);
+                -webkit-transform: translateX(-100%);
+                -ms-transform: translateX(-100%);
             }
         }
     }
@@ -101,8 +111,14 @@
             left: 0;
             bottom: -1px;
             transform: scale(0, 1);
+            -webkit-transform: scale(0, 1);
+            -ms-transform: scale(0, 1);
             transform-origin: left top;
+            -webkit-transform-origin: left top;
+            -ms-transform-origin: left top;
             transition: transform 0.3s;
+            -webkit-transition: transform 0.3s;
+            -ms-transition: transform 0.3s;
             background: $background-color_sub;
             @include mq(md){
                 display: none;
@@ -113,6 +129,8 @@
         }
         &:hover::after {
             transform: scale(1, 1);
+            -webkit-transform: scale(1, 1);
+            -ms-transform: scale(1, 1);
         }
     }
     @include mq(md) {

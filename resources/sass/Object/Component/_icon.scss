@@ -20,6 +20,8 @@
         padding: $space_s;
         border: 1px solid;
         border-radius: 50px;
+        -webkit-border-radius: 50px;
+        -moz-border-radius: 50px;
         color: $font-color_default;
     }
 }

@@ -50,6 +50,8 @@
             width: 150px;
             height: 150px;
             border-radius: 50%;
+            -webkit-border-radius: 50%;
+            -moz-border-radius: 50%;
         }
     }
     &__footer {

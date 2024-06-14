@@ -6,25 +6,38 @@
         font-size: $font-size_m;
     }
     &__purchase {
-        width: 60px;
-        height: 60px;
-        padding: $space_m;
+        list-style: none;
         position: absolute;
-        top: 25%;
-        left: 25%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-weight: bold;
-        border-radius: 50%;
-        font-size: $font-size_l;
-        color: $font-color_sub;
-        background: $background-color_label;
-        @include mq(sm) {
-            width: 30px;
-            height: 30px;
-            font-size: 12px;
-            z-index: 2;
+        top: 50px;
+        right: 50px;
+        & span{
+            display: inline-block;
+            line-height: 40px;
+            vertical-align: middle;
+        }
+        & ::before {
+            content: "購入\A済み";
+            white-space: pre;
+            font-size: $font-size_l;
+            color: $font-color_label;
+            padding: 14px;
+            display: inline-block;
+            line-height: 1em;
+            border: $boader-color_main 5px solid;
+            border-radius: 50%;
+            -webkit-border-radius: 50%;
+            -moz-border-radius: 50%;
+            font-weight: bold;
+            transform: rotate(-30deg);
+            -webkit-transform: rotate(-16deg);
+            -ms-transform: rotate(-16deg);
+            background: $background-color_main;
+            @include mq(sm) {
+                width: 30px;
+                height: 30px;
+                font-size: 12px;
+                z-index: 2;
+            }
         }
     }
     &__category {
@@ -32,6 +45,8 @@
         padding: 8px 0;
         font-size: 12px;
         border-radius: 100vh;
+        -webkit-border-radius: 100vh;
+        -moz-border-radius: 100vh;
         border: 1px solid;
         text-align: center;
     }
