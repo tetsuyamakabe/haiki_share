@@ -123,8 +123,6 @@ export default {
                 this.products = response.data.products; // お気に入り登録商品情報
                 this.lastPage = response.data.products.last_page; // ページ数
             }).catch(error => {
-                console.log(error);
-                console.error('商品情報取得失敗:', error.response.data);
                 this.errors = error.response.data;
             });
         },

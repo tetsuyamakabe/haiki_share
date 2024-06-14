@@ -120,8 +120,6 @@ export default {
 
         // 商品画像のパスを取得するメソッド
         getProductPicturePath(product) {
-            console.log('productは、', product);
-            console.log('product.picturesは、', product.pictures);
             if (product.pictures && product.pictures.length > 0) {
                 return product.pictures[0].file; // 商品画像がある場合は、その画像パスを返す
             } else {
@@ -164,8 +162,6 @@ export default {
                 });
                 this.getProduct(); // 購入状態を更新（「購入する」から「購入をキャンセル」へ変更）
             }).catch(error => {
-                console.log('errorは、', error);
-                console.error('商品購入処理失敗:', error.response.data);
                 this.errors = error.response.data.errors;
             });
         },
@@ -180,8 +176,6 @@ export default {
                 });
                 this.getProduct();　// 購入状態を更新（「購入キャンセル」から「購入する」へ変更）
             }).catch(error => {
-                console.log('errorは、', error);
-                console.error('商品購入キャンセル処理失敗:', error.response.data);
                 this.errors = error.response.data.errors;
             });
         },
@@ -212,12 +206,10 @@ export default {
         getSidebarProfile() {
             // 利用者側プロフィール情報の取得APIをGET送信
             axios.get('/api/user/mypage/profile').then(response => {
-                console.log('APIからのレスポンスデータ:', response.data);
                 this.user = response.data.user; // レスポンスデータのユーザー情報をuserプロパティにセット
                 // 取得した各プロフィール情報をintroductionプロパティにセット
                 this.introduction = this.user.introduction; // 自己紹介文
             }).catch (error => {
-                console.error('プロフィール取得失敗:', error.response.data);
                 this.errors = error.response.data;
             });
         },

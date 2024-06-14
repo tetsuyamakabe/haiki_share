@@ -87,8 +87,6 @@ export default {
 
         // 商品画像のパスを取得するメソッド
         getProductPicturePath(product) {
-            console.log('productは、', product);
-            console.log('product.picturesは、', product.pictures);
             if (product.pictures && product.pictures.length > 0) {
                 return product.pictures[0].file; // 商品画像がある場合は、その画像パスを返す
             } else {
