@@ -77,6 +77,12 @@
             width: 90%;
         }
     }
+    &--not-allowed{
+        &:disabled{
+            cursor: not-allowed;
+            background: $background-color_sub;
+        }
+    }
     &--register {
         padding: $space_s;
         display: block;
