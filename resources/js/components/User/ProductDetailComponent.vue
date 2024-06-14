@@ -44,7 +44,7 @@
                     <!-- 利用者側の購入ボタンは購入済みの購入ボタンは購入できない・自分が購入した商品の場合は、「購入をキャンセルする」ボタンが表示される -->
                     <button v-if="product.is_purchased === false" class="c-button c-button--submit c-button--main" @click="purchaseProduct">購入する</button>
                     <button v-else-if="product.is_purchased === true && product.purchased_id === loginId" class="c-button c-button--submit c-button--primary" @click="cancelPurchase">購入をキャンセルする</button>
-                    <button v-else class="c-button c-button--submit c-button--main">購入済み</button>
+                    <button v-else class="c-button c-button--submit c-button--main c-button--not-allowed" :disabled="true">購入済み</button>
                 </div>
             </div>
             <!-- サイドバー -->
