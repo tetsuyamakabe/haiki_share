@@ -9,7 +9,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        background: $background-color_sub;
+        background: $background-color_main;
         border: solid 2px $boader-color_line;
         border-radius: 50%;
         z-index: 2;
@@ -52,7 +52,7 @@
         line-height: 2.5;
         text-align: center;
         color: $font-color_default;
-        background-color: $background-color_sub2;
+        background-color: $background-color_primary;
     }
     &__copyright {
         font-size: $font-size_default;

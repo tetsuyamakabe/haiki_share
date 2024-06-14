@@ -14,6 +14,7 @@
         padding: $space_s;
     }
     &__name {
+        max-height: 40px;
         font-weight: bold;
     }
     &__body {
@@ -38,16 +39,14 @@
         z-index: 1;
         opacity: .9;
         color: $font-color_default;
-        background-color: $background-color_sub;
+        background-color: $background-color_main;
     }
     &__price {
-        width: 25%;
         padding: $space_s 0 $space_s $space_s;
         right: 0px;
         bottom: 55px;
         font-weight: bold;
         @include mq(sm) {
-            width: 30%;
             bottom: 48px;
         }
     }

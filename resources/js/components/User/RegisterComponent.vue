@@ -15,7 +15,7 @@
                 <input v-model="formData.email" id="email" type="text" class="c-input" :class="{ 'is-invalid': errors && errors.email }" autocomplete="email">
                 <!-- パスワード -->
                 <label for="password" class="c-label">パスワード<span class="c-badge">必須</span></label>
-                <span class="c-text c-text--note">※パスワードとパスワード（再入力）は、半角数字・英字大文字・小文字、記号（!@#$%^&*）を使って8文字以上で入力してください</span>
+                <span class="c-text c-text--note u-fz-10@sm">※パスワードとパスワード（再入力）は、半角数字・英字大文字・小文字、記号（!@#$%^&*）を使って8文字以上で入力してください</span>
                 <span v-if="errors && errors.password" class="c-error">{{ errors.password[0] }}</span>
                 <div class="c-password">
                     <input v-model="formData.password" id="password" :type="PasswordType" class="c-input" :class="{ 'is-invalid': errors && errors.password }" placeholder="8文字以上で入力してください">

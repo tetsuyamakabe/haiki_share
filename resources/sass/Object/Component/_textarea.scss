@@ -5,7 +5,7 @@
     box-sizing: border-box;
     font-size: $font-size_default;
     border: 1px solid $boader-color_line;
-    background: $background-color_main;
+    background: $background-color_default;
     @include mq(sm) {
         &::placeholder {
             font-size: $font-size_m;

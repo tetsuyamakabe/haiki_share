@@ -26,10 +26,10 @@ $font-color_sub: #fefefe;
 $font-color_like: #ff7fbf;
 $font-color_unlike: #ccc;
 
-$background-color_main: #f6f5f4;
-$background-color_sub: #fefefe;
-$background-color_sub2: #eee;
-$background-color_sub3: #434343;
+$background-color_main: #fefefe;
+$background-color_primary: #eee;
+$background-color_default: #f6f5f4;
+$background-color_sub: #434343;
 $background-color_btn_main: #ff2828;
 $background-color_btn_primary: #32cd32;
 $background-color_btn_default: #ffa500;
@@ -61,6 +61,8 @@ $space_xxl: 40px;
 $space_3l: 48px;
 
 $font-family_default: Quicksand, 游ゴシック体, "Yu Gothic", YuGothic, "ヒラギノ角ゴシック Pro", "Hiragino Kaku Gothic Pro", メイリオ, Meiryo, Osaka, "ＭＳ Ｐゴシック", "MS PGothic", sans-serif;
+
+$font-family_corp: 'Arial', sans-serif;
 
 // マップ型変数
 $breakpoints: (

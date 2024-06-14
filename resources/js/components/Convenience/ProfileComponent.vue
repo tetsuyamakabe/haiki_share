@@ -16,7 +16,7 @@
                     <input v-model="formData.branch_name" id="branch_name" type="text" class="c-input" :class="{ 'is-invalid': errors && errors.branch_name }" autocomplete="branch_name">
                     <!-- 郵便番号 -->
                     <label for="zip" class="c-label">郵便番号</label>
-                    <span class="c-text c-text--note">※数字のみを入力し、ハイフンを含む場合は3桁と4桁の間に挿入してください。ハイフンを含まない場合は数字を7桁入力してください。</span>
+                    <span class="c-text c-text--note u-fz-10@sm">※数字のみを入力し、ハイフンを含む場合は3桁と4桁の間に挿入してください。ハイフンを含まない場合は数字を7桁入力してください。</span>
                     <span v-if="errors && errors.zip" class="c-error">{{ errors.zip[0] }}</span>
                     <input v-model="formData.postalcode" id="zip" type="text" class="c-input" :class="{ 'is-invalid': errors && errors.zip }" autocomplete="zip" placeholder="郵便番号で住所を簡単入力できます">
                     <div class="c-button--zip">

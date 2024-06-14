@@ -9,7 +9,7 @@
             <form @submit.prevent="resetPassword" class="c-form">
                 <!-- 新しいパスワード -->
                 <label for="new_password" class="c-label">新しいパスワード<span class="c-badge">必須</span></label>
-                <span class="c-text c-text--note">※新しいパスワードと新しいパスワード（再入力）は、半角数字・英字大文字・小文字、記号（!@#$%^&*）を使って8文字以上で入力してください</span>
+                <span class="c-text c-text--note u-fz-10@sm">※新しいパスワードと新しいパスワード（再入力）は、半角数字・英字大文字・小文字、記号（!@#$%^&*）を使って8文字以上で入力してください</span>
                 <span v-if="errors && errors.newPassword" class="c-error">{{ errors.newPassword[0] }}</span>
                 <div class="c-password">
                     <input v-model="formData.newPassword" id="new_password" :type="NewPasswordType" class="c-input" :class="{ 'is-invalid': errors && errors.newPassword }" placeholder="英数字8文字以上で入力してください">

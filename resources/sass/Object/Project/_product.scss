@@ -1,5 +1,6 @@
 .p-product {
     padding: $space_l $space_m;
+    background-color: $background-color_main;
     @include mq(sm) {
         padding: $space_s;
     }
