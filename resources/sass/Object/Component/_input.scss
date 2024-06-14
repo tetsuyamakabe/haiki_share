@@ -5,7 +5,7 @@
     padding: $space_s;
     box-sizing: border-box;
     font-size: $font-size_default;
-    background: $background-color_main;
+    background: $background-color_default;
     border: 1px solid $boader-color_line;
     @include mq(sm) {
         margin: $space_s 0;

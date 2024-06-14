@@ -7177,7 +7177,10 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _SidebarComponent_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./SidebarComponent.vue */ "./resources/js/components/Convenience/SidebarComponent.vue");
+/* harmony import */ var _Parts_Toast_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Parts/Toast.vue */ "./resources/js/components/Parts/Toast.vue");
+/* harmony import */ var _SidebarComponent_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./SidebarComponent.vue */ "./resources/js/components/Convenience/SidebarComponent.vue");
+//
+//
 //
 //
 //
@@ -7241,11 +7244,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+ // Toastコンポーネントをインポート
  // サイドバーコンポーネント
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
-    SidebarComponent: _SidebarComponent_vue__WEBPACK_IMPORTED_MODULE_0__["default"] // サイドバーコンポーネントを読み込み
+    Toast: _Parts_Toast_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
+    // Toastコンポーネントを読み込み
+    SidebarComponent: _SidebarComponent_vue__WEBPACK_IMPORTED_MODULE_1__["default"] // サイドバーコンポーネントを読み込み
   },
   data: function data() {
     return {
@@ -7348,6 +7354,11 @@ __webpack_require__.r(__webpack_exports__);
         _this2.$router.push({
           name: 'convenience.mypage'
         }); // 商品出品後、マイページに遷移
+        _this2.$store.dispatch('flash/setFlashMessage', {
+          // フラッシュメッセージの表示
+          message: '商品を出品しました。',
+          type: 'success'
+        });
       })["catch"](function (error) {
         _this2.errors = error.response.data.errors;
       });
@@ -49891,377 +49902,386 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("main", { staticClass: "l-main" }, [
-    _vm._m(0),
-    _vm._v(" "),
-    _c(
-      "div",
-      { staticClass: "l-article" },
-      [
-        _c("div", { staticClass: "l-article__main" }, [
-          _c(
-            "form",
-            {
-              staticClass: "c-form",
-              on: {
-                submit: function ($event) {
-                  $event.preventDefault()
-                  return _vm.submitForm($event)
+  return _c(
+    "main",
+    { staticClass: "l-main" },
+    [
+      _c("Toast"),
+      _vm._v(" "),
+      _vm._m(0),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "l-article" },
+        [
+          _c("div", { staticClass: "l-article__main" }, [
+            _c(
+              "form",
+              {
+                staticClass: "c-form",
+                on: {
+                  submit: function ($event) {
+                    $event.preventDefault()
+                    return _vm.submitForm($event)
+                  },
                 },
               },
-            },
-            [
-              _vm._m(1),
-              _vm._v(" "),
-              _vm.errors && _vm.errors.name
-                ? _c("span", { staticClass: "c-error" }, [
-                    _vm._v(_vm._s(_vm.errors.name[0])),
-                  ])
-                : _vm._e(),
-              _vm._v(" "),
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.formData.name,
-                    expression: "formData.name",
-                  },
-                ],
-                staticClass: "c-input",
-                class: { "is-invalid": _vm.errors && _vm.errors.name },
-                attrs: { id: "name", type: "text", autocomplete: "name" },
-                domProps: { value: _vm.formData.name },
-                on: {
-                  input: function ($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.$set(_vm.formData, "name", $event.target.value)
-                  },
-                },
-              }),
-              _vm._v(" "),
-              _vm._m(2),
-              _vm._v(" "),
-              _vm.errors && _vm.errors.price
-                ? _c("span", { staticClass: "c-error" }, [
-                    _vm._v(_vm._s(_vm.errors.price[0])),
-                  ])
-                : _vm._e(),
-              _vm._v(" "),
-              _c("div", [
+              [
+                _vm._m(1),
+                _vm._v(" "),
+                _vm.errors && _vm.errors.name
+                  ? _c("span", { staticClass: "c-error" }, [
+                      _vm._v(_vm._s(_vm.errors.name[0])),
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
                 _c("input", {
                   directives: [
                     {
                       name: "model",
                       rawName: "v-model",
-                      value: _vm.formData.price,
-                      expression: "formData.price",
+                      value: _vm.formData.name,
+                      expression: "formData.name",
                     },
                   ],
-                  staticClass: "c-input c-input--price",
-                  class: { "is-invalid": _vm.errors && _vm.errors.price },
-                  attrs: {
-                    id: "price",
-                    type: "text",
-                    maxlength: "4",
-                    autocomplete: "price",
-                  },
-                  domProps: { value: _vm.formData.price },
+                  staticClass: "c-input",
+                  class: { "is-invalid": _vm.errors && _vm.errors.name },
+                  attrs: { id: "name", type: "text", autocomplete: "name" },
+                  domProps: { value: _vm.formData.name },
                   on: {
                     input: function ($event) {
                       if ($event.target.composing) {
                         return
                       }
-                      _vm.$set(_vm.formData, "price", $event.target.value)
+                      _vm.$set(_vm.formData, "name", $event.target.value)
                     },
                   },
                 }),
                 _vm._v(" "),
-                _c("span", { staticClass: "c-text" }, [_vm._v("円（税込）")]),
-              ]),
-              _vm._v(" "),
-              _vm._m(3),
-              _vm._v(" "),
-              _vm.errors && _vm.errors.category
-                ? _c("span", { staticClass: "c-error" }, [
-                    _vm._v(_vm._s(_vm.errors.category[0])),
-                  ])
-                : _vm._e(),
-              _vm._v(" "),
-              _c(
-                "select",
-                {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.formData.category,
-                      expression: "formData.category",
+                _vm._m(2),
+                _vm._v(" "),
+                _vm.errors && _vm.errors.price
+                  ? _c("span", { staticClass: "c-error" }, [
+                      _vm._v(_vm._s(_vm.errors.price[0])),
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _c("div", [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.formData.price,
+                        expression: "formData.price",
+                      },
+                    ],
+                    staticClass: "c-input c-input--price",
+                    class: { "is-invalid": _vm.errors && _vm.errors.price },
+                    attrs: {
+                      id: "price",
+                      type: "text",
+                      maxlength: "4",
+                      autocomplete: "price",
                     },
-                  ],
-                  staticClass: "c-input",
-                  class: { "is-invalid": _vm.errors && _vm.errors.category },
-                  attrs: { id: "category" },
-                  on: {
-                    change: function ($event) {
-                      var $$selectedVal = Array.prototype.filter
-                        .call($event.target.options, function (o) {
-                          return o.selected
-                        })
-                        .map(function (o) {
-                          var val = "_value" in o ? o._value : o.value
-                          return val
-                        })
-                      _vm.$set(
-                        _vm.formData,
-                        "category",
-                        $event.target.multiple
-                          ? $$selectedVal
-                          : $$selectedVal[0]
-                      )
+                    domProps: { value: _vm.formData.price },
+                    on: {
+                      input: function ($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.formData, "price", $event.target.value)
+                      },
+                    },
+                  }),
+                  _vm._v(" "),
+                  _c("span", { staticClass: "c-text" }, [_vm._v("円（税込）")]),
+                ]),
+                _vm._v(" "),
+                _vm._m(3),
+                _vm._v(" "),
+                _vm.errors && _vm.errors.category
+                  ? _c("span", { staticClass: "c-error" }, [
+                      _vm._v(_vm._s(_vm.errors.category[0])),
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _c(
+                  "select",
+                  {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.formData.category,
+                        expression: "formData.category",
+                      },
+                    ],
+                    staticClass: "c-input",
+                    class: { "is-invalid": _vm.errors && _vm.errors.category },
+                    attrs: { id: "category" },
+                    on: {
+                      change: function ($event) {
+                        var $$selectedVal = Array.prototype.filter
+                          .call($event.target.options, function (o) {
+                            return o.selected
+                          })
+                          .map(function (o) {
+                            var val = "_value" in o ? o._value : o.value
+                            return val
+                          })
+                        _vm.$set(
+                          _vm.formData,
+                          "category",
+                          $event.target.multiple
+                            ? $$selectedVal
+                            : $$selectedVal[0]
+                        )
+                      },
                     },
                   },
-                },
-                [
-                  _c("option", { attrs: { value: "" } }, [
-                    _vm._v("カテゴリを選択してください"),
+                  [
+                    _c("option", { attrs: { value: "" } }, [
+                      _vm._v("カテゴリを選択してください"),
+                    ]),
+                    _vm._v(" "),
+                    _vm._l(_vm.categories, function (category) {
+                      return _c(
+                        "option",
+                        { domProps: { value: category.id } },
+                        [_vm._v(_vm._s(category.name))]
+                      )
+                    }),
+                  ],
+                  2
+                ),
+                _vm._v(" "),
+                _vm._m(4),
+                _vm._v(" "),
+                _vm.errors && _vm.errors.expiration_date
+                  ? _c("span", { staticClass: "c-error" }, [
+                      _vm._v(_vm._s(_vm.errors.expiration_date[0])),
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _c("div", { staticClass: "c-form--expiration" }, [
+                  _c("div", { staticClass: "c-input--date" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.formData.expiration_year,
+                          expression: "formData.expiration_year",
+                        },
+                      ],
+                      staticClass: "c-input",
+                      class: {
+                        "is-invalid": _vm.errors && _vm.errors.expiration_date,
+                      },
+                      attrs: {
+                        id: "expiration_year",
+                        type: "text",
+                        placeholder: "YYYY",
+                        maxlength: "4",
+                      },
+                      domProps: { value: _vm.formData.expiration_year },
+                      on: {
+                        input: function ($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            _vm.formData,
+                            "expiration_year",
+                            $event.target.value
+                          )
+                        },
+                      },
+                    }),
+                    _vm._v(" "),
+                    _c(
+                      "label",
+                      {
+                        staticClass: "c-label",
+                        attrs: { for: "expiration_year" },
+                      },
+                      [_vm._v("年")]
+                    ),
                   ]),
                   _vm._v(" "),
-                  _vm._l(_vm.categories, function (category) {
-                    return _c("option", { domProps: { value: category.id } }, [
-                      _vm._v(_vm._s(category.name)),
+                  _c("div", { staticClass: "c-input--date" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.formData.expiration_month,
+                          expression: "formData.expiration_month",
+                        },
+                      ],
+                      staticClass: "c-input",
+                      class: {
+                        "is-invalid": _vm.errors && _vm.errors.expiration_date,
+                      },
+                      attrs: {
+                        id: "expiration_month",
+                        type: "text",
+                        placeholder: "MM",
+                        maxlength: "2",
+                      },
+                      domProps: { value: _vm.formData.expiration_month },
+                      on: {
+                        input: function ($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            _vm.formData,
+                            "expiration_month",
+                            $event.target.value
+                          )
+                        },
+                      },
+                    }),
+                    _vm._v(" "),
+                    _c(
+                      "label",
+                      {
+                        staticClass: "c-label",
+                        attrs: { for: "expiration_month" },
+                      },
+                      [_vm._v("月")]
+                    ),
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "c-input--date" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.formData.expiration_day,
+                          expression: "formData.expiration_day",
+                        },
+                      ],
+                      staticClass: "c-input",
+                      class: {
+                        "is-invalid": _vm.errors && _vm.errors.expiration_date,
+                      },
+                      attrs: {
+                        id: "expiration_day",
+                        type: "text",
+                        placeholder: "DD",
+                        maxlength: "2",
+                      },
+                      domProps: { value: _vm.formData.expiration_day },
+                      on: {
+                        input: function ($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            _vm.formData,
+                            "expiration_day",
+                            $event.target.value
+                          )
+                        },
+                      },
+                    }),
+                    _vm._v(" "),
+                    _c(
+                      "label",
+                      {
+                        staticClass: "c-label",
+                        attrs: { for: "expiration_day" },
+                      },
+                      [_vm._v("日")]
+                    ),
+                  ]),
+                ]),
+                _vm._v(" "),
+                _vm._m(5),
+                _vm._v(" "),
+                _vm.errors && _vm.errors.product_picture
+                  ? _c("span", { staticClass: "c-error" }, [
+                      _vm._v(_vm._s(_vm.errors.product_picture[0])),
                     ])
-                  }),
-                ],
-                2
-              ),
-              _vm._v(" "),
-              _vm._m(4),
-              _vm._v(" "),
-              _vm.errors && _vm.errors.expiration_date
-                ? _c("span", { staticClass: "c-error" }, [
-                    _vm._v(_vm._s(_vm.errors.expiration_date[0])),
-                  ])
-                : _vm._e(),
-              _vm._v(" "),
-              _c("div", { staticClass: "c-form--expiration" }, [
-                _c("div", { staticClass: "c-input--date" }, [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.formData.expiration_year,
-                        expression: "formData.expiration_year",
-                      },
-                    ],
-                    staticClass: "c-input",
-                    class: {
-                      "is-invalid": _vm.errors && _vm.errors.expiration_date,
-                    },
-                    attrs: {
-                      id: "expiration_year",
-                      type: "text",
-                      placeholder: "YYYY",
-                      maxlength: "4",
-                    },
-                    domProps: { value: _vm.formData.expiration_year },
-                    on: {
-                      input: function ($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(
-                          _vm.formData,
-                          "expiration_year",
-                          $event.target.value
-                        )
-                      },
-                    },
-                  }),
-                  _vm._v(" "),
-                  _c(
-                    "label",
-                    {
-                      staticClass: "c-label",
-                      attrs: { for: "expiration_year" },
-                    },
-                    [_vm._v("年")]
-                  ),
-                ]),
+                  : _vm._e(),
                 _vm._v(" "),
-                _c("div", { staticClass: "c-input--date" }, [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.formData.expiration_month,
-                        expression: "formData.expiration_month",
-                      },
-                    ],
-                    staticClass: "c-input",
+                _c(
+                  "div",
+                  {
+                    staticClass: "c-product__picture",
                     class: {
-                      "is-invalid": _vm.errors && _vm.errors.expiration_date,
+                      "is-invalid": _vm.errors && _vm.errors.product_picture,
                     },
-                    attrs: {
-                      id: "expiration_month",
-                      type: "text",
-                      placeholder: "MM",
-                      maxlength: "2",
-                    },
-                    domProps: { value: _vm.formData.expiration_month },
-                    on: {
-                      input: function ($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(
-                          _vm.formData,
-                          "expiration_month",
-                          $event.target.value
-                        )
-                      },
-                    },
-                  }),
-                  _vm._v(" "),
-                  _c(
-                    "label",
-                    {
-                      staticClass: "c-label",
-                      attrs: { for: "expiration_month" },
-                    },
-                    [_vm._v("月")]
-                  ),
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "c-input--date" }, [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.formData.expiration_day,
-                        expression: "formData.expiration_day",
-                      },
-                    ],
-                    staticClass: "c-input",
-                    class: {
-                      "is-invalid": _vm.errors && _vm.errors.expiration_date,
-                    },
-                    attrs: {
-                      id: "expiration_day",
-                      type: "text",
-                      placeholder: "DD",
-                      maxlength: "2",
-                    },
-                    domProps: { value: _vm.formData.expiration_day },
-                    on: {
-                      input: function ($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(
-                          _vm.formData,
-                          "expiration_day",
-                          $event.target.value
-                        )
-                      },
-                    },
-                  }),
-                  _vm._v(" "),
-                  _c(
-                    "label",
-                    {
-                      staticClass: "c-label",
-                      attrs: { for: "expiration_day" },
-                    },
-                    [_vm._v("日")]
-                  ),
-                ]),
-              ]),
-              _vm._v(" "),
-              _vm._m(5),
-              _vm._v(" "),
-              _vm.errors && _vm.errors.product_picture
-                ? _c("span", { staticClass: "c-error" }, [
-                    _vm._v(_vm._s(_vm.errors.product_picture[0])),
-                  ])
-                : _vm._e(),
-              _vm._v(" "),
-              _c(
-                "div",
-                {
-                  staticClass: "c-product__picture",
-                  class: {
-                    "is-invalid": _vm.errors && _vm.errors.product_picture,
+                    on: { drop: _vm.handleDrop },
                   },
-                  on: { drop: _vm.handleDrop },
-                },
-                [
-                  _c("input", {
-                    staticClass: "c-input--hidden",
-                    attrs: { type: "file", id: "product_picture" },
-                    on: { change: _vm.handleFileChange },
-                  }),
-                  _vm._v(" "),
-                  !_vm.picturePreview && _vm.formData.product_picture !== ""
-                    ? _c("img", {
-                        staticClass: "c-product__picture--img",
-                        attrs: {
-                          src:
-                            "https://haikishare.com/product_pictures/" +
-                            _vm.formData.product_picture,
-                          alt: "アップロード商品画像",
-                        },
-                      })
-                    : _vm.picturePreview
-                    ? _c("img", {
-                        staticClass: "c-product__picture--img",
-                        attrs: {
-                          src: _vm.picturePreview,
-                          alt: "アップロード商品画像",
-                        },
-                      })
-                    : _c("img", {
-                        staticClass: "c-product__picture--img",
-                        attrs: {
-                          src: "https://haikishare.com/product_pictures/no_image.png",
-                          alt: "NO_IMAGE",
-                        },
-                      }),
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "button",
-                {
-                  staticClass: "c-button c-button--submit c-button--main",
-                  attrs: { type: "submit" },
-                },
-                [_vm._v("商品を出品する")]
-              ),
-            ]
-          ),
-        ]),
-        _vm._v(" "),
-        _c("sidebar-component", {
-          attrs: {
-            convenience_name: _vm.convenience_name,
-            branch_name: _vm.branch_name,
-            prefecture: _vm.prefecture,
-            city: _vm.city,
-            town: _vm.town,
-            building: _vm.building,
-            introduction: _vm.introduction,
-          },
-        }),
-      ],
-      1
-    ),
-  ])
+                  [
+                    _c("input", {
+                      staticClass: "c-input--hidden",
+                      attrs: { type: "file", id: "product_picture" },
+                      on: { change: _vm.handleFileChange },
+                    }),
+                    _vm._v(" "),
+                    !_vm.picturePreview && _vm.formData.product_picture !== ""
+                      ? _c("img", {
+                          staticClass: "c-product__picture--img",
+                          attrs: {
+                            src:
+                              "https://haikishare.com/product_pictures/" +
+                              _vm.formData.product_picture,
+                            alt: "アップロード商品画像",
+                          },
+                        })
+                      : _vm.picturePreview
+                      ? _c("img", {
+                          staticClass: "c-product__picture--img",
+                          attrs: {
+                            src: _vm.picturePreview,
+                            alt: "アップロード商品画像",
+                          },
+                        })
+                      : _c("img", {
+                          staticClass: "c-product__picture--img",
+                          attrs: {
+                            src: "https://haikishare.com/product_pictures/no_image.png",
+                            alt: "NO_IMAGE",
+                          },
+                        }),
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "c-button c-button--submit c-button--main",
+                    attrs: { type: "submit" },
+                  },
+                  [_vm._v("商品を出品する")]
+                ),
+              ]
+            ),
+          ]),
+          _vm._v(" "),
+          _c("sidebar-component", {
+            attrs: {
+              convenience_name: _vm.convenience_name,
+              branch_name: _vm.branch_name,
+              prefecture: _vm.prefecture,
+              city: _vm.city,
+              town: _vm.town,
+              building: _vm.building,
+              introduction: _vm.introduction,
+            },
+          }),
+        ],
+        1
+      ),
+    ],
+    1
+  )
 }
 var staticRenderFns = [
   function () {
@@ -50714,7 +50734,7 @@ var render = function () {
                   _vm._v("郵便番号"),
                 ]),
                 _vm._v(" "),
-                _c("span", { staticClass: "c-text c-text--note" }, [
+                _c("span", { staticClass: "c-text c-text--note u-fz-10@sm" }, [
                   _vm._v(
                     "※数字のみを入力し、ハイフンを含む場合は3桁と4桁の間に挿入してください。ハイフンを含まない場合は数字を7桁入力してください。"
                   ),
@@ -51575,7 +51595,7 @@ var render = function () {
             _vm._v("郵便番号"),
           ]),
           _vm._v(" "),
-          _c("span", { staticClass: "c-text c-text--note" }, [
+          _c("span", { staticClass: "c-text c-text--note u-fz-10@sm" }, [
             _vm._v(
               "※数字のみを入力し、ハイフンを含む場合は3桁と4桁の間に挿入してください。ハイフンを含まない場合は数字を7桁入力してください。"
             ),
@@ -51790,7 +51810,7 @@ var render = function () {
           _vm._v(" "),
           _vm._m(7),
           _vm._v(" "),
-          _c("span", { staticClass: "c-text c-text--note" }, [
+          _c("span", { staticClass: "c-text c-text--note u-fz-10@sm" }, [
             _vm._v(
               "※パスワードとパスワード（再入力）は、半角数字・英字大文字・小文字、記号（!@#$%^&*）を使って8文字以上で入力してください"
             ),
@@ -52267,7 +52287,7 @@ var render = function () {
           [
             _vm._m(1),
             _vm._v(" "),
-            _c("span", { staticClass: "c-text c-text--note" }, [
+            _c("span", { staticClass: "c-text c-text--note u-fz-10@sm" }, [
               _vm._v(
                 "※新しいパスワードと新しいパスワード（再入力）は、半角数字・英字大文字・小文字、記号（!@#$%^&*）を使って8文字以上で入力してください"
               ),
@@ -54281,7 +54301,8 @@ var render = function () {
                                   _c(
                                     "button",
                                     {
-                                      staticClass: "c-button c-button--default",
+                                      staticClass:
+                                        "c-button c-button--default u-fz-10@sm",
                                       on: {
                                         click: function ($event) {
                                           _vm.cancelPurchase(product.product.id)
@@ -55920,7 +55941,7 @@ var render = function () {
           _vm._v(" "),
           _vm._m(3),
           _vm._v(" "),
-          _c("span", { staticClass: "c-text c-text--note" }, [
+          _c("span", { staticClass: "c-text c-text--note u-fz-10@sm" }, [
             _vm._v(
               "※パスワードとパスワード（再入力）は、半角数字・英字大文字・小文字、記号（!@#$%^&*）を使って8文字以上で入力してください"
             ),
@@ -56349,7 +56370,7 @@ var render = function () {
           [
             _vm._m(1),
             _vm._v(" "),
-            _c("span", { staticClass: "c-text c-text--note" }, [
+            _c("span", { staticClass: "c-text c-text--note u-fz-10@sm" }, [
               _vm._v(
                 "※新しいパスワードと新しいパスワード（再入力）は、半角数字・英字大文字・小文字、記号（!@#$%^&*）を使って8文字以上で入力してください"
               ),

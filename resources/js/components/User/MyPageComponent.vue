@@ -44,7 +44,7 @@
                                     </div>
                                     <div class="c-card__footer">
                                         <router-link :to="getProductDetailLink(product.product.id)" class="c-button c-button--default">詳細を見る</router-link>
-                                        <button class="c-button c-button--default" @click="cancelPurchase(product.product.id)">購入をキャンセルする</button>
+                                        <button class="c-button c-button--default u-fz-10@sm" @click="cancelPurchase(product.product.id)">購入をキャンセルする</button>
                                     </div>
                                 </div>
                             </li>

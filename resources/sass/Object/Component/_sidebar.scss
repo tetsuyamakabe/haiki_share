@@ -2,7 +2,7 @@
     padding: $space_s;
     display: flex;
     flex-direction: column;
-    background: $background-color_sub;
+    background: $background-color_main;
     @include mq(md) {
         flex-direction: row;
         justify-content: center;

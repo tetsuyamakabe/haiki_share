@@ -6,7 +6,7 @@
     font-weight: bold;
     color: $font-color_default;
     font-size: $font-size_default;
-    background: $background-color_sub;
+    background: $background-color_main;
     &:hover {
         cursor: pointer;
         color: $font-color_sub;
@@ -20,10 +20,10 @@
     &--purchase {
         display: block;
         color: $font-color_sub;
-        background: $background-color_sub2;
+        background: $background-color_primary;
         &:disabled{
             cursor: not-allowed;
-            background: $background-color_sub3;
+            background: $background-color_sub;
         }
     }
     &--main {

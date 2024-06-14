@@ -103,7 +103,7 @@
             transform: scale(0, 1);
             transform-origin: left top;
             transition: transform 0.3s;
-            background: $background-color_sub3;
+            background: $background-color_sub;
             @include mq(md){
                 display: none;
             }
