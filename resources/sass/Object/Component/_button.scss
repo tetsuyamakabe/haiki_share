@@ -80,7 +80,6 @@
     &--not-allowed{
         &:disabled{
             cursor: not-allowed;
-            background: $background-color_sub;
         }
     }
     &--register {
