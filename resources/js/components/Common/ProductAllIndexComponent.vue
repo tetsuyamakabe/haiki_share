@@ -22,7 +22,9 @@
                                 </div>
                                 <div class="c-card__body">
                                     <img class="c-card__img" :src="getProductPicturePath(product)" alt="商品画像"> <!-- 商品画像 -->
-                                    <label v-show="product.is_purchased" class="c-label__purchase">購入<br>済み</label> <!-- 購入済みラベル -->
+                                    <ul v-show="product.is_purchased">
+                                        <li class="c-label__purchase"><span></span></li> <!-- 購入済みラベル -->
+                                    </ul>
                                     <div class="c-icon">
                                         <!-- 利用者ユーザーの場合にいいねアイコンを表示 -->
                                         <div v-if="$store.getters['auth/check'] && $store.getters['auth/role'] === 'user'">

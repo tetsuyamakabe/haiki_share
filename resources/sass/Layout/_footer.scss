@@ -12,6 +12,8 @@
         background: $background-color_main;
         border: solid 2px $boader-color_line;
         border-radius: 50%;
+        -webkit-border-radius: 50%;
+        -moz-border-radius: 50%;
         z-index: 2;
         &--arrow {
             width: 10px;
@@ -19,6 +21,8 @@
             border-top: 3px solid $boader-color_line;
             border-right: 3px solid $boader-color_line;
             transform: translateY(20%) rotate(-45deg);
+            -webkit-transform: translateY(20%) rotate(-45deg);
+            -ms-transform: translateY(20%) rotate(-45deg);
         }
         &.UpMove {
             animation: UpAnime 0.5s forwards;
@@ -27,10 +31,14 @@
             from {
                 opacity: 0;
                 transform: translateY(100px);
+                -webkit-transform: translateY(100px);
+                -ms-transform: translateY(100px);
             }
             to {
                 opacity: 1;
                 transform: translateY(0);
+                -webkit-transform: translateY(0);
+                -ms-transform: translateY(0);
             }
         }
         &.DownMove {
@@ -40,10 +48,15 @@
             from {
                 opacity: 1;
                 transform: translateY(0);
+                -webkit-transform: translateY(0);
+                -ms-transform: translateY(0);
             }
             to {
                 opacity: 1;
                 transform: translateY(100px);
+                -webkit-transform: translateY(100px);
+                -ms-transform: translateY(100px);
+
             }
         }
     }

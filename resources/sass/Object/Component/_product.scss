@@ -28,6 +28,8 @@
     &--avatar {
         width: 100px;
         border-radius: 50%;
+        -webkit-border-radius: 50%;
+        -moz-border-radius: 50%;
     }
     &--avatar-wrap {
         display: flex;

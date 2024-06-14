@@ -5,6 +5,7 @@
     padding: $space_s;
     font-size: $font-size_default;
     border: 1px solid $boader-color_line;
+    position: relative;
     @include mq(sm) {
         max-width: 100%;
         font-size: $font-size_m;

@@ -1,6 +1,8 @@
 .c-button {
     padding: $space_s;
     border-radius: 3px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
     text-align: center;
     text-decoration: none;
     font-weight: bold;
@@ -65,6 +67,8 @@
         justify-content: center;
         align-items: center;
         border-radius: 100vh;
+        -webkit-border-radius: 100vh;
+        -moz-border-radius: 100vh;
         font-size: $font-size_l;
         @include mq(md) {
             width: 60%;
