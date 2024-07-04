@@ -14,7 +14,7 @@ use App\Http\Requests\User\ProfileRequest;
 use Illuminate\Support\Facades\Notification;
 use App\Notifications\User\ContactNotification;
 
-class MyPageController extends Controller
+class UserMyPageController extends Controller
 {
     // プロフィール情報の取得処理
     public function getProfile(Request $request)

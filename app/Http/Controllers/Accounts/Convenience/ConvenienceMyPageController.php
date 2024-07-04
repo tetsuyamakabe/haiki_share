@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\Convenience\ProfileRequest;
 
-class MyPageController extends Controller
+class ConvenienceMyPageController extends Controller
 {
     // プロフィール情報の取得処理
     public function getProfile(Request $request)

@@ -54699,7 +54699,11 @@ var render = function () {
                   )
                 : _c(
                     "button",
-                    { staticClass: "c-button c-button--submit c-button--main" },
+                    {
+                      staticClass:
+                        "c-button c-button--submit c-button--main c-button--not-allowed",
+                      attrs: { disabled: true },
+                    },
                     [_vm._v("購入済み")]
                   ),
             ]),

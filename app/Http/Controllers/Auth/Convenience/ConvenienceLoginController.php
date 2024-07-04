@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\Convenience\LoginRequest;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
-class LoginController extends Controller
+class ConvenienceLoginController extends Controller
 {
     /*
     |--------------------------------------------------------------------------
