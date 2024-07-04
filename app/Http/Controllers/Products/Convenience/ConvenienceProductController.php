@@ -17,7 +17,7 @@ use App\Http\Requests\Convenience\SearchRequest;
 use App\Http\Requests\Convenience\ProductEditRequest;
 use App\Http\Requests\Convenience\ProductSaleRequest;
 
-class ProductController extends Controller
+class ConvenienceProductController extends Controller
 {
     // 商品出品処理（商品の投稿）
     public function createProduct(ProductSaleRequest $request)

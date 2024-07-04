@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use App\Http\Requests\Convenience\RegisterRequest;
 
-class RegisterController extends Controller
+class ConvenienceRegisterController extends Controller
 {
     /*
     |--------------------------------------------------------------------------

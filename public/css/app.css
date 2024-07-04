@@ -747,6 +747,10 @@ table {
   }
 }
 
+.c-button--not-allowed:disabled {
+  cursor: not-allowed;
+}
+
 .c-button--register {
   padding: 8px;
   display: block;

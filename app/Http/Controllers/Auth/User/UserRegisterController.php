@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\User\RegisterRequest;
 use Illuminate\Foundation\Auth\RegistersUsers;
 
-class RegisterController extends Controller
+class UserRegisterController extends Controller
 {
     /*
     |--------------------------------------------------------------------------

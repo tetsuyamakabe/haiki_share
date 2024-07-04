@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Notification;
 use App\Notifications\User\CancelNotification;
 use App\Notifications\User\PurchaseNotification;
 
-class ProductController extends Controller
+class UserProductController extends Controller
 {
     // 商品購入処理
     public function purchaseProduct($productId)
