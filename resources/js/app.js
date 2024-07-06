@@ -4,6 +4,8 @@ import router from './router'
 import store from './store'
 import App from './App.vue'
 import axiosErrorHandler from './axiosErrorHandler'
+import Vuelidate from 'vuelidate'
+Vue.use(Vuelidate)
 
 const createApp = async () => {
     await store.dispatch('auth/currentUser')

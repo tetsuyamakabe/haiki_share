@@ -1076,8 +1076,14 @@ table {
   cursor: pointer;
 }
 
+.c-input.is-valid {
+  background-color: #cce6ff;
+  border: 2px solid #339cff;
+}
+
 .c-input.is-invalid {
   background-color: #ffcccc;
+  border: 2px solid #ff3333;
 }
 
 .c-input__search {
