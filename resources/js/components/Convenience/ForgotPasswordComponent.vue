@@ -10,7 +10,11 @@
                 <!-- メールアドレス -->
                 <label for="email" class="c-label">メールアドレス<span class="c-badge">必須</span></label>
                 <span v-if="errors && errors.email" class="c-error">{{ errors.email[0] }}</span>
-                <input v-model="formData.email" id="email" type="text" class="c-input" :class="{ 'is-invalid': errors && errors.email }" autocomplete="email">
+                <span v-if="$v.formData.email.$error && $v.formData.email.$dirty" class="c-error">メールアドレスが入力されていません。</span>
+                <span v-if="$v.formData.email.$error && !$v.formData.email.maxLength && $v.formData.email.$dirty" class="c-error">メールアドレスは、255文字以内で入力してください。</span>
+                <span v-if="$v.formData.email.$error && !$v.formData.email.email && $v.formData.email.$dirty" class="c-error">有効なメールアドレスを入力してください。</span>
+                <input v-model="formData.email" id="email" type="text" class="c-input" @blur="$v.formData.email.$touch()" :class="{'is-invalid': $v.formData.email.$error && $v.formData.email.$dirty, 'is-valid': !$v.formData.email.$error && $v.formData.email.$dirty}" autocomplete="email">
+
                 <!-- メール送信ボタン -->
                 <button type="submit" class="c-button c-button--submit c-button--main">パスワード変更メールを送信する</button>
             </form>
@@ -20,6 +24,7 @@
 
 <script>
 import Toast from '../Parts/Toast.vue'; // Toastコンポーネントをインポート
+import { required, maxLength, email } from 'vuelidate/lib/validators'; // Vuelidateからバリデータをインポート
 
 export default {
     components: {
@@ -33,6 +38,16 @@ export default {
             },
             errors: null // エラーメッセージ
         };
+    },
+
+    validations: { // フロント側のバリデーション
+        formData: {
+            email: {
+                required,
+                email,
+                maxLength: maxLength(255),
+            },
+        },
     },
 
     methods: {

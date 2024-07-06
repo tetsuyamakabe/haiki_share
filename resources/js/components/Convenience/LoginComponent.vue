@@ -8,17 +8,25 @@
                 <!-- メールアドレス -->
                 <label for="email" class="c-label">メールアドレス<span class="c-badge">必須</span></label>
                 <span v-if="errors && errors.email" class="c-error">{{ errors.email[0] }}</span>
-                <input v-model="formData.email" id="email" type="text" class="c-input" :class="{ 'is-invalid': errors && errors.email }" autocomplete="email">
+                <span v-if="$v.formData.email.$error && $v.formData.email.$dirty" class="c-error">メールアドレスが入力されていません。</span>
+                <span v-if="$v.formData.email.$error && !$v.formData.email.maxLength && $v.formData.email.$dirty" class="c-error">メールアドレスは、255文字以内で入力してください。</span>
+                <span v-if="$v.formData.email.$error && !$v.formData.email.email && $v.formData.email.$dirty" class="c-error">有効なメールアドレスを入力してください。</span>
+                <input v-model="formData.email" id="email" type="text" class="c-input" @blur="$v.formData.email.$touch()" :class="{'is-invalid': $v.formData.email.$error && $v.formData.email.$dirty, 'is-valid': !$v.formData.email.$error && $v.formData.email.$dirty}" autocomplete="email">
+
                 <!-- パスワード -->
                 <label for="password" class="c-label">パスワード<span class="c-badge">必須</span></label>
                 <span class="c-text c-text--note u-fz-10@sm">※パスワードは、半角数字・英字大文字・小文字、記号（!@#$%^&*）を使って8文字以上で入力してください</span>
                 <span v-if="errors && errors.password" class="c-error">{{ errors.password[0] }}</span>
+                <span v-if="$v.formData.password.$error && $v.formData.password.$dirty" class="c-error">パスワードが入力されていません。</span>
+                <span v-if="$v.formData.password.$error && !$v.formData.password.minLength && $v.formData.password.$dirty" class="c-error">パスワードは、8文字以上で入力してください。</span>
+                <span v-if="$v.formData.password.$error && !$v.formData.password.validPasswordFormat && $v.formData.password.$dirty" class="c-error">パスワードは半角数字・英字大文字・小文字、記号（!@#$%^&*）で入力してください。</span>
                 <div class="c-password">
-                    <input v-model="formData.password" id="password" :type="PasswordType" class="c-input" :class="{ 'is-invalid': errors && errors.password }" placeholder="8文字以上で入力してください">
+                    <input v-model="formData.password" id="password" :type="PasswordType" class="c-input" @blur="$v.formData.password.$touch()" :class="{'is-invalid': $v.formData.password.$error && $v.formData.password.$dirty, 'is-valid': !$v.formData.password.$error && $v.formData.password.$dirty}" placeholder="8文字以上で入力してください">
                     <span @click="togglePasswordVisibility('password')" class="c-password__icon">
                         <i :class="PasswordIconClass"></i>
                     </span>
                 </div>
+
                 <!-- 次回のログインを省略する -->
                 <div class="c-form__group">
                     <input class="c-checkbox" type="checkbox" v-model="remember" id="remember">
@@ -34,6 +42,9 @@
 </template>
 
 <script>
+import { required, maxLength, email, minLength, helpers } from 'vuelidate/lib/validators'; // Vuelidateからバリデータをインポート
+const validPasswordFormat = helpers.regex('validPasswordFormat', /^[a-zA-Z0-9!@#$%^&*]+$/); // パスワードの正規表現バリデーション
+
 export default {
     data() {
         return {
@@ -48,6 +59,21 @@ export default {
             PasswordIconClass: 'far fa-eye-slash', // 初期アイコン
             PasswordConfirmIconClass: 'far fa-eye-slash', // 初期アイコン
         };
+    },
+
+    validations: { // フロント側のバリデーション
+        formData: {
+            email: {
+                required,
+                email,
+                maxLength: maxLength(255),
+            },
+            password: {
+                required,
+                validPasswordFormat,
+                minLength: minLength(8),
+            },
+        },
     },
 
     methods: {
