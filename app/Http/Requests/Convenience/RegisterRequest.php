@@ -24,7 +24,7 @@ class RegisterRequest extends FormRequest
     public function rules()
     {
         return [
-            // 名前のバリデーションルール（必須、string型、最大文字数255文字以下）
+            // コンビニ名のバリデーションルール（必須、string型、最大文字数255文字以下）
             'convenience_name' => ['required', 'string', 'max:255'],
             // メールアドレスのバリデーションルール（必須、string型、メール形式、最大文字数255文字以下、ユニーク制約）
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],

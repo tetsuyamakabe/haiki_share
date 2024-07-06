@@ -65,7 +65,7 @@
 
 <script>
 import TermsComponent from '../Common/TermsComponent.vue'; // 利用規約コンポーネント
-import { required, maxLength, email, minLength } from 'vuelidate/lib/validators'; // Vuelidateから必要なバリデータをインポート
+import { required, maxLength, email, minLength } from 'vuelidate/lib/validators'; // Vuelidateからバリデータをインポート
 
 export default {
     components: {
@@ -90,7 +90,7 @@ export default {
         };
     },
 
-    validations: {
+    validations: { // フロント側のバリデーション
         formData: {
             name: {
                 required,
