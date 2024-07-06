@@ -5,20 +5,22 @@
             <div class="c-sidebar">
                 <div class="c-sidebar__avatar--wrap">
                     <div class="c-sidebar__avatar">
-                        <img :src="avatar" alt="顔写真画像" class="c-sidebar__avatar--img">
+                        <img :src="avatar" alt="顔写真画像" class="c-sidebar__avatar--img"> <!-- 顔写真 -->
                     </div>
                 </div>
                 <div class="c-sidebar__content--wrap">
                     <div class="c-sidebar__header">
-                        <p>{{ convenience_name }}{{ branch_name }}</p>
+                        <p class="c-sidebar__username">{{ convenience_name }}{{ branch_name }}</p> <!-- コンビニ名・支店名 -->
                     </div>
                     <div class="c-sidebar__body">
-                        <p class="c-sidebar--content">
-                            <i class="fa-solid fa-location-dot"></i>{{ prefecture }}{{ city }}{{ town }}{{ building }}
-                        </p>
-                        <p v-if="introduction" class="c-sidebar--content">
-                            <i class="fa-solid fa-message"></i>{{ introduction }}
-                        </p>
+                        <div class="c-sidebar--content">
+                            <i class="fa-solid fa-location-dot"></i>
+                            <span class="c-sidebar__address">{{ prefecture }}{{ city }}{{ town }}{{ building }}</span> <!-- 住所 -->
+                        </div>
+                        <div v-if="introduction" class="c-sidebar--content">
+                            <i class="fa-solid fa-message"></i>
+                            <p class="c-sidebar__introduction">{{ introduction }}</p> <!-- 自己紹介文（ない場合は非表示） -->
+                        </div>
                     </div>
                     <div class="c-sidebar__footer">
                         <router-link class="c-button c-button--primary" :to="{ name: 'convenience.profile' }">プロフィール編集</router-link>

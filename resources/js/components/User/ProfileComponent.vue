@@ -9,35 +9,52 @@
                     <!-- お名前 -->
                     <label for="name" class="c-label">お名前<span class="c-badge">必須</span></label>
                     <span v-if="errors && errors.name" class="c-error">{{ errors.name[0] }}</span>
-                    <input v-model="formData.name" id="name" type="name" class="c-input" :class="{ 'is-invalid': errors && errors.name }" autocomplete="name">
+                    <span v-if="$v.formData.name.$error && $v.formData.name.$dirty" class="c-error">お名前が入力されていません。</span>
+                    <span v-if="$v.formData.name.$error && !$v.formData.name.maxLength && $v.formData.name.$dirty" class="c-error">お名前は、255文字以内で入力してください。</span>
+                    <input v-model="formData.name" id="name" type="text" class="c-input" @blur="$v.formData.name.$touch()" :class="{'is-invalid': $v.formData.name.$error && $v.formData.name.$dirty, 'is-valid': !$v.formData.name.$error && $v.formData.name.$dirty}" autocomplete="name">
+
                     <!-- メールアドレス -->
                     <label for="email" class="c-label">メールアドレス<span class="c-badge">必須</span></label>
                     <span v-if="errors && errors.email" class="c-error">{{ errors.email[0] }}</span>
-                    <input v-model="formData.email" id="email" type="text" class="c-input" :class="{ 'is-invalid': errors && errors.email }" autocomplete="email">
+                    <span v-if="$v.formData.email.$error && $v.formData.email.$dirty" class="c-error">メールアドレスが入力されていません。</span>
+                    <span v-if="$v.formData.email.$error && !$v.formData.email.maxLength && $v.formData.email.$dirty" class="c-error">メールアドレスは、255文字以内で入力してください。</span>
+                    <span v-if="$v.formData.email.$error && !$v.formData.email.email && $v.formData.email.$dirty" class="c-error">有効なメールアドレスを入力してください。</span>
+                    <input v-model="formData.email" id="email" type="text" class="c-input" @blur="$v.formData.email.$touch()" :class="{'is-invalid': $v.formData.email.$error && $v.formData.email.$dirty, 'is-valid': !$v.formData.email.$error && $v.formData.email.$dirty}" autocomplete="email">
+
                     <!-- パスワード -->
-                    <label for="password" class="c-label">パスワード</label>
+                    <label for="password" class="c-label">パスワード<span class="c-badge">必須</span></label>
                     <span class="c-text c-text--note u-fz-10@sm">※パスワードとパスワード（再入力）は、半角数字・英字大文字・小文字、記号（!@#$%^&*）を使って8文字以上で入力してください</span>
                     <span v-if="errors && errors.password" class="c-error">{{ errors.password[0] }}</span>
+                    <span v-if="$v.formData.password.$error && $v.formData.password.$dirty" class="c-error">パスワードが入力されていません。</span>
+                    <span v-if="$v.formData.password.$error && !$v.formData.password.minLength && $v.formData.password.$dirty" class="c-error">パスワードは、8文字以上で入力してください。</span>
+                    <span v-if="$v.formData.password.$error && !$v.formData.password.validPasswordFormat && $v.formData.password.$dirty" class="c-error">パスワードは半角数字・英字大文字・小文字、記号（!@#$%^&*）で入力してください。</span>
                     <div class="c-password">
-                        <input v-model="formData.password" id="password" :type="PasswordType" class="c-input" :class="{ 'is-invalid': errors && errors.password }" placeholder="8文字以上で入力してください">
+                        <input v-model="formData.password" id="password" :type="PasswordType" class="c-input" @blur="$v.formData.password.$touch()" :class="{'is-invalid': $v.formData.password.$error && $v.formData.password.$dirty, 'is-valid': !$v.formData.password.$error && $v.formData.password.$dirty}" placeholder="8文字以上で入力してください">
                         <span @click="togglePasswordVisibility('password')" class="c-password__icon">
                             <i :class="PasswordIconClass"></i>
                         </span>
                     </div>
+
                     <!-- パスワード（再入力） -->
-                    <label for="password-confirm" class="c-label">パスワード（再入力）</label>
+                    <label for="password-confirm" class="c-label">パスワード（再入力）<span class="c-badge">必須</span></label>
                     <span v-if="errors && errors.password_confirmation" class="c-error">{{ errors.password_confirmation[0] }}</span>
+                    <span v-if="$v.formData.password_confirmation.$error && $v.formData.password_confirmation.$dirty" class="c-error">パスワード（再入力）が入力されていません。</span>
+                    <span v-if="$v.formData.password_confirmation.$error && !$v.formData.password_confirmation.minLength && $v.formData.password_confirmation.$dirty" class="c-error">パスワード（再入力）は、8文字以上で入力してください。</span>
+                    <span v-if="$v.formData.password_confirmation.$error && !$v.formData.password_confirmation.validPasswordFormat && $v.formData.password_confirmation.$dirty" class="c-error">パスワード（再入力）は半角数字・英字大文字・小文字、記号（!@#$%^&*）で入力してください。</span>
                     <div class="c-password">
-                        <input v-model="formData.password_confirmation" id="password-confirm" :type="PasswordConfirmType" class="c-input" :class="{ 'is-invalid': errors && errors.password_confirmation }" placeholder="8文字以上で入力してください">
+                        <input v-model="formData.password_confirmation" id="password-confirm" :type="PasswordConfirmType" class="c-input" @blur="$v.formData.password_confirmation.$touch()" :class="{'is-invalid': $v.formData.password_confirmation.$error && $v.formData.password_confirmation.$dirty, 'is-valid': !$v.formData.password_confirmation.$error && $v.formData.password_confirmation.$dirty}" placeholder="8文字以上で入力してください">
                         <span @click="togglePasswordVisibility('password_confirm')" class="c-password__icon">
                             <i :class="PasswordConfirmIconClass"></i>
                         </span>
                     </div>
+
                     <!-- 自己紹介文 -->
                     <label for="introduction" class="c-label">自己紹介</label>
                     <span v-if="errors && errors.introduction" class="c-error">{{ errors.introduction[0] }}</span>
+                    <span v-if="$v.formData.introduction.$error && !$v.formData.introduction.maxLength && $v.formData.introduction.$dirty" class="c-error">自己紹介は、50文字以内で入力してください。</span>
                     <textarea v-model="formData.introduction" maxlength="50" id="introduction" type="text" class="c-textarea" autocomplete="introduction" @keyup="countCharacters" :class="{ 'is-invalid': errors && errors.introduction }" placeholder="50文字以内で入力してください"></textarea>
                     <span class="c-textarea--count">{{ formData.introduction.length }} / 50文字</span>
+
                     <!-- 顔写真 -->
                     <label for="avatar" class="c-label">顔写真</label>
                     <span v-if="errors && errors.avatar" class="c-error">{{ errors.avatar[0] }}</span>
@@ -60,6 +77,8 @@
 
 <script>
 import SidebarComponent from './SidebarComponent.vue'; // サイドバーコンポーネント
+import { required, maxLength, email, minLength, helpers } from 'vuelidate/lib/validators'; // Vuelidateからバリデータをインポート
+const validPasswordFormat = helpers.regex('validPasswordFormat', /^[a-zA-Z0-9!@#$%^&*]+$/); // パスワードとパスワード（再入力）の正規表現バリデーション
 
 export default {
     components: {
@@ -84,6 +103,33 @@ export default {
             PasswordIconClass: 'far fa-eye-slash', // 初期アイコン
             PasswordConfirmIconClass: 'far fa-eye-slash', // 初期アイコン
         };
+    },
+
+    validations: { // フロント側のバリデーション
+        formData: {
+            name: {
+                required,
+                maxLength: maxLength(255),
+            },
+            email: {
+                required,
+                email,
+                maxLength: maxLength(255),
+            },
+            password: {
+                required,
+                validPasswordFormat,
+                minLength: minLength(8),
+            },
+            password_confirmation: {
+                required,
+                validPasswordFormat,
+                minLength: minLength(8),
+            },
+            introduction: {
+                maxLength: maxLength(50),
+            },
+        },
     },
 
     computed: {

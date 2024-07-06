@@ -1456,6 +1456,14 @@ table {
   }
 }
 
+.c-sidebar__username,
+.c-sidebar__address,
+.c-sidebar__introduction {
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  max-width: 100%;
+}
+
 .c-sidebar__body {
   opacity: 0.7;
 }

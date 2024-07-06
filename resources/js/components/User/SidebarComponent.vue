@@ -10,12 +10,13 @@
                 </div>
                 <div class="c-sidebar__content--wrap">
                     <div class="c-sidebar__header">
-                        <p>{{ username }}</p> <!-- お名前 -->
+                        <p class="c-sidebar__username">{{ username }}</p> <!-- お名前 -->
                     </div>
                     <div class="c-sidebar__body">
-                        <p v-if="introduction" class="c-sidebar--content">
-                            <i class="fa-solid fa-message"></i>{{ introduction }} <!-- 自己紹介文（ない場合は非表示） -->
-                        </p>
+                        <div v-if="introduction" class="c-sidebar--content">
+                            <i class="fa-solid fa-message"></i>
+                            <p class="c-sidebar__introduction">{{ introduction }}</p><!-- 自己紹介文（ない場合は非表示） -->
+                        </div>
                     </div>
                     <div class="c-sidebar__footer">
                         <router-link class="c-button c-button--primary" :to="{ name: 'user.profile' }">プロフィール編集</router-link>
