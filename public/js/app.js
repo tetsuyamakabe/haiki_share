@@ -8083,10 +8083,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
  // 利用規約コンポーネント
 var jsonpAdapter = __webpack_require__(/*! axios-jsonp */ "./node_modules/axios-jsonp/lib/index.js"); // 郵便番号API
  // Vuelidateからバリデータをインポート
+var validPasswordFormat = vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["helpers"].regex('validPasswordFormat', /^[a-zA-Z0-9!@#$%^&*]+$/); // パスワードとパスワード（再入力）の正規表現バリデーション
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -8162,10 +8165,12 @@ var jsonpAdapter = __webpack_require__(/*! axios-jsonp */ "./node_modules/axios-
       },
       password: {
         required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["required"],
+        validPasswordFormat: validPasswordFormat,
         minLength: Object(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["minLength"])(8)
       },
       password_confirmation: {
         required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["required"],
+        validPasswordFormat: validPasswordFormat,
         minLength: Object(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["minLength"])(8)
       }
     }
@@ -10398,9 +10403,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
  // 利用規約コンポーネント
  // Vuelidateからバリデータをインポート
+var validPasswordFormat = vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["helpers"].regex('validPasswordFormat', /^[a-zA-Z0-9!@#$%^&*]+$/); // パスワードとパスワード（再入力）の正規表現バリデーション
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -10446,10 +10454,12 @@ __webpack_require__.r(__webpack_exports__);
       },
       password: {
         required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["required"],
+        validPasswordFormat: validPasswordFormat,
         minLength: Object(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["minLength"])(8)
       },
       password_confirmation: {
         required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["required"],
+        validPasswordFormat: validPasswordFormat,
         minLength: Object(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["minLength"])(8)
       }
     }
@@ -52071,6 +52081,16 @@ var render = function () {
               ])
             : _vm._e(),
           _vm._v(" "),
+          _vm.$v.formData.password.$error &&
+          !_vm.$v.formData.password.validPasswordFormat &&
+          _vm.$v.formData.password.$dirty
+            ? _c("span", { staticClass: "c-error" }, [
+                _vm._v(
+                  "パスワードは半角数字・英字大文字・小文字、記号（!@#$%^&*）で入力してください。"
+                ),
+              ])
+            : _vm._e(),
+          _vm._v(" "),
           _c("div", { staticClass: "c-password" }, [
             _vm.PasswordType === "checkbox"
               ? _c("input", {
@@ -52238,6 +52258,16 @@ var render = function () {
           _vm.$v.formData.password_confirmation.$dirty
             ? _c("span", { staticClass: "c-error" }, [
                 _vm._v("パスワード（再入力）は、8文字以上で入力してください。"),
+              ])
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.$v.formData.password_confirmation.$error &&
+          !_vm.$v.formData.password_confirmation.validPasswordFormat &&
+          _vm.$v.formData.password_confirmation.$dirty
+            ? _c("span", { staticClass: "c-error" }, [
+                _vm._v(
+                  "パスワード（再入力）は半角数字・英字大文字・小文字、記号（!@#$%^&*）で入力してください。"
+                ),
               ])
             : _vm._e(),
           _vm._v(" "),
@@ -56311,6 +56341,16 @@ var render = function () {
               ])
             : _vm._e(),
           _vm._v(" "),
+          _vm.$v.formData.password.$error &&
+          !_vm.$v.formData.password.validPasswordFormat &&
+          _vm.$v.formData.password.$dirty
+            ? _c("span", { staticClass: "c-error" }, [
+                _vm._v(
+                  "パスワードは半角数字・英字大文字・小文字、記号（!@#$%^&*）で入力してください。"
+                ),
+              ])
+            : _vm._e(),
+          _vm._v(" "),
           _c("div", { staticClass: "c-password" }, [
             _vm.PasswordType === "checkbox"
               ? _c("input", {
@@ -56467,7 +56507,7 @@ var render = function () {
             : _vm._e(),
           _vm._v(" "),
           _vm.$v.formData.password_confirmation.$error &&
-          !_vm.$v.formData.password_confirmation.$dirty
+          _vm.$v.formData.password_confirmation.$dirty
             ? _c("span", { staticClass: "c-error" }, [
                 _vm._v("パスワード（再入力）が入力されていません。"),
               ])
@@ -56478,6 +56518,16 @@ var render = function () {
           _vm.$v.formData.password_confirmation.$dirty
             ? _c("span", { staticClass: "c-error" }, [
                 _vm._v("パスワード（再入力）は、8文字以上で入力してください。"),
+              ])
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.$v.formData.password_confirmation.$error &&
+          !_vm.$v.formData.password_confirmation.validPasswordFormat &&
+          _vm.$v.formData.password_confirmation.$dirty
+            ? _c("span", { staticClass: "c-error" }, [
+                _vm._v(
+                  "パスワード（再入力）は半角数字・英字大文字・小文字、記号（!@#$%^&*）で入力してください。"
+                ),
               ])
             : _vm._e(),
           _vm._v(" "),

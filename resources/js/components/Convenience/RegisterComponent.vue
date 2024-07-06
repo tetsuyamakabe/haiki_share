@@ -69,6 +69,7 @@
                 <span v-if="errors && errors.password" class="c-error">{{ errors.password[0] }}</span>
                 <span v-if="$v.formData.password.$error && $v.formData.password.$dirty" class="c-error">パスワードが入力されていません。</span>
                 <span v-if="$v.formData.password.$error && !$v.formData.password.minLength && $v.formData.password.$dirty" class="c-error">パスワードは、8文字以上で入力してください。</span>
+                <span v-if="$v.formData.password.$error && !$v.formData.password.validPasswordFormat && $v.formData.password.$dirty" class="c-error">パスワードは半角数字・英字大文字・小文字、記号（!@#$%^&*）で入力してください。</span>
                 <div class="c-password">
                     <input v-model="formData.password" id="password" :type="PasswordType" class="c-input" @blur="$v.formData.password.$touch()" :class="{'is-invalid': $v.formData.password.$error && $v.formData.password.$dirty, 'is-valid': !$v.formData.password.$error && $v.formData.password.$dirty}" placeholder="8文字以上で入力してください">
                     <span @click="togglePasswordVisibility('password')" class="c-password__icon">
@@ -81,6 +82,7 @@
                 <span v-if="errors && errors.password_confirmation" class="c-error">{{ errors.password_confirmation[0] }}</span>
                 <span v-if="$v.formData.password_confirmation.$error && $v.formData.password_confirmation.$dirty" class="c-error">パスワード（再入力）が入力されていません。</span>
                 <span v-if="$v.formData.password_confirmation.$error && !$v.formData.password_confirmation.minLength && $v.formData.password_confirmation.$dirty" class="c-error">パスワード（再入力）は、8文字以上で入力してください。</span>
+                <span v-if="$v.formData.password_confirmation.$error && !$v.formData.password_confirmation.validPasswordFormat && $v.formData.password_confirmation.$dirty" class="c-error">パスワード（再入力）は半角数字・英字大文字・小文字、記号（!@#$%^&*）で入力してください。</span>
                 <div class="c-password">
                     <input v-model="formData.password_confirmation" id="password-confirm" :type="PasswordConfirmType" class="c-input" @blur="$v.formData.password_confirmation.$touch()" :class="{'is-invalid': $v.formData.password_confirmation.$error && $v.formData.password_confirmation.$dirty, 'is-valid': !$v.formData.password_confirmation.$error && $v.formData.password_confirmation.$dirty}" placeholder="8文字以上で入力してください">
                     <span @click="togglePasswordVisibility('password_confirm')" class="c-password__icon">
@@ -108,7 +110,8 @@
 <script>
 import TermsComponent from '../Common/TermsComponent.vue'; // 利用規約コンポーネント
 const jsonpAdapter = require('axios-jsonp') // 郵便番号API
-import { required, maxLength, email, minLength } from 'vuelidate/lib/validators'; // Vuelidateからバリデータをインポート
+import { required, maxLength, email, minLength, helpers } from 'vuelidate/lib/validators'; // Vuelidateからバリデータをインポート
+const validPasswordFormat = helpers.regex('validPasswordFormat', /^[a-zA-Z0-9!@#$%^&*]+$/); // パスワードとパスワード（再入力）の正規表現バリデーション
 
 export default {
     components: {
@@ -171,10 +174,12 @@ export default {
             },
             password: {
                 required,
+                validPasswordFormat,
                 minLength: minLength(8),
             },
             password_confirmation: {
                 required,
+                validPasswordFormat,
                 minLength: minLength(8),
             },
         },
