@@ -7693,6 +7693,40 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _SidebarComponent_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./SidebarComponent.vue */ "./resources/js/components/Convenience/SidebarComponent.vue");
+/* harmony import */ var vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuelidate/lib/validators */ "./node_modules/vuelidate/lib/validators/index.js");
+/* harmony import */ var vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -7782,8 +7816,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
-var jsonpAdapter = __webpack_require__(/*! axios-jsonp */ "./node_modules/axios-jsonp/lib/index.js");
+var jsonpAdapter = __webpack_require__(/*! axios-jsonp */ "./node_modules/axios-jsonp/lib/index.js"); // 郵便番号API
  // サイドバーコンポーネント
+ // Vuelidateからバリデータをインポート
+var validPasswordFormat = vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["helpers"].regex('validPasswordFormat', /^[a-zA-Z0-9!@#$%^&*]+$/); // パスワードとパスワード（再入力）の正規表現バリデーション
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -7840,6 +7876,53 @@ var jsonpAdapter = __webpack_require__(/*! axios-jsonp */ "./node_modules/axios-
       // 初期アイコン
       PasswordConfirmIconClass: 'far fa-eye-slash' // 初期アイコン
     };
+  },
+  validations: {
+    // フロント側のバリデーション
+    formData: {
+      convenience_name: {
+        required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["required"],
+        maxLength: Object(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["maxLength"])(255)
+      },
+      branch_name: {
+        required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["required"],
+        maxLength: Object(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["maxLength"])(255)
+      },
+      prefecture: {
+        required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["required"],
+        maxLength: Object(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["maxLength"])(255)
+      },
+      city: {
+        required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["required"],
+        maxLength: Object(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["maxLength"])(255)
+      },
+      town: {
+        required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["required"],
+        maxLength: Object(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["maxLength"])(255)
+      },
+      building: {
+        required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["required"],
+        maxLength: Object(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["maxLength"])(255)
+      },
+      email: {
+        required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["required"],
+        email: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["email"],
+        maxLength: Object(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["maxLength"])(255)
+      },
+      password: {
+        required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["required"],
+        validPasswordFormat: validPasswordFormat,
+        minLength: Object(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["minLength"])(8)
+      },
+      password_confirmation: {
+        required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["required"],
+        validPasswordFormat: validPasswordFormat,
+        minLength: Object(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["minLength"])(8)
+      },
+      introduction: {
+        maxLength: Object(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["maxLength"])(50)
+      }
+    }
   },
   computed: {
     // ログインユーザーかどうか
@@ -8280,6 +8363,16 @@ var validPasswordFormat = vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__[
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuelidate/lib/validators */ "./node_modules/vuelidate/lib/validators/index.js");
+/* harmony import */ var vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__);
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -8317,6 +8410,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+ // Vuelidateからバリデータをインポート
+var validPasswordFormat = vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__["helpers"].regex('validPasswordFormat', /^[a-zA-Z0-9!@#$%^&*]+$/); // パスワードとパスワード（再入力）の正規表現バリデーション
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -8339,6 +8435,21 @@ __webpack_require__.r(__webpack_exports__);
       // 新しいパスワードの初期アイコン
       PasswordConfirmIconClass: 'far fa-eye-slash' // 新しいパスワード（再入力）の初期アイコン
     };
+  },
+  validations: {
+    // フロント側のバリデーション
+    formData: {
+      newPassword: {
+        required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__["required"],
+        validPasswordFormat: validPasswordFormat,
+        minLength: Object(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__["minLength"])(8)
+      },
+      password_confirmation: {
+        required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__["required"],
+        validPasswordFormat: validPasswordFormat,
+        minLength: Object(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__["minLength"])(8)
+      }
+    }
   },
   mounted: function mounted() {
     // URLからトークンとメールアドレスを取得
@@ -8395,6 +8506,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
 //
 //
 //
@@ -10197,6 +10310,25 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _SidebarComponent_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./SidebarComponent.vue */ "./resources/js/components/User/SidebarComponent.vue");
+/* harmony import */ var vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuelidate/lib/validators */ "./node_modules/vuelidate/lib/validators/index.js");
+/* harmony import */ var vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -10259,6 +10391,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 
  // サイドバーコンポーネント
+ // Vuelidateからバリデータをインポート
+var validPasswordFormat = vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["helpers"].regex('validPasswordFormat', /^[a-zA-Z0-9!@#$%^&*]+$/); // パスワードとパスワード（再入力）の正規表現バリデーション
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -10293,6 +10427,33 @@ __webpack_require__.r(__webpack_exports__);
       // 初期アイコン
       PasswordConfirmIconClass: 'far fa-eye-slash' // 初期アイコン
     };
+  },
+  validations: {
+    // フロント側のバリデーション
+    formData: {
+      name: {
+        required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["required"],
+        maxLength: Object(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["maxLength"])(255)
+      },
+      email: {
+        required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["required"],
+        email: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["email"],
+        maxLength: Object(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["maxLength"])(255)
+      },
+      password: {
+        required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["required"],
+        validPasswordFormat: validPasswordFormat,
+        minLength: Object(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["minLength"])(8)
+      },
+      password_confirmation: {
+        required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["required"],
+        validPasswordFormat: validPasswordFormat,
+        minLength: Object(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["minLength"])(8)
+      },
+      introduction: {
+        maxLength: Object(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["maxLength"])(50)
+      }
+    }
   },
   computed: {
     // ログインユーザーかどうか
@@ -10738,6 +10899,7 @@ var validPasswordFormat = vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_0__[
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
 //
 //
 //
@@ -50973,6 +51135,21 @@ var render = function () {
                     ])
                   : _vm._e(),
                 _vm._v(" "),
+                _vm.$v.formData.convenience_name.$error &&
+                _vm.$v.formData.convenience_name.$dirty
+                  ? _c("span", { staticClass: "c-error" }, [
+                      _vm._v("コンビニ名が入力されていません。"),
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.$v.formData.convenience_name.$error &&
+                !_vm.$v.formData.convenience_name.maxLength &&
+                _vm.$v.formData.convenience_name.$dirty
+                  ? _c("span", { staticClass: "c-error" }, [
+                      _vm._v("コンビニ名は、255文字以内で入力してください。"),
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
                 _c("input", {
                   directives: [
                     {
@@ -50984,7 +51161,12 @@ var render = function () {
                   ],
                   staticClass: "c-input",
                   class: {
-                    "is-invalid": _vm.errors && _vm.errors.convenience_name,
+                    "is-invalid":
+                      _vm.$v.formData.convenience_name.$error &&
+                      _vm.$v.formData.convenience_name.$dirty,
+                    "is-valid":
+                      !_vm.$v.formData.convenience_name.$error &&
+                      _vm.$v.formData.convenience_name.$dirty,
                   },
                   attrs: {
                     id: "convenience_name",
@@ -50993,6 +51175,9 @@ var render = function () {
                   },
                   domProps: { value: _vm.formData.convenience_name },
                   on: {
+                    blur: function ($event) {
+                      _vm.$v.formData.convenience_name.$touch()
+                    },
                     input: function ($event) {
                       if ($event.target.composing) {
                         return
@@ -51014,6 +51199,21 @@ var render = function () {
                     ])
                   : _vm._e(),
                 _vm._v(" "),
+                _vm.$v.formData.branch_name.$error &&
+                _vm.$v.formData.branch_name.$dirty
+                  ? _c("span", { staticClass: "c-error" }, [
+                      _vm._v("支店名が入力されていません。"),
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.$v.formData.branch_name.$error &&
+                !_vm.$v.formData.branch_name.maxLength &&
+                _vm.$v.formData.branch_name.$dirty
+                  ? _c("span", { staticClass: "c-error" }, [
+                      _vm._v("支店名は、255文字以内で入力してください。"),
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
                 _c("input", {
                   directives: [
                     {
@@ -51024,7 +51224,14 @@ var render = function () {
                     },
                   ],
                   staticClass: "c-input",
-                  class: { "is-invalid": _vm.errors && _vm.errors.branch_name },
+                  class: {
+                    "is-invalid":
+                      _vm.$v.formData.branch_name.$error &&
+                      _vm.$v.formData.branch_name.$dirty,
+                    "is-valid":
+                      !_vm.$v.formData.branch_name.$error &&
+                      _vm.$v.formData.branch_name.$dirty,
+                  },
                   attrs: {
                     id: "branch_name",
                     type: "text",
@@ -51032,6 +51239,9 @@ var render = function () {
                   },
                   domProps: { value: _vm.formData.branch_name },
                   on: {
+                    blur: function ($event) {
+                      _vm.$v.formData.branch_name.$touch()
+                    },
                     input: function ($event) {
                       if ($event.target.composing) {
                         return
@@ -51105,6 +51315,21 @@ var render = function () {
                     ])
                   : _vm._e(),
                 _vm._v(" "),
+                _vm.$v.formData.prefecture.$error &&
+                _vm.$v.formData.prefecture.$dirty
+                  ? _c("span", { staticClass: "c-error" }, [
+                      _vm._v("都道府県が入力されていません。"),
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.$v.formData.prefecture.$error &&
+                !_vm.$v.formData.prefecture.maxLength &&
+                _vm.$v.formData.prefecture.$dirty
+                  ? _c("span", { staticClass: "c-error" }, [
+                      _vm._v("都道府県は、255文字以内で入力してください。"),
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
                 _c("input", {
                   directives: [
                     {
@@ -51115,7 +51340,14 @@ var render = function () {
                     },
                   ],
                   staticClass: "c-input",
-                  class: { "is-invalid": _vm.errors && _vm.errors.prefecture },
+                  class: {
+                    "is-invalid":
+                      _vm.$v.formData.prefecture.$error &&
+                      _vm.$v.formData.prefecture.$dirty,
+                    "is-valid":
+                      !_vm.$v.formData.prefecture.$error &&
+                      _vm.$v.formData.prefecture.$dirty,
+                  },
                   attrs: {
                     id: "prefecture",
                     type: "text",
@@ -51123,6 +51355,9 @@ var render = function () {
                   },
                   domProps: { value: _vm.formData.prefecture },
                   on: {
+                    blur: function ($event) {
+                      _vm.$v.formData.prefecture.$touch()
+                    },
                     input: function ($event) {
                       if ($event.target.composing) {
                         return
@@ -51140,6 +51375,20 @@ var render = function () {
                     ])
                   : _vm._e(),
                 _vm._v(" "),
+                _vm.$v.formData.city.$error && _vm.$v.formData.city.$dirty
+                  ? _c("span", { staticClass: "c-error" }, [
+                      _vm._v("市区町村が入力されていません。"),
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.$v.formData.city.$error &&
+                !_vm.$v.formData.city.maxLength &&
+                _vm.$v.formData.city.$dirty
+                  ? _c("span", { staticClass: "c-error" }, [
+                      _vm._v("市区町村は、255文字以内で入力してください。"),
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
                 _c("input", {
                   directives: [
                     {
@@ -51150,10 +51399,20 @@ var render = function () {
                     },
                   ],
                   staticClass: "c-input",
-                  class: { "is-invalid": _vm.errors && _vm.errors.city },
+                  class: {
+                    "is-invalid":
+                      _vm.$v.formData.city.$error &&
+                      _vm.$v.formData.city.$dirty,
+                    "is-valid":
+                      !_vm.$v.formData.city.$error &&
+                      _vm.$v.formData.city.$dirty,
+                  },
                   attrs: { id: "city", type: "text", autocomplete: "city" },
                   domProps: { value: _vm.formData.city },
                   on: {
+                    blur: function ($event) {
+                      _vm.$v.formData.city.$touch()
+                    },
                     input: function ($event) {
                       if ($event.target.composing) {
                         return
@@ -51171,6 +51430,20 @@ var render = function () {
                     ])
                   : _vm._e(),
                 _vm._v(" "),
+                _vm.$v.formData.town.$error && _vm.$v.formData.town.$dirty
+                  ? _c("span", { staticClass: "c-error" }, [
+                      _vm._v("地名・番地が入力されていません。"),
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.$v.formData.town.$error &&
+                !_vm.$v.formData.town.maxLength &&
+                _vm.$v.formData.town.$dirty
+                  ? _c("span", { staticClass: "c-error" }, [
+                      _vm._v("地名・番地は、255文字以内で入力してください。"),
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
                 _c("input", {
                   directives: [
                     {
@@ -51181,10 +51454,20 @@ var render = function () {
                     },
                   ],
                   staticClass: "c-input",
-                  class: { "is-invalid": _vm.errors && _vm.errors.town },
+                  class: {
+                    "is-invalid":
+                      _vm.$v.formData.town.$error &&
+                      _vm.$v.formData.town.$dirty,
+                    "is-valid":
+                      !_vm.$v.formData.town.$error &&
+                      _vm.$v.formData.town.$dirty,
+                  },
                   attrs: { id: "town", type: "text", autocomplete: "town" },
                   domProps: { value: _vm.formData.town },
                   on: {
+                    blur: function ($event) {
+                      _vm.$v.formData.town.$touch()
+                    },
                     input: function ($event) {
                       if ($event.target.composing) {
                         return
@@ -51206,6 +51489,16 @@ var render = function () {
                     ])
                   : _vm._e(),
                 _vm._v(" "),
+                _vm.$v.formData.building.$error &&
+                !_vm.$v.formData.building.maxLength &&
+                _vm.$v.formData.building.$dirty
+                  ? _c("span", { staticClass: "c-error" }, [
+                      _vm._v(
+                        "建物名・部屋番号は、255文字以内で入力してください。"
+                      ),
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
                 _c("input", {
                   directives: [
                     {
@@ -51216,7 +51509,14 @@ var render = function () {
                     },
                   ],
                   staticClass: "c-input",
-                  class: { "is-invalid": _vm.errors && _vm.errors.building },
+                  class: {
+                    "is-invalid":
+                      _vm.$v.formData.building.$error &&
+                      _vm.$v.formData.building.$dirty,
+                    "is-valid":
+                      !_vm.$v.formData.building.$error &&
+                      _vm.$v.formData.building.$dirty,
+                  },
                   attrs: {
                     id: "building",
                     type: "text",
@@ -51224,6 +51524,9 @@ var render = function () {
                   },
                   domProps: { value: _vm.formData.building },
                   on: {
+                    blur: function ($event) {
+                      _vm.$v.formData.building.$touch()
+                    },
                     input: function ($event) {
                       if ($event.target.composing) {
                         return
@@ -51241,6 +51544,30 @@ var render = function () {
                     ])
                   : _vm._e(),
                 _vm._v(" "),
+                _vm.$v.formData.email.$error && _vm.$v.formData.email.$dirty
+                  ? _c("span", { staticClass: "c-error" }, [
+                      _vm._v("メールアドレスが入力されていません。"),
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.$v.formData.email.$error &&
+                !_vm.$v.formData.email.maxLength &&
+                _vm.$v.formData.email.$dirty
+                  ? _c("span", { staticClass: "c-error" }, [
+                      _vm._v(
+                        "メールアドレスは、255文字以内で入力してください。"
+                      ),
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.$v.formData.email.$error &&
+                !_vm.$v.formData.email.email &&
+                _vm.$v.formData.email.$dirty
+                  ? _c("span", { staticClass: "c-error" }, [
+                      _vm._v("有効なメールアドレスを入力してください。"),
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
                 _c("input", {
                   directives: [
                     {
@@ -51251,10 +51578,20 @@ var render = function () {
                     },
                   ],
                   staticClass: "c-input",
-                  class: { "is-invalid": _vm.errors && _vm.errors.email },
+                  class: {
+                    "is-invalid":
+                      _vm.$v.formData.email.$error &&
+                      _vm.$v.formData.email.$dirty,
+                    "is-valid":
+                      !_vm.$v.formData.email.$error &&
+                      _vm.$v.formData.email.$dirty,
+                  },
                   attrs: { id: "email", type: "text", autocomplete: "email" },
                   domProps: { value: _vm.formData.email },
                   on: {
+                    blur: function ($event) {
+                      _vm.$v.formData.email.$touch()
+                    },
                     input: function ($event) {
                       if ($event.target.composing) {
                         return
@@ -51264,11 +51601,7 @@ var render = function () {
                   },
                 }),
                 _vm._v(" "),
-                _c(
-                  "label",
-                  { staticClass: "c-label", attrs: { for: "password" } },
-                  [_vm._v("パスワード")]
-                ),
+                _vm._m(7),
                 _vm._v(" "),
                 _c("span", { staticClass: "c-text c-text--note u-fz-10@sm" }, [
                   _vm._v(
@@ -51279,6 +51612,31 @@ var render = function () {
                 _vm.errors && _vm.errors.password
                   ? _c("span", { staticClass: "c-error" }, [
                       _vm._v(_vm._s(_vm.errors.password[0])),
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.$v.formData.password.$error &&
+                _vm.$v.formData.password.$dirty
+                  ? _c("span", { staticClass: "c-error" }, [
+                      _vm._v("パスワードが入力されていません。"),
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.$v.formData.password.$error &&
+                !_vm.$v.formData.password.minLength &&
+                _vm.$v.formData.password.$dirty
+                  ? _c("span", { staticClass: "c-error" }, [
+                      _vm._v("パスワードは、8文字以上で入力してください。"),
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.$v.formData.password.$error &&
+                !_vm.$v.formData.password.validPasswordFormat &&
+                _vm.$v.formData.password.$dirty
+                  ? _c("span", { staticClass: "c-error" }, [
+                      _vm._v(
+                        "パスワードは半角数字・英字大文字・小文字、記号（!@#$%^&*）で入力してください。"
+                      ),
                     ])
                   : _vm._e(),
                 _vm._v(" "),
@@ -51295,7 +51653,12 @@ var render = function () {
                         ],
                         staticClass: "c-input",
                         class: {
-                          "is-invalid": _vm.errors && _vm.errors.password,
+                          "is-invalid":
+                            _vm.$v.formData.password.$error &&
+                            _vm.$v.formData.password.$dirty,
+                          "is-valid":
+                            !_vm.$v.formData.password.$error &&
+                            _vm.$v.formData.password.$dirty,
                         },
                         attrs: {
                           id: "password",
@@ -51308,6 +51671,9 @@ var render = function () {
                             : _vm.formData.password,
                         },
                         on: {
+                          blur: function ($event) {
+                            _vm.$v.formData.password.$touch()
+                          },
                           change: function ($event) {
                             var $$a = _vm.formData.password,
                               $$el = $event.target,
@@ -51348,7 +51714,12 @@ var render = function () {
                         ],
                         staticClass: "c-input",
                         class: {
-                          "is-invalid": _vm.errors && _vm.errors.password,
+                          "is-invalid":
+                            _vm.$v.formData.password.$error &&
+                            _vm.$v.formData.password.$dirty,
+                          "is-valid":
+                            !_vm.$v.formData.password.$error &&
+                            _vm.$v.formData.password.$dirty,
                         },
                         attrs: {
                           id: "password",
@@ -51359,6 +51730,9 @@ var render = function () {
                           checked: _vm._q(_vm.formData.password, null),
                         },
                         on: {
+                          blur: function ($event) {
+                            _vm.$v.formData.password.$touch()
+                          },
                           change: function ($event) {
                             _vm.$set(_vm.formData, "password", null)
                           },
@@ -51375,7 +51749,12 @@ var render = function () {
                         ],
                         staticClass: "c-input",
                         class: {
-                          "is-invalid": _vm.errors && _vm.errors.password,
+                          "is-invalid":
+                            _vm.$v.formData.password.$error &&
+                            _vm.$v.formData.password.$dirty,
+                          "is-valid":
+                            !_vm.$v.formData.password.$error &&
+                            _vm.$v.formData.password.$dirty,
                         },
                         attrs: {
                           id: "password",
@@ -51384,6 +51763,9 @@ var render = function () {
                         },
                         domProps: { value: _vm.formData.password },
                         on: {
+                          blur: function ($event) {
+                            _vm.$v.formData.password.$touch()
+                          },
                           input: function ($event) {
                             if ($event.target.composing) {
                               return
@@ -51411,18 +51793,38 @@ var render = function () {
                   ),
                 ]),
                 _vm._v(" "),
-                _c(
-                  "label",
-                  {
-                    staticClass: "c-label",
-                    attrs: { for: "password-confirm" },
-                  },
-                  [_vm._v("パスワード（再入力）")]
-                ),
+                _vm._m(8),
                 _vm._v(" "),
                 _vm.errors && _vm.errors.password_confirmation
                   ? _c("span", { staticClass: "c-error" }, [
                       _vm._v(_vm._s(_vm.errors.password_confirmation[0])),
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.$v.formData.password_confirmation.$error &&
+                _vm.$v.formData.password_confirmation.$dirty
+                  ? _c("span", { staticClass: "c-error" }, [
+                      _vm._v("パスワード（再入力）が入力されていません。"),
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.$v.formData.password_confirmation.$error &&
+                !_vm.$v.formData.password_confirmation.minLength &&
+                _vm.$v.formData.password_confirmation.$dirty
+                  ? _c("span", { staticClass: "c-error" }, [
+                      _vm._v(
+                        "パスワード（再入力）は、8文字以上で入力してください。"
+                      ),
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.$v.formData.password_confirmation.$error &&
+                !_vm.$v.formData.password_confirmation.validPasswordFormat &&
+                _vm.$v.formData.password_confirmation.$dirty
+                  ? _c("span", { staticClass: "c-error" }, [
+                      _vm._v(
+                        "パスワード（再入力）は半角数字・英字大文字・小文字、記号（!@#$%^&*）で入力してください。"
+                      ),
                     ])
                   : _vm._e(),
                 _vm._v(" "),
@@ -51440,7 +51842,11 @@ var render = function () {
                         staticClass: "c-input",
                         class: {
                           "is-invalid":
-                            _vm.errors && _vm.errors.password_confirmation,
+                            _vm.$v.formData.password_confirmation.$error &&
+                            _vm.$v.formData.password_confirmation.$dirty,
+                          "is-valid":
+                            !_vm.$v.formData.password_confirmation.$error &&
+                            _vm.$v.formData.password_confirmation.$dirty,
                         },
                         attrs: {
                           id: "password-confirm",
@@ -51456,6 +51862,9 @@ var render = function () {
                             : _vm.formData.password_confirmation,
                         },
                         on: {
+                          blur: function ($event) {
+                            _vm.$v.formData.password_confirmation.$touch()
+                          },
                           change: function ($event) {
                             var $$a = _vm.formData.password_confirmation,
                               $$el = $event.target,
@@ -51501,7 +51910,11 @@ var render = function () {
                         staticClass: "c-input",
                         class: {
                           "is-invalid":
-                            _vm.errors && _vm.errors.password_confirmation,
+                            _vm.$v.formData.password_confirmation.$error &&
+                            _vm.$v.formData.password_confirmation.$dirty,
+                          "is-valid":
+                            !_vm.$v.formData.password_confirmation.$error &&
+                            _vm.$v.formData.password_confirmation.$dirty,
                         },
                         attrs: {
                           id: "password-confirm",
@@ -51515,6 +51928,9 @@ var render = function () {
                           ),
                         },
                         on: {
+                          blur: function ($event) {
+                            _vm.$v.formData.password_confirmation.$touch()
+                          },
                           change: function ($event) {
                             _vm.$set(
                               _vm.formData,
@@ -51536,7 +51952,11 @@ var render = function () {
                         staticClass: "c-input",
                         class: {
                           "is-invalid":
-                            _vm.errors && _vm.errors.password_confirmation,
+                            _vm.$v.formData.password_confirmation.$error &&
+                            _vm.$v.formData.password_confirmation.$dirty,
+                          "is-valid":
+                            !_vm.$v.formData.password_confirmation.$error &&
+                            _vm.$v.formData.password_confirmation.$dirty,
                         },
                         attrs: {
                           id: "password-confirm",
@@ -51545,6 +51965,9 @@ var render = function () {
                         },
                         domProps: { value: _vm.formData.password_confirmation },
                         on: {
+                          blur: function ($event) {
+                            _vm.$v.formData.password_confirmation.$touch()
+                          },
                           input: function ($event) {
                             if ($event.target.composing) {
                               return
@@ -51581,6 +52004,14 @@ var render = function () {
                 _vm.errors && _vm.errors.introduction
                   ? _c("span", { staticClass: "c-error" }, [
                       _vm._v(_vm._s(_vm.errors.introduction[0])),
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.$v.formData.introduction.$error &&
+                !_vm.$v.formData.introduction.maxLength &&
+                _vm.$v.formData.introduction.$dirty
+                  ? _c("span", { staticClass: "c-error" }, [
+                      _vm._v("自己紹介は、50文字以内で入力してください。"),
                     ])
                   : _vm._e(),
                 _vm._v(" "),
@@ -51793,6 +52224,28 @@ var staticRenderFns = [
       _vm._v("メールアドレス"),
       _c("span", { staticClass: "c-badge" }, [_vm._v("必須")]),
     ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { staticClass: "c-label", attrs: { for: "password" } }, [
+      _vm._v("パスワード"),
+      _c("span", { staticClass: "c-badge" }, [_vm._v("必須")]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      { staticClass: "c-label", attrs: { for: "password-confirm" } },
+      [
+        _vm._v("パスワード（再入力）"),
+        _c("span", { staticClass: "c-badge" }, [_vm._v("必須")]),
+      ]
+    )
   },
 ]
 render._withStripped = true
@@ -52871,6 +53324,31 @@ var render = function () {
               ])
             : _vm._e(),
           _vm._v(" "),
+          _vm.$v.formData.newPassword.$error &&
+          _vm.$v.formData.newPassword.$dirty
+            ? _c("span", { staticClass: "c-error" }, [
+                _vm._v("新しいパスワードが入力されていません。"),
+              ])
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.$v.formData.newPassword.$error &&
+          !_vm.$v.formData.newPassword.minLength &&
+          _vm.$v.formData.newPassword.$dirty
+            ? _c("span", { staticClass: "c-error" }, [
+                _vm._v("新しいパスワードは、8文字以上で入力してください。"),
+              ])
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.$v.formData.newPassword.$error &&
+          !_vm.$v.formData.newPassword.validPasswordFormat &&
+          _vm.$v.formData.newPassword.$dirty
+            ? _c("span", { staticClass: "c-error" }, [
+                _vm._v(
+                  "新しいパスワードは半角数字・英字大文字・小文字、記号（!@#$%^&*）で入力してください。"
+                ),
+              ])
+            : _vm._e(),
+          _vm._v(" "),
           _c("div", { staticClass: "c-password" }, [
             _vm.NewPasswordType === "checkbox"
               ? _c("input", {
@@ -52883,10 +53361,17 @@ var render = function () {
                     },
                   ],
                   staticClass: "c-input",
-                  class: { "is-invalid": _vm.errors && _vm.errors.newPassword },
+                  class: {
+                    "is-invalid":
+                      _vm.$v.formData.newPassword.$error &&
+                      _vm.$v.formData.newPassword.$dirty,
+                    "is-valid":
+                      !_vm.$v.formData.newPassword.$error &&
+                      _vm.$v.formData.newPassword.$dirty,
+                  },
                   attrs: {
                     id: "new_password",
-                    placeholder: "英数字8文字以上で入力してください",
+                    placeholder: "8文字以上で入力してください",
                     type: "checkbox",
                   },
                   domProps: {
@@ -52895,6 +53380,9 @@ var render = function () {
                       : _vm.formData.newPassword,
                   },
                   on: {
+                    blur: function ($event) {
+                      _vm.$v.formData.newPassword.$touch()
+                    },
                     change: function ($event) {
                       var $$a = _vm.formData.newPassword,
                         $$el = $event.target,
@@ -52934,14 +53422,24 @@ var render = function () {
                     },
                   ],
                   staticClass: "c-input",
-                  class: { "is-invalid": _vm.errors && _vm.errors.newPassword },
+                  class: {
+                    "is-invalid":
+                      _vm.$v.formData.newPassword.$error &&
+                      _vm.$v.formData.newPassword.$dirty,
+                    "is-valid":
+                      !_vm.$v.formData.newPassword.$error &&
+                      _vm.$v.formData.newPassword.$dirty,
+                  },
                   attrs: {
                     id: "new_password",
-                    placeholder: "英数字8文字以上で入力してください",
+                    placeholder: "8文字以上で入力してください",
                     type: "radio",
                   },
                   domProps: { checked: _vm._q(_vm.formData.newPassword, null) },
                   on: {
+                    blur: function ($event) {
+                      _vm.$v.formData.newPassword.$touch()
+                    },
                     change: function ($event) {
                       _vm.$set(_vm.formData, "newPassword", null)
                     },
@@ -52957,14 +53455,24 @@ var render = function () {
                     },
                   ],
                   staticClass: "c-input",
-                  class: { "is-invalid": _vm.errors && _vm.errors.newPassword },
+                  class: {
+                    "is-invalid":
+                      _vm.$v.formData.newPassword.$error &&
+                      _vm.$v.formData.newPassword.$dirty,
+                    "is-valid":
+                      !_vm.$v.formData.newPassword.$error &&
+                      _vm.$v.formData.newPassword.$dirty,
+                  },
                   attrs: {
                     id: "new_password",
-                    placeholder: "英数字8文字以上で入力してください",
+                    placeholder: "8文字以上で入力してください",
                     type: _vm.NewPasswordType,
                   },
                   domProps: { value: _vm.formData.newPassword },
                   on: {
+                    blur: function ($event) {
+                      _vm.$v.formData.newPassword.$touch()
+                    },
                     input: function ($event) {
                       if ($event.target.composing) {
                         return
@@ -52996,6 +53504,33 @@ var render = function () {
               ])
             : _vm._e(),
           _vm._v(" "),
+          _vm.$v.formData.password_confirmation.$error &&
+          _vm.$v.formData.password_confirmation.$dirty
+            ? _c("span", { staticClass: "c-error" }, [
+                _vm._v("新しいパスワード（再入力）が入力されていません。"),
+              ])
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.$v.formData.password_confirmation.$error &&
+          !_vm.$v.formData.password_confirmation.minLength &&
+          _vm.$v.formData.password_confirmation.$dirty
+            ? _c("span", { staticClass: "c-error" }, [
+                _vm._v(
+                  "新しいパスワード（再入力）は、8文字以上で入力してください。"
+                ),
+              ])
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.$v.formData.password_confirmation.$error &&
+          !_vm.$v.formData.password_confirmation.validPasswordFormat &&
+          _vm.$v.formData.password_confirmation.$dirty
+            ? _c("span", { staticClass: "c-error" }, [
+                _vm._v(
+                  "新しいパスワード（再入力）は半角数字・英字大文字・小文字、記号（!@#$%^&*）で入力してください。"
+                ),
+              ])
+            : _vm._e(),
+          _vm._v(" "),
           _c("div", { staticClass: "c-password" }, [
             _vm.PasswordConfirmType === "checkbox"
               ? _c("input", {
@@ -53010,11 +53545,15 @@ var render = function () {
                   staticClass: "c-input",
                   class: {
                     "is-invalid":
-                      _vm.errors && _vm.errors.password_confirmation,
+                      _vm.$v.formData.password_confirmation.$error &&
+                      _vm.$v.formData.password_confirmation.$dirty,
+                    "is-valid":
+                      !_vm.$v.formData.password_confirmation.$error &&
+                      _vm.$v.formData.password_confirmation.$dirty,
                   },
                   attrs: {
                     id: "password-confirm",
-                    placeholder: "英数字8文字以上で入力してください",
+                    placeholder: "8文字以上で入力してください",
                     type: "checkbox",
                   },
                   domProps: {
@@ -53023,6 +53562,9 @@ var render = function () {
                       : _vm.formData.password_confirmation,
                   },
                   on: {
+                    blur: function ($event) {
+                      _vm.$v.formData.password_confirmation.$touch()
+                    },
                     change: function ($event) {
                       var $$a = _vm.formData.password_confirmation,
                         $$el = $event.target,
@@ -53064,17 +53606,24 @@ var render = function () {
                   staticClass: "c-input",
                   class: {
                     "is-invalid":
-                      _vm.errors && _vm.errors.password_confirmation,
+                      _vm.$v.formData.password_confirmation.$error &&
+                      _vm.$v.formData.password_confirmation.$dirty,
+                    "is-valid":
+                      !_vm.$v.formData.password_confirmation.$error &&
+                      _vm.$v.formData.password_confirmation.$dirty,
                   },
                   attrs: {
                     id: "password-confirm",
-                    placeholder: "英数字8文字以上で入力してください",
+                    placeholder: "8文字以上で入力してください",
                     type: "radio",
                   },
                   domProps: {
                     checked: _vm._q(_vm.formData.password_confirmation, null),
                   },
                   on: {
+                    blur: function ($event) {
+                      _vm.$v.formData.password_confirmation.$touch()
+                    },
                     change: function ($event) {
                       _vm.$set(_vm.formData, "password_confirmation", null)
                     },
@@ -53092,15 +53641,22 @@ var render = function () {
                   staticClass: "c-input",
                   class: {
                     "is-invalid":
-                      _vm.errors && _vm.errors.password_confirmation,
+                      _vm.$v.formData.password_confirmation.$error &&
+                      _vm.$v.formData.password_confirmation.$dirty,
+                    "is-valid":
+                      !_vm.$v.formData.password_confirmation.$error &&
+                      _vm.$v.formData.password_confirmation.$dirty,
                   },
                   attrs: {
                     id: "password-confirm",
-                    placeholder: "英数字8文字以上で入力してください",
+                    placeholder: "8文字以上で入力してください",
                     type: _vm.PasswordConfirmType,
                   },
                   domProps: { value: _vm.formData.password_confirmation },
                   on: {
+                    blur: function ($event) {
+                      _vm.$v.formData.password_confirmation.$touch()
+                    },
                     input: function ($event) {
                       if ($event.target.composing) {
                         return
@@ -53261,27 +53817,32 @@ var render = function () {
           _vm._v(" "),
           _c("div", { staticClass: "c-sidebar__content--wrap" }, [
             _c("div", { staticClass: "c-sidebar__header" }, [
-              _c("p", [
+              _c("p", { staticClass: "c-sidebar__username" }, [
                 _vm._v(_vm._s(_vm.convenience_name) + _vm._s(_vm.branch_name)),
               ]),
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "c-sidebar__body" }, [
-              _c("p", { staticClass: "c-sidebar--content" }, [
+              _c("div", { staticClass: "c-sidebar--content" }, [
                 _c("i", { staticClass: "fa-solid fa-location-dot" }),
-                _vm._v(
-                  _vm._s(_vm.prefecture) +
-                    _vm._s(_vm.city) +
-                    _vm._s(_vm.town) +
-                    _vm._s(_vm.building) +
-                    "\n                    "
-                ),
+                _vm._v(" "),
+                _c("span", { staticClass: "c-sidebar__address" }, [
+                  _vm._v(
+                    _vm._s(_vm.prefecture) +
+                      _vm._s(_vm.city) +
+                      _vm._s(_vm.town) +
+                      _vm._s(_vm.building)
+                  ),
+                ]),
               ]),
               _vm._v(" "),
               _vm.introduction
-                ? _c("p", { staticClass: "c-sidebar--content" }, [
+                ? _c("div", { staticClass: "c-sidebar--content" }, [
                     _c("i", { staticClass: "fa-solid fa-message" }),
-                    _vm._v(_vm._s(_vm.introduction) + "\n                    "),
+                    _vm._v(" "),
+                    _c("p", { staticClass: "c-sidebar__introduction" }, [
+                      _vm._v(_vm._s(_vm.introduction)),
+                    ]),
                   ])
                 : _vm._e(),
             ]),
@@ -55983,6 +56544,20 @@ var render = function () {
                     ])
                   : _vm._e(),
                 _vm._v(" "),
+                _vm.$v.formData.name.$error && _vm.$v.formData.name.$dirty
+                  ? _c("span", { staticClass: "c-error" }, [
+                      _vm._v("お名前が入力されていません。"),
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.$v.formData.name.$error &&
+                !_vm.$v.formData.name.maxLength &&
+                _vm.$v.formData.name.$dirty
+                  ? _c("span", { staticClass: "c-error" }, [
+                      _vm._v("お名前は、255文字以内で入力してください。"),
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
                 _c("input", {
                   directives: [
                     {
@@ -55993,10 +56568,20 @@ var render = function () {
                     },
                   ],
                   staticClass: "c-input",
-                  class: { "is-invalid": _vm.errors && _vm.errors.name },
-                  attrs: { id: "name", type: "name", autocomplete: "name" },
+                  class: {
+                    "is-invalid":
+                      _vm.$v.formData.name.$error &&
+                      _vm.$v.formData.name.$dirty,
+                    "is-valid":
+                      !_vm.$v.formData.name.$error &&
+                      _vm.$v.formData.name.$dirty,
+                  },
+                  attrs: { id: "name", type: "text", autocomplete: "name" },
                   domProps: { value: _vm.formData.name },
                   on: {
+                    blur: function ($event) {
+                      _vm.$v.formData.name.$touch()
+                    },
                     input: function ($event) {
                       if ($event.target.composing) {
                         return
@@ -56014,6 +56599,30 @@ var render = function () {
                     ])
                   : _vm._e(),
                 _vm._v(" "),
+                _vm.$v.formData.email.$error && _vm.$v.formData.email.$dirty
+                  ? _c("span", { staticClass: "c-error" }, [
+                      _vm._v("メールアドレスが入力されていません。"),
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.$v.formData.email.$error &&
+                !_vm.$v.formData.email.maxLength &&
+                _vm.$v.formData.email.$dirty
+                  ? _c("span", { staticClass: "c-error" }, [
+                      _vm._v(
+                        "メールアドレスは、255文字以内で入力してください。"
+                      ),
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.$v.formData.email.$error &&
+                !_vm.$v.formData.email.email &&
+                _vm.$v.formData.email.$dirty
+                  ? _c("span", { staticClass: "c-error" }, [
+                      _vm._v("有効なメールアドレスを入力してください。"),
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
                 _c("input", {
                   directives: [
                     {
@@ -56024,10 +56633,20 @@ var render = function () {
                     },
                   ],
                   staticClass: "c-input",
-                  class: { "is-invalid": _vm.errors && _vm.errors.email },
+                  class: {
+                    "is-invalid":
+                      _vm.$v.formData.email.$error &&
+                      _vm.$v.formData.email.$dirty,
+                    "is-valid":
+                      !_vm.$v.formData.email.$error &&
+                      _vm.$v.formData.email.$dirty,
+                  },
                   attrs: { id: "email", type: "text", autocomplete: "email" },
                   domProps: { value: _vm.formData.email },
                   on: {
+                    blur: function ($event) {
+                      _vm.$v.formData.email.$touch()
+                    },
                     input: function ($event) {
                       if ($event.target.composing) {
                         return
@@ -56037,11 +56656,7 @@ var render = function () {
                   },
                 }),
                 _vm._v(" "),
-                _c(
-                  "label",
-                  { staticClass: "c-label", attrs: { for: "password" } },
-                  [_vm._v("パスワード")]
-                ),
+                _vm._m(3),
                 _vm._v(" "),
                 _c("span", { staticClass: "c-text c-text--note u-fz-10@sm" }, [
                   _vm._v(
@@ -56052,6 +56667,31 @@ var render = function () {
                 _vm.errors && _vm.errors.password
                   ? _c("span", { staticClass: "c-error" }, [
                       _vm._v(_vm._s(_vm.errors.password[0])),
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.$v.formData.password.$error &&
+                _vm.$v.formData.password.$dirty
+                  ? _c("span", { staticClass: "c-error" }, [
+                      _vm._v("パスワードが入力されていません。"),
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.$v.formData.password.$error &&
+                !_vm.$v.formData.password.minLength &&
+                _vm.$v.formData.password.$dirty
+                  ? _c("span", { staticClass: "c-error" }, [
+                      _vm._v("パスワードは、8文字以上で入力してください。"),
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.$v.formData.password.$error &&
+                !_vm.$v.formData.password.validPasswordFormat &&
+                _vm.$v.formData.password.$dirty
+                  ? _c("span", { staticClass: "c-error" }, [
+                      _vm._v(
+                        "パスワードは半角数字・英字大文字・小文字、記号（!@#$%^&*）で入力してください。"
+                      ),
                     ])
                   : _vm._e(),
                 _vm._v(" "),
@@ -56068,7 +56708,12 @@ var render = function () {
                         ],
                         staticClass: "c-input",
                         class: {
-                          "is-invalid": _vm.errors && _vm.errors.password,
+                          "is-invalid":
+                            _vm.$v.formData.password.$error &&
+                            _vm.$v.formData.password.$dirty,
+                          "is-valid":
+                            !_vm.$v.formData.password.$error &&
+                            _vm.$v.formData.password.$dirty,
                         },
                         attrs: {
                           id: "password",
@@ -56081,6 +56726,9 @@ var render = function () {
                             : _vm.formData.password,
                         },
                         on: {
+                          blur: function ($event) {
+                            _vm.$v.formData.password.$touch()
+                          },
                           change: function ($event) {
                             var $$a = _vm.formData.password,
                               $$el = $event.target,
@@ -56121,7 +56769,12 @@ var render = function () {
                         ],
                         staticClass: "c-input",
                         class: {
-                          "is-invalid": _vm.errors && _vm.errors.password,
+                          "is-invalid":
+                            _vm.$v.formData.password.$error &&
+                            _vm.$v.formData.password.$dirty,
+                          "is-valid":
+                            !_vm.$v.formData.password.$error &&
+                            _vm.$v.formData.password.$dirty,
                         },
                         attrs: {
                           id: "password",
@@ -56132,6 +56785,9 @@ var render = function () {
                           checked: _vm._q(_vm.formData.password, null),
                         },
                         on: {
+                          blur: function ($event) {
+                            _vm.$v.formData.password.$touch()
+                          },
                           change: function ($event) {
                             _vm.$set(_vm.formData, "password", null)
                           },
@@ -56148,7 +56804,12 @@ var render = function () {
                         ],
                         staticClass: "c-input",
                         class: {
-                          "is-invalid": _vm.errors && _vm.errors.password,
+                          "is-invalid":
+                            _vm.$v.formData.password.$error &&
+                            _vm.$v.formData.password.$dirty,
+                          "is-valid":
+                            !_vm.$v.formData.password.$error &&
+                            _vm.$v.formData.password.$dirty,
                         },
                         attrs: {
                           id: "password",
@@ -56157,6 +56818,9 @@ var render = function () {
                         },
                         domProps: { value: _vm.formData.password },
                         on: {
+                          blur: function ($event) {
+                            _vm.$v.formData.password.$touch()
+                          },
                           input: function ($event) {
                             if ($event.target.composing) {
                               return
@@ -56184,18 +56848,38 @@ var render = function () {
                   ),
                 ]),
                 _vm._v(" "),
-                _c(
-                  "label",
-                  {
-                    staticClass: "c-label",
-                    attrs: { for: "password-confirm" },
-                  },
-                  [_vm._v("パスワード（再入力）")]
-                ),
+                _vm._m(4),
                 _vm._v(" "),
                 _vm.errors && _vm.errors.password_confirmation
                   ? _c("span", { staticClass: "c-error" }, [
                       _vm._v(_vm._s(_vm.errors.password_confirmation[0])),
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.$v.formData.password_confirmation.$error &&
+                _vm.$v.formData.password_confirmation.$dirty
+                  ? _c("span", { staticClass: "c-error" }, [
+                      _vm._v("パスワード（再入力）が入力されていません。"),
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.$v.formData.password_confirmation.$error &&
+                !_vm.$v.formData.password_confirmation.minLength &&
+                _vm.$v.formData.password_confirmation.$dirty
+                  ? _c("span", { staticClass: "c-error" }, [
+                      _vm._v(
+                        "パスワード（再入力）は、8文字以上で入力してください。"
+                      ),
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.$v.formData.password_confirmation.$error &&
+                !_vm.$v.formData.password_confirmation.validPasswordFormat &&
+                _vm.$v.formData.password_confirmation.$dirty
+                  ? _c("span", { staticClass: "c-error" }, [
+                      _vm._v(
+                        "パスワード（再入力）は半角数字・英字大文字・小文字、記号（!@#$%^&*）で入力してください。"
+                      ),
                     ])
                   : _vm._e(),
                 _vm._v(" "),
@@ -56213,7 +56897,11 @@ var render = function () {
                         staticClass: "c-input",
                         class: {
                           "is-invalid":
-                            _vm.errors && _vm.errors.password_confirmation,
+                            _vm.$v.formData.password_confirmation.$error &&
+                            _vm.$v.formData.password_confirmation.$dirty,
+                          "is-valid":
+                            !_vm.$v.formData.password_confirmation.$error &&
+                            _vm.$v.formData.password_confirmation.$dirty,
                         },
                         attrs: {
                           id: "password-confirm",
@@ -56229,6 +56917,9 @@ var render = function () {
                             : _vm.formData.password_confirmation,
                         },
                         on: {
+                          blur: function ($event) {
+                            _vm.$v.formData.password_confirmation.$touch()
+                          },
                           change: function ($event) {
                             var $$a = _vm.formData.password_confirmation,
                               $$el = $event.target,
@@ -56274,7 +56965,11 @@ var render = function () {
                         staticClass: "c-input",
                         class: {
                           "is-invalid":
-                            _vm.errors && _vm.errors.password_confirmation,
+                            _vm.$v.formData.password_confirmation.$error &&
+                            _vm.$v.formData.password_confirmation.$dirty,
+                          "is-valid":
+                            !_vm.$v.formData.password_confirmation.$error &&
+                            _vm.$v.formData.password_confirmation.$dirty,
                         },
                         attrs: {
                           id: "password-confirm",
@@ -56288,6 +56983,9 @@ var render = function () {
                           ),
                         },
                         on: {
+                          blur: function ($event) {
+                            _vm.$v.formData.password_confirmation.$touch()
+                          },
                           change: function ($event) {
                             _vm.$set(
                               _vm.formData,
@@ -56309,7 +57007,11 @@ var render = function () {
                         staticClass: "c-input",
                         class: {
                           "is-invalid":
-                            _vm.errors && _vm.errors.password_confirmation,
+                            _vm.$v.formData.password_confirmation.$error &&
+                            _vm.$v.formData.password_confirmation.$dirty,
+                          "is-valid":
+                            !_vm.$v.formData.password_confirmation.$error &&
+                            _vm.$v.formData.password_confirmation.$dirty,
                         },
                         attrs: {
                           id: "password-confirm",
@@ -56318,6 +57020,9 @@ var render = function () {
                         },
                         domProps: { value: _vm.formData.password_confirmation },
                         on: {
+                          blur: function ($event) {
+                            _vm.$v.formData.password_confirmation.$touch()
+                          },
                           input: function ($event) {
                             if ($event.target.composing) {
                               return
@@ -56354,6 +57059,14 @@ var render = function () {
                 _vm.errors && _vm.errors.introduction
                   ? _c("span", { staticClass: "c-error" }, [
                       _vm._v(_vm._s(_vm.errors.introduction[0])),
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.$v.formData.introduction.$error &&
+                !_vm.$v.formData.introduction.maxLength &&
+                _vm.$v.formData.introduction.$dirty
+                  ? _c("span", { staticClass: "c-error" }, [
+                      _vm._v("自己紹介は、50文字以内で入力してください。"),
                     ])
                   : _vm._e(),
                 _vm._v(" "),
@@ -56506,6 +57219,28 @@ var staticRenderFns = [
       _vm._v("メールアドレス"),
       _c("span", { staticClass: "c-badge" }, [_vm._v("必須")]),
     ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { staticClass: "c-label", attrs: { for: "password" } }, [
+      _vm._v("パスワード"),
+      _c("span", { staticClass: "c-badge" }, [_vm._v("必須")]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      { staticClass: "c-label", attrs: { for: "password-confirm" } },
+      [
+        _vm._v("パスワード（再入力）"),
+        _c("span", { staticClass: "c-badge" }, [_vm._v("必須")]),
+      ]
+    )
   },
 ]
 render._withStripped = true
@@ -57690,14 +58425,19 @@ var render = function () {
           _vm._v(" "),
           _c("div", { staticClass: "c-sidebar__content--wrap" }, [
             _c("div", { staticClass: "c-sidebar__header" }, [
-              _c("p", [_vm._v(_vm._s(_vm.username))]),
+              _c("p", { staticClass: "c-sidebar__username" }, [
+                _vm._v(_vm._s(_vm.username)),
+              ]),
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "c-sidebar__body" }, [
               _vm.introduction
-                ? _c("p", { staticClass: "c-sidebar--content" }, [
+                ? _c("div", { staticClass: "c-sidebar--content" }, [
                     _c("i", { staticClass: "fa-solid fa-message" }),
-                    _vm._v(_vm._s(_vm.introduction) + " "),
+                    _vm._v(" "),
+                    _c("p", { staticClass: "c-sidebar__introduction" }, [
+                      _vm._v(_vm._s(_vm.introduction)),
+                    ]),
                   ])
                 : _vm._e(),
             ]),

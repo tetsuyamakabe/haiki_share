@@ -29,6 +29,13 @@
             font-size: $font-size_m;
         }
     }
+    &__username,
+    &__address,
+    &__introduction {
+        overflow-wrap: break-word;
+        word-wrap: break-word;
+        max-width: 100%;
+    }
     &__body {
         opacity: .7;
     }

@@ -109,7 +109,7 @@
 
 <script>
 import TermsComponent from '../Common/TermsComponent.vue'; // 利用規約コンポーネント
-const jsonpAdapter = require('axios-jsonp') // 郵便番号API
+const jsonpAdapter = require('axios-jsonp'); // 郵便番号API
 import { required, maxLength, email, minLength, helpers } from 'vuelidate/lib/validators'; // Vuelidateからバリデータをインポート
 const validPasswordFormat = helpers.regex('validPasswordFormat', /^[a-zA-Z0-9!@#$%^&*]+$/); // パスワードとパスワード（再入力）の正規表現バリデーション
 
