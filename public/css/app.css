@@ -1566,8 +1566,14 @@ table {
   }
 }
 
+.c-textarea.is-valid {
+  background-color: #cce6ff;
+  border: 2px solid #339cff;
+}
+
 .c-textarea.is-invalid {
   background-color: #ffcccc;
+  border: 2px solid #ff3333;
 }
 
 .c-textarea--count {

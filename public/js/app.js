@@ -5056,6 +5056,17 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Parts_Toast_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Parts/Toast.vue */ "./resources/js/components/Parts/Toast.vue");
+/* harmony import */ var vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuelidate/lib/validators */ "./node_modules/vuelidate/lib/validators/index.js");
+/* harmony import */ var vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -5088,6 +5099,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 
  // Toastコンポーネントをインポート
+ // Vuelidateからバリデータをインポート
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -5104,6 +5116,24 @@ __webpack_require__.r(__webpack_exports__);
       },
       errors: null // エラーメッセージ
     };
+  },
+  validations: {
+    // フロント側のバリデーション
+    formData: {
+      name: {
+        required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["required"],
+        maxLength: Object(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["maxLength"])(255)
+      },
+      email: {
+        required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["required"],
+        email: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["email"],
+        maxLength: Object(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["maxLength"])(255)
+      },
+      contact: {
+        required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["required"],
+        maxLength: Object(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["maxLength"])(255)
+      }
+    }
   },
   methods: {
     // 入力された値をサーバー側に送信するメソッド
@@ -5849,6 +5879,17 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Parts_Toast_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Parts/Toast.vue */ "./resources/js/components/Parts/Toast.vue");
+/* harmony import */ var vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuelidate/lib/validators */ "./node_modules/vuelidate/lib/validators/index.js");
+/* harmony import */ var vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -5990,6 +6031,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 
  // Toastコンポーネントをインポート
+ // Vuelidateからバリデータをインポート
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -6008,6 +6050,24 @@ __webpack_require__.r(__webpack_exports__);
       // お問い合わせ内容の文字数カウント初期値
       errors: null // エラーメッセージ
     };
+  },
+  validations: {
+    // フロント側のバリデーション
+    formData: {
+      name: {
+        required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["required"],
+        maxLength: Object(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["maxLength"])(255)
+      },
+      email: {
+        required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["required"],
+        email: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["email"],
+        maxLength: Object(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["maxLength"])(255)
+      },
+      contact: {
+        required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["required"],
+        maxLength: Object(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["maxLength"])(255)
+      }
+    }
   },
   methods: {
     // 入力された値をサーバー側に送信するメソッド
@@ -46751,6 +46811,20 @@ var render = function () {
                 ])
               : _vm._e(),
             _vm._v(" "),
+            _vm.$v.formData.name.$error && _vm.$v.formData.name.$dirty
+              ? _c("span", { staticClass: "c-error" }, [
+                  _vm._v("お名前が入力されていません。"),
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.$v.formData.name.$error &&
+            !_vm.$v.formData.name.maxLength &&
+            _vm.$v.formData.name.$dirty
+              ? _c("span", { staticClass: "c-error" }, [
+                  _vm._v("お名前は、255文字以内で入力してください。"),
+                ])
+              : _vm._e(),
+            _vm._v(" "),
             _c("input", {
               directives: [
                 {
@@ -46761,10 +46835,18 @@ var render = function () {
                 },
               ],
               staticClass: "c-input",
-              class: { "is-invalid": _vm.errors && _vm.errors.name },
-              attrs: { id: "name", type: "name", autocomplete: "name" },
+              class: {
+                "is-invalid":
+                  _vm.$v.formData.name.$error && _vm.$v.formData.name.$dirty,
+                "is-valid":
+                  !_vm.$v.formData.name.$error && _vm.$v.formData.name.$dirty,
+              },
+              attrs: { id: "name", type: "text", autocomplete: "name" },
               domProps: { value: _vm.formData.name },
               on: {
+                blur: function ($event) {
+                  _vm.$v.formData.name.$touch()
+                },
                 input: function ($event) {
                   if ($event.target.composing) {
                     return
@@ -46782,6 +46864,28 @@ var render = function () {
                 ])
               : _vm._e(),
             _vm._v(" "),
+            _vm.$v.formData.email.$error && _vm.$v.formData.email.$dirty
+              ? _c("span", { staticClass: "c-error" }, [
+                  _vm._v("メールアドレスが入力されていません。"),
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.$v.formData.email.$error &&
+            !_vm.$v.formData.email.maxLength &&
+            _vm.$v.formData.email.$dirty
+              ? _c("span", { staticClass: "c-error" }, [
+                  _vm._v("メールアドレスは、255文字以内で入力してください。"),
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.$v.formData.email.$error &&
+            !_vm.$v.formData.email.email &&
+            _vm.$v.formData.email.$dirty
+              ? _c("span", { staticClass: "c-error" }, [
+                  _vm._v("有効なメールアドレスを入力してください。"),
+                ])
+              : _vm._e(),
+            _vm._v(" "),
             _c("input", {
               directives: [
                 {
@@ -46792,10 +46896,18 @@ var render = function () {
                 },
               ],
               staticClass: "c-input",
-              class: { "is-invalid": _vm.errors && _vm.errors.email },
+              class: {
+                "is-invalid":
+                  _vm.$v.formData.email.$error && _vm.$v.formData.email.$dirty,
+                "is-valid":
+                  !_vm.$v.formData.email.$error && _vm.$v.formData.email.$dirty,
+              },
               attrs: { id: "email", type: "text", autocomplete: "email" },
               domProps: { value: _vm.formData.email },
               on: {
+                blur: function ($event) {
+                  _vm.$v.formData.email.$touch()
+                },
                 input: function ($event) {
                   if ($event.target.composing) {
                     return
@@ -46813,6 +46925,20 @@ var render = function () {
                 ])
               : _vm._e(),
             _vm._v(" "),
+            _vm.$v.formData.contact.$error && _vm.$v.formData.contact.$dirty
+              ? _c("span", { staticClass: "c-error" }, [
+                  _vm._v("お問い合わせ内容が入力されていません。"),
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.$v.formData.contact.$error &&
+            !_vm.$v.formData.contact.maxLength &&
+            _vm.$v.formData.contact.$dirty
+              ? _c("span", { staticClass: "c-error" }, [
+                  _vm._v("お問い合わせ内容は、255文字以内で入力してください。"),
+                ])
+              : _vm._e(),
+            _vm._v(" "),
             _c("textarea", {
               directives: [
                 {
@@ -46823,7 +46949,14 @@ var render = function () {
                 },
               ],
               staticClass: "c-textarea",
-              class: { "is-invalid": _vm.errors && _vm.errors.contact },
+              class: {
+                "is-invalid":
+                  _vm.$v.formData.contact.$error &&
+                  _vm.$v.formData.contact.$dirty,
+                "is-valid":
+                  !_vm.$v.formData.contact.$error &&
+                  _vm.$v.formData.contact.$dirty,
+              },
               attrs: {
                 maxlength: "255",
                 id: "contact",
@@ -46834,6 +46967,9 @@ var render = function () {
               domProps: { value: _vm.formData.contact },
               on: {
                 keyup: _vm.countCharacters,
+                blur: function ($event) {
+                  _vm.$v.formData.contact.$touch()
+                },
                 input: function ($event) {
                   if ($event.target.composing) {
                     return
@@ -48421,6 +48557,20 @@ var render = function () {
                   ])
                 : _vm._e(),
               _vm._v(" "),
+              _vm.$v.formData.name.$error && _vm.$v.formData.name.$dirty
+                ? _c("span", { staticClass: "c-error" }, [
+                    _vm._v("お名前が入力されていません。"),
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
+              _vm.$v.formData.name.$error &&
+              !_vm.$v.formData.name.maxLength &&
+              _vm.$v.formData.name.$dirty
+                ? _c("span", { staticClass: "c-error" }, [
+                    _vm._v("お名前は、255文字以内で入力してください。"),
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
               _c("input", {
                 directives: [
                   {
@@ -48431,10 +48581,18 @@ var render = function () {
                   },
                 ],
                 staticClass: "c-input",
-                class: { "is-invalid": _vm.errors && _vm.errors.name },
-                attrs: { id: "name", type: "name", autocomplete: "name" },
+                class: {
+                  "is-invalid":
+                    _vm.$v.formData.name.$error && _vm.$v.formData.name.$dirty,
+                  "is-valid":
+                    !_vm.$v.formData.name.$error && _vm.$v.formData.name.$dirty,
+                },
+                attrs: { id: "name", type: "text", autocomplete: "name" },
                 domProps: { value: _vm.formData.name },
                 on: {
+                  blur: function ($event) {
+                    _vm.$v.formData.name.$touch()
+                  },
                   input: function ($event) {
                     if ($event.target.composing) {
                       return
@@ -48452,6 +48610,28 @@ var render = function () {
                   ])
                 : _vm._e(),
               _vm._v(" "),
+              _vm.$v.formData.email.$error && _vm.$v.formData.email.$dirty
+                ? _c("span", { staticClass: "c-error" }, [
+                    _vm._v("メールアドレスが入力されていません。"),
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
+              _vm.$v.formData.email.$error &&
+              !_vm.$v.formData.email.maxLength &&
+              _vm.$v.formData.email.$dirty
+                ? _c("span", { staticClass: "c-error" }, [
+                    _vm._v("メールアドレスは、255文字以内で入力してください。"),
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
+              _vm.$v.formData.email.$error &&
+              !_vm.$v.formData.email.email &&
+              _vm.$v.formData.email.$dirty
+                ? _c("span", { staticClass: "c-error" }, [
+                    _vm._v("有効なメールアドレスを入力してください。"),
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
               _c("input", {
                 directives: [
                   {
@@ -48462,10 +48642,20 @@ var render = function () {
                   },
                 ],
                 staticClass: "c-input",
-                class: { "is-invalid": _vm.errors && _vm.errors.email },
-                attrs: { id: "email", type: "email", autocomplete: "email" },
+                class: {
+                  "is-invalid":
+                    _vm.$v.formData.email.$error &&
+                    _vm.$v.formData.email.$dirty,
+                  "is-valid":
+                    !_vm.$v.formData.email.$error &&
+                    _vm.$v.formData.email.$dirty,
+                },
+                attrs: { id: "email", type: "text", autocomplete: "email" },
                 domProps: { value: _vm.formData.email },
                 on: {
+                  blur: function ($event) {
+                    _vm.$v.formData.email.$touch()
+                  },
                   input: function ($event) {
                     if ($event.target.composing) {
                       return
@@ -48483,6 +48673,22 @@ var render = function () {
                   ])
                 : _vm._e(),
               _vm._v(" "),
+              _vm.$v.formData.contact.$error && _vm.$v.formData.contact.$dirty
+                ? _c("span", { staticClass: "c-error" }, [
+                    _vm._v("お問い合わせ内容が入力されていません。"),
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
+              _vm.$v.formData.contact.$error &&
+              !_vm.$v.formData.contact.maxLength &&
+              _vm.$v.formData.contact.$dirty
+                ? _c("span", { staticClass: "c-error" }, [
+                    _vm._v(
+                      "お問い合わせ内容は、255文字以内で入力してください。"
+                    ),
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
               _c("textarea", {
                 directives: [
                   {
@@ -48493,7 +48699,14 @@ var render = function () {
                   },
                 ],
                 staticClass: "c-textarea",
-                class: { "is-invalid": _vm.errors && _vm.errors.contact },
+                class: {
+                  "is-invalid":
+                    _vm.$v.formData.contact.$error &&
+                    _vm.$v.formData.contact.$dirty,
+                  "is-valid":
+                    !_vm.$v.formData.contact.$error &&
+                    _vm.$v.formData.contact.$dirty,
+                },
                 attrs: {
                   maxlength: "255",
                   id: "contact",
@@ -48504,6 +48717,9 @@ var render = function () {
                 domProps: { value: _vm.formData.contact },
                 on: {
                   keyup: _vm.countCharacters,
+                  blur: function ($event) {
+                    _vm.$v.formData.contact.$touch()
+                  },
                   input: function ($event) {
                     if ($event.target.composing) {
                       return
@@ -52446,7 +52662,12 @@ var render = function () {
                   ],
                   staticClass: "c-textarea",
                   class: {
-                    "is-invalid": _vm.errors && _vm.errors.introduction,
+                    "is-invalid":
+                      _vm.$v.formData.introduction.$error &&
+                      _vm.$v.formData.introduction.$dirty,
+                    "is-valid":
+                      !_vm.$v.formData.introduction.$error &&
+                      _vm.$v.formData.introduction.$dirty,
                   },
                   attrs: {
                     maxlength: "50",
@@ -52458,6 +52679,9 @@ var render = function () {
                   domProps: { value: _vm.formData.introduction },
                   on: {
                     keyup: _vm.countCharacters,
+                    blur: function ($event) {
+                      _vm.$v.formData.introduction.$touch()
+                    },
                     input: function ($event) {
                       if ($event.target.composing) {
                         return
@@ -57551,7 +57775,12 @@ var render = function () {
                   ],
                   staticClass: "c-textarea",
                   class: {
-                    "is-invalid": _vm.errors && _vm.errors.introduction,
+                    "is-invalid":
+                      _vm.$v.formData.introduction.$error &&
+                      _vm.$v.formData.introduction.$dirty,
+                    "is-valid":
+                      !_vm.$v.formData.introduction.$error &&
+                      _vm.$v.formData.introduction.$dirty,
                   },
                   attrs: {
                     maxlength: "50",
@@ -57563,6 +57792,9 @@ var render = function () {
                   domProps: { value: _vm.formData.introduction },
                   on: {
                     keyup: _vm.countCharacters,
+                    blur: function ($event) {
+                      _vm.$v.formData.introduction.$touch()
+                    },
                     input: function ($event) {
                       if ($event.target.composing) {
                         return

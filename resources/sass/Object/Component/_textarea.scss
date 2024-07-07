@@ -11,8 +11,13 @@
             font-size: $font-size_m;
         }
     }
-    &.is-invalid {
-        background-color: $background-color_valid;
+    &.is-valid { // バリデーション正常
+        background-color: $background-color_is_valid;
+        border: 2px solid $boader-color_is_valid;
+    }
+    &.is-invalid { // バリデーション異常
+        background-color: $background-color_is_invalid;
+        border: 2px solid $boader-color_is_invalid
     }
     &--count {
         position: relative;
