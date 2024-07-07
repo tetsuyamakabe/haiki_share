@@ -37,7 +37,7 @@ Route::middleware(['cors'])->group(function () {
     Route::get('/products/detail/{productId}', [ConvenienceProductController::class, 'getProductDetail']); // （未ログインユーザーの）商品情報の取得
     Route::get('categories', [ConvenienceProductController::class, 'getCategories']); // 商品カテゴリー情報の取得
     Route::get('prefecture', [UserProductController::class, 'getPrefecture']); // 出品しているコンビニがある都道府県の取得
-    Route::post('contact', [UserMyPageController::class, 'getPrefecture']); // お問い合わせ処理
+    Route::post('contact', [UserMyPageController::class, 'contact']); // お問い合わせ処理
 
     Route::get('/user', [UserLoginController::class, 'getUser']); // ユーザー情報の取得
 

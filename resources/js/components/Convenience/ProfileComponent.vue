@@ -95,7 +95,7 @@
                     <label for="introduction" class="c-label">自己紹介</label>
                     <span v-if="errors && errors.introduction" class="c-error">{{ errors.introduction[0] }}</span>
                     <span v-if="$v.formData.introduction.$error && !$v.formData.introduction.maxLength && $v.formData.introduction.$dirty" class="c-error">自己紹介は、50文字以内で入力してください。</span>
-                    <textarea v-model="formData.introduction" maxlength="50" id="introduction" type="text" class="c-textarea" autocomplete="introduction" @keyup="countCharacters" :class="{ 'is-invalid': errors && errors.introduction }" placeholder="50文字以内で入力してください"></textarea>
+                    <textarea v-model="formData.introduction" maxlength="50" id="introduction" type="text" class="c-textarea" autocomplete="introduction" @keyup="countCharacters" @blur="$v.formData.introduction.$touch()" :class="{'is-invalid': $v.formData.introduction.$error && $v.formData.introduction.$dirty, 'is-valid': !$v.formData.introduction.$error && $v.formData.introduction.$dirty}" placeholder="50文字以内で入力してください"></textarea>
                     <span class="c-textarea--count">{{ formData.introduction.length }} / 50文字</span>
 
                     <!-- 顔写真 -->
