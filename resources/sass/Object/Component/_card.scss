@@ -19,9 +19,9 @@
         max-width: 100%;
         font-weight: bold;
         overflow: hidden;
+        overflow-wrap: break-word; // 文字の折り返し
+        word-wrap: break-word; // 文字の折り返し
         text-overflow: ellipsis; // 省略記号（...）
-        white-space: normal; // 文字の折り返しを有効
-        word-wrap: break-word; // 改行
         display: -webkit-box; // 複数行テキストの省略
         -webkit-line-clamp: 2; // 最大行数
         -webkit-box-orient: vertical; // ブロック要素を縦に並べる
