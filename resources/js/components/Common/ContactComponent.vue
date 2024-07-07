@@ -72,7 +72,6 @@ export default {
                 required,
                 maxLength: maxLength(255),
             },
-
         },
     },
 
