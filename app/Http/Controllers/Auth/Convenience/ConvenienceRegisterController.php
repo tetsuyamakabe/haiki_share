@@ -8,8 +8,10 @@ use App\Models\Convenience;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use App\Http\Requests\Convenience\RegisterRequest;
+use App\Notifications\Convenience\RegisteredNotification;
 
 class ConvenienceRegisterController extends Controller
 {
@@ -96,6 +98,8 @@ class ConvenienceRegisterController extends Controller
                 // ConvenienceモデルとAddressモデルの関連付け
                 $convenience->address()->associate($address);
                 $convenience->save();
+                // ユーザー登録完了メールの送信
+                Notification::send($user, new RegisteredNotification($user));
                 return response()->json(['user' => $user, 'convenience' => $convenience, 'address' => $address], 201);
             }
         } catch (\Exception $e) {
