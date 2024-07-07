@@ -46,6 +46,13 @@ class UserMyPageController extends Controller
             // ユーザー情報を更新
             $user->name = $request->input('name'); // 名前
             $user->email = $request->input('email'); // メールアドレス
+            // メールアドレスの変更がある場合のみemail_verified_atをリセットする
+            if (!empty($email)) {
+                $user->email = $email; // 新しいメールアドレスを設定する
+                $user->email_verified_at = null; // メール認証のリセット
+                $user->save(); // 変更を保存する
+                $user->sendEmailVerificationNotification(); // メール認証通知を送信する
+            }
             // パスワードの入力がある場合のみ更新する
             $password = $request->input('password'); // パスワード
             if (!empty($password)) {
