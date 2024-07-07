@@ -784,7 +784,15 @@ table {
 
 .c-card__name {
   max-height: 40px;
+  max-width: 100%;
   font-weight: bold;
+  overflow: hidden;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
 }
 
 .c-card__body {
@@ -1355,8 +1363,11 @@ table {
 }
 
 .c-product--item {
+  max-width: 100%;
   font-size: 16px;
   line-height: 1.5;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
 }
 
 .c-product__price--value {
@@ -1398,6 +1409,7 @@ table {
 }
 
 .c-product--item-wrap {
+  width: 90%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -1459,9 +1471,9 @@ table {
 .c-sidebar__username,
 .c-sidebar__address,
 .c-sidebar__introduction {
+  max-width: 100%;
   overflow-wrap: break-word;
   word-wrap: break-word;
-  max-width: 100%;
 }
 
 .c-sidebar__body {
@@ -1587,6 +1599,8 @@ table {
 .c-title--sub {
   margin: 16px 0;
   font-size: 24px;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
 }
 
 @media screen and (max-width: 414px) {

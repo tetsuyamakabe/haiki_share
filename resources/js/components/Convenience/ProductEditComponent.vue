@@ -9,38 +9,54 @@
                     <!-- 商品名 -->
                     <label for="name" class="c-label">商品名<span class="c-badge">必須</span></label>
                     <span v-if="errors && errors.name" class="c-error">{{ errors.name[0] }}</span>
-                    <input v-model="formData.name" id="name" type="text" class="c-input" :class="{ 'is-invalid': errors && errors.name }" autocomplete="name">
+                    <span v-if="$v.formData.name.$error && $v.formData.name.$dirty" class="c-error">商品名が入力されていません。</span>
+                    <span v-if="$v.formData.name.$error && !$v.formData.name.maxLength && $v.formData.name.$dirty" class="c-error">商品名は、255文字以内で入力してください。</span>
+                    <input v-model="formData.name" id="name" type="text" class="c-input" @blur="$v.formData.name.$touch()" :class="{'is-invalid': $v.formData.name.$error && $v.formData.name.$dirty, 'is-valid': !$v.formData.name.$error && $v.formData.name.$dirty}" autocomplete="name">
+
                     <!-- 価格 -->
                     <label for="price" class="c-label">価格<span class="c-badge">必須</span></label>
                     <span v-if="errors && errors.price" class="c-error">{{ errors.price[0] }}</span>
+                    <span v-if="$v.formData.price.$error && $v.formData.price.$dirty" class="c-error">価格が入力されていません。</span>
+                    <span v-if="$v.formData.price.$error && !$v.formData.price.numeric && $v.formData.price.$dirty" class="c-error">価格は半角数字で入力してください。</span>
+                    <span v-if="$v.formData.price.$error && !$v.formData.price.minLength && $v.formData.price.$dirty" class="c-error">価格は0以上で入力してください。</span>
                     <div>
-                        <input v-model="formData.price" id="price" type="number" class="c-input c-input--price" maxlength="4" :class="{ 'is-invalid': errors && errors.price }" autocomplete="price">
+                        <input v-model="formData.price" id="price" type="text" class="c-input c-input--price" maxlength="4" @blur="$v.formData.price.$touch()" :class="{'is-invalid': $v.formData.price.$error && $v.formData.price.$dirty, 'is-valid': !$v.formData.price.$error && $v.formData.price.$dirty}" autocomplete="price">
                         <span class="c-text">円（税込）</span>
                     </div>
+
                     <!-- カテゴリ名 -->
                     <label for="category" class="c-label">カテゴリ名<span class="c-badge">必須</span></label>
                     <span v-if="errors && errors.category" class="c-error">{{ errors.category[0] }}</span>
-                    <select v-model="formData.category" id="category" class="c-input" :class="{ 'is-invalid': errors && errors.category }">
+                    <span v-if="$v.formData.category.$error && $v.formData.category.$dirty" class="c-error">カテゴリ名が選択されていません。</span>
+                    <select v-model="formData.category" id="category" class="c-input" @blur="$v.formData.category.$touch()" :class="{'is-invalid': $v.formData.category.$error && $v.formData.category.$dirty, 'is-valid': !$v.formData.category.$error && $v.formData.category.$dirty}" autocomplete="category">
                         <option value="">カテゴリを選択してください</option>
                         <option v-for="category in categories" :value="category.id">{{ category.name }}</option>
                     </select>
+
                     <!-- 賞味期限 -->
                     <label for="expiration_date" class="c-label">賞味期限<span class="c-badge">必須</span></label>
                     <span v-if="errors && errors.expiration_date" class="c-error">{{ errors.expiration_date[0] }}</span>
+                    <span v-if="$v.formData.expiration_year.$error && $v.formData.expiration_year.$dirty" class="c-error">賞味期限（年）が入力されていません。</span>
+                    <span v-if="$v.formData.expiration_year.$error && !$v.formData.expiration_year.validExpirationYearFormat && $v.formData.expiration_year.$dirty" class="c-error">賞味期限（年）は半角数字4桁で入力してください。</span>
+                    <span v-if="$v.formData.expiration_month.$error && $v.formData.expiration_month.$dirty" class="c-error">賞味期限（月）が入力されていません。</span>
+                    <span v-if="$v.formData.expiration_month.$error && !$v.formData.expiration_month.validExpirationMonthFormat && $v.formData.expiration_month.$dirty" class="c-error">賞味期限（月）は半角数字2桁（01〜12）で入力してください。</span>
+                    <span v-if="$v.formData.expiration_day.$error && $v.formData.expiration_day.$dirty" class="c-error">賞味期限（日）が入力されていません。</span>
+                    <span v-if="$v.formData.expiration_day.$error && !$v.formData.expiration_day.validExpirationDayFormat && $v.formData.expiration_day.$dirty" class="c-error">賞味期限（日）は半角数字2桁（01〜31）で入力してください。</span>
                     <div class="c-form--expiration">
                         <div class="c-input--date">
-                            <input v-model="formData.expiration_year" id="expiration_year" type="text" class="c-input" placeholder="YYYY" maxlength="4" :class="{ 'is-invalid': errors && errors.expiration_date }">
+                            <input v-model="formData.expiration_year" id="expiration_year" type="text" class="c-input" placeholder="YYYY" maxlength="4" @blur="$v.formData.expiration_year.$touch()" :class="{'is-invalid': $v.formData.expiration_year.$error && $v.formData.expiration_year.$dirty, 'is-valid': !$v.formData.expiration_year.$error && $v.formData.expiration_year.$dirty}" autocomplete="expiration_year">
                             <label for="expiration_year" class="c-label">年</label>
                         </div>
                         <div class="c-input--date">
-                            <input v-model="formData.expiration_month" id="expiration_month" type="text" class="c-input" placeholder="MM" maxlength="2" :class="{ 'is-invalid': errors && errors.expiration_date }">
+                            <input v-model="formData.expiration_month" id="expiration_month" type="text" class="c-input" placeholder="MM" maxlength="2" @blur="$v.formData.expiration_month.$touch()" :class="{'is-invalid': $v.formData.expiration_month.$error && $v.formData.expiration_month.$dirty, 'is-valid': !$v.formData.expiration_month.$error && $v.formData.expiration_month.$dirty}" autocomplete="expiration_month">
                             <label for="expiration_month" class="c-label">月</label>
                         </div>
                         <div class="c-input--date">
-                            <input v-model="formData.expiration_day" id="expiration_day" type="text" class="c-input" placeholder="DD" maxlength="2" :class="{ 'is-invalid': errors && errors.expiration_date }">
+                            <input v-model="formData.expiration_day" id="expiration_day" type="text" class="c-input" placeholder="DD" maxlength="2" @blur="$v.formData.expiration_day.$touch()" :class="{'is-invalid': $v.formData.expiration_day.$error && $v.formData.expiration_day.$dirty, 'is-valid': !$v.formData.expiration_day.$error && $v.formData.expiration_day.$dirty}" autocomplete="expiration_day">
                             <label for="expiration_day" class="c-label">日</label>
                         </div>
                     </div>
+
                     <!-- 商品画像 -->
                     <label for="product_picture" class="c-label">商品画像<span class="c-badge">必須</span></label>
                     <span v-if="errors && errors.product_picture" class="c-error">{{ errors.product_picture[0] }}</span>
@@ -65,6 +81,10 @@
 
 <script>
 import SidebarComponent from './SidebarComponent.vue'; // サイドバーコンポーネント
+import { required, maxLength, numeric, minLength, helpers } from 'vuelidate/lib/validators'; // Vuelidateからバリデータをインポート
+const validExpirationYearFormat = helpers.regex('validExpirationYearFormat', /^[0-9]{4}$/); // 賞味期限（年）の正規表現バリデーション
+const validExpirationMonthFormat = helpers.regex('validExpirationMonthFormat',/^(0[1-9]|1[0-2])$/); // 賞味期限（月）の正規表現バリデーション
+const validExpirationDayFormat = helpers.regex('validExpirationDayFormat', /^(0[1-9]|[1-2][0-9]|3[0-1])$/); // 賞味期限（日）の正規表現バリデーション
 
 export default {
     components: {
@@ -93,6 +113,35 @@ export default {
             introduction: '', // 自己紹介文
             errors: null, // エラーメッセージ
         };
+    },
+
+    validations: { // フロント側のバリデーション
+        formData: {
+            name: {
+                required,
+                maxLength: maxLength(255),
+            },
+            price: {
+                required,
+                numeric,
+                minLength: minLength(0),
+            },
+            category: {
+                required,
+            },
+            expiration_year: {
+                required,
+                validExpirationYearFormat,
+            },
+            expiration_month: {
+                required,
+                validExpirationMonthFormat,
+            },
+            expiration_day: {
+                required,
+                validExpirationDayFormat,
+            }
+        },
     },
 
     computed: {
