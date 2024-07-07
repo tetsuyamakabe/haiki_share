@@ -9,27 +9,37 @@
                     <option value="">都道府県を選択</option>
                     <option v-for="prefecture in prefectures" :key="prefecture">{{ prefecture }}</option>
                 </select>
-                <!-- 価格 -->
+
+                <!-- 最低価格 -->
                 <label class="c-label">最低価格</label>
                 <span v-if="errors && errors.minPrice" class="c-error">{{ errors.minPrice[0] }}</span>
-                <input class="c-input c-input__search" type="text" name="minPrice" maxlength="4" v-model="minPrice" placeholder="半角数字で入力">
+                <span v-if="$v.minPrice.$error && !$v.minPrice.numeric && $v.minPrice.$dirty" class="c-error">最低価格は、半角数字で入力してください。</span>
+                <span v-if="$v.minPrice.$error && !$v.minPrice.minLength && $v.minPrice.$dirty" class="c-error">最低価格は、0以上で入力してください。</span>
+                <input v-model="minPrice" id="minPrice" type="text" class="c-input c-input__search" name="minPrice" maxlength="4" placeholder="半角数字で入力" @blur="$v.minPrice.$touch()" :class="{'is-invalid': $v.minPrice.$error && $v.minPrice.$dirty, 'is-valid': !$v.minPrice.$error && $v.minPrice.$dirty}" autocomplete="minPrice">
                 <span class="c-text u-ml__s">円</span>
+
+                <!-- 最高価格 -->
                 <label class="c-label">最高価格</label>
                 <span v-if="errors && errors.maxPrice" class="c-error">{{ errors.maxPrice[0] }}</span>
-                <input class="c-input c-input__search" type="text" name="maxPrice" maxlength="4" v-model="maxPrice" placeholder="半角数字で入力">
+                <span v-if="$v.maxPrice.$error && !$v.maxPrice.numeric && $v.maxPrice.$dirty" class="c-error">最高価格は、半角数字で入力してください。</span>
+                <span v-if="$v.maxPrice.$error && !$v.maxPrice.minLength && $v.maxPrice.$dirty" class="c-error">最高価格は、0以上で入力してください。</span>
+                <input v-model="maxPrice" id="maxPrice" type="text" class="c-input c-input__search" name="maxPrice" maxlength="4" placeholder="半角数字で入力" @blur="$v.maxPrice.$touch()" :class="{'is-invalid': $v.maxPrice.$error && $v.maxPrice.$dirty, 'is-valid': !$v.maxPrice.$error && $v.maxPrice.$dirty}" autocomplete="maxPrice">
                 <span class="c-text u-ml__s">円</span>
+
                 <!-- 賞味期限切れかどうか -->
                 <label class="c-label">賞味期限切れかどうか</label>
                 <div class="c-input__radio">
                     <input type="radio" value="true" v-model="isExpired"><label class="c-text">賞味期限切れ</label></br>
                     <input type="radio" value="false" v-model="isExpired"><label class="c-text">賞味期限内</label>
                 </div>
+
                 <!-- カテゴリー -->
                 <label class="c-label">商品カテゴリで絞り込み</label>
                 <select class="c-selectbox" v-model="selectedCategory">
                     <option value="">商品カテゴリを選択</option>
                     <option v-for="category in categories" :key="category.id" :value="category.id">{{ category.name }}</option>
                 </select>
+
                 <!-- 並び替え -->
                 <label class="c-label">並び替え（出品した順）</label>
                 <select class="c-selectbox" v-model="sortOrder">
@@ -37,6 +47,7 @@
                     <option value="desc">新しい順</option>
                     <option value="asc">古い順</option>
                 </select>
+
                 <label class="c-label">並び替え（賞味期限日付順）</label>
                 <select class="c-selectbox" v-model="sortExpiredOrder">
                     <option value="">選択してください</option>
@@ -51,6 +62,8 @@
 </template>
 
 <script>
+import { numeric, minLength } from 'vuelidate/lib/validators'; // Vuelidateからバリデータをインポート
+
 export default {
     props: ['errors'],  // 親コンポーネントからerrorsを受け取る
 
@@ -67,6 +80,18 @@ export default {
             sortExpiredOrder: '',
         };
     },
+
+    validations: { // フロント側のバリデーション
+        minPrice: {
+            numeric,
+            minLength: minLength(0),
+        },
+        maxPrice: {
+            numeric,
+            minLength: minLength(0),
+        },
+    },
+
 
     created() {
         this.getPrefectures(); // インスタンス初期化時に都道府県情報を読み込む

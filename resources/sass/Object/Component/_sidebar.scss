@@ -32,9 +32,9 @@
     &__username,
     &__address,
     &__introduction {
-        overflow-wrap: break-word;
-        word-wrap: break-word;
         max-width: 100%;
+        overflow-wrap: break-word; // 文字の折り返し
+        word-wrap: break-word; // 文字の折り返し
     }
     &__body {
         opacity: .7;

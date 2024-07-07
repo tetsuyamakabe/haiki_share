@@ -783,8 +783,21 @@ table {
 }
 
 .c-card__name {
-  max-height: 40px;
+  max-width: 100%;
   font-weight: bold;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: normal;
+  /* 改行させるためにnormalを指定 */
+  word-wrap: break-word;
+  /* 単語単位で改行するために指定 */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  /* 最大の行数を指定 */
+  -webkit-box-orient: vertical;
+  /* 縦方向に並べるように指定 */
+  max-height: 40px;
+  /* 高さの最大値を設定 */
 }
 
 .c-card__body {
@@ -1357,6 +1370,9 @@ table {
 .c-product--item {
   font-size: 16px;
   line-height: 1.5;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  max-width: 100%;
 }
 
 .c-product__price--value {
@@ -1398,6 +1414,7 @@ table {
 }
 
 .c-product--item-wrap {
+  width: 90%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -1587,6 +1604,8 @@ table {
 .c-title--sub {
   margin: 16px 0;
   font-size: 24px;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
 }
 
 @media screen and (max-width: 414px) {

@@ -3,8 +3,11 @@
     margin: auto;
     padding: $space_s;
     &--item{
-        font-size: $font-size_default;
+        max-width: 100%;
+        font-size: 16px;
         line-height: 1.5;
+        overflow-wrap: break-word; // 文字の折り返し
+        word-wrap: break-word; // 文字の折り返し
     }
     &__price {
         &--value {
@@ -38,6 +41,7 @@
         align-items: center;
     }
     &--item-wrap {
+        width: 90%;
         display: flex;
         flex-direction: column;
         justify-content: center;

@@ -9,6 +9,8 @@
     &--sub {
         margin: $space_m 0;
         font-size: $font-size_l;
+        overflow-wrap: break-word;
+        word-wrap: break-word;
         @include mq(sm) {
             font-size: $font-size_default;
         }

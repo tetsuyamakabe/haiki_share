@@ -172,7 +172,7 @@ return [
         'contact' => 'お問い合わせ内容',
         'avatar' => '顔写真', 
         'product_picture' => '商品画像',
-        'minprice' => '最低価格',
-        'maxprice' => '最高価格'
+        'minPrice' => '最低価格',
+        'maxPrice' => '最高価格'
     ],
 ];
