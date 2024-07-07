@@ -7,7 +7,9 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\User\RegisterRequest;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use App\Notifications\User\RegisteredNotification;
 
 class UserRegisterController extends Controller
 {
@@ -71,6 +73,8 @@ class UserRegisterController extends Controller
             'password' => Hash::make($validated['password']), // パスワード
             'role' => $validated['role'], // role
         ]);
+        // ユーザー登録完了メールの送信
+        Notification::send($user, new RegisteredNotification($user));
         return response()->json($user, 201);
     }
 }
