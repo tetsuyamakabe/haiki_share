@@ -9,16 +9,17 @@ use Illuminate\Notifications\Messages\MailMessage;
 
 class EmailVerificationNotification extends Notification
 {
-    use Queueable;
+    use Queueable; // キュートレイト
+    public $token; // トークン
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(string $token)
     {
-        //
+        $this->token = $token; // トークンを保持
     }
 
     /**
@@ -38,12 +39,17 @@ class EmailVerificationNotification extends Notification
      * @param  mixed  $notifiable
      * @return \Illuminate\Notifications\Messages\MailMessage
      */
-    public function toMail($notifiable)
+    // メールアドレス認証メールのカスタム
+    public function toMail($notifiable): MailMessage
     {
+        // メールアドレス変更URLを生成
+        $url = url('reset', $this->token);
+        // パスワードリセットリンクの有効期限を取得
+        $count = config('auth.passwords.users.expire');
+        // MailMessageのインスタンスを作成、件名を設定、メールテンプレートのビューにメールアドレス変更URLを渡す
         return (new MailMessage)
-                    ->line('The introduction to the notification.')
-                    ->action('Notification Action', url('/'))
-                    ->line('Thank you for using our application!');
+            ->subject('【' . config('app.name') . '】メールアドレス変更の確認')
+            ->view('auth.user.emailverify', ['verification_url' => $url, 'count' => $count]);
     }
 
     /**

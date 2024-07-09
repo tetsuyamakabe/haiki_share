@@ -33,9 +33,9 @@ class ProfileRequest extends FormRequest
         ];
 
         // メールアドレスが更新された場合のみバリデーションルールを適用
-        if ($this->has('email')) {
+        if ($this->has('new_email')) {
             // メールアドレスのバリデーションルール（NULL許容、string型、メール形式、最大文字数255文字以下、ユニーク制約）
-            $rules['email'] = 'required|string|email|max:255|unique:users,email,' . auth()->id();
+            $rules['new_email'] = 'required|string|email|max:255|unique:users,email,' . auth()->id();
         }
 
         // 顔写真がアップロードされた場合のみバリデーションルールを適用
