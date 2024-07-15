@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\User\ContactRequest;
 use App\Http\Requests\User\ProfileRequest;
 use Illuminate\Support\Facades\Notification;
+use App\Http\Requests\User\ChangeEmailRequest;
 use App\Notifications\User\ContactNotification;
 
 class UserMyPageController extends Controller
@@ -79,19 +80,19 @@ class UserMyPageController extends Controller
         }
     }
 
-    public function sendEmailVerification(ProfileRequest $request)
+    public function sendEmailVerification(ChangeEmailRequest $request)
     {
-        $new_email = $request->input('new_email'); // メールアドレス
-        $token = hash_hmac( // トークン生成
+        $email = $request->input('new_email'); // メールアドレス
+        $token = hash_hmac(
             'sha256',
-            Str::random(40) . $new_email,
+            Str::random(40) . $email,
             config('app.key')
         );
         DB::beginTransaction(); // トークンをDBに保存
         try {
             $param = [
                 'user_id' => Auth::id(),
-                'new_email' => $new_email,
+                'new_email' => $email,
                 'token' => $token,
             ];
             $email_reset = EmailReset::create($param);

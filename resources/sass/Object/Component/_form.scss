@@ -19,4 +19,10 @@
         padding: $space_s;
         background-color: $background-color_main;
     }
+    &__email {
+        display: block;
+        margin: $space_s 0;
+        overflow-wrap: break-word; // 文字の折り返し
+        word-wrap: break-word; // 文字の折り返し
+    }
 }

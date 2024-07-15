@@ -19,6 +19,7 @@ import UserMyPageComponent from './components/User/MyPageComponent.vue'; // マ�
 import UserForgotPasswordComponent from './components/User/ForgotPasswordComponent.vue'; // パスワードメール送信画面
 import UserResetPasswordPasswordComponent from './components/User/ResetPasswordComponent.vue'; // パスワードリセット画面
 import UserProfileComponent from './components/User/ProfileComponent.vue'; // プロフィール編集画面
+import UserEmailChangeComponent from './components/User/EmailChangeComponent.vue'; // メールアドレス変更画面
 import UserWithdrawComponent from './components/User/WithdrawComponent.vue'; // 退会画面
 import UserProductDetailComponent from './components/User/ProductDetailComponent.vue'; // 商品詳細画面
 import UserLikeProductComponent from './components/User/ProductLikeComponent.vue'; // お気に入り登録商品一覧画面
@@ -144,6 +145,12 @@ const router = new VueRouter({
             path: '/user/mypage/profile',
             name: 'user.profile',
             component: UserProfileComponent,
+        },
+        // 利用者メールアドレス変更画面
+        {
+            path: '/user/mypage/profile/email',
+            name: 'user.profile.email',
+            component: UserEmailChangeComponent,
         },
         // コンビニ側プロフィール編集画面
         {
