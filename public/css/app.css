@@ -717,7 +717,8 @@ table {
   margin: 16px;
 }
 
-.c-button--zip {
+.c-button--zip,
+.c-button__email {
   display: flex;
   justify-content: flex-end;
 }
@@ -937,6 +938,13 @@ table {
 .c-form--search {
   padding: 8px;
   background-color: #fefefe;
+}
+
+.c-form__email {
+  display: block;
+  margin: 8px 0;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
 }
 
 .c-heading {

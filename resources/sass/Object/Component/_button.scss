@@ -55,7 +55,8 @@
         flex-direction: column;
         margin: $space_m;
     }
-    &--zip {
+    &--zip,
+    &__email {
         display: flex;
         justify-content: flex-end;
     }

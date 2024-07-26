@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Password;
 use App\Http\Requests\Convenience\ForgotPasswordRequest;
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 
-class ForgotPasswordController extends Controller
+class ConvenienceForgotPasswordController extends Controller
 {
     /*
     |--------------------------------------------------------------------------
@@ -22,7 +22,7 @@ class ForgotPasswordController extends Controller
     |
     */
 
-    use ConvenienceSendsPasswordResetEmails;
+    use SendsPasswordResetEmails;
 
     /**
      * Create a new controller instance.

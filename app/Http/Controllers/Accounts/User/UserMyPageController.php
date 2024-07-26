@@ -4,7 +4,10 @@ namespace App\Http\Controllers\Accounts\User;
 
 use App\Models\Like;
 use App\Models\User;
+use App\Model\EmailReset;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -12,6 +15,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\User\ContactRequest;
 use App\Http\Requests\User\ProfileRequest;
 use Illuminate\Support\Facades\Notification;
+use App\Http\Requests\User\ChangeEmailRequest;
 use App\Notifications\User\ContactNotification;
 
 class UserMyPageController extends Controller
@@ -45,7 +49,13 @@ class UserMyPageController extends Controller
             }
             // ユーザー情報を更新
             $user->name = $request->input('name'); // 名前
-            $user->email = $request->input('email'); // メールアドレス
+            // メールアドレスの変更がある場合のみemail_verified_atをリセットする
+            // if (!empty($email)) {
+            //     $user->email = $email; // 新しいメールアドレスを設定する
+            //     $user->email_verified_at = null; // メール認証のリセット
+            //     $user->save(); // 変更を保存する
+            //     $user->sendEmailVerificationNotification(); // メール認証通知を送信する
+            // }
             // パスワードの入力がある場合のみ更新する
             $password = $request->input('password'); // パスワード
             if (!empty($password)) {
@@ -67,6 +77,32 @@ class UserMyPageController extends Controller
         } catch (\Exception $e) {
             \Log::error('例外エラー: ' . $e->getMessage());
             return response()->json(['message' => 'プロフィール編集に失敗しました。'], 500);
+        }
+    }
+
+    public function sendEmailVerification(ChangeEmailRequest $request)
+    {
+        $email = $request->input('new_email'); // メールアドレス
+        $token = hash_hmac(
+            'sha256',
+            Str::random(40) . $email,
+            config('app.key')
+        );
+        DB::beginTransaction(); // トークンをDBに保存
+        try {
+            $param = [
+                'user_id' => Auth::id(),
+                'new_email' => $email,
+                'token' => $token,
+            ];
+            $email_reset = EmailReset::create($param);
+            DB::commit();
+            $email_reset->sendEmailVerificationNotification($token);
+            return response()->json(['message' => 'メールアドレス認証メールの送信に成功しました。', 'user' => $user], 200);
+        } catch (\Exception $e) {
+            DB::rollback();
+            \Log::error('例外エラー: ' . $e->getMessage());
+            return response()->json(['message' => 'メールアドレス認証メールの送信に失敗しました。'], 500);
         }
     }
 

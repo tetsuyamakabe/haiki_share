@@ -15,11 +15,10 @@
 
                     <!-- メールアドレス -->
                     <label for="email" class="c-label">メールアドレス<span class="c-badge">必須</span></label>
-                    <span v-if="errors && errors.email" class="c-error">{{ errors.email[0] }}</span>
-                    <span v-if="$v.formData.email.$error && $v.formData.email.$dirty" class="c-error">メールアドレスが入力されていません。</span>
-                    <span v-if="$v.formData.email.$error && !$v.formData.email.maxLength && $v.formData.email.$dirty" class="c-error">メールアドレスは、255文字以内で入力してください。</span>
-                    <span v-if="$v.formData.email.$error && !$v.formData.email.email && $v.formData.email.$dirty" class="c-error">有効なメールアドレスを入力してください。</span>
-                    <input v-model="formData.email" id="email" type="text" class="c-input" @blur="$v.formData.email.$touch()" :class="{'is-invalid': $v.formData.email.$error && $v.formData.email.$dirty, 'is-valid': !$v.formData.email.$error && $v.formData.email.$dirty}" autocomplete="email">
+                    <span v-if="formData.email" class="c-form__email">{{ formData.email }}</span>
+                    <div class="c-button__email">
+                        <button type="button" class="c-button c-button--primary" @click="emailChange">メールアドレス変更</button>
+                    </div>
 
                     <!-- パスワード -->
                     <label for="password" class="c-label">パスワード<span class="c-badge">必須</span></label>
@@ -111,11 +110,6 @@ export default {
                 required,
                 maxLength: maxLength(255),
             },
-            email: {
-                required,
-                email,
-                maxLength: maxLength(255),
-            },
             password: {
                 required,
                 validPasswordFormat,
@@ -162,6 +156,11 @@ export default {
             });
         },
 
+        // メールアドレス変更画面へ遷移する
+        emailChange() {
+            this.$router.push({ name: 'user.profile.email' }); // メールアドレス変更画面に遷移する
+        },
+
         // 入力された値をサーバー側に送信するメソッド
         submitForm() {
             // リクエストヘッダー定義
@@ -174,7 +173,6 @@ export default {
             const formData = new FormData(); // FormDataオブジェクトの作成
             formData.append('_method', 'PUT'); // リクエストメソッドをPUTにする
             formData.append('name', this.formData.name); // お名前
-            formData.append('email', this.formData.email); // メールアドレス
             formData.append('password', this.formData.password); // パスワード
             formData.append('password_confirmation', this.formData. password_confirmation); // パスワード（再入力）
             formData.append('introduction', this.formData.introduction); // 自己紹介文

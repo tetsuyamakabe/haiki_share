@@ -51,6 +51,7 @@ Route::middleware(['cors'])->group(function () {
     Route::middleware(['auth', 'authcheckrole'])->group(function () {
         Route::get('/user/mypage/profile', [UserMyPageController::class, 'getProfile']); // プロフィール情報の取得処理
         Route::put('/user/mypage/profile', [UserMyPageController::class, 'editProfile']); // プロフィール編集・更新処理
+        Route::post('/user/mypage/email', [UserMyPageController::class, 'sendEmailVerification']); // メールアドレス認証メール送信処理
         Route::delete('/user/mypage/withdraw', [UserMyPageController::class, 'withdraw']); // 退会処理
         Route::get('/user/mypage/products', [UserMyPageController::class, 'getMyProducts']); // マイページに表示する購入・お気に入り商品情報の取得
         Route::post('/user/products/purchase/{productId}', [UserProductController::class, 'purchaseProduct']); // 商品購入処理

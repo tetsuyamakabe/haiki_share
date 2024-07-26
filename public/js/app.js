@@ -9328,6 +9328,130 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/User/EmailChangeComponent.vue?vue&type=script&lang=js":
+/*!***********************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/User/EmailChangeComponent.vue?vue&type=script&lang=js ***!
+  \***********************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Parts_Toast_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Parts/Toast.vue */ "./resources/js/components/Parts/Toast.vue");
+/* harmony import */ var vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuelidate/lib/validators */ "./node_modules/vuelidate/lib/validators/index.js");
+/* harmony import */ var vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+ // Toastコンポーネント
+ // Vuelidateからバリデータをインポート
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  components: {
+    Toast: _Parts_Toast_vue__WEBPACK_IMPORTED_MODULE_0__["default"] // Toastコンポーネントを読み込み
+  },
+  data: function data() {
+    return {
+      formData: {
+        old_email: '',
+        // 古いメールアドレス
+        new_email: '',
+        // 新しいメールアドレス
+        new_email_confirmation: '' // 新しいメールアドレス（再入力）
+      },
+      errors: null // エラーメッセージ
+    };
+  },
+  validations: {
+    // フロント側のバリデーション
+    formData: {
+      old_email: {
+        required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["required"],
+        email: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["email"],
+        maxLength: Object(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["maxLength"])(255)
+      },
+      new_email: {
+        required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["required"],
+        email: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["email"],
+        maxLength: Object(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["maxLength"])(255)
+      },
+      new_email_confirmation: {
+        required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["required"],
+        email: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["email"],
+        maxLength: Object(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["maxLength"])(255)
+      }
+    }
+  },
+  created: function created() {
+    this.getOldEmail(); // インスタンス初期化時に古いメールアドレス情報を読み込む
+  },
+  methods: {
+    // 古いメールアドレス情報をサーバーから取得
+    getOldEmail: function getOldEmail() {
+      var _this = this;
+      // 利用者側プロフィール情報の取得APIをGET送信
+      axios.get('/api/user/mypage/profile').then(function (response) {
+        _this.user = response.data.user; // レスポンスデータのユーザー情報をuserプロパティにセット
+        // 取得した古いメールアドレス情報をformDataに入れる
+        _this.formData.old_email = _this.user.email || ''; // 古いメールアドレス
+      })["catch"](function (error) {
+        _this.errors = error.response.data;
+      });
+    },
+    // メールアドレス認証メール送信処理
+    sendVerifyLink: function sendVerifyLink() {
+      var _this2 = this;
+      // 利用者メールアドレス認証メール送信APIをPOST送信
+      axios.post('/api/user/mypage/email', this.formData).then(function (response) {
+        // formDataを含めたリクエスト
+        _this2.$store.dispatch('flash/setFlashMessage', {
+          // フラッシュメッセージの表示
+          message: 'メールアドレス認証メールを送信しました。',
+          type: 'success'
+        });
+      })["catch"](function (error) {
+        _this2.errors = error.response.data.errors;
+      });
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/User/ForgotPasswordComponent.vue?vue&type=script&lang=js":
 /*!**************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/User/ForgotPasswordComponent.vue?vue&type=script&lang=js ***!
@@ -10576,7 +10700,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 
  // サイドバーコンポーネント
  // Vuelidateからバリデータをインポート
@@ -10623,11 +10746,6 @@ var validPasswordFormat = vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__[
         required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["required"],
         maxLength: Object(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["maxLength"])(255)
       },
-      email: {
-        required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["required"],
-        email: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["email"],
-        maxLength: Object(vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["maxLength"])(255)
-      },
       password: {
         required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__["required"],
         validPasswordFormat: validPasswordFormat,
@@ -10671,6 +10789,12 @@ var validPasswordFormat = vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__[
         _this.errors = error.response.data;
       });
     },
+    // メールアドレス変更画面へ遷移する
+    emailChange: function emailChange() {
+      this.$router.push({
+        name: 'user.profile.email'
+      }); // メールアドレス変更画面に遷移する
+    },
     // 入力された値をサーバー側に送信するメソッド
     submitForm: function submitForm() {
       var _this2 = this;
@@ -10684,7 +10808,6 @@ var validPasswordFormat = vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_1__[
       var formData = new FormData(); // FormDataオブジェクトの作成
       formData.append('_method', 'PUT'); // リクエストメソッドをPUTにする
       formData.append('name', this.formData.name); // お名前
-      formData.append('email', this.formData.email); // メールアドレス
       formData.append('password', this.formData.password); // パスワード
       formData.append('password_confirmation', this.formData.password_confirmation); // パスワード（再入力）
       formData.append('introduction', this.formData.introduction); // 自己紹介文
@@ -55515,6 +55638,267 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/User/EmailChangeComponent.vue?vue&type=template&id=9a7a750c":
+/*!***************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/User/EmailChangeComponent.vue?vue&type=template&id=9a7a750c ***!
+  \***************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function () {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("main", { staticClass: "l-main" }, [
+    _vm._m(0),
+    _vm._v(" "),
+    _c(
+      "section",
+      { staticClass: "l-main__wrapper" },
+      [
+        _c("Toast"),
+        _vm._v(" "),
+        _c(
+          "form",
+          {
+            staticClass: "c-form",
+            on: {
+              submit: function ($event) {
+                $event.preventDefault()
+                return _vm.sendVerifyLink($event)
+              },
+            },
+          },
+          [
+            _vm._m(1),
+            _vm._v(" "),
+            _vm.formData.old_email
+              ? _c("span", { staticClass: "c-form__email" }, [
+                  _vm._v(_vm._s(_vm.formData.old_email)),
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            _vm._m(2),
+            _vm._v(" "),
+            _vm.errors && _vm.errors.new_email
+              ? _c("span", { staticClass: "c-error" }, [
+                  _vm._v(_vm._s(_vm.errors.new_email[0])),
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.$v.formData.new_email.$error && _vm.$v.formData.new_email.$dirty
+              ? _c("span", { staticClass: "c-error" }, [
+                  _vm._v("新しいメールアドレスが入力されていません。"),
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.$v.formData.new_email.$error &&
+            !_vm.$v.formData.new_email.maxLength &&
+            _vm.$v.formData.new_email.$dirty
+              ? _c("span", { staticClass: "c-error" }, [
+                  _vm._v(
+                    "新しいメールアドレスは、255文字以内で入力してください。"
+                  ),
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.$v.formData.new_email.$error &&
+            !_vm.$v.formData.new_email.email &&
+            _vm.$v.formData.new_email.$dirty
+              ? _c("span", { staticClass: "c-error" }, [
+                  _vm._v("有効なメールアドレスを入力してください。"),
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.formData.new_email,
+                  expression: "formData.new_email",
+                },
+              ],
+              staticClass: "c-input",
+              class: {
+                "is-invalid":
+                  _vm.$v.formData.new_email.$error &&
+                  _vm.$v.formData.new_email.$dirty,
+                "is-valid":
+                  !_vm.$v.formData.new_email.$error &&
+                  _vm.$v.formData.new_email.$dirty,
+              },
+              attrs: {
+                id: "new_email",
+                type: "text",
+                autocomplete: "new_email",
+              },
+              domProps: { value: _vm.formData.new_email },
+              on: {
+                blur: function ($event) {
+                  _vm.$v.formData.new_email.$touch()
+                },
+                input: function ($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.formData, "new_email", $event.target.value)
+                },
+              },
+            }),
+            _vm._v(" "),
+            _vm._m(3),
+            _vm._v(" "),
+            _vm.errors && _vm.errors.new_email_confirmation
+              ? _c("span", { staticClass: "c-error" }, [
+                  _vm._v(_vm._s(_vm.errors.new_email_confirmation[0])),
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.$v.formData.new_email_confirmation.$error &&
+            _vm.$v.formData.new_email_confirmation.$dirty
+              ? _c("span", { staticClass: "c-error" }, [
+                  _vm._v(
+                    "新しいメールアドレス（再入力）が入力されていません。"
+                  ),
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.$v.formData.new_email_confirmation.$error &&
+            !_vm.$v.formData.new_email_confirmation.maxLength &&
+            _vm.$v.formData.new_email_confirmation.$dirty
+              ? _c("span", { staticClass: "c-error" }, [
+                  _vm._v(
+                    "新しいメールアドレス（再入力）は、255文字以内で入力してください。"
+                  ),
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.$v.formData.new_email_confirmation.$error &&
+            !_vm.$v.formData.new_email_confirmation.email &&
+            _vm.$v.formData.new_email_confirmation.$dirty
+              ? _c("span", { staticClass: "c-error" }, [
+                  _vm._v("有効なメールアドレスを入力してください。"),
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.formData.new_email_confirmation,
+                  expression: "formData.new_email_confirmation",
+                },
+              ],
+              staticClass: "c-input",
+              class: {
+                "is-invalid":
+                  _vm.$v.formData.new_email_confirmation.$error &&
+                  _vm.$v.formData.new_email_confirmation.$dirty,
+                "is-valid":
+                  !_vm.$v.formData.new_email_confirmation.$error &&
+                  _vm.$v.formData.new_email_confirmation.$dirty,
+              },
+              attrs: {
+                id: "new_email_confirmation",
+                type: "text",
+                autocomplete: "new_email_confirmation",
+              },
+              domProps: { value: _vm.formData.new_email_confirmation },
+              on: {
+                blur: function ($event) {
+                  _vm.$v.formData.new_email_confirmation.$touch()
+                },
+                input: function ($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(
+                    _vm.formData,
+                    "new_email_confirmation",
+                    $event.target.value
+                  )
+                },
+              },
+            }),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "c-button c-button--submit c-button--main",
+                attrs: { type: "submit" },
+              },
+              [_vm._v("メールアドレス認証メールを送信する")]
+            ),
+          ]
+        ),
+      ],
+      1
+    ),
+  ])
+}
+var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "l-main__header" }, [
+      _c("h1", { staticClass: "c-title" }, [
+        _vm._v("利用者メールアドレス変更"),
+      ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      { staticClass: "c-label", attrs: { for: "old_email" } },
+      [
+        _vm._v("古いメールアドレス"),
+        _c("span", { staticClass: "c-badge" }, [_vm._v("必須")]),
+      ]
+    )
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      { staticClass: "c-label", attrs: { for: "new_email" } },
+      [
+        _vm._v("新しいメールアドレス"),
+        _c("span", { staticClass: "c-badge" }, [_vm._v("必須")]),
+      ]
+    )
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      { staticClass: "c-label", attrs: { for: "new_email_confirmation" } },
+      [
+        _vm._v("新しいメールアドレス（再入力）"),
+        _c("span", { staticClass: "c-badge" }, [_vm._v("必須")]),
+      ]
+    )
+  },
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/User/ForgotPasswordComponent.vue?vue&type=template&id=4ea63dc6":
 /*!******************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/User/ForgotPasswordComponent.vue?vue&type=template&id=4ea63dc6 ***!
@@ -57287,68 +57671,23 @@ var render = function () {
                 _vm._v(" "),
                 _vm._m(2),
                 _vm._v(" "),
-                _vm.errors && _vm.errors.email
-                  ? _c("span", { staticClass: "c-error" }, [
-                      _vm._v(_vm._s(_vm.errors.email[0])),
+                _vm.formData.email
+                  ? _c("span", { staticClass: "c-form__email" }, [
+                      _vm._v(_vm._s(_vm.formData.email)),
                     ])
                   : _vm._e(),
                 _vm._v(" "),
-                _vm.$v.formData.email.$error && _vm.$v.formData.email.$dirty
-                  ? _c("span", { staticClass: "c-error" }, [
-                      _vm._v("メールアドレスが入力されていません。"),
-                    ])
-                  : _vm._e(),
-                _vm._v(" "),
-                _vm.$v.formData.email.$error &&
-                !_vm.$v.formData.email.maxLength &&
-                _vm.$v.formData.email.$dirty
-                  ? _c("span", { staticClass: "c-error" }, [
-                      _vm._v(
-                        "メールアドレスは、255文字以内で入力してください。"
-                      ),
-                    ])
-                  : _vm._e(),
-                _vm._v(" "),
-                _vm.$v.formData.email.$error &&
-                !_vm.$v.formData.email.email &&
-                _vm.$v.formData.email.$dirty
-                  ? _c("span", { staticClass: "c-error" }, [
-                      _vm._v("有効なメールアドレスを入力してください。"),
-                    ])
-                  : _vm._e(),
-                _vm._v(" "),
-                _c("input", {
-                  directives: [
+                _c("div", { staticClass: "c-button__email" }, [
+                  _c(
+                    "button",
                     {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.formData.email,
-                      expression: "formData.email",
+                      staticClass: "c-button c-button--primary",
+                      attrs: { type: "button" },
+                      on: { click: _vm.emailChange },
                     },
-                  ],
-                  staticClass: "c-input",
-                  class: {
-                    "is-invalid":
-                      _vm.$v.formData.email.$error &&
-                      _vm.$v.formData.email.$dirty,
-                    "is-valid":
-                      !_vm.$v.formData.email.$error &&
-                      _vm.$v.formData.email.$dirty,
-                  },
-                  attrs: { id: "email", type: "text", autocomplete: "email" },
-                  domProps: { value: _vm.formData.email },
-                  on: {
-                    blur: function ($event) {
-                      _vm.$v.formData.email.$touch()
-                    },
-                    input: function ($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.$set(_vm.formData, "email", $event.target.value)
-                    },
-                  },
-                }),
+                    [_vm._v("メールアドレス変更")]
+                  ),
+                ]),
                 _vm._v(" "),
                 _vm._m(3),
                 _vm._v(" "),
@@ -78894,6 +79233,75 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/User/EmailChangeComponent.vue":
+/*!***************************************************************!*\
+  !*** ./resources/js/components/User/EmailChangeComponent.vue ***!
+  \***************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _EmailChangeComponent_vue_vue_type_template_id_9a7a750c__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./EmailChangeComponent.vue?vue&type=template&id=9a7a750c */ "./resources/js/components/User/EmailChangeComponent.vue?vue&type=template&id=9a7a750c");
+/* harmony import */ var _EmailChangeComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./EmailChangeComponent.vue?vue&type=script&lang=js */ "./resources/js/components/User/EmailChangeComponent.vue?vue&type=script&lang=js");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _EmailChangeComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"],
+  _EmailChangeComponent_vue_vue_type_template_id_9a7a750c__WEBPACK_IMPORTED_MODULE_0__["render"],
+  _EmailChangeComponent_vue_vue_type_template_id_9a7a750c__WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/User/EmailChangeComponent.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/User/EmailChangeComponent.vue?vue&type=script&lang=js":
+/*!***************************************************************************************!*\
+  !*** ./resources/js/components/User/EmailChangeComponent.vue?vue&type=script&lang=js ***!
+  \***************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_EmailChangeComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./EmailChangeComponent.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/User/EmailChangeComponent.vue?vue&type=script&lang=js");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_EmailChangeComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/User/EmailChangeComponent.vue?vue&type=template&id=9a7a750c":
+/*!*********************************************************************************************!*\
+  !*** ./resources/js/components/User/EmailChangeComponent.vue?vue&type=template&id=9a7a750c ***!
+  \*********************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_EmailChangeComponent_vue_vue_type_template_id_9a7a750c__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./EmailChangeComponent.vue?vue&type=template&id=9a7a750c */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/User/EmailChangeComponent.vue?vue&type=template&id=9a7a750c");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_EmailChangeComponent_vue_vue_type_template_id_9a7a750c__WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_EmailChangeComponent_vue_vue_type_template_id_9a7a750c__WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/components/User/ForgotPasswordComponent.vue":
 /*!******************************************************************!*\
   !*** ./resources/js/components/User/ForgotPasswordComponent.vue ***!
@@ -79680,22 +80088,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_User_ForgotPasswordComponent_vue__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./components/User/ForgotPasswordComponent.vue */ "./resources/js/components/User/ForgotPasswordComponent.vue");
 /* harmony import */ var _components_User_ResetPasswordComponent_vue__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./components/User/ResetPasswordComponent.vue */ "./resources/js/components/User/ResetPasswordComponent.vue");
 /* harmony import */ var _components_User_ProfileComponent_vue__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./components/User/ProfileComponent.vue */ "./resources/js/components/User/ProfileComponent.vue");
-/* harmony import */ var _components_User_WithdrawComponent_vue__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./components/User/WithdrawComponent.vue */ "./resources/js/components/User/WithdrawComponent.vue");
-/* harmony import */ var _components_User_ProductDetailComponent_vue__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./components/User/ProductDetailComponent.vue */ "./resources/js/components/User/ProductDetailComponent.vue");
-/* harmony import */ var _components_User_ProductLikeComponent_vue__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./components/User/ProductLikeComponent.vue */ "./resources/js/components/User/ProductLikeComponent.vue");
-/* harmony import */ var _components_User_ProductPurchasedComponent_vue__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./components/User/ProductPurchasedComponent.vue */ "./resources/js/components/User/ProductPurchasedComponent.vue");
-/* harmony import */ var _components_Convenience_RegisterComponent_vue__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./components/Convenience/RegisterComponent.vue */ "./resources/js/components/Convenience/RegisterComponent.vue");
-/* harmony import */ var _components_Convenience_LoginComponent_vue__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./components/Convenience/LoginComponent.vue */ "./resources/js/components/Convenience/LoginComponent.vue");
-/* harmony import */ var _components_Convenience_MyPageComponent_vue__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./components/Convenience/MyPageComponent.vue */ "./resources/js/components/Convenience/MyPageComponent.vue");
-/* harmony import */ var _components_Convenience_ForgotPasswordComponent_vue__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./components/Convenience/ForgotPasswordComponent.vue */ "./resources/js/components/Convenience/ForgotPasswordComponent.vue");
-/* harmony import */ var _components_Convenience_ResetPasswordComponent_vue__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./components/Convenience/ResetPasswordComponent.vue */ "./resources/js/components/Convenience/ResetPasswordComponent.vue");
-/* harmony import */ var _components_Convenience_ProfileComponent_vue__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ./components/Convenience/ProfileComponent.vue */ "./resources/js/components/Convenience/ProfileComponent.vue");
-/* harmony import */ var _components_Convenience_WithdrawComponent_vue__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ./components/Convenience/WithdrawComponent.vue */ "./resources/js/components/Convenience/WithdrawComponent.vue");
-/* harmony import */ var _components_Convenience_ProductDetailComponent_vue__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ./components/Convenience/ProductDetailComponent.vue */ "./resources/js/components/Convenience/ProductDetailComponent.vue");
-/* harmony import */ var _components_Convenience_ProductSaleComponent_vue__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ./components/Convenience/ProductSaleComponent.vue */ "./resources/js/components/Convenience/ProductSaleComponent.vue");
-/* harmony import */ var _components_Convenience_ProductEditComponent_vue__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ./components/Convenience/ProductEditComponent.vue */ "./resources/js/components/Convenience/ProductEditComponent.vue");
-/* harmony import */ var _components_Convenience_ProductSaleIndexComponent_vue__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! ./components/Convenience/ProductSaleIndexComponent.vue */ "./resources/js/components/Convenience/ProductSaleIndexComponent.vue");
-/* harmony import */ var _components_Convenience_ProductPurchaseIndexComponent_vue__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! ./components/Convenience/ProductPurchaseIndexComponent.vue */ "./resources/js/components/Convenience/ProductPurchaseIndexComponent.vue");
+/* harmony import */ var _components_User_EmailChangeComponent_vue__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./components/User/EmailChangeComponent.vue */ "./resources/js/components/User/EmailChangeComponent.vue");
+/* harmony import */ var _components_User_WithdrawComponent_vue__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./components/User/WithdrawComponent.vue */ "./resources/js/components/User/WithdrawComponent.vue");
+/* harmony import */ var _components_User_ProductDetailComponent_vue__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./components/User/ProductDetailComponent.vue */ "./resources/js/components/User/ProductDetailComponent.vue");
+/* harmony import */ var _components_User_ProductLikeComponent_vue__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./components/User/ProductLikeComponent.vue */ "./resources/js/components/User/ProductLikeComponent.vue");
+/* harmony import */ var _components_User_ProductPurchasedComponent_vue__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./components/User/ProductPurchasedComponent.vue */ "./resources/js/components/User/ProductPurchasedComponent.vue");
+/* harmony import */ var _components_Convenience_RegisterComponent_vue__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./components/Convenience/RegisterComponent.vue */ "./resources/js/components/Convenience/RegisterComponent.vue");
+/* harmony import */ var _components_Convenience_LoginComponent_vue__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./components/Convenience/LoginComponent.vue */ "./resources/js/components/Convenience/LoginComponent.vue");
+/* harmony import */ var _components_Convenience_MyPageComponent_vue__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./components/Convenience/MyPageComponent.vue */ "./resources/js/components/Convenience/MyPageComponent.vue");
+/* harmony import */ var _components_Convenience_ForgotPasswordComponent_vue__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./components/Convenience/ForgotPasswordComponent.vue */ "./resources/js/components/Convenience/ForgotPasswordComponent.vue");
+/* harmony import */ var _components_Convenience_ResetPasswordComponent_vue__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ./components/Convenience/ResetPasswordComponent.vue */ "./resources/js/components/Convenience/ResetPasswordComponent.vue");
+/* harmony import */ var _components_Convenience_ProfileComponent_vue__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ./components/Convenience/ProfileComponent.vue */ "./resources/js/components/Convenience/ProfileComponent.vue");
+/* harmony import */ var _components_Convenience_WithdrawComponent_vue__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ./components/Convenience/WithdrawComponent.vue */ "./resources/js/components/Convenience/WithdrawComponent.vue");
+/* harmony import */ var _components_Convenience_ProductDetailComponent_vue__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ./components/Convenience/ProductDetailComponent.vue */ "./resources/js/components/Convenience/ProductDetailComponent.vue");
+/* harmony import */ var _components_Convenience_ProductSaleComponent_vue__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ./components/Convenience/ProductSaleComponent.vue */ "./resources/js/components/Convenience/ProductSaleComponent.vue");
+/* harmony import */ var _components_Convenience_ProductEditComponent_vue__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! ./components/Convenience/ProductEditComponent.vue */ "./resources/js/components/Convenience/ProductEditComponent.vue");
+/* harmony import */ var _components_Convenience_ProductSaleIndexComponent_vue__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! ./components/Convenience/ProductSaleIndexComponent.vue */ "./resources/js/components/Convenience/ProductSaleIndexComponent.vue");
+/* harmony import */ var _components_Convenience_ProductPurchaseIndexComponent_vue__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(/*! ./components/Convenience/ProductPurchaseIndexComponent.vue */ "./resources/js/components/Convenience/ProductPurchaseIndexComponent.vue");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == _typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw new Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(_typeof(e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw new Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, "catch": function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw new Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -79721,6 +80130,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
  // パスワードメール送信画面
  // パスワードリセット画面
  // プロフィール編集画面
+ // メールアドレス変更画面
  // 退会画面
  // 商品詳細画面
  // お気に入り登録商品一覧画面
@@ -79790,7 +80200,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
   {
     path: '/convenience/register',
     name: 'convenience.register',
-    component: _components_Convenience_RegisterComponent_vue__WEBPACK_IMPORTED_MODULE_21__["default"]
+    component: _components_Convenience_RegisterComponent_vue__WEBPACK_IMPORTED_MODULE_22__["default"]
   },
   // 利用者側ログイン画面
   {
@@ -79802,7 +80212,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
   {
     path: '/convenience/login',
     name: 'convenience.login',
-    component: _components_Convenience_LoginComponent_vue__WEBPACK_IMPORTED_MODULE_22__["default"]
+    component: _components_Convenience_LoginComponent_vue__WEBPACK_IMPORTED_MODULE_23__["default"]
   },
   // 利用者側マイページ画面
   {
@@ -79814,7 +80224,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
   {
     path: '/convenience/mypage',
     name: 'convenience.mypage',
-    component: _components_Convenience_MyPageComponent_vue__WEBPACK_IMPORTED_MODULE_23__["default"]
+    component: _components_Convenience_MyPageComponent_vue__WEBPACK_IMPORTED_MODULE_24__["default"]
   },
   // 利用者側パスワードメール送信画面
   {
@@ -79826,7 +80236,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
   {
     path: '/convenience/password/email',
     name: 'convenience.password.email',
-    component: _components_Convenience_ForgotPasswordComponent_vue__WEBPACK_IMPORTED_MODULE_24__["default"]
+    component: _components_Convenience_ForgotPasswordComponent_vue__WEBPACK_IMPORTED_MODULE_25__["default"]
   },
   // 利用者側パスワードリセット画面
   {
@@ -79838,7 +80248,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
   {
     path: '/convenience/password/reset/:token',
     name: 'convenience.password.reset',
-    component: _components_Convenience_ResetPasswordComponent_vue__WEBPACK_IMPORTED_MODULE_25__["default"]
+    component: _components_Convenience_ResetPasswordComponent_vue__WEBPACK_IMPORTED_MODULE_26__["default"]
   },
   // 利用者側プロフィール編集画面
   {
@@ -79846,47 +80256,53 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
     name: 'user.profile',
     component: _components_User_ProfileComponent_vue__WEBPACK_IMPORTED_MODULE_16__["default"]
   },
+  // 利用者メールアドレス変更画面
+  {
+    path: '/user/mypage/profile/email',
+    name: 'user.profile.email',
+    component: _components_User_EmailChangeComponent_vue__WEBPACK_IMPORTED_MODULE_17__["default"]
+  },
   // コンビニ側プロフィール編集画面
   {
     path: '/convenience/mypage/profile',
     name: 'convenience.profile',
-    component: _components_Convenience_ProfileComponent_vue__WEBPACK_IMPORTED_MODULE_26__["default"]
+    component: _components_Convenience_ProfileComponent_vue__WEBPACK_IMPORTED_MODULE_27__["default"]
   },
   // 利用者側退会画面
   {
     path: '/user/mypage/withdraw',
     name: 'user.withdraw',
-    component: _components_User_WithdrawComponent_vue__WEBPACK_IMPORTED_MODULE_17__["default"]
+    component: _components_User_WithdrawComponent_vue__WEBPACK_IMPORTED_MODULE_18__["default"]
   },
   // コンビニ側退会画面
   {
     path: '/convenience/mypage/withdraw',
     name: 'convenience.withdraw',
-    component: _components_Convenience_WithdrawComponent_vue__WEBPACK_IMPORTED_MODULE_27__["default"]
+    component: _components_Convenience_WithdrawComponent_vue__WEBPACK_IMPORTED_MODULE_28__["default"]
   },
   // コンビニ側商品出品画面
   {
     path: '/convenience/products/create',
     name: 'convenience.products.create',
-    component: _components_Convenience_ProductSaleComponent_vue__WEBPACK_IMPORTED_MODULE_29__["default"]
+    component: _components_Convenience_ProductSaleComponent_vue__WEBPACK_IMPORTED_MODULE_30__["default"]
   },
   // コンビニ側商品編集画面
   {
     path: '/convenience/products/edit/:productId',
     name: 'convenience.products.edit',
-    component: _components_Convenience_ProductEditComponent_vue__WEBPACK_IMPORTED_MODULE_30__["default"]
+    component: _components_Convenience_ProductEditComponent_vue__WEBPACK_IMPORTED_MODULE_31__["default"]
   },
   // コンビニ側出品した商品一覧画面
   {
     path: '/convenience/products/sale',
     name: 'convenience.products.sale',
-    component: _components_Convenience_ProductSaleIndexComponent_vue__WEBPACK_IMPORTED_MODULE_31__["default"]
+    component: _components_Convenience_ProductSaleIndexComponent_vue__WEBPACK_IMPORTED_MODULE_32__["default"]
   },
   // コンビニ側購入された商品一覧画面
   {
     path: '/convenience/products/purchase',
     name: 'convenience.products.purchase',
-    component: _components_Convenience_ProductPurchaseIndexComponent_vue__WEBPACK_IMPORTED_MODULE_32__["default"]
+    component: _components_Convenience_ProductPurchaseIndexComponent_vue__WEBPACK_IMPORTED_MODULE_33__["default"]
   },
   // コンビニ側商品一覧画面
   {
@@ -79898,13 +80314,13 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
   {
     path: '/user/products/detail/:productId',
     name: 'user.products.detail',
-    component: _components_User_ProductDetailComponent_vue__WEBPACK_IMPORTED_MODULE_18__["default"]
+    component: _components_User_ProductDetailComponent_vue__WEBPACK_IMPORTED_MODULE_19__["default"]
   },
   // コンビニ側商品詳細画面
   {
     path: '/convenience/products/detail/:productId',
     name: 'convenience.products.detail',
-    component: _components_Convenience_ProductDetailComponent_vue__WEBPACK_IMPORTED_MODULE_28__["default"]
+    component: _components_Convenience_ProductDetailComponent_vue__WEBPACK_IMPORTED_MODULE_29__["default"]
   },
   // コンビニ側商品詳細画面
   {
@@ -79916,13 +80332,13 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
   {
     path: '/user/products/liked',
     name: 'user.products.liked',
-    component: _components_User_ProductLikeComponent_vue__WEBPACK_IMPORTED_MODULE_19__["default"]
+    component: _components_User_ProductLikeComponent_vue__WEBPACK_IMPORTED_MODULE_20__["default"]
   },
   // 利用者側購入した商品一覧画面
   {
     path: '/user/products/purchased',
     name: 'user.products.purchased',
-    component: _components_User_ProductPurchasedComponent_vue__WEBPACK_IMPORTED_MODULE_20__["default"]
+    component: _components_User_ProductPurchasedComponent_vue__WEBPACK_IMPORTED_MODULE_21__["default"]
   }],
   // ページ遷移時に必ずページの最上部から表示させる
   scrollBehavior: function scrollBehavior(to, from, savedPosition) {
